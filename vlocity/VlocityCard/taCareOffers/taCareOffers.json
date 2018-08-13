@@ -1,0 +1,39 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "$scope.data.cardIndex",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "0"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "active",
+            "templateUrl": "taCareOffers"
+        }
+    ],
+    "title": "",
+    "zone": "middle"
+}

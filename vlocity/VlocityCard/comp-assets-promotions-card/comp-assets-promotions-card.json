@@ -1,0 +1,91 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "data": {
+                        "classSuffix": "name-field"
+                    },
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "['Name']['label']",
+                    "name": "['Name']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "['Description']['label']",
+                    "name": "['Description']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "Commitment Start Date",
+                    "fieldType": "standard",
+                    "group": "Custom Fields",
+                    "label": "['%vlocity_namespace%__CommitmentStartDate__c']['label']",
+                    "name": "['%vlocity_namespace%__CommitmentStartDate__c']['value']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "Commitment End Date",
+                    "fieldType": "standard",
+                    "group": "Custom Fields",
+                    "label": "['%vlocity_namespace%__CommitmentEndDate__c']['label']",
+                    "name": "['%vlocity_namespace%__CommitmentEndDate__c']['value']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "Cancellation Date",
+                    "fieldType": "standard",
+                    "group": "Custom Fields",
+                    "label": "['%vlocity_namespace%__CancellationDate__c']['label']",
+                    "name": "['%vlocity_namespace%__CancellationDate__c']['value']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "Reason for Cancellation",
+                    "fieldType": "standard",
+                    "group": "Custom Fields",
+                    "label": "['%vlocity_namespace%__ReasonForCancellation__c']['label']",
+                    "name": "['%vlocity_namespace%__ReasonForCancellation__c']['value']",
+                    "type": "string"
+                }
+            ],
+            "name": "CustomView_Basic",
+            "templateUrl": "cpq-card-blank"
+        }
+    ],
+    "title": "Assets Applied Promotion Card"
+}

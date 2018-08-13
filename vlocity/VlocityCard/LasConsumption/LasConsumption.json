@@ -1,0 +1,67 @@
+{
+    "dataSource": {
+        "type": "Custom",
+        "value": {
+            "body": "{\n\"consumos\":[\n{\n\"type\":\"Llamada\",\n\"date\":\"12/02/2017 13:30\",\n\"importe\":\"-5\"\n},\n{\n\"type\":\"Llamada\",\n\"date\":\"12/02/2017 11:30\",\n\"importe\":\"-15\"\n},\n{\n\"type\":\"SMS\",\n\"date\":\"12/02/2017 18:30\",\n\"importe\":\"-2\"\n},\n{\n\"type\":\"Llamada\",\n\"date\":\"12/02/2017 20:30\",\n\"importe\":\"-12\"\n},\n{\n\"type\":\"SMS\",\n\"date\":\"12/02/2017 14:30\",\n\"importe\":\"-32\"\n}\n]\n}",
+            "resultVar": "['consumos']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "$scope.data.cardIndex",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "0"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['type']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "type",
+                    "name": "['type']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['date']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "date",
+                    "name": "['date']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['importe']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "importe",
+                    "name": "['importe']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "templateUrl": "ta-community-card-last-consumption"
+        }
+    ],
+    "title": "Ultimos consumos"
+}

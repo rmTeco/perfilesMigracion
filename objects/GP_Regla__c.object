@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Reglas p/sumar o restar puntos - Gestor de Puntos</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Activa__c</fullName>
+        <description>La regla estará Activa si la fecha actual esta entre Vigencia desde y Vigencia Hasta.</description>
+        <externalId>false</externalId>
+        <formula>AND(TODAY() &gt; Vigencia_desde__c, TODAY() &lt; Vigencia_hasta__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Activa</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Descripcion_regla__c</fullName>
+        <externalId>false</externalId>
+        <label>Descripcion regla</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Dias_vencimiento__c</fullName>
+        <externalId>false</externalId>
+        <label>Dias para vencimiento</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Fecha_vencimiento__c</fullName>
+        <externalId>false</externalId>
+        <label>Fecha de vencimiento</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Metodo_a_ejecutar__c</fullName>
+        <externalId>false</externalId>
+        <label>Metodo a ejecutar</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operador_calculo__c</fullName>
+        <externalId>false</externalId>
+        <label>Operador calculo</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>+</fullName>
+                    <default>false</default>
+                    <label>+</label>
+                </value>
+                <value>
+                    <fullName>-</fullName>
+                    <default>false</default>
+                    <label>-</label>
+                </value>
+                <value>
+                    <fullName>*</fullName>
+                    <default>false</default>
+                    <label>*</label>
+                </value>
+                <value>
+                    <fullName>/</fullName>
+                    <default>false</default>
+                    <label>/</label>
+                </value>
+                <value>
+                    <fullName>%</fullName>
+                    <default>false</default>
+                    <label>%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SeComparaContraElValorFijo__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>SeComparaContraElValorFijo</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Tipo_de_evento__c</fullName>
+        <externalId>false</externalId>
+        <label>Tipo de evento</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bienvenida</fullName>
+                    <default>false</default>
+                    <label>Bienvenida</label>
+                </value>
+                <value>
+                    <fullName>Confiabilización</fullName>
+                    <default>false</default>
+                    <label>Confiabilización</label>
+                </value>
+                <value>
+                    <fullName>Premio Recarga 3M</fullName>
+                    <default>false</default>
+                    <label>Premio Recarga 3M</label>
+                </value>
+                <value>
+                    <fullName>Castigo Recarga</fullName>
+                    <default>false</default>
+                    <label>Castigo Recarga</label>
+                </value>
+                <value>
+                    <fullName>Recarga por Monto</fullName>
+                    <default>false</default>
+                    <label>Recarga por Monto</label>
+                </value>
+                <value>
+                    <fullName>Upselling</fullName>
+                    <default>false</default>
+                    <label>Upselling</label>
+                </value>
+                <value>
+                    <fullName>Cater</fullName>
+                    <default>false</default>
+                    <label>Cater</label>
+                </value>
+                <value>
+                    <fullName>Antigüedad</fullName>
+                    <default>false</default>
+                    <label>Antigüedad</label>
+                </value>
+                <value>
+                    <fullName>Alta a FOL</fullName>
+                    <default>false</default>
+                    <label>Alta a FOL</label>
+                </value>
+                <value>
+                    <fullName>Continuidad FOL</fullName>
+                    <default>false</default>
+                    <label>Continuidad FOL</label>
+                </value>
+                <value>
+                    <fullName>Alta a Débito Automatico</fullName>
+                    <default>false</default>
+                    <label>Alta a Débito Automatico</label>
+                </value>
+                <value>
+                    <fullName>Descarga APP</fullName>
+                    <default>false</default>
+                    <label>Descarga APP</label>
+                </value>
+                <value>
+                    <fullName>Alta Nuevo Servicio Core</fullName>
+                    <default>false</default>
+                    <label>Alta Nuevo Servicio Core</label>
+                </value>
+                <value>
+                    <fullName>Referidos</fullName>
+                    <default>false</default>
+                    <label>Referidos</label>
+                </value>
+                <value>
+                    <fullName>Convergente Fiber</fullName>
+                    <default>false</default>
+                    <label>Convergente Fiber</label>
+                </value>
+                <value>
+                    <fullName>Convergente Arnet</fullName>
+                    <default>false</default>
+                    <label>Convergente Arnet</label>
+                </value>
+                <value>
+                    <fullName>Baja</fullName>
+                    <default>false</default>
+                    <label>Baja</label>
+                </value>
+                <value>
+                    <fullName>Transferencia</fullName>
+                    <default>false</default>
+                    <label>Transferencia</label>
+                </value>
+                <value>
+                    <fullName>Canje</fullName>
+                    <default>false</default>
+                    <label>Canje</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Valor_calculo__c</fullName>
+        <externalId>false</externalId>
+        <label>Valor calculo</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Valor_resultado_fijo__c</fullName>
+        <externalId>false</externalId>
+        <label>Valor resultado fijo</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Valor_resultado_variable__c</fullName>
+        <externalId>false</externalId>
+        <label>Valor calculo variable</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Variable_calculo__c</fullName>
+        <externalId>false</externalId>
+        <label>Variable calculo</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Vencimiento_fecha_fija__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>True : Vence en una fecha determinada.
+False : Vence luego de la cantidad de días que se especifique.</description>
+        <externalId>false</externalId>
+        <label>Vencimiento en fecha fija</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Vigencia_desde__c</fullName>
+        <externalId>false</externalId>
+        <label>Vigencia desde</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Vigencia_hasta__c</fullName>
+        <externalId>false</externalId>
+        <label>Vigencia hasta</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>GP Regla</label>
+    <nameField>
+        <label>Nombre de Regla</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>GP Reglas</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

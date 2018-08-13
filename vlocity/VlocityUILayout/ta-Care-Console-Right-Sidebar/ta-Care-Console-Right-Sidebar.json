@@ -1,0 +1,40 @@
+{
+    "Cards": [
+        "taStartAction",
+        "taPromotions",
+        "taAbandoned"
+    ],
+    "bypassSave": true,
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0014C00000GgKtx"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "body": "{}",
+            "bundle": "getAbandonedSessionsByAccountId",
+            "inputMap": {
+                "Id": "{{params.id}}"
+            },
+            "optionsMap": {
+            },
+            "query": "SELECT Id, RecordType.Name FROM Account where Id = '{{params.id}}'",
+            "resultVar": ""
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Console-Right-Sidebar-Card"
+        }
+    },
+    "workspace": [
+        "taStartAction/Personal/1502570576411",
+        "taPromotions/Personal/1502570576411",
+        "taAbandoned/Personal/1502570576411"
+    ]
+}

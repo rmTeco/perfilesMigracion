@@ -1,0 +1,77 @@
+<!--<pre>RESPONSE: {{control.vlcSI[control.itemsKey] | json}}</pre>-->
+<div 
+    ng-if="control.vlcSI[control.itemsKey].length" 
+    class="slds-tree__container slds-size--1-of-1 ta-QAForm" 
+    role="application" 
+    ng-controller="QAController as qac"
+    ng-init="
+        expanded = true; 
+        answers = {};
+        qac.init(control.vlcSI[control.itemsKey][0].descripcionIntervaloTiempo);
+        qac.onTimeout();
+        bpTree.response.qaAnswers = {}; 
+        bpTree.response.qaTimeout = false;"
+    >
+	<div class="slds-section-title--divider slds-text-align--right slds-m-bottom--medium">
+		Tiempo restante: {{qac.counter | secondsToDateTime | date:'HH:mm:ss'}}
+	</div>
+	<ul ng-if="qac.counter" class="slds-tree" role="tree" aria-labelledby="treeheading" aria-activedescendant="tree0-node1" ng-repeat="pregunta in control.vlcSI[control.itemsKey][0].listaPreguntas track by $index">
+	    
+		<li id="tree0-node1" role="treeitem" aria-level="1" aria-expanded="{{expanded}}" class="slds-p-bottom--medium">
+			<div class="slds-tree__item" ng-click="expanded = !expanded">
+				<button class="slds-button slds-button--icon slds-m-right--x-small" aria-controls="tree0-node1" title="Toggle">
+                    <slds-button-svg-icon 
+                        size="'small'" 
+                        sprite="'utility'" 
+                        icon="'chevronright'">
+                    </slds-button-svg-icon>
+                </button>
+				<div class="slds-form-element slds-text-heading--medium">
+					<a id="tree0-node1__label" class="slds-truncate" href="javascript:void(0);" tabindex="-1" role="presentation" title="{{pregunta.codConsulta}}">{{pregunta.consulta}}</a>
+				</div>
+			</div>
+			<ul ng-class="{'slds-is-expanded' : expanded, 'slds-is-collapsed': !expanded}" role="group" aria-labelledby="<tree0-node1_></tree0-node1_>_label" ng-repeat="respuesta in pregunta.listaRespuestas track by $index">
+			    
+				<li class="slds-m-left--medium" id="tree0-node1-0" role="treeitem" aria-level="2">
+					<div class="slds-tree__item">
+						<div class="slds-form-element">
+							<div class="slds-form-element__control" for="id-{{$parent.$index}}-{{$index}}">
+							    
+                            		<span class="slds-radio">
+                            		    <label class="slds-radio__label">
+                            	            <input 
+                            	                type="radio" 
+                            	                name="question-{{$parent.$index}}-{{$index}}"
+                            	                id="id-{{$parent.$index}}-{{$index}}"
+                            	                ng-value="respuesta.codRespuesta"
+                            	                ng-model="bpTree.response.data.listaPreguntas[$parent.$index].codRespuesta"
+                            	                required>
+                            	        
+                            	            <span class="slds-radio--faux"></span>
+                            		        <span class="slds-form-element__label">{{respuesta.respuesta}}</span>
+                            		    </label>
+                            		</span>
+                            	
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<div 
+	    ng-if="!qac.counter"
+	    ng-init="bpTree.response.qaTimeout = true">
+		<div class="slds-notify slds-notify--toast slds-theme--error slds-size--1-of-1 taMsgBannerContainer" role="alert">
+			<div class="slds-notify__content slds-grid slds-text-align--center taMsgBanner">
+				<div class="slds-col slds-align-middle">
+					<h2 class="slds-text-heading--small">Tiempo de respuesta finalizado!</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="!control.vlcSI[control.itemsKey].length">
+	<span class="slds-text-color--error">Error de Servicio</span>
+</div>

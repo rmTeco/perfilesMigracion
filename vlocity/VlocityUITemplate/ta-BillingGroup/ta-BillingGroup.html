@@ -1,0 +1,88 @@
+<div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="taBillingGroupChanges">
+<div  class="slds-tree__container"  role="application" ng-controller="BillingAccountsController as bac">
+    <ul class="slds-tree" 
+        role="tree" 
+        aria-labelledby="treeheading" 
+        aria-activedescendant="tree0-node1">
+        <li id="tree0-node1" 
+            role="treeitem" 
+            aria-level="1" 
+            aria-expanded="{{expanded}}"
+            ng-repeat="ba in bpTree.response.BillingAccounts " ng-if="ba.Fraud != true && ba.Assets != null && ba.TotalActiveAssets">
+            <div class="slds-tree__item" ng-click="expanded = expanded">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <span class="slds-checkbox">
+                            <input type="checkbox" name="options"  id="id-{{ba.Id}}" 
+                                        ng-model="ba.isSelected"
+                                        ng-click="bac.checkAll(ba)"
+                                        ng-checked="ba.isSelected"/> 
+                            <label class="slds-checkbox__label" for="id-{{ba.Id}}"> 
+                                <span class="slds-checkbox--faux"></span>
+                                <a id="tree0-node1__label" class="slds-form-element__label slds-truncate" href="javascript:void(0);" tabindex="-1" role="presentation" title="Tree Branch">{{ba.Name}}</a>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+             <ul ng-class="{'slds-is-expanded' : expanded, 'slds-is-collapsed': expanded}"
+                role="group" 
+                aria-labelledby="<tree0-node1_></tree0-node1_>_label"
+                ng-if="!!ba.Assets[0]">
+                <li class="slds-m-left--medium"
+                    id="tree0-node1-0" 
+                    role="treeitem" 
+                    aria-level="2"
+                    ng-repeat="serv in ba.Assets " ng-if="serv.Status == 'Active'"> 
+                    <div class="slds-tree__item">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <span class="slds-checkbox">
+                                    <input type="checkbox" name="options"  id="id-{{ba.Id}}-{{$index}}"
+                                    ng-model="serv.isSelected"
+                                        ng-click="bac.verifyChecker(ba)"
+                                        ng-checked="serv.isSelected"/>
+                                        
+                                    <label class="slds-checkbox__label" for="id-{{ba.Id}}-{{$index}}">
+                                        <span class="slds-checkbox--faux"></span>
+                                        <span class="slds-form-element__label">{{serv.Name}}</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul ng-class="{'slds-is-expanded' : expanded, 'slds-is-collapsed': expanded}"
+                role="group" 
+                aria-labelledby="<tree0-node1_></tree0-node1_>_label"
+                ng-if="!ba.Assets[0] && ba.Assets.Status == 'Active'">
+                <li class="slds-m-left--medium"
+                    id="tree0-node1-0" 
+                    role="treeitem" 
+                    aria-level="2">
+                    <div class="slds-tree__item">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <span class="slds-checkbox">
+                                    <input type="checkbox" name="options"  id="id-{{ba.Id}}-1"
+                                    ng-model="ba.Assets.isSelected"
+                                        ng-click="bac.verifyChecker(ba)"
+                                        ng-checked="ba.Assets.isSelected"/>
+                                        
+                                    <label class="slds-checkbox__label" for="id-{{ba.Id}}-1">
+                                        <span class="slds-checkbox--faux"></span>
+                                        <span class="slds-form-element__label">{{ba.Assets.Name}}</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+            </ul>
+        </li>
+    </ul>
+</div>
+</div>

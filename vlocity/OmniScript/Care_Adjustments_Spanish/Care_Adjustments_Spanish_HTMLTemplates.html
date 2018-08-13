@@ -1,0 +1,92 @@
+<link rel="stylesheet" href="/resource/ta_slds_os/slds_os.min.css"/>
+<style>
+    .vlc-slds-line_break .slds-form-element__control {
+        border-bottom: solid 1px #EEF1F6;
+        margin-bottom: 15px;
+    }
+
+  #vlcKnowledge .vlc-slds-button--eye.slds-button__icon {
+        fill:#061c3f ;
+    }
+
+   #vlcKnowledge .vlc-slds-button--exp.slds-button__icon {
+        fill: #061c3f ;
+    }
+
+   #vlcKnowledge .slds-item {
+        height: auto;
+    }
+
+   #vlcKnowledge .slds-item:hover {
+        background-color: #f4f4f4 ;
+    }
+
+   #vlcKnowledge .slds-item p {
+        width: 70%;
+        margin-top: 3px;
+        margin-bottom: 3px;
+        margin-right: 5px;
+        padding-bottom: 0;
+        
+       color: #2891d4 ;
+        font-size: 15px;
+        font-weight: 300;
+        
+       
+       line-height: 16px;
+        text-decoration: none;
+        white-space: normal;
+        word-break: break-word;
+        cursor: pointer;
+    }
+    #vlcKnowledge .slds-item p:hover {
+        text-decoration: underline;
+    }
+    
+   #vlcKnowledge .slds-item h3 {
+        font-size: 14px;
+        white-space: normal;
+    }
+
+   #Step-ConfirmationAccountAdjustment_prevBtn {
+         display:none;
+   }
+
+   #Step-CancelCorfirmation_prevBtn{
+         display:none;
+    }
+
+   #Step-DevitarionCorfirmation_prevBtn{
+         display:none;
+    }
+
+</style>
+<script type='text/javascript'  src='/support/console/39.0/integration.js' />
+<script>
+if (sforce.console.isInConsole())
+  sforce.console.setSidebarVisible(false, null, sforce.console.Region.RIGHT);
+</script>
+
+<style>
+/*PFTA-9349*/
+.via-slds form[stepForm] child:nth-child(2) .vlc-slds-selItem label.vlc-slds-selItem__label, .via-slds label.vlc-slds-inline-control__label a[vlc-slds-tool-tip=test][nubbin=left], .via-slds legend.slds-form-element__label, .vlocity label.vlc-slds-inline-control__label[for=SelectAsset0] {
+   display: none;
+}
+.message.description[msg=Success] {
+   background: #eeeeee !important;
+   color: black!important;
+   font-size: 14px !important;
+}
+.message.description[msg=Success]::before {
+   content: 'i';
+    font-size: 20px;
+    border-radius: 50%;
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 16px;
+}
+
+</style>

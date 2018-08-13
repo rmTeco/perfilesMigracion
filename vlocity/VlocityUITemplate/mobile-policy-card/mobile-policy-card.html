@@ -1,0 +1,61 @@
+<div class="slds-card via-mobile-policy-slds-card slds-m-bottom--small" data-card="card-{{cardIndex}}" ng-controller="viaMobilePolicyCardController as vmpcc">
+  <div class="slds-card__header via-slds-card__header slds-grid slds-p-bottom--medium slds-p-left--x-small slds-p-right--x-small">
+    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+      <div class="slds-media__figure" ng-if="!data.hideIcon">
+          <vloc-card-icon data="data" obj="obj" size="'medium'"></vloc-card-icon>
+      </div>
+      <div class="slds-media__body slds-truncate_container--100">
+        <a href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="{{data.title}}">
+          <span class="slds-text-heading--small">{{data.fields[0].label}} {{obj | getter: data.fields[0] | picker: data.fields[0].type}}</span>
+        </a>
+        <br />
+        <span class="expires">
+            {{data.fields[1].label}} {{obj | getter: data.fields[1] | picker: data.fields[1].type}}
+        </span>
+      </div>
+    </div>
+    <div class="slds-no-flex">
+        <slds-dropdown content="data.actions" ng-if="data.actions.length > 0" label-attribute="displayName" action-function="performAction(item)"></slds-dropdown>
+    </div>
+  </div>
+  <div class="slds-small-show slds-card__body via-slds-card__body slds-grid slds-grid--vertical slds-theme--default slds-p-left--small slds-p-right--small">
+    <div class="slds-col slds-col--padded slds-grid slds-wrap slds-grid--align-spread">
+      <div class="slds-col--padded slds-size--1-of-5 slds-small-show slds-m-top--medium slds-p-bottom--small via-slds-border--bottom" ng-repeat="field in data.fields.slice(2, 7)" ng-show="key != 'attributes'">
+          <div class="slds-truncate slds-text-heading--label" title="{{field.label}}">{{field.label}}</div>
+          <div class="slds-truncate slds-text-heading--small" ng-if="!obj[field.relationshipName]">
+              {{obj | getter: field | picker: field.type}}
+          </div>
+          <div class="slds-truncate slds-text-heading--small" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}
+          </div>
+      </div>
+    </div>
+    <div class="slds-col slds-col--padded slds-grid slds-wrap slds-grid--vertical-align-center slds-grid--align-spread">
+          <div class="slds-col--padded slds-small-show slds-m-top--medium slds-p-bottom--medium" ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+              <a href="#" ng-click="performAction(action)">
+                {{action.displayName}}
+              </a>
+          </div>
+      </div>
+  </div>
+  <div class="slds-x-small-show-only via-slds-x-small-card__body slds-card__body slds-grid slds-grid--vertical slds-theme--default">
+    <div class="slds-size--1-of-1 slds-x-small-show-only" ng-repeat="field in data.fields.slice(2)" ng-show="key != 'attributes'">
+      <div class="slds-grid via-slds-grid slds-p-left--x-small slds-p-right--x-small slds-p-top--xx-small slds-p-bottom--xx-small" ng-if="vmpcc.expanded || $index < 2">
+          <div class="slds-col slds-size--1-of-2">
+              <p class="slds-text-align--left slds-truncate slds-text-heading--label" title="{{field.label}}">{{field.label}}</p>
+          </div>
+          <div class="slds-col slds-size--1-of-2" ng-if="!obj[field.relationshipName]">
+              <p class="slds-text-align--right slds-truncate" >{{(obj | getter: field | picker: field.type) || '&nbsp;'}}</p>
+          </div>
+          <div class="slds-col slds-size--1-of-2" ng-if="obj[field.relationshipName]">
+              <p class="slds-text-align--right slds-truncate" >{{obj[field.relationshipName]['Name']}}</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="slds-card__footer slds-m-top--xx-small slds-p-bottom--xx-small slds-x-small-show-only slds-text-align--center" ng-if="data.fields.length > 4" ng-click="vmpcc.expanded = !vmpcc.expanded">
+    <button class="slds-button slds-button--icon">
+      <span ng-if="!vmpcc.expanded"><slds-svg-icon sprite="'utility'" icon="'chevrondown'" size="'x-small'" extra-classes="'slds-icon-text-default'"></slds-svg-icon></span>
+      <span ng-if="vmpcc.expanded"><slds-svg-icon sprite="'utility'" icon="'chevronup'" size="'x-small'" extra-classes="'slds-icon-text-default'"></slds-svg-icon></span>
+    </button>
+  </div>
+</div>

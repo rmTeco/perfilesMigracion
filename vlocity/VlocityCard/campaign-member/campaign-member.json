@@ -1,0 +1,44 @@
+{
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "type": null,
+        "value": {
+            "inputMap": {
+                "campaignId": "70136000000JwSF"
+            },
+            "query": "SELECT  Status, TargetCallDate__c, City, FirstName, LastName, Name, Type, MobilePhone, LeadOrContactId, HasResponded, Email, CompanyOrAccount, Title FROM CampaignMember WHERE CampaignId='{{params.id}}'",
+            "remoteClass": "CampaignListHandler",
+            "remoteMethod": "getMemberListByCampaign",
+            "remoteNSPrefix": "%vlocity_namespace%"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankCardState": false,
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "All Campaign Members",
+            "sObjectType": "CampaignMember",
+            "templateUrl": "campaign-member-list"
+        }
+    ],
+    "title": "campaign-member-list"
+}

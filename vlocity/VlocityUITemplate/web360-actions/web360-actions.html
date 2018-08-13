@@ -1,0 +1,56 @@
+<div ng-controller="Web360ActionsCtrl as wac"
+     ng-init="wac.init()">
+    <!-- WEB360 -->
+    <div class="slds-p-around--small" style="background: #FFF;"
+         ng-if="!wac.mobile">
+        <div class="via-slds slds-p-around--small ng-scope community_card-2x">
+            <div class="slds-grid slds-wrap slds-grid--pull-padded slds-m-horizontal--large">
+                 <div 
+                    ng-repeat="action in data.actions | limitTo: 5" 
+                    class="slds-size--1-of-1 slds-p-vertical--medium slds-p-horizontal--small slds-border--bottom vloc-action-grid-cell"
+                    ng-class="{'slds-border--top' : $index == 0}">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-text-align--left">
+                            <a ng-click="performAction(action)"
+                                class="celeste"
+                                hotkey-card-action>
+                                <p>{{action.displayName}}</p>
+                            </a>
+                        </div>
+                        <div class="slds-col slds-text-align--right">
+                            <slds-svg-icon
+                				sprite="'utility'"
+                				icon="'chevronright'"
+                				size="'x-small'"
+                				style="fill:#00b2c5"
+                				class="slds-text-align--right">
+                			</slds-svg-icon>
+        		        </div>
+        	        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MOBILE -->
+    <div class="via-slds slds-p-around--small"
+         style="background: #FFF;"
+         ng-if="wac.mobile">
+        <div class="slds-size--12-of-12">
+            <div class="slds-size--12-of-12 slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-border--bottom"
+                 ng-class="{ 'slds-border--top': $first }"
+                 ng-repeat="action in data.actions"
+                 ng-click="performAction(action)">
+                <a class="slds-p-around--large slds-text-body--regular celeste">{{action.displayName}}</a>
+                <div class="slds-p-around--large">
+                    <slds-svg-icon
+        				sprite="'utility'"
+        				icon="'chevronright'"
+        				size="'small'"
+        				extra-classes="'chevronIcon'">
+        			</slds-svg-icon>
+        		</div>
+            </div>
+        </div>
+    </div>
+</div>

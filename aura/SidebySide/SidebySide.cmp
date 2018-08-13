@@ -1,0 +1,29 @@
+<aura:component > 
+    <aura:handler event="aura:doneRendering" action="{!c.doneRendering}" />
+    <aura:attribute name="json" type="JSON" required="true" />
+    <aura:attribute name="isDoneRendering" type="Boolean" default="false" access="private" />
+    <aura:attribute name="selectedLabel" type="String" access="private" />
+    <aura:attribute name="selectedContent" type="String" access="private" />
+    <p>
+        {!$Label.et4ae5.msg0210}
+    </p>
+  	<div class="uxds row" >
+    	<div class="uxds col-xs-3">   
+           <div class="list-group list-custom" >
+				<aura:iteration items="{!v.json.entries}" var="entry" indexVar="i" >
+                    <aura:if isTrue="{!i == 0}">
+                        <ui:outputURL value="#" class="list-group-item active" label="{!entry.label}" click="{!c.setTextArea}" aura:id="sbsOption"/>
+						<aura:set attribute="else">
+                            <ui:outputURL value="#" class="list-group-item" label="{!entry.label}" click="{!c.setTextArea}" aura:id="sbsOption"/>
+                        </aura:set>
+                    </aura:if>
+                </aura:iteration>
+            </div>
+        </div>
+        <div id="divTextArea" class="uxds col-xs-9 textarea-custom">
+            <p>
+                <aura:unescapedHtml aura:id="optTextArea" value="{!v.selectedContent}" />
+            </p>
+        </div>
+    </div>
+</aura:component>

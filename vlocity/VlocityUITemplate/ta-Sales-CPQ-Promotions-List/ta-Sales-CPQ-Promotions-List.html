@@ -1,0 +1,26 @@
+<!-- FILTERS -->
+<div class="slds-col cpq-items-container scroll cpq-filter-container" ng-if="importedScope.$parent.$parent.filters.show">
+    <vloc-layout layout-name="ta-Sales-CPQ-Product-Filters" ctrl="CPQItemsController"></vloc-layout>
+</div>
+
+<!-- CARDS -->
+<div class="cpq-promotions-list" ng-if="!importedScope.$parent.$parent.filters.show">
+	<vloc-card ng-repeat="card in cards" ctrl="CPQPromotionItemController" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" ng-if="isLoaded">
+	</vloc-card>
+
+	<div class="slds-grid slds-grid--vertical-align-center slds-grid--align-center cpq-no-products-msg" ng-show="!records && isLoaded">
+	    {{::importedScope.customLabels.CPQPromotionsNotAvailable}}
+	</div>
+	
+	<div class="next-product slds-col slds-text-align--center slds-m-vertical--medium"  ng-if="session.nextPromotions">
+	    <div class="slds-spinner_container" ng-if="loadingMore">
+	        <div class="slds-spinner--brand slds-spinner slds-spinner--small" aria-hidden="false" role="alert">
+	            <div class="slds-spinner__dot-a"></div>
+	            <div class="slds-spinner__dot-b"></div>
+	        </div>
+	    </div>
+	    <a ng-click="importedScope.nextPagePromotions()" ng-if="!loadingMore">
+	      {{::importedScope.customLabels.CPQLoadMore}}
+	    </a>
+	</div>
+</div>

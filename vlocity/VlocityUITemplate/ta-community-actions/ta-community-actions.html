@@ -1,0 +1,35 @@
+<div class="slds-p-around--small">
+    <div class="via-slds slds-p-around--large ng-scope community_card-2x">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-m-right--medium">
+            <div class="slds-p-horizontal--small slds-size--1-of-1">
+                <div class="slds-text-heading--large availables_title"  id="title-mobile">{{data.title}}</div>
+            </div>
+            <div id="containergestiones">
+                <div ng-repeat="action in data.actions | limitTo: 7" class="slds-size--1-of-1 slds-p-vertical--medium slds-m-horizontal--xxx-small slds-border--bottom vloc-action-grid-cell gestionlink">
+                        <div class="slds-grid">
+                            <div class="slds-size--6-of-6 slds-text-align--left slds-m-horizontal--medium">
+                                <a ng-click="performAction(action)"
+                                    class="celeste"
+                                    hotkey-card-action>
+                                    <div class="slds-grid" >
+                                        <div class="slds-size--1-of-2 slds-text-align--left slds-m-horizontal--medium">
+                                            <p class="availables_text">{{action.displayName}}</p>
+                                        </div>
+                                        <div class="slds-size--2-of-5 slds-text-align--right">
+                                            <slds-svg-icon
+                                				sprite="'utility'"
+                                				icon="'chevronright'"
+                                				size="'x-small'"
+                                				style="fill:#00b2c5"
+                                				class="slds-text-align--right">
+                            			    </slds-svg-icon>
+                            			</div>    
+                        			</div>    
+                                </a>
+                            </div>
+            	        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

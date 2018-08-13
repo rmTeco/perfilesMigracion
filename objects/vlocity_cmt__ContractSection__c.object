@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Contains details about each section of a generated contract document.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__ContainsRedlines__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates if the contract section contains at least one redline</description>
+        <externalId>false</externalId>
+        <label>Contains Redlines</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ContractVersionId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract Document version that this section belongs to</description>
+        <externalId>false</externalId>
+        <label>Contract Version</label>
+        <referenceTo>vlocity_cmt__ContractVersion__c</referenceTo>
+        <relationshipLabel>Contract Sections</relationshipLabel>
+        <relationshipName>Contract_Sections</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DisplayHeaderData__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract section display header</description>
+        <externalId>false</externalId>
+        <label>Display Header</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DisplayHeaderInline__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates if the section following the contract section header will be displayed inline in the document.</description>
+        <externalId>false</externalId>
+        <label>Display Header Inline</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DisplayHeader__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Display Header</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DisplaySectionName__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, the section name is displayed on the generated document</description>
+        <externalId>false</externalId>
+        <label>Display Section Name</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentClauseId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Indicates the clause that this contract section resulted from</description>
+        <externalId>false</externalId>
+        <label>Document Clause</label>
+        <referenceTo>vlocity_cmt__DocumentClause__c</referenceTo>
+        <relationshipLabel>Contract Document Sections</relationshipLabel>
+        <relationshipName>ContractDocumentSections</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentTemplateSectionId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Indicates the template section that this contract section resulted from</description>
+        <externalId>false</externalId>
+        <label>Document Template Section</label>
+        <referenceTo>vlocity_cmt__DocumentTemplateSection__c</referenceTo>
+        <relationshipLabel>Contract Document Sections</relationshipLabel>
+        <relationshipName>ContractDocumentSections</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsEnd__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Is End</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsInNewPage__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, the section is started on a new page</description>
+        <externalId>false</externalId>
+        <label>New Page</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsRestricted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, indicates that the section content is restricted for editing</description>
+        <externalId>false</externalId>
+        <label>Restricted</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsSectionNonStandard__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, indicates that section is a non-standard section that deviates from the associated template</description>
+        <externalId>false</externalId>
+        <label>Non Standard</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsStart__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Is Start</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsWordTableHeaderRepeated__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Repeat Table Header in Word</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ItemSectionFontStyle__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Default font style used for section</description>
+        <externalId>false</externalId>
+        <label>Item Section Font Style</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Level__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The level of this section in the section hierarchy</description>
+        <externalId>false</externalId>
+        <label>Level</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__NeedAutoSectionNumber__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, indicates that the section number for this section will be automatically generated</description>
+        <externalId>false</externalId>
+        <label>Auto Section Number</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ReconciledSectionContent__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The section content creates as a result of its equivalent reconciled section from the Word document</description>
+        <externalId>false</externalId>
+        <label>Reconciled Section Content</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ResetAutoNumber__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If checked, indicates that the section number for this section will be reset</description>
+        <externalId>false</externalId>
+        <label>Reset Auto Number</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SectionContent__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The section content stored as a HTML fragment</description>
+        <externalId>false</externalId>
+        <label>Section Content</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SectionCreationSource__c</fullName>
+        <deprecated>false</deprecated>
+        <description>How was this section created - whether it was generated, reconciled from a Word document or customized by a user</description>
+        <externalId>false</externalId>
+        <label>Section Creation Source</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Customize</fullName>
+                    <default>false</default>
+                    <label>Customize</label>
+                </value>
+                <value>
+                    <fullName>Generate</fullName>
+                    <default>true</default>
+                    <label>Generate</label>
+                </value>
+                <value>
+                    <fullName>Import</fullName>
+                    <default>false</default>
+                    <label>Import</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Sequence__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The section&apos;s sequence number in the contract document</description>
+        <externalId>false</externalId>
+        <label>Sequence</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SignatureTokens__c</fullName>
+        <deprecated>false</deprecated>
+        <description>DocuSign signature tokens</description>
+        <externalId>false</externalId>
+        <label>Signature Tokens</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__TemplateSectionContent__c</fullName>
+        <deprecated>false</deprecated>
+        <description>DEPRECATED. Replaced by Template Section Data.</description>
+        <externalId>false</externalId>
+        <label>Template Section Content</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__TemplateSectionData__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The original section content that was brought over from the corresponding template section</description>
+        <externalId>false</externalId>
+        <label>Template Section Data</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Tokens__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Tokens in the section that map to Salesforce object fields</description>
+        <externalId>false</externalId>
+        <label>Tokens</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Type of the section</description>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Context</fullName>
+                    <default>false</default>
+                    <label>Context</label>
+                </value>
+                <value>
+                    <fullName>Clause</fullName>
+                    <default>false</default>
+                    <label>Clause</label>
+                </value>
+                <value>
+                    <fullName>Image</fullName>
+                    <default>false</default>
+                    <label>Image</label>
+                </value>
+                <value>
+                    <fullName>Signature</fullName>
+                    <default>false</default>
+                    <label>Signature</label>
+                </value>
+                <value>
+                    <fullName>Conditional</fullName>
+                    <default>false</default>
+                    <label>Conditional</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__WMLData__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>WML Data</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <label>Contract Document Section</label>
+    <nameField>
+        <label>Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Contract Document Sections</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

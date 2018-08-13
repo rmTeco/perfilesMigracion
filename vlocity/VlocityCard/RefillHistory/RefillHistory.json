@@ -1,0 +1,137 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.SubscriptionId",
+                "val": "c3087a66-45b0-4a2d-a5e5-88a8e01f4990"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "cantidadItemsConsulta": "0",
+                "cantidadMaxConsulta": "5",
+                "codSuscriptor": "{{params.SubscriptionId}}",
+                "referenciaItemPaginado": "0"
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "ta_care_queryRefillsHelper",
+            "remoteMethod": "GetRefillHistory",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']['ListInfoRecarga']"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "sorteableField": {
+        "fisrtSort": "['fechaRecarga']",
+        "reverse": true
+    },
+    "states": [
+        {
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "active"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "AssetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-refill-history",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaRecarga']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['fechaRecarga']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['codCanal']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Canal",
+                    "name": "['codCanal']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Descripción",
+                    "name": "['ListInfoBalance'][0]['nombreBalance']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['montoRecarga']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Monto",
+                    "name": "['montoRecarga']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Vencimiento",
+                    "name": "['CicloDeVida']['ListInfoCicloDeVidaAnterior'][0]['fechaExpiracionSuscripcion']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Bonus']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Bonus",
+                    "name": "['Bonus']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "templateUrl": "ta-care-table"
+        }
+    ],
+    "title": "Historial de recargas"
+}

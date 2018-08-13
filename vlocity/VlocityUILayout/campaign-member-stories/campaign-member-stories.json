@@ -1,0 +1,43 @@
+{
+    "Cards": [
+        "Campaign Policy Story",
+        "Campaign Non Held Policy Story",
+        "Campaign Opportunity Story",
+        "Campaign Case Story",
+        "Campaign Event Story",
+        "Campaign Saved OmniScript Story",
+        "Campaign Task Story",
+        "Campaign Campaign Story",
+        "Campaign Claim Story",
+        "Campaign Note Story",
+        "Campaign Member Action Log Story"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.campaignMember.Id.value",
+                "val": "00v41000000Ven3AAC"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "Stories",
+            "apexRestResultVar": "Stories",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v1/story/{{$root.campaignMember.Id.value}}?pageSize=3",
+            "inputMap": {
+                "pageSize": "10",
+                "storyId": "{{$root.campaignMember.Id.value}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "StoryListHandler",
+            "remoteMethod": "getStories",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "Stories"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "campaign-member-stories"
+        }
+    }
+}

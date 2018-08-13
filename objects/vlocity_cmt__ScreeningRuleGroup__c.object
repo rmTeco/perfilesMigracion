@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__JSONParserClass__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Enter the Apex class used by the relevant Type to parse data in the correct structure to be compared against the Screening Rules. Either specify an existing class, or enter a new name and click &apos;Generate JSON Parser Class&apos; to create the class based on the custom setting &apos;Application Flow Setting&apos;.</description>
+        <externalId>false</externalId>
+        <label>JSON Parser Class</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ScreeningClass__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Apex class used by the relevant Type to parse data in the correct structure to be compared against the Screening Rules. Either specify an existing class, or enter a new name and click &apos;Generate Screening Class&apos; to create the template class.</inlineHelpText>
+        <label>Screening Class</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>All</fullName>
+                    <default>false</default>
+                    <label>All</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Screening Rule Group</label>
+    <listViews>
+        <fullName>vlocity_cmt__All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Screening Rule Groups</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>vlocity_cmt__GenerateJSONParserClass</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate JSON Parser Class</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)}
+var gettingnamespace = sforce.connection.query(&quot;SELECT NamespacePrefix FROM ApexClass WHERE Name =&apos;ApplicationUtilities&apos; LIMIT 1&quot;);
+var getname = gettingnamespace.getArray(&quot;records&quot;);
+var classname = &quot;ScreeningClassBuilder&quot;;
+if(getname.length &gt; 0)
+{
+var namespace_prefix = getname[0].NamespacePrefix;
+if(namespace_prefix != null &amp;&amp; namespace_prefix != &apos;&apos;)
+{
+classname = getname[0].NamespacePrefix +&quot;.&quot; + classname;
+}
+}
+var res=sforce.apex.execute(classname,&quot;BuildJSONParserClass&quot;,{sRuleGroupId:&quot;{!vlocity_cmt__ScreeningRuleGroup__c.Id  }&quot;});
+alert(res);</url>
+    </webLinks>
+    <webLinks>
+        <fullName>vlocity_cmt__GenerateScreeningClass</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate Screening Class</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)}
+var gettingnamespace = sforce.connection.query(&quot;SELECT NamespacePrefix FROM ApexClass WHERE Name =&apos;ApplicationUtilities&apos; LIMIT 1&quot;);
+var getname = gettingnamespace.getArray(&quot;records&quot;);
+var classname = &quot;ScreeningClassBuilder&quot;;
+if(getname.length &gt; 0)
+{
+var namespace_prefix = getname[0].NamespacePrefix;
+if(namespace_prefix != null &amp;&amp; namespace_prefix != &apos;&apos;)
+{
+classname = getname[0].NamespacePrefix +&quot;.&quot; + classname;
+}
+}
+var res=sforce.apex.execute(classname,&quot;BuildScreeningClass&quot;,{sRuleGroupId:&quot;{!vlocity_cmt__ScreeningRuleGroup__c.Id  }&quot;});
+alert(res);</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,19 @@
+<div ng-controller="geoMapsCtrl as GMCtrl" style="width: 100%">
+		<div ng-if='bpTree.response.Antennas'>
+			<h3>Mapa de antenas</h3>
+		</div>
+<!-- 
+		<pre>{{bpTree.response.Address |json}}</pre>
+		<pre> - {{bpTree.response.Antennas |json}}</pre> -->
+	   
+		<div class="slds-grid">
+			<div
+				ng-if='bpTree.response.Antennas'
+				ng-init='GMCtrl.init()'
+				id='busSearchMap' 
+				class='slds-size--1-of-1 slds-medium--1-of-1 slds-large-size--12-of-12 busSearchMap'>
+			</div>        
+		</div>
+		
+		<!-- <div>test Coord {{GMCtrl.response |json}}</div> -->
+	</div>

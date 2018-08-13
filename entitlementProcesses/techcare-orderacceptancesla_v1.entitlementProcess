@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <description>PFTA-7818</description>
+    <entryStartDateField>Case.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Case.IsClosed</field>
+        <operation>equals</operation>
+        <value>true</value>
+    </exitCriteriaFilterItems>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>En espera del cliente</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RelatedTechQuoteStatus__c</field>
+            <operation>equals</operation>
+            <value>Pendiente de aprobación</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Subject</field>
+            <operation>equals</operation>
+            <value>Gestión de Servicio Técnico</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>TechCare10Days</milestoneName>
+        <minutesToComplete>14400</minutesToComplete>
+        <timeTriggers>
+            <actions>
+                <name>UpdateCaseStatus</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <milestones>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Derivada</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Subject</field>
+            <operation>equals</operation>
+            <value>Gestión de Servicio Técnico</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneCriteriaFilterItems>
+            <field>Case.RelatedTechQuoteStatus__c</field>
+            <operation>equals</operation>
+            <value>Rechazado por Cliente</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>TechCare90days</milestoneName>
+        <minutesToComplete>129600</minutesToComplete>
+        <useCriteriaStartTime>true</useCriteriaStartTime>
+    </milestones>
+    <name>TechCare-OrderAcceptanceSLA</name>
+    <versionMaster>552c000000001bc</versionMaster>
+    <versionNumber>1</versionNumber>
+</EntitlementProcess>

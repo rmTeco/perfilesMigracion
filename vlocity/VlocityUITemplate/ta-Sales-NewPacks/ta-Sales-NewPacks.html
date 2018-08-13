@@ -1,0 +1,169 @@
+<div class="ta-sales-new-packs slds-medium-size--12-of-12" ng-if="bpTree.response.ShowPacksStep" ng-controller="PacksItemsDetailController as pidc" ng-init="pidc.init();">
+    <section>
+        <div class="slds-spinner_container" ng-if="pidc.showSpinner">
+            <div role="status" class="slds-spinner slds-spinner--small">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div id="header-packs-items-details">
+            <button ng-class="{'ng-hide': pidc.errorRetry }" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive" ng-click="pidc.manageRecursiveGroups(bpTree.response.records)">
+                      <span class="slds-text-not-addToCartselected">
+                        Refresh</span>
+            </button>
+        </div>
+        <!--div class="header-simulation" ng-if="pidc.total > 0 ">
+            <div class="slds-text-body--small header-title">Total a pagar</div>
+            <div class="slds-truncate total">{{ pidc.total | currency }}</div>
+        </div-->
+        <div class="slds-medium-size--12-of-12 title" ng-if="pidc.arrayItemsGroup.length > 0">Elegí el plack que más te convenga para ahorrar y disfrutar de tu Personal</div>
+        
+        <div class="slds-form-element__control" ng-show="bpTree.response.showErrorTemplate === true">
+            <div class="vlc-control-wrapper">
+                <div class="message description" msg="Requirement" style="margin-bottom: 15px; color:#ffffff !important">Seleccioná un pack para continuar con la compra.
+                </div>
+            </div>
+        </div>
+        
+        
+        <div>
+            <div ng-repeat="items in pidc.arrayItemsGroup" ng-class-odd="'odd'" ng-class-even="'even'" ng-class="{'border-top': $first, 'border-bottom': $last}">
+                
+                <div ng-click="pidc.getExpandedItems(items.productGroup.actions.expanditems.remote.params.cartId, items.productGroup.actions.expanditems.remote.params.itemId, items.productGroup.actions.expanditems.remote.params.productHierarchyPath, $index, null, null)" class="element-svg slds-medium-size--12-of-12">
+
+                    <div class="slds-medium-size--11-of-12">{{ items.productGroup.fields.Name.value ? items.productGroup.fields.Name.value : items.productGroup.Name.value  }}</div>
+                    <div class="slds-medium-size--1-of-12">
+                        <slds-svg-icon ng-if="items.hideItems" sprite="'utility'" icon="'chevronright'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon>
+        			    <slds-svg-icon ng-if="!items.hideItems" sprite="'utility'" icon="'chevrondown'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon>
+    			    </div>
+                    <button ng-class="{'ng-hide': items.errorRetry }" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive" ng-click="pidc.getExpandedItems(items.productGroup.actions.expanditems.remote.params.cartId, items.productGroup.actions.expanditems.remote.params.itemId, items.productGroup.actions.expanditems.remote.params.productHierarchyPath, $index, null, null)"><span class="slds-text-not-selected">
+                        Try Again</span>
+                    </button>
+                    
+                </div>
+                
+                <div class="body-packs" ng-class="{'ng-hide': items.hideItems }">
+                    <div ng-repeat="itemsRecordsChild in items.dataRecords.childProducts">
+                        <div class="items-row">
+                            <div class="items">
+                                <div class="slds-medium-size--6-of-12 ">
+                                    <label class="lbl-item">{{itemsRecordsChild.fields.Name.value ? itemsRecordsChild.fields.Name.value : itemsRecordsChild.fields.Name }}</label>
+                                </div>
+                                <div class="slds-medium-size--2-of-12 " ng-if="itemsRecordsChild.fields.%vlocity_namespace%__PricingElement__c.value >= 0">
+                                    <div class="slds-truncate" >{{ itemsRecordsChild.fields.%vlocity_namespace%__PricingElement__c.value | currency }}</div>
+                                    
+                                </div>
+                                <div class="slds-medium-size--2-of-12 center-text">
+                                    <button ng-if="!itemsRecordsChild.nameResult.lineItems && itemsRecordsChild.actions.addtocart" class="slds-button btn-cstm" aria-live="assertive" ng-click="pidc.addToCart(items.productGroup, $parent.$parent.$index, $parent.$index, itemsRecordsChild.actions.addtocart.remote, null, 'childProducts')"> <span class="slds-text-not-selected">Comprar</span></button>
+                                    <button ng-if="itemsRecordsChild.nameResult.lineItems && itemsRecordsChild.nameResult.lineItems.records[0].actions.deleteitem" class="slds-button btn-cstm-delete" aria-live="assertive" ng-click="pidc.deleteCartItem(items.productGroup, $parent.$parent.$index, $parent.$index, itemsRecordsChild.nameResult.lineItems.records[0].actions.deleteitem.remote, null, 'childProducts')"> <span class="slds-text-not-selected">X</span></button>
+                                </div>
+                                <div class="slds-medium-size--2-of-12 center-text">
+                                   <button ng-if="itemsRecordsChild.actions.getproductbyid.remote" class="slds-button btn-cstm" aria-live="assertive" ng-click="pidc.getCartsProductsById(itemsRecordsChild.actions.getproductbyid.remote.params, $parent.$parent.$index, $parent.$index)"> <span ng-if="!itemsRecordsChild.showMoreInfo" class="slds-text-not-selected">Detalles</span><span ng-if="itemsRecordsChild.showMoreInfo" class="slds-text-not-selected">Ocultar detalles</span></button> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cpq-product-item-packs-details slds-scrollable--y" ng-if="itemsRecordsChild.moreInfo.length > 0 && itemsRecordsChild.showMoreInfo">
+                            <!--form is used for input validations-->
+                            <form>
+                                <div class="services">
+                                    <div ng-repeat="itemsInfo in itemsRecordsChild.moreInfo" class="service">
+                                        <div class="margin-space slds-medium-size--1-of-12">
+                                            <slds-svg-icon ng-if="itemsInfo.type!=='Numeros Amigos' && itemsInfo.service_type=='SMS'" sprite="'utility'" icon="'sms'" size="'small'" no-hint="true" aria-hidden="true">
+                                            </slds-svg-icon>
+                                            <slds-svg-icon ng-if="itemsInfo.type!=='Numeros Amigos' && itemsInfo.service_type=='MMS'" sprite="'utility'" icon="'image'" size="'small'" no-hint="true" aria-hidden="true">
+                                            </slds-svg-icon>
+                                            <slds-svg-icon ng-if="itemsInfo.type!=='Numeros Amigos' && itemsInfo.service_type=='VOICE'" sprite="'utility'" icon="'call'" size="'small'" no-hint="true" aria-hidden="true">
+                                            </slds-svg-icon>
+                                            <slds-svg-icon ng-if="itemsInfo.type!=='Numeros Amigos' && itemsInfo.service_type=='DATA'" sprite="'utility'" icon="'broadcast'" size="'small'" no-hint="true" aria-hidden="true">
+                                            </slds-svg-icon>
+                                            <slds-svg-icon ng-if="itemsInfo.type=='Numeros Amigos'" sprite="'utility'" icon="'groups'" size="'small'" no-hint="true" aria-hidden="true">
+                                            </slds-svg-icon>
+                                            
+                                		</div>
+                                		
+                                		<div class="margin-space slds-medium-size--11-of-12">
+
+                                    		<div ng-if="itemsInfo.type!=='Numeros Amigos'" class="display-one-line">
+                                    		    <div ng-if="$first" class="margin-space margin-blank">Contiene </div>
+                                        		<div ng-if="itemsInfo.service_type=='SMS'" class="margin-space margin-blank"> {{ itemsInfo.service_free_units }} {{ itemsInfo.service_type }} </div>
+                                        		<div ng-if="itemsInfo.service_type=='VOICE'" class="margin-space margin-blank"> {{ itemsInfo.service_free_units }} {{ itemsInfo.service_description }} </div>
+                                        	    <div ng-if="itemsInfo.service_type=='DATA' && itemsInfo.service_description !== 'Datos WhatsApp' && itemsInfo.service_description !== 'Datos Libres para FaceBook'" class="margin-space margin-blank"> {{ itemsInfo.service_free_units }} {{ itemsInfo.service_unit }} </div>
+                                        	    <div ng-if="itemsInfo.service_type=='DATA' && itemsInfo.service_description=='Datos WhatsApp' && itemsInfo.service_free_units == '10' && itemsInfo.service_unit == 'MB' " class="margin-space margin-blank">Whatsapp Ilimitado</div>
+                                        	    <div ng-if="itemsInfo.service_type=='DATA' && itemsInfo.service_description=='Datos Libres para FaceBook' && itemsInfo.service_free_units == '10' && itemsInfo.service_unit == 'MB' " class="margin-space margin-blank">Facebook Ilimitado</div>
+                                        	    
+                                        	    <div ng-if="itemsInfo.service_validity !== '' && itemsInfo.service_validity_unit !== ''" class="margin-space margin-blank"> durante {{ itemsInfo.service_validity }} {{ itemsInfo.service_validity_unit }}</div>
+                                        	    
+                                    		</div>
+                                    		
+                                    		
+                                    		<div ng-if="itemsInfo.type=='Numeros Amigos'">
+                                    		    {{ itemsInfo.faf.lines_max }} Números Amigos
+                                    		    <div  ng-if="itemsInfo.service_type=='SMS'" class="margin-space">{{ itemsInfo.service_type }} {{ itemsInfo.service_coverage }} {{ items.service_use } </div>
+                                        		<div ng-if="itemsInfo.service_type=='VOICE'" class="margin-space">Llamadas {{ itemsInfo.service_coverage }} {{ itemsInfo.service_use }}</div>
+                                        		
+                                    		</div>
+                                		
+                                		</div>
+                                    
+                                    </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="items-row" ng-repeat="itemsRecordsLineItems in items.dataRecords.lineItems">
+                        <div class="items">
+                            <div class="txt-group-item">
+                                <label>{{itemsRecordsLineItems.fields.Name.value ? itemsRecordsLineItems.fields.Name.value : itemsRecordsLineItems.fields.Name }}</label>
+                            </div>
+                            <div class="btn-group-item">
+                                <button ng-if="!itemsRecordsLineItems.nameResult.lineItems && itemsRecordsLineItems.actions.addtocart" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive" ng-click="pidc.addToCart(items.productGroup, $parent.$parent.$index, $parent.$index, itemsRecordsLineItems.actions.addtocart.remote, null, 'lineItems')"> <span class="slds-text-not-selected">Add to Cart</span></button>
+                                <button ng-if="itemsRecordsLineItems.nameResult.lineItems && itemsRecordsLineItems.nameResult.lineItems.records[0].actions.deleteitem" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive" ng-click="pidc.deleteCartItem(items.productGroup, $parent.$parent.$index, $parent.$index,  itemsRecordsLineItems.nameResult.lineItems.records[0].actions.deleteitem.remote, null, 'lineItems')"> <span class="slds-text-not-selected">Delete Item</span></button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="margin-group" ng-repeat="itemsRecordsProductGroups in items.dataRecords.productGroups.records">
+                        <div ng-click="pidc.getExpandedItems(itemsRecordsProductGroups.actions.expanditems.remote.params.cartId, itemsRecordsProductGroups.actions.expanditems.remote.params.itemId, itemsRecordsProductGroups.actions.expanditems.remote.params.productHierarchyPath, $parent.$index, $index, 'productGroups')" class="element-svg">
+                            <slds-svg-icon ng-if="itemsRecordsProductGroups.hideItems" sprite="'utility'" icon="'chevronright'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon>
+            			    <slds-svg-icon ng-if="!itemsRecordsProductGroups.hideItems" sprite="'utility'" icon="'chevrondown'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon>
+                            {{ itemsRecordsProductGroups.fields.Name.value ? itemsRecordsProductGroups.fields.Name.value : itemsRecordsProductGroups.Name.value  }}
+                            <button ng-class="{'ng-hide': itemsRecordsProductGroups.errorRetry }" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive" ng-click="pidc.getExpandedItems(itemsRecordsProductGroups.actions.expanditems.remote.params.cartId, itemsRecordsProductGroups.actions.expanditems.remote.params.itemId, itemsRecordsProductGroups.actions.expanditems.remote.params.productHierarchyPath, $parent.$index, $index, 'productGroups')"><span class="slds-text-not-selected">
+                                Try Again</span>
+                            </button>
+                        </div>
+                    
+                        <div class="items-row" ng-repeat="itemsRecordsGroupChild in itemsRecordsProductGroups.nameResult.childProducts" ng-class="{'ng-hide': itemsRecordsProductGroups.hideItems }">
+                            <div class="items">
+                                <div class="txt-group-item">
+                                    <label>{{itemsRecordsGroupChild.fields.Name.value ? itemsRecordsGroupChild.fields.Name.value : itemsRecordsChild.fields.Name }}</label>
+                                </div>
+                                <div class="btn-group-item">
+                                    <button ng-if="!itemsRecordsGroupChild.nameResult.lineItems && itemsRecordsGroupChild.actions.addtocart" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive" ng-click="pidc.addToCart(itemsRecordsProductGroups, $parent.$parent.$parent.$index, $parent.$parent.$index, itemsRecordsGroupChild.actions.addtocart.remote, $parent.$index, 'childProducts')"> <span class="slds-text-not-selected">Add to Cart</span></button>
+                                    <button ng-if="itemsRecordsGroupChild.nameResult.lineItems && itemsRecordsGroupChild.nameResult.lineItems.records[0].actions.deleteitem" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive" ng-click="pidc.deleteCartItem(itemsRecordsProductGroups, $parent.$parent.$parent.$index, $parent.$parent.$index, itemsRecordsGroupChild.nameResult.lineItems.records[0].actions.deleteitem.remote, $parent.$index, 'childProducts')"> <span class="slds-text-not-selected">Delete Item</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="slds-notify_container"  style="padding-top: 95px;" ng-if="pidc.showNotification">
+          <div class="slds-notify slds-notify--toast" ng-class="{'slds-theme--success': pidc.severity == 'success', 'slds-theme--warning': pidc.severity == 'warning', 'slds-theme--error': pidc.severity == 'error'}" >
+            <span class="slds-assistive-text">Alert</span>
+            <button class="slds-button slds-notify__close slds-button--icon-inverse" title="Close" ng-click="$hide()">
+              
+              <slds-svg-icon sprite="'utility'" icon="'close'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon>
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <div class="slds-notify__content">
+              <h2 class="slds-text-heading--small" style="color: #fff !important;" ng-if="pidc.message">{{ pidc.message }}</h2>
+            </div>
+          </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,267 @@
+<div class="via-slds riders-list-canvas container-table-canvas" ng-controller="containerTableCanvarController">
+    <!--/*****************************************
+    ***********Grilla con paginado por cards
+    ********************************************-->
+    <div class="slds-card slds-p-around--large np-card" style="background: #FFF;"
+    ng-class="{'slds-hide': !showGrid}">
+        <!--Aditional filters-->
+        <div class="slds-size--6-of-6 slds-small-size--8-of-8 slds-medium-size--6-of-6 slds-large-size--5-of-5">
+            <label class="slds-text-heading--small" for="text-input-01">¿Querés afinar tu búsqueda?</label>
+            <div class="slds-text-title">Podés usar filtros adicionales:</div>
+        </div>
+        
+       
+        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-p-left--small">
+            <div class="slds-size--2-of-6 slds-small-size--4-of-8 slds-medium-size--2-of-6 slds-large-size--1-of-6 slds-m-top--smalll">
+
+                <div class="slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLAditionalFilter= false;" ng-class="{'slds-is-open': isDDLAditionalFilter}"
+                    ng-click="isDDLAditionalFilter = !isDDLAditionalFilter">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                            <input type="search" id="text-input-02" class="slds-lookup__search-input slds-input" aria-owns="option-list-01" role="combobox"
+                                aria-activedescendant="" aria-expanded="false" readonly="true" placeholder="{{filterAditonalOption}}"
+                                ng-blur="isDDLAditionalFilter = false;"/>
+                            <button class="slds-button slds-input__icon slds-text-color--default" aria-expanded="false" tabindex="-1">
+                                <slds-svg-icon sprite="'utility'" icon="'down'" size="'x-small'" no-hint="true"
+                                extra-classes="'slds-icon-text-default'"></slds-svg-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown--left" role="listbox">
+                        <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-5" role="presentation"
+                            ng-focus="isDDLAditionalFilterOption=false;">
+                            <li role="presentation" ng-mousedown="changeAditionalFilter('Todos los consumos');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Todos los consumos</span>
+                                </span>
+                            </li>
+                            <li ng-repeat="record in records | uniqueValues : 'ConsumptionType'" role="presentation" ng-mousedown="changeAditionalFilter(record.ConsumptionType);">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="0" id="listbox-option-248">
+                                <span class="slds-truncate">{{record.ConsumptionType}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="slds-size--2-of-6 slds-small-size--4-of-8 slds-medium-size--2-of-6 slds-large-size--2-of-5 slds-p-left--large">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLAditionalFilterOption = false;" ng-class="{'slds-is-open': isDDLAditionalFilterOption}"
+                    ng-click="isDDLAditionalFilterOption = !isDDLAditionalFilterOption">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                            <input type="search" id="text-input-01" class="slds-lookup__search-input slds-input" aria-owns="option-list-01" role="combobox"
+                                aria-activedescendant="" aria-expanded="false" readonly="true" placeholder="{{filterTypeFilterOption}}"
+                                ng-model="filterTypeFilterOption"
+                                ng-blur="isDDLAditionalFilterOption = false;" /> <!--ng-blur="isDDLServiceOpen = false;"-->
+                            <button class="slds-button slds-input__icon slds-text-color--default" aria-expanded="false" tabindex="-1">
+                            <slds-svg-icon sprite="'utility'" icon="'down'" size="'x-small'" no-hint="true"
+                                extra-classes="'slds-icon-text-default'"></slds-svg-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown--left" role="listbox">
+                        <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-5" role="presentation">
+                            <li role="presentation" ng-mousedown="changeAditionalFilterOption('Con cargo');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Con cargo</span>
+                                </span>
+                            </li>
+                            <li role="presentation" ng-mousedown="changeAditionalFilterOption('Sin cargo');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Sin cargo</span>
+                                </span>
+                            </li>
+                            <li role="presentation" ng-mousedown="changeAditionalFilterOption('Con y sin cargo');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Con y sin cargo</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--search and filters-->
+        <div class="slds-p-bottom--small">
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--4-of-12 slds-form-element slds-p-top--medium">
+             <label class="slds-text-heading--small" for="text-input-01">¿Sabés que estás buscando?</label>
+             <div class="slds-text-title">Buscá por el número de destino o descripción del consumo:</div>
+              <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+                <slds-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-input__icon'"></slds-svg-icon>
+                
+                <input ng-model="searchTerm" class="slds-input" type="text" placeholder="Buscar" ng-change="search()"/>
+                
+              </div>
+            </div>
+        </div>
+        <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-p-top--medium">
+            <span class="slds-text-title">Última actualización el: 10/08/2017 15:34:21Hs</span>
+        </div>
+        <!--table-->
+        
+        
+        {{records.length}}
+        
+			<table class="slds-table slds-table--bordered slds-tree slds-table--tree table tableCSS" role="treegrid" aria-owns="tree0-node0" aria-readonly="true">
+				<thead>
+					<tr class="slds-text-title--caps">
+						
+						<th 
+							ng-click="viewState.orderByField='StartDate'; viewState.reverseSort = !viewState.reverseSort"
+							class="slds-cell-buffer--left" 
+							scope="col">
+							<div class="slds-grid slds-grid--vertical-align-center">
+								<div class="slds-truncate" title="Fecha inicio">Fecha inicio</div>
+								<span ng-show="viewState.orderByField == 'StartDate'">
+									<span ng-show="!viewState.reverseSort">^</span>
+									<span ng-show="viewState.reverseSort">v</span>
+								</span>		
+							</div>
+						</th>
+
+						<th 
+							ng-click="viewState.orderByField='ConsumptionType'; viewState.reverseSort = !viewState.reverseSort"
+							scope="col">
+							
+							<div class="slds-grid slds-grid--vertical-align-center">
+								<div class="slds-truncate" title="Tipo de consumo">Tipo de consumo</div>
+								<span ng-show="viewState.orderByField == 'ConsumptionType'">
+									<span ng-show="!viewState.reverseSort">^</span>
+									<span ng-show="viewState.reverseSort">v</span>
+								</span>		
+							</div>
+						</th>
+
+						<th 
+							ng-click="viewState.orderByField='DestinationNumber'; viewState.reverseSort = !viewState.reverseSort"
+							scope="col">
+							
+							<div class="slds-grid slds-grid--vertical-align-center">
+								<div class="slds-truncate" title="Numero destino">Numero destino</div>
+								<span ng-show="viewState.orderByField == 'DestinationNumber'">
+									<span ng-show="!viewState.reverseSort">^</span>
+									<span ng-show="viewState.reverseSort">v</span>
+								</span>		
+							</div>
+						</th>
+						
+						<th 
+							ng-click="viewState.orderByField='Cost'; viewState.reverseSort = !viewState.reverseSort"
+							scope="col">
+							
+							<div class="slds-grid slds-grid--vertical-align-center">
+								<div class="slds-truncate" title="Costo">Costo</div>
+								<span ng-show="viewState.orderByField == 'Cost'">
+									<span ng-show="!viewState.reverseSort">^</span>
+									<span ng-show="viewState.reverseSort">v</span>
+								</span>		
+							</div>
+						</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr
+						ng-repeat-start="record in records | filter: viewState.query | orderBy:viewState.orderByField:viewState.reverseSort"
+						ng-init="viewState.index=$index"
+						class="searchClient-body slds-hint-parent"
+						aria-level="1"
+						ng-click="accountStatus[record.CodePlan] = !accountStatus[record.CodePlan]">
+						
+						<td data-label="Primary Contact Name">
+							<div class="slds-truncate" title="{{record.PrimaryContactName}}">{{record.StartDate}}</div>
+						</td>
+						
+						<td data-label="Phone">
+							<div class="slds-truncate" title="{{record.Phone}}">{{record.ConsumptionType}}</div>
+						</td>
+						
+						<td data-label="Document Type">
+							<div class="slds-truncate" title="{{record.DocumentType}}">{{record.DestinationNumber}}</div>
+						</td>
+						
+						<td data-label="Document Number">
+							<div class="slds-truncate" title="{{record.DocumentNumber}}">{{record.Cost}}</div>
+						</td>
+					</tr>
+					<tr 
+						ng-if="accountStatus[record.CodePlan]" 
+						ng-repeat="record in records" 
+						ng-repeat-end=" " 
+						aria-level="2"
+						class="slds-hint-parent">
+
+						<th data-label="Asset Name" scope="row" class="slds-tree__item">
+							<button class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+								<svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+									<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+								</svg>
+								<span class="slds-assistive-text">Toggle</span>
+							</button>
+							<div class="slds-truncate" title="{{line.Name}}">fede</div>
+						</th>
+
+						<td data-label="">
+							<div class="slds-truncate" title="">dfgdfg</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+        
+        
+        <div class="slds-scrollable--x">    
+            <table  class="slds-table slds-table--bordered slds-table--resizable-cols via-slds-table-pinned-header">
+              <thead>
+                <tr class="slds-text-heading--label">
+                    <th class="slds-p-bottom--small" ng-repeat="field in $root.selectedState.fields" scope="col" ng-class="{'slds-is-sorted' : sortingOrder == 'obj'+field.name, 'slds-is-sorted--desc' : reverse, 'slds-is-sorted--asc': !reverse}">
+                        <a class="slds-th__action" ng-click="sortBy(field)" href="javascript:void(0)">
+                            {{field.label}}
+                            <div class="slds-icon_container">
+                                <slds-svg-icon sprite="'utility'" size="'x-small'" icon="'arrowdown'" extra-classes="'slds-icon-text-default slds-is-sortable__icon'"></slds-svg-icon>
+                            </div>
+                        </a>
+                    </th>
+                    <th ng-if="cards[0].actions.length" class="slds-cell-shrink" scope="col"><div class="slds-cell-shrink slds-th__action" ></div></th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr vloc-card ng-repeat-start="card in getCardList() | orderBy:sortingOrder:reverse track by card.cardIndex" ng-model="card" data="card" records="records" use-existing-element-type showExtra="showExtra" ng-init="showExtra = false" ng-click="showExtra = !showExtra">
+                  </tr>
+                  <tr ng-repeat-end ng-show="showExtra">
+                      showExtra
+                </tr>
+              </tbody>
+            </table>
+        </div>
+  
+        <div class="slds-grid slds-p-top--small">
+            <div class="slds-col">
+              <label class="slds-form-element__label">Filas por página</label>
+              <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                  <select class="slds-select" ng-options="item for item in numberOfRowsOption" ng-model="itemsPerPage">
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="slds-col">
+              <label class="slds-form-element__label">Total filas</label>
+              <span>{{records.length}}</span>
+            </div>
+            
+            
+            <div class="slds-col">
+                <div class="slds-form-element slds-button-group pull-right" role="group">
+                    <button class="slds-button slds-button--neutral" title="Previous" ng-click="goToPage(previousPage);" ng-disabled="currentPage == 0">« Anterior</button>
+                    <button ng-repeat="n in currentRange" class="slds-button slds-button--neutral" ng-click="goToPage(n);" ng-disabled="n == currentPage">
+                        {{n + 1}}
+                    </button>
+                    <button class="slds-button slds-button--neutral" ng-click="goToPage(nextPage);" ng-disabled="currentPage == pagedItems.length - 1">Siguiente »
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

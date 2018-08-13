@@ -1,0 +1,104 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "resultVar": "['Cases']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.AccountId",
+                            "Id": "['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Incident-Detail",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['StartDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de Inicio",
+                    "name": "['StartDate']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Estimated_resolution_date__c']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha Estimada de Cierre",
+                    "name": "['Estimated_resolution_date__c']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Subject']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Título",
+                    "name": "['Subject']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['SubType']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Subtipo",
+                    "name": "['SubType']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['CaseNumber']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "N° Ticket",
+                    "name": "['CaseNumber']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "sObjectType": "Case",
+            "templateUrl": "ta-TechCare-Massive-Incidents-List"
+        }
+    ],
+    "title": "Eventos Masivos"
+}

@@ -1,0 +1,65 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="taSalesCartContainerController">
+    <html xmlns:ng="http://angularjs.org" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:slds />
+            <apex:includeScript value="/support/console/40.0/integration.js"/>
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+        </head>
+        <body>
+            <div ng-controller="CartContainerController as ccc">
+                <div class="slds-spinner_container" ng-show="!ccc.showCart">
+                    <div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+                <div ng-if="ccc.showCart">
+                    <apex:include pageName="TaSalesCPQv15"/>
+                </div>
+            </div>
+            
+            
+            <script type="text/javascript">
+                (function(){
+                    'use strict';
+
+                    angular
+                        .module('hybridCPQ')
+                        .controller('CartContainerController', CartContainerController);
+
+                    CartContainerController.$inject = ['$scope'];
+
+                    function CartContainerController($scope) {
+                        var ccc = this;
+                        ccc.showCart = false;
+                        
+                        
+                        init();
+                        
+                        function init () {
+                        console.info('ID: ', "{!$CurrentPage.parameters.id}", ' - AssetID: ', "{!$CurrentPage.parameters.assetId}");
+                            Visualforce.remoting.Manager.invokeAction(
+                               "taSalesCartContainerController.CallPrefeasibility", "{!$CurrentPage.parameters.id}", "{!$CurrentPage.parameters.assetId}",
+                                    function(result, event) {
+                                       console.info('result: ', result);
+                                       ccc.showCart = result;
+                                       console.info('ccc.showCart: ', ccc.showCart);
+                                       $scope.$apply();
+                                    },
+                               {escape: false} // No escaping, please
+                            );
+                            
+                            console.info('ccc.showCart: ', ccc.showCart);
+                        }
+                        
+                    }
+
+                 })();
+            </script>
+            
+            
+        </body>
+    </html>
+</apex:page>

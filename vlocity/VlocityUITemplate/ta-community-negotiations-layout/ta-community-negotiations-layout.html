@@ -1,0 +1,91 @@
+<div class="via-slds ta-community-services" style="float: left;
+    clear: none;">
+    <div ng-if="data.%vlocity_namespace%__Definition__c.title != undefined &&
+                data.%vlocity_namespace%__Definition__c.title != ''">
+        <p class="title" >{{data.%vlocity_namespace%__Definition__c.title}}</p>
+        <!--<div class="slds-m-top--small slds-m-bottom--small" 
+             style="height:1px; width:100%; background-color:#A4A4A4;">
+        </div>  -->
+    </div>
+
+   <div class="community_card-2x" ng-if="!mmc.mobile" style="width: 400px; min-height: 400px; margin-top:15px; margin-right:5px; float:left;">
+       <div class="slds-grid slds-wrap slds-grid--pull-padded card_misg_desk" style="margin: 0px;">
+       <div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom">
+                        <p class="subTitle slds-p-around--small" id="title-mobile">En curso y completadas</p>
+                    </div>
+            
+        <div ng-repeat="card in cards | filter: {cardName: 'Completed'} | orderBy:order"
+             vloc-card 
+             ctrl="{{ctrl}}" 
+             ng-model="card" 
+             data="card" 
+             records="records" 
+             index="{{$index}}" 
+             session-id="{{sessionId}}"
+             class="slds-size--1-of-1 slds-medium-size--6-of-6 slds-large-size--12-of-12 "
+             use-existing-element-type>
+        </div>
+        </div>
+    </div>
+        
+    <div class="community_card-2x" ng-if="!mmc.mobile" style="width: 400px; min-height: 400px; margin-top:15px; margin-right:5px;float:left;">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded card_misg_desk" style="margin: 0px;">
+        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom">
+                        <p class="subTitle slds-p-around--small" id="title-mobile">Abandonadas</p>
+                    </div>
+        
+        <div ng-repeat="card in cards | filter: {cardName: 'Abandoned'} | orderBy:order"
+             vloc-card 
+             ctrl="{{ctrl}}" 
+             ng-model="card" 
+             data="card" 
+             records="records" 
+             index="{{$index}}" 
+             session-id="{{sessionId}}"
+             class="slds-size--1-of-1 slds-medium-size--6-of-6 slds-large-size--12-of-12 "
+             use-existing-element-type>
+        </div>
+        </div>
+    </div>
+    <!-- mobile -->
+    <div class="community_card-2x" ng-if="mmc.mobile" style="width: 400px; min-height: 400px; margin-top:15px; margin-right:5px; float:left;">
+       <div class="slds-grid slds-wrap slds-grid--pull-padded card_misg_desk" style="margin: 0px;">
+       <div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom">
+                        <p class="subTitle slds-p-around--small" id="title-mobile">En curso y completadas</p>
+                    </div>
+            
+        <div ng-repeat="card in cards | filter: {cardName: 'Completed'} | orderBy:order"
+             vloc-card 
+             ctrl="{{ctrl}}" 
+             ng-model="card" 
+             data="card" 
+             records="records" 
+             index="{{$index}}" 
+             session-id="{{sessionId}}"
+             class="slds-size--1-of-1 slds-medium-size--6-of-6 slds-large-size--12-of-12 "
+             use-existing-element-type>
+        </div>
+        </div>
+    </div>
+        
+    <div class="community_card-2x" ng-if="mmc.mobile" style="width: 400px; min-height: 400px; margin-top:15px; margin-right:5px;float:left;">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded card_misg_desk" style="margin: 0px;">
+        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom">
+                        <p class="subTitle slds-p-around--small" id="title-mobile">Abandonadas</p>
+                    </div>
+        
+        <div ng-repeat="card in cards | filter: {cardName: 'Abandoned'} | orderBy:order"
+             vloc-card 
+             ctrl="{{ctrl}}" 
+             ng-model="card" 
+             data="card" 
+             records="records" 
+             index="{{$index}}" 
+             session-id="{{sessionId}}"
+             class="slds-size--1-of-1 slds-medium-size--6-of-6 slds-large-size--12-of-12 "
+             use-existing-element-type>
+        </div>
+        </div>
+    </div>
+
+</div>

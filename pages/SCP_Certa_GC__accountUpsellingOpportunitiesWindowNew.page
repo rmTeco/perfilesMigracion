@@ -1,0 +1,240 @@
+<apex:page sidebar="false" controller="SCP_Certa_GC.accountUpsellingOpportunitiesWindowNew" tabStyle="Strategic_Client_Plan__tab">
+    <style>
+    .LeftCol{
+        width:auto;
+        margin-right:360px;
+    }
+    .RightCol{
+        width:350px;
+        float: right;
+    }
+    .FillWidth{
+        width:100%;
+    }
+    
+    .bPageBlock .pbTitle{
+        width:70%;
+    }
+    
+    .apexp{
+        float: left;
+        width: 100%;
+    }
+    
+    
+    .Button{
+     float: right; 
+     width: 120px; 
+     text-align: center; 
+     border: 1px solid black; 
+     border-bottom-left-radius: 5px;
+     border-top-left-radius: 5px; 
+     border-bottom-right-radius: 5px;
+     border-top-right-radius: 5px; 
+     line-height: 30px; 
+     font-size: 18px; 
+     background: white url('https://c.na14.visual.force.com/img/alohaSkin/grid_headerbg.gif'); 
+     background-position: 0px 100%; 
+     background-repeat: repeat-x;
+     cursor:pointer;
+    }
+    
+    .buttonRight{
+     border-bottom-left-radius: 0px;
+     border-top-left-radius: 0px; 
+     }
+     
+    .buttonLeft{
+     border-bottom-right-radius: 0px;
+     border-top-right-radius: 0px; 
+     border-right: 0px;
+    
+    }
+    
+    .AlignRight{
+    
+        text-align:right;
+        
+    }
+    
+    .AlignCenter{
+    
+        text-align:Center;
+        
+    }
+    
+    .list th {
+        text-align: center;
+    }
+     
+    </style>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+    <apex:include pageName="SCP_Certa_GC__changeFocus"/>
+    <apex:stylesheet value="{!$Resource.SCP_Certa_GC__ipad}"/>
+    <script  type="text/javascript">
+        
+        $j = jQuery.noConflict();
+        
+        function ajaxshow(){
+        
+            $j(".ajaxloader").show();
+        
+        }    
+        function ajaxstop(){
+        
+            $j(".ajaxloader").hide();
+        
+        }
+        
+    
+        function showInput(){
+        
+        
+        }
+        
+                $j(".MyEdit").live("dblclick",function(){
+                if($j("#CanEdit").length != 0){
+                    $j(this).find(".MyEditCurrent").hide();
+                    $j(this).removeClass(".MyEdit");
+                    
+                    $j(this).find(".MyEdit").show().focus();
+                }
+                
+            });
+            
+    
+    </script>
+    <c:SCPMenu ></c:SCPMenu>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.scp_certa_gc__step2}" id="Content">
+            <h2>{!$Label.Own_installed_base}:</h2>
+                <table class="list" border="0" cellspacing="0" cellpadding="0" style="border-bottom:0px;">
+                    <tr class="headerRow">
+                        <th scope="col">{!$ObjectType.Contract.fields.ContractNumber.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.Description.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.StartDate.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.ContractTerm.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.EndDate.Label}</th>
+                        <th scope="col">{!$Label.Months_to_go}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.mrc__c.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.fcv__c.Label}</th>
+                        <!-- <th scope="col"></th> -->
+                    </tr>
+                    <apex:repeat value="{!ourContracts}" var="ourContract">
+                    <tr>
+                        <td class="alignCenter">
+                            <apex:outputLink value="/{!ourContract.id}">{!ourContract.ContractNumber}</apex:outputLink>
+                        </td>
+                        <td style="width:180px;">
+                            <apex:outputField value="{!ourContract.Description}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.StartDate}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.ContractTerm}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.EndDate}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputText value="{!FLOOR((ourContract.EndDate - now)/30)}" />
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.SCP_Certa_GC__mrc__c}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.SCP_Certa_GC__fcv__c}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <!--
+                        <td class="alignCenter" style="width:160px; max-width:160px; min-width:160px;">                         
+                        </td>
+                        -->
+                    </tr>
+                    </apex:repeat>
+                </table>
+            <apex:outputText rendered="{!IF(canEdit == true,true,false)}"><div style="clear:both; text-align:center; font-style: italic;" id="CanEdit">{!$Label.double_click}</div></apex:outputText>
+            <apex:commandButton rerender="Content" value="{!$Label.scp_certa_gc__save}" status="renderMeStatus"  action="{!SaveChanges}" rendered="{!canEdit}"/>     
+            <apex:commandButton action="{!URLFOR($Action.Contract.New, null, [accid = account.id, retURL=URLFOR($Page.accountUpsellingOpportunitiesWindowNew,null,[id = account.id]), saveURL=URLFOR($Page.accountUpsellingOpportunitiesWindowNew,null,[id = account.id])])}" value="{!$Label.scp_certa_gc__new}" rendered="{!canEdit}"/>
+
+            <apex:actionStatus id="renderMeStatus" onstart="ajaxshow();" onstop="showInput(); ajaxstop();"/>
+            <!--
+            <br/><br/>                              
+            <h2>{!$Label.competitor_s_installed_base}:</h2>             
+                <table class="list" border="0" cellspacing="0" cellpadding="0" style="border-bottom:0px;">
+                    <tr class="headerRow">
+                        <th scope="col">{!$ObjectType.Contract.fields.ContractNumber.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.Description.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.StartDate.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.ContractTerm.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.EndDate.Label}</th>
+                        <th scope="col">{!$Label.Months_to_go}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.mrc__c.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.fcv__c.Label}</th>
+                        <th scope="col">{!$ObjectType.Contract.fields.competitorName__c.Label}</th>                     
+                    </tr>
+                    <apex:repeat value="{!competitorContracts}" var="competitorContract">
+                    <tr>
+                        <td class="alignCenter">
+                            <apex:outputLink value="/{!competitorContract.id}">{!competitorContract.ContractNumber}</apex:outputLink>
+                        </td>
+                        <td style="width:180px;">
+                            <apex:outputField value="{!competitorContract.Description}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.StartDate}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.ContractTerm}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.EndDate}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputText value="{!FLOOR((competitorContract.EndDate - now)/30)}" />
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.mrc__c}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.fcv__c}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                        <td class="alignCenter" style="width:160px; max-width:160px; min-width:160px;">
+                            <apex:outputField value="{!competitorContract.competitorName__c}">
+                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+                            </apex:outputField>
+                        </td>
+                    </tr>
+                    </apex:repeat>
+                </table>
+                <apex:outputText rendered="{!IF(canEdit == true,true,false)}"><div style="clear:both; text-align:center; font-style: italic;" id="CanEdit">{!$Label.double_click}</div></apex:outputText>
+                <apex:commandButton rerender="Content" value="{!$Label.scp_certa_gc__save}" status="renderMeStatus"  action="{!SaveChanges}" rendered="{!canEdit}"/>     
+                <apex:commandButton action="{!URLFOR($Action.Contract.New, null, [accid = account.id, retURL=URLFOR($Page.accountUpsellingOpportunitiesWindowNew,null,[id = account.id]), saveURL=URLFOR($Page.accountUpsellingOpportunitiesWindowNew,null,[id = account.id])])}" value="{!$Label.scp_certa_gc__new}" rendered="{!canEdit}"/>
+                -->
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

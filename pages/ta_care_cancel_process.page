@@ -1,0 +1,39 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="TaCareCancelProcessController">
+<apex:slds />
+<link rel="stylesheet" href="/resource/ta_slds_os/slds_os.min.css"/>
+
+<div class="slds-scope" style="text-align:center;" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+   
+    <span class="slds-icon_container slds-icon_container--circle slds-icon-action-description"
+        title="description of icon when needed"
+        style="background-color:  #FFF; border: solid 1px #D9186D; padding: 3px;">
+  
+        <svg class="slds-icon slds-icon--medium" aria-hidden="true" style="fill: #D9186D;">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/action-sprite/svg/symbols.svg#reject"></use>
+        </svg>
+        
+        <span class="slds-assistive-text">La gestión fue cancelada</span>
+    </span>
+
+    <header>
+        <h1 class="ng-binding" style="font-family: 'Platform Light' !important; font-size: 32pt; color: #000;">La gestión fue cancelada.</h1>
+    </header>
+
+</div>
+
+<script type="text/javascript">
+              
+    Visualforce.remoting.Manager.invokeAction(
+        "TaCareCancelProcessController.closeCase",
+        "{!$CurrentPage.parameters.CaseId}",
+        function(result, event) {
+            $scope.$apply(function(){
+                console.info('resultado: ',result);
+            });
+        },
+        {escape: false} // No escaping, please
+    );
+
+</script>
+
+</apex:page>

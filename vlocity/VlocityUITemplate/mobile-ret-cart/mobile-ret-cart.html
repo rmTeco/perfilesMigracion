@@ -1,0 +1,36 @@
+<div class="via-slds cpq-module">
+
+    <div class="slds-spinner_container" ng-show="!isLoaded">
+        <div class="slds-spinner_brand slds-spinner slds-spinner_medium" aria-hidden="false" role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+
+    <div class="slds-grid slds-grid_vertical">
+        <div class="slds-col slds-grid slds-wrap slds-small-nowrap cpq-container">
+            <div class="slds-is-relative slds-col slds-grid slds-size_1-of-1 slds-small-size_2-of-3 slds-medium-size_4-of-6 slds-large-size_8-of-12">
+
+                <div class="cpq-cart-container">
+                    <vloc-layout layout-name="cpq-product-cart" ctrl="CPQCartController"></vloc-layout>
+                </div>
+
+                <div>
+                    <vloc-layout layout-name="cpq-total-bar" ctrl="CPQTotalController" class="cpq-product-cart-order"></vloc-layout>
+                </div>
+
+            </div>
+            
+            <div class="slds-is-relative slds-col slds-grid slds-size_1-of-1 slds-small-size_1-of-3 slds-medium-size_2-of-6 slds-large-size_4-of-12" ng-show="importedScope.isConfigAttrsPanelEnabled">
+
+                <div class="cpq-product-container">
+                    <vloc-layout layout-name="cpq-product-cart-config" ctrl="CPQCartItemConfigController"></vloc-layout>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

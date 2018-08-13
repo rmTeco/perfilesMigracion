@@ -1,0 +1,82 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+        "['codUsoUnidadesLibres']": "SMS"
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationCode": "VTPACK",
+                            "operationFlow": "'Compra de Pack'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleBuySMS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "['codUsoUnidadesLibres']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Mensajes",
+                    "name": "['cantUnidadesRemanentes']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Vencimiento",
+                    "name": "['fechaVigenciaHastaProdAdq']",
+                    "type": "date"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "ta-care-prepaid-flyout-grid-items"
+        }
+    ]
+}

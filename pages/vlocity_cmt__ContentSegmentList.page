@@ -1,0 +1,10 @@
+<apex:page controller="vlocity_cmt.ContentListDisplayController" sidebar="true" >
+	<apex:iframe src="/apex/{!namespace}ContentList" scrolling="true" id="theIframe"/> 
+	<apex:includeScript value="{!$Resource.vlocity_cmt__JQUERYJS}"/>
+    <script>
+	  	function setFrameStylesFromParent(paramHeight){
+	  		
+	  		$("#theIframe").height(paramHeight);
+  		}
+	</script>	       
+</apex:page>

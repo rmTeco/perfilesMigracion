@@ -1,0 +1,29 @@
+{
+    "bpTree": {
+        "response": {
+            "Orders": [
+                {
+                    "OrderDate": "2018-01-13",
+                    "OrderNumber": "209234123"
+                },
+                {
+                    "OrderDate": "2018-01-14",
+                    "OrderNumber": "209234124"
+                }
+            ],
+            "process": {
+                "aditionalMessage": "El número de confirmación es 2324.",
+                "aditionalMessages": {
+                    "listValues": "Orders",
+                    "params": [
+                        "OrderNumber",
+                        "OrderDate"
+                    ],
+                    "text": "Número de orden: {0} - Fecha: {1}"
+                },
+                "result": "PENDING",
+                "resultMessage": "Su gestión esta en curso."
+            }
+        }
+    }
+}

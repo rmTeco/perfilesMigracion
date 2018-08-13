@@ -1,0 +1,43 @@
+{
+    "Cards": [
+        "SubscriptionsList",
+        "SubscriptionsListActions",
+        "AssetHistoryBlacklist"
+    ],
+    "bypassSave": true,
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.LineNumber",
+                "val": "1122334456"
+            }
+        ],
+        "type": "IntegrationProcedures",
+        "value": {
+            "body": "{\n    \"IPResult\": {\n        \"respuesta\": \"bloqueado\"\n    }\n}",
+            "inputMap": {
+                "params": {
+                    "nroLinea": "{{params.LineNumber}}"
+                }
+            },
+            "ipMethod": "IFS_S349",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "IFS_S349",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": ""
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-TechCare-Subscriptions-List-Container"
+        }
+    },
+    "workspace": [
+        "SubscriptionsList/Personal - DESA01/1515008122129",
+        "SubscriptionsListActions/Personal - DESA01/1515076257512",
+        "AssetHistoryBlacklist/Personal - DESA01/1/1527863299846"
+    ]
+}

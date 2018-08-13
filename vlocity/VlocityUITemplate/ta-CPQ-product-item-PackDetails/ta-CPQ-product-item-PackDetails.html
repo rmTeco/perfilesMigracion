@@ -1,0 +1,55 @@
+<div class="cpq-product-item-packs-details slds-scrollable--y" ng-controller="ProductItemMorePackDetailsController as pimpdc" ng-init="pimpdc.init();">
+    <!--form is used for input validations-->
+    <form>
+        
+        <div class="header-cost">
+            <div class="slds-media__body">
+                <!--div class="slds-tile__title slds-text-heading--large">
+                    {{::obj['UnitPrice']['value'] | currency}}
+                </div-->
+                <div class="slds-tile__title slds-text-heading--large">
+                    {{ pimpdc.pricingElement | currency}}
+                </div>
+            </div>
+            <p>
+                {{::obj.Name.value}}
+            </p>
+        </div>
+        
+        <div class="services">
+            <div ng-repeat="items in pimpdc.childs" class="service">
+                <div class="margin-space">
+                    <slds-svg-icon ng-if="items.type!=='Numeros Amigos' && items.service_type=='SMS'" sprite="'utility'" icon="'sms'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.type!=='Numeros Amigos' && items.service_type=='MMS'" sprite="'utility'" icon="'image'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.type!=='Numeros Amigos' && items.service_type=='VOICE'" sprite="'utility'" icon="'call'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.type!=='Numeros Amigos' && items.service_type=='DATA'" sprite="'utility'" icon="'broadcast'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.type=='Numeros Amigos'" sprite="'utility'" icon="'groups'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    
+        		</div>
+        		<div class="margin-space">
+        		    {{ items.service_free_units }}  {{ items.service_unit | uppercase }}
+        		</div>
+        		<div ng-if="items.type!=='Numeros Amigos'">
+            		<div  ng-if="items.service_type=='SMS'" class="margin-space">{{ items.service_type }} {{ items.service_coverage }}</div>
+            		<div  ng-if="items.service_type=='VOICE'" class="margin-space">Llamadas {{ items.service_coverage }}</div>
+            		<div  ng-if="items.service_type=='DATA'" class="margin-space">Plan de datos</div>
+        		</div>
+        		
+        		
+        		<div ng-if="items.type=='Numeros Amigos'">
+        		    {{ items.faf.lines_max }} Números Amigos
+        		    <div  ng-if="items.service_type=='SMS'" class="margin-space">{{ items.service_type }} {{ items.service_coverage }} {{ items.service_use } </div>
+            		<div ng-if="items.service_type=='VOICE'" class="margin-space">Llamadas {{ items.service_coverage }} {{ items.service_use }}</div>
+            		
+        		</div>
+            
+            </div>
+        </div>
+        
+    </form>
+</div>

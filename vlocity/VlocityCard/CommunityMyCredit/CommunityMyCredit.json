@@ -1,0 +1,96 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "MSISDN__c",
+                "val": "1138305304"
+            }
+        ],
+        "type": null,
+        "value": {
+            "inputMap": {
+                "params": {
+                    "identificadorRecurso": "{{MSISDN__c}}"
+                }
+            },
+            "ipMethod": "IFS_S439",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "IFS_S439",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "['totalesBalance']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankCardState": true,
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetType": "'Número de Línea'",
+                            "LineNumber": "['identificadorRecurso']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "CommunityLastRefills",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['saldoBalance']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Crédito de Recarga",
+                    "name": "['saldoBalance']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['saldoSuscripcionRegalado']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Crédito de promociones",
+                    "name": "['saldoSuscripcionRegalado']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Mi crédito",
+            "placeholderExpand": false,
+            "placeholders": [
+            ],
+            "templateUrl": "ta-community-availables"
+        }
+    ],
+    "title": "Mi crédito"
+}

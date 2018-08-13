@@ -1,0 +1,9 @@
+<apex:page controller="SCP_Certa_GC.accountIndustryTrends" contentType="application/vnd.ms-excel#{!excelNameTrendWindows}" showheader="false">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    </head>
+
+    <h2><apex:outputText value="{!$Label.scp_certa_gc__opportunities_value_proposition}"/></h2>
+    <c:accountIndustryTrendsWindowNewComponent />   
+
+</apex:page>

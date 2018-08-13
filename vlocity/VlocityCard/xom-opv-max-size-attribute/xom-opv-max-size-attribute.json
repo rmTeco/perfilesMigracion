@@ -1,0 +1,31 @@
+{
+    "dataSource": {
+        "type": "Custom",
+        "value": {
+            "body": "{\n  \"orchestration-attribute-config\": {\n    \"OrcAttributeMaxsize\": \"2\"\n  }\n}"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "name": "Orchestration Attribute Config Items",
+            "templateUrl": "xom-opv-attribute-config-items"
+        }
+    ],
+    "title": "Orchestration Attribute Config Items"
+}

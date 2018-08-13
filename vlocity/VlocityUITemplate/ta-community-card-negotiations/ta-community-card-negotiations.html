@@ -1,0 +1,164 @@
+<div
+    ng-controller="MyModuleCtrl as mmc"
+    ng-init="mmc.init()">
+    <div class="slds-p-around--small" style="padding: 0px;">
+        
+        <!-- WEB -->
+
+            <div class="via-slds slds-m-around--small ng-scope" style="margin:0px;" ng-if="!mmc.mobile">
+                <div class="slds-grid slds-wrap slds-grid--pull-padded card_misg_desk">
+
+                    <!--<div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom" ng-if="data.title != 'Abandonadas'">
+                        <p class="slds-text-heading--large slds-p-bottom--small" id="title-mobile">Abandonadas</p>
+                    </div> -->
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-around--x-small slds-border--bottom"
+                         ng-if="records.length === undefined">
+                        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-spread slds-grid--vertical-align-center">
+                            <div class="slds-p-left--small slds-size--3-of-4">
+                                <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--vertical-align-center">
+                                    <div ng-repeat="field in data.fields"
+                                         ng-if="field.label == 'Name'"
+                                         class="slds-p-horizontal--small slds-size--1-of-1 slds-text-heading--small">
+                                            {{records | getter: field | picker: field.type}}
+                                    </div>
+                                    <div ng-repeat="field in data.fields">
+                                        <div ng-if="field.label == 'CreatedDate'" class="slds-p-horizontal--small">
+                                            {{records | getter: field | date: 'dd/MM/yyyy'}} 
+                                        </div>
+                                        <div class="slds-text-title slds-text-color--weak"
+                                            ng-if="field.label == 'Status'">
+                                            <span ng-if="(records | getter: field | picker: field.type) == 'Close' || 
+                                                (record | getter: field | picker: field.type) == 'Closed'">
+                                                 - Cerrado
+                                            </span>
+                                            <span ng-if="(records | getter: field | picker: field.type) == 'Completed'">
+                                                 - Finalizado
+                                            </span>
+                                            <span ng-if="(records | getter: field | picker: field.type) == 'New' || 
+                                                (records | getter: field | picker: field.type) == 'Nuevo' || 
+                                                (records | getter: field | picker: field.type) == 'In Progress' || 
+                                                (records | getter: field | picker: field.type) == 'Derivado' ||
+                                                (records | getter: field | picker: field.type) == 'Draft'">
+                                                 - En proceso
+                                            </span>
+                                        </div>
+                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-around--x-small slds-border--bottom"
+                         ng-repeat="record in records | orderBy: 'LastModifiedDate':true | limitTo: 5"
+                         ng-if="records.length != undefined">
+                        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-spread slds-grid--vertical-align-center">
+                            <div class="slds-p-left--small slds-size--3-of-4">
+                                <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--vertical-align-center">
+                                    <div ng-repeat="field in data.fields"
+                                         ng-if="field.label == 'Name'"
+                                         class="slds-p-horizontal--small slds-size--1-of-1 slds-text-heading--small">
+                                            {{record | getter: field | picker: field.type}}
+                                    </div>
+                                    <div ng-repeat="field in data.fields">
+                                        <div ng-if="field.label == 'CreatedDate'" class="slds-p-horizontal--small">
+                                            {{record | getter: field | date: 'dd/MM/yyyy'}} 
+                                        </div>
+                                        <div class="slds-text-title slds-text-color--weak"
+                                            ng-if="field.label == 'Status'">
+                                            <span ng-if="(record | getter: field | picker: field.type) == 'Close' || 
+                                                (record | getter: field | picker: field.type) == 'Closed'">
+                                                 - Cerrado
+                                            </span>
+                                            <span ng-if="(record | getter: field | picker: field.type) == 'Completed'">
+                                                 - Finalizado
+                                            </span>
+                                            <span ng-if="(record | getter: field | picker: field.type) == 'New' || 
+                                                (record | getter: field | picker: field.type) == 'Nuevo' || 
+                                                (record | getter: field | picker: field.type) == 'In Progress' || 
+                                                (record | getter: field | picker: field.type) == 'Derivado' ||
+                                                (record | getter: field | picker: field.type) == 'Draft'">
+                                                 - En proceso
+                                            </span>
+                                        </div>
+                                 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- showing the abandonadas card even if it has no records -->
+            <!--<div ng-if="data.title == 'Abandonadas' && records.length == 0"> 
+                <div class="via-slds slds-m-around--small ng-scope" style="height: 320px;">
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded card_misg_desk">
+                            <div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom">
+                                <p class="slds-text-heading--large slds-p-bottom--small">{{data.title}}</p>
+                            </div>
+                    </div>
+                </div>
+            </div> -->
+            
+            <!--<div ng-if="records.length > 5"-->
+            <!--     ng-repeat="action in data.actions | limitTo: 1"-->
+            <!--     class="slds-p-horizontal--small slds-size--1-of-1 slds-p-top--large slds-p-bottom--x-small slds-align-bottom">-->
+            <!--    <button ng-click="performAction(action)"-->
+            <!--            class="slds-button slds-button--neutral slds-align--absolute-center">-->
+            <!--            Ver todas-->
+            <!--    </button>-->
+            <!--</div>-->
+
+        <!-- MOBILE -->
+        <div class="slds-card slds-grid slds-wrap"
+            style="border: none; background:#FFF;"
+            ng-if="mmc.mobile">
+            <p class="slds-text-align--center" style="max-width: 400px;">{{mc.accountId}}</p>
+            <div class="via-slds slds-size--1-of-1 slds-m-around--small ng-scope" style="margin:0px;">
+                <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                    <!-- removed because showed the title 2 times -->
+                    <!--<div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom">
+                        <p class="slds-text-heading--large slds-p-bottom--small" id="title-mobile">{{data.title}}</p>
+                    </div>-->
+                    <div class="slds-p-horizontal--small slds-size--1-of-1 slds-p-around--x-small slds-border--bottom"
+                         ng-repeat="record in records | limitTo: 5">
+                        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-spread slds-grid--vertical-align-center">
+                            <div class="slds-p-left--small slds-size--3-of-4">
+                                <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--vertical-align-center">
+                                    <div ng-repeat="field in data.fields"
+                                         ng-if="field.label == 'Name'"
+                                         class="slds-p-horizontal--small slds-size--1-of-1 slds-text-heading--small">
+                                            {{record | getter: field | picker: field.type}}
+                                    </div>
+                                    <div ng-repeat="field in data.fields">
+                                        <div ng-if="field.label == 'CreatedDate'" class="slds-p-horizontal--small">
+                                            {{record | getter: field | date: 'dd/MM/yyyy'}} 
+                                        </div>
+                                        <div class="slds-text-title slds-text-color--weak"
+                                            ng-if="field.label == 'Status'">
+                                            <span ng-if="(record | getter: field | picker: field.type) == 'Close' || 
+                                                (record | getter: field | picker: field.type) == 'Closed'">
+                                                 - Cerrado
+                                            </span>
+                                            <span ng-if="(record | getter: field | picker: field.type) == 'Completed'">
+                                                 - Finalizado
+                                            </span>
+                                            <span ng-if="(record | getter: field | picker: field.type) == 'New' || 
+                                                (record | getter: field | picker: field.type) == 'Nuevo' || 
+                                                (record | getter: field | picker: field.type) == 'In Progress' || 
+                                                (record | getter: field | picker: field.type) == 'Derivado' ||
+                                                (record | getter: field | picker: field.type) == 'Draft'">
+                                                 - En proceso
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             
+        </div>
+    </div>
+</div>

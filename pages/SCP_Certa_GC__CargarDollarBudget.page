@@ -1,0 +1,44 @@
+<apex:page controller="SCP_Certa_GC.CargarDollarBudgetController" >
+    <apex:form >
+
+        <apex:pageBlock title="Dollar Budget">
+            
+            <apex:pageMessages id="mensajeDeError"/>
+            
+            <apex:pageBlock title="Cargar una nueva Cotización" >
+                
+                <apex:pageBlockButtons location="bottom">
+                    <apex:commandButton action="{!saveDollarBudget}" value="Insertar" reRender="tablita, mensajeDeError"/>
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockSection >
+                    
+                    <apex:inputField label="Nombre" value="{!DollarBudgetNuevo.Name}"></apex:inputField>
+                    <apex:inputField label="Cotización $" value="{!DollarBudgetNuevo.SCP_Certa_GC__Cotizacion__c}"></apex:inputField>
+
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <apex:pageBlock id="tablita" title="Historial de cotizaciones">
+                
+                
+                <apex:pageBlockTable value="{!listaDollarBudget}" var="item">
+                    
+                    <apex:column value="{!item.name}" headerValue="Nombre"/>
+                    <apex:column value="{!item.SCP_Certa_GC__Cotizacion__c}" headerValue="Cotización"/>
+                    <apex:column value="{!item.createdDate}" headerValue="Fecha de Inicio de Cotización"/>
+                    <apex:column value="{!item.createdBy.name}" headerValue="Creado por"/>
+                    <apex:column headerValue="Activo" ><apex:outputText rendered="{!item = listaDollarBudget[0]}" >
+                        
+                        <img src="/img/checkbox_checked.gif" alt="Seleccionado" width="16" height="16" class="checkImg" title="Seleccionado"/>
+                        
+                        </apex:outputText> </apex:column>
+
+                </apex:pageBlockTable>
+               
+            </apex:pageBlock>
+            
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

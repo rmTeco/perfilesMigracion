@@ -1,0 +1,50 @@
+{
+    "Cards": [
+        "cpq-product-cart-item"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "801360000055hNw"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/items?pagesize=10&price=false&validate=false&fields=%vlocity_namespace%__BillingAccountId__c,%vlocity_namespace%__ServiceAccountId__c,Quantity,%vlocity_namespace%__RecurringTotal__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__RecurringManualDiscount__c,%vlocity_namespace%__ProvisioningStatus__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__OneTimeCharge__c,ListPrice,%vlocity_namespace%__ParentItemId__c,%vlocity_namespace%__BillingAccountId__r.Name,%vlocity_namespace%__ServiceAccountId__r.Name,%vlocity_namespace%__PremisesId__r.Name,%vlocity_namespace%__InCartQuantityMap__c,%vlocity_namespace%__EffectiveQuantity__c&priceDetailsFields=%vlocity_namespace%__OneTimeCharge__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__OneTimeCalculatedPrice__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__RecurringCalculatedPrice__c,%vlocity_namespace%__RecurringTotal__c",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "fields": "%vlocity_namespace%__BillingAccountId__c,%vlocity_namespace%__ServiceAccountId__c,Quantity,%vlocity_namespace%__RecurringTotal__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__RecurringManualDiscount__c,%vlocity_namespace%__ProvisioningStatus__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__OneTimeCharge__c,ListPrice,%vlocity_namespace%__ParentItemId__c,%vlocity_namespace%__BillingAccountId__r.Name,%vlocity_namespace%__ServiceAccountId__r.Name,%vlocity_namespace%__PremisesId__r.Name,%vlocity_namespace%__InCartQuantityMap__c,%vlocity_namespace%__EffectiveQuantity__c",
+                "pagesize": "10",
+                "price": false,
+                "priceDetailsFields": "%vlocity_namespace%__OneTimeCharge__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__OneTimeCalculatedPrice__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__RecurringCalculatedPrice__c,%vlocity_namespace%__RecurringTotal__c",
+                "validate": false
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getCartsItems",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "result.records"
+        }
+    },
+    "sessionVars": [
+        {
+            "name": "nextProducts",
+            "val": "payload.actions.nextproducts"
+        },
+        {
+            "name": "messages",
+            "val": "payload.messages"
+        }
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-product-cart"
+        }
+    },
+    "workspace": [
+        "cpq-product-cart-item/Vlocity/1500408956677"
+    ]
+}

@@ -1,0 +1,80 @@
+<apex:page extensions="ta_techCare_communities_controller" StandardController="Case">
+    <head>
+         <apex:slds />
+    </head>
+    
+    <body>
+        <div class="slds-scope" style="position: relative;">
+            <apex:form id="box1">
+                <apex:actionStatus id="spinner">
+                    <apex:facet name="start">
+                        <div class="slds-spinner_container" style="position: absolute;">
+                            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionStatus>
+
+                <div class="slds-box" style="{!IF(inpCase.Order__c == null, 'display:block', 'display:none')}">
+                    <div class="slds-text-align_center slds-p-vertical_x-large">
+                        El caso no cuenta con una orden activa
+                    </div>
+                </div>
+
+                <div class="slds-box" style="{!IF(accepted, 'display:block', 'display:none')}">
+                    <div class="slds-text-align_center slds-p-vertical_x-large">
+                        El presupuesto ya ha sido aceptado
+                    </div>
+                </div>
+
+                <div class="slds-box" style="{!IF(rejected, 'display:block', 'display:none')}">
+                    <div class="slds-text-align_center slds-p-vertical_x-large">
+                        El presupuesto ya ha sido rechazado
+                    </div>
+                </div>
+
+                <div class="slds-box" style="{!IF(AND(AND(AND(NOT(rejected),NOT(accepted)),inpCase.Order__c != null),inpCase.status="En espera del cliente"), 'display:block', 'display:none')}">
+                    
+                    <!-- <div style="{!IF(result == '', 'display:block', 'display:none')}"> -->
+                    <apex:outputPanel id="rerend">
+                        <apex:outputPanel rendered="{!messagesSize == 0}">
+                            <div class="slds-text-align_center">
+                                Orden activa por: <b>${!inpCase.Order__r.vlocity_cmt__OneTimeTotal__c}</b><br/>
+
+                                Acepta el presupuesto?
+                            </div>
+                            
+                            <div class="slds-text-align_center slds-m-top_medium">
+                                <apex:commandButton action="{!noAceptar}"
+                                                    styleClass="slds-button slds-button_brand" 
+                                                    value="No aceptar" 
+                                                    status="spinner"
+                                                    reRender="rerend">
+                                </apex:commandButton>
+                                
+                                <apex:commandButton action="{!aceptar}"
+                                                    styleClass="slds-button slds-button_brand" 
+                                                    value="Aceptar" 
+                                                    status="spinner"
+                                                    reRender="rerend">
+                                </apex:commandButton>
+
+                            </div>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel rendered="{!messagesSize > 0}">
+                            <div class="slds-text-align_center">
+                                <apex:repeat var="msj" value="{!messages}">
+                                    <apex:outputText value="{!msj}" escape="false"/><br/>
+                                </apex:repeat>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                </div>
+            </apex:form>
+        </div>
+    </body>
+</apex:page>

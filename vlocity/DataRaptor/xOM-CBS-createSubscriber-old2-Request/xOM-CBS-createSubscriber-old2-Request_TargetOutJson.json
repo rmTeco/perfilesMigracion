@@ -1,0 +1,390 @@
+{
+    "cuenta": {
+        "idCuenta": "string",
+        "infoCuenta": {
+            "claseCuenta": "string",
+            "codCuenta": "string",
+            "condicionPago": "string",
+            "idCliente": "string",
+            "idCuenta": "string",
+            "infoBasicaCuenta": {
+                "codAccionMoroATomar": "string",
+                "datosDeContacto": {
+                    "apellido": "string",
+                    "direccionEmail": "string",
+                    "idDireccion": "string",
+                    "nombre": "string",
+                    "numeroContacto": {
+                        "numeroTelefono": "string"
+                    },
+                    "numeroFax": "string",
+                    "numeroTelefono": "string",
+                    "numeroTelefonoAlternativo": "string",
+                    "segundoNombre": "string",
+                    "tituloCortesia": "string"
+                },
+                "listaDatosAdicionales": [
+                    {
+                        "nombreParametro": "string",
+                        "valorParametro": "string"
+                    }
+                ],
+                "marcaCargoTardio": "string",
+                "marcaControlLimite": "string",
+                "tipoFactura": {
+                    "marcaCargoInteraccionNegocio": "string",
+                    "tipoNotificacion": "string"
+                }
+            },
+            "listaLimiteDeCredito": [
+                {
+                    "limiteCreditoOriginal": "string",
+                    "tipoPerfilCrediticio": "string"
+                }
+            ],
+            "pago": {
+                "codFormaPago": "string",
+                "listaCanalesDePago": [
+                    {
+                        "codPago": "string",
+                        "infoCanalDePago": {
+                            "codEntidadFinanciera": "string",
+                            "codEntidadTC": "string",
+                            "codMedioPago": "string",
+                            "codSeguridadTarjeta": "string",
+                            "codSucursalEntidad": "string",
+                            "fechaVencimientoTarjeta": "string",
+                            "listaPlanDePago": [
+                                {
+                                    "esquemaBasadoEnBalance": {
+                                        "montoRecarga": "string",
+                                        "montoRecargaMin": 0,
+                                        "numeroDeRecarga": 0,
+                                        "periodoTiempo": "string"
+                                    },
+                                    "esquemaBasadoEnCicloDeFacturacion": {
+                                        "diaImputacionPago": "string",
+                                        "montoMaximoDebito": "string"
+                                    },
+                                    "esquemaBasadoEnTiempo": {
+                                        "diaImputacionPago": "string",
+                                        "montoRecarga": "string",
+                                        "periodoTiempo": "string"
+                                    },
+                                    "tipoPago": "string"
+                                }
+                            ],
+                            "listadoCodigoCargo": [
+                                {
+                                    "codCargo": "string"
+                                }
+                            ],
+                            "nombreEntidadFinanciera": "string",
+                            "nroTarjeta": "string",
+                            "prioridad": "string"
+                        }
+                    }
+                ]
+            },
+            "saldoBalance": "string",
+            "tipoCicloFacturacion": "string"
+        }
+    },
+    "listaOfertasAdicionales": [
+        {
+            "fechaHastaCaracteristicaProd": "string",
+            "infoActivacon": {
+                "fechaLimiteActivacionProdAdq": "string",
+                "fechaVigenciaDesdeProdAdq": "string",
+                "modoActivacion": "string"
+            },
+            "modoEfectividad": {
+                "fechaDesdeCaracteristicaProd": "string",
+                "modo": "string"
+            },
+            "producto": {
+                "codGranularidadProducto": "string",
+                "estadoProductoAdq": "string",
+                "fechaDesdePruebaProducto": "string",
+                "fechaHastaPruebaProducto": "string",
+                "infoProducto": {
+                    "codProducto": "string",
+                    "descripcionProducto": "string",
+                    "nombreProducto": "string",
+                    "secuenciaProductoAdquirido": "string"
+                },
+                "infoProductoPrimario": {
+                    "codProducto": "string",
+                    "descripcionProducto": "string",
+                    "nombreProducto": "string",
+                    "secuenciaProductoAdquirido": "string"
+                },
+                "listaProductosCaracteristicas": [
+                    {
+                        "codGranularidadProducto": "string",
+                        "codProducto": "string",
+                        "listaPropiedades": [
+                            {
+                                "caracteristicaProducto": {
+                                    "listaSubPropiedades": [
+                                        {
+                                            "codCaracteristicaProducto": "string",
+                                            "valorCaracteristicaProducto": "string"
+                                        }
+                                    ],
+                                    "valorCaracteristicaProducto": "string"
+                                },
+                                "codCaracteristicaProducto": "string",
+                                "fechaDesdeCaracteristicaProd": "string",
+                                "fechaHastaCaracteristicaProd": "string",
+                                "tipoCaracteristicaProducto": "string"
+                            }
+                        ],
+                        "marcaProductoPrincipal": "string",
+                        "productoPadre": {
+                            "codProducto": "string"
+                        },
+                        "tipoProducto": "string",
+                        "tipoRed": "string"
+                    }
+                ],
+                "listaPropiedades": [
+                    {
+                        "caracteristicaProducto": {
+                            "listaSubPropiedades": [
+                                {
+                                    "codCaracteristicaProducto": "string",
+                                    "valorCaracteristicaProducto": "string"
+                                }
+                            ],
+                            "valorCaracteristicaProducto": "string"
+                        },
+                        "codCaracteristicaProducto": "string",
+                        "fechaDesdeCaracteristicaProd": "string",
+                        "fechaHastaCaracteristicaProd": "string",
+                        "tipoCaracteristicaProducto": "string"
+                    }
+                ],
+                "tipoAplicacionOferta": "string"
+            }
+        }
+    ],
+    "ofertaPrimaria": {
+        "fechaVigenciaDesdeProdAdq": "string",
+        "producto": {
+            "codGranularidadProducto": "string",
+            "estadoProductoAdq": "string",
+            "fechaDesdePruebaProducto": "string",
+            "fechaHastaPruebaProducto": "string",
+            "infoProducto": {
+                "codProducto": "string",
+                "descripcionProducto": "string",
+                "nombreProducto": "string",
+                "secuenciaProductoAdquirido": "string"
+            },
+            "infoProductoPrimario": {
+                "codProducto": "string",
+                "descripcionProducto": "string",
+                "nombreProducto": "string",
+                "secuenciaProductoAdquirido": "string"
+            },
+            "listaProductosCaracteristicas": [
+                {
+                    "codGranularidadProducto": "string",
+                    "codProducto": "string",
+                    "listaPropiedades": [
+                        {
+                            "caracteristicaProducto": {
+                                "listaSubPropiedades": [
+                                    {
+                                        "codCaracteristicaProducto": "string",
+                                        "valorCaracteristicaProducto": "string"
+                                    }
+                                ],
+                                "valorCaracteristicaProducto": "string"
+                            },
+                            "codCaracteristicaProducto": "string",
+                            "fechaDesdeCaracteristicaProd": "string",
+                            "fechaHastaCaracteristicaProd": "string",
+                            "tipoCaracteristicaProducto": "string"
+                        }
+                    ],
+                    "marcaProductoPrincipal": "string",
+                    "productoPadre": {
+                        "codProducto": "string"
+                    },
+                    "tipoProducto": "string",
+                    "tipoRed": "string"
+                }
+            ],
+            "listaPropiedades": [
+                {
+                    "caracteristicaProducto": {
+                        "listaSubPropiedades": [
+                            {
+                                "codCaracteristicaProducto": "string",
+                                "valorCaracteristicaProducto": "string"
+                            }
+                        ],
+                        "valorCaracteristicaProducto": "string"
+                    },
+                    "codCaracteristicaProducto": "string",
+                    "fechaDesdeCaracteristicaProd": "string",
+                    "fechaHastaCaracteristicaProd": "string",
+                    "tipoCaracteristicaProducto": "string"
+                }
+            ],
+            "tipoAplicacionOferta": "string"
+        }
+    },
+    "registrarCliente": {
+        "cliente": {
+            "infoCliente": {
+                "codCliente": "string",
+                "infoBasicaCliente": {
+                    "codAccionMoroATomar": "string",
+                    "listaDatosAdicionales": [
+                        {
+                            "nombreParametro": "string",
+                            "valorParametro": "string"
+                        }
+                    ],
+                    "tipoCicloFacturacion": "string"
+                },
+                "infoClientePadre": {
+                    "idCliente": "string"
+                },
+                "tipoCliente": "string",
+                "tipoNodoCliente": "string"
+            },
+            "infoEmpresa": {
+                "direccionEmail": "string",
+                "idDireccion": "string",
+                "nombreFantasia": "string",
+                "numeroFax": "string",
+                "numeroTelefono": "string",
+                "razonSocial": "string",
+                "sectorActividad": "string",
+                "tipoOrganizacion": "string",
+                "web": "string"
+            },
+            "infoIndividuo": {
+                "apellido": "string",
+                "codPais": "string",
+                "direccionEmail": "string",
+                "estadoCivil": "string",
+                "fechaNacimiento": "string",
+                "fechaValidezDocumento": "string",
+                "genero": "string",
+                "idDireccion": "string",
+                "lugarDeNacimiento": {
+                    "codPais": "string"
+                },
+                "nivelEducacion": "string",
+                "nombre": "string",
+                "numeroContacto": {
+                    "numeroTelefono": "string"
+                },
+                "numeroDocumento": "string",
+                "numeroFax": "string",
+                "numeroTelefono": "string",
+                "numeroTelefonoAlternativo": "string",
+                "profesion": "string",
+                "segundoNombre": "string",
+                "tipoDocumento": "string",
+                "tituloCortesia": "string"
+            }
+        },
+        "codCliente": "string",
+        "tipoOperacion": "string"
+    },
+    "suscriptor": {
+        "codSuscripcion": "string",
+        "infoSuscriptor": {
+            "codCuenta": "string",
+            "estadoProductoAdq": "string",
+            "fechaLimiteActivacionProdAdq": "string",
+            "infoBasicaSuscriptor": {
+                "codEscenarioMorosidad": "string",
+                "listaDatosAdicionales": [
+                    {
+                        "nombreParametro": "string",
+                        "valorParametro": "string"
+                    }
+                ]
+            },
+            "listaIdentificacionSuscriptor": [
+                {
+                    "identificadorRecurso": "string",
+                    "marcaRecursoPrincipal": "string",
+                    "relacionSubIdentificadorRecurso": "string",
+                    "tipoRecurso": "string"
+                }
+            ],
+            "listaLimiteDeConsumo": [
+                {
+                    "codMoneda": "string",
+                    "codUnidadDeMedida": "string",
+                    "limiteCreditoOriginal": "string",
+                    "listaDatosAdicionales": [
+                        {
+                            "nombreParametro": "string",
+                            "valorParametro": "string"
+                        }
+                    ],
+                    "tipoDeMedida": "string",
+                    "tipoPerfilCrediticio": "string",
+                    "tipoUnidad": "string"
+                }
+            ],
+            "segmentoProducto": "string"
+        },
+        "modoPagoSecundario": {
+            "idCuenta": "string",
+            "idRelacionPago": "string",
+            "listaCuentasPredetermindas": [
+                {
+                    "cuentaDEFFlag": "string",
+                    "idCuenta": "string"
+                }
+            ],
+            "listaLimitesDePago": [
+                {
+                    "idLimitePago": "string",
+                    "infoLimiteDePago": {
+                        "codMoneda": "string",
+                        "codigoReglaLimite": "string",
+                        "flagLimiteFondos": "string",
+                        "limite": {
+                            "codUnidadDeMedida": "string",
+                            "limiteCreditoOriginal": "string",
+                            "tipoPerfilCrediticio": "string",
+                            "tipoValorLimite": "string"
+                        },
+                        "periodoTiempo": "string"
+                    }
+                }
+            ],
+            "listaRelacionesPagos": [
+                {
+                    "idCuenta": "string",
+                    "idLimitePago": "string",
+                    "idRelacionPago": "string",
+                    "indicadorRelacionPago": "string",
+                    "prioridad": "string",
+                    "reglaExtPago": {
+                        "codCargo": "string",
+                        "codRegla": "string",
+                        "producto": {
+                            "codProducto": "string",
+                            "descripcionProducto": "string",
+                            "nombreProducto": "string",
+                            "secuenciaProductoAdquirido": "string"
+                        }
+                    }
+                }
+            ],
+            "modoPago": "string"
+        }
+    }
+}

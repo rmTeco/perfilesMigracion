@@ -1,0 +1,17 @@
+<div ng-controller="NewContactController as nc">
+    <div class="slds-form-element slds-has-error">
+        <div class="slds-form-element__control">
+            <input 
+                    type="text" 
+                    required="" 
+                    aria-describedby="error-message" 
+                    id="text-input-id-1" 
+                    class="slds-input" 
+                    ng-keypress="nc.ValidateTextbox(bpTree.response.ContactInfo.DocumentType,$event);"
+                    maxlength="{{bpTree.response.ContactInfo.DocumentType=='DNI'?8:100}}"
+                    minlength="{{bpTree.response.ContactInfo.DocumentType=='DNI'?7:1}}"
+                    ng-model="bpTree.response.ContactInfo.Document">
+        </div>
+    <div id="error-message" class="slds-form-element__help">Campo requerido</div>
+    </div>
+</div>

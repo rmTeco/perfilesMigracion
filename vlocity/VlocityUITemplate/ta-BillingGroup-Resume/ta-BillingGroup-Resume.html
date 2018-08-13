@@ -1,0 +1,46 @@
+<div ng-controller="billingGroupChangesSummaryController as bgc" class="slds-grid slds-grid--pull-padded vlc-slds-small--size-column Resume">
+    <div class="slds-col">
+        <div class="slds-grid Resumen-de-las-modif">
+            <p>Resumen de las modificaciones</p>
+        </div>
+        <br>
+        <div class="BA-or-S">
+            <p>Billing Account o Servicios a realocar:</p>
+            <div class="BA-or-S-Billing-Account" ng-repeat="BA in bpTree.response.BillingAccounts">
+                <div>
+                    <div ng-if="BA.isReferenced == true">{{BA.Name}}
+                        <div ng-if="bgc.isArray(BA.Assets)">
+                            <div ng-repeat="Servicio in BA.Assets" ng-if="Servicio.isSelected == true">
+                                <div class="BA-or-S-Billing-Account-Servicio">
+                                    <p>- {{Servicio.Name}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-if="!bgc.isArray(BA.Assets)">
+                            <div class="BA-or-S-Billing-Account-Servicio">
+                                <p>- {{BA.Assets.Name}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="BA-or-S">
+            <p>Billing Account de destino:</p>
+            <div ng-if="!bpTree.response.IsNewBillingAccount">
+                <div class="BA-or-S-Billing-Account"
+                    ng-repeat="BA in bpTree.response.BillingAccounts">
+                    <p ng-if="BA.Id == bpTree.response.BillingAccountToResponse">
+                        {{BA.Name}}
+                    </p>
+                </div>
+            </div>
+            <div ng-if="bpTree.response.IsNewBillingAccount">
+                <p>
+                    {{bpTree.response.AccountData.ContactName}}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

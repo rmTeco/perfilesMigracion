@@ -1,0 +1,74 @@
+<apex:page showHeader="true" sidebar="false"
+            standardStylesheets="false"
+            docType="html-5.0" applyBodyTag="false"
+            standardController="vlocity_cmt__DRBundle__c"
+            extensions="vlocity_cmt.DRDataPackRunnerController,vlocity_cmt.DRHomeController"
+            recordSetVar="bundles"
+            tabStyle="DataRaptor__tab">
+  <head>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__angular_bundle_1_6}"/>
+      <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/ng-table/dist/ng-table.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ngInfiniteScroll, '/build/ng-infinite-scroll.min.js')}"/>
+      <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__SldsAngular}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__DRVComp}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__DRHome}"/>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+  </style>
+  <body xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div ng-app="drhome" class="via-slds ng-cloak {!$User.UIThemeDisplayed}" ng-controller="drhome">
+      <slds-home
+                page-title="'DataRaptor'"
+                new-url="'{!newUrl}'"
+                view-url="'{!newUrl}?id={Id}'"
+                group-by="false"
+                id-prefix="drbundle-home"
+                s-object-type="'{!$ObjectType.DRBundle__c.Name}'"
+                row-actions="rowActions"
+                default-columns="defaultColumns"
+                extra-filters="extraFilters">
+      </slds-home>
+    </div>
+    <c:VFActionFunction />
+  <script>
+      window.i18n = {
+        "SldsObjectHomeHeaderInfo": "{!$Label.vlocity_cmt__sldsobjecthomeheaderinfo}",
+        "RefreshData": "{!$Label.vlocity_cmt__refreshdata}",
+        "Export": "{!$Label.vlocity_cmt__export}",
+        "New": "{!$Label.vlocity_cmt__new}",
+        "FilterList": "{!$Label.vlocity_cmt__filterlist}",
+        "Import": "{!$Label.vlocity_cmt__import}",
+        "AdditionalActions": "{!$Label.vlocity_cmt__additionalactions}",
+        "Delete": "{!$Label.vlocity_cmt__delete}",
+        "Preview": "{!$Label.vlocity_cmt__preview}",
+        "LastModified": "{!$Label.vlocity_cmt__lastmodified}",
+        "Name": "{!$Label.vlocity_cmt__name}",
+        "ModifiedOnBy": "{!$Label.vlocity_cmt__modifiedonby}",
+        "DeleteDataRaptor": "{!$Label.vlocity_cmt__deletedataraptor}",
+        "InstallDataPack": "{!$Label.vlocity_cmt__installdatapack}",
+        "DeleteDataraptorConfirmation2": "{!$Label.vlocity_cmt__deletedataraptorconfirmation2}",
+        "Filters":"{!$Label.vlocity_cmt__filters}",
+        "HideFilter":"{!$Label.vlocity_cmt__hidefilter}",
+        "Cancel":"{!$Label.vlocity_cmt__cancel}",
+        "Save":"{!$Label.vlocity_cmt__save}",
+        "ShowMe":"{!$Label.vlocity_cmt__showme}",
+        "MatchingAllOfTheseFilters":"{!$Label.vlocity_cmt__matchingallofthesefilters}",
+        "Remove":"{!$Label.vlocity_cmt__remove}",
+        "NewFilter":"{!$Label.vlocity_cmt__newfilter}",
+        "AddFilter":"{!$Label.vlocity_cmt__addfilter}",
+        "RemoveAll":"{!$Label.vlocity_cmt__removeall}",
+        "Field":"{!$Label.vlocity_cmt__field}",
+        "Operator":"{!$Label.vlocity_cmt__operator}",
+        "Value":"{!$Label.vlocity_cmt__value}",
+        "Done":"{!$Label.vlocity_cmt__done}",
+        "AllType":"{!$Label.vlocity_cmt__alltype}",
+        "MyType":"{!$Label.vlocity_cmt__mytype}"
+      };
+    </script>
+  </body>
+</apex:page>

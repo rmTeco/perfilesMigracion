@@ -1,0 +1,37 @@
+{
+    "Cards": [
+        "ConsoleNegotiationsv2"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.AssetId",
+                "val": "02i6C0000002d2xQAA"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "body": "{\n \"Orders\": {\n   \"Id\":[\"8016C0000000MQk\", \"8016C0000000MOP\"]\n },\n \"Cases\": {\n   \"Id\":[\"5006C0000019lgy\", \"5006C0000019lhI\"]\n }\n}",
+            "inputMap": {
+                "Id": "{{params.AssetId}}"
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "query": "SELECT OrderId,Order.CreatedDate,Order.Status,Order.OrderNumber FROM OrderItem WHERE %vlocity_namespace%__AssetId__c = '{{params.id}}'",
+            "remoteClass": "AssetUtils",
+            "remoteMethod": "getNegotiations",
+            "remoteNSPrefix": null,
+            "resultVar": "",
+            "timeout": null
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ConsoleNegotiations"
+        }
+    },
+    "workspace": [
+        "ConsoleNegotiationsv2/Personal - DESA01/1511531307211"
+    ]
+}

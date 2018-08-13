@@ -1,0 +1,22 @@
+{
+    "Cards": [
+        "mobile-ret-asset-card"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016A000003aB7a"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name, Account.Name,%vlocity_namespace%__Product_Image__c,InstallDate,Status, %vlocity_namespace%__RecurringTotal__c,Description,  %vlocity_namespace%__OneTimeTotal__c FROM Asset WHERE AccountId = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "mobile-ret-card-canvas"
+        }
+    }
+}

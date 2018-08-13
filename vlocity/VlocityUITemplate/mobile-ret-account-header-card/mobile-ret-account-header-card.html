@@ -1,0 +1,14 @@
+<div class="slds-grid summary-header">
+  <div class="slds-col" ng-repeat="field in data.fields">
+       <span class="field-label slds-text-heading_medium">{{obj | getter: field: 'label'}}:
+       </span>
+        <span class="field-value slds-text-heading_medium">
+            {{obj | getter: field | picker: field.type}}
+        </span>
+  </div>
+  <div class="slds-col" ng-repeat="action in data.actions">
+        <button class="slds-button slds-button_neutral slds-float_right" ng-click="performAction(action, null, '')">
+            {{action.displayName}}
+        </button>
+  </div>
+</div>

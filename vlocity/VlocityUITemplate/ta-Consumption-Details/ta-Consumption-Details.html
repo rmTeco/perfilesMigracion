@@ -1,0 +1,319 @@
+<div class="via-slds" 
+ng-controller="consumptionDetailsController as ptc">
+    <!--<div class="via-slds" ng-controller="consumptionDetailsController as ptc" ng-mouseover="hideSideBar()" ng-mouseleave="showSideBar()">-->
+    <div ng-if="params.AssetId != null">
+    </div>
+    
+    <!-- -->
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;">
+            
+            <div class="slds-size--11-of-12 slds-medium-size--11-of-12 slds-large-size--11-of-12">
+                <div class="slds-text-heading_large title-card">
+                    <span class="big_title">Detalle de Consumos</span>
+                </div>
+            </div>
+            
+            <div class="slds-size--2-of-6 slds-medium-size--2-of-6 slds-large-size--2-of-6 slds-m-top--small" 
+            ng-if="noassets"
+            style="font-size: 16px;">
+                La cuenta seleccionada no posee consumos
+            </div>
+            <div ng-if="!noassets" class="slds-size--2-of-6 slds-medium-size--2-of-6 slds-large-size--2-of-6 slds-m-top--small">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLServiceOpen = false;" ng-class="{'slds-is-open': isDDLServiceOpen}"
+                    ng-click="isDDLServiceOpen = !isDDLServiceOpen" style="margin-right: 5px;">
+                    <div class="slds-form-element">
+                        <label class="slds-text-heading--small" for="text-input-01">Servicio</label>
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                            <input  type="search" 
+                                    id="text-input-01" 
+                                    class="slds-lookup__search-input slds-input" 
+                                    role="combobox"
+                                    readonly="true" 
+                                    style = "width: 300px"
+                                    placeholder="{{ptc.filterServiceOption}}" 
+                                    ng-model="ptc.filterServiceOption" 
+                                    ng-blur="isDDLServiceOpen = false;"/>
+                            <button class="slds-button slds-input__icon slds-text-color--default" 
+                                    aria-expanded="false" 
+                                    tabindex="-1">
+                            <slds-svg-icon  sprite="'utility'" 
+                                            icon="'down'" 
+                                            size="'x-small'" 
+                                            no-hint="true"
+                                            extra-classes="'slds-icon-text-default'">
+                            </slds-svg-icon>
+                        </button>
+                        </div>
+                    </div>
+                    <div    class="slds-dropdown slds-dropdown--left" 
+                            role="listbox">
+                        <ul ng-if="assetsAmmount == 1" 
+                            class="slds-dropdown__list slds-dropdown--length-5" 
+                            role="presentation">
+                            <li ng-mousedown="ptc.changeFilterService(records.Account.Asset.Name, records.Account.Asset.LineNumber, records.Account.Asset.Family);"
+                                role="presentation">
+                                <span   class="slds-lookup__item-action slds-lookup__item-action--label" 
+                                        role="option" 
+                                        tabindex="0" 
+                                        id="listbox-option-248">
+                                <span class="slds-truncate">{{records.Account.Asset.LineNumber}} - {{records.Account.Asset.Name}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                        <ul ng-if="assetsAmmount > 1" 
+                            ng-repeat="asset in records.Account.Asset"
+                            class="slds-dropdown__list slds-dropdown--length-5" 
+                            role="presentation">
+                            <li ng-mousedown="ptc.changeFilterService(asset.Name, asset.LineNumber, asset.Family);"
+                                role="presentation">
+                                <span   class="slds-lookup__item-action slds-lookup__item-action--label" 
+                                        role="option" 
+                                        tabindex="0" 
+                                        id="listbox-option-248">
+                                <span class="slds-truncate">{{asset.LineNumber}} - {{asset.Name}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!noassets" class="slds-size--1-of-6 slds-medium-size--1-of-6 slds-large-size--1-of-6 slds-m-top--small">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLFilterOpen= false;" ng-class="{'slds-is-open': isDDLFilterOpen}"
+                        ng-click="isDDLFilterOpen = !isDDLFilterOpen" style="margin-right: 5px;">
+                        <div class="slds-form-element">
+                            <label class="slds-text-heading--small" for="text-input-01">Periodo</label>
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                                <input type="search" 
+                                id="text-input-02" 
+                                class="slds-lookup__search-input slds-input" 
+                                aria-owns="option-list-01" role="combobox"
+                                aria-activedescendant="" 
+                                aria-expanded="false" 
+                                readonly="true" 
+                                placeholder="{{ptc.filterOption}}" 
+                                ng-model="ptc.filterOption" 
+                                ng-change="preriodo(e)" 
+                                ng-blur="isDDLFilterOpen = false;"/>
+                                <button class="slds-button slds-input__icon slds-text-color--default" aria-expanded="false" tabindex="-1">
+                                    <slds-svg-icon sprite="'utility'" icon="'down'" size="'x-small'" no-hint="true"
+                                        extra-classes="'slds-icon-text-default'">
+                                    </slds-svg-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="slds-dropdown slds-dropdown--left" role="listbox">
+                            <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-3" role="presentation">
+                                <!--li ng-if="params.AssetId != '{1}'" role="presentation" ng-mousedown="ptc.changeFilter('Los últimos 3 días'); ptc.ultimos3(); ptc.newFilterDate();"-->
+                                <li  role="presentation" ng-mousedown="ptc.changeFilter('Los últimos 3 días'); ptc.ultimos3(); ptc.newFilterDate();">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-247">
+                                    <span class="slds-truncate">Los últimos 3 días</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilter('Los últimos 15 días'); ptc.ultimos15(); ptc.newFilterDate();">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="0" id="listbox-option-248">
+                                    <span class="slds-truncate">Los últimos 15 días</span>
+                                    </span>
+                                </li>
+                                <!--<li ng-if="params.AssetId === '{1}'" role="presentation" ng-mousedown="ptc.changeFilter('Una factura');">-->
+                                <!--    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">-->
+                                <!--    <span class="slds-truncate">Una factura</span>-->
+                                <!--    </span>-->
+                                <!--</li>-->
+                                <li role="presentation" ng-mousedown="ptc.changeFilter('Un rango personalizado'); ptc.newFilterDate();">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="1" id="listbox-option-250">
+                                    <span class="slds-truncate">Un rango personalizado</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+            <!--div class="slds-size--1-of-6 slds-medium-size--1-of-6 slds-large-size--1-of-6 slds-m-top--small"
+            style="{{!ptc.filtroAdicionalFactura?'display:block !important':'display:none !important'}}">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLFacturaOpen = false;" ng-class="{'slds-is-open': isDDLFacturaOpen}"
+                        ng-click="isDDLFacturaOpen = !isDDLFacturaOpen">
+                        <div class="slds-form-element">
+                            <label class="slds-text-heading--small" for="text-input-01">Factura de:</label>
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                                <input type="search" id="text-input-01" class="slds-lookup__search-input slds-input" aria-owns="option-list-01" role="combobox"
+                                    aria-activedescendant="" aria-expanded="false" readonly="true" placeholder="{{ptc.filterOptionFactura}}"
+                                    ng-model="ptc.filterOptionFactura" ng-blur="isDDLFacturaOpen = false;"/>
+                                <button class="slds-button slds-input__icon slds-text-color--default" aria-expanded="false" tabindex="-1">
+                                    <slds-svg-icon sprite="'utility'" icon="'down'" size="'x-small'" no-hint="true"
+                                        extra-classes="'slds-icon-text-default'">
+                                    </slds-svg-icon>
+                            </button>
+                            </div>
+                        </div>
+                        <div class="slds-dropdown slds-dropdown--left" role="listbox">
+                            <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-5" role="presentation">
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Enero');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Enero</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Febrero');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Febrero</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Marzo');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Marzo</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Abril');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Enero</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Abril');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Abril</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Mayo');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Mayo</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Junio');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Junio</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Julio');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Julio</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Agosto');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Agosto</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Septiembre');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Septiembre</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Octubre');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Octubre</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Noviembre');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Noviembre</span>
+                                    </span>
+                                </li>
+                                <li role="presentation" ng-mousedown="ptc.changeFilterFactura('Diciembre');">
+                                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                    <span class="slds-truncate">Diciembre</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div-->
+            <div class="slds-size--1-of-6 slds-medium-size--1-of-6 slds-large-size--1-of-6 slds-m-top--small" style="{{!ptc.filtroAdicionalRangoHasta?'display:block !important':'display:none !important'}}">
+               <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click"  style="margin-right: 5px;">
+                        <label class="slds-text-heading--small">Inicio
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                                    <div    class="slds-button slds-input__icon slds-text-color--default" 
+                                            aria-expanded="false" 
+                                            tabindex="-1" 
+                                            for="text-input-id-1">
+                                            <slds-svg-icon  sprite="'utility'" 
+                                                            icon="'event'" 
+                                                            size="'x-small'" 
+                                                            no-hint="true"
+                                                            extra-classes="'slds-icon-text-default'">
+                                            </slds-svg-icon>
+                                    </div>
+                                    <input  
+                                        id="text-input-id-1"
+                                        class="slds-input" 
+                                        type="datetime" 
+                                        onkeydown="return false"
+                                        ng-model="$root.filterOptionRangoDesde"
+                                        ng-model-options="{updateOn: 'default blur', debounce: {'default': 2000, 'blur': 0}}"
+                                        ng-change="ptc.newStart(); ptc.newFilterDate();"
+                                        slds-date-picker
+                                        style="margin-top: 5px;"
+                                        date-format="dd/MM/yyyy"
+                                        min-date="{{$root.minDateValueFrom}}"
+                                        max-date="{{$root.maxDateValueFrom}}"/>
+                            </div>
+                        </label>
+                    </div>
+            </div>
+            <div class="slds-size--1-of-6 slds-medium-size--1-of-6 slds-large-size--1-of-6 slds-m-top--small" style="{{!ptc.filtroAdicionalRangoHasta?'display:block !important':'display:none !important'}}">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+                        <label class="slds-text-heading--small">Fin
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                                <div    class="slds-button slds-input__icon slds-text-color--default" 
+                                        aria-expanded="false" 
+                                        tabindex="-1" 
+                                        for="text-input-id-2">
+                                        <slds-svg-icon  sprite="'utility'" 
+                                                        icon="'event'" 
+                                                        size="'x-small'" 
+                                                        no-hint="true"
+                                                        extra-classes="'slds-icon-text-default'">
+                                        </slds-svg-icon>
+                                </div>
+                                <input  id="text-input-id-2"
+                                        class="slds-input" 
+                                        type="datetime" 
+                                        onkeydown="return false"
+                                        ng-model="$root.filterOptionRangoHasta"
+                                        ng-model-options="{updateOn: 'default blur', debounce: {'default': 2000, 'blur': 0}}" 
+                                        ng-change="ptc.newFilterDate();"
+                                        slds-date-picker 
+                                        date-format="dd/MM/yyyy"
+                                        style="margin-top: 5px;"
+                                        max-date="{{$root.maxDateValueTo}}"
+                                        min-date="{{$root.minDateValueTo}}"
+                                        
+                                        />
+                                 
+                            </div>
+                        </label>
+                    </div>
+            </div>
+            
+            
+            
+            <div ng-if="!noassets" class="slds-size--1-of-6 slds-medium-size--1-of-6 slds-large-size--1-of-6 slds-m-top--small">
+                <center>
+                <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--small">
+                    <button ng-click="ptc.filtersAccepted()" style="margin-top: 15px;" class="slds-button slds-button--brand">Consultar</button>
+                </div>
+                </center>
+            </div>
+            
+            <div  ng-class="{'slds-show': ptc.errorFound}"
+                  class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--small">
+                 <div class="slds-text-align--left text-output-error">{{ptc.errorMessage}}</div>
+            </div>
+            
+            
+           
+           
+           
+            <div ng-if="!noassets" class="slds-size--11-of-12 slds-medium-size--11-of-12 slds-large-size--11-of-12">
+                 <div class="slds-p-right--x-small spacer">
+                    <div class="slds-text-heading--x-small" ng-click="showInfoDetCon = !showInfoDetCon;" onclick="show();" style="color: #00B4C5;">
+                        <label class="slds-text-heading--small" style="color: #00B4C5;">Filtros avanzados</label>
+                        <span ng-if="showInfoDetCon"><i class="icon-v-down-caret"></i></span>
+                        <span ng-if="!showInfoDetCon"><i class="icon-v-right-caret"></i></span>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('6 7(){a(2.0("1").4.3=="5")2.0("1").4.3="9";8{2.0("1").4.3="5"}}',11,11,'getElementById|advancerFilters|document|display|style|none|function|show|else|block|if'.split('|'),0,{}))
+
+            </script>
+</div>

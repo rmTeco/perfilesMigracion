@@ -1,0 +1,44 @@
+<div class="slds-p-around--small">
+    <div class="via-slds slds-p-around--large ng-scope community_card-2x">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <div class="slds-p-horizontal--small slds-size--1-of-1">
+                <div class="slds-text-heading--large availables_title"  id="title-mobile">{{data.title}}</div>
+            </div>
+            <div class="slds-m-top--large slds-p-horizontal--small slds-grid slds-wrap slds-grid--pull-padded slds-m-right--large">
+                <div class="slds-m-horizontal--small slds-size--1-of-1 slds-p-around--x-small slds-border--bottom consumo"
+                     ng-repeat="record in records | limitTo: 5">
+                    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-spread slds-grid--vertical-align-center">
+                        <div class="slds-m-left--x-small slds-size--3-of-4">
+                            <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                                <div ng-repeat="field in data.fields"
+                                     class="slds-m-horizontal--medium slds-size--1-of-1 slds-text-heading--small">
+                                    <div ng-if="field.label == 'type'" class="gris">
+                                        <b>{{record | getter: field | picker: field.type}} </b>
+                                    </div>
+                                </div>
+                                <div ng-repeat="field in data.fields">
+                                    <div ng-if="field.label == 'date'" class="slds-m-horizontal--medium gris">
+                                        {{record | getter: field | date: 'dd/MM/yyyy hh:mm'}} 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-repeat="field in data.fields">
+                            <div ng-if="field.label == 'importe'" class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-4 slds-m-right--xx-small DangerColour">
+                                {{record | getter: field | picker: field.type}}
+                    		</div>
+                		</div>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="action in data.actions | limitTo: 1"
+                 class="slds-p-horizontal--small slds-size--1-of-1 slds-p-top--large slds-p-bottom--x-small">
+                <button ng-click="performAction(action)"
+                        class="   slds-button slds-button--neutral slds-align--absolute-center Rectangle-2 Consultar" 
+                        >
+                    {{action.displayName}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

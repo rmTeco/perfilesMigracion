@@ -1,0 +1,43 @@
+{
+    "Cards": [
+        "cpq-product-details"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "801360000000mgJ"
+            },
+            {
+                "name": "parent.Id.value",
+                "val": "01u36000000OY1bAAG"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "body": "{\n        \"IsActive\": {\n            \"value\": true,\n            \"label\": \"Active\"\n        },\n        \"Name\": {\n            \"value\": \"GenWatt Diesel 200kW\",\n            \"label\": \"Product Name\"\n        },\n        \"UnitPrice\": {\n            \"value\": 25000,\n            \"label\": \"List Price\"\n        },\n        \"ProductCode\": {\n            \"value\": \"GC1040\",\n            \"label\": \"Product Code\"\n        },\n        \"Product2Id\": {\n            \"value\": \"01t37000000QFVAAA4\",\n            \"label\": \"Product ID\"\n        },\n        \"Pricebook2Id\": {\n            \"value\": \"01s37000000bN9dAAE\",\n            \"label\": \"Price Book ID\"\n        },\n        \"Id\": {\n            \"value\": \"01u37000000kn5oAAA\",\n            \"label\": \"Price Book Entry ID\"\n        },\n        \"actions\": {\n            \"addtocart\": {\n                \"remote\": {\n                    \"params\": {\n                        \"methodName\": \"postCartsItems\",\n                        \"cartId\": \"80137000000TOFv\",\n                        \"itemsToBeAdded\": [\n                            {\n                                \"itemId\": \"01u37000000kn64AAA\",\n                                \"quantity\": 1\n                            }\n                        ],\n                        \"quantity\": 1\n                    }\n                },\n                \"rest\": {\n                    \"link\": \"/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80137000000TOFv/items\",\n                    \"method\": \"POST\",\n                    \"params\": {\n                        \"itemsToBeAdded\": [\n                            {\n                                \"itemId\": \"01u37000000kn64AAA\",\n                                \"quantity\": 1\n                            }\n                        ]\n                    }\n                }\n            }\n        },\n        \"messages\": []\n    }",
+            "endpoint": "/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/products?id={{parent.Id.value}}&hierarchy=3&includeAttachment=true",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "hierarchy": "3",
+                "id": "{{parent.Id.value}}",
+                "includeAttachment": "true"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getCartsProductsById",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "result.records"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-product-item-more"
+        }
+    },
+    "workspace": [
+        "cpq-product-details/Vlocity/1/1493936282735"
+    ]
+}

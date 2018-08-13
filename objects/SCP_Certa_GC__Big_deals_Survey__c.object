@@ -1,0 +1,2482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>SCP_Certa_GC__Actividades_durante_preventa__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Actividades a realizar durante la preventa</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Actividades a realizar durante la preventa</inlineHelpText>
+        <label>Actividades durante preventa</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Solo Oferta</fullName>
+                    <default>false</default>
+                    <label>Solo Oferta</label>
+                </value>
+                <value>
+                    <fullName>Solo preventa especialista sectorial</fullName>
+                    <default>false</default>
+                    <label>Solo preventa especialista sectorial</label>
+                </value>
+                <value>
+                    <fullName>Preventa especialista sectorial + Oferta</fullName>
+                    <default>false</default>
+                    <label>Preventa especialista sectorial + Oferta</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Alcance_de_la_colaboracion_con_terceros__c</fullName>
+        <deprecated>false</deprecated>
+        <description>% de colaboración de terceros necesaria</description>
+        <externalId>false</externalId>
+        <inlineHelpText>% de colaboración de terceros necesaria</inlineHelpText>
+        <label>Alcance de la colaboración con terceros</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&lt; 10%</fullName>
+                    <default>false</default>
+                    <label>&lt; 10%</label>
+                </value>
+                <value>
+                    <fullName>&lt; 20%</fullName>
+                    <default>false</default>
+                    <label>&lt; 20%</label>
+                </value>
+                <value>
+                    <fullName>&lt; 30%</fullName>
+                    <default>false</default>
+                    <label>&lt; 30%</label>
+                </value>
+                <value>
+                    <fullName>&lt; 40%</fullName>
+                    <default>false</default>
+                    <label>&lt; 40%</label>
+                </value>
+                <value>
+                    <fullName>&lt; 50%</fullName>
+                    <default>false</default>
+                    <label>&lt; 50%</label>
+                </value>
+                <value>
+                    <fullName>&lt; 60%</fullName>
+                    <default>false</default>
+                    <label>&lt; 60%</label>
+                </value>
+                <value>
+                    <fullName>&lt; 70%</fullName>
+                    <default>false</default>
+                    <label>&lt; 70%</label>
+                </value>
+                <value>
+                    <fullName>&lt; 80%</fullName>
+                    <default>false</default>
+                    <label>&lt; 80%</label>
+                </value>
+                <value>
+                    <fullName>&gt; 80%</fullName>
+                    <default>false</default>
+                    <label>&gt; 80%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Alcance_definido__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Se conoce el alcance del proyecto?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Se conoce el alcance del proyecto?</inlineHelpText>
+        <label>Alcance definido</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Ambito_donde_ya_es_cliente_con_TEF__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Ambito geográfico donde ya es nuestro cliente</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Ambito geográfico donde ya es nuestro cliente</inlineHelpText>
+        <label>Ambito donde ya es cliente con TEF</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ARG</fullName>
+                    <default>false</default>
+                    <label>ARG</label>
+                </value>
+                <value>
+                    <fullName>BRA</fullName>
+                    <default>false</default>
+                    <label>BRA</label>
+                </value>
+                <value>
+                    <fullName>CHI</fullName>
+                    <default>false</default>
+                    <label>CHI</label>
+                </value>
+                <value>
+                    <fullName>COL</fullName>
+                    <default>false</default>
+                    <label>COL</label>
+                </value>
+                <value>
+                    <fullName>ECU</fullName>
+                    <default>false</default>
+                    <label>ECU</label>
+                </value>
+                <value>
+                    <fullName>PER</fullName>
+                    <default>false</default>
+                    <label>PER</label>
+                </value>
+                <value>
+                    <fullName>VEN</fullName>
+                    <default>false</default>
+                    <label>VEN</label>
+                </value>
+                <value>
+                    <fullName>USA</fullName>
+                    <default>false</default>
+                    <label>USA</label>
+                </value>
+                <value>
+                    <fullName>España</fullName>
+                    <default>false</default>
+                    <label>España</label>
+                </value>
+                <value>
+                    <fullName>UK</fullName>
+                    <default>false</default>
+                    <label>UK</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>Otro</fullName>
+                    <default>false</default>
+                    <label>Otro</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Aprobar_Go_Estrategico__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Aprobar Go Estrategico</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Cantidad_de_personas_a_incorporar__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Nº de personas que tendrían que incorporarse en plantilla?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Nº de personas que tendrían que incorporarse en plantilla?</inlineHelpText>
+        <label>Cantidad de personas a incorporar</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>+80</fullName>
+                    <default>false</default>
+                    <label>+80</label>
+                </value>
+                <value>
+                    <fullName>+70</fullName>
+                    <default>false</default>
+                    <label>+70</label>
+                </value>
+                <value>
+                    <fullName>+50</fullName>
+                    <default>false</default>
+                    <label>+50</label>
+                </value>
+                <value>
+                    <fullName>+40</fullName>
+                    <default>false</default>
+                    <label>+40</label>
+                </value>
+                <value>
+                    <fullName>+30</fullName>
+                    <default>false</default>
+                    <label>+30</label>
+                </value>
+                <value>
+                    <fullName>+20</fullName>
+                    <default>false</default>
+                    <label>+20</label>
+                </value>
+                <value>
+                    <fullName>+15</fullName>
+                    <default>false</default>
+                    <label>+15</label>
+                </value>
+                <value>
+                    <fullName>+10</fullName>
+                    <default>false</default>
+                    <label>+10</label>
+                </value>
+                <value>
+                    <fullName>+5</fullName>
+                    <default>false</default>
+                    <label>+5</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Cantidad_jornadas_preventa_y_oferta__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Calcular el nº de jornadas =  &quot;Nº de FTES totales&quot; x &quot;meses de duración de la preventa y oferta&quot; x &quot;22 jornadas/mes&quot;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>&quot;Calcular el nº de jornadas =  &quot;&quot;Nº de FTES totales&quot;&quot; x &quot;&quot;meses de duración de la preventa y oferta&quot;&quot; x &quot;&quot;22 jornadas/mes&quot;&quot;&quot;</inlineHelpText>
+        <label>Cantidad jornadas preventa y oferta</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Capacidad_para_cumplir_los_SLA__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Cuánta es la facilidad de cumplir los SLAs solicitados?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Cuánta es la facilidad de cumplir los SLAs solicitados?</inlineHelpText>
+        <label>Capacidad para cumplir los SLA</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Escasa</fullName>
+                    <default>false</default>
+                    <label>Escasa</label>
+                </value>
+                <value>
+                    <fullName>Baja</fullName>
+                    <default>false</default>
+                    <label>Baja</label>
+                </value>
+                <value>
+                    <fullName>Media</fullName>
+                    <default>false</default>
+                    <label>Media</label>
+                </value>
+                <value>
+                    <fullName>Alta</fullName>
+                    <default>false</default>
+                    <label>Alta</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Capex_a_o_en_curso__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Capex estimado para el año en curso (actual) (MM USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Capex estimado para el año en curso (actual) (MM USD)</inlineHelpText>
+        <label>Capex año en curso</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Capex_total__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Capex estimado total del proyecto (MM USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Capex estimado total del proyecto (MM USD)</inlineHelpText>
+        <label>Capex total</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Codigo_en_Sales_Force_del_proyecto__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Código en Sales Force del proyecto</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Código en Sales Force del proyecto</inlineHelpText>
+        <label>Código en Sales Force del proyecto</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Competencia__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Se conoce quienes son los competidores en esta oportunidad?. Enumerarlos en caso afirmativo</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Se conoce quienes son los competidores en esta oportunidad?. Enumerarlos en caso afirmativo</inlineHelpText>
+        <label>Competencia</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Condiciones_previas_para_licitar__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Existen requisitos previos de empresa, de niveles de certificación, de exigencias fiscales, etc?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Existen requisitos previos de empresa, de niveles de certificación, de exigencias fiscales, etc?</inlineHelpText>
+        <label>Condiciones previas para licitar</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Consumo_capex_activos_fijos__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Hay consumo de Capex en Activos Fijos?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Hay consumo de Capex en Activos Fijos?</inlineHelpText>
+        <label>Consumo capex en activos fijos</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Descripcion_de_los_entregables_del__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Descripción de los distintos entregables: productos, servicios, proyectos a medida</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Descripción de los distintos entregables: productos, servicios, proyectos a medida</inlineHelpText>
+        <label>Descripción de los entregables</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Detalle_de_experiencia_en_el_Grupo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Detallar la experiencia en el Grupo</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Detallar la experiencia en el Grupo</inlineHelpText>
+        <label>Detalle de experiencia en el Grupo</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Detalle_de_perfiles_necesarios__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Describir los perfiles necesarios para los recursos de terceros</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Describir los perfiles necesarios para los recursos de terceros</inlineHelpText>
+        <label>Detalle de perfiles necesarios</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Detalle_penalizaciones_indemnizaciones__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Detallar el importe de las penalizaciones / indemnizaciones</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Detallar el importe de las penalizaciones / indemnizaciones (MM USD)</inlineHelpText>
+        <label>Detalle penalizaciones indemnizaciones</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>no conocidas</fullName>
+                    <default>false</default>
+                    <label>no conocidas</label>
+                </value>
+                <value>
+                    <fullName>+200</fullName>
+                    <default>false</default>
+                    <label>+200</label>
+                </value>
+                <value>
+                    <fullName>200</fullName>
+                    <default>false</default>
+                    <label>200</label>
+                </value>
+                <value>
+                    <fullName>150</fullName>
+                    <default>false</default>
+                    <label>150</label>
+                </value>
+                <value>
+                    <fullName>100</fullName>
+                    <default>false</default>
+                    <label>100</label>
+                </value>
+                <value>
+                    <fullName>50</fullName>
+                    <default>false</default>
+                    <label>50</label>
+                </value>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Detalles_adicionales__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Detalles adicionales</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Duracion_de_la_garantia__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Duración de la garantia, si procede (años)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Duración de la garantia, si procede (años)</inlineHelpText>
+        <label>Duracion de la garantia</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No existe</fullName>
+                    <default>true</default>
+                    <label>No existe</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>&gt; 3</fullName>
+                    <default>false</default>
+                    <label>&gt; 3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Duracion_de_responsabilidad_civil__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Definir el tiempo que dura la responsabilidad civil (años)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Definir el tiempo que dura la responsabilidad civil (años)</inlineHelpText>
+        <label>Duración de responsabilidad civil</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>no existe</fullName>
+                    <default>false</default>
+                    <label>no existe</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>&gt; 3</fullName>
+                    <default>false</default>
+                    <label>&gt; 3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Duracion_del_proyecto__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Duración total del proyecto (meses)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Duración total del proyecto (meses)</inlineHelpText>
+        <label>Duración del proyecto (meses)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Duracion_estimada_Preventa__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Duración estimada de la Preventa y Oferta (considerando todas las fases) (meses)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Duración estimada de la Preventa y Oferta (considerando todas las fases) (meses)</inlineHelpText>
+        <label>Duración estimada de la Preventa</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>+9</fullName>
+                    <default>false</default>
+                    <label>+9</label>
+                </value>
+                <value>
+                    <fullName>9</fullName>
+                    <default>false</default>
+                    <label>9</label>
+                </value>
+                <value>
+                    <fullName>7</fullName>
+                    <default>false</default>
+                    <label>7</label>
+                </value>
+                <value>
+                    <fullName>6</fullName>
+                    <default>false</default>
+                    <label>6</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Es_cliente_actual_de_TEF__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Es cliente actual</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Es cliente actual</inlineHelpText>
+        <label>Es cliente actual de TEF</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Es_moroso_con_el_Grupo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Es moroso con el Grupo?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Es moroso con el Grupo?</inlineHelpText>
+        <label>¿Es moroso con el Grupo?</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Si</fullName>
+                    <default>false</default>
+                    <label>Si</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>NS/NC</fullName>
+                    <default>false</default>
+                    <label>NS/NC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Estabilidad_financiera_cliente__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Ha tenido el cliente concurso de mora o similar en algún momento, o tiene deuda superior a 1 año?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Ha tenido el cliente concurso de mora o similar en algún momento, o tiene deuda superior a 1 año?</inlineHelpText>
+        <label>Estabilidad financiera del cliente</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Estabilidad_organizacion_del_cliente__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Es previsible que exista un cambio en la organización / responsables del cliente en el plazo de 12 meses?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Es previsible que exista un cambio en la organización / responsables del cliente en el plazo de 12 meses?</inlineHelpText>
+        <label>Estabilidad de organización del cliente</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Escasa</fullName>
+                    <default>false</default>
+                    <label>Escasa</label>
+                </value>
+                <value>
+                    <fullName>Baja</fullName>
+                    <default>false</default>
+                    <label>Baja</label>
+                </value>
+                <value>
+                    <fullName>Media</fullName>
+                    <default>false</default>
+                    <label>Media</label>
+                </value>
+                <value>
+                    <fullName>Alta</fullName>
+                    <default>false</default>
+                    <label>Alta</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Estan_perfiles_clave_necesarios__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Existen los perfiles clave necesarios para el proyecto y están accesibles?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Existen los perfiles clave necesarios para el proyecto y están accesibles?</inlineHelpText>
+        <label>Están los perfiles clave necesarios</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Existe_descripcion_tecnica__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Existe una descripción técnica de alto nivel de la solución propuesta?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Existe una descripción técnica de alto nivel de la solución propuesta?</inlineHelpText>
+        <label>Existe descripción tecnica</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Existe_experiencia_previa_con_solucion__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Existe experiencia previa con la solución tecnológica propuesta?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Existe experiencia previa con la solución tecnológica propuesta?</inlineHelpText>
+        <label>Existe experiencia previa con solución</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Experiencia_con_proyectos_similares__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Existe experiencia en el Grupo en proyectos similares?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Existe experiencia en el Grupo en proyectos similares?</inlineHelpText>
+        <label>Experiencia con proyectos similares</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Si</fullName>
+                    <default>false</default>
+                    <label>Si</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>ns/nc</fullName>
+                    <default>false</default>
+                    <label>ns/nc</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__FCV_de_contratos_actuales__c</fullName>
+        <deprecated>false</deprecated>
+        <description>FCV de los contratos actuales</description>
+        <externalId>false</externalId>
+        <inlineHelpText>FCV de los contratos actuales (MM USD)</inlineHelpText>
+        <label>FCV de contratos actuales</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0-10</fullName>
+                    <default>false</default>
+                    <label>0-10</label>
+                </value>
+                <value>
+                    <fullName>10-20</fullName>
+                    <default>false</default>
+                    <label>10-20</label>
+                </value>
+                <value>
+                    <fullName>20-50</fullName>
+                    <default>false</default>
+                    <label>20-50</label>
+                </value>
+                <value>
+                    <fullName>50-100</fullName>
+                    <default>false</default>
+                    <label>50-100</label>
+                </value>
+                <value>
+                    <fullName>100-500</fullName>
+                    <default>false</default>
+                    <label>100-500</label>
+                </value>
+                <value>
+                    <fullName>500-1.000</fullName>
+                    <default>false</default>
+                    <label>500-1.000</label>
+                </value>
+                <value>
+                    <fullName>&gt; 1.000</fullName>
+                    <default>false</default>
+                    <label>&gt; 1.000</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__FCV_o_valor_total_de_contrato__c</fullName>
+        <deprecated>false</deprecated>
+        <description>FCV o Valor total del contrato (MM USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>FCV o Valor total del contrato (MM USD)</inlineHelpText>
+        <label>zz OBSOLETO FCV</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__FTE_no_presentes__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Concretar el número de FTEs que son necesarios para el equipo de oferta, que no forman parte de la OB</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Concretar el número de FTEs que son necesarios para el equipo de oferta, que no forman parte de la OB</inlineHelpText>
+        <label>FTE no presentes</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1 - 2</fullName>
+                    <default>false</default>
+                    <label>1 - 2</label>
+                </value>
+                <value>
+                    <fullName>3 - 4</fullName>
+                    <default>false</default>
+                    <label>3 - 4</label>
+                </value>
+                <value>
+                    <fullName>5 o más</fullName>
+                    <default>false</default>
+                    <label>5 o más</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__FTE_que_se_aportaran__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Concretar el número FTEs que la OB está dispuesta a aportar en preventa y propuesta</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Concretar el número FTEs que la OB está dispuesta a aportar en preventa y propuesta</inlineHelpText>
+        <label>FTE que se aportaran</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>+5</fullName>
+                    <default>false</default>
+                    <label>+5</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__FTE_terceros_requeridos__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Concretar el número de FTEs de terceros que se requieren</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Concretar el número de FTEs de terceros que se requieren</inlineHelpText>
+        <label>FTE terceros requeridos</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>4</fullName>
+                    <default>false</default>
+                    <label>4</label>
+                </value>
+                <value>
+                    <fullName>5</fullName>
+                    <default>false</default>
+                    <label>5</label>
+                </value>
+                <value>
+                    <fullName>+5</fullName>
+                    <default>false</default>
+                    <label>+5</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Fecha_comienzo_de_contrato__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Fecha estimada de comienzo del contrato</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Fecha estimada de comienzo del contrato</inlineHelpText>
+        <label>Fecha comienzo de contrato</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Fecha_de_defensa__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Fecha en la que debe defenderse la oferta frente al cliente (si procede)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Fecha en la que debe defenderse la oferta frente al cliente (si procede)</inlineHelpText>
+        <label>Fecha de defensa</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Fecha_estimada_del_fallo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Fecha estimada del fallo por parte del cliente</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Fecha estimada del fallo por parte del cliente</inlineHelpText>
+        <label>Fecha estimada del fallo</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Full_contract_value__c</fullName>
+        <deprecated>false</deprecated>
+        <description>FCV o Valor total del contrato (MM USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>FCV o Valor total del contrato (MM USD)</inlineHelpText>
+        <label>Full contract value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Grado_certeza_continuidad_plataforma__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Cuál es el grado de fiabilidad sobre la continuidad en el tiempo de la/s plataforma/s estándar sobre las que se implanta la solución tecnológica?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Cuál es el grado de fiabilidad sobre la continuidad en el tiempo de la/s plataforma/s estándar sobre las que se implanta la solución tecnológica?</inlineHelpText>
+        <label>Grado certeza continuidad plataforma</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Escasa</fullName>
+                    <default>false</default>
+                    <label>Escasa</label>
+                </value>
+                <value>
+                    <fullName>Baja</fullName>
+                    <default>false</default>
+                    <label>Baja</label>
+                </value>
+                <value>
+                    <fullName>Media</fullName>
+                    <default>false</default>
+                    <label>Media</label>
+                </value>
+                <value>
+                    <fullName>Alta</fullName>
+                    <default>false</default>
+                    <label>Alta</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Grado_de_conocimiento_del_cliente__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Cuál es el nivel de conocimiento del Cliente: organización + negocio + posicionamiento + estrategia...?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Cuál es el nivel de conocimiento del Cliente: organización + negocio + posicionamiento + estrategia...?</inlineHelpText>
+        <label>Grado de conocimiento del cliente</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Escaso</fullName>
+                    <default>false</default>
+                    <label>Escaso</label>
+                </value>
+                <value>
+                    <fullName>Bajo</fullName>
+                    <default>false</default>
+                    <label>Bajo</label>
+                </value>
+                <value>
+                    <fullName>Medio</fullName>
+                    <default>false</default>
+                    <label>Medio</label>
+                </value>
+                <value>
+                    <fullName>Alto</fullName>
+                    <default>false</default>
+                    <label>Alto</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Grado_exigencia_SLA__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Cuál es el grado de exigencia de los SLAs que pide el cliente respecto a nuestro estándar?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Cuál es el grado de exigencia de los SLAs que pide el cliente respecto a nuestro estándar?</inlineHelpText>
+        <label>Grado de exigencia de los SLA</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alto</fullName>
+                    <default>false</default>
+                    <label>Alto</label>
+                </value>
+                <value>
+                    <fullName>Medio</fullName>
+                    <default>false</default>
+                    <label>Medio</label>
+                </value>
+                <value>
+                    <fullName>Bajo</fullName>
+                    <default>false</default>
+                    <label>Bajo</label>
+                </value>
+                <value>
+                    <fullName>Escaso</fullName>
+                    <default>false</default>
+                    <label>Escaso</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Impacto_en_el_cliente__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Cuál es el impacto del proyecto en el negocio del cliente?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Cuál es el impacto del proyecto en el negocio del cliente?</inlineHelpText>
+        <label>Impacto en el cliente</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alto</fullName>
+                    <default>false</default>
+                    <label>Alto</label>
+                </value>
+                <value>
+                    <fullName>Medio</fullName>
+                    <default>false</default>
+                    <label>Medio</label>
+                </value>
+                <value>
+                    <fullName>Bajo</fullName>
+                    <default>false</default>
+                    <label>Bajo</label>
+                </value>
+                <value>
+                    <fullName>Escaso</fullName>
+                    <default>false</default>
+                    <label>Escaso</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Importe_fianzas_depositar__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Cuantificar el importe de las Fianzas a depositar (miles USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Cuantificar el importe de las Fianzas a depositar (miles USD)</inlineHelpText>
+        <label>Importe de fianzas a depositar</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0</fullName>
+                    <default>false</default>
+                    <label>0</label>
+                </value>
+                <value>
+                    <fullName>50</fullName>
+                    <default>false</default>
+                    <label>50</label>
+                </value>
+                <value>
+                    <fullName>100</fullName>
+                    <default>false</default>
+                    <label>100</label>
+                </value>
+                <value>
+                    <fullName>150</fullName>
+                    <default>false</default>
+                    <label>150</label>
+                </value>
+                <value>
+                    <fullName>200</fullName>
+                    <default>false</default>
+                    <label>200</label>
+                </value>
+                <value>
+                    <fullName>+200</fullName>
+                    <default>false</default>
+                    <label>+200</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Informacion_formalizada_suficiente__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Existe información formalizada detallada y suficiente para elaborar la propuesta?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Existe información formalizada detallada y suficiente para elaborar la propuesta?</inlineHelpText>
+        <label>Información formalizada suficiente</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Interrelacion_con_principales_decisores__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Cuál es el grado de interrelación con los principales decisores?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Cuál es el grado de interrelación con los principales decisores?</inlineHelpText>
+        <label>Interrelación con principales decisores</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Escaso</fullName>
+                    <default>false</default>
+                    <label>Escaso</label>
+                </value>
+                <value>
+                    <fullName>Bajo</fullName>
+                    <default>false</default>
+                    <label>Bajo</label>
+                </value>
+                <value>
+                    <fullName>Medio</fullName>
+                    <default>false</default>
+                    <label>Medio</label>
+                </value>
+                <value>
+                    <fullName>Alto</fullName>
+                    <default>false</default>
+                    <label>Alto</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Lineas_implicadas__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Detallar el % de la solución que puede aportar con su portfolio</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Detallar el % de la solución que puede aportar con su portfolio</inlineHelpText>
+        <label>Lineas de producto implicadas</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>0%</fullName>
+                    <default>false</default>
+                    <label>0%</label>
+                </value>
+                <value>
+                    <fullName>20%</fullName>
+                    <default>false</default>
+                    <label>20%</label>
+                </value>
+                <value>
+                    <fullName>40%</fullName>
+                    <default>false</default>
+                    <label>40%</label>
+                </value>
+                <value>
+                    <fullName>60%</fullName>
+                    <default>false</default>
+                    <label>60%</label>
+                </value>
+                <value>
+                    <fullName>80%</fullName>
+                    <default>false</default>
+                    <label>80%</label>
+                </value>
+                <value>
+                    <fullName>100%</fullName>
+                    <default>false</default>
+                    <label>100%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__NAV_12_meses_naturales__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Ingresos durante los próximos 12 meses naturales (a contar desde hoy)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Ingresos durante los próximos 12 meses naturales (a contar desde hoy)</inlineHelpText>
+        <label>NAV 12 meses naturales</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Ingresos durante los primeros 12 meses de vida del proyecto (MM USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Ingresos durante los primeros 12 meses de vida del proyecto (MM USD)</inlineHelpText>
+        <label>NAV o ingresos proximos 12 meses</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Necesario_desarrollar_oferta_con_tercero__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Es imprescindible la colaboración con un tercero para desarrollar la oferta?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Es imprescindible la colaboración con un tercero para desarrollar la oferta?</inlineHelpText>
+        <label>Necesario desarrollar oferta con tercero</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Necesidad_de_incorporar_personas__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Definir si existe la necesidad de incorporar personas en plantilla</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Definir si existe la necesidad de incorporar personas en plantilla</inlineHelpText>
+        <label>Necesidad de incorporar personas</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Nivel_de_interlocucion_con_el_cliente__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Definir cuál es el nivel de interlocución actual con el cliente</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Definir cuál es el nivel de interlocución actual con el cliente</inlineHelpText>
+        <label>Nivel de interlocución con el cliente</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Responsable de comunicación</fullName>
+                    <default>false</default>
+                    <label>Responsable de comunicación</label>
+                </value>
+                <value>
+                    <fullName>CIO / Dir. Sistemas</fullName>
+                    <default>false</default>
+                    <label>CIO / Dir. Sistemas</label>
+                </value>
+                <value>
+                    <fullName>CFO / Dir. Finanzas</fullName>
+                    <default>false</default>
+                    <label>CFO / Dir. Finanzas</label>
+                </value>
+                <value>
+                    <fullName>CEO / Dir. General</fullName>
+                    <default>false</default>
+                    <label>CEO / Dir. General</label>
+                </value>
+                <value>
+                    <fullName>Consejo Administración / Presidencia / Ministro</fullName>
+                    <default>false</default>
+                    <label>Consejo Administración / Presidencia / Ministro</label>
+                </value>
+                <value>
+                    <fullName>Otros</fullName>
+                    <default>false</default>
+                    <label>Otros</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Oportunidad__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Oportunidad</label>
+        <referenceTo>Opportunity</referenceTo>
+        <relationshipName>Questionarios_Big_deals</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Pais__c</fullName>
+        <deprecated>false</deprecated>
+        <description>País en el que se desarrolla el proyecto</description>
+        <externalId>false</externalId>
+        <inlineHelpText>País en el que se desarrolla el proyecto</inlineHelpText>
+        <label>País</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>ARG</fullName>
+                    <default>false</default>
+                    <label>ARG</label>
+                </value>
+                <value>
+                    <fullName>BRA</fullName>
+                    <default>false</default>
+                    <label>BRA</label>
+                </value>
+                <value>
+                    <fullName>CHI</fullName>
+                    <default>false</default>
+                    <label>CHI</label>
+                </value>
+                <value>
+                    <fullName>COL</fullName>
+                    <default>false</default>
+                    <label>COL</label>
+                </value>
+                <value>
+                    <fullName>ECU</fullName>
+                    <default>false</default>
+                    <label>ECU</label>
+                </value>
+                <value>
+                    <fullName>PER</fullName>
+                    <default>false</default>
+                    <label>PER</label>
+                </value>
+                <value>
+                    <fullName>VEN</fullName>
+                    <default>false</default>
+                    <label>VEN</label>
+                </value>
+                <value>
+                    <fullName>USA</fullName>
+                    <default>false</default>
+                    <label>USA</label>
+                </value>
+                <value>
+                    <fullName>España</fullName>
+                    <default>false</default>
+                    <label>España</label>
+                </value>
+                <value>
+                    <fullName>UK</fullName>
+                    <default>false</default>
+                    <label>UK</label>
+                </value>
+                <value>
+                    <fullName>Europe</fullName>
+                    <default>false</default>
+                    <label>Europe</label>
+                </value>
+                <value>
+                    <fullName>Otro</fullName>
+                    <default>false</default>
+                    <label>Otro</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Partners_necesarios_identificados__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Están identificados los potenciales partners necesarios para el proyecto?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Están identificados los potenciales partners necesarios para el proyecto?</inlineHelpText>
+        <label>Partners necesarios estan identificados</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Personal_clave_del_cliente_identificado__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Esta identificado y disponible el personal clave del cliente?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Esta identificado y disponible el personal clave del cliente?</inlineHelpText>
+        <label>Personal clave del cliente identificado</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Plazo_de_ejecucion__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Cuál es el plazo de ejecución del proyecto? (meses)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Cuál es el plazo de ejecución del proyecto? (meses)</inlineHelpText>
+        <label>Plazo de ejecución (meses)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&gt;6</fullName>
+                    <default>false</default>
+                    <label>&gt;6</label>
+                </value>
+                <value>
+                    <fullName>&gt;12</fullName>
+                    <default>false</default>
+                    <label>&gt;12</label>
+                </value>
+                <value>
+                    <fullName>&gt;24</fullName>
+                    <default>false</default>
+                    <label>&gt;24</label>
+                </value>
+                <value>
+                    <fullName>&gt;36</fullName>
+                    <default>false</default>
+                    <label>&gt;36</label>
+                </value>
+                <value>
+                    <fullName>&gt;60</fullName>
+                    <default>false</default>
+                    <label>&gt;60</label>
+                </value>
+                <value>
+                    <fullName>&gt;120</fullName>
+                    <default>false</default>
+                    <label>&gt;120</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Porcentaje_pasivo_laboral_importe__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Es el volumen de pasivo laboral máximo significativo respecto al total del importe económico del proyecto?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Es el volumen de pasivo laboral máximo significativo respecto al total del importe económico del proyecto?</inlineHelpText>
+        <label>Porcentaje pasivo laboral importe</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&gt;5%</fullName>
+                    <default>false</default>
+                    <label>&gt;5%</label>
+                </value>
+                <value>
+                    <fullName>3-5%</fullName>
+                    <default>false</default>
+                    <label>3-5%</label>
+                </value>
+                <value>
+                    <fullName>1-2%</fullName>
+                    <default>false</default>
+                    <label>1-2%</label>
+                </value>
+                <value>
+                    <fullName>&lt;1%</fullName>
+                    <default>false</default>
+                    <label>&lt;1%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Productos_clave_estan_en_porfolio__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Están en porfolio los productos clave necesarios para el proyecto?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Están en porfolio los productos clave necesarios para el proyecto?</inlineHelpText>
+        <label>Productos clave estan en porfolio</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Productos_terceros_cumplen_SLA__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Los SLA&apos;s de los productos y servicios de los terceros cumplen los SLAs que pide  el cliente?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Los SLA&apos;s de los productos y servicios de los terceros cumplen los SLAs que pide  el cliente?</inlineHelpText>
+        <label>Productos terceros cumplen SLA</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Escasa</fullName>
+                    <default>false</default>
+                    <label>Escasa</label>
+                </value>
+                <value>
+                    <fullName>Baja</fullName>
+                    <default>false</default>
+                    <label>Baja</label>
+                </value>
+                <value>
+                    <fullName>Media</fullName>
+                    <default>false</default>
+                    <label>Media</label>
+                </value>
+                <value>
+                    <fullName>Alta</fullName>
+                    <default>false</default>
+                    <label>Alta</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Responsable_comercial__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Nombre de nuestro responsable comercial</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Nombre de nuestro responsable comercial</inlineHelpText>
+        <label>Responsable comercial</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__SLA_Detalle__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Detallar SLAs</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Detallar SLAs</inlineHelpText>
+        <label>SLA Detalle</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__SLA_definidos__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿Hay SLAs definidos?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Hay SLAs definidos?</inlineHelpText>
+        <label>SLA definidos</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Sector__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Sector de negocio</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Sector de negocio</inlineHelpText>
+        <label>Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>AAPP</fullName>
+                    <default>false</default>
+                    <label>AAPP</label>
+                </value>
+                <value>
+                    <fullName>EEFF</fullName>
+                    <default>false</default>
+                    <label>EEFF</label>
+                </value>
+                <value>
+                    <fullName>IDS</fullName>
+                    <default>false</default>
+                    <label>IDS</label>
+                </value>
+                <value>
+                    <fullName>Privado</fullName>
+                    <default>false</default>
+                    <label>Privado</label>
+                </value>
+                <value>
+                    <fullName>otra</fullName>
+                    <default>false</default>
+                    <label>otra</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Situacion_con_partners_favorable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>¿La situación contractual y relacional con esos partners es favorable? (no hay disputas y/o contenciosos pendientes)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿La situación contractual y relacional con esos partners es favorable? (no hay disputas y/o contenciosos pendientes)</inlineHelpText>
+        <label>Situacion con partners favorable</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Tiempo_responsabilidad_terceros__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Tiempo que dura la responsabilidad frente a terceros? (años)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Tiempo que dura la responsabilidad frente a terceros? (años)</inlineHelpText>
+        <label>Tiempo responsabilidad frente a terceros</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>no existe</fullName>
+                    <default>false</default>
+                    <label>no existe</label>
+                </value>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+                <value>
+                    <fullName>&gt; 3</fullName>
+                    <default>false</default>
+                    <label>&gt; 3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Tipo_de_negocio__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Tipo de negocio</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tipo de negocio</inlineHelpText>
+        <label>Tipo de negocio</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Proyecto</fullName>
+                    <default>false</default>
+                    <label>Proyecto</label>
+                </value>
+                <value>
+                    <fullName>Proy + Servicio</fullName>
+                    <default>false</default>
+                    <label>Proy + Servicio</label>
+                </value>
+                <value>
+                    <fullName>Concesión/ APP/ UTE</fullName>
+                    <default>false</default>
+                    <label>Concesión/ APP/ UTE</label>
+                </value>
+                <value>
+                    <fullName>otra</fullName>
+                    <default>false</default>
+                    <label>otra</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Tipo_de_oportunidad__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Tipo de oportunidad</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tipo de oportunidad</inlineHelpText>
+        <label>Tipo de oportunidad</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Concurso público</fullName>
+                    <default>false</default>
+                    <label>Concurso público</label>
+                </value>
+                <value>
+                    <fullName>APP</fullName>
+                    <default>false</default>
+                    <label>APP</label>
+                </value>
+                <value>
+                    <fullName>PPP</fullName>
+                    <default>false</default>
+                    <label>PPP</label>
+                </value>
+                <value>
+                    <fullName>RFI</fullName>
+                    <default>false</default>
+                    <label>RFI</label>
+                </value>
+                <value>
+                    <fullName>RFP</fullName>
+                    <default>false</default>
+                    <label>RFP</label>
+                </value>
+                <value>
+                    <fullName>Precualificada</fullName>
+                    <default>false</default>
+                    <label>Precualificada</label>
+                </value>
+                <value>
+                    <fullName>otra</fullName>
+                    <default>false</default>
+                    <label>otra</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Valor_estimado_ingresos_recurrentes__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Valor estimado ingresos recurrentes  durante toda la duración del contrato (MM USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Valor estimado ingresos recurrentes  durante toda la duración del contrato (MM USD)</inlineHelpText>
+        <label>Valor estimado ingresos recurrentes</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Valor_estimado_one_shot__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Valor estimado Ingresos one-shot durante toda la duración del contrato (MM USD)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Valor estimado Ingresos one-shot durante toda la duración del contrato (MM USD)</inlineHelpText>
+        <label>Valor estimado one-shot</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Valoracion_de_arquitectura_tecnica__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Valoración de arquitectura tecnica</description>
+        <externalId>false</externalId>
+        <label>Valoración de arquitectura tecnica</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>100%</fullName>
+                    <default>false</default>
+                    <label>100%</label>
+                </value>
+                <value>
+                    <fullName>90%</fullName>
+                    <default>false</default>
+                    <label>90%</label>
+                </value>
+                <value>
+                    <fullName>80%</fullName>
+                    <default>false</default>
+                    <label>80%</label>
+                </value>
+                <value>
+                    <fullName>70%</fullName>
+                    <default>false</default>
+                    <label>70%</label>
+                </value>
+                <value>
+                    <fullName>60%</fullName>
+                    <default>false</default>
+                    <label>60%</label>
+                </value>
+                <value>
+                    <fullName>50%</fullName>
+                    <default>false</default>
+                    <label>50%</label>
+                </value>
+                <value>
+                    <fullName>40%</fullName>
+                    <default>false</default>
+                    <label>40%</label>
+                </value>
+                <value>
+                    <fullName>30%</fullName>
+                    <default>false</default>
+                    <label>30%</label>
+                </value>
+                <value>
+                    <fullName>20%</fullName>
+                    <default>false</default>
+                    <label>20%</label>
+                </value>
+                <value>
+                    <fullName>10%</fullName>
+                    <default>false</default>
+                    <label>10%</label>
+                </value>
+                <value>
+                    <fullName>0%</fullName>
+                    <default>false</default>
+                    <label>0%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Valoracion_de_detalle_de_SLA__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Valoración de detalle de SLA</description>
+        <externalId>false</externalId>
+        <label>Valoración de detalle de SLA</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>100%</fullName>
+                    <default>false</default>
+                    <label>100%</label>
+                </value>
+                <value>
+                    <fullName>90%</fullName>
+                    <default>false</default>
+                    <label>90%</label>
+                </value>
+                <value>
+                    <fullName>80%</fullName>
+                    <default>false</default>
+                    <label>80%</label>
+                </value>
+                <value>
+                    <fullName>70%</fullName>
+                    <default>false</default>
+                    <label>70%</label>
+                </value>
+                <value>
+                    <fullName>60%</fullName>
+                    <default>false</default>
+                    <label>60%</label>
+                </value>
+                <value>
+                    <fullName>50%</fullName>
+                    <default>false</default>
+                    <label>50%</label>
+                </value>
+                <value>
+                    <fullName>40%</fullName>
+                    <default>false</default>
+                    <label>40%</label>
+                </value>
+                <value>
+                    <fullName>30%</fullName>
+                    <default>false</default>
+                    <label>30%</label>
+                </value>
+                <value>
+                    <fullName>20%</fullName>
+                    <default>false</default>
+                    <label>20%</label>
+                </value>
+                <value>
+                    <fullName>10%</fullName>
+                    <default>false</default>
+                    <label>10%</label>
+                </value>
+                <value>
+                    <fullName>0%</fullName>
+                    <default>false</default>
+                    <label>0%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Valoracion_de_relacion_de_entregables__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Valoración de relacion de entregables</description>
+        <externalId>false</externalId>
+        <label>Valoración de relacion de entregables</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>100%</fullName>
+                    <default>false</default>
+                    <label>100%</label>
+                </value>
+                <value>
+                    <fullName>90%</fullName>
+                    <default>false</default>
+                    <label>90%</label>
+                </value>
+                <value>
+                    <fullName>80%</fullName>
+                    <default>false</default>
+                    <label>80%</label>
+                </value>
+                <value>
+                    <fullName>70%</fullName>
+                    <default>false</default>
+                    <label>70%</label>
+                </value>
+                <value>
+                    <fullName>60%</fullName>
+                    <default>false</default>
+                    <label>60%</label>
+                </value>
+                <value>
+                    <fullName>50%</fullName>
+                    <default>false</default>
+                    <label>50%</label>
+                </value>
+                <value>
+                    <fullName>40%</fullName>
+                    <default>false</default>
+                    <label>40%</label>
+                </value>
+                <value>
+                    <fullName>30%</fullName>
+                    <default>false</default>
+                    <label>30%</label>
+                </value>
+                <value>
+                    <fullName>20%</fullName>
+                    <default>false</default>
+                    <label>20%</label>
+                </value>
+                <value>
+                    <fullName>10%</fullName>
+                    <default>false</default>
+                    <label>10%</label>
+                </value>
+                <value>
+                    <fullName>0%</fullName>
+                    <default>false</default>
+                    <label>0%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__arquitectura_tecnica__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Draft de arquitectura técnica de alto nivel</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Draft de arquitectura técnica de alto nivel</inlineHelpText>
+        <label>arquitectura técnica</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__facturacion_estandar__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Informar si las condiciones de facturación cumplen con nuestros estándares</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Informar si las condiciones de facturación cumplen con nuestros estándares</inlineHelpText>
+        <label>facturacion estándar</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__fecha_de_entrega__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Fecha en la que se debe entregar la oferta al cliente</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Fecha en la que se debe entregar la oferta al cliente</inlineHelpText>
+        <label>fecha de entrega</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__l_neas_de_producto_principales__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Identificar las tres principales líneas de producto del portfolio</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Identificar las tres principales líneas de producto del portfolio</inlineHelpText>
+        <label>líneas de producto principales</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Fija y Movil, Voz y Datos</fullName>
+                    <default>false</default>
+                    <label>Fija y Movil, Voz y Datos</label>
+                </value>
+                <value>
+                    <fullName>M2M</fullName>
+                    <default>false</default>
+                    <label>M2M</label>
+                </value>
+                <value>
+                    <fullName>Cloud</fullName>
+                    <default>false</default>
+                    <label>Cloud</label>
+                </value>
+                <value>
+                    <fullName>Ehealth</fullName>
+                    <default>false</default>
+                    <label>Ehealth</label>
+                </value>
+                <value>
+                    <fullName>Smart cities</fullName>
+                    <default>false</default>
+                    <label>Smart cities</label>
+                </value>
+                <value>
+                    <fullName>otras</fullName>
+                    <default>false</default>
+                    <label>otras</label>
+                </value>
+                <value>
+                    <fullName>Seguridad</fullName>
+                    <default>false</default>
+                    <label>Seguridad</label>
+                </value>
+                <value>
+                    <fullName>Big Data</fullName>
+                    <default>false</default>
+                    <label>Big Data</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__porcentage_indemnizacion_total_importe__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Es significativo el volumen de indemnización máximo respecto al total del importe económico del proyecto?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Es significativo el volumen de indemnización máximo respecto al total del importe económico del proyecto?</inlineHelpText>
+        <label>porcentage indemnización total importe</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&gt;100%</fullName>
+                    <default>false</default>
+                    <label>&gt;100%</label>
+                </value>
+                <value>
+                    <fullName>50 - 100%</fullName>
+                    <default>false</default>
+                    <label>50 - 100%</label>
+                </value>
+                <value>
+                    <fullName>30 - 50%</fullName>
+                    <default>false</default>
+                    <label>30 - 50%</label>
+                </value>
+                <value>
+                    <fullName>10 - 30%</fullName>
+                    <default>false</default>
+                    <label>10 - 30%</label>
+                </value>
+                <value>
+                    <fullName>&lt;10%</fullName>
+                    <default>false</default>
+                    <label>&lt;10%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__porcentaje_penalizacion_incumplimiento__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Es el volumen de penalización máximo significativo respecto al total del importe económico del proyecto? (incumplimiento del nivel de servicio)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Es el volumen de penalización máximo por incumplimiento del nivel de servicio significativo respecto al total del importe económico del proyecto?</inlineHelpText>
+        <label>porcentaje penalización incumplimiento</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&gt;5%</fullName>
+                    <default>false</default>
+                    <label>&gt;5%</label>
+                </value>
+                <value>
+                    <fullName>3 - 5%</fullName>
+                    <default>false</default>
+                    <label>3 - 5%</label>
+                </value>
+                <value>
+                    <fullName>1 - 2%</fullName>
+                    <default>false</default>
+                    <label>1 - 2%</label>
+                </value>
+                <value>
+                    <fullName>&lt;1%</fullName>
+                    <default>false</default>
+                    <label>&lt;1%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__porcentaje_penalizacion_resicion__c</fullName>
+        <deprecated>false</deprecated>
+        <description>¿Es el volumen de penalización máximo por rescición anticipada del contrato significativo respecto al total del importe económico del proyecto?</description>
+        <externalId>false</externalId>
+        <inlineHelpText>¿Es el volumen de penalización máximo por rescición anticipada del contrato significativo respecto al total del importe económico del proyecto?</inlineHelpText>
+        <label>porcentaje penalización resicion</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>&gt;5%</fullName>
+                    <default>false</default>
+                    <label>&gt;5%</label>
+                </value>
+                <value>
+                    <fullName>3-5%</fullName>
+                    <default>false</default>
+                    <label>3-5%</label>
+                </value>
+                <value>
+                    <fullName>1-2%</fullName>
+                    <default>false</default>
+                    <label>1-2%</label>
+                </value>
+                <value>
+                    <fullName>&lt;1%</fullName>
+                    <default>false</default>
+                    <label>&lt;1%</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__puntuacion_FCV_o_valor_total_de_contrato__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 200, 
+  IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 150, 
+    IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 100,
+      IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 75, 
+        IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 50, 
+          IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 20, 
+            IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 10, 
+              IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 5, 
+                IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c &lt; 2, 
+                  IF(SCP_Certa_GC__FCV_o_valor_total_de_contrato__c == 0,
+                    0,
+                    10
+                  ),
+                  20
+                ),
+                30
+              ),
+              40
+            ),
+            50
+          ), 
+          60
+        ),
+        70
+      ),
+      80
+    ),
+    90
+  ),
+  100
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>puntuación FCV o valor total de contrato</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__puntuacion_NAV_o_ingresos_12_meses__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 50,
+  IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 30,
+    IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 20,
+      IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 15,
+        IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 10,
+          IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 4,
+            IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 2,
+              IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 1,
+                IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c &lt; 0.5,
+                  IF(SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c == 0,
+                    0,
+                    10
+                  ),
+                  20
+                ),
+                30
+              ),
+              40
+            ),
+            50
+          ),
+          60
+        ),
+        70
+      ),
+      80
+    ),
+    90
+  ),
+  100
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>puntuación NAV o ingresos 12 meses</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__state__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Estado</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Desbloqueado</fullName>
+                    <default>true</default>
+                    <label>Desbloqueado</label>
+                </value>
+                <value>
+                    <fullName>Bloqueado</fullName>
+                    <default>false</default>
+                    <label>Bloqueado</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <gender>Masculine</gender>
+    <label>Cuestionario Big deals</label>
+    <nameField>
+        <displayFormat>QBD-{000}</displayFormat>
+        <label>Numero de Cuestionario Big deals</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Cuestionarios Big deals</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

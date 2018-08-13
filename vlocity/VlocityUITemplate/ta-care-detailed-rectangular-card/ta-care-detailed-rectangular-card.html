@@ -1,0 +1,25 @@
+<div ng-init="customOptions = control.propSetMap.customOptions"
+    ng-repeat="item in control.vlcSI[control.itemsKey]"
+    class="slds-size--1-of-1">
+
+    <div ng-repeat="section in customOptions.sections"
+        class="slds-card"
+        ng-class="{'ta-slds-has-bottom-magnet': ($first && customOptions.sections.length > 1), 'ta-slds-has-top-magnet': !$first}">
+    
+        <div class="slds-p-around--medium">
+
+            <div class="slds-list--horizontal slds-wrap">
+
+                <div ng-repeat-start="field in section.fields"
+                    class="slds-item--label slds-text-color--weak slds-truncate"
+                    title="{{field.label}}">{{field.label}}</div>
+                
+                <div ng-repeat-end class="slds-item--detail slds-truncate">{{item[field.value]}}</div>
+               
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

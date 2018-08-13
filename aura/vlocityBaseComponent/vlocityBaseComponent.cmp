@@ -1,0 +1,34 @@
+<!--c:super-->
+<aura:component extensible="true" controller="vlocity_cmt.ActionDisplayController" access="GLOBAL">
+    <aura:attribute name="height" type="String" access='global'/> 
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="recordType" type="String" access='global' default=""/>
+    <aura:attribute name="applicableTypes" type="String[]" default="[]" access='global'/>
+    <aura:attribute name="Id" type="String"/>
+    <aura:attribute name="src" type="String" access='global' default=""/>
+    <aura:attribute name="width" type="String" access='global'/>
+    <aura:attribute name="display" type="String" default="block"/>
+    <aura:attribute name="isValid" type="Boolean" default="true"/>
+    <aura:attribute name="isPreview" type="Boolean" default="false"/>
+    <aura:attribute name="hostURL" type="String" access='global'/> 
+    <aura:attribute name="baseURL" type="String" access='global'/>
+    <aura:attribute name="nsPrefix" type="String" access='global'/>
+   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{!v.isValid}">
+        <aura:if isTrue="{!(v.recordType != undefined)}">
+            <iframe id="iFrame" src='{!v.hostURL + v.src}'
+                    width='{!v.width}' height='{!v.height}' frameBorder="0px" 
+                    scrolling="false" markerUnits="strokeWidth"/>
+         </aura:if>
+    </aura:if>
+    <aura:if isTrue="{!v.isValid == false}">
+        <!-- Give warning message in preview -->
+        <aura:if isTrue="{!v.isPreview}">
+            <ui:message title="Warning: Invalid Object Type" severity="warning" closable="false" class="{!v.Id}">
+                Cannot use {!v.Id} component on {!v.recordType} type
+            </ui:message>
+        </aura:if>
+    </aura:if>
+</aura:component>

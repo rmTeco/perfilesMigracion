@@ -1,0 +1,41 @@
+.vlocity {
+    .ta-pagination {
+        &-link-pages {
+            &--previewsPage a, &--nextPage a {
+                min-width: 85px;
+            }
+        }
+        .pagination-grid {
+            padding: 15px;
+            
+            .disabled {
+                cursor: not-allowed;
+                color: grey;
+            }
+            
+            .active {
+                color: #000;
+            }
+            
+            &-optionIcon {
+                position: absolute;
+                top: 0;
+                right: 7px;
+                transform: translate(0,20%);
+                
+                .slds-icon {
+                    fill: #9FAAB5;
+                    width: 15px;
+                }
+            }
+            
+            &-dropdown.slds-dropdown-trigger--click {
+                width : 100px;
+            }
+            
+            &-dropdown-expanded.slds-dropdown--left {
+                width : 100%;
+            }
+        }
+    }
+}

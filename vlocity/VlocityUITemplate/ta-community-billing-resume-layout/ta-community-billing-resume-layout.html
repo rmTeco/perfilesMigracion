@@ -1,0 +1,119 @@
+<div class="via-slds slds-m-around--small ng-scope" ng-controller="refillHistoryController as ctrl" ng-init="init()">
+
+<div>
+
+    
+</div>
+
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;" ng-if="!ctrl.mobile">
+            
+            <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-p-around--medium" >
+                
+				<div class="slds-float--left" style="margin-top:15px;">
+					<span class="lineNumber">Cuenta: {{params.numeroServicio}}</span><br/>
+					<span style="font-size: smaller; font-weight: bold;"> {{params.numeroServicio}}</span><br/>
+					<span style="font-size: medium;">Diréccion: {{params.direccionFactura}} <br/>Recepción de Factura: {{params.direccionFactura}}</span>
+				</div>
+			<hr/> 	
+            </div>
+			
+
+			<div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-p-around--medium">
+				<span class="slds-text-heading--medium">Saldo: <b>${{saldoPorTipoBalance | number:2}}</b></span>
+			</div>
+
+
+            <div class="slds-grid slds-wrap slds-grid--pull-padded slds-m-around--medium slds-p-around--medium negotationsfilter">
+    
+                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-4 slds-large-size--1-of-4">
+                    <div id="divExterno" class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+                        <label class="slds-text-heading--small">Fecha de inicio
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control">
+                                    <div    class="slds-button slds-input__icon slds-text-color--default" 
+                                            aria-expanded="false" 
+                                            tabindex="1" 
+                                            for="text-input-id-1">
+                                            <slds-svg-icon  sprite="'utility'" 
+                                                            icon="'event'" 
+                                                            size="'x-small'" 
+                                                            no-hint="true"
+                                                            extra-classes="'slds-icon-text-default'">
+                                            </slds-svg-icon>
+                                    </div>
+                                    <input  
+                                        id="text-input-id-1"
+                                        name="minDate"
+                                        class="slds-input" 
+                                        type="datetime" 
+                                        ng-change="setMinDate(filterOptionRangoDesde)"
+                                        ng-model="filterOptionRangoDesde"
+                                        onkeydown="return false"
+                                        slds-date-picker
+                                        date-format="dd/MM/yyyy"
+                                        max-date="{{maxDateValueFrom}}"
+                                        min-date="{{minDateValueFrom}}"/>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-4 slds-large-size--1-of-4">
+                    <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+                        <label class="slds-text-heading--small">Fecha de fin
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control">
+                                <div    class="slds-button slds-input__icon slds-text-color--default" 
+                                        aria-expanded="false" 
+                                        tabindex="2" 
+                                        for="text-input-id-2">
+                                        <slds-svg-icon  sprite="'utility'" 
+                                                        icon="'event'" 
+                                                        size="'x-small'" 
+                                                        no-hint="true"
+                                                        extra-classes="'slds-icon-text-default'">
+                                        </slds-svg-icon>
+                                </div>
+                                <input  id="text-input-id-2"
+                                        name="maxDate"
+                                        class="slds-input" 
+                                        type="datetime"
+                                        placeholder=""
+                                        ng-change="setMaxDate(filterOptionRangoHasta)"
+                                        ng-model="filterOptionRangoHasta"
+                                        onkeydown="return false"
+                                        slds-date-picker 
+                                        date-format="dd/MM/yyyy"
+                                        min-date="{{minDateValueTo}}"
+                                        max-date="{{maxDateValueTo}}"/>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-4 slds-large-size--1-of-4">
+                    <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--small">
+                        <button ng-click="filtersAccepted()" class="slds-button slds-button--brand filterNegotiations slds-p-horizontal--x-large slds-p-vertical--x-small">Consultar</button>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+            
+            <div  ng-class="errorFound ? 'slds-visible' : 'slds-hidden'"
+                  class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--small">
+                 <div class="slds-text-align--left slds-text-color--error">{{errorMessage}}
+                 </div>
+            </div>
+
+            <div ng-class="{'slds-hide': !showGrid}">
+            <vloc-card ng-repeat="card in cards" 
+                ng-model="card" 
+                data="card" 
+                records="records"
+                index="{{$index}}" 
+                session-id="{{sessionId}}">
+            </vloc-card>
+
+            </div>
+            
+    </div>

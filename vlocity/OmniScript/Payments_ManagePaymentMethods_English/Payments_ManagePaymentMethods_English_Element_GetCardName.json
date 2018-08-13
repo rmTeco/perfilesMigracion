@@ -1,0 +1,39 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 2,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-ManagePaymentMethodsForCredit",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Payments/ManagePaymentMethods/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 10,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/Payments/ManagePaymentMethods/English",
+        "Name": "PaymentMethods",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Payments/ManagePaymentMethods/English/PaymentMethods",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "PaymentMethods",
+    "%vlocity_namespace%__ParentElementType__c": "Edit Block",
+    "%vlocity_namespace%__PropertySet__c": {
+        "controlWidth": 5,
+        "dataType": "Text",
+        "dateFormat": "MM-dd-yyyy",
+        "disOnTplt": false,
+        "expression": "IF( %First3Digits|n% = '469' ,       'TARJETA TITANIO',\nIF( %First3Digits|n% = '496' ,       'TARJETA SU CREDITO',\nIF( %First3Digits|n% = '497' ,       'TARJETA UNICA',\nIF( %First3Digits|n% = '492' ,       'TARJETA CORDOBESA',\nIF( %First3Digits|n% = '490' ,       'TARJETA MAS',\nIF( %First3Digits|n% = '487' ,       'TARJETA CMR',\nIF( %First3Digits|n% = '491' ,       'TARJETA CONFIABLE',\nIF( %First3Digits|n% = '406' ,       'CREDENCIAL',\nIF( %First3Digits|n% = '403' ,       'MASTERCARD',\nIF( %First3Digits|n% = '405' ,       'CABAL',\nIF( %First3Digits|n% = '404' ,       'VISA',\nIF( %First3Digits|n% = '436' ,       'TARJETA SHOPPING',\nIF( %First3Digits|n% = '446' ,       'DATA 2000',\nIF( %First3Digits|n% = '420' ,       'NEVADA',\nIF( %First3Digits|n% = '411' ,       'KADICARD',\nIF( %First3Digits|n% = '429' ,       'MIRA',\nIF( %First3Digits|n% = '414' ,       'TARJETA ARGENTA',\nIF( %First3Digits|n% = '445' ,       'COOPEPLUS',\nIF( %First3Digits|n% = '427' ,       'CREDIMAS',\nIF( %First3Digits|n% = '413' ,       'TARJETA AZUL',\nIF( %First3Digits|n% = '424' ,       'CARTA AUTOMATICA',\nIF( %First3Digits|n% = '408' ,       'DINERS',\nIF( %First3Digits|n% = '444' ,       'NARANJA-VISA',\nIF( %First3Digits|n% = '443' ,       'SIDECREER',\nIF( %First3Digits|n% = '409' ,       'NARANJA',\nIF( %First3Digits|n% = '421' ,       'VISA PROVENCRED',\nIF( %First3Digits|n% = '377' ,       'AMERICAN EXPRESS',\nIF( %First3Digits|n% = '425' ,       'TARJETA GRUPAR',\nIF( %First3Digits|n% = '428' ,       'TARJETA NATIVA',\nIF( %First3Digits|n% = '522' ,       'CENTROCARD',\nIF( %First3Digits|n% = '498' ,       'MAESTRO',\nIF( %First3Digits|n% = '468' ,       'TARJETA SOL',\nIF( %First3Digits|n% = '499' ,       'ELECTRON',\nIF( %First3Digits|n% = '503' ,       'TARJETA CONSUMAX',\nIF( %First3Digits|n% = '467' ,       'TARJETA CREDICASH',\n''\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)\n)",
+        "hide": false,
+        "hideGroupSep": false,
+        "inputWidth": 12,
+        "label": null,
+        "show": null,
+        "showInputWidth": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Formula",
+    "Name": "GetCardName",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Payments/ManagePaymentMethods/English/GetCardName"
+}

@@ -1,0 +1,53 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes"  access='GLOBAL' >
+    <aura:attribute name="height" type="String" access='global'/> 
+    <aura:attribute name="width" type="String" access='global'/>
+    <aura:attribute name="isOmniScriptValid" type="Boolean" default="true" /> 
+    <aura:attribute name="isPreview" type="Boolean" default="false" />
+
+    <aura:attribute name="extraParams" type="Object" access="public" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <style>
+        .omni-script.preview-block{
+            background: #EDEDED;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .panel-heading{
+            padding: 10px 10px;
+            height: 24px;
+            margin: 0;
+            position: inherit;
+            color: #059DD3;
+            margin-top:10px;
+            line-height: 1;
+            font-family: "Salesforce Sans", Arial, sans-serif;
+            text-transform: uppercase;
+            padding-left: 0;
+        }
+        .omni-script.preview-block h5{
+            width: 750%
+            font-size: 32px;
+            color: #059DD3;
+            font-family: "Salesforce Sans", Arial, sans-serif;
+        }
+    </style>
+   
+    <aura:if isTrue="{!v.isPreview}">
+        <div class="omni-script preview-block" style="{!'max-height:' + v.height + '; min-height: 100px;'}">
+            <h5>Your OmniScript Will Appear Here At Runtime</h5>
+        </div>
+        <aura:set attribute="else">  
+            <aura:if isTrue="{!v.isOmniScriptValid}"> 
+                <div class="omni-script" id="frame">
+                    {!v.body}
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.isOmniScriptValid == false}"> 
+                <ui:message title="Loading Error" severity="error" closable="false">OmniScript Does Not Exist</ui:message>
+            </aura:if>
+        </aura:set>  
+    </aura:if>
+</aura:component>

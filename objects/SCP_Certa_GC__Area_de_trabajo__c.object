@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>SCP_Certa_GC__Conocimiento_del_Area__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Conocimiento del Area</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alto</fullName>
+                    <default>false</default>
+                    <label>Alto</label>
+                </value>
+                <value>
+                    <fullName>Medio</fullName>
+                    <default>false</default>
+                    <label>Medio</label>
+                </value>
+                <value>
+                    <fullName>Bajo</fullName>
+                    <default>false</default>
+                    <label>Bajo</label>
+                </value>
+                <value>
+                    <fullName>Aún no tengo contacto</fullName>
+                    <default>false</default>
+                    <label>Aún no tengo contacto</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Cuenta__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Cuenta</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Areas de trabajo</relationshipLabel>
+        <relationshipName>Areas_de_trabajo</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Tipo_de_Area__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tipo de Area</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Comunicaciones</fullName>
+                    <default>false</default>
+                    <label>Comunicaciones</label>
+                </value>
+                <value>
+                    <fullName>Sistemas</fullName>
+                    <default>false</default>
+                    <label>Sistemas</label>
+                </value>
+                <value>
+                    <fullName>Seguridad</fullName>
+                    <default>false</default>
+                    <label>Seguridad</label>
+                </value>
+                <value>
+                    <fullName>Digitalización</fullName>
+                    <default>false</default>
+                    <label>Digitalización</label>
+                </value>
+                <value>
+                    <fullName>Transformación</fullName>
+                    <default>false</default>
+                    <label>Transformación</label>
+                </value>
+                <value>
+                    <fullName>Financiera</fullName>
+                    <default>false</default>
+                    <label>Financiera</label>
+                </value>
+                <value>
+                    <fullName>Área de Negocio</fullName>
+                    <default>false</default>
+                    <label>Área de Negocio</label>
+                </value>
+                <value>
+                    <fullName>RRHH</fullName>
+                    <default>false</default>
+                    <label>RRHH</label>
+                </value>
+                <value>
+                    <fullName>Bienes e Inmuebles</fullName>
+                    <default>false</default>
+                    <label>Bienes e Inmuebles</label>
+                </value>
+                <value>
+                    <fullName>Áreas Corporativas</fullName>
+                    <default>false</default>
+                    <label>Áreas Corporativas</label>
+                </value>
+                <value>
+                    <fullName>Producción</fullName>
+                    <default>false</default>
+                    <label>Producción</label>
+                </value>
+                <value>
+                    <fullName>Ninguna de las anteriores</fullName>
+                    <default>false</default>
+                    <label>Ninguna de las anteriores</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Titulo_Area__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Titulo Area</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <gender>Masculine</gender>
+    <label>Area de trabajo</label>
+    <nameField>
+        <label>Nombre de Area</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Areas de trabajo</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

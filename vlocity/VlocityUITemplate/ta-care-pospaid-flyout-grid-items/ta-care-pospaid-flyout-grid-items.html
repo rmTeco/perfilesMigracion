@@ -1,0 +1,64 @@
+<div class="community-flyout-grid-items-card">	
+		<ul class="slds-grid">
+			<li 
+				ng-repeat="field in data.fields" 
+				ng-show="key != 'attributes'"
+				ng-class="{'service': $first}"
+				class="slds-col">		
+				<span class="service-content" ng-if="(obj | getter: field | picker: field.type) == 'Internet'">
+					<slds-svg-icon
+						sprite="'utility'"
+						icon="'broadcast'"
+						size="'x-small'"
+						extra-classes="'service-content-icon'">
+					</slds-svg-icon>
+				</span>
+				<span class="service-content" ng-if="(obj | getter: field | picker: field.type) == 'Voz'">
+					<slds-svg-icon
+						sprite="'utility'"
+						icon="'call'"
+						size="'x-small'"
+						extra-classes="'service-content-icon'">
+					</slds-svg-icon>
+				</span>
+				<span class="service-content" ng-if="(obj | getter: field | picker: field.type) == 'SMS'">
+					<slds-svg-icon
+						sprite="'utility'"
+						icon="'sms'"
+						size="'x-small'"
+						extra-classes="'service-content-icon'">
+					</slds-svg-icon>
+				</span>
+				
+				<div>{{field.label}}</div>
+				<label class="value" ng-if="!obj[field.relationshipName]">
+					{{obj | getter: field | picker: field.type}}
+				</label>
+				<label class="value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</label>
+			</li>
+			<li class="slds-col"
+			    ng-repeat="field in data.fields" >
+			    <div ng-if="(obj | getter: field | picker: field.type) == 'Internet'">
+					<div class="demo-wrapper html5-progress-bar">
+					    <div>
+					        
+					    </div>
+                        <div class="progress-bar-wrapper">
+                            <progress id="progressbar" value="50" max="100"></progress>
+                        </div>
+                    </div>
+				</div>
+			</li>
+			<li class="slds-col">
+				<div class="startActions-item actions slds-col">
+					<span ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+						 <button class="slds-button slds-button--neutral slds-truncate" href="#" ng-click="performAction(action)" hotkey-card-action>
+							 <span class="slds-text-body_regular ta-button-font">{{action.displayName}}</span>
+						</button> 
+						 <!-- <span class="separator" ng-show="!$last">|</span> -->
+					</span>
+				</div>
+			</li>
+		</ul>
+		
+	</div>

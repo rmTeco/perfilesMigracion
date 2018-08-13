@@ -1,0 +1,35 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "8011I000000ChBc"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/listsofvalues?listkeys=PaymentChoice&cartId={{params.id}}",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "listkeys": "PaymentChoice"
+            },
+            "methodType": "GET",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.CpqAppHandler"
+            },
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getListsOfValues",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-base-header-payment-choice"
+        }
+    }
+}

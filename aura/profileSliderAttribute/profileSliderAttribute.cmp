@@ -1,0 +1,24 @@
+<aura:component access="GLOBAL">
+    <aura:registerEvent name="change" type="vlocity_cmt:profileAttributeValueChangedEvent"/>
+    <aura:attribute name="attributeName" type="String"/>
+    <aura:attribute name="attributeValue" type="Integer"/>    
+    <aura:attribute name="appliedAttributeCode" type="String"/>    
+    
+    <section class="slider-attribute" onclick="{!c.cancelOnclick}">
+        <header>
+        	<h3>{!v.attributeName}</h3>
+        </header>
+        <article>
+            <input class="" type="range" min="1" max="5" step="1" value="{!v.attributeValue}"
+                   onchange="{!c.sliderValueChanged}" />
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </article>
+    </section>
+    
+</aura:component>

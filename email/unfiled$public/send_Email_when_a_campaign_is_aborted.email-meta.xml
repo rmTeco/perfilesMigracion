@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>send Email when a campaign is aborted</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>send Email when a campaign is aborted</name>
+    <style>none</style>
+    <subject>La campaña {!Campaign.Name} fue abortada</subject>
+    <textOnly>{!Campaign.Link}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

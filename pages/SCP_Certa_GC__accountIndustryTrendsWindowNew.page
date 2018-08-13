@@ -1,0 +1,2203 @@
+<apex:page sidebar="false" controller="SCP_Certa_GC.accountIndustryTrends" tabStyle="Strategic_Client_Plan__tab">
+    
+    <c:SCPMenu ></c:SCPMenu>
+        
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUI}"  />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUITouch}" />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__DataTable}"  />
+    
+    <style>
+        table.dataTable thead .sorting {
+          background: #f2f3f3 url("{!URLFOR($Resource.SCP_Certa_GC__DataTableImg, 'sort_both.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_asc {
+          background: #f2f3f3 url("{!URLFOR($Resource.SCP_Certa_GC__DataTableImg, 'sort_asc.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_desc {
+          background: #f2f3f3 url("{!URLFOR($Resource.SCP_Certa_GC__DataTableImg, 'sort_desc.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_asc_disabled {
+          background: #f2f3f3 url("{!URLFOR($Resource.SCP_Certa_GC__DataTableImg, 'sort_asc_disabled.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_desc_disabled {
+          background: #f2f3f3 url("{!URLFOR($Resource.SCP_Certa_GC__DataTableImg, 'sort_desc_disabled.png')}") no-repeat center right ! important;
+        }
+        
+        table.dataTable thead .sorting_asc,
+        table.dataTable thead .sorting_desc,
+        table.dataTable thead .sorting {
+          cursor: pointer;
+          *cursor: hand;
+        }
+        
+        .dataTables_filter {
+            text-align: right ! important;
+            padding-right: 15px ! important;
+        }
+        
+        .abbrTd div {
+            width: 200px;
+        }
+        
+        .abbrTd span {
+            overflow: hidden;
+            width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap; 
+            display: inline-block;
+        }
+        
+        .abbrOpp {
+            width: 60px;
+            overflow: hidden;
+            display: inline-flex;
+        }
+        
+        .PopupHolder {
+            float:left;
+            margin-right: 6px;
+        }
+        
+	    .NotUsed{
+            background-color: white ! important;
+        }
+
+        .hasPotentialBussiness {
+            background-color: #1797c0 ! important;    
+        }
+
+        .hasOpportunity {
+            background-color: #FFDBDB ! important;        
+        }
+	    
+        .hasOpportunityAndPotencial{
+        background-color: #4ab471 ! important;
+        
+        }
+        
+        .NotUsedSampleText, .hasPotentialBussinessSampleText, .hasOpportunitySampleText {
+        /*font-weight:bold;  margin:10px*/
+        	font-size:14px;
+        }
+        
+        .NotUsedSample, .hasPotentialBussinessSample, .hasOpportunitySample {
+        	/*border: 1px solid black;*/    
+		    width: 20px;
+		    height: 20px;
+        	/*line-height: 30px;*/    
+        }
+        
+        .NotUsedSampleText {    
+		    color: white ! important;
+        	color: #2d839a ! important;
+       	}
+        .NotUsedSample {    		    
+        	background-color: white ! important;		    
+		}
+        
+        .hasPotentialBussinessSampleText {    
+		    color: #1797c0 ! important;
+        	color: #2d839a ! important;
+       	}
+        .hasPotentialBussinessSample {    		    
+		    background-color: #1797c0 ! important;        	
+		}
+        
+        .hasOpportunitySampleText {    
+		    color: #FFDBDB ! important;
+        	color: #2d839a ! important;
+       	}        
+        .hasOpportunitySample {
+		    background-color: #ffdbdb ! important;       	
+		}
+        
+        .ScrollingDiv{
+            overflow-y:auto;
+            overflow-x: auto;
+            max-height:300px;
+            /*max-width: 800px;*/
+        }
+        
+        .AddPopup {
+            position: absolute;
+            margin-top: 14px;
+            padding: 5px;
+            background-color: #eee;
+            border: 1px solid black;
+            width: 100px;
+            white-space: normal;
+            min-height: 14px;
+            margin-left: -43px;
+            border-radius: 3px;
+            display:none;
+        }
+        
+        .ui-state-hover{
+            background-color: lightgreen ! important;
+        }
+        
+        .ui-draggable-dragging{
+            background-color: white;
+            border: 1px solid gray;
+        }
+        
+        .ui-draggable-dragging>td{
+            padding-left: 4px;
+            padding-right: 2px;
+        }
+        
+        .ui-draggable-dragging>.TdName, .ui-draggable-dragging>.TdLink{
+            display:none;
+        }
+        
+        .DraggableRow{
+            cursor:move;
+        }
+        
+        .PopupHolder{
+            float:right;
+            margin-right: 6px;
+            margin: 5px;
+        }
+        
+        .PopupHolder *{
+            box-sizing: content-box;
+        }
+            
+        #mainTable th, #mainOppsTable th{
+            padding-right: 15px;
+        }
+                
+        .dataTables_filter {
+            text-align: right ! important;
+            padding-right: 15px ! important;
+        } 
+        
+        .label-link a {
+            color: white;
+        }
+        
+        .removeSpan {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .filterHelpImage {
+            width: 20px;
+            height: 20px;
+            background: url('/img/help/helpOrbs.gif');
+            background-size: 55px 20px;
+            background-repeat: no-repeat;
+            background-position: -30px 0px;
+            cursor: pointer; 
+        }
+        
+        #filterDiv select {
+            width: 120px;
+        }
+        
+        #filterDiv input {
+            width: 120px;
+        }
+        
+        
+        
+    </style>
+    
+    <script>
+    jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+        "currency-pre": function ( a ) {
+            console.log(a);
+            a = (a==="-") ? 0 : a.slice(a.indexOf("$")+1, a.indexOf("</span>"));
+            a = a.replace(/\./g, "");
+            a = a.slice(0, a.indexOf(","));
+            console.log(a);
+            return a;
+        },
+        
+        
+        "currency-asc": function ( a, b ) {
+            return a - b;
+        },
+        
+        "currency-desc": function ( a, b ) {
+            return b - a;
+        }
+    } );
+    </script>
+    
+    <script>
+        $j = jQuery.noConflict();        
+        
+        $j(document).ready(function() {
+            init();
+            
+            $j("#showFilter").live("click",function(){
+                $j("#showFilter").fadeOut();
+                $j("#filterDiv").fadeIn();
+            });
+            $j("#hideFilter").live("click",function(){
+                $j("#filterDiv").fadeOut();
+                $j("#showFilter").fadeIn();                    
+            }); 
+            
+            $j(".removeSpan").live("click",function(){
+                $j("input",$j("#value"+$j(this).attr("id"))).val("");
+                $j("select",$j("#field"+$j(this).attr("id"))).val("--None--").change();
+                $j("select",$j("#operator"+$j(this).attr("id"))).val("--None--").change();
+            });
+                        
+            $j("#showFilterLogic").live("click",function(){
+                
+                var filterLogic = "";
+                if ($j("input",$j("#value0Span")).val() != "") {
+                    filterLogic += "1";
+                }
+                if ($j("input",$j("#value1Span")).val() != "") {
+                    if (filterLogic != "") {
+                        filterLogic += " AND ";
+                    }
+                    filterLogic += "2";
+                }
+                if ($j("input",$j("#value2Span")).val() != "") {
+                    if (filterLogic != "") {
+                        filterLogic += " AND ";
+                    }
+                    filterLogic += "3";
+                }
+                if ($j("input",$j("#value3Span")).val() != "") {
+                    if (filterLogic != "") {
+                        filterLogic += " AND ";
+                    }
+                    filterLogic += "4";
+                }
+                if ($j("input",$j("#value4Span")).val() != "") {
+                    if (filterLogic != "") {
+                        filterLogic += " AND ";
+                    }
+                    filterLogic += "5";
+                }
+                $j("input",$j("#filterLogicSpan")).val(filterLogic);
+                
+                $j("#filterLogicDiv").fadeIn();
+                $j(this).fadeOut();
+                $j(".andSpan").fadeOut();               
+            });
+            
+            $j("#hideFilterLogic").live("click",function(){
+                $j("#filterLogicDiv").fadeOut();
+                $j("#showFilterLogic").fadeIn();
+                $j("input",$j("#filterLogicSpan")).val("");
+                $j(".andSpan").fadeIn();
+            });                        
+        });
+        
+        function init(){
+            if ({!CanEdit}) {
+                $j(".DraggableRow").unbind().draggable({
+                        appendTo: "body",
+                        helper: "clone",
+                        cursor: "move",
+                        containment: "body",
+                        cursorAt: {top:-10}
+                });
+            
+                $j(".droppableTD").unbind().droppable({
+                    activeClass: "ui-state-default",
+                    hoverClass: "ui-state-hover",
+                    accept: ".DraggableRow",
+                    tolerance: "pointer",            
+                    drop: function( event, ui ) {               
+                        
+                        if ($j(ui.draggable).hasClass("IndustryTrendsRow")) {
+                            linkTrendAction($j(ui.draggable).attr("id"),$j(this).parent().attr("id"));
+                        }
+                        
+                        if ($j(ui.draggable).hasClass("StrategicInitiativeRow")) {
+                            linkIniciativeAction($j(ui.draggable).attr("id"),$j(this).parent().attr("id"));
+                        }
+                        
+                        if ($j(ui.draggable).hasClass("PastProvenValueNewRow")) {
+                            linkPastProventValue($j(ui.draggable).attr("id"),$j(this).parent().attr("id"));
+                        }
+    
+                    }
+                });
+            }
+            
+            
+            $j(".PopupHolder").mouseenter(function(event){
+                if ($j(this).children(".lookupHoverDetail").css("display") == "none") {
+                    $j(this).children(".lookupHoverDetail").css("top",event.clientY + 'px');
+                    $j(this).children(".lookupHoverDetail").css("left",(event.clientX - 360) + 'px');
+                    $j(this).children(".lookupHoverDetail").css("position","fixed");            
+                    $j(this).children(".lookupHoverDetail").show();             
+                }
+            });
+            
+            $j(".PopupHolder").mouseleave(function(){
+                $j(this).children(".lookupHoverDetail").hide();
+            });
+            
+                        
+            $j(".linkPopUp").mouseenter(function(event){
+                var id = $j(this).attr("data-id"); 
+                LookupHoverDetail.getHover('lookup'+id+'opp4', '/'+id+'/m?retURL=/'+id+'&isAjaxRequest=1').show();
+                $j("#lookup"+id+"opp4Hover").css("top",event.clientY + 'px');
+                $j("#lookup"+id+"opp4Hover").css("left",event.clientX + 'px');
+                $j("#lookup"+id+"opp4Hover").css("position","fixed");               
+            });
+            
+            $j(".linkPopUp").mouseleave(function(event){
+                var id = $j(this).attr("data-id");
+                LookupHoverDetail.getHover('lookup'+id+'opp4').hide();                                                              
+            });
+                   
+            $j("#mainTable").dataTable({
+                "bPaginate": false,        
+                "bInfo": false
+            });
+            
+            $j("#mainOppsTable").dataTable({
+                "bPaginate": false,
+                "aoColumns": [
+                    null,
+                    {"sType": "currency"},
+                    null,
+                    null,
+                    null,
+                    null
+                ],
+                "bInfo": false
+            });
+
+            $j("#mainTableSolutions").dataTable({
+                "bPaginate": false,        
+                "bInfo": false
+            });
+            
+            $j(".showMore").click(function(){
+                
+                var gparent = $j(this).parent().parent();
+                
+                $j(".lessSpan", gparent).fadeOut(function(){
+                    $j(".moreSpan", gparent).fadeIn();
+                });
+            });
+            
+            $j(".showLess").click(function(){
+                var gparent = $j(this).parent().parent();
+                $j(".moreSpan", gparent).fadeOut(function(){
+                    $j(".lessSpan", gparent).fadeIn();
+                });              
+            });
+                    
+        }
+            
+        function ajaxshow(){
+        
+            $j(".ajaxloader").show();
+        
+        }    
+        function ajaxstop(){
+        
+            $j(".ajaxloader").hide();
+            init();
+        
+        }
+    </script>
+    
+
+    
+    <apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="Content">
+        <apex:pageMessages id="errorMsg" />
+        <div class="panel panel-default">
+            <apex:form >
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span style="float:left;">
+                            {!$Label.scp_certa_gc__opportunities_value_proposition}
+                        </span>
+
+                        <span style="float:left;">
+                            <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/F65rpPzC5j4"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                        </span>
+                    </h3>
+                    
+                    <div class="row paddingRight">  
+                        
+                        <apex:actionFunction action="{!exportToExcelTrendWindows}" name="exportToExcel"/>
+                        <apex:actionFunction name="linkTrendAction" action="{!linkTrend}" rerender="panelOpportunities,panelDrivers,panelSolution" status="renderMeStatus" >
+                            <apex:param name="firstParam" assignTo="{!trendid}" value="" />
+                            <apex:param name="secondParam" assignTo="{!oppid}" value="" />
+                        </apex:actionFunction> 
+                        <apex:actionFunction name="linkIniciativeAction" action="{!linkIniciative}" rerender="panelOpportunities,panelDrivers,panelSolution" status="renderMeStatus" >
+                            <apex:param name="firstParam" assignTo="{!iniciativeid}" value="" />
+                            <apex:param name="secondParam" assignTo="{!oppid}" value="" />
+                        </apex:actionFunction>
+                        <apex:actionFunction name="linkPastProventValue" action="{!linkPastProventValue}" rerender="panelOpportunities,panelDrivers,panelSolution" status="renderMeStatus" >
+                            <apex:param name="firstParam" assignTo="{!pastProventValueid}" value="" />
+                            <apex:param name="secondParam" assignTo="{!oppid}" value="" />
+                        </apex:actionFunction>
+                        
+                        <div class="btn-group pull-right" role="group" aria-label="...">                            
+                            <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+                                <span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+                            </button>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                
+                <div class="panel-body">
+                    <apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="ajaxstop()"/>
+                    <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+                        <img src="{!$Resource.AjaxLoader}"/><br/>Loading...
+                    </div>                                          	             	
+                    <div class="alert alert-info" role="alert">	
+                        <span class="glyphicon glyphicon-info-sign"></span>	    				
+                        <span class="messageText"><span style="font-weight:bold;  margin:5px">{!$Label.Asignacion_value_drivers}</span><br/>
+                            
+                            <div class="row">
+                                
+                                <div class= "col-md-3">
+                                    <span class="NotUsedSample" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="NotUsedSampleText">{!$Label.No_asignado_oportunidad}</span><br/>
+                                </div>
+                                <div class= "col-md-3">
+                                    <span class="hasPotentialBussinessSample" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="hasPotentialBussinessSampleText">{!$Label.No_asignado_oportunidad}</span><br/>
+                                </div>
+                                <div class= "col-md-3">
+                                    <span class="hasOpportunitySample" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="hasOpportunitySampleText">{!$Label.Asignado_al_menos_una}</span>
+                                </div>
+                                <div class= "col-md-3">
+                                <span class="hasOpportunityAndPotencial" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="hasOpportunitySampleText">{!$Label.Ha_sido_asignado_a_una_oportunidad_existente_y_potencial}</span> 
+                            </div>
+                                
+                            </div>
+                            
+                        </span>
+                    </div>
+                    <!-- Filter -->
+                    
+                    <div class="row" style="margin-left: 14px;margin-bottom: 10px;">
+                        <div id="filterDiv" style="display:none;">
+                            <button id="hideFilter" class="btn btn-default btn-xs">
+                                {!$Label.Hide_Filters}
+                            </button>
+                            <br/><br/>
+                            
+                            <div id="filterDiv">
+                                <apex:outputText value="{!$Label.scp_certa_gc__filter} 1:"/>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="field0Span">
+                                    <apex:selectList multiselect="false" size="1" value="{!field}">
+                                        <apex:actionSupport event="onchange" rerender="operators,values"/>
+                                        <apex:selectOptions value="{!fields}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="operator0Span">
+                                    <apex:selectList id="operators" multiselect="false" size="1" value="{!operator}">
+                                        <apex:actionSupport event="onchange" rerender="values"/>
+                                        <apex:selectOptions value="{!operators}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <apex:outputPanel id="values">
+                                    <apex:outputPanel rendered="{!fieldName==''}">
+                                        <span id="value0Span">
+                                            <apex:inputText value="{!value}" style="height: 21px;position:relative;top:-1px"/>
+                                        </span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName=='Stage'}">
+                                        <apex:selectList id="stages" multiselect="false" size="1" value="{!value}">
+                                            <apex:selectOptions value="{!stages}"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName=='Date'}">
+                                        <apex:inputField required="false" value="{!oppDummy.closedate}" />
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="0Span" class="removeSpan" >{!$Label.Remove}</span>
+                                <span class="andSpan" >{!$Label.AND}</span>
+                                <br/>
+                                <div style="width: 10px;height: 5px"></div>
+                                
+                                
+                                <apex:outputText value="{!$Label.scp_certa_gc__filter} 2:"/>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="field1Span">
+                                    <apex:selectList multiselect="false" size="1" value="{!field1}">
+                                        <apex:actionSupport event="onchange" rerender="operators1,values1"/>
+                                        <apex:selectOptions value="{!fields}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="operator1Span">   
+                                    <apex:selectList id="operators1" multiselect="false" size="1" value="{!operator1}">
+                                        <apex:actionSupport event="onchange" rerender="values1"/>
+                                        <apex:selectOptions value="{!operators1}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <apex:outputPanel id="values1">
+                                    <apex:outputPanel rendered="{!fieldName1==''}">
+                                        <span id="value1Span">
+                                            <apex:inputText value="{!value1}" style="height: 21px;position:relative;top:-1px"/>
+                                        </span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName1=='Stage'}">
+                                        <apex:selectList id="stages1" multiselect="false" size="1" value="{!value1}">
+                                            <apex:selectOptions value="{!stages}"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName=='Date'}">
+                                        <apex:inputField required="false" value="{!oppDummy1.closedate}"/>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="1Span" class="removeSpan" >{!$Label.Remove}</span>
+                                <span class="andSpan" >{!$Label.AND}</span>
+                                <br/>
+                                <div style="width: 10px;height: 5px"></div>
+                                
+                                
+                                <apex:outputText value="{!$Label.scp_certa_gc__filter} 3:"/>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="field2Span">
+                                    <apex:selectList multiselect="false" size="1" value="{!field2}">
+                                        <apex:actionSupport event="onchange" rerender="operators2,values2"/>
+                                        <apex:selectOptions value="{!fields}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="operator2Span">
+                                    <apex:selectList id="operators2" multiselect="false" size="1" value="{!operator2}">
+                                        <apex:actionSupport event="onchange" rerender="values2"/>
+                                        <apex:selectOptions value="{!operators2}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <apex:outputPanel id="values2">
+                                    <apex:outputPanel rendered="{!fieldName2==''}">
+                                        <span id="value2Span">
+                                            <apex:inputText value="{!value2}" style="height: 21px;position:relative;top:-1px"/>
+                                        </span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName2=='Stage'}">
+                                        <apex:selectList id="stages2" multiselect="false" size="1" value="{!value2}">
+                                            <apex:selectOptions value="{!stages}"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName=='Date'}">
+                                        <apex:inputField required="false" value="{!oppDummy2.closedate}"/>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="2Span" class="removeSpan" >{!$Label.Remove}</span>
+                                <span class="andSpan" >{!$Label.AND}</span>
+                                <br/>
+                                <div style="width: 10px;height: 5px"></div>
+                                
+                                
+                                <apex:outputText value="{!$Label.scp_certa_gc__filter} 4:"/>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="field3Span">                          
+                                    <apex:selectList multiselect="false" size="1" value="{!field3}">
+                                        <apex:actionSupport event="onchange" rerender="operators3,values3"/>
+                                        <apex:selectOptions value="{!fields}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="operator3Span">   
+                                    <apex:selectList id="operators3" multiselect="false" size="1" value="{!operator3}">
+                                        <apex:actionSupport event="onchange" rerender="values3"/>
+                                        <apex:selectOptions value="{!operators3}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <apex:outputPanel id="values3">
+                                    <apex:outputPanel rendered="{!fieldName3==''}">
+                                        <span id="value3Span">
+                                            <apex:inputText value="{!value3}" style="height: 21px;position:relative;top:-1px"/>
+                                        </span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName3=='Stage'}">
+                                        <apex:selectList id="stages3" multiselect="false" size="1" value="{!value3}">
+                                            <apex:selectOptions value="{!stages}"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName=='Date'}">
+                                        <apex:inputField required="false" value="{!oppDummy3.closedate}"/>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="3Span" class="removeSpan" >{!$Label.Remove}</span>
+                                <span class="andSpan" >{!$Label.AND}</span>
+                                <br/>
+                                <div style="width: 10px;height: 5px"></div>
+                                
+                                
+                                <apex:outputText value="{!$Label.scp_certa_gc__filter} 5:"/>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="field4Span">
+                                    <apex:selectList multiselect="false" size="1" value="{!field4}">
+                                        <apex:actionSupport event="onchange" rerender="operators4,values4"/>
+                                        <apex:selectOptions value="{!fields}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <span id="operator4Span">
+                                    <apex:selectList id="operators4" multiselect="false" size="1" value="{!operator4}">
+                                        <apex:actionSupport event="onchange" rerender="values4"/>
+                                        <apex:selectOptions value="{!operators4}"/>
+                                    </apex:selectList>
+                                </span>
+                                <div style="width: 10px;float: left;"></div>
+                                <apex:outputPanel id="values4">
+                                    <apex:outputPanel rendered="{!fieldName4==''}">
+                                        <span id="value4Span">
+                                            <apex:inputText value="{!value4}" style="height: 21px;position:relative;top:-1px"/>
+                                        </span>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName4=='Stage'}">
+                                        <apex:selectList id="stages4" multiselect="false" size="1" value="{!value4}">
+                                            <apex:selectOptions value="{!stages}"/>
+                                        </apex:selectList>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!fieldName=='Date'}">
+                                        <apex:inputField required="false" value="{!oppDummy4.closedate}"/>
+                                    </apex:outputPanel>
+                                </apex:outputPanel>             
+                                <span id="4Span" class="removeSpan" >{!$Label.Remove}</span>
+                                <br/>
+                                <div style="width: 10px;height: 5px"></div>
+                                
+                                <span id="showFilterLogic" class="btn btn-default btn-xs" style="font-family: inherit;margin-left: 0px;">
+                                    {!$Label.Add_Filter_Logic}
+                                </span>
+                                <br/>
+                                <div id="filterLogicDiv" style="display:none">
+                                    <apex:outputText value="{!$Label.scp_certa_gc__filter_logic}:"/>
+                                    <div style="width: 10px;float: left;"></div>
+                                    <span id="filterLogicSpan">
+                                        <apex:inputText value="{!filterLogic}" style="height: 21px"/>
+                                    </span>
+                                    <span class="filterHelpImage" title="{!$Label.filterHelp}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <br/>
+                                    <br/>
+                                    <span id="hideFilterLogic" class="btn btn-default btn-xs" style="font-family: inherit;margin-left: 0px;">
+                                        {!$Label.Remove} {!$Label.Filter_Logic}
+                                    </span>
+                                </div>
+                                <br/>   
+                                <apex:commandButton styleClass="btn btn-default btn-xs" action="{!setFilter}" value="{!$Label.scp_certa_gc__apply_filters}" id="theButton" rerender="panelOpportunities,panelDrivers,panelSolution,errorMsg" status="renderMeStatus" oncomplete="createDataTableSerch()"/>
+                            </div>
+                            
+                        </div>
+                        
+                        <!--
+                        <button id="showFilter" class="btn btn-default btn-xs">
+                            {!$Label.Show_Filters}
+                        </button>
+						-->
+                    </div>
+                    
+                    <!-- End Filter -->                
+                    <apex:outputPanel id="panelOpportunities">
+                        <div class="ScrollingDiv">
+                            <span style="float: left;font-weight: bold;">{!$Label.Opportunities}</span>
+                            <table id="mainOppsTable" class="table table-striped table-bordered table-condensed" style="width:100%;">                               
+                                <thead>
+                                    <tr class="headerRow">
+                                        <!-- <th scope="col" width="25px" class=" deemphasize">RDM</th>  -->                                      
+                                        <th scope="col" class=" deemphasize" style="width: 30%;">{!$Label.Nombre_de_la_oportunidad}</th>
+                                        <th scope="col" class=" deemphasize">{!$ObjectType.Opportunity.fields.Amount.label}</th>
+                                        <th scope="col" class=" deemphasize">{!$ObjectType.Opportunity.fields.Probability.label}</th>
+                                        <th scope="col" class=" deemphasize">{!$ObjectType.Opportunity.fields.CloseDate.label}</th>
+                                        <th scope="col" class=" deemphasize">{!$ObjectType.Opportunity.fields.StageName.label}</th>
+                                        <th scope="col" class=" deemphasize">{!$Label.Related_Value_Drivers}</th>
+                                    </tr>
+                                </thead>                                                                            
+                                <tbody>
+                                    <apex:repeat value="{!opportunityWrappers}" var="OppWrapper">             
+                                        <tr id="{!OppWrapper.opp.id}" class="dataRow even">
+                                            <td class="dataCell droppableTD">
+                                                <apex:outputLink value="/{!OppWrapper.opp.id}">{!OppWrapper.opp.Name}</apex:outputLink>                                   
+                                            </td>                                    
+                                            <td class="dataCell droppableTD" style="text-align:right;">
+                                                <apex:outputField value="{!OppWrapper.opp.SCP_Certa_GC__FCV__c}"/>
+                                            </td>                                    
+                                            <td class="dataCell droppableTD" style="text-align:right;">
+                                                <apex:outputField value="{!OppWrapper.opp.Probability}"/>
+                                            </td>
+                                            <td class="dataCell droppableTD">
+                                                <apex:outputField value="{!OppWrapper.opp.CloseDate}"/>
+                                            </td>
+                                            <td class="dataCell droppableTD">
+                                                <apex:outputField value="{!OppWrapper.opp.StageName}"/>
+                                            </td>
+                                            <td class="dataCell droppableTD">                                    
+                                                <apex:repeat value="{!OppWrapper.opp.IndustryTrends__r}" var="subitem">
+                                                    <div class="PopupHolder">
+                                                        <span class="label label-primary">SL-{!subitem.Industry_Trend__r.name}</span>
+                                                        <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                            <div class="Custom50Block topRight"><div class="bPageBlock secondaryPalette">
+                                                                <div class="pbHeader">
+                                                                    <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                        <tr>
+                                                                            <td class="pbTitle"><h2 class="mainTitle">{!$Label.scp_certa_gc__solution}</h2></td>
+                                                                            <td class="pbButton"><apex:commandButton action="{!unlinkTrend}" value="{!$Label.scp_certa_gc__unlink}" rendered="{!CanEdit}" reRender="panelOpportunities,panelDrivers,panelSolution" status="renderMeStatus"><apex:param name="firstParam" assignTo="{!trendid}" value="{!subitem.id}" /></apex:commandButton></td>
+                                                                        </tr>
+                                                                        </tbody></table>
+                                                                </div>
+                                                                <div class="pbBody">
+                                                                    <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                        <tr>
+                                                                            <td class="labelCol last">{!$Label.Solution}</td>
+                                                                            <td class="dataCol last">{!subitem.Industry_Trend__r.Trend__c}</td>
+                                                                        </tr>
+                                                                        </tbody></table>
+                                                                </div>
+                                                                <div class="pbFooter secondaryPalette">
+                                                                    <div class="bg"></div>
+                                                                </div>
+                                                                </div></div>
+                                                        </div>
+                                                    </div>
+                                                </apex:repeat>
+                                                <apex:repeat value="{!OppWrapper.opp.StrategicInitiatives__r}" var="subitem">
+                                                    <div class="PopupHolder">
+                                                        <span class="label label-success">ST-{!subitem.Strategic_Initiative__r.name}</span>
+                                                        <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                            <div class="Custom50Block topRight"><div class="bPageBlock secondaryPalette">
+                                                                <div class="pbHeader">
+                                                                    <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                        <tr>
+                                                                            <td class="pbTitle"><h2 class="mainTitle">{!$Label.scp_certa_gc__iniciativa}</h2></td>
+                                                                            <td class="pbButton"><apex:commandButton action="{!unlinkIniciative}" value="{!$Label.scp_certa_gc__unlink}" rendered="{!CanEdit}" reRender="panelOpportunities,panelDrivers,panelSolution" status="renderMeStatus"><apex:param name="firstParam" assignTo="{!iniciativeid}" value="{!subitem.id}" /></apex:commandButton></td>
+                                                                        </tr>
+                                                                        </tbody></table>
+                                                                </div>
+                                                                <div class="pbBody">
+                                                                    <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                        <tr>
+                                                                            <td class="labelCol last">{!$Label.iniciativa}</td>
+                                                                            <td class="dataCol last">{!subitem.Strategic_Initiative__r.Strategic_Initiative__c}</td>
+                                                                        </tr>
+                                                                        </tbody></table>
+                                                                </div>
+                                                                <div class="pbFooter secondaryPalette">
+                                                                    <div class="bg"></div>
+                                                                </div>
+                                                                </div></div>
+                                                        </div>
+                                                    </div>
+                                                </apex:repeat>  
+                                                
+                                                <apex:repeat value="{!OppWrapper.opp.OpportunityPastProvenValueNew__r}" var="subitem">
+                                                    <div class="PopupHolder">
+                                                        <span class="label label-danger">CE-{!subitem.PastProvenValueNew__r.name}</span>
+                                                        <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                            <div class="Custom50Block topRight"><div class="bPageBlock secondaryPalette">
+                                                                <div class="pbHeader">
+                                                                    <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                        <tr>
+                                                                            <td class="pbTitle"><h2 class="mainTitle">{!$Label.scp_certa_gc__account_past_proven_value}</h2></td>
+                                                                            <td class="pbButton"><apex:commandButton action="{!unlinkPastProventValue}" value="{!$Label.scp_certa_gc__unlink}" rendered="{!CanEdit}" reRender="panelOpportunities,panelDrivers,panelSolution" status="renderMeStatus"><apex:param name="firstParam" assignTo="{!pastProventValueid}" value="{!subitem.id}" /></apex:commandButton></td>
+                                                                        </tr>
+                                                                        </tbody></table>
+                                                                </div>
+                                                                <div class="pbBody">
+                                                                    <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                        <tr>
+                                                                            <td class="labelCol last">{!$Label.account_past_proven_value}</td>
+                                                                            <td class="dataCol last">{!subitem.PastProvenValueNew__r.Unique_Value__c}</td>
+                                                                        </tr>
+                                                                        </tbody></table>
+                                                                </div>
+                                                                <div class="pbFooter secondaryPalette">
+                                                                    <div class="bg"></div>
+                                                                </div>
+                                                                </div></div>
+                                                        </div>
+                                                    </div>
+                                                </apex:repeat>                                            
+                                            </td>                                       
+                                        </tr>                                              
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </div>
+                    </apex:outputPanel>
+                    
+                    <br/>
+                    
+                    <apex:outputPanel id="panelDrivers" >
+                        <div class="ScrollingDiv">                                      
+                            <span style="float: left;font-weight: bold;">{!$Label.value_drivers_account}</span>
+                            <table id="mainTable" class="table table-bordered table-condensed">
+                                <thead>
+                                    <tr class="headerRow">
+                                        <th scope="col" class=" deemphasize">{!$Label.Title}</th>
+                                        <th scope="col" class=" deemphasize">{!$Label.Description}</th>
+                                        <th scope="col" class=" deemphasize">{!$Label.Type}</th>
+                                        <th scope="col" class=" deemphasize">{!$Label.Source}</th>
+                                        <!-- <th scope="col" class=" deemphasize">{!$Label.Related_PNB}</th> -->
+                                        <th scope="col" class=" deemphasize">{!$Label.Opportunities}</th>
+                                    </tr>
+                                    
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!regions}" var="item">
+                                        <apex:repeat value="{!item.Trends}" var="subitem">
+                                            
+                                            <apex:outputText rendered="{!subitem.Opportunities__R == null && subitem.Potential_New_Business_Trend__R == null}">
+                                                <tr id="{!subitem.id}" class="IndustryTrendsRow DraggableRow dataRow NotUsed"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                       
+                                                    <td>
+                                                        {!subitem.title__c}
+                                                    </td>
+                                                    <td>
+                                                        <span class="lessSpan">
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Trend__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Trend__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            
+                                                            <apex:outputText >                                                    
+                                                                <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                    <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                                </button>
+                                                            </apex:outputText>
+                                                        </span>
+                                                        <span class="moreSpan" style="display:none;">                               
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Trend__c}"/>
+                                                            <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                            </button>
+                                                        </span>                                                  
+                                                    </td>
+                                                    
+                                                    
+                                                    <td class=" dataCell  ">
+                                                        {!subitem.type__c}
+                                                    </td>
+                                                    <td class=" dataCell  ">
+                                                        {!item.region.name}
+                                                    </td>
+                                                    
+                                                    <td class="TdLink" style="width:125px;">
+                                                        <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                            <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                                <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                                <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                    <div class="Custom50Block topRight">
+                                                                        <div class="bPageBlock secondaryPalette">
+                                                                            <div class="pbHeader">
+                                                                                <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                        <td class="pbButton">
+                                                                                            <a href="/{!Opps.Opportunity__c}">
+                                                                                                <button type="button" class="btn btn-default btn-xs">
+                                                                                                    {!$Label.view}
+                                                                                                </button>                            
+                                                                                            </a>
+                                                                                        </td>                                                                           
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbBody">
+                                                                                <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                        <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbFooter secondaryPalette">
+                                                                                <div class="bg"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                        </apex:repeat>
+                                                    </td> 
+                                                </tr>
+                                            </apex:outputText>
+                                            
+                                            <apex:outputText rendered="{!subitem.Opportunities__R != null && subitem.Potential_New_Business_Trend__R == null}">
+                                                <tr id="{!subitem.id}" class="IndustryTrendsRow DraggableRow dataRow {!IF ( (subitem.Opportunities__R.size > 0) , 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R.size > 0 , 'hasOpportunity' , IF(subitem.Potential_New_Business_Trend__r != null , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                       
+                                                    <td>
+                                                        {!subitem.title__c}
+                                                    </td>
+                                                    <td>
+                                                        <span class="lessSpan">
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Trend__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Trend__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            
+                                                            <apex:outputText >                                                    
+                                                                <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                    <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                                </button>
+                                                            </apex:outputText>
+                                                        </span>
+                                                        <span class="moreSpan" style="display:none;">                               
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Trend__c}"/>
+                                                            <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                            </button>
+                                                        </span>                                                  
+                                                    </td>
+                                                    
+                                                    
+                                                    <td class=" dataCell  ">
+                                                        {!subitem.type__c}
+                                                    </td>
+                                                    <td class=" dataCell  ">
+                                                        {!item.region.name}
+                                                    </td>
+                                                    
+                                                    <td class="TdLink" style="width:125px;">
+                                                        <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                            <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                                <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                                <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                    <div class="Custom50Block topRight">
+                                                                        <div class="bPageBlock secondaryPalette">
+                                                                            <div class="pbHeader">
+                                                                                <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                        <td class="pbButton">
+                                                                                            <a href="/{!Opps.Opportunity__c}">
+                                                                                                <button type="button" class="btn btn-default btn-xs">
+                                                                                                    {!$Label.view}
+                                                                                                </button>                            
+                                                                                            </a>
+                                                                                        </td>                                                                           
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbBody">
+                                                                                <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                        <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbFooter secondaryPalette">
+                                                                                <div class="bg"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                        </apex:repeat>
+                                                    </td> 
+                                                </tr>
+                                            </apex:outputText>
+                                            
+                                            <apex:outputText rendered="{!subitem.Opportunities__R == null && subitem.Potential_New_Business_Trend__R != null}">
+                                                <tr id="{!subitem.id}" class="IndustryTrendsRow DraggableRow dataRow {!IF ( (subitem.Potential_New_Business_Trend__R.size > 0), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R != null , 'hasOpportunity' , IF(subitem.Potential_New_Business_Trend__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                       
+                                                    <td>
+                                                        {!subitem.title__c}
+                                                    </td>
+                                                    <td>
+                                                        <span class="lessSpan">
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Trend__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Trend__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            
+                                                            <apex:outputText >                                                    
+                                                                <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                    <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                                </button>
+                                                            </apex:outputText>
+                                                        </span>
+                                                        <span class="moreSpan" style="display:none;">                               
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Trend__c}"/>
+                                                            <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                            </button>
+                                                        </span>                                                  
+                                                    </td>
+                                                    
+                                                    
+                                                    <td class=" dataCell  ">
+                                                        {!subitem.type__c}
+                                                    </td>
+                                                    <td class=" dataCell  ">
+                                                        {!item.region.name}
+                                                    </td>
+                                                    
+                                                    <td class="TdLink" style="width:125px;">
+                                                        <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                            <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                                <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                                <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                    <div class="Custom50Block topRight">
+                                                                        <div class="bPageBlock secondaryPalette">
+                                                                            <div class="pbHeader">
+                                                                                <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                        <td class="pbButton">
+                                                                                            <a href="/{!Opps.Opportunity__c}">
+                                                                                                <button type="button" class="btn btn-default btn-xs">
+                                                                                                    {!$Label.view}
+                                                                                                </button>                            
+                                                                                            </a>
+                                                                                        </td>                                                                           
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbBody">
+                                                                                <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                        <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbFooter secondaryPalette">
+                                                                                <div class="bg"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                        </apex:repeat>
+                                                    </td> 
+                                                </tr>
+                                            </apex:outputText>
+                                            
+                                            <apex:outputText rendered="{!subitem.Opportunities__R != null && subitem.Potential_New_Business_Trend__R != null}">
+                                                <tr id="{!subitem.id}" class="IndustryTrendsRow DraggableRow dataRow {!IF ( (subitem.Opportunities__R.size > 0) && (subitem.Potential_New_Business_Trend__R.size > 0), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R.size > 0 , 'hasOpportunity' , IF(subitem.Potential_New_Business_Trend__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                       
+                                                    <td>
+                                                        {!subitem.title__c}
+                                                    </td>
+                                                    <td>
+                                                        <span class="lessSpan">
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                                <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Trend__c,50)}"/>
+                                                                <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Trend__c) > 50}">
+                                                                    ...
+                                                                </apex:outputText>
+                                                            </apex:outputPanel>
+                                                            
+                                                            <apex:outputText >                                                    
+                                                                <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                    <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                                </button>
+                                                            </apex:outputText>
+                                                        </span>
+                                                        <span class="moreSpan" style="display:none;">                               
+                                                            <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                                <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                            </apex:outputPanel>
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Trend__c}"/>
+                                                            <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                            </button>
+                                                        </span>                                                  
+                                                    </td>
+                                                    
+                                                    
+                                                    <td class=" dataCell  ">
+                                                        {!subitem.type__c}
+                                                    </td>
+                                                    <td class=" dataCell  ">
+                                                        {!item.region.name}
+                                                    </td>
+                                                    
+                                                    <td class="TdLink" style="width:125px;">
+                                                        <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                            <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                                <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                                <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                    <div class="Custom50Block topRight">
+                                                                        <div class="bPageBlock secondaryPalette">
+                                                                            <div class="pbHeader">
+                                                                                <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                        <td class="pbButton">
+                                                                                            <a href="/{!Opps.Opportunity__c}">
+                                                                                                <button type="button" class="btn btn-default btn-xs">
+                                                                                                    {!$Label.view}
+                                                                                                </button>                            
+                                                                                            </a>
+                                                                                        </td>                                                                           
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbBody">
+                                                                                <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                        <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbFooter secondaryPalette">
+                                                                                <div class="bg"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                        </apex:repeat>
+                                                    </td> 
+                                                </tr>
+                                            </apex:outputText>
+                                            
+                                        </apex:repeat>
+                                    </apex:repeat>
+                                    <apex:repeat value="{!globalStrategicInitiatives}" var="subitem">
+                                        
+                                        <apex:outputText rendered="{!subitem.Opportunities__R == null && subitem.Potential_New_Business_Strategic_Ini__r == null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow NotUsed"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                   
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td> 
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>
+                                                </td> 
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Parent Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        <apex:outputText rendered="{!subitem.Opportunities__R != null && subitem.Potential_New_Business_Strategic_Ini__r == null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow {!IF ( (subitem.Opportunities__R.size > 0) && (subitem.Potential_New_Business_Strategic_Ini__r != null), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R.size > 0 , 'hasOpportunity' , IF(subitem.Potential_New_Business_Strategic_Ini__r != null , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                   
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td> 
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>
+                                                </td> 
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Parent Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.Opportunities__R == null && subitem.Potential_New_Business_Strategic_Ini__r != null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow {!IF ( (subitem.Potential_New_Business_Strategic_Ini__r.size > 0), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R != null , 'hasOpportunity' , IF(subitem.Potential_New_Business_Strategic_Ini__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                   
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td> 
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>
+                                                </td> 
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Parent Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.Opportunities__R != null && subitem.Potential_New_Business_Strategic_Ini__r != null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow {!IF ( (subitem.Opportunities__R.size > 0) && (subitem.Potential_New_Business_Strategic_Ini__r.size > 0), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R.size > 0 , 'hasOpportunity' , IF(subitem.Potential_New_Business_Strategic_Ini__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                   
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td> 
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>
+                                                </td> 
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Parent Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        
+                                    </apex:repeat>
+                                    <apex:repeat value="{!localStrategicInitiatives}" var="subitem">
+                                        
+                                        <apex:outputText rendered="{!subitem.Opportunities__R == null && subitem.Potential_New_Business_Strategic_Ini__r == null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow NotUsed"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                  
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td>
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>                                                     
+                                                </td>
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.Opportunities__R != null && subitem.Potential_New_Business_Strategic_Ini__r == null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow {!IF ( (subitem.Opportunities__R.size > 0) && (subitem.Potential_New_Business_Strategic_Ini__r != null), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R.size > 0 , 'hasOpportunity' , IF(subitem.Potential_New_Business_Strategic_Ini__r != null , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                  
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td>
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>                                                     
+                                                </td>
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.Opportunities__R == null && subitem.Potential_New_Business_Strategic_Ini__r != null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow {!IF ( (subitem.Opportunities__R != null) && (subitem.Potential_New_Business_Strategic_Ini__r.size > 0), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R != null, 'hasOpportunity' , IF(subitem.Potential_New_Business_Strategic_Ini__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                  
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td>
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>                                                     
+                                                </td>
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.Opportunities__R != null && subitem.Potential_New_Business_Strategic_Ini__r != null}">
+                                            <tr id="{!subitem.id}" class="StrategicInitiativeRow DraggableRow dataRow {!IF ( (subitem.Opportunities__R.size > 0) && (subitem.Potential_New_Business_Strategic_Ini__r.size > 0), 'hasOpportunityAndPotencial', IF(subitem.Opportunities__R.size > 0 , 'hasOpportunity' , IF(subitem.Potential_New_Business_Strategic_Ini__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">                                  
+                                                <td>
+                                                    {!subitem.title__c}
+                                                </td>
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Title__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Title__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c == null || subitem.SCP_Certa_GC__Title__c == ''}">
+                                                            <apex:outputText value="{!Left(subitem.SCP_Certa_GC__Strategic_Initiative__c,50)}"/>
+                                                            <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Strategic_Initiative__c) > 50}">
+                                                                ...
+                                                            </apex:outputText>
+                                                        </apex:outputPanel>
+                                                        
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputPanel rendered="{!subitem.SCP_Certa_GC__Title__c != null && subitem.SCP_Certa_GC__Title__c != ''}">
+                                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        </apex:outputPanel>
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Strategic_Initiative__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>                                                     
+                                                </td>
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!$Label.Iniciativa} 
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    Account
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.Opportunities__R}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        
+                                    </apex:repeat>
+                                    <apex:repeat value="{!provenValueWrapperList}" var="subitem">
+                                        
+                                        <apex:outputText rendered="{!subitem.provenValue.OpportunityPastProvenValueNew__r == null && subitem.provenValue.Potential_New_Business_Past_Provent__r == null}">
+                                            <tr id="{!subitem.provenValue.id}" class="PastProvenValueNewRow DraggableRow dataRow NotUsed"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                                                <td class=" dataCell  ">
+                                                    {!subitem.provenValue.Title__c}
+                                                </td>
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputText value="{!Left(subitem.provenValue.SCP_Certa_GC__Unique_Value__c,50)}"/>
+                                                        <apex:outputText rendered="{!LEN(subitem.provenValue.SCP_Certa_GC__Unique_Value__c) > 50}">
+                                                            ...
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="float:right;display:none;">                               
+                                                        <apex:outputField value="{!subitem.provenValue.SCP_Certa_GC__Unique_Value__c}"/>                                              
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>                                                     
+                                                </td>
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!subitem.provenValue.Type__c}
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    {!subitem.source}
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.provenValue.OpportunityPastProvenValueNew__r}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.provenValue.OpportunityPastProvenValueNew__r != null && subitem.provenValue.Potential_New_Business_Past_Provent__r == null}">
+                                            <tr id="{!subitem.provenValue.id}" class="PastProvenValueNewRow DraggableRow dataRow {!IF ( (subitem.provenValue.OpportunityPastProvenValueNew__r.size > 0) && (subitem.provenValue.Potential_New_Business_Past_Provent__r != null), 'hasOpportunityAndPotencial', IF(subitem.provenValue.OpportunityPastProvenValueNew__r.size > 0 , 'hasOpportunity' , IF(subitem.provenValue.Potential_New_Business_Past_Provent__r != null, 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                                                <td class=" dataCell  ">
+                                                    {!subitem.provenValue.Title__c}
+                                                </td>
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputText value="{!Left(subitem.provenValue.SCP_Certa_GC__Unique_Value__c,50)}"/>
+                                                        <apex:outputText rendered="{!LEN(subitem.provenValue.SCP_Certa_GC__Unique_Value__c) > 50}">
+                                                            ...
+                                                            <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="float:right;display:none;">                               
+                                                        <apex:outputField value="{!subitem.provenValue.SCP_Certa_GC__Unique_Value__c}"/>                                              
+                                                        <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>                                                     
+                                                </td>
+                                                
+                                                <td class=" dataCell  ">
+                                                    {!subitem.provenValue.Type__c}
+                                                </td>
+                                                <td class=" dataCell  ">
+                                                    {!subitem.source}
+                                                </td>
+                                                
+                                                <td class="TdLink" style="width:125px;">
+                                                    <apex:repeat value="{!subitem.provenValue.OpportunityPastProvenValueNew__r}" var="Opps">
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>                            
+                                                                                        </a>
+                                                                                    </td>                                                                           
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                            </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.provenValue.OpportunityPastProvenValueNew__r == null && subitem.provenValue.Potential_New_Business_Past_Provent__r != null}">
+                                        	<tr id="{!subitem.provenValue.id}" class="PastProvenValueNewRow DraggableRow dataRow {!IF ( (subitem.provenValue.OpportunityPastProvenValueNew__r != null) && (subitem.provenValue.Potential_New_Business_Past_Provent__r.size > 0), 'hasOpportunityAndPotencial', IF(subitem.provenValue.OpportunityPastProvenValueNew__r != null , 'hasOpportunity' , IF(subitem.provenValue.Potential_New_Business_Past_Provent__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                                            <td class=" dataCell  ">
+                                                {!subitem.provenValue.Title__c}
+                                            </td>
+                                            <td>
+                                                <span class="lessSpan">
+                                                    <apex:outputText value="{!Left(subitem.provenValue.SCP_Certa_GC__Unique_Value__c,50)}"/>
+                                                    <apex:outputText rendered="{!LEN(subitem.provenValue.SCP_Certa_GC__Unique_Value__c) > 50}">
+                                                        ...
+                                                        <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                        </button>
+                                                    </apex:outputText>
+                                                </span>
+                                                <span class="moreSpan" style="float:right;display:none;">                               
+                                                    <apex:outputField value="{!subitem.provenValue.SCP_Certa_GC__Unique_Value__c}"/>                                              
+                                                    <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                        <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                    </button>
+                                                </span>                                                     
+                                            </td>
+                                            
+                                            <td class=" dataCell  ">
+                                                {!subitem.provenValue.Type__c}
+                                            </td>
+                                            <td class=" dataCell  ">
+                                                {!subitem.source}
+                                            </td>
+                                            
+                                            <td class="TdLink" style="width:125px;">
+                                                <apex:repeat value="{!subitem.provenValue.OpportunityPastProvenValueNew__r}" var="Opps">
+                                                    <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                        <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                        <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                            <div class="Custom50Block topRight">
+                                                                <div class="bPageBlock secondaryPalette">
+                                                                    <div class="pbHeader">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                            <tr>
+                                                                                <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                <td class="pbButton">
+                                                                                    <a href="/{!Opps.Opportunity__c}">
+                                                                                        <button type="button" class="btn btn-default btn-xs">
+                                                                                            {!$Label.view}
+                                                                                        </button>                            
+                                                                                    </a>
+                                                                                </td>                                                                           
+                                                                            </tr>
+                                                                            </tbody></table>
+                                                                    </div>
+                                                                    <div class="pbBody">
+                                                                        <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                            <tr>
+                                                                                <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                            </tr>
+                                                                            </tbody></table>
+                                                                    </div>
+                                                                    <div class="pbFooter secondaryPalette">
+                                                                        <div class="bg"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </apex:repeat>
+                                            </td>
+                                        </tr>
+                                        </apex:outputText>
+                                        
+                                        <apex:outputText rendered="{!subitem.provenValue.OpportunityPastProvenValueNew__r != null && subitem.provenValue.Potential_New_Business_Past_Provent__r != null}">
+                                            <tr id="{!subitem.provenValue.id}" class="PastProvenValueNewRow DraggableRow dataRow {!IF ( (subitem.provenValue.OpportunityPastProvenValueNew__r.size > 0) && (subitem.provenValue.Potential_New_Business_Past_Provent__r.size > 0), 'hasOpportunityAndPotencial', IF(subitem.provenValue.OpportunityPastProvenValueNew__r.size > 0 , 'hasOpportunity' , IF(subitem.provenValue.Potential_New_Business_Past_Provent__r.size > 0 , 'hasPotentialBussiness' , 'NotUsed')) )}"  onmouseover="if (window.hiOn){hiOn(this);} " onmouseout="if (window.hiOff){hiOff(this);} " onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}">
+                                            <td class=" dataCell  ">
+                                                {!subitem.provenValue.Title__c}
+                                            </td>
+                                            <td>
+                                                <span class="lessSpan">
+                                                    <apex:outputText value="{!Left(subitem.provenValue.SCP_Certa_GC__Unique_Value__c,50)}"/>
+                                                    <apex:outputText rendered="{!LEN(subitem.provenValue.SCP_Certa_GC__Unique_Value__c) > 50}">
+                                                        ...
+                                                        <button class="btn btn-default btn-xs showMore" onclick="return false;" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                        </button>
+                                                    </apex:outputText>
+                                                </span>
+                                                <span class="moreSpan" style="float:right;display:none;">                               
+                                                    <apex:outputField value="{!subitem.provenValue.SCP_Certa_GC__Unique_Value__c}"/>                                              
+                                                    <button class="btn btn-default btn-xs showLess" onclick="return false;" style="float:right;">
+                                                        <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                    </button>
+                                                </span>                                                     
+                                            </td>
+                                            
+                                            <td class=" dataCell  ">
+                                                {!subitem.provenValue.Type__c}
+                                            </td>
+                                            <td class=" dataCell  ">
+                                                {!subitem.source}
+                                            </td>
+                                            
+                                            <td class="TdLink" style="width:125px;">
+                                                <apex:repeat value="{!subitem.provenValue.OpportunityPastProvenValueNew__r}" var="Opps">
+                                                    <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">                                                            
+                                                        <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>                                                                                                                            
+                                                        <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                            <div class="Custom50Block topRight">
+                                                                <div class="bPageBlock secondaryPalette">
+                                                                    <div class="pbHeader">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                            <tr>
+                                                                                <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                <td class="pbButton">
+                                                                                    <a href="/{!Opps.Opportunity__c}">
+                                                                                        <button type="button" class="btn btn-default btn-xs">
+                                                                                            {!$Label.view}
+                                                                                        </button>                            
+                                                                                    </a>
+                                                                                </td>                                                                           
+                                                                            </tr>
+                                                                            </tbody></table>
+                                                                    </div>
+                                                                    <div class="pbBody">
+                                                                        <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                            <tr>
+                                                                                <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                            </tr>
+                                                                            </tbody></table>
+                                                                    </div>
+                                                                    <div class="pbFooter secondaryPalette">
+                                                                        <div class="bg"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </apex:repeat>
+                                            </td>
+                                        </tr>
+                                        </apex:outputText>
+                                        
+                                        
+                                    </apex:repeat>                                    
+                                </tbody>                            
+                            </table>
+                        </div>    
+                    </apex:outputPanel> 
+                    
+                </div>
+            </apex:form>
+            <div class="panel-footer">
+                <div class="row paddingRight">  
+                    <div class="btn-group pull-right" role="group" aria-label="...">                            
+                        <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+                            <span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <c:FastTask page="{!$Label.scp_certa_gc__opportunities_value_proposition}" account="{!account.id}"></c:FastTask>
+            <chatter:feed entityId="{!Account.Id}" />
+        </div>
+    </apex:outputpanel>
+</apex:page>

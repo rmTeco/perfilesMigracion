@@ -1,0 +1,18 @@
+<apex:page controller="et4ae5.etSwitchboard">
+    <apex:form >
+        <apex:actionFunction action="{!initialize}" name="initializeJS" />
+        <div style="width:100%; height:390px; padding-top: 10px; display: block;">
+            <span style="font-size:16px;">{!$Label.et4ae5__launchingmarketingcloudconnector}</span>
+        </div>
+    </apex:form>
+    <script type="text/javascript">
+        if ((typeof sforce != 'undefined') && sforce && (!!sforce.one)) {
+            // Lightning Experience - Redirect to ETSwitchboard page in classic view.
+            window.top.location.href = "/apex/et4ae5__ETSwitchboard";
+        }
+        else {
+            // Classic view - call the initialize method in the controller.
+            initializeJS();
+        }
+    </script>
+</apex:page>

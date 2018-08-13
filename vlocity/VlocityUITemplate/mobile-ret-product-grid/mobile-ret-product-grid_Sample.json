@@ -1,0 +1,1509 @@
+{
+    "cards": [
+        {
+            "templateUrl": "mobile-cpq-product-item"
+        }
+    ],
+    "records": [
+        {
+            "%vlocity_namespace%__RecurringPrice__c": {
+                "label": "Recurring Price",
+                "value": 0
+            },
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "iPhone 6s Product Image",
+                    "url": "/resource/VDOProductResources/images/TNiPhone6s.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000002lPLBAA2"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "iPhone 6s"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Handset",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "The moment you use iPhone 6s, you know you’ve never felt anything like it. With just a single press, 3D Touch lets you do more than ever before. Live Photos bring your memories to life in a powerfully vivid way. And that’s just the beginning. Take a deeper look at iPhone 6s, and you’ll find innovation on every level.",
+                "Id": "01t41000001q697AAA",
+                "Name": "iPhone 6s",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q697AAA"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q697AAA"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0001"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 129
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLBAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLBAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "iPhone 6s",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q697AAA",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q697AAA",
+                    "Name": "iPhone 6s",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q697AAA"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EIsnAAG",
+                "Name": "Root iPhone 6s",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EIsnAAG"
+                }
+            },
+            "productChildItemId": "a1b41000001EIsnAAG",
+            "productHierarchyPath": "01t41000001q697AAA",
+            "productId": "01t41000001q697AAA",
+            "sequenceNumber": 1
+        },
+        {
+            "%vlocity_namespace%__RecurringPrice__c": {
+                "label": "Recurring Price",
+                "value": 0
+            },
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "iPhone 6s Plus Product Image",
+                    "url": "/resource/VDOProductResources/images/TNiPhone6sPlus.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000002lPLDAA2"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "iPhone 6s Plus"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Handset",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "The moment you use iPhone 6s, you know you’ve never felt anything like it. With just a single press, 3D Touch lets you do more than ever before. Live Photos bring your memories to life in a powerfully vivid way. And that’s just the beginning. Take a deeper look at iPhone 6s, and you’ll find innovation on every level.",
+                "Id": "01t41000001q698AAA",
+                "Name": "iPhone 6s Plus",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q698AAA"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q698AAA"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0002"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 149
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLDAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLDAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "iPhone 6s Plus",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q698AAA",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q698AAA",
+                    "Name": "iPhone 6s Plus",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q698AAA"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EIsbAAG",
+                "Name": "Root iPhone 6s Plus",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EIsbAAG"
+                }
+            },
+            "productChildItemId": "a1b41000001EIsbAAG",
+            "productHierarchyPath": "01t41000001q698AAA",
+            "productId": "01t41000001q698AAA",
+            "sequenceNumber": 1
+        },
+        {
+            "%vlocity_namespace%__RecurringPrice__c": {
+                "label": "Recurring Price",
+                "value": 0
+            },
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "iPhone 5s Product Image",
+                    "url": "/resource/VDOProductResources/images/TNiPhone5s.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000002lPLLAA2"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "iPhone 5s"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Handset",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "With the launch of the new iPhone 5s, the most forward-thinking smartphone in the world, iPhone 5c, the most colorful iPhone yet and iOS 7, the most significant iOS update since the original iPhone, Apple is ushering in the next generation of mobile computing, delivering an incredible new hardware and software experience that only Apple could create.",
+                "Id": "01t41000001q69AAAQ",
+                "Name": "iPhone 5s",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69AAAQ"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q69AAAQ"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0004"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 79
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLLAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLLAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "iPhone 5s",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q69AAAQ",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q69AAAQ",
+                    "Name": "iPhone 5s",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69AAAQ"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EItfAAG",
+                "Name": "Root iPhone 5s",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EItfAAG"
+                }
+            },
+            "productChildItemId": "a1b41000001EItfAAG",
+            "productHierarchyPath": "01t41000001q69AAAQ",
+            "productId": "01t41000001q69AAAQ",
+            "sequenceNumber": 1
+        },
+        {
+            "%vlocity_namespace%__RecurringPrice__c": {
+                "label": "Recurring Price",
+                "value": 0
+            },
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "iPhone 5c Product Image",
+                    "url": "/resource/VDOProductResources/images/TNiPhone5c.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000002lPLPAA2"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "iPhone 5c"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Handset",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "With the launch of the new iPhone 5s, the most forward-thinking smartphone in the world, iPhone 5c, the most colorful iPhone yet and iOS 7, the most significant iOS update since the original iPhone, Apple is ushering in the next generation of mobile computing, delivering an incredible new hardware and software experience that only Apple could create.",
+                "Id": "01t41000001q69BAAQ",
+                "Name": "iPhone 5c",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69BAAQ"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q69BAAQ"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0005"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 59
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLPAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLPAA2",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "iPhone 5c",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q69BAAQ",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q69BAAQ",
+                    "Name": "iPhone 5c",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69BAAQ"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EItkAAG",
+                "Name": "Root iPhone 5c",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EItkAAG"
+                }
+            },
+            "productChildItemId": "a1b41000001EItkAAG",
+            "productHierarchyPath": "01t41000001q69BAAQ",
+            "productId": "01t41000001q69BAAQ",
+            "sequenceNumber": 1
+        },
+        {
+            "%vlocity_namespace%__RecurringPrice__c": {
+                "label": "Recurring Price",
+                "value": 0
+            },
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "Samsung Galaxy S7 Product Image",
+                    "url": "/resource/VDOProductResources/images/TNGalaxyS7.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000002lPLiAAM"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "Samsung Galaxy S7"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Handset",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "Redefine what a phone can do. This is what a perfect balance between form and function looks like. Find out why Galaxy S7 edge and S7 are the best yet.",
+                "Id": "01t41000001q69GAAQ",
+                "Name": "Samsung Galaxy S7",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69GAAQ"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q69GAAQ"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0010"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 149
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLiAAM",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPLiAAM",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "Samsung Galaxy S7",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q69GAAQ",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q69GAAQ",
+                    "Name": "Samsung Galaxy S7",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69GAAQ"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EItCAAW",
+                "Name": "Root Samsung Galaxy S7",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EItCAAW"
+                }
+            },
+            "productChildItemId": "a1b41000001EItCAAW",
+            "productHierarchyPath": "01t41000001q69GAAQ",
+            "productId": "01t41000001q69GAAQ",
+            "sequenceNumber": 1
+        },
+        {
+            "%vlocity_namespace%__RecurringPrice__c": {
+                "label": "Recurring Price",
+                "value": 0
+            },
+            "Attachments": [
+                {
+                    "contentType": null,
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "iPhone 7 Product Image",
+                    "url": "/resource/VDOProductResources/images/TNiPhone6s.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000002lPZgAAM"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "iPhone 7"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Handset",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "iPhone 7 dramatically improves the most important aspects of the iPhone experience. It introduces advanced new camera systems. The best performance and battery life ever in an iPhone. Immersive stereo speakers. The brightest, most colourful iPhone display. Splash and water resistance.1 And it looks every bit as powerful as it is. This is iPhone 7.",
+                "Id": "01t41000001q6AaAAI",
+                "Name": "iPhone 7",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q6AaAAI"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q6AaAAI"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0145"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 179
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPZgAAM",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000002lPZgAAM",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "iPhone 7",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q6AaAAI",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q6AaAAI",
+                    "Name": "iPhone 7",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q6AaAAI"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EIv4AAG",
+                "Name": "Root PCI",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EIv4AAG"
+                }
+            },
+            "productChildItemId": "a1b41000001EIv4AAG",
+            "productHierarchyPath": "01t41000001q6AaAAI",
+            "productId": "01t41000001q6AaAAI",
+            "sequenceNumber": 1
+        },
+        {
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "Beats Powerbeats Product Image",
+                    "url": "/resource/VDOProductResources/images/TNPowerbeatsWire.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000003u2UEAAY"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "Beats Powerbeats"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": false,
+                "%vlocity_namespace%__SubType__c": "Earphones",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "Performance. Power. Strength. Beats earphones are ready for any challenge with up to 12 hours of battery life to fuel multiple long workouts and powerful, dynamic sound to keep you pushing.",
+                "Id": "01t41000001q69KAAQ",
+                "Name": "Beats Powerbeats",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69KAAQ"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q69KAAQ"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0033"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 119.95
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000003u2UEAAY",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000003u2UEAAY",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "Beats Powerbeats",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q69KAAQ",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q69KAAQ",
+                    "Name": "Beats Powerbeats",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q69KAAQ"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EIsIAAW",
+                "Name": "Root Beats Powerbeats",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EIsIAAW"
+                }
+            },
+            "productChildItemId": "a1b41000001EIsIAAW",
+            "productHierarchyPath": "01t41000001q69KAAQ",
+            "productId": "01t41000001q69KAAQ",
+            "sequenceNumber": 1
+        },
+        {
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "Apple Watch Product Image",
+                    "url": "/resource/VDOProductResources/images/TNWatch.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000003uecSAAQ"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "Apple Watch"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Watch",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "Stainless steel or space black stainless steel cases.",
+                "Id": "01t41000001q6B3AAI",
+                "Name": "Apple Watch",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q6B3AAI"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q6B3AAI"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0028"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 599
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000003uecSAAQ",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000003uecSAAQ",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "Apple Watch",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q6B3AAI",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q6B3AAI",
+                    "Name": "Apple Watch",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q6B3AAI"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EIsFAAW",
+                "Name": "Root Apple Watch",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EIsFAAW"
+                }
+            },
+            "productChildItemId": "a1b41000001EIsFAAW",
+            "productHierarchyPath": "01t41000001q6B3AAI",
+            "productId": "01t41000001q6B3AAI",
+            "sequenceNumber": 1
+        },
+        {
+            "Attachments": [
+                {
+                    "contentType": "Image",
+                    "defaultAttachment": true,
+                    "description": "The default product image.",
+                    "mimeType": "image/png",
+                    "title": "Apple Watch Sport Product Image",
+                    "url": "/resource/VDOProductResources/images/TNWatchSport.png"
+                }
+            ],
+            "Id": {
+                "label": "Price Book Entry ID",
+                "value": "01u41000003uecXAAQ"
+            },
+            "IsActive": {
+                "label": "Active",
+                "value": true
+            },
+            "Name": {
+                "label": "Product Name",
+                "value": "Apple Watch Sport"
+            },
+            "Pricebook2Id": {
+                "label": "Price Book ID",
+                "value": "01s41000007YZFEAA4"
+            },
+            "Product2": {
+                "%vlocity_namespace%__CategoryData__c": "[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Root\",\"id\":\"a2H41000000f1OpEAI\",\"childCategories\":[{\"uiStates\":{},\"nameResult\":{},\"messages\":[],\"fields\":{},\"displaySequence\":-1,\"actions\":{},\"name\":\"Phones\",\"id\":\"a2H41000000f1KsEAI\",\"childCategories\":[]}]}]",
+                "%vlocity_namespace%__IsConfigurable__c": true,
+                "%vlocity_namespace%__SubType__c": "Watch",
+                "%vlocity_namespace%__Type__c": "Product",
+                "Description": "Anodised aluminium cases in four finishes.",
+                "Id": "01t41000001q6B4AAI",
+                "Name": "Apple Watch Sport",
+                "RecordTypeId": "012410000016HsZAAU",
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v39.0/sobjects/Product2/01t41000001q6B4AAI"
+                }
+            },
+            "Product2Id": {
+                "label": "Product ID",
+                "value": "01t41000001q6B4AAI"
+            },
+            "ProductCode": {
+                "label": "Product Code",
+                "value": "VLO-MOB-0029"
+            },
+            "UnitPrice": {
+                "label": "List Price",
+                "value": 299
+            },
+            "actions": {
+                "addtocart": {
+                    "client": {
+                        "params": {
+                        }
+                    },
+                    "remote": {
+                        "params": {
+                            "cartId": "80141000000iGqAAAU",
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000003uecXAAQ",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "methodName": "postCartsItems",
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    },
+                    "rest": {
+                        "link": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/80141000000iGqAAAU/items",
+                        "method": "POST",
+                        "params": {
+                            "hierarchy": -1,
+                            "includeAttachment": true,
+                            "items": [
+                                {
+                                    "itemId": "01u41000003uecXAAQ",
+                                    "quantity": 1
+                                }
+                            ],
+                            "lastRecordId": null,
+                            "pagesize": 1000,
+                            "price": true,
+                            "query": null,
+                            "validate": true
+                        }
+                    }
+                }
+            },
+            "attributeValues": {
+            },
+            "defaultQuantity": 1,
+            "displaySequence": -1,
+            "groupMaxQuantity": 99999,
+            "groupMinQuantity": 0,
+            "isVirtualItem": false,
+            "itemType": "childProduct",
+            "maxQuantity": 99999,
+            "messages": [
+            ],
+            "minQuantity": 0,
+            "name": "Apple Watch Sport",
+            "productCategories": {
+                "messages": [
+                ],
+                "records": [
+                    {
+                        "childCategories": {
+                            "id": "a2H41000000f1KsEAI",
+                            "messages": [
+                            ],
+                            "name": "Phones"
+                        },
+                        "id": "a2H41000000f1OpEAI",
+                        "messages": [
+                        ],
+                        "name": "Root"
+                    }
+                ],
+                "totalSize": 1
+            },
+            "productChildItemDefinition": {
+                "%vlocity_namespace%__ChildLineNumber__c": "1",
+                "%vlocity_namespace%__CollapseHierarchy__c": false,
+                "%vlocity_namespace%__IsOverride__c": false,
+                "%vlocity_namespace%__IsRootProductChildItem__c": true,
+                "%vlocity_namespace%__IsVirtualItem__c": false,
+                "%vlocity_namespace%__MaxQuantity__c": 99999,
+                "%vlocity_namespace%__MaximumChildItemQuantity__c": 99999,
+                "%vlocity_namespace%__MinQuantity__c": 0,
+                "%vlocity_namespace%__MinimumChildItemQuantity__c": 0,
+                "%vlocity_namespace%__ParentProductId__c": "01t41000001q6B4AAI",
+                "%vlocity_namespace%__ParentProductId__r": {
+                    "Id": "01t41000001q6B4AAI",
+                    "Name": "Apple Watch Sport",
+                    "attributes": {
+                        "type": "Product2",
+                        "url": "/services/data/v39.0/sobjects/Product2/01t41000001q6B4AAI"
+                    }
+                },
+                "%vlocity_namespace%__Quantity__c": 1,
+                "%vlocity_namespace%__SeqNumber__c": 1,
+                "Id": "a1b41000001EIsGAAW",
+                "Name": "Root Apple Watch Sport",
+                "attributes": {
+                    "type": "%vlocity_namespace%__ProductChildItem__c",
+                    "url": "/services/data/v39.0/sobjects/%vlocity_namespace%__ProductChildItem__c/a1b41000001EIsGAAW"
+                }
+            },
+            "productChildItemId": "a1b41000001EIsGAAW",
+            "productHierarchyPath": "01t41000001q6B4AAI",
+            "productId": "01t41000001q6B4AAI",
+            "sequenceNumber": 1
+        }
+    ]
+}

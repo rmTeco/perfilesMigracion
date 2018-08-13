@@ -1,0 +1,90 @@
+[
+    {
+        "%vlocity_namespace%__Action__c": "Add;Modify;Disconnect;Suspend;Resume;NoChange",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "5b5bcce3-2232-50d8-3db6-4de7be73d32f",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "1f8b8b13-53fc-ba69-b688-c2281fcd1901",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/Assetize plan definition",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "Suspend-Siniestro;Baja-Baja;Baja-PortOut;Resume-Siniestro;Conciliate;Resume-Voluntaria;Resume-Fraude;Suspend-Voluntaria;Suspend-Portabilidad;Suspend-Fraude",
+        "Name": "Assetize",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/Assetize/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Add;Modify;Disconnect;Suspend;Resume;NoChange",
+        "%vlocity_namespace%__ConditionData__c": "{\r\n    \"name\": \"SimpleCondition\",\r\n    \"type\": \"AND\",\r\n    \"singleconditions\": [\r\n        {\r\n            \"conditionname\": \"Condition 1\",\r\n            \"left-side-type\": \"field-FRLine\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"Order.Gestion__c\",\r\n            \"op\": \"!=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Conciliate\"\r\n        }\r\n    ]\r\n}",
+        "%vlocity_namespace%__GlobalKey__c": "846f40b0-d3eb-2bad-f372-e17fc99a59fc",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "1f8b8b13-53fc-ba69-b688-c2281fcd1901",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/Assetize plan definition",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "Assetize WithoutSubactions",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/Assetize WithoutSubactions/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Add;Modify;Disconnect;Suspend;Resume;NoChange",
+        "%vlocity_namespace%__ConditionData__c": "{\r\n    \"name\": \"SimpleCondition\",\r\n    \"type\": \"AND\",\r\n    \"singleconditions\": [\r\n        {\r\n            \"conditionname\": \"Condition 1\",\r\n            \"left-side-type\": \"field-FRLine\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"Order.Gestion__c\",\r\n            \"op\": \"!=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Conciliate\"\r\n        }\r\n    ]\r\n}",
+        "%vlocity_namespace%__GlobalKey__c": "c4654cc6-6677-82bb-7f06-22a4c5f77674",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "1f8b8b13-53fc-ba69-b688-c2281fcd1901",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/Assetize plan definition",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "assetize Standard Without SubAction",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/assetize Standard Without SubAction/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Modify",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "fdd37847-5325-e5f6-09de-af017b564535",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "4563e889-ea49-a3d6-5159-2cb63e7159e7",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/Modify sim orch plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "Modify Sim orch scenario",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/Modify Sim orch scenario/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    }
+]

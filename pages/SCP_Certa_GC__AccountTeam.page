@@ -1,0 +1,17 @@
+<apex:page standardController="Account" extensions="SCP_Certa_GC.accountTeamController">
+	
+    <style>
+        .centrar{
+        text-align: center;
+        }
+    </style>
+    
+    <apex:pageBlock title="Equipo de cuenta"  >
+        <apex:pageBlockTable value="{!miembros}" var="miembro" >
+            <apex:column style="text-align: center;" width="50%" value="{!miembro.user.name}" 
+                         headerValue="Nombre" headerClass="centrar" />
+            <apex:column style="text-align: center;" width="50%" value="{!miembro.teamMemberRole}" 
+                         headerValue="Función" headerClass="centrar" />
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>

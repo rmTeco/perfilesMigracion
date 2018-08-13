@@ -1,0 +1,48 @@
+<aura:component controller="vlocity_cmt.ActionDisplayController" extensible="true" access="global"> 
+
+    <aura:attribute name="backgroundColor" type="String" default="#FFFFFF" />
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <aura:method name="handleIFrameMessage" action="{!c.handleIFrameMessage}" 
+                 description="handle a postmessage event from an iframe"> 
+        <aura:attribute name="message" type="Object" /> 
+        <aura:attribute name="openActionIn" type="String" /> 
+    </aura:method>
+
+    <aura:attribute name="url" type="String" />
+    <aura:attribute name="maxHeight" type="String" access="global" />
+    <aura:attribute name="openInActionsIn" type="String" access="global" /> 
+    <aura:attribute name="iFrameResizer" type="Object" /> 
+    <aura:attribute name="hideSpinner" type="Boolean" default="false" /> 
+    <aura:handler name="destroy" value="{!this}" action="{!c.handleDestroy}"/>
+    <aura:handler name="change" value="{!v.url}" action="{!c.setupIframeResizer}"/>
+
+    <aura:registerEvent name="navigateToComponent" type="force:navigateToComponent"/>
+    <aura:registerEvent name="navigateToList" type="force:navigateToList"/>
+    <aura:registerEvent name="navigateToObjectHome" type="force:navigateToObjectHome"/>
+    <aura:registerEvent name="navigateToRelatedList" type="force:navigateToRelatedList"/>
+    <aura:registerEvent name="navigateToSObject" type="force:navigateToSObject"/>
+    <aura:registerEvent name="navigateToURL" type="force:navigateToURL"/>
+    <aura:registerEvent name="refreshView" type="force:refreshView"/>
+    <aura:registerEvent name="showToast" type="force:showToast"/>
+    <aura:registerEvent name="sendMessage" type="ltng:sendMessage"/>
+    <aura:registerEvent name="ILEvent" type="vlocity_cmt:vlocityInteractionLauncherEvent"/>
+    <aura:handler event="aura:locationChange" action="{!c.locationChange}"/>
+    <aura:handler event="forceCommunity:routeChange" action="{!c.locationChange}"/>
+
+    <ltng:require scripts="{!$Resource.vlocity_cmt__iframeresizer + '/js/iframeResizer.js'}"
+              afterScriptsLoaded="{!c.setupIframeResizer}" />
+    
+    <iframe aura:id="iframe" width="0%" height="0%" test="{!v.url}" src="{!v.url}" title="{!(v.url) ? 'Vlocity Layout': 'No user content'}" onload="{!c.frameLoaded}" class="{!(v.url) ? '': 'slds-hide'}" frameBorder="0px" border="0" style="{! (v.url ? '' : 'width:0px;height:0px;') + 'border: 0px; background:' + (v.backgroundColor ? v.backgroundColor : '#FFFFFF' ) + ';'}" />
+    {!v.body}
+    
+    <div class="{! 'slds-wrap slds-p-around--x-large' + (v.hideSpinner ? ' slds-hide' :'') + (v.url ? '': ' slds-hide') }" style="{! 'background:' + (v.backgroundColor ? v.backgroundColor : '#FFFFFF' ) +';'}">
+            <div role="status" class="slds-spinner slds-spinner_medium">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+            </div>
+    </div>
+    
+    
+</aura:component>

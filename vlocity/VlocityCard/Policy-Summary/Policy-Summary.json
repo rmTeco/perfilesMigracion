@@ -1,0 +1,69 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0015000001CnG8I"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Name, %vlocity_namespace%__aggregate_AnnualPremium__c, %vlocity_namespace%__aggregate_CashValue__c, %vlocity_namespace%__aggregate_DeathBenefit__c, %vlocity_namespace%__aggregate_PolicyCount__c From Account Where Id = '{{params.id}}'"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Count",
+                    "name": "['%vlocity_namespace%__aggregate_PolicyCount__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Annual Premium",
+                    "name": "['%vlocity_namespace%__aggregate_AnnualPremium__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Accumulated Value",
+                    "name": "['%vlocity_namespace%__aggregate_CashValue__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Death Benefit",
+                    "name": "['%vlocity_namespace%__aggregate_DeathBenefit__c']",
+                    "type": "currency"
+                }
+            ],
+            "name": "Overview",
+            "templateUrl": "card-highlight-totals"
+        }
+    ],
+    "title": "Overview"
+}

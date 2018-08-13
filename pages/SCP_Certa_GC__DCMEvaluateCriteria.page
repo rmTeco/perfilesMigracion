@@ -1,0 +1,353 @@
+<apex:page sidebar="false"  controller="SCP_Certa_GC.DCMEvaluateCriteriaController" tabStyle="Strategic_Client_Plan__tab">
+
+    <c:SCPMenu ></c:SCPMenu>
+    
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__DataTable}"  />
+    
+    <style>
+    	table.dataTable thead .sorting {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_both.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_asc {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_desc {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_asc_disabled {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc_disabled.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_desc_disabled {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc_disabled.png')}") no-repeat center right ! important;
+	    }
+	    
+	    table.dataTable thead .sorting_asc,
+	    table.dataTable thead .sorting_desc,
+	    table.dataTable thead .sorting {
+	      cursor: pointer;
+	      *cursor: hand;
+	    }
+	    
+	    .dataTables_filter {
+	        text-align: right ! important;
+	        padding-right: 15px ! important;
+	    }
+	    
+	    .AddEvaluation{
+		    
+		}
+		
+		.conteinerDiv {
+			border-bottom:1px solid #edeff0;
+			padding-bottom: 20px;
+		}
+
+    </style>
+    <script>
+        $j = jq213;
+        
+        $j(document).ready(function() {
+            createDataTableSerch();  
+            $j(".EvaluateButton").click(function(){
+	            addeval = 1;
+	        });
+	        $j(".AddButton").click(function(){
+	            addeval = 1;
+	        });
+            
+        });
+        
+        function createDataTableSerch(){
+            $j("#mainTable").dataTable({
+                "bPaginate": false,        
+                "bInfo": false
+            });
+        }
+        
+        function ajaxshow(){
+	        $j(".errorMsg").css("display","none");
+	        $j(".ajaxloader").show();
+	    }    
+	    
+	    function ajaxstop(){
+	        $j(".ajaxloader").hide();
+	        if ($j(".errorMsg", $j("#myModal")).css("display") == 'block') {
+	    		$j('#myModal').modal('show');    	
+	        }
+	    }
+	
+	    function showInput(){
+    
+	        console.log("render called:" +addeval);
+	    
+	        /*
+	        if(addeval==1)
+		            $j(".AddEvaluation").show();
+		        else
+		            $j(".AddEvaluation").hide();
+		    */
+	    }
+	    
+	    var addeval = 1;
+	    
+	    function showModal() {
+	    	addeval=1;
+	    	$j('#myModal').modal('show');
+	    }	    
+	    
+    </script>
+    	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="EvaluatedCriteriaPageBlock">
+	    	<div class="panel panel-default">	    		
+	    		<div class="panel-heading">
+	    			<h3 class="panel-title">
+	    				<span style="float:left;">
+	    					{!$Label.scp_certa_gc__dcm}
+	    				</span>
+	    				<span style="float:left;">
+	    					<c:showVideo />
+	    				</span>
+	    			</h3>
+	    			<div class="row paddingRight">
+	    				<apex:form >	
+    						<apex:actionFunction action="{!exportToExcel}" name="exportToExcel"/>
+    						<apex:actionFunction action="{!$Page.DCMCriteria}?id={!opportunity.id}" name="viewCDC"/>
+    					</apex:form>	   					
+						<div class="btn-group pull-right" role="group" aria-label="...">	    					
+	           				<button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+		   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+		                    </button>
+	           				<button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+		   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+		                    </button>
+		                    <button type="button" class="btn btn-default btn-sm" onclick="viewCDC()">
+		   						<span class="glyphicon glyphicon-comment icon-btn-left"></span>&nbsp;{!$Label.viewCDC}
+		                    </button>	
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="panel-body">
+			    	<apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="showInput(); ajaxstop();"/>
+		            <div class="btn-group pull-right" role="group" aria-label="...">	    					
+           				<apex:outputLink value="{!$Page.SCP_Certa_GC__accountRDMWindow}?id={!opportunity.id}">
+                        	<button type="button" class="btn btn-default btn-sm">
+		   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.gotoMosaic}
+		                    </button>
+                        </apex:outputLink>
+           				<apex:outputLink value="{!$Page.SCP_Certa_GC__OpportunitySnapshot}?id={!opportunity.id}">
+                         	<button type="button" class="btn btn-default btn-sm">
+		   						<span class="glyphicon glyphicon-camera icon-btn-left"></span>&nbsp;{!$Label.gotoSnapshot}
+		                    </button>
+                         </apex:outputLink>		                    
+    				</div>
+		            <h2 style="margin-top: 0px;">{!$Label.scp_certa_gc__opportunity}: <span style="font-size: 16px;"><apex:outputLink value="/{!opportunity.id}">{!opportunity.Name}</apex:outputLink></span></h2>
+		            
+		            <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+		                <img src="{!$Resource.SCP_Certa_GC__AjaxLoader}"/><br/>Loading...
+		            </div>
+					
+					<!-- Evaluar Criterio -->
+					<apex:form id="AddEvaluation">
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-lg" style="z-index:9999;width: 1000px;">
+						    	<div class="modal-content">
+						      		<div class="modal-header">
+						        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        		<h4 class="modal-title" id="myModalLabel">{!$Label.eval_criteria}</h4>
+						      		</div>
+						      		<div class="modal-body">
+								    	<div class="AddEvaluation conteinerDiv">
+											<table class="table table-striped table-bordered table-condensed">
+												<thead>
+													<tr>
+														<th>
+                                                            <apex:outputText value="Criterio"/>
+															<!--<apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/>-->
+														</th>
+														<th>
+                                                            <apex:outputText value="Consideración del cliente"/>
+															<!--<apex:outputText value="{!$ObjectType.SCP_Criteria_DCM__c.fields.Customer_Consideration__c.label}"/>-->
+														</th>
+														<th>
+															<!--<apex:outputText value="{!$ObjectType.SCP_Criteria_DCM__c.fields.Our_Competitive_Standing__c.label}"/>-->
+                                                            <apex:outputText value="Nuestra posición competitiva"/>
+														</th>
+														<th>
+                                                            <apex:outputText value="Competidores competitivos de pie"/>
+															<!--<apex:outputText value="{!$ObjectType.SCP_Criteria_DCM__c.fields.Competitors_Competitive_Standing__c.label}"/>-->
+														</th>
+														<th>
+															<apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/>
+														</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>
+															<apex:inputField required="true" value="{!newEval.SCP_Certa_GC__Criteria__c}" rendered="{!newEval.SCP_Certa_GC__Criteria__c == null || newEval.SCP_Certa_GC__Criteria__c == ''}"/>
+															<apex:outputField value="{!newEval.SCP_Certa_GC__Criteria__c}" rendered="{!newEval.SCP_Certa_GC__Criteria__c != null && newEval.SCP_Certa_GC__Criteria__c != ''}"/>
+														</td>
+														<td>
+															<apex:inputField required="true" value="{!newEval.SCP_Certa_GC__Customer_Consideration__c}" />
+														</td>
+														<td>
+															<apex:inputField required="true" value="{!newEval.SCP_Certa_GC__Our_Competitive_Standing__c}" />
+														</td>
+														<td>
+															<apex:inputField required="true" value="{!newEval.SCP_Certa_GC__Competitors_Competitive_Standing__c}" />
+														</td>
+														<td>
+					                    					<apex:inputField value="{!newEval.SCP_Certa_GC__Approach__c}" />
+					                    				</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+								    </div>
+						      		<div class="modal-footer">
+						        		<button type="button" class="btn btn-default" data-dismiss="modal" style="  margin-right: 10px;">{!$Label.close}</button>
+						        		<apex:commandButton styleClass="btn btn-primary" reRender="EvaluatedCriteriaPageBlock" action="{!InsertEvaluation}" value="{!$Label.scp_certa_gc__add_buttom}" style="margin-left:0px;" onclick="addeval=1;" status="renderMeStatus"/>
+						      		</div>
+						    	</div>
+						  	</div>					  	
+						</div>
+					</apex:form>
+					
+					<!-- Selección de Criterios -->					
+					<apex:form >
+						<div class="conteinerDiv">					
+							<h2>{!$Label.scp_certa_gc__select_criteria}</h2>				
+							<div class="row">
+								<div class="col-md-4">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>
+													<apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/>
+												</th>
+												<th>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<apex:repeat value="{!notEvaluatedDCM}" var="item" >
+												<tr>
+													<td>
+														<apex:outputText value="{!item}"/>
+													</td>
+													<td style="text-align: center;">
+								                        <apex:commandButton styleClass="btn btn-default btn-xs" action="{!popCriteriaEvaluation}" value="{!$Label.scp_certa_gc__evaluate}"  status="renderMeStatus" rerender="AddEvaluation" oncomplete="showModal();">
+									                    	<apex:param name="criteria" value="{!item}" assignTo="{!criteriaToEvaluate}"/>
+									                    </apex:commandButton>
+													</td>
+												</tr>
+											</apex:repeat>											
+											<tr>
+												<td style="height: 60px;vertical-align: bottom;">
+							                        <apex:commandButton styleClass="btn btn-default btn-xs" action="{!popCriteriaEvaluation}" value="{!$Label.scp_certa_gc__add} {!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"  status="renderMeStatus" rerender="AddEvaluation" oncomplete="showModal();">
+								                    	<apex:param name="criteria" value="{!newCriteria}" assignTo="{!criteriaToEvaluate}"/>
+								                    </apex:commandButton>
+												</td>
+												<td></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>						
+						</div>
+					</apex:form>
+						
+					<!-- Criterios Evaluados -->
+					<apex:form >
+						<apex:actionFunction action="{!saveEvaluatedDCM}" name="SaveChanges" rerender="EvaluatedCriteriaPageBlock" status="renderMeStatus"/>
+						<div class="conteinerDiv">
+							<h2>Criterios de Decisión por Oportunidad</h2>
+							<apex:outputPanel layout="block">
+			                    <table class="table table-striped table-bordered table-condensed">
+			                    	<thead>
+			                    		<tr>
+			                    			<th style="min-width: 230px;">
+                                                <apex:outputText value="Criterio"/>
+			                    				<!--<apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/>-->
+			                    			</th>
+			                    			<th>
+			                    				<!--<apex:outputText value="{!$ObjectType.SCP_Criteria_DCM__c.fields.Customer_Consideration__c.label}"/>-->
+                                                <apex:outputText value="Consideración del cliente"/>
+			                    			</th>
+			                    			<th>
+			                    				<!--<apex:outputText value="{!$ObjectType.SCP_Criteria_DCM__c.fields.Our_Competitive_Standing__c.label}"/>-->
+                                                <apex:outputText value="Nuestra posición competitiva"/>
+			                    			</th>
+			                    			<th>
+			                    				<!--<apex:outputText value="{!$ObjectType.SCP_Criteria_DCM__c.fields.Competitors_Competitive_Standing__c.label}"/>-->
+                                                <apex:outputText value="Competidores competitivos de pie"/>
+			                    			</th>
+			                    			<th style="width: 100%;">
+			                    				<apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/>
+			                    			</th>
+			                    			<th>
+			                    			</th>
+			                    		</tr>
+			                    	</thead>
+			                    	 
+			                    	<tbody>
+			                    		<apex:repeat value="{!evaluatedDCM}" var="item">
+			                    			<tr>
+			                    				<td>
+			                    					<apex:outputField value="{!item.SCP_Certa_GC__Criteria__c}" />
+			                    				</td>
+			                    				<td>
+			                    					<apex:outputField value="{!item.SCP_Certa_GC__Customer_Consideration__c}">
+					                                    <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+					                                </apex:outputField>
+			                    				</td>
+			                    				<td>
+			                    					<apex:outputField value="{!item.SCP_Certa_GC__Our_Competitive_Standing__c}">
+					                                    <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+					                                </apex:outputField>
+			                    				</td>
+			                    				<td>
+			                    					<apex:outputField value="{!item.SCP_Certa_GC__Competitors_Competitive_Standing__c}">
+					                                    <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+					                                </apex:outputField>  
+			                    				</td>
+			                    				<td>
+			                    					<apex:outputField value="{!item.SCP_Certa_GC__Approach__c}">
+					                                    <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+					                                </apex:outputField>
+			                    				</td>
+			                    				<td>
+			                    					<apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__del_buttom}"  reRender="EvaluatedCriteriaPageBlock" status="renderMeStatus" action="{!DeleteEvaluation}">
+						                                <apex:param assignTo="{!delid}" name="delid" value="{!item.id}"/>
+						                            </apex:commandButton>
+			                    				</td>
+			                    			</tr>
+			                    		</apex:repeat>
+			                    	</tbody>
+			                    </table>                  
+			                </apex:outputPanel>     
+						</div>
+					</apex:form>
+				</div>
+				<div class="panel-footer">
+	    			<div class="row paddingRight">
+						<div class="btn-group pull-right" role="group" aria-label="...">	    					
+	           				<button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+		   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+		                    </button>
+	           				<button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+		   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+		                    </button>
+		                    <button type="button" class="btn btn-default btn-sm" onclick="viewCDC()">
+		   						<span class="glyphicon glyphicon-comment icon-btn-left"></span>&nbsp;Ver Gráfico de Criterios
+		                    </button>	
+	    				</div>
+	    			</div>
+	    		</div>
+				<c:FastTask page="{!$Label.scp_certa_gc__dcm}" account="{!account.Id}" opp="{!opportunity.id}"></c:FastTask>
+			    <div>
+			        <span style="height:10px">&nbsp;<br/></span>
+			        <chatter:feed entityId="{!account.Id}"/>
+			    </div>
+		    </div>
+		</apex:outputpanel>
+</apex:page>

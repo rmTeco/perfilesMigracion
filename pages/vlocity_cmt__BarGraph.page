@@ -1,0 +1,18 @@
+<apex:page StandardController="Account" extensions="vlocity_cmt.BillingDashboardController">
+    <c:ConsoleGlobalComponent />
+    <apex:form >
+        <apex:outputText value="{!account.Type}" rendered="false"/>
+		
+        <apex:outputPanel layout="none" >
+			<!-- filter="{column:'BillingLineItem__c.BillDate__c',operator:'greaterThan',value:'2014-05-11'}" -->
+			<apex:outputPanel layout="block" style="width:30%; display:inline-block; position:relative">
+				<analytics:reportChart size="small" developerName="{!nsPrefix}BillingByMonth" filter="{column:'Account.Id',operator:'equals',value:'{!sobjectId}'}"/> 
+				<!--  <analytics:reportChart size="small" developerName="UsageByPromotionalPackage" /> -->
+                
+                <!-- <apex:image url="{!$Resource.Graph2}" width="322" height="265" /> -->
+                
+                <!--<analytics:reportChart size="small" developerName="BillingByMonth" filter="{column:'Account.Id',operator:'equals',value:'{!sobjectId}'}"/> -->
+	        </apex:outputPanel>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

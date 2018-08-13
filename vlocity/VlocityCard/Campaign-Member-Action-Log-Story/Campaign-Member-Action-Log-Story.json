@@ -1,0 +1,39 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objType']": "Campaign Member Action Log"
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Attempted Call",
+                    "name": "['highlight']",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Member Action Log",
+            "sObjectType": "%vlocity_namespace%__CampaignMemberActionLog__c",
+            "templateUrl": "campaign-member-story-card"
+        }
+    ],
+    "title": "Action Log"
+}

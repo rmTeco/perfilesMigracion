@@ -1,0 +1,27 @@
+<div class="account-story" ng-init="showInfo = true" ng-if="$root.entitySelected">
+    <div class="spacer story-spacer" ng-click="showInfo = !showInfo">
+        {{::$root.vlocity.getCustomLabel('Story', 'Story')}} <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+              <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+    </div>
+    <div id="story-time" ng-show="showInfo">
+      <div class="story-type">
+            <label>{{::$root.vlocity.getCustomLabel('Type', 'Type')}}:</label>
+            <select ng-model="importedScope.selectedStory"
+                    ng-options="story.objType for story in importedScope.uniqueStoryList | orderBy:story.objType"
+                    ng-change="importedScope.change()">
+                <option value="">{{::$root.vlocity.getCustomLabel('All', 'All')}}</option>
+            </select>
+      </div>
+      <div class="story" ng-repeat="story in importedScope.stories" ng-click="importedScope.onNavigate(story.Id, story.objType, story.navigateLink)">
+        <div class="icon-segment">
+          <img src="{{story.imageRef}}">
+          <div class="line"></div>
+        </div>
+        <div class="story-info">
+          <div class="story-type"><strong>{{story.objType}}</strong></div>
+          <div>{{story.title}}</div>
+          <div class="story-date">{{story.formatedLastActivityDate}}</div>
+        </div>
+      </div>
+    </div>
+</div>

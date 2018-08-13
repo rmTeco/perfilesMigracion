@@ -1,0 +1,78 @@
+<div class="slds-card via-slds-card--active slds-m-bottom--small incident-detail" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}"  data-popover-flyout="true">
+	<div 
+		class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center slds-p-around--small" 
+		ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+		<div class="slds-media slds-col--padded slds-media--center slds-has-flexi-truncate">				
+			<div class="slds-media__body slds-truncate">					
+				<span class="slds-text-heading--small">{{data.title}}</span>
+				<br />
+				<span>{{data.fields[0].label}} {{obj | getter:data.fields[0] | picker:data.fields[0].type}}</span>
+			</div>
+		</div>
+	</div>
+	<div class="slds-card__body slds-grid slds-wrap slds-theme--default slds-p-around--medium">
+		<div ng-repeat="field in data.fields.slice(1)" class="slds-col--padded slds-size--1-of-2">
+			<div class="slds-tile slds-p-bottom--medium">
+				<p class="slds-text-heading--label" title="{{field.label}}">{{field.label}}</p>
+				<div class="slds-tile__detail slds-text-heading--small ">					
+					<p ng-if="field.type == 'datetime'">{{obj | getter: field | date : "HH:mm dd/MM/y"}}</p>
+					<p						
+						ng-if="!obj[field.relationshipName] && field.type != 'datetime' && field.label != 'Estado'">{{obj | getter: field | picker: field.type}} </p>
+					<p class="slds-truncate" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}} </p>
+					<div ng-if="field.label == 'Estado'" title="{{obj[field.name]}}">
+                        <p ng-if="(obj | getter: field) == 'New'">Nuevo</p>
+                        <p ng-if="(obj | getter: field) == 'Closed'">Cerrado</p>
+                        <p ng-if="(obj | getter: field) != 'New' && (obj | getter: field) != 'Closed'">
+                            {{obj | getter: field}}
+                        </p>
+                    </div>
+				</div>
+			</div>
+		</div>
+		<div class="slds-col--padded slds-size--1-of-2">
+			<div class="slds-tile slds-p-bottom--medium">
+				<p class="slds-text-heading--label">Archivos adjuntos de Procedimiento</p>				
+				<div					
+					ng-init="attachments = obj.Attachments.length == undefined && obj.Attachments.length != 0 ? [obj.Attachments] : obj.Attachments">
+					<div ng-repeat="a in attachments | filter:{'Description':'Procedimiento'}">
+						<a href="/servlet/servlet.FileDownload?file={{a.Id}}" target="_blank">						
+							{{a.Name}}
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="slds-col--padded slds-size--1-of-2">
+			<div class="slds-tile slds-p-bottom--medium">
+				<p class="slds-text-heading--label">Archivos adjuntos de Detalle del Incidente</p>				
+				<div					
+					ng-init="attachments = obj.Attachments.length == undefined && obj.Attachments.length != 0 ? [obj.Attachments] : obj.Attachments">
+					<div ng-repeat="a in attachments | filter:{'Description':'Detalle del Incidente'}">
+						<a href="/servlet/servlet.FileDownload?file={{a.Id}}" target="_blank">
+							{{a.Name}}
+						</a>
+					</div>
+				</div>
+			</div>
+	    </div>
+	    <div class="slds-col--padded slds-size--1-of-1">
+    	    <div class="slds-grid slds-wrap slds-border--top">
+            	<div 
+            	    class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-3 slds-large-size--1-of-6 slds-p-top--medium startActions-item"
+            	    ng-repeat="action in data.actions">
+            	    <button href="javascript:void(0);"
+            	        class="slds-button slds-button--neutral slds-truncate"
+            	        ng-click="performAction(action)">
+            	        <vloc-card-icon 
+                            data="action"
+                            obj="obj"
+                            size="'small'"
+                            extra-classes="'big via-action-icon slds-icon-text-default ta-button-icon'">
+                        </vloc-card-icon>
+                        <span class="slds-text-body_regular ta-button-font">{{action.displayName}}</span>
+            	    </button>
+            	</div>
+            </div>
+        </div>
+    </div>
+</div>

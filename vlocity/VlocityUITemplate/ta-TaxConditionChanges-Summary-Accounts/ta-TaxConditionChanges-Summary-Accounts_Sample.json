@@ -1,0 +1,137 @@
+{
+    "bpTree": {
+        "response": {
+            "Account": {
+                "Contact": {
+                    "Birthdate": "2017-07-06 00:00:00",
+                    "Cuil": "36123456789",
+                    "DocumentNumber": "34073311",
+                    "DocumentType": "DNI",
+                    "Email": "lino.acosta@accenture.com",
+                    "FirstName": "Sandra",
+                    "Gender": "Masculino",
+                    "Id": "0036C000007EDICQA4",
+                    "LastName": "TestC",
+                    "MobilePhone": "1234567891",
+                    "OtherPhone": "1234567891",
+                    "Phone": "234234",
+                    "Status": "Activo"
+                },
+                "DocumentNumber": "20340733291",
+                "DocumentType": "CUIT",
+                "FOL": true,
+                "Fraud": false,
+                "Id": "0016C000008eeAoQAI",
+                "NPS": "9-PROMOTERS",
+                "Name": "Sandra Ramos",
+                "PersonalClubCategory": "Basico",
+                "PersonalClubPoints": "88",
+                "Segment": "Black"
+            },
+            "Contact": {
+                "Accounts": {
+                    "BillingAccounts": [
+                        {
+                            "Id": "0016C000008fHeiQAE",
+                            "Name": "Sandra Ramos Billing 1",
+                            "RecordType": {
+                                "Name": "Billing"
+                            },
+                            "Status": "Inactive"
+                        },
+                        {
+                            "Id": "0016C000008fKMLQA2",
+                            "Name": "Sandra Ramos Billing 2",
+                            "RecordType": {
+                                "Name": "Billing"
+                            },
+                            "Status": "Active"
+                        }
+                    ],
+                    "DocumentNumber": "20340733291",
+                    "DocumentType": "CUIT",
+                    "Id": "0016C000008eeAoQAI",
+                    "Name": "Sandra Ramos",
+                    "RecordType": {
+                        "Name": "Consumer"
+                    },
+                    "Status": "Active"
+                },
+                "Id": "0036C000007EDICQA4"
+            },
+            "ContextId": "0016C000008eeAo",
+            "DRId_Case": "5006C0000019SL2QAM",
+            "DocumentType": "CUIT2X",
+            "Step_1_Tax_Condition_Validations": {
+                "Step_1_Is_Valid": true,
+                "ValidationsBlock": {
+                    "TotalActiveAccounts": 1
+                }
+            },
+            "Step_2_Select_Tax_Condition_To_Modify": {
+                "TaxConditionBlock": {
+                    "TaxConditionAll": null,
+                    "TaxConditionCUIT2XOnly": "CUIT",
+                    "TaxConditionCUIT3XOnly": null,
+                    "TaxConditionChange": "CUIT",
+                    "TaxConditionDNIOnly": null
+                }
+            },
+            "Step_4_CUIT_To_DNI": {
+                "CUITToDNIBlock": {
+                    "GetCUITCheckDigit": "1",
+                    "GetCUITNumber": "34073329",
+                    "GetCUITType": "20"
+                }
+            },
+            "Step_6_Select_New_Tax_Condition_DNI_To_CUIT": {
+                "NewIIBBConditionBlock": {
+                    "IIBBCondition": null,
+                    "IIBBExemption": {
+                        "IIBBExemptionDateFrom": null,
+                        "IIBBExemptionDateTo": null,
+                        "IIBBExemptionJurisdiction": null,
+                        "IIBBPercentage": null
+                    }
+                },
+                "NewIVAConditionBlock": {
+                    "IVACondition": null,
+                    "IVAExemptionDateFrom": null,
+                    "IVAExemptionDateTo": null,
+                    "IVAPercentage": null
+                },
+                "RespaldatoryDocumentationBlock": null
+            },
+            "Step_7_Select_New_Tax_Condition_CUIT_To_DNI": {
+                "NewIVAConditionBlockDNI": {
+                    "IVAConditionDNI": "IVA_CF",
+                    "IVAExemptionDateFromDNI": null,
+                    "IVAExemptionDateToDNI": null,
+                    "IVAPercentageDNI": null
+                }
+            },
+            "id": "a1q6C0000001nnLQAQ",
+            "layout": "lightning",
+            "testContextId": "0016C000008eeAo",
+            "timeStamp": "2017-07-18T18:23:59.383Z",
+            "userId": "0056C000000gOrAQAU",
+            "userName": "nehuen.sola@accenture.com.desa01",
+            "userProfile": "Vlocity CMT",
+            "vlcPersistentComponent": {
+            },
+            "vlcTimeTracking": {
+                "DataRaptor - CreateCase": 723,
+                "DataRaptor - GetAccountInfoById": 1421,
+                "DataRaptor - GetBillingAccountsByContactId": 1445,
+                "OmniScriptSessionToken": "adc2a6bd-a785-46cc-9425-350cc5204a32",
+                "Remote Action  - TaxConditionChanges": 281,
+                "Set Values": 2,
+                "Step_1_Tax_Condition_Validations": 2029,
+                "Step_2_Select_Tax_Condition_To_Modify": 4695,
+                "Step_3_Select_Billing_Accounts": 4030,
+                "Step_4_CUIT_To_DNI": 11876,
+                "Step_7_Select_New_Tax_Condition_CUIT_To_DNI": 8962
+            }
+        }
+    }
+}

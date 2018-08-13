@@ -1,0 +1,40 @@
+{
+    "Cards": [
+        "groupedRow"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.AccountId",
+                "val": "0016C000009HYQw"
+            },
+            {
+                "name": "params.AssetId",
+                "val": "02i6C0000002WLSQA2"
+            }
+        ],
+        "type": "Inherit",
+        "value": {
+            "body": "[\n\t\t\t{\n\t\t\t\t\"Mandatory\": \"true\",\n\t\t\t\t\"Status\": \"Active\",\n\t\t\t\t\"%vlocity_namespace%__LineNumber__c\": \"0001.0010\",\n\t\t\t\t\"Tipo_de_Producto__c\": \"Servicio GSM\",\n\t\t\t\t\"InstallDate\": \"2017-10-14\",\n\t\t\t\t\"Name\": \"voz Entrante\",\n\t\t\t\t\"Id\": \"02i6C0000002WLcQAM\",\n\t\t\t\t\"SubType\": \"voz\"\t\t\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Mandatory\": \"true\",\n\t\t\t\t\"Status\": \"Active\",\n\t\t\t\t\"%vlocity_namespace%__LineNumber__c\": \"0001.0010\",\n\t\t\t\t\"Tipo_de_Producto__c\": \"Servicio GSM\",\n\t\t\t\t\"InstallDate\": \"2017-10-14\",\n\t\t\t\t\"Name\": \"voz Saliente\",\n\t\t\t\t\"Id\": \"02i6C0000002WLcQAM\",\n\t\t\t\t\"SubType\": \"voz\"\t\t\n\t\t\t}\n\t\t]",
+            "bundle": "GetServicesByAccountId",
+            "ctxId": "params.Id",
+            "inputMap": {
+                "accountId": "{{params.AccountId}}",
+                "assetId": "{{params.AssetId}}"
+            },
+            "optionsMap": {
+                "vlcClass": "ta_techCare_added_value_services"
+            },
+            "query": "SELECT\nAsset.Id,\nAsset.Name,\nAsset.InstallDate,\nAsset.Tipo_de_Producto__c,\nAsset.%vlocity_namespace%__LineNumber__c,\nAsset.status\n\nFROM Asset\nWHERE \nAsset.AccountId = '{{params.AccountId}}'\nAND\nAsset.%vlocity_namespace%__ParentItemId__c = '{{params.AssetId}}'\nAND\nAsset.Tipo_de_Producto__c = 'Servicio Valor Agregado'",
+            "remoteClass": "ta_techCare_added_value_services",
+            "remoteMethod": "getAddedValueServicesByAssetId",
+            "remoteNSPrefix": null,
+            "resultVar": ""
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-added-value-services-container-grouped"
+        }
+    }
+}

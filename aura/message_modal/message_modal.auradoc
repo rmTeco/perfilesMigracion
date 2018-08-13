@@ -1,0 +1,37 @@
+<aura:documentation>
+	<aura:description>
+    	General Description : 
+
+		Json needs to be setup as followed and is initialized with default values, 
+        if removed then will be set to default on rendering of component. If set 
+        link_flag to false then the url related fields are optional.
+        default json, use as template but do not change field names.
+        Set as attribute of parent component and set as attribute in 
+        component tag like so et4ae5:step_modal step_json="v.jsonName" where attribute 
+		is like so : aura:attribute name="step_json" type="json" set json 
+        in helper of parent application/component on initialization.<br/>
+
+		Field definitions :<br/>
+ 
+		title       - header of component<br/>
+		body        - Content of modal on each page.<br/>
+
+		json template :<br/>
+
+		{<br/>
+            "entries" : [<br/>
+            	{ <br/>
+            		"title" : "TITLE",<br/>
+                    "body" : "Content in HTML"<br/>
+        		}, <br/>
+                {<br/>
+                    "title" : "TITLE",<br/>
+                    "body"  : "Content in HTML"<br/>
+                }<br/>
+    		]	<br/>		
+      	}
+    </aura:description>
+    <aura:example name="step_modal" ref="et4ae5:step_modal" label="Label">
+		This is using no values and must be passed a JSON value!
+	</aura:example>
+</aura:documentation>

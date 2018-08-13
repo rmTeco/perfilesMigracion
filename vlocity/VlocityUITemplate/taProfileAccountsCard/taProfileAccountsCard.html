@@ -1,0 +1,14 @@
+<div class="account-select-container">
+    <table class="account-select-table" width="100%">
+        <tr>
+            <td class="account-select-label" width="50%">
+                <label>Cuenta:</label>
+            </td>
+            <td class="account-select-cont vlocity" width="50%">
+                <select class="account-select form-control">
+                    <option ng-repeat="field in data.fields" value="Cuenta 1">{{obj | getter: field | picker: field.type}}</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>

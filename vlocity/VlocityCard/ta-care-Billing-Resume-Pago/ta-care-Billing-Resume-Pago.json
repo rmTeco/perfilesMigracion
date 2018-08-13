@@ -1,0 +1,114 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "inputMap": {
+                "body": {
+                    "accesoCuenta": {
+                        "codCuenta": "2380001051410001",
+                        "condicionPago": "string",
+                        "idCuenta": "2380001051410001",
+                        "identificadorRecurso": "string"
+                    },
+                    "cantidadItemsConsulta": 0,
+                    "cantidadMaxConsulta": 0,
+                    "fechaDesde": "2018-01-01 00:00:00",
+                    "fechaHasta": "2018-01-31 00:00:00",
+                    "referenciaItemPaginado": 0,
+                    "txid": "123456"
+                }
+            },
+            "ipMethod": "IFS_S059",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "resultVar": "['pagos']['listaInfoPagos']['infoPago']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountIntegrationId": "params.AccountIntegrationId",
+                            "direccionFactura": "params.direccionFactura",
+                            "txId": "params.txId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "paymentrecord",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaAplicacionPago']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "FECHA DE PAGO",
+                    "name": "['fechaAplicacionPago']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['tipoTransaccionPago']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "TIPO",
+                    "name": "['tipoTransaccionPago']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "NRO. DE COMPROBANTE",
+                    "name": "['txId']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['importePago']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "MONTO",
+                    "name": "['importePago']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Activo",
+            "sObjectType": null,
+            "templateUrl": "card-table-BillingResume-row-history"
+        }
+    ],
+    "title": "Pagos"
+}

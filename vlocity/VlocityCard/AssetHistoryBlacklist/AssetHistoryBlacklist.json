@@ -1,0 +1,83 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.AssetId",
+                "val": "02i6C0000002fCjQAI"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "AssetId": "{{params.AssetId}}"
+            },
+            "optionsMap": {
+                "vlcClass": "ta_techCare_subscriptions"
+            },
+            "remoteClass": "ta_techCare_subscriptions",
+            "remoteMethod": "getHistoryBlacklist",
+            "remoteNSPrefix": null,
+            "resultVar": "['resultGetAssetHistoryBlacklist']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['dateEstimateBlacklistRemove']",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "null"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Fecha y Hora",
+                    "name": "['createdDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Accion",
+                    "name": "['addBlackList']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Usuario",
+                    "name": "['createdById']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['dateEstimateBlacklistRemove'] != 'null'",
+            "name": "Active",
+            "templateUrl": "ta-TechCare-Subscriptions-Card"
+        }
+    ],
+    "title": "Asset History Blacklist"
+}

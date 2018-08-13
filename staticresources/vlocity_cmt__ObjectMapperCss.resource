@@ -1,0 +1,1 @@
+body .via-slds .slds-page-header .slds-media .slds-media__figure .slds-icon{fill:#008ab3}body .via-slds .slds-container--x-small{max-width:200px}

@@ -1,0 +1,23 @@
+<aura:component extensible="true" abstract="true">
+	
+    <!-- Handlers -->
+    <aura:handler name="BCMessage" event="et4ae5:BaseComponentMessage" action="{!c.handleComponentEvent}"/>
+    <aura:registerEvent name="BCMessage" type="et4ae5:BaseComponentMessage"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    
+    <div class="mainSpinner-component">
+        <span class="loadingMC" aura:id="spinnerSpan">
+        	<ui:spinner aura:id="mainSpinner"/>
+        </span>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1">
+                <div aura:id="popupMessage"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Required to render sub component -->
+    {!v.body}
+</aura:component>

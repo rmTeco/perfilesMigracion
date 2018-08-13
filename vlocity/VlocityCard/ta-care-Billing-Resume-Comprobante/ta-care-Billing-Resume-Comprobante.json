@@ -1,0 +1,134 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "inputMap": {
+                "body": {
+                    "cantRegistrosMostrar": "string",
+                    "codAcceso": {
+                        "codAccesoCuenta": {
+                            "codCuenta": "[params.AccountIntegrationId]",
+                            "idCuenta": "[params.AccountIntegrationId]",
+                            "identificadorRecurso": ""
+                        },
+                        "condicionPago": "2"
+                    },
+                    "numRegistroInicial": "string",
+                    "numTotalRegistros": "string",
+                    "tipoConsulta": {
+                        "cicloFacturacion": "20180101",
+                        "consultaPendientes": "Y",
+                        "periodoTiempo": {
+                            "fechaDesde": "2018-01-01 00:00:00",
+                            "fechaHasta": "2018-01-31 00:00:00",
+                            "tipoConsulta": "1"
+                        }
+                    }
+                }
+            },
+            "ipMethod": "IFS_S024",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "resultVar": "['comprobantes']['listaInfoFactura']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "codAccion": "['codAccionNegocio']",
+                            "fechaEmision": "['fechaEmisionComprobante']",
+                            "nroComprobante": "['numeroComprobanteLegal']",
+                            "nroCuenta": "params.AccountIntegrationId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ViewTransactionDetail",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaEmisionComprobante']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "FECHA DE EMISIÓN",
+                    "name": "['fechaEmisionComprobante']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaVencimientoComprobante']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "FECHA DE VENCIMIENTO",
+                    "name": "['fechaVencimientoComprobante']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['codAccionNegocio']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "TIPO",
+                    "name": "['codAccionNegocio']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['numeroComprobanteLegal']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "NRO. DE COMPROBANTE",
+                    "name": "['numeroComprobanteLegal']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['importeComprobante']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "MONTO",
+                    "name": "['importeComprobante']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Activo",
+            "sObjectType": null,
+            "templateUrl": "card-table-BillingResume-row-history"
+        }
+    ],
+    "title": "Comprobantes"
+}

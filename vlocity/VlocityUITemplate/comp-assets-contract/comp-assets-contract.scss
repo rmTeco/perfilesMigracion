@@ -1,0 +1,24 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $assets-namespace is defined in cpq-base-variables */
+$namespace: $assets-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .comp-#{$namespace}-contract {
+            .#{$namespace}-next-asset {
+                padding: $cpq-padding-large-vertical;   
+
+                .#{$namespace}-spinner-container {
+                    position: relative;
+                    padding-top: 10px;
+                }
+            }
+        }    
+    }
+}

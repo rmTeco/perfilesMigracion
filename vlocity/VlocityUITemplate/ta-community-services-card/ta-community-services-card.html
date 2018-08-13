@@ -1,0 +1,74 @@
+<div ng-controller="MyModuleCtrl as mmc"
+     ng-init="mmc.init()">
+    <!-- WEB -->
+    <!-- ng-if="!mmc.mobile" -->
+    <div class="slds-grid respon"
+         style="background: #FFF;">
+        <div ng-repeat="action in data.actions | limitTo: 1"
+             ng-click="performAction(action)"
+             class="slds-size--1-of-1 slds-align-middle slds-p-vertical--small cursor">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-size--2-of-7 slds-p-vertical--small slds-align--absolute-center" 
+                     ng-repeat="field in data.fields | limitTo: 1"><!--aqui esta la imagen-->
+                     <!--No se puede usar este svg en la comunidad porque afecta la height de la iframe-->
+                     
+                   <slds-svg-icon  sprite="'utility'" 
+                            icon="'phone_portrait'"
+                            size="'large'" 
+                            style="fill:#00B4C5"
+                            extra-classes="'slds-input__icon'">
+                    </slds-svg-icon>
+                </div>
+                
+                <div class="slds-size--5-of-7 slds-grid slds-wrap slds-grid--vertical-align-center slds-align-middle">
+                    <div class="slds-col slds-size--1-of-1"
+                         ng-repeat="field in data.fields | filter: fieldsfilter">
+                        <div ng-if="field.label == 'ProductName'"
+                             class="slds-size--1-of-1 slds-p-vertical--x-small client">
+                            <!--el nombre-->
+                            {{obj | getter: field | picker: field.type}}
+                        </div>
+                        <div ng-if="field.label == 'LineNumber'"
+                             class="slds-size--1-of-1 slds-p-vertical--x-small linenumber"><!--el nombre-->
+                            {{obj | getter: field | picker: field.type}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- MOBILE-->
+    <!--<div class="mobile" 
+        ng-if="mmc.mobile">
+        <div class="mobile"
+            style="background: #FFF;" ng-repeat="action in data.actions | limitTo: 1"
+            ng-click="performAction(action)">
+            <div class="mobile"
+                ng-repeat="field in data.fields" ng-if="field.label == 'Family'">
+                <slds-svg-icon  ng-if="(obj | getter: field | picker: field.type) == 'Movil' ||
+                                        (obj | getter: field | picker: field.type) == 'Device'"
+                                sprite="'utility'" 
+                                icon="'phone_portrait'"
+                                size="'large'" 
+                                style="fill:#00B4C5;">
+                </slds-svg-icon>
+            </div>
+            <div class="mobile"
+                ng-repeat="field in data.fields"
+                ng-if="field.label == 'AccountName'">
+                <p class="client">// {{obj | getter: field | picker: field.type}}</p>
+                <p class="linenumber" ng-repeat="field in data.fields"
+                    ng-if="field.label == 'LineNumber'">{{obj | getter: field | picker: field.type}}</p>
+            </div>
+            <div class="mobile">
+                <slds-svg-icon
+                    sprite="'utility'"
+                    icon="'chevronright'"
+                    size="'small'"
+                    style="fill:#00B4C5;">
+                </slds-svg-icon>
+            </div>
+        </div>
+    </div>-->
+</div>

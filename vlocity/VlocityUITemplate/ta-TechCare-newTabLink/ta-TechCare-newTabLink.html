@@ -1,0 +1,14 @@
+<div
+    ng-if="bpTree.response.Case.Id"
+    ng-controller="MCModuleCtrl as mcm"
+    ng-init="mcm.init()">
+    <p>Su gestión ha sido procesada, el número es: 
+        <a 
+            href="#"
+            class="slds-text-link"
+            ng-click="mcm.openTab()">
+            <strong>{{mcm.caseNumber}}</strong>
+        </a>
+    </p>
+</div>
+<script src="/support/console/41.0/integration.js"></script>

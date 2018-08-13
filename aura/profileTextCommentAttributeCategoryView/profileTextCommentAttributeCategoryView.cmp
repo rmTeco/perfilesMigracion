@@ -1,0 +1,15 @@
+<aura:component access="GLOBAL" controller="vlocity_cmt.ProfileClientAttributeController" extends="vlocity_cmt:profileAbstractAttributeCategoryView">
+    <section onclick="{!c.editAttributes}">
+        <h3 class="slds-section-title--divider">{!v.attributeCategoryName}</h3>
+        <article class="text-comment-attribute-list">
+            <aura:iteration items="{!v.appliedAttributes}" var="attribute">
+        		<vlocity_cmt:profileTextCommentAttribute attributeName="{!attribute.Name}" 
+                                               attributeValue="{!attribute.SegmentValue}"
+                                               appliedAttributeCode="{!attribute.SegmentCode}"
+                                               color="{!v.renderUsingColorCodes ? attribute.Color : 'inherit'}"
+                                               change="{!c.handleTextCommentValueChangedEvent}" />                    
+            </aura:iteration>
+        </article>
+    </section>
+        
+</aura:component>

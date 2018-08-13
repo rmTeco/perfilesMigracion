@@ -1,0 +1,60 @@
+<apex:page standardController="vlocity_cmt__VqMachine__c" extensions="vlocity_cmt.VlocityIntelligenceMachineEditCtrl,vlocity_cmt.DRDataPackRunnerController" showHeader="true" sidebar="false" standardStylesheets="false" docType="html-5.0" applyBodyTag="false">
+  <head> 
+      <apex:includeScript value="{!$Resource.vlocity_cmt__angular_bundle_1_6}"/>
+      <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__SldsAngular}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__DRVComp}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__VlocityIntelligenceMachineEdit}" />
+      <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/clipboard/dist/clipboard.min.js')}"/>
+      <apex:includeLightning />
+  </head>
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+    html, body {
+      height: 100%;
+    }
+    .Theme3 .slds-grid.slds-grid--frame {
+        min-width: auto;
+        max-width: calc(100vw - 4.4em);
+    }
+  </style>
+  <body xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div class="via-slds {!$User.UIThemeDisplayed}" >
+      <div class="slds-grid slds-grid--frame" style="max-height: 100vh">
+        <div ng-app="vlocityIntelligenceMachineEdit" class="slds-col slds-grid slds-grid--vertical slds-grid--vertical-stretch" ng-controller="vlocityIntelligenceMachine as ctrl" style="max-width: 100%;">
+          <slds-record-home-header sprite="custom" icon="custom109" icon-bg-class="slds-icon-standard-feed" object-type="'{!sObjectType}'" object-type-label="'{!sObjectTypeLabel}'" instance="ctrl.machine" fields="ctrl.visibleFields" buttons="ctrl.buttons" field-metadata="ctrl.fields"></slds-record-home-header>
+          <div class="slds-tabs--default slds-col slds-grid slds-grid--vertical slds-grid--vertical-stretch" style="overflow: hidden">
+            <ul class="slds-tabs--default__nav" role="tablist" style="flex-shrink: 0;">
+              <li class="slds-tabs--default__item slds-text-title--caps" title="Resources" role="presentation" ng-click="ctrl.activeTab = 0" ng-class="{'slds-active': ctrl.activeTab == 0}">
+                <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item">Resources</a>
+              </li>
+              <li class="slds-tabs--default__item slds-text-title--caps" title="Weightings"
+                role="presentation" ng-click="ctrl.activeTab = 1" ng-class="{'slds-active': ctrl.activeTab == 1}">
+                <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item">Weightings</a>
+              </li>
+            </ul>
+            <div id="tab-default-1" class="slds-col slds-grid slds-grid--vertical-stretch" role="tabpanel" aria-labelledby="tab-default-1__item" ng-show="ctrl.activeTab == 0" style="overflow: hidden">
+              <div class="slds-col slds-grid slds-grid--vertical-stretch" vim-resources=" " resources="ctrl.machine.$$resources" machine="ctrl.machine"></div>
+            </div>
+            <div id="tab-default-2" class="slds-col slds-grid slds-grid--vertical-stretch" style="overflow: hidden" role="tabpanel" aria-labelledby="tab-default-2__item" ng-show="ctrl.activeTab == 1" vim-weightings=" " machine="ctrl.machine">
+            </div> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      angular.module('vlocityIntelligenceMachineEdit')
+        .value('VqMachine', {!machineJson}) 
+        .value('resourcePage', '{!resourcePage}')
+        .value('$$resources', {!resourceValues})
+        .value('fieldMetadata', {!fieldMetadata})
+        .value('fieldSetMetadata', {!fieldSetMetadata})
+        .value('categories', JSON.parse("{!JSENCODE(allCategories)}"))
+        .value('resources', JSON.parse("{!JSENCODE(allResources)}"));
+    </script>
+  </body>
+
+</apex:page>

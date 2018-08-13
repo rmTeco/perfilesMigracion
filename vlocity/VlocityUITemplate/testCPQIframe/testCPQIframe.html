@@ -1,0 +1,13 @@
+<div 
+    ng-if="bpTree.response.IdOrder" 
+    ng-controller="CPQIframeController as cpqic" 
+    ng-init="cpqic.init();" 
+    style="width: 100%">
+    
+    <iframe
+        id="cartIframe"
+        src="{{cpqic.iframeSRC}}" 
+        style="width: 100%; height: 600px;"></iframe>
+    
+    <!--<ng-include src="{{cpqic.iframeSRC}}"></ng-include>-->
+</div>

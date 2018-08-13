@@ -1,0 +1,375 @@
+<apex:page standardController="SCP_Certa_GC__Solicitud_Capex__c" extensions="SCP_Certa_GC.SolicitudCapexController"  sidebar="false" docType="html-5.0">
+    
+    <apex:includeScript value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'js/JQueryToBS.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'js/bootstrap.min.js')}"/>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}" />
+    <apex:stylesheet value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'css/bootstrap-namespaced.min.css')}"/>	 
+    <apex:stylesheet value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'css/BSCustomSyles.css')}"/>
+    <script>
+    //-----------------------------------------------------------------------------
+    //Add the newer versions with noConflict(true) in reverse load order leaving 1.6.1 first
+    var jq161 = jQuery.noConflict(true);
+    var jq213 = jQuery.noConflict(true);
+    
+    jQuery = jq161;
+    $j = jq213;
+    
+    $j(document).ready(function() {      
+        captureFileButtons();
+    });
+    
+    function captureFileButtons() {
+        $j("[name=newNote]").on("mousedown", function(){
+            SaveChangesBeforeAttach();
+        });
+        $j("[name=attachFile]").on("mousedown", function(){
+            SaveChangesBeforeAttach();
+        });            
+        $j("[name=viewAll]").on("mousedown", function(){
+            SaveChangesBeforeAttach();
+        });
+    }
+    
+    //-----------------------------------------------------------------------------
+    </script>
+    <style>
+        .bootstrap-sf1 * {
+        font-family:  Calibri, ProximaNovaSoft-Regular, 'Helvetica Neue', 'Gill Sans', 'Gill Sans MT', Candara, Segoe, 'Segoe UI', Arial, sans-serif;
+        }
+        
+        .paddingRight {
+        padding-right: 15px;
+        }
+        
+        .inlineEditUndo {
+        display: none;
+        }
+        
+        .inlineEditWriteOn {
+        background: rgba(0, 0, 0, 0) url("/img/func_icons/util/pencil12.gif") no-repeat scroll right 2px;		    
+        }
+        
+        .PopupHolderOpp {
+        float:right;
+        margin-right: 6px;
+        margin: 5px;
+        cursor: pointer;
+        }
+        
+        .PopupHolderOpp *{
+        box-sizing: content-box ! important;
+        }
+        
+        .PopupHolderOpp .pbHeader {
+        border:0px;
+        border-top: 3px solid #f3ae4e !important;
+        }
+        
+        .PopupHolderOpp .pbHeader .mainTitle {
+        font-size: 18px !important;
+        font-weight: bold !important;	
+        }
+        
+        .PopupHolderOpp .pbBody .labelCol {
+        font-size: 16px !important;
+        font-weight: bold !important;	
+        }
+        
+        .PopupHolderOpp .pbBody .dataCol {
+        font-size: 16px !important;
+        font-weight: normal !important;
+        }
+        
+        .agregarButton {
+        padding: 3px 20px !important;
+        font-size: 13px !important;
+        }
+    </style>
+    
+    
+    <script>
+    
+    
+    </script>
+    
+    <apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+        
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <span style="float:left; margin-right: 5px; font-weight: bold; font-size: 110%;">
+                    Solicitud de Capex
+                </span>
+            </h1>
+            
+            <apex:actionStatus id="loadingSend">
+                <apex:facet name="start">
+                    <img src="/img/loading.gif"/>
+                </apex:facet>
+            </apex:actionStatus>
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                    <span class="glyphicon glyphicon glyphicon-envelope icon-btn-left"></span>&nbsp;{!$Label.send}
+                </button>
+            </div>
+        </div>
+        <br/>
+        
+        <!-- Message Sended -->
+        <apex:outputPanel id="msgPanel">
+            <br/>
+
+            <apex:messages style="width: 98%;" styleClass="center-block alert alert-danger" />
+            
+            <apex:outputPanel rendered="{! enviado != null}">
+                <br/>
+                <div style = "width: 98%;" class="center-block alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    {!enviado}
+                </div>
+            </apex:outputPanel>
+        </apex:outputPanel>
+        <br/>                  
+        
+        <apex:form >
+            <apex:actionFunction action="{!guardarSinValidar}" name="SaveChangesBeforeAttach" />
+            <apex:actionFunction action="{!send}" name="SaveChanges" reRender="msgPanel, mensajes" status="loadingSend" oncomplete="enviar(); return false;" />
+            <apex:actionFunction action="{!enviarMail}" name="enviar" reRender="msgPanel" />
+            
+            <!-- Solicitante -->
+            <apex:pageBlock title="Solicitante">
+                
+                <apex:pageBlockSection >
+                    <apex:outputField label="Operador / Pais" value="{!solicitud.SCP_Certa_GC__Operator_or_country__c}"/>
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection >
+
+                    <apex:outputText label="¿Quién realiza la solicitud?">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__applicant_name__c}"/>
+                        </div>
+                    </apex:outputText>
+
+                    <apex:inputField value="{!solicitud.SCP_Certa_GC__Applicant_Position__c}" label="Posición y Area del solicitante" />
+                    <apex:outputField label="Fecha de solicitud" value="{!solicitud.SCP_Certa_GC__Application_Date__c}" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <!-- Informacion General del Proyecto -->
+            <apex:pageBlock title="Información General del Proyecto" >
+                
+                <apex:pageBlockSection >
+                    <apex:outputField label="Nombre del Proyecto" value="{!solicitud.SCP_Certa_GC__Proyect_Name__c}"/>
+                    <apex:outputField label="Código en Salesforce" value="{!solicitud.SCP_Certa_GC__Salesforce_code__c}"/>
+                    <apex:outputField label="Descripción breve del proyecto " value="{!solicitud.SCP_Certa_GC__Proyect_description__c}"/>
+                    <apex:outputField label="Nombre del Cliente" value="{!solicitud.SCP_Certa_GC__Client_Name__c}"/>
+                    
+                    <apex:pageBlockSectionItem >
+                        <label>Fecha de licitación (dd/mm/aaaa)</label>    
+                        <apex:inputField value="{!solicitud.SCP_Certa_GC__Fecha_de_Licitacion__c}"/>
+                    </apex:pageBlockSectionItem> 
+                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <!-- Informacíon Economica del Proyecto -->
+            <apex:pageBlock title="Información Económica del Proyecto">
+                
+                <apex:pageBlockSection >
+                    <apex:outputField label="FCV" value="{!solicitud.SCP_Certa_GC__FCV__c}"/>
+                    
+                    <apex:outputText label="TIR anual (%)">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__TIR__c}"/>
+                        </div>
+                    </apex:outputText>
+                    
+                    <apex:outputField label="NAV" value="{!solicitud.SCP_Certa_GC__NAV__c}"/>
+                    
+                    <apex:outputText label="Margen OIBDA (%)">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__OIBDA__c}"/>
+                        </div>
+                    </apex:outputText>
+                     
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <!-- Capex -->
+            <apex:pageBlock title="Capex">
+                
+                <apex:pageBlockSection >
+                    <apex:outputField label="Capex total del Proyecto" value="{!solicitud.SCP_Certa_GC__Total_Capex__c}"/>
+                    
+                    <apex:outputText label="Capex solicitado">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__Requested_Capex__c}"/>
+                        </div>
+                    </apex:outputText>
+                    
+                    <apex:outputText label="¿Es una disposición multianual?">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__Multiyear_Disposition__c}"/>
+                        </div>
+                    </apex:outputText>
+                    
+                    <apex:pageBlockSectionItem >
+                        <label>En caso de ser multianual, Importe de capex solicitado para el año en curso</label>    
+                        <apex:inputField value="{!solicitud.SCP_Certa_GC__Capex_Import_for_this_year__c}" />
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:outputText label="Concepto para el que se solicita">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__Solicitation_Concept__c}"/>
+                        </div>
+                    </apex:outputText>
+
+                    <apex:pageBlockSectionItem >
+                        <label>Capex marco inversor del año en curso</label>    
+                        <apex:inputField value="{!solicitud.SCP_Certa_GC__Capex_Investor_current_year__c}"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <label>Capex marco inversor ya comprometido</label>    
+                        <apex:inputField value="{!solicitud.SCP_Certa_GC__Capex_Investor_commited__c}"/>
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <!-- Documentacion -->
+            <apex:pageBlock title="Documentacion">
+                
+                <apex:pageBlockSection >
+                    
+                    <apex:outputText label="Adjunta el Business Case">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__Attach_Business_case__c}"/>
+                        </div>
+                    </apex:outputText>
+                    
+                    <apex:outputText label="Ha sido revisado por su controlador de gestion local">
+                        <div class="requiredInput">
+                            <div class="requiredBlock"></div>
+                            <apex:inputField value="{!solicitud.SCP_Certa_GC__Reviewed_by_management_control__c}"/>
+                        </div>
+                    </apex:outputText>
+   
+                    <apex:pageBlockSectionItem >
+                        <label>Ha sido aprobado por su controlador de gestion local</label>
+                        <apex:inputField value="{!solicitud.SCP_Certa_GC__approved_by_management_control__c}" id="aprobado"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <label>Explique por que no ha sido aprobado</label>   
+                        <apex:inputField value="{!solicitud.SCP_Certa_GC__Description_Not_Approved__c}"/>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <label>Informacion adicional que se adjunta</label>
+                        <apex:inputField value="{!solicitud.SCP_Certa_GC__Aditional_information__c}" />
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>            
+        	
+        
+       
+            <apex:actionFunction action="{!eliminarMail}" name="borrar" reRender="mailsAEnviar" />
+            <apex:actionFunction action="{!agregarMail}" name="add" reRender="mailsAEnviar" status="loadingTable" />
+            <!-- tabla de Email a enviar -->
+            
+            <apex:pageBlock id="mailsAEnviar">
+                
+
+                <div class ="col-md-6" >
+                     
+                    <apex:outputPanel rendered="{!destinatariosPorDefault.size > 0}">
+                        <apex:pageBlockTable styleClass="right" value="{!destinatariosPorDefault}" var="destinatario" >
+                            <apex:column style="width: 40%; padding-left: 5px;" HeaderValue="Destinatario solicitud capex" value="{!destinatario.name}" />
+                            <apex:column style="width: 40%; padding-left: 5px;" HeaderValue="Correo Electronico" value="{!destinatario.SCP_Certa_GC__Email__c}"/>
+                        </apex:pageBlockTable>
+                    </apex:outputPanel>
+                    <br/><br/>
+                    
+                    <label>Agregar un correo adicional al cual enviar la solicitud &nbsp; </label> 
+                    <n/>
+                    <br/>
+                    <br/>
+                        <label>Nombre:&nbsp;</label><apex:input style="width: 24%;" html-placeholder="Nombre" type="text" value="{!nombreEmail}"/>
+                        <label>Correo:&nbsp;</label><apex:input style="width: 24%;" html-placeholder="Ejemplo@ejemplo.com" type="text" value="{!mailExterno}"/>
+
+
+                    
+                    &nbsp;&nbsp;   
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-sm agregarButton" onclick="add()" >
+                            <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;Agregar
+                        </button>
+                        &nbsp;
+                        <apex:actionStatus id="loadingTable">
+                            <apex:facet name="start">
+                                <img src="/img/loading.gif"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        
+                    </div>
+                    <br/><br/>
+                    
+ 
+                    
+                </div>
+                
+                <apex:outputPanel styleClass="col-md-6" rendered="{!wrappersMails.size > 0}">
+                    <apex:pageBlockTable styleClass="right" value="{!wrappersMails}" var="wppEmail" >
+                        <apex:column style="width:5%; text-align: center; ">
+                            <apex:inputCheckbox value="{!wppEmail.eliminar}"/>
+                        </apex:column>
+                        <apex:column style="width: 40%" HeaderValue="Nombre" value="{!wppEmail.nombre}"/>
+                        <apex:column style="width: 40%" HeaderValue="Direccion de correo electronico adicional" value="{!wppEmail.email}"/>
+                        
+                    </apex:pageBlockTable>
+                    
+                    <br/>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-sm" onclick="borrar()">
+                            <span class="glyphicon glyphicon-trash icon-btn-left"></span>&nbsp;Eliminar
+                        </button>
+                        <br/>
+                        <br/>
+                        
+                    </div>
+                </apex:outputPanel>
+
+
+            </apex:pageBlock>
+        </apex:form> 
+        
+        <br/><br/>
+        <!-- Archivos Adjuntos -->
+        <apex:actionRegion >
+        <apex:pageBlock mode="maindetail">
+            <apex:pageBlockSection columns="1">         
+                <apex:relatedList list="CombinedAttachments" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        </apex:actionRegion>
+        
+        
+        
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                <span class="glyphicon glyphicon glyphicon-envelope icon-btn-left"></span>&nbsp;{!$Label.send}
+            </button>
+        </div>
+        
+    </apex:outputpanel>
+    
+</apex:page>

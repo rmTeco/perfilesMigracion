@@ -1,0 +1,48 @@
+@import "campaign-variables";
+@import "campaign-mixins";
+
+.campaign-member-stories {
+    position: relative;
+    min-height: 15rem;
+
+    .via-slds-story-cards--header-title {
+            position: relative;
+    }
+
+    .via-slds-feed-item:last-child {
+        .slds-media--timeline:before {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: $bp-xmedium) {
+        .via-slds-story-cards--header.slds-theme--shade {
+            border-top: 1px solid $cards-border-gray;
+            border-bottom: 1px solid $cards-border-gray;
+            background-color: $cards-gray;
+        }
+        .via-slds-feed-item {
+            &> .slds-media {
+                position: relative;
+
+                &> .slds-media__body {
+                    width: 100%;
+
+                    &> .slds-media > .slds-media__body > .slds-truncate {
+                        max-width: 42%;
+
+                        &+ .slds-truncate {
+                            max-width: 100%;
+                        }
+                    }
+                }
+
+                &> .slds-media__figure {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                }
+            }
+        }
+    }
+}

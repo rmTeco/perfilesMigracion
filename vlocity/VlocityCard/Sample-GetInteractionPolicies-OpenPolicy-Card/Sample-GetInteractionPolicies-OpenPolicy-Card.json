@@ -1,0 +1,41 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "REPLACE SAMPLE": "OPEN STATE"
+    },
+    "icon": "custom31",
+    "sprite": "custom",
+    "states": [
+        {
+            "blankCardState": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'non-existent'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SampleInteractionPolicy-OpenState",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'non-existent'",
+            "name": "Add New",
+            "sObjectType": "%vlocity_namespace%__CustomerInteraction__c",
+            "templateUrl": "card-open-slds"
+        }
+    ],
+    "title": "Add New"
+}

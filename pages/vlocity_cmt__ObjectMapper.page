@@ -1,0 +1,121 @@
+<apex:page controller="vlocity_cmt.ObjectMapperController" showHeader="true" sidebar="true" standardStylesheets="false" docType="html-5.0" title="Vlocity Custom Object Map">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ng="http://angularjs.org" ng-app="ObjectMapper">
+		<head>
+			<base href="/"/>
+			<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.slds, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+			<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.ObjectMapperCss)}" />
+			<script type="text/javascript" src="/support/console/31.0/integration.js"></script>
+			<script type="text/javascript" src="/soap/ajax/31.0/connection.js"></script>
+			<script type="text/javascript" src="{!URLFOR($Resource.vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script type="text/javascript" src="{!URLFOR($Resource.SldsAngular)}"></script>
+            <script type="text/javascript" src="{!URLFOR($Resource.ObjectMapper)}"></script>
+            <script type="text/javascript" src="{!$Resource.EPCAdmin}"></script>
+		</head>
+		<body  ng-controller="ObjectMapperController" ng-init="initApp()">
+			<div class="via-slds">
+				<!--Page Header START-->
+				<div class="slds-page-header" role="banner">
+					<div class="slds-media slds-media--center">
+						<div class="slds-media__figure">
+							<svg aria-hidden="true" class="slds-icon">
+								<use xlink:href="{{SLDSICON.SETTINGS}}"></use>
+							</svg>
+						</div>
+						<div class="slds-media__body">
+							<p class="slds-page-header__title slds-truncate slds-align-middle" title="Object Mapper">Object Mapper</p>
+							<p class="slds-text-body--small page-header__info">Map required objects</p>
+						</div>
+					</div>
+				</div>
+				<!--Page Header END-->
+				<div class="grid-wrapper slds-theme--shade">
+					<ng-form name="objectMapperForm">
+						<div class="slds-grid slds-m-around--small slds-grid--pull-padded">
+							<div class="slds-col--padded slds-m-top--small slds-form-element">
+								<label class="slds-form-element__label" for="select-01">Source Parent Object</label>
+								<div class="slds-form-element__control">
+									<div class="slds-select_container">
+										<select id="select-01" class="slds-select" ng-model="objectMapper.sourceParentObject" ng-options="object.name as object.label for object in allObjectList" ng-change="changeSourceParent(objectMapper.sourceParentObject)" ng-required="true">
+											<option value="" ng-disabled="true">Select</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="slds-col--padded slds-m-top--small slds-form-element">
+								<label class="slds-form-element__label" for="select-02">Destination Parent Object</label>
+								<div class="slds-form-element__control">
+									<div class="slds-select_container">
+										<select id="select-02" class="slds-select" ng-model="objectMapper.destinationParentObject" ng-options="object.name as object.label for object in allObjectList" ng-change="changeDestinationParent(objectMapper.destinationParentObject)" ng-required="true">
+											<option value="" ng-disabled="true">Select</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="">
+							<div ng-repeat="childObjectMapper in childObjectMapperList" ng-include="'ChildObject.tpl.html'">
+							</div>
+						</div>
+						<div class="slds-container--center slds-container--x-small slds-p-bottom--medium">
+							<div class="slds-button-group slds-m-top--medium" role="group"> 
+								<button class="slds-button slds-button--neutral" ng-click="add()">Add</button> 
+								<button class="slds-button slds-button--neutral" ng-click="save()" ng-disabled="objectMapperForm.$invalid">Save</button> 
+							</div>
+						</div>
+					</ng-form>
+				</div>
+                <div class="slds-spinner_container" ng-show="showSpinner"> 
+                    <div class="slds-spinner--brand slds-spinner slds-spinner--large" aria-hidden="false" role="alert"> 
+                        <div class="slds-spinner__dot-a"></div> 
+                        <div class="slds-spinner__dot-b"></div> 
+                    </div> 
+                </div>
+			</div>
+			<script type="text/javascript">
+				'use strict';
+				//Define remote actions.
+				var remoteActions = {
+                    adminInvokeMethod: {
+                    	action: "{!$RemoteAction.ObjectMapperController.adminInvokeMethod}",
+                    	config: {escape: false}
+                    },
+                    getObjectMapper: {
+                    	action: "{!$RemoteAction.ObjectMapperController.getObjectMapper}",
+                    	config: {escape: false}
+                    },
+                    save: {
+                    	action: "{!$RemoteAction.ObjectMapperController.saveObjectMapper}",
+                    	config: {escape: false}
+                    },
+                    getRelatedObjects: {
+                    	action: "{!$RemoteAction.ObjectMapperController.getRelatedObjects}",
+                    	config: {escape: false}
+                    },
+                    deleteObjectMapper: {
+                    	action: "{!$RemoteAction.ObjectMapperController.deleteObjectMapper}",
+                    	config: {escape: false}
+                    }
+                };
+                //Config data from APEX
+                var configData = {
+                	nsPrefix: "{!nsPrefix}",
+                	adminClassType: "{!adminUtilitiesClassType}"
+                }
+                //labels
+                var labels = {
+                	errorHeading : 'Object Mapper Error'
+                }
+                //Define ICONs
+                var SLDSICON = {
+                    'SETTINGS': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#settings")}',
+                    'RIGHT_ARROW': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#right")}',
+                    'SEARCH': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#search")}',
+                    'EDIT': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#edit")}',
+                    'ADD': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#add")}',
+                    'DELETE': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#delete")}',
+                    'CLOSE': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#close")}'
+                };
+			</script>
+		</body>
+	</html>
+</apex:page>

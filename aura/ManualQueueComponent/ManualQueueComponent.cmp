@@ -1,0 +1,68 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:appHostable" access="global" controller="vlocity_cmt.ManualQueueItemsController">
+    
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="userId" type="String"/>
+    <aura:attribute name="displayedFields" type="String" default="state__c, timestampReady__c, account__c, OrderItemId__c, assignedToUserId__c"/>
+    <aura:attribute name="title" type="String" default="Items In The Queue"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="mqTableData" type="vlocity_cmt.ManualQueueTableData"/>
+    
+    <h1 class="slds-page-header__title slds-truncate slds-align-middle" 
+           title="Items In the Queue">Items In the Queue</h1>
+    &nbsp;
+    
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="Action">Action</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <aura:iteration items="{!v.mqTableData.columnData}" var="displayFields" indexvar="header">
+                    <th scope="col">
+                        <div class="slds-truncate" title="{!displayFields}">{!displayFields}</div>
+                    </th>
+                </aura:iteration>
+            </tr>
+            
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.mqTableData.rowData}" var="mqItemInfo" indexVar="index">
+                <tr>
+                    <td> 
+                        <a onclick="{!c.pickUp}" data-pickupinfo="{!mqItemInfo.manualQueueItemId}">Pick Up</a>
+                        &nbsp;
+                        <a onclick="{!c.complete}" data-completeinfo="{!mqItemInfo.manualQueueItemId}">Complete</a>
+                        &nbsp;
+                        <a onclick="{!c.retry}" data-retryinfo="{!mqItemInfo.manualQueueItemId}">Retry</a>
+                    </td>
+                    <td data-label="Manual Queue Name">
+                        <ui:outputURL value="{!'/' + mqItemInfo.manualQueueItemId}" 
+                            target="_blank" label="{!mqItemInfo.manualQueueItemName}"/>
+                    </td>
+                    <td data-label="State">
+                        <div class="slds-truncate" title="{!mqItemInfo.state}">{!mqItemInfo.state}</div>
+                    </td>
+                    <td data-label="Timestamp">
+                        <div class="slds-truncate" title="{!mqItemInfo.timestamp}">{!mqItemInfo.timestamp}</div>
+                    </td>
+                    <td data-label="Account">
+                        <ui:outputURL value="{!'/' + mqItemInfo.account}" 
+                            target="_blank" label="{!mqItemInfo.account}"/>
+                    </td>
+                    <td data-label="OrderFulfilment Request">
+                        <ui:outputURL value="{!'/' + mqItemInfo.orderFulfilmentRequest}" 
+                            target="_blank" label="{!mqItemInfo.orderFulfilmentRequestName}"/>
+                    </td>
+                    <td data-label="Assigned To User">
+                        <ui:outputURL value="{!'/' + mqItemInfo.assignedToUser}" 
+                            target="_blank" label="{!mqItemInfo.assignedToUser}"/>
+                    </td>
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+</aura:component>

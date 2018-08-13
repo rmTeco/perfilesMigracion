@@ -1,0 +1,70 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.vlocity.userAccountId",
+                "val": "0016C0000095jLJ"
+            }
+        ],
+        "type": null,
+        "value": {
+            "query": "SELECT Id, Name FROM Account WHERE Id = '{{$root.vlocity.userAccountId}}'"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "['Account']['Id']",
+            "blankCardState": false,
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal Alta",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal Baja",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal Mod.Mail",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Active",
+            "sObjectType": "Account",
+            "templateUrl": "action-grid-card-slds"
+        }
+    ],
+    "title": "Club Personal"
+}

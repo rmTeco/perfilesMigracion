@@ -1,0 +1,60 @@
+<div ng-init="importedScope.setData(records.result, params.id)">
+     <div class="slds-container--medium slds-container--center">
+        <div class="campaign-spinner-container" ng-show="importedScope.isLoading">
+          <div class="slds-spinner_container campaign-list-spinner">
+              <div class="slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                  <div class="slds-spinner__dot-a"></div>
+                  <div class="slds-spinner__dot-b"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-page-header slds-align--absolute-center slds-m-top--none slds-text-heading--label slds-p-around--xx-small slds-p-vertical--small">
+        <div class="slds-form-element slds-m-horizontal--xx-small slds-size--1-of-3" ng-class="{'slds-size--1-of-6' : importedScope.options.dateRange === 'Custom'}">
+            <label>Group By:</label>
+            <select id="select-01" class="slds-select slds-p-around--xx-small" ng-change="importedScope.setRange()" ng-model="importedScope.options.groupBy">
+                    <option value="{{date}}" ng-repeat="date in importedScope.groupBy">{{date}}</option>
+            </select>
+        </div>
+        <div class="slds-form-element slds-size--1-of-3" ng-class="{'slds-size--4-of-6' : importedScope.options.dateRange === 'Custom'}">
+            <ul ng-class="{'slds-list--horizontal' : importedScope.options.dateRange === 'Custom'}">
+                <li ng-class="{'slds-size--1-of-3 slds-item slds-p-right--xx-small' : importedScope.options.dateRange === 'Custom'}">
+                    <label>Date Range:</label>
+                    <select id="select-02" class="slds-select slds-p-around--xx-small" ng-change="importedScope.setRange()" ng-model="importedScope.options.dateRange">
+                            <option value="{{dateRange}}" ng-repeat="dateRange in importedScope.dateRange">{{dateRange}}</option>
+                    </select>
+                </li>
+                <span ng-if="importedScope.options.dateRange === 'Custom'" class="slds-list--horizontal slds-size--3-of-4">
+                    <li class="slds-form-element slds-size--1-of-2 slds-item">
+                        <label>Start Date:</label>
+                        <input class="slds-input" type="date" name="startDate" ng-model="importedScope.customRange[0]" ng-change="(importedScope.customRange[0] && importedScope.customRange[1]) && importedScope.setRange()"></input>
+                    </li>
+                     <li class="slds-form-element slds-size--1-of-2 slds-item slds-p-left--xx-small">
+                        <label>End Date:</label>
+                        <input class="slds-input" type="date" name="endDate" ng-model="importedScope.customRange[1]" ng-change="(importedScope.customRange[0] && importedScope.customRange[1]) && importedScope.setRange()"></input>
+                    </li>
+                    <span ng-if="importedScope.customRange[0] && importedScope.customRange[1] && importedScope.invalidDateRange">
+                        <div class="slds-popover slds-nubbin--top-right slds-theme--error" role="alert" aria-live="polite" style="position:absolute;top:80px;left:12px;">
+                          <div class="slds-popover__body slds-text-longform">
+                            <p>Invalid Date Range</p>
+                          </div>
+                        </div>
+                    </span>
+                </span>
+            </ul>
+        </div>
+        <div class="slds-form-element slds-m-horizontal--xx-small slds-size--1-of-3" ng-class="{'slds-size--1-of-6' : importedScope.options.dateRange === 'Custom'}">
+            <label>Filter:</label><span class="slds-text-align--right slds-text-color--weak tool-tip" ng-hide="importedScope.options.dateRange === 'Custom'"> (Toggle keys in legend)</span>
+            <select id="select-02" class="slds-select slds-p-around--xx-small" ng-change="importedScope.filterData()" ng-model="importedScope.options.filter">
+                <option value="{{status}}" ng-repeat="status in importedScope.status">{{status}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="canvas-container slds-m-around--small">
+        <div ng-show="importedScope.noData" class="slds-text-body--regular slds-m-top--medium slds-text-align--center">
+            {{importedScope.error}}
+        </div>
+        <canvas id="barChart" class="chart chart-bar" chart-data="importedScope.data" chart-labels="importedScope.labels" chart-series="importedScope.series" chart-options="importedScope.chartOptions" chart-colors="importedScope.colors">
+        </canvas>
+    </div>
+</div>

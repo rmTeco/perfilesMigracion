@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Shipping Mode</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Express__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Express</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Express</inlineHelpText>
+        <label>Express</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>LocationCode__c</fullName>
+        <description>Location Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Codigo de Localidad</inlineHelpText>
+        <label>Location Code</label>
+        <length>6</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PostalCode__c</fullName>
+        <description>Postal Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Codigo Postal</inlineHelpText>
+        <label>Postal Code</label>
+        <length>8</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Standard__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Standard</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Standard</inlineHelpText>
+        <label>Standard</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>StateCode__c</fullName>
+        <description>State Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Codigo de Provincia</inlineHelpText>
+        <label>StateCode</label>
+        <length>2</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Shipping Mode</label>
+    <listViews>
+        <fullName>Shipping_Mode</fullName>
+        <columns>NAME</columns>
+        <columns>PostalCode__c</columns>
+        <columns>LocationCode__c</columns>
+        <columns>Express__c</columns>
+        <columns>Standard__c</columns>
+        <columns>StateCode__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Shipping Mode</label>
+        <language>en_US</language>
+    </listViews>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,41 @@
+{
+    "Cards": [
+        "CategoryCard"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "8016C0000008VCK"
+            },
+            {
+                "name": "params.catalogId",
+                "val": "a0V6C00000064CY"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "body": "[\n\t{\n\t\t\"name\": \"test1\"\n\t},\n\t{\n\t\t\"name\": \"test2\"\n\t}\n]",
+            "endpoint": "/%vlocity_namespace%/v2/cpq/catalogs/{{params.catalogId}}",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "catalogId": "{{$root.rootCatalogId}}",
+                "hierarchy": "3"
+            },
+            "methodType": "GET",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%."
+            },
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getCatalogHierarchy",
+            "remoteNSPrefix": "%vlocity_namespace%"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-CPQ-Category-List"
+        }
+    }
+}

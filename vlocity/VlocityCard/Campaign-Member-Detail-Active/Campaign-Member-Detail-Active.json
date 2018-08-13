@@ -1,0 +1,44 @@
+{
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "type": null,
+        "value": {
+            "inputMap": {
+            },
+            "optionsMap": {
+            },
+            "query": "",
+            "remoteClass": "",
+            "remoteMethod": "",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankCardState": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Campaign Member Detail Active",
+            "sObjectType": "CampaignMember",
+            "templateUrl": "campaign-member-detail"
+        }
+    ],
+    "title": "Campaign Member Detail Active"
+}

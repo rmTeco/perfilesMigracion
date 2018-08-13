@@ -1,0 +1,48 @@
+.home-actions {
+    display: flex;
+    flex-direction: column;
+    // min-height: 768px;
+    
+    .home-action {
+        position: relative;
+        flex-grow: 1;
+        max-height: 33%;
+        min-height: 190px;
+        margin-bottom: 1.5em;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+        
+        a {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-icon {
+			flex-grow: 0;
+    		width: 80px;
+    		margin-left: 30px;
+            
+            .slds-icon {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        
+        .action-text {
+			flex-grow: 1;
+			font-size: 3em;
+			font-weight: lighter;
+			color: #0C96DA;
+			margin-left: 60px;
+			text-align: left;
+        }
+    }
+}

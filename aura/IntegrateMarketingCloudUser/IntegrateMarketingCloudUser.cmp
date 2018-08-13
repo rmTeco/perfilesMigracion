@@ -1,0 +1,23 @@
+<aura:component implements="force:appHostable" extends="et4ae5:BaseComponent" controller="et4ae5.LightningIntegrateMCUserControl">
+
+    <!--Static Resources-->
+    <ltng:require styles="/resource/et4ae5__uxds/css/uxds-bootstrap.min.css,/resource/et4ae5__LightningMarketingCloudStyles" />
+
+    <!--Handlers-->
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+
+    <!--Attributes-->
+    <aura:attribute name="oAuthConnectJSON" type="JSON" access="private" />
+
+    <!--Markup-->
+    <div class="uxds">
+        <div class="uxds container">
+            <div class="uxds row rowSpacer-component">
+                <div class="center-block" style="width:400px;" aura:id="userCredsDiv">
+                    <et4ae5:OAuthConnect json="{!v.oAuthConnectJSON}" aura:id="oAuthConnectJSON" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+</aura:component>

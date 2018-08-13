@@ -1,0 +1,93 @@
+{
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "type": null,
+        "value": {
+            "body": "[\n{\n    \"Status\": \"In Progress\",\n    \"ResumeLink\": \"https://desa01-desa01.cs63.force.com/clientes/apex/%vlocity_namespace%__OmniScriptUniversalPage?OmniScriptInstanceId=a1p6C000000AMG8QAO&scriptMode=vertical&layout=lightning&loadWithPage=false#\",\n    \"Name\": \"Actualización de Datos\",\n    \"LastModifiedDate\": \"2017-12-26T15:11:50.000Z\"\n}\n]",
+            "bundle": "",
+            "ctxId": "",
+            "query": "",
+            "resultVar": "['Abandoned']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    },
+                    {
+                        "group": [
+                        ],
+                        "logicalOperator": "&&"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "displayName": "Ver Todas",
+                        "hasExtraParams": true,
+                        "id": "Ver Todas2",
+                        "isCustomAction": true,
+                        "openUrlIn": "New Tab / Window",
+                        "type": "Custom",
+                        "url": ""
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LastModifiedDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "CreatedDate",
+                    "name": "['LastModifiedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Status",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "templateUrl": "ta-community-card-negotiations"
+        }
+    ],
+    "title": "Abandonadas"
+}

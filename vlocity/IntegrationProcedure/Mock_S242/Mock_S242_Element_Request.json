@@ -1,0 +1,49 @@
+{
+    "%vlocity_namespace%__Active__c": false,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "Mock_S242",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Mock/S242/Procedure",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 2,
+    "%vlocity_namespace%__PropertySet__c": {
+        "executionConditionalFormula": "",
+        "extraPayload": {
+        },
+        "failOnStepError": false,
+        "failureConditionalFormula": "",
+        "label": "HTTPAction1",
+        "namedCredential": "prodgonogoAuthed",
+        "responseJSONNode": "response",
+        "responseJSONPath": "",
+        "restMethod": "GET",
+        "restOptions": {
+            "URIEncode": false,
+            "cache": false,
+            "headers": {
+                "Authorization": "%GetAuthorization:IPResult:token_type% %GetAuthorization:IPResult:access_token%"
+            },
+            "params": {
+                "codServicio": "%params:codServicio%",
+                "nroLinea": "%params:nroLinea%",
+                "txId": "%params:txId%"
+            },
+            "sendBody": false,
+            "timeout": null,
+            "withCredentials": false,
+            "xmlEscapeResponse": false
+        },
+        "restPath": "/fija/ultimaSessionCCIP/estado",
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "type": "Integration"
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Rest Action",
+    "Name": "Request",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Mock/S242/Procedure/Request"
+}

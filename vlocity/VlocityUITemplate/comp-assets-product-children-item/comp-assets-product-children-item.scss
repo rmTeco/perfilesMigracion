@@ -1,0 +1,87 @@
+/*** MIXINS ***/
+@import "cpq-cards-style";
+
+/* $assets-namespace is defined in cpq-base-variables */
+$namespace: $assets-namespace;
+$padding-wrapper: 40;
+@include cardsMixin($namespace);
+
+/*** STYLES ***/
+.vlocity {
+    .#{$namespace}-child-products {
+        .#{$namespace}-item-base-product {
+            padding: 0.1rem 0;
+            &.#{$namespace}-item-selected {
+                &::after {
+                    right: -$cpq-padding-large-horizontal !important;
+                }
+            }
+
+            .#{$namespace}-item-base-product-name {
+                .#{$namespace}-item-child-product-name-wrapper {
+                    .#{$namespace}-item-no-children {
+                        padding-left: 21px !important;
+                    }
+                }
+            }
+
+            .#{$namespace}-item-base-product-name .slds-button__icon {
+                transform: rotate(0deg);
+                transform-origin: 45%;
+            }
+        }
+
+        .#{$namespace}-item-product-group {
+            color: $cpq-cart-item-product-group-label-color;
+            font-weight: $cpq-cart-item-product-group-font-weight;
+            text-transform: uppercase;
+            padding: 4px 0;
+        }
+
+        .fix-slds-close-switch {
+            transform: rotate(-90deg) !important;
+        }
+    }
+
+    /* Generate padding for product name label in tree */
+    @include cpqProductChildLevelStyling($namespace, 'left', $padding-wrapper);
+}
+
+[dir=rtl] .vlocity {
+    .#{$namespace}-child-products {
+        .#{$namespace}-item-base-product {
+            .#{$namespace}-item-base-product-name {
+                 padding: 0 0 0 6px;
+                .#{$namespace}-product-name {
+                    padding-left: 0;
+                }
+                .#{$namespace}-item-has-children {
+                    .slds-button__icon {
+                        float: right; 
+                        margin: 0.3rem 0 0 0.5rem;
+
+                        &.fix-slds-close-switch {
+                            transform: rotate(90deg) !important;
+                        }
+                    }
+                }
+               .#{$namespace}-item-child-product-name-wrapper {
+                    .#{$namespace}-item-no-children {
+                        padding-left: 0;
+                        padding-right: 21px;
+                    }
+                }
+
+            }
+
+            .#{$namespace}-item-base-product-currency {
+                .slds-popover.cpq-price-actions-popover {
+                    left: auto;
+                    right: -0.5rem;
+                }
+            }
+        }
+    }
+
+    @include cpqProductChildLevelStyling($namespace, 'right', $padding-wrapper);
+}

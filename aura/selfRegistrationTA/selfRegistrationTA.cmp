@@ -1,0 +1,90 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="LightningSelfRegisterController">
+    <aura:attribute name="accountId" type="String" required="false" description="accountId for creating the user. If not specified, it will create a PersonAccount if possible for B2C scenario. Or otherwise if it's in a community, the community's self-registration accountId will be used."/>
+    <aura:attribute name="regConfirmUrl" type="String" required="true" default="./CheckPasswordResetEmail"/>
+    <aura:attribute name="startUrl" type="String" required="false" description="The url you go to after a successful login" />
+    <aura:attribute name="showError" type="Boolean" required="true" description="" default="false" access="private"/>
+    <aura:attribute name="errorMessage" type="String" required="false" description="" access="private"/>
+    <aura:attribute name="document" type="String" required="false" default="DNI"/>
+    <aura:attribute name="email" type="String" required="false" default="Correo Electrónico"/>
+    <aura:attribute name="includeEmail" type="String" required="false" default="false"/>
+    <aura:attribute name="registerBtn" type="String" required="false" default="Registrarse"/>
+    <aura:attribute name="verifyBtn" type="String" required="false" default="Consultar"/>
+    <aura:attribute name="nextBtn" type="String" required="false" default="Continuar"/>
+    <aura:attribute name="rememberPswBtn" type="String" required="false" default="Recordar Password"/>
+    <aura:attribute name="identityValUrl" type="String" required="false" description="The url you go to validate customer identity" />
+    <aura:attribute name="contactId" type="String" required="false" />
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    
+    <aura:attribute name="showVerifyBtn" type="String" required="false" default="true"/>
+    <aura:attribute name="showRegisterBtn" type="String" required="false" default="false"/>
+    <aura:attribute name="showRememberPswBtn" type="String" required="false" default="false"/>
+    <aura:attribute name="showNextBtn" type="String" required="false" default="false"/>
+    <aura:attribute name="showForm" type="String" required="false" default="false"/>
+    
+    <aura:registerevent name="sitePropagatedStartUrl" type="c:setStartUrl"/>
+    <aura:handler name="init" value="{!this}" action="{!c.initialize}"/>
+    <aura:dependency resource="c:setStartUrl" type="EVENT"/>
+    <aura:dependency resource="siteforce:registerQueryEventMap" type="EVENT"/>
+    <aura:handler event="c:setStartUrl" action="{!c.setStartUrl}"/> 
+    
+    <aura:attribute name="communityForgotPasswordUrl" type="String" access="private"/>
+    <aura:attribute name="forgotPasswordUrl" type="String" required="false" default="/ForgotPassword"/>
+    <aura:attribute name="forgotPasswordLabel" type="String" required="false" default="Forgot your password?"/>
+    <div>
+        <div class="loginBox">
+            <h1>Crear usuario de Personal</h1>
+            <hr/>
+            <aura:renderIf isTrue="{!v.showError}">
+                <div id="error">
+                    <ui:outputRichText value="{!v.errorMessage}"/>
+                </div>
+            </aura:renderIf>
+            <div class="form-container">
+                <aura:renderIf isTrue="{!v.showForm}">
+                <div id="sfdc_username_container" class="sfdc">
+                    <span id="sfdc_user" class="login-icon" data-icon="a"></span>
+                    <div class="inputContainer">
+                        <ui:inputText value="" aura:id="document" placeholder="{!v.document}" class="input sfdc_usernameinput sfdc"/>
+                    </div>
+                </div>
+                <aura:renderIf isTrue="{!v.includeEmail}">
+                    <div id="sfdc_email_container" class="sfdc">
+                        <span id="sfdc_user" class="login-icon" data-icon="k"></span>
+                        <div class="inputContainer">
+                            <ui:inputText value="" aura:id="email" placeholder="{!v.email}" class="input sfdc_usernameinput sfdc"/>
+                        </div>
+                    </div>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.showVerifyBtn}">
+                    <div class="sfdc">
+                        <ui:button aura:id="verifyBtn" label="{!v.verifyBtn}" press="{!c.handleContactSearch}" class="sfdc_button checkBtn"/>
+                    </div>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.showRegisterBtn}">
+                    <div class="sfdc">
+                        <ui:button aura:id="registerBtn" label="{!v.registerBtn}" press="{!c.handleRegister}" class="sfdc_button"/>
+                    </div>
+                </aura:renderIf>
+                <aura:renderIf isTrue="{!v.showNextBtn}">
+                    <div class="sfdc">
+                        <ui:button aura:id="nextBtn" label="{!v.nextBtn}" press="{!c.handleNextStep}" class="sfdc_button checkBtn"/>
+                    </div>
+                </aura:renderIf>
+                <div id="sfdc_forgot" class="sfdc">
+                    <span class="slds-button ta-linkButton"><a href="{!if(v.communityForgotPasswordUrl == null, v.forgotPasswordUrl, v.communityForgotPasswordUrl)}">{!v.forgotPasswordLabel}</a></span>
+                </div>
+                <aura:set attribute="else">
+                        <div class="slds-align_absolute-center" style="height: 4rem;">
+                            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_inline">
+                                <span class="slds-assistive-text">Loading</span>
+                                <div class="slds-spinner__dot-a"></div>
+                                <div class="slds-spinner__dot-b"></div>
+                            </div>
+                        </div>
+                </aura:set>
+    </aura:renderIf>
+            </div>
+            <hr/>
+        </div>
+    </div>
+</aura:component>

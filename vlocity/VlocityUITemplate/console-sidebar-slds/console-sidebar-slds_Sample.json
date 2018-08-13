@@ -1,0 +1,145 @@
+{
+    "cards": [
+        {
+            "Alerts": [
+            ],
+            "dataSource": {
+                "contextVariables": [
+                    {
+                        "name": "params.id",
+                        "val": "0011500001ChJqa"
+                    }
+                ],
+                "type": null,
+                "value": {
+                    "query": "SELECT Id, Name, BillingAddress, Phone, PhotoURL, Website FROM Account WHERE Id = '{{params.id}}'"
+                }
+            },
+            "definedActions": [
+                {
+                    "actionIds": [
+                        {
+                            "id": "Add",
+                            "type": "Vlocity Action"
+                        }
+                    ],
+                    "filter": "$scope.data.status == 'active'"
+                }
+            ],
+            "filter": {
+                "attributes": {
+                    "type": "Account"
+                }
+            },
+            "layoutName": "vlocity.layout.console-sidebar",
+            "order": 0,
+            "states": [
+                {
+                    "alerts": [
+                    ],
+                    "blankStateCheck": false,
+                    "conditions": [
+                        {
+                            "field": "$scope.data.status",
+                            "operator": "===",
+                            "type": "system",
+                            "value": "'active'"
+                        }
+                    ],
+                    "definedActions": {
+                        "actions": [
+                        ]
+                    },
+                    "fields": [
+                    ],
+                    "filter": "$scope.data.status == 'active'",
+                    "flyout": "",
+                    "name": "active",
+                    "templateUrl": "left-profile"
+                }
+            ],
+            "templates": [
+                {
+                    "filter": "$scope.data.status == 'active'",
+                    "templateUrl": "left-profile"
+                },
+                {
+                    "filter": "$scope.data.status == 'non-existent'",
+                    "templateUrl": "left-profile"
+                }
+            ],
+            "title": "Profile"
+        },
+        {
+            "Alerts": [
+            ],
+            "dataSource": {
+                "contextVariables": [
+                    {
+                        "name": "params.id",
+                        "val": "0011500001ChJqa"
+                    }
+                ],
+                "type": null,
+                "value": {
+                    "query": ""
+                }
+            },
+            "definedActions": [
+                {
+                    "actionIds": [
+                        {
+                            "id": "Add",
+                            "type": "Vlocity Action"
+                        }
+                    ],
+                    "filter": "$scope.data.status == 'active'"
+                }
+            ],
+            "filter": {
+                "attributes": {
+                    "type": "Account"
+                }
+            },
+            "layoutName": "vlocity.layout.console-sidebar",
+            "order": 1,
+            "states": [
+                {
+                    "alerts": [
+                    ],
+                    "blankStateCheck": false,
+                    "collapse": false,
+                    "conditions": [
+                        {
+                            "field": "$scope.data.status",
+                            "operator": "===",
+                            "type": "system",
+                            "value": "'active'"
+                        }
+                    ],
+                    "definedActions": {
+                        "actions": [
+                        ]
+                    },
+                    "fields": [
+                    ],
+                    "filter": "$scope.data.status == 'active'",
+                    "flyout": "",
+                    "name": "active",
+                    "templateUrl": "left-account-info"
+                }
+            ],
+            "templates": [
+                {
+                    "filter": "$scope.data.status == 'active'",
+                    "templateUrl": "left-account-info"
+                },
+                {
+                    "filter": "$scope.data.status == 'non-existent'",
+                    "templateUrl": "left-account-info"
+                }
+            ],
+            "title": "Profile"
+        }
+    ]
+}

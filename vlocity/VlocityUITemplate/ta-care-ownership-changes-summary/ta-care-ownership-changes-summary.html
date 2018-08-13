@@ -1,0 +1,94 @@
+<!-- <div>{{bpTree.response | json}}</div> -->
+
+<div class="ta-care-ownership-changes-containter"> 
+<div class="ta-care-ownership-changes-summary">
+    
+    <div class="slds-p-around--large" style="background: #FFF;width:100%;">
+        <div class="confirmation">
+            <slds-svg-icon sprite="'action'" 
+                           icon="'check'" 
+                           size="'small'" 
+                           no-hint="true"
+                extra-classes="'slds-icon-text-default'">
+            </slds-svg-icon>
+            <!--<i class="icon icon-v-check-circle-line green confirmed"></i>-->
+            Cliente validado con éxito! Ya podes confirmar la gestión. 
+        </div>
+        
+        <div class="services_title">
+        Estos son los servicios que cambiarán de titular:
+        </div>
+        
+        <div ng-if="bpTree.response.TotalFuturePrepaidPlanActiveAssets <= 5" class="services slds-size--1-of-2">
+            <div class="service"
+            ng-repeat="selectedAsset in bpTree.response.AssetSelection.SelectAsset">
+                <span class="line_number">{{selectedAsset.MSISDN}}</span><br/>
+                {{selectedAsset['Asset Name']}} <br/>
+                {{selectedAsset['Product Name']}}<br>
+                {{selectedAsset.BillingStreet}}
+            </div>
+        </div>
+        
+        <div ng-if="bpTree.response.TotalFuturePrepaidPlanActiveAssets > 5" class="services slds-size--1-of-2">
+            <div class="service"
+            ng-repeat="selectedAsset in bpTree.response.Orders">
+                <span class="line_number">{{selectedAsset.MSISDN}}</span><br/>
+                {{selectedAsset.AssetName}} <br/>
+                {{selectedAsset.AssetName}}<br>
+                {{selectedAsset.BillingStreet}}
+            </div>
+        </div>
+        
+        
+        <div class="slds-has-divider--top slds-m-bottom--xx-large"></div>
+        
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-m-bottom--x-large">
+            <div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--1-of-6 slds-large-size--1-of-12">
+                <div class="icon green usericon">
+                    <slds-svg-icon sprite="'utility'" 
+                       icon="'user'" 
+                       size="'large'" 
+                       no-hint="true"
+                       extra-classes="'slds-icon-text-green'">
+                    </slds-svg-icon>
+                </div>
+            </div>
+            <div class="titular slds-p-horizontal--small slds-size--2-of-3 slds-medium-size--4-of-6 slds-large-size--11-of-12">
+                <b>Nuevo Titular:  {{bpTree.response.Contact.FirstName}} {{bpTree.response.Contact.LastName}}<br/>
+                {{bpTree.response.Contact.DocumentType}}: {{bpTree.response.Contact.DocumentNumber}}<br/>
+                <span ng-if="!bpTree.response.DestinationAccount.ContactName">
+                    Cuenta: {{bpTree.response.DestinationAccount.Name}}
+                </span>
+                <span ng-if="bpTree.response.DestinationAccount.ContactName">
+                    Cuenta: {{bpTree.response.DestinationAccount.ContactName}}
+                </span>
+                </b>
+            </div>
+        </div>
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--1-of-6 slds-large-size--1-of-12">
+                <div class="icon green usericon">
+                        <slds-svg-icon sprite="'utility'" 
+                           icon="'user'" 
+                           size="'large'" 
+                           no-hint="true"
+                           extra-classes="'slds-icon-text-grey'">
+                    </slds-svg-icon>
+                </div>
+            </div>
+            <div class="titular slds-p-horizontal--small slds-size--2-of-3 slds-medium-size--4-of-6 slds-large-size--11-of-12">
+                Titular Anterior: {{bpTree.response.PreviousContactInfo.FirstName}} {{bpTree.response.PreviousContactInfo.LastName}}<br/>
+                {{bpTree.response.PreviousContactInfo.DocumentType}}: {{bpTree.response.PreviousContactInfo.DocumentNumber}}<br/>
+                Cuenta: {{bpTree.response.PreviousContactInfo.Name}}
+            </div>
+        </div>
+            
+            
+        
+            
+        
+    </div>
+    </div>
+</div>

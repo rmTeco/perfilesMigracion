@@ -1,0 +1,26 @@
+<aura:component implements="force:hasRecordId,force:hasSObjectName" access="public">    
+    <aura:attribute name="recordId" type="Id" />
+    <aura:attribute name="sObjectName" type="String" />
+    <aura:attribute name="showAddToJourneyDialog" type="Boolean" default="false" />
+    
+    <ltng:require styles="/resource/et4ae5__SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    
+    <!-- Component Body -->
+    <div class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                <div class="slds-media__figure header-icon">                                
+                </div>
+                <div class="slds-media__body slds-truncate">
+                    <span class="slds-text-heading--small">{!$Label.et4ae5.Journeys}</span>
+                </div>
+            </div>
+            <div class="slds-no-flex">
+                <button onclick="{!c.openAddToJourneyDialog}" class="slds-button slds-button--neutral slds-col--bump-left">{!$Label.et4ae5.AddToJourney}</button>
+            </div>
+        </div>        
+    </div>
+    
+    <!-- Modal -->
+    {!v.body}
+</aura:component>

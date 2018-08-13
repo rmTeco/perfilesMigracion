@@ -1,0 +1,66 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+/*** MIXINS ***/
+@import "cpq-mixin";
+/*** STYLES ***/
+.vlocity {
+    .cpq-product-cart-item-addon-same-section {
+        
+        .cpq-cart-item-attr-value {
+            font-weight: $cpq-headings-font-weight;
+            color: $cpq-product-cart-items-attr-value-color;
+        }
+
+        .cpq-cart-item-input {
+            padding: 0 3px;
+            margin-top: $cpq-padding-large-vertical/5;
+            text-align: center;
+            width: 50px; //width can fit 3 digits
+            height: 25px;
+            min-height: calc(25px + 2px); //override slds input styles
+        }
+        .cpq-line-item-container {
+            max-width: 100%;
+        }
+        
+        .cpq-component-content {
+            display: none;
+        }
+
+        .slds-section.slds-is-open .cpq-component-content {
+            display: block;
+        }
+        
+        .cpq-cart-promo-item {
+            background-color: $cpq-cart-promo-item-bg-color;
+            border-style: solid;
+            border-radius: $cpq-cart-promo-item-border-radius;
+            border-width: $cpq-cart-promo-item-border-width;
+            border-color: $cpq-cart-promo-item-border-color;
+            margin-left: $cpq-padding-small-horizontal * 2;
+            padding: $cpq-padding-large-horizontal;
+            
+            .u-Flex-childProduct {
+                flex: 0 0 240px;
+            }
+            
+            .add-button {
+                background-color: $cpq-cart-promo-button-bg-color;
+                border: 0px;
+            }
+        }
+        
+        .fix-slds-close-switch {
+            transform: rotate(-90deg) !important;
+        }
+        
+    }
+    
+    .cpq-product-cart-item-section-heading {
+        font-size: $cpq-cart-section-title-font-size;
+    }
+    
+    .cpq-cmp-config-panel {
+        padding-left: 25px;
+    }
+}

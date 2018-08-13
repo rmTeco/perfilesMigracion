@@ -1,0 +1,101 @@
+<div ng-controller="CPQPromotionsController" class="cpq-cart-promotions">
+
+    <!-- Promotions Tab Content -->
+    <div id="tab-default-2" class="slds-tabs_default__content cpq-promotion-items-tab-content" role="tabpanel" aria-labelledby="tab-default-2__item">
+
+        <!-- Promotions Type Dropedown and Date Picker Filters  -->
+        <div class="slds-grid slds-wrap">
+
+            <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open slds-m-around_medium custom-view-dropdown">
+                <button cpq-dropdown-handler="viewOpen = false" id="cpq-custom-view-button" class="slds-button custom-view-dropdown-button slds-button_neutral slds-picklist__label slds-p-right_small" aria-haspopup="true" ng-click="viewOpen = !viewOpen">
+                    <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top_x-small slds-float_right custom-view-dropdown-button'"></slds-button-svg-icon>
+                    <span class="slds-truncate" title="Select an Option"></span>
+                    <span>{{dropDownLabel.value}}</span>
+                </button>
+
+                <div class="slds-dropdown slds-dropdown_left" ng-if="viewOpen">
+                    <ul class="slds-dropdown__list slds-dropdown_length-10" role="menu">
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('All')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                <span class="slds-truncate">{{::customLabels.AllPromotions}}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('Active')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <span class="slds-truncate">{{::customLabels.ActivePromotions}}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('Expired')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <span class="slds-truncate">{{::customLabels.ExpiredPromotions}}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('Canceled')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <span class="slds-truncate">{{::customLabels.CanceledPromotions}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slds-p-horizontal_small slds-form-element slds-m-top_small" ng-if="appliedPromotionsTypeSelected === 'Active'">
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                    <slds-input-svg-icon sprite="'utility'" icon="'dayview'" extra-classes="'slds-float_right'"></slds-input-svg-icon>
+                    <input type="text" class="slds-input" ng-model="appliedPromotionsCommitmentDateSelected.value" data-date-format="yyyy-MM-dd" slds-date-picker ng-change="changeAppliedPromotionsCommitmentDate()" data-container=".via-slds"/>
+                </div>
+            </div>
+
+        </div>
+        <!-- END of Promotions Type Dropedown and Date Picker Filters  -->
+
+        <!-- DATA -->
+        <div ng-if="records" ng-init="getCustomViewStateData(cards)">
+        
+            <div class="cpq-base-promotion cpq-promotion-header">
+                <div ng-repeat="field in $root.customViews.cpqCustomViews[$root.customViews.currentCustomView].fields" class="cpq-promotion-name">
+                    {{records[0] | getter: field: 'label' }}
+                </div>
+                <div class="cpq-promotion-name">&nbsp;</div>
+            </div>
+            <div class="cpq-base-promotion cpq-promotion-item" ng-repeat="record in records | orderBy: sortBySequenceValue">
+                <div ng-repeat="field in $root.customViews.cpqCustomViews[$root.customViews.currentCustomView].fields"  class="cpq-promotion-name">
+                    <!-- Custom fields -->
+                    <div ng-show="record[field.fieldName].dataType === 'DATETIME'">
+                        {{record[field.fieldName].value | date}}
+                    </div>
+                    <div ng-show="record[field.fieldName].dataType != 'DATETIME'">
+                        {{record[field.fieldName].value}}
+                        <span title="{{::record[$root.nsPrefix+'Action__c'].value}}" ng-show="record[field.fieldName].fieldName === 'Name'">
+                            <slds-button-svg-icon sprite="'utility'" size="'small'" icon="'bookmark'" extra-classes="'slds-button__icon_left'" class="cpq-promotion-item-bookmark-{{::record[$root.nsPrefix+'Action__c'].value.toLowerCase() || 'default'}}"></slds-button-svg-icon>
+                        </span>
+                    </div>
+                </div>
+                <div class="cpq-promotion-name">
+                    <button class="slds-button slds-button_neutral" ng-if="record[$root.nsPrefix + 'Action__c']['value'] === 'Change' || record[$root.nsPrefix + 'Action__c']['value'] === 'Disconnect'" ng-click="cancelAppliedPromotion(record)" ng-disabled="record[$root.nsPrefix + 'Action__c']['value'] === 'Disconnect' || !(record.actions && record.actions.deleteappliedpromoitems)">
+                        <span>
+                            {{::customLabels.CPQCancel}}
+                        </span>
+                    </button>
+                    <button class="slds-button slds-button_neutral" ng-if="record[$root.nsPrefix + 'Action__c']['value'] === 'Add'" ng-click="deleteAppliedPromotion(record)" ng-disabled="!record.actions || !record.actions.deleteappliedpromoitems">
+                        <span>
+                            {{::customLabels.CPQDelete}}
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <!-- END of DATA -->
+        <div class="slds-grid slds-grid_align-center slds-is-relative slds-m-top_xx-large">
+            <!-- NO DATA -->
+            <div class="cpq-no-cart-items-msg slds-p-vertical_xx-large" ng-show="(!records || records.length === 0) && isLoaded">
+                {{::customLabels.CPQNoResultsFound}}
+            </div>
+            <!-- END of NO DATA -->
+
+        </div>
+    </div>
+    <!-- END of Promotions Tab Content -->
+
+</div>

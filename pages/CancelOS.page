@@ -1,0 +1,12 @@
+<apex:page showHeader="false" sidebar="false" title="CancelSO">
+    <apex:includeScript value="/support/console/39.0/integration.js"/>
+    <script type="text/javascript">
+        window.onload = function() {
+            sforce.console.getEnclosingTabId(closeSubtab);
+        };
+        var closeSubtab = function closeSubtab(result) {
+            var tabId = result.id;
+            sforce.console.closeTab(tabId);
+        };
+    </script>
+</apex:page>

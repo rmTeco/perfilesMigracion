@@ -1,0 +1,70 @@
+<div ng-class="importedScope.isExternalId? 'heightOfThorFrame' : ''">
+<div ng-if="importedScope.isExternalId"  class="container-fluid">
+    <div class="btn-toolbar" role="toolbar">
+        <div class="btn-group actions" role="group">
+            <a class="submit-button"
+            ng-click="importedScope.viewOriginalOrder();"><i class="icon icon-v-cart"></i><span>View Original Order</span></a>
+        </div>
+        <div class="btn-group actions" role="group">
+            <a class="submit-button" ng-if="importedScope.orchestrationPlanId !=null"
+            ng-click="importedScope.resolveNavigate(importedScope.orchestrationPlanId)"><i class="icon icon-v-play"></i><span>View Plan Parameters</span></a>
+        </div>
+    </div>
+</div>
+
+<div ng-attr-width="{{importedScope.getCanvasWidth(importedScope.orchestrationPlan.swimlanes)}}" right="{{importedScope.getCanvasWidth(importedScope.orchestrationPlan.swimlanes)}}" ng-class="importedScope.isExternalId? 'vlocity btns-left btn-container-canvas btn-off-platform' : 'vlocity btns-left btn-container-canvas'" planDir="{{::importedScope.getSwimlaneX1(swimlane)}}">
+        <button id="zoomIn"  ng-click="importedScope.scaleVal = importedScope.scaleVal+0.1; importedScope.zoomIn();"  type="button" class="btn btn-small btn-default"><span class="icon icon-v-plus"   aria-hidden="true"></span></button>
+        <button id="zoomOut" ng-if="importedScope.scaleVal > 0.2"  ng-click="importedScope.zoomOut();" type="button" class="btn btn-small  btn-default">                     <span class="icon icon-v-minus"  aria-hidden="true"></span></button>
+        <button id="zoomOut" ng-if="importedScope.scaleVal <= 0.2" ng-click="importedScope.zoomOut();" type="button" class="btn btn-small  btn-default" ng-disabled="true"><span class="icon icon-v-minus"  aria-hidden="true"></span></button>
+    
+    </div>
+<div id="canvas" ng-class="!importedScope.isExternalId? 'canvas-on-platform' : ''" style="width:{{importedScope.getCanvasWidth(importedScope.orchestrationPlan.swimlanes)+40}}px;">
+<svg ng-attr-width="{{importedScope.getCanvasWidth(importedScope.orchestrationPlan.swimlanes)}}" ng-attr-height="{{importedScope.getCanvasHeight(importedScope.orchestrationPlan.swimlanes)}}" width="100" height="100" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <line x1="0" y1="0" ng-attr-x2="{{importedScope.getCanvasWidth(importedScope.orchestrationPlan.swimlanes)}}" y2="0" class="swimlane"/>
+          <line ng-attr-x1="{{::importedScope.getSwimlaneX(swimlane)}}" ng-attr-y1="{{::importedScope.getSwimlaneY2(swimlane)}}" ng-attr-x2="{{importedScope.getCanvasWidth(importedScope.orchestrationPlan.swimlanes)}}" ng-attr-y2="{{::importedScope.getSwimlaneY2(swimlane)}}" ng-repeat="swimlane in importedScope.orchestrationPlan.swimlanes track by swimlane.idx" class="swimlane"/>
+          <g ng-repeat="item in importedScope.orchestrationPlan.items track by item.id">
+            <rect ng-attr-x="{{::importedScope.getItemX(item)}}" ng-attr-y="{{::importedScope.getItemY(item)}}" 
+                  ng-attr-width="{{::importedScope.getItemWidth(item)}}" ng-attr-height="{{importedScope.getItemHeight(item)}}"
+                  ng-class="[importedScope.label2class(item.state), importedScope.label2class(item.type), 'item']" rx="8" ry="8"/>
+            <rect ng-attr-x="{{::importedScope.getItemX(item)}}" ng-attr-y="{{::importedScope.getItemY(item)}}"
+                  ng-attr-width="{{::importedScope.getItemWidth(item)}}" ng-attr-height="{{::importedScope.getHeaderHeight(item)}}"
+                  ng-class="['item-header', importedScope.label2class(item.state)]" rx="8" ry="8"/>
+            <use xlink:href="{{importedScope.getIconURL('/assets/icons/utility-sprite/svg/symbols.svg', item)}}" fill="{{importedScope.getIconColor(item)}}" stroke="{{importedScope.getIconColor(item)}}" stroke-width="0.5" 
+                ng-attr-x="{{importedScope.getItemIconX(item)}}" ng-attr-y="{{importedScope.getItemIconY(item)}}" ng-attr-width="{{importedScope.getItemIconWidth(item)}}" ng-attr-height="{{importedScope.getItemIconHeight(item)}}"
+                ng-if="importedScope.shouldShowIcon(item)"
+                ></use>
+          </g>
+          <g>
+            <g ng-repeat="dep in importedScope.orchestrationPlan.deps track by dep.id">
+              <path ng-attr-d="{{::importedScope.buildPath(dep)}}"  class="dep"/>
+            </g>
+          </g>
+          <g ng-if="importedScope.orchestrationPlan.highlightedDeps">
+            <path ng-attr-d="{{::importedScope.buildPath(dep)}}" class="dep highlighted" ng-repeat="dep in importedScope.orchestrationPlan.highlightedDeps track by dep.id"/>
+          </g>
+          <g ng-if="importedScope.orchestrationPlan.highlightedItems">
+            <rect ng-repeat="item in importedScope.orchestrationPlan.highlightedItems track by item.id"
+                ng-attr-x="{{::importedScope.getItemX(item)}}" ng-attr-y="{{::importedScope.getItemY(item)}}" 
+                ng-attr-width="{{::importedScope.getItemWidth(item)}}" ng-attr-height="{{::importedScope.getItemHeight(item)}}" rx="8" ry="8"
+                class="highlighted"/>
+          </g>
+        </svg>
+        
+<div ng-repeat="swimlane in importedScope.orchestrationPlan.swimlanes | orderBy : 'showOrder' track by swimlane.idx"
+    ng-style="{top: '{{::importedScope.getSwimlaneY(swimlane)+30}}px', {{::importedScope.getSwimlaneX1(swimlane)}}:'55px', width: '100%'}"
+        class="order-label-container" title="{{swimlane.orderName}} - {{swimlane.planDefName}}">
+        <vloc-card ctrl="{{ctrl}}" ng-model="card" data="cards[1]" records="" index="{{$index}}" ></vloc-card>
+</div>
+<div ng-repeat="item in importedScope.orchestrationPlan.items track by item.id" ng-mouseenter="importedScope.highlightItemAndDependencies(item)" ng-mouseleave="importedScope.unhighlightItemAndDependencies(item)">
+          <div ng-style="{top: '{{::importedScope.getItemLabelY(item)+22}}px', left:'{{::importedScope.getItemLabelX(item)}}px', width:'137px', height:'30px'}"  class="item-label-container" ng-class="['item-header', importedScope.label2class(item.state)]" id="itemLabel-{{::item.id}}" bs-tooltip="importedScope.getItemTooltip(item)"> 
+                 <vloc-card ctrl="{{ctrl}}" ng-model="card" data="cards[1]" records="citem" index="{{$index}}" ></vloc-card>
+          </div>
+          <div ng-style="{left: '{{::importedScope.getItemTextX(item)+20}}px', top: '{{::importedScope.getItemTextY(item)+20}}px', width: '{{::importedScope.getItemTextWidth(item)}}px'}" class="item-body-text" ng-init="transType=importedScope.getItemText(item);">
+            <div class="">
+                <vloc-card ctrl="{{ctrl}}" ng-model="card" data="cards[0]" records="citem" index="{{$index}}" ></vloc-card>
+            </div>
+          </div>
+        </div>
+    <span id="flyout"></span>
+</div>
+</div>

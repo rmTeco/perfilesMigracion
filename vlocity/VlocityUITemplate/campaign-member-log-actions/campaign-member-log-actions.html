@@ -1,0 +1,7 @@
+<div ng-init="importedScope.createLogs(records)">
+    <div class="campaign-member-log-actions slds-m-top--medium {{importedScope.toggleTabsClass}}" ng-hide="importedScope.responsiveHelper.bpXMedium">
+        <div class="member-log-actions-tabs" slds-tabs slds-active-pane="importedScope.sldsActivePane" template="SldsTabsScoped.tpl.html">
+            <div ng-repeat="tab in $root.memberTabs" data-title="{{tab.tabUI.title}}" name="{{tab.tabUI.title}}" data-icon="{{tab.tabUI.icon}}" ng-include="tab.tabUI.template" slds-pane class="slds-clearfix"></div>
+        </div>
+    </div>
+</div>

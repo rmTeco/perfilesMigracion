@@ -1,0 +1,87 @@
+<div ng-controller="AssetsMainController" class="assets-promotions-view">
+    <!-- Promotions Tab Content -->
+    <div id="tab-default-2" class="slds-tabs--default__content assets-promo-items-tab-content" role="tabpanel" aria-labelledby="tab-default-2__item">
+
+        <!-- Promotions Type Dropedown and Date Picker Filters  -->
+        <div class="slds-grid slds-wrap">
+            <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--2-of-6 slds-large-size--2-of-12 slds-m-right--small slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click slds-is-open slds-m-around--small">
+                <button cpq-dropdown-handler="viewOpen = false" id="cpq-custom-view-button" class="slds-button custom-view-dropdown-button slds-button--neutral slds-picklist__label slds-p-right--small" aria-haspopup="true" ng-click="viewOpen = !viewOpen">
+                    <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top--x-small slds-float--right'"></slds-button-svg-icon>
+                    <span class="slds-truncate" title="Select an Option"></span>
+                    <span>{{dropDownLabel.value}}</span>
+                </button>
+
+                <div class="slds-dropdown slds-dropdown--left" ng-if="viewOpen">
+                    <ul class="slds-dropdown__list slds-dropdown--length-10" role="menu">
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('All')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                <span class="slds-truncate">{{::customLabels.AllPromotions}}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('Active')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <span class="slds-truncate">{{::customLabels.ActivePromotions}}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('Expired')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <span class="slds-truncate">{{::customLabels.ExpiredPromotions}}</span>
+                            </a>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation" ng-click="changeAppliedPromotionsType('Canceled')">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                <span class="slds-truncate">{{::customLabels.CanceledPromotions}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--3-of-6 slds-large-size--3-of-12 slds-m-left--small slds-form-element slds-m-top--small" ng-if="appliedPromotionsTypeSelected === 'Active'">
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+                    <slds-input-svg-icon sprite="'utility'" icon="'dayview'" extra-classes="'slds-float--right'"></slds-input-svg-icon>
+                     <input type="text" class="slds-input" ng-model="appliedPromotionsCommitmentDateSelected.value" data-date-format="yyyy-MM-dd" slds-date-picker ng-change="changeAppliedPromotionsCommitmentDate()" data-container=".via-slds"/>
+                </div>
+            </div>
+        </div>
+        <!-- END of Promotions Type Dropedown and Date Picker Filters  -->
+
+        <!-- DATA -->
+        <div ng-if="records" ng-init="getStateData(cards)">
+            <div class="assets-base-promo assets-promo-header">
+                <div ng-repeat="field in $root.customViews.cpqCustomViews[$root.customViews.currentCustomView].fields"  class="assets-promo-name">
+                    {{records[0] | getter: field: 'label' }}
+                </div>
+            </div>
+
+            <div ng-repeat="record in records | orderBy: sortBySequenceValue">
+                <div class="assets-base-promo assets-promo-item">
+                    <div ng-repeat="field in $root.customViews.cpqCustomViews[$root.customViews.currentCustomView].fields"  class="assets-promo-name">
+                        <!-- Custom properties (Name, Description)-->
+                        {{record[field.label]}}
+                        <span title="{{::record[$root.nsPrefix+'Action__c'].value}}" ng-show="field.label === 'Name'">
+                            <slds-button-svg-icon sprite="'utility'" size="'small'" icon="'bookmark'" extra-classes="'slds-button__icon--left'" class="assets-promo-item-bookmark-{{::record[$root.nsPrefix+'Action__c'].value.toLowerCase() || 'default'}}"></slds-button-svg-icon>
+                        </span>
+                    
+                        <!-- Custom fields -->
+                        <div ng-show="record[field.fieldName].dataType === 'DATETIME'">
+                            {{record[field.fieldName].value | date}}
+                        </div>
+                        <div ng-show="record[field.fieldName].dataType != 'DATETIME'">
+                            {{record[field.fieldName].value}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END of DATA -->
+
+        <!-- NO DATA -->
+        <div class="slds-grid slds-grid--align-center assets-no-items-msg" ng-show="!records || records.length === 0 ">
+            {{::customLabels.CPQNoResultsFound}}
+        </div>
+        <!-- END of NO DATA -->   
+
+    </div>
+    <!-- END of Promotions Tab Content -->
+</div>

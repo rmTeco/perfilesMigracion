@@ -1,0 +1,114 @@
+<div class="slds-col--padded slds-size--1-of-1"
+    ng-controller="collapsableMultiSelectController"
+    ng-init="setJSDataPreprocessor(control, baseCtrl.renderAssetItems)">
+
+    <ng-form name='loopform'
+        class='slds-form-element vlc-flex vlc-slds-multiSelect-control'
+        id="{{::control.name + $index}}"
+        ng-required="control.propSetMap.req"
+        ng-repeat='control in child.eleArray'>
+
+        <div class="slds-form-element__control">
+
+            <label for="{{::control.name + $index}}" class='slds-form-element__label vlc-slds-inline-control__label'>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" nubbin="left" help="{{control.propSetMap.help}}"> i </a>
+
+                <!--<div vlc-slds-include="vlcLabelController.html"></div>-->
+                
+                {{::control.propSetMap.customOptions.customLabel}}
+
+                <span class='vlc-asterix icon-v-asterix'
+                        ng-show='control.propSetMap.req'>
+                </span>
+
+            </label>
+
+            <ul class="slds-form-element ng-scope" horizontalmode="false">
+                <li class="slds-form-element__control"
+                    ng-repeat='option in baseCtrl.assetItems'>
+
+                    <label class='slds-checkbox'>
+            
+                        <input id='{{control.Name + $index}}'
+                            ng-disabled='option.Status != "Active"'
+                            ng-required="control.propSetMap.req && !control.response"
+                            type='checkbox'
+                            ng-init='onSelectItem(control, option, $index, this)'
+                            ng-model='option.vlcSelected'
+                            ng-value="option"
+                            ng-change='onSelectItem(control, option, $index, this)'/>
+            
+                        <span class="slds-checkbox--faux" ng-if='control.propSetMap.horizontalMode!=="image"'></span>
+                        
+                        <ul class="slds-tree" 
+                            style="display: inline-flex"
+                            role="tree"
+                            aria-labelledby="treeheading">
+                            
+                            <li id="tree0-node1"
+                                role="treeitem"
+                                aria-level="1"
+                                aria-expanded="{{detailExpanded}}"
+                                ng-click="detailExpanded = !detailExpanded">
+
+                                <div class="slds-tree__item slds-p-left--none">
+                                    <button class="slds-button slds-button--icon slds-m-right--x-small"
+                                        aria-controls="tree0-node1"
+                                        title="Toggle">
+                                        <slds-button-svg-icon size="'small'" sprite="'utility'" icon="'chevronright'" extra-classes="'expanded-detail-icon'">
+                                        </slds-button-svg-icon>
+                                        <span class="slds-assistive-text">Toggle</span>
+                                    </button>
+
+                                    <a id="tree0-node1__label"
+                                        href="javascript:void(0);"
+                                        tabindex="-1"
+                                        role="presentation"
+                                        class="slds-truncate"
+                                        title="Tree Branch">
+                                        
+                                        <span class="slds-form-element__label" ng-if='control.propSetMap.horizontalMode!=="image"'>{{::option[control.propSetMap.customOptions.optionLabel]}}</span>
+
+                                    </a>
+                                </div>
+
+                                <ul ng-class="{'slds-is-expanded' : detailExpanded, 'slds-is-collapsed': !detailExpanded}"
+                                    role="group"
+                                    aria-labelledby="tree0-node1__label">
+
+                                    <li ng-repeat="item in control.propSetMap.customOptions.collapsableFields"
+                                        id="tree0-node1-0"
+                                        role="treeitem"
+                                        aria-level="2">
+
+                                        <div class="slds-tree__item slds-p-left--none">
+                                            <button class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+                                                <svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+                                                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+                                                </svg>
+                                                <span class="slds-assistive-text">Toggle</span>
+                                            </button>
+                                            <label href="javascript:void(0);" tabindex="-1" role="presentation" class="slds-truncate vlc-slds-inline-control__label"
+                                                title="Tree Item">{{item.text.replace('{0}', option[item.params[0].fieldName])}}</label>
+                                        </div>
+
+                                    </li>
+
+                                </ul>
+
+                            </li>
+
+                        </ul>
+            
+                    </label>
+                
+                </li>
+            </ul>
+            
+        </div>
+
+    </ng-form>
+
+</div>

@@ -1,0 +1,55 @@
+<div class="slds-tile cpq-product-item" data-product-id="{{obj.Id.value}}" ng-if="obj.category.toLowerCase() === importedScope.getCategorySelected().toLowerCase()">
+    <div class="slds-media cpq-product-item-container">
+        <div class="slds-media__body">
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-small-size--10-of-12 slds-medium-size--10-of-12 slds-large-size--10-of-12">
+                    <p class="slds-tile__title slds-truncate product-name">
+                        {{::obj.Name.value}}
+                    </p>
+                </div>
+                <div class="slds-colslds-small-size--2-of-12 slds-medium-size--2-of-12 slds-large-size--2-of-12">
+                    <a href="#" ng-click="importedScope.viewMore()" class="product-link slds-text-body--small slds-float--right">
+                        {{::importedScope.customLabels.CPQMore}}
+                    </a>
+                </div>
+            </div>
+            <div class="slds-tile__detail">
+                <div class="slds-grid">
+                    <div class="slds-col slds-small-size--8-of-12 slds-medium-size--7-of-12 slds-large-size--8-of-12 slds-text-align--left product-price">
+                        <div ng-if="::obj | resolveCustomField:'RecurringPrice__c'">
+                            <span class="price-label">
+                            {{::obj | resolveCustomField:'RecurringPrice__c':'label' | uppercase}}
+                            </span>
+                            <span class="slds-text-body--small">
+                                {{importedScope.getPriceValue(obj, importedScope.nsPrefix+'RecurringPrice__c')}}
+                            </span>
+                        </div>
+                        <div>
+                            <span class="price-label">{{::obj['UnitPrice']['label'] | uppercase}} </span>
+                            <span class="slds-text-body--small"> 
+                                {{importedScope.getPriceValue(obj, 'UnitPrice')}}
+                            </span>
+                        </div>
+                        <div class="cpq-item-product-messages">
+                            <ul ng-if="obj.messages.length > 0">
+                                <li ng-repeat="msg in obj.messages" class="slds-p-vertical--xx-small">
+                                    <span class="cpq-error-msg" ng-if="msg.severity === 'ERROR'">
+                                        {{msg.message}}
+                                    </span>
+                                    <span class="cpq-warning-msg" ng-if="msg.severity !== 'ERROR'">
+                                        {{msg.message}}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-small-size--4-of-12 slds-medium-size--5-of-12 slds-large-size--4-of-12 slds-text-align--right cpq-product-actions">
+                        <button class="slds-button slds-button--neutral add-button" ng-click="importedScope.addToCart(obj)" ng-disabled="!obj.actions || obj.category.toLowerCase() !== 'qualified'">
+                            {{::importedScope.customLabels.CPQAddToCart}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

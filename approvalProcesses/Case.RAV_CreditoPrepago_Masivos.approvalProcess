@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApprovalProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <allowRecall>false</allowRecall>
+    <allowedSubmitters>
+        <type>owner</type>
+    </allowedSubmitters>
+    <approvalPageFields>
+        <field>CaseNumber</field>
+        <field>Owner</field>
+        <field>vlocity_cmt__Amount__c</field>
+    </approvalPageFields>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Asignar_caso_a_backoffice</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <name>alex.lazarev@cloudgaia.com.fan</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>500&lt;amount&lt;=5000</description>
+        <entryCriteria>
+            <formula>(vlocity_cmt__Amount__c &gt; 500) &amp;&amp; (vlocity_cmt__Amount__c  &lt;= 5000)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Step1_Backoffice</label>
+        <name>Step1_Backoffice</name>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <approvalActions>
+            <action>
+                <name>Change_Status_AprobadaRevisor</name>
+                <type>FieldUpdate</type>
+            </action>
+        </approvalActions>
+        <assignedApprover>
+            <approver>
+                <name>BackOfficeTest</name>
+                <type>queue</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>5000 &lt; amount &gt; 20000</description>
+        <entryCriteria>
+            <formula>(vlocity_cmt__Amount__c &gt; 5000) &amp;&amp; (vlocity_cmt__Amount__c &lt;= 20000)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Step2_Revisor</label>
+        <name>Step2_Revisor</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>alex.lazarev@cloudgaia.com.fan</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>5000 &lt; amount &lt;= 10000</description>
+        <entryCriteria>
+            <formula>(vlocity_cmt__Amount__c &gt; 5000) &amp;&amp; (vlocity_cmt__Amount__c  &lt;= 10000)&amp;&amp; ISPICKVAL(Status , &apos;Aprobada revisor&apos;)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Step3_Gerente2Dep</label>
+        <name>Step3_Gerente2Dep</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>alex.lazarev@cloudgaia.com.fan</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>10000 &lt; amount &lt;= 14000</description>
+        <entryCriteria>
+            <formula>(vlocity_cmt__Amount__c &gt; 10000) &amp;&amp; (vlocity_cmt__Amount__c  &lt;= 14000) &amp;&amp; ISPICKVAL(Status , &apos;Aprobada revisor&apos;)</formula>
+        </entryCriteria>
+        <ifCriteriaNotMet>GotoNextStep</ifCriteriaNotMet>
+        <label>Step4_Gerente1Dep</label>
+        <name>Step4_Gerente1Dep</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <approvalStep>
+        <allowDelegate>false</allowDelegate>
+        <assignedApprover>
+            <approver>
+                <name>alex.lazarev@cloudgaia.com.fan</name>
+                <type>user</type>
+            </approver>
+            <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
+        </assignedApprover>
+        <description>14000&lt;amount&lt;=20000</description>
+        <entryCriteria>
+            <formula>(vlocity_cmt__Amount__c &gt; 14000) &amp;&amp; (vlocity_cmt__Amount__c  &lt;= 20000) &amp;&amp; ISPICKVAL(Status , &apos;Aprobada revisor&apos;)</formula>
+        </entryCriteria>
+        <label>Step5_Director</label>
+        <name>Step5_Director</name>
+        <rejectBehavior>
+            <type>RejectRequest</type>
+        </rejectBehavior>
+    </approvalStep>
+    <description>Reglas de escalamiento para:
+
+Tipo de ajuste: Credito Prepago
+Segmento: Default (Masivos)
+Wrorkteam: Atencion al cliente</description>
+    <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
+    <entryCriteria>
+        <booleanFilter>2 AND 3 AND 4 AND (1 OR 5 OR 6)</booleanFilter>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>New</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Subject</field>
+            <operation>equals</operation>
+            <value>Inconvenientes con cargos tasados y facturados</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Account.SegmentLevel2__c</field>
+            <operation>equals</operation>
+            <value>Default</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>User.Work_Team__c</field>
+            <operation>equals</operation>
+            <value>Atencion al cliente</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Derivada</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.Status</field>
+            <operation>equals</operation>
+            <value>Aprobada revisor</value>
+        </criteriaItems>
+    </entryCriteria>
+    <finalApprovalActions>
+        <action>
+            <name>Change_Status_Aprobada</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalApprovalActions>
+    <finalApprovalRecordLock>false</finalApprovalRecordLock>
+    <finalRejectionActions>
+        <action>
+            <name>Change_Status_Rechazada</name>
+            <type>FieldUpdate</type>
+        </action>
+    </finalRejectionActions>
+    <finalRejectionRecordLock>false</finalRejectionRecordLock>
+    <initialSubmissionActions>
+        <action>
+            <name>Change_Status</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Email</name>
+            <type>Alert</type>
+        </action>
+    </initialSubmissionActions>
+    <label>RAV_CreditoPrepago_Masivos</label>
+    <nextAutomatedApprover>
+        <useApproverFieldOfRecordOwner>false</useApproverFieldOfRecordOwner>
+        <userHierarchyField>Manager</userHierarchyField>
+    </nextAutomatedApprover>
+    <recordEditability>AdminOnly</recordEditability>
+    <showApprovalHistory>false</showApprovalHistory>
+</ApprovalProcess>

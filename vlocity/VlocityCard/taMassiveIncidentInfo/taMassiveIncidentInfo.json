@@ -1,0 +1,213 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "bundle": "",
+            "ctxId": "",
+            "resultVar": "['Case']"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.AccountId",
+                            "Id": "params.Id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-MassiveEventChildCase",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "CaseId": "params.Id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "CloseMassiveCase",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['CaseNumber']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "N° Tkt:",
+                    "name": "['CaseNumber']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Type']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Tipo",
+                    "name": "['Type']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['SubType']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Subtipo",
+                    "name": "['SubType']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Origin']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Canal",
+                    "name": "['Origin']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Incident']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Incidente",
+                    "name": "['Incident']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Subject']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Titulo",
+                    "name": "['Subject']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Start_Date']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de inicio",
+                    "name": "['Start_Date']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['CreatedDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de creación",
+                    "name": "['CreatedDate']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Modified_Date']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de modificación",
+                    "name": "['Modified_Date']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['ClosedDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de fin",
+                    "name": "['ClosedDate']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['AffectedCustomer']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Cliente afectado",
+                    "name": "['AffectedCustomer']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Speech']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Speech",
+                    "name": "['Speech']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Procedure']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Procedimiento",
+                    "name": "['Procedure']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Description']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Detalle del incidente",
+                    "name": "['Description']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-TechCare-Massive-Incident-Detail"
+        }
+    ],
+    "title": "Detalle de Incidente"
+}

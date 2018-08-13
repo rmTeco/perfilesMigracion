@@ -1,0 +1,6 @@
+<div class="cpq-cart-item-details js-cart-error-container">
+    <vloc-card ng-repeat="card in cards |orderBy:order|filter: searchFunc(card)" 
+    	ctrl="CPQCartItemController" ng-model="card" data="card" records="records" 
+    	index="{{$index}}" session-id="{{sessionId}}" line-item-modal="true">
+    </vloc-card>
+</div>

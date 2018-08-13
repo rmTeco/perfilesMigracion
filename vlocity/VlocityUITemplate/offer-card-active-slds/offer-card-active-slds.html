@@ -1,0 +1,8 @@
+<div class="slds-card via-slds-offer-card slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(obj.Id)}" hotkey-layout-card ng-controller="viaOfferCardActive as vm">
+  <div class="slds-card__body  via-slds-card__body slds-grid slds-wrap slds-theme--default slds-is-relative slds-p-bottom--medium slds-p-top--medium slds-grid--vertical-align-end slds-grid--align-center">
+    <div class="slds-grid slds-grid--vertical slds-grid--vertical-align-center slds-grid--align-center via-slds-main-action-wrapper" style="background-image: url({{vm.getImageUrl(obj)}})">
+        <a class="via-slds-main-action slds-text-align--center" hotkey-card-action  ng-if="obj.targetObjectType != 'VlocityAction'" href="{{obj.targetObjectKey}}"></a>
+        <a class="via-slds-main-action slds-text-align--center" hotkey-card-action  ng-if="obj.targetObjectType == 'VlocityAction'" ng-click="performAction(obj.info)"></a>
+      </div>
+  </div>
+</div>

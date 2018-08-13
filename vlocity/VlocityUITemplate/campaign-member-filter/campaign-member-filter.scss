@@ -1,0 +1,81 @@
+.slds-col{
+    &.filter-container{
+        border-right: 1px solid #d8dde6;
+        min-height: 34rem;
+        width: 11rem;
+        max-width: 11rem;
+    }
+    .max-range{
+        position: relative;
+        top: -.58rem;
+    }
+   
+    
+}
+
+.slds-icon{
+        &.category{
+           fill: #4F6A92;
+           height: 1.2rem;
+           width: 1.2rem;
+        }
+    }
+
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+      //overflow: hidden;
+      width: 80px;
+      -webkit-appearance: none;
+      &.max-range{
+        background-color: transparent;
+      }
+      &.min-range{
+          background-color: #d8dde6;
+      }
+    }
+    
+    
+    input[type='range']::-webkit-slider-runnable-track {
+      height: 2px;
+      -webkit-appearance: none;
+      color: #0C8EFF;
+    }
+    
+    input[type='range']:focus {
+        outline:none;
+        
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      border: .15rem solid #0C8EFF;
+      border-radius: 2rem;
+      background: #00396B;
+      margin-top: -.5rem;
+      overflow: hidden;
+      height: 1rem;
+      width: 1rem;
+    
+    }
+    input[type='range'].min-range::-webkit-slider-thumb {
+        height: 1.2rem;
+        width: 1.2rem;
+    }
+
+} 
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #43e5f7; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: #9a905d;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #43e5f7; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #9a905d;
+}

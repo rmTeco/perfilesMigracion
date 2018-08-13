@@ -1,0 +1,6 @@
+<tr data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" >
+    <td class="slds-truncate" data-label="{{field.label}}" ng-repeat="field in data.fields" ng-show="key != 'attributes'">{{obj | getter: field | picker: field.type}}&nbsp;</td>
+    <td class="slds-cell-shrink" ng-if="data.actions.length > 0" data-label="Actions" style="overflow: visible">
+        <slds-dropdown content="data.actions" ng-if="data.actions.length > 0" icon-attribute="vlocityIcon" label-attribute="displayName" action-function="performAction(item)"></slds-dropdown>
+    </td>
+</tr>

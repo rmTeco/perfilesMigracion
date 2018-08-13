@@ -1,0 +1,8 @@
+<!--<div class="ta-Care-Bundle-View-Division-Left">-->
+<!--    <vloc-card ng-repeat="card in cards |orderBy:order" ng-if="card.zone == 'left'" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>-->
+<!--</div>-->
+<div class="slds-grid slds-wrap slds-grid--pull-padded">
+    <div ng-repeat="card in cards |orderBy:order" class="ta-Care-Bundle-View-Division-Right slds-size--1-of-2">
+            <vloc-card ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" use-existing-element-type></vloc-card>
+    </div>
+</div>

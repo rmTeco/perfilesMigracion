@@ -1,0 +1,107 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    .cpq-product-item {
+        border-bottom: $cpq-product-item-padding solid $cpq-page-bg-color;
+        
+        .cpq-product-item-container {
+            padding: $cpq-padding-large-vertical 0px;
+            margin: 0px $cpq-padding-large-horizontal;
+        
+            .cpq-product-item-select-checkbox {
+                // Ensure atleast 40px width for inputs for device touch area
+                padding: $cpq-padding-small-horizontal;
+                margin-top: -$cpq-padding-small-horizontal/2;
+            }
+            
+            .product-name {
+                font-size: 12px;
+                font-weight: $cpq-headings-font-weight;
+                line-height: 30px;
+                .prefaseablitiyLabel {
+                    display: inline-block;
+                    padding: 0px 5px;
+                    background: #e7e7e7;
+                    text-transform: uppercase;
+                    font-size: 8px;
+                    height: 14px;
+                    line-height: 14px;
+                    border-radius: 7px;
+                    margin-left: 2px;
+                }
+            }
+            
+            .taTextSuccess {
+                color: #118752;
+                font-weight: bold;
+            }
+            
+            .product-link {
+                line-height: 30px;
+                color: #00b4c5;
+            }
+            .product-description {
+                font-size: 10px;
+                .taPriceContainer {
+                    color: #16325c;
+                    .taPrice {
+                        display: inline-block;
+                        margin-right: 10px;
+                        font-size: 20px;
+                    }
+                    .taPriceStrikeOut {
+                        text-decoration: line-through;
+                    }
+                }
+                .taProductDescription {
+                    color: #00912a;
+                }
+                .taItemDesc {
+                    color: #7c7c7c;
+                }
+            }
+            .product-icon-stock {
+                fill: #008655;
+            }
+            
+            .offers-count {
+                background-color: #FDB734;
+                color: white;
+                margin-left: 5px;
+            }
+        }
+        
+        .cpq-product-actions {
+            padding-top:$cpq-padding-large-vertical;
+            padding-bottom:$cpq-padding-large-vertical; 
+            
+            .add-button {
+                padding-left:$cpq-padding-small-horizontal;
+                padding-right:$cpq-padding-small-horizontal;
+                color: #00b4c5;
+           }
+           
+            .ta-button-neutral {
+                color: #00b4c5;
+            }
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    .cpq-product-item {
+        .cpq-product-item-container {
+            .product-price {
+                div {
+                    padding-right: 0;
+                    padding-left: $cpq-padding-large-horizontal;
+                }
+            }
+        }
+    }
+}

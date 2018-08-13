@@ -1,0 +1,23 @@
+<div class="opv_cardItem"  ng-class="::{ startDateHt: importedScope.startDate }">  
+
+ {{importedScope.getItemText($parent.$parent.$parent.item)}}<br>
+     {{$parent.$parent.$parent.item.additionalName}}
+<div style="display:flex;"><span ng-if="$parent.$parent.$parent.item['startDate']">{{::$root.vlocity.getCustomLabel('XOMStart', 'Start')}} : </span> <span>{{$parent.$parent.$parent.item['startDate']}}</span></div>
+<div style="display:flex;"><span ng-if="$parent.$parent.$parent.item['dueDate']">{{::$root.vlocity.getCustomLabel('XOMDue', 'Due')}}  : </span> <span>{{$parent.$parent.$parent.item['dueDate']}}</span></div>
+</div>
+ <table>
+    <tr>
+        <td>
+            <div class="TaskAction" ng-controller="actionRedirectController as ar" ng-init="itemId=$parent.$parent.$parent.$parent.item.id; customTaskExecUrl=$parent.$parent.$parent.$parent.item.customTaskExecutionUrl;">
+                <div class="" ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)" title="{{$root.vlocity.getCustomLabel('XOMViewTaskDetails', action.displayName)}}">
+                     <a href="#" ng-click="ar.performAction(action,params,itemId,customTaskExecUrl);">
+                        <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}" ></i>
+                    </a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div ng-class="(importedScope.languageRTL=='rtl') ? 'viewMorertl' : 'viewMore'" ng-click="importedScope.viewMore($parent.$parent.$parent.item);" ng-init="vm=importedScope.viewMoreText();">{{$parent.$parent.$parent.item.viewMoreText}}</div> 
+        </td>
+    </tr>
+</table>

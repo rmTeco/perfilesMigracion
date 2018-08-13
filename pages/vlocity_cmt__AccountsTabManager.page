@@ -1,0 +1,53 @@
+<apex:page controller="vlocity_cmt.TabManagerController">
+    <c:ConsoleGlobalComponent />
+    <apex:includeScript value="/support/console/31.0/integration.js"/>
+    <!-- <apex:includeScript value="http://code.jquery.com/jquery-2.1.1.min.js"/> -->
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" />
+    
+  <ul id="accountList" stype="display:none">
+  </ul>
+
+    
+    <apex:stylesheet value="{!$Resource.vlocity_cmt__consoleStyles}" />
+    
+    <c:ConsoleGlobalComponent />
+    
+    <script type="text/javascript">
+        var ch;
+
+         window.onload = function() {
+            
+            openSubtabs();
+        };
+        
+        function openSubtabs() {   
+            var i = 1;
+            
+            <apex:repeat value="{!payAdjustments}" var="pA">
+                consoleHelper.openSubTabManager('{!pA.Id}', '{!pA.Name}', i, false, null);
+                i++;
+            </apex:repeat>
+            
+            <apex:repeat value="{!statements}" var="stmt">
+                consoleHelper.openSubTabManager('{!stmt.Id}', '{!stmt.Name}', i, false, null);
+                i++;
+            </apex:repeat>
+            
+            <apex:repeat value="{!accContacts}" var="con">
+                consoleHelper.openSubTabManager('{!con.Id}', '{!con.Name}', i, false, null);
+                i++;
+            </apex:repeat>
+
+            <apex:repeat value="{!cases}" var="case">
+                consoleHelper.openSubTabManager('{!case.Id}', '{!case.CaseNumber}', i, false, null); 
+                i++;
+            </apex:repeat>
+            
+            <apex:repeat value="{!paymentMethods}" var="item">
+                consoleHelper.openSubTabManager('{!item.Id}', '{!item.Name}', i, false, null);
+                i++;
+            </apex:repeat>
+        }
+    </script>
+
+</apex:page>

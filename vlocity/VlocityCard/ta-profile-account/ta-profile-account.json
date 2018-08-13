@@ -1,0 +1,62 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.vlocity.userAccountId",
+                "val": "0016C000008eeAo"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name,  PhotoURL, Type,   %vlocity_namespace%__CustomerValue__c, PersonalClubPoints__c FROM Account WHERE Id = '{{$root.vlocity.userAccountId}}'",
+            "resultVar": "[0]"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "CanjeClubPersonal",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Active",
+            "placeholderExpand": true,
+            "placeholders": [
+            ],
+            "sObjectType": null,
+            "templateUrl": "ta-community-profile-card"
+        }
+    ],
+    "title": "Profile"
+}

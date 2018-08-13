@@ -1,0 +1,338 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="taOrderController">
+{!valor}
+    <head>
+        <apex:includeScript value="/support/console/40.0/integration.js"/>
+        <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script>
+
+        <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+        <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script> -->
+        <script src="{!$Resource.vlocity_cmt__CardFramework_Assets}"></script>
+        <script src="{!$Resource.vlocity_cmt__CardFramework}"></script>
+        <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script> 
+    </head>
+    <!--hola
+        <apex:form >
+            <apex:outputlabel value="Enter your name here"/>
+                <apex:inputtext value="{!valor}"/>          
+        </apex:form>
+
+        <apex:form >
+            <apex:actionFunction name="passStringToController" action="{!setValor}">
+                <apex:param name="p1" value="" assignTo="{!valor}"/>
+            </apex:actionFunction>
+        </apex:form>
+    -->
+    <style>
+        .ng-cloak { display: none !important; }
+    </style>
+
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="General">
+        <div 
+            ng-controller="GeneralController as gc"
+            ng-init="gc.init();">
+            <!-- promt error expire time -->
+            <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal--prompt ng-cloak" 
+                ng-show="gc.showErrorTimeout">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close">
+                        <svg class="slds-button__icon slds-button__icon--large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium" id="prompt-heading-id">Orden Cancelada</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                    <p>Tiempo de espera excedido.</p>
+                    </div>
+                    <div class="slds-modal__footer slds-theme--default">
+                    <button class="slds-button slds-button--neutral"
+                        ng-click="gc.close();">Close</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open ng-cloak"
+                ng-show="gc.showErrorTimeout"></div>
+            <!-- fin promt error expire time -->
+
+            <div class="slds-section-title--divider slds-text-align--right slds-m-bottom--medium">
+                Tiempo restante: {{gc.counter | secondsToDateTime | date:'HH:mm:ss'}}
+            </div>
+        </div>
+
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Sales"
+            strOmniScriptSubType="General"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('General', modules);
+            
+            myModule
+                .filter('secondsToDateTime', secondsToDateTime);
+            
+            function secondsToDateTime() {
+                return function(seconds) {
+                    return new Date(1970, 0, 1).setSeconds(seconds);
+                };
+            }
+            
+            myModule
+                .controller('GeneralController', GeneralController);
+                
+                GeneralController.$inject = ['$scope', '$timeout', '$window']
+                function GeneralController($scope, $timeout, $window) {
+                    var gc = this;
+                    gc.cancelButton = cancelButton;
+                    
+                    gc.init = init;
+                    gc.close = close;
+                    gc.onTimeout = onTimeout;
+                    gc.orderId = "{!$CurrentPage.parameters.IdOrder}";
+                    gc.showErrorTimeout = false;
+                    //console.info($location.host());
+                    
+                    function init() {
+                        if(gc.orderId){
+                            //getTimeOut();
+                            gc.counter = convertMinutesToSeconds(10);
+                            gc.onTimeout();
+                        }
+                    }
+
+                    function getTimeOut() {
+                        var dataSource = {
+                            type: 'Query',
+                            value: {
+                                query: "select Timeout__c from Timeouts__c where Name='Orders'"
+                            }
+                        };
+                        
+                        dataSourceService.getData(dataSource, $scope)
+                            .then(function(result) {
+                                console.info('Success result: ', result);
+                                gc.counter = convertMinutesToSeconds(result);
+                                gc.onTimeout();
+                            })
+                            .catch(function(result) {
+                                console.error('error!', result);
+                        });
+                    }
+
+                    function cancelButton(IdOrder,bpTreeJson) {
+                    debugger;
+                        console.info('cancelButton: ', IdOrder, bpTreeJson);
+                        
+                        var closeSubtab = function closeSubtab(result) {
+                            var tabId = result.id;
+                            sforce.console.closeTab(tabId);
+                        };
+
+                        Visualforce.remoting.Manager.invokeAction(
+                            "taOrderController.CancelOrderAndRedirect", IdOrder, JSON.stringify(bpTreeJson),
+                            function(result, event) {
+                                console.info("cancelOrderAndRedirect: ",result);
+                                 sforce.console.getEnclosingTabId(closeSubtab);
+                                },
+                                
+                            {escape: false} // No escaping, please
+                        );
+                    }
+                    
+                    function convertMinutesToSeconds(value) {
+                        return (value * 1) * 60;
+                    }
+                    
+                    function onTimeout(){
+                        gc.counter--;
+                        mytimeout = $timeout(gc.onTimeout,1000);
+                        if (!gc.counter) {
+                            gc.showErrorTimeout = true;
+                            stop();
+                        }
+                    }
+
+                    function stop (){
+                        $timeout.cancel(mytimeout);
+
+                        Visualforce.remoting.Manager.invokeAction("taOrderController.OrderTimeOut", IdOrder,
+                            function(result, event) {
+                                console.info("OrderTimeOut: ",result);
+                                 //sforce.console.getEnclosingTabId(closeSubtab);
+                            }, {escape: false} // No escaping, please
+                        );
+                    }
+
+                    function close(){
+                        sforce.console.closeTab(gc.orderId);
+                        gc.showErrorTimeout = false;
+                    }
+                }
+
+
+            myModule
+                .controller('LinesController', LinesController);
+                
+                LinesController.$inject = ['$window']
+                function LinesController($window) {
+                    var lc = this;
+                    lc.checkAll = checkAll;
+                    lc.verifyChecker = verifyChecker;
+                    lc.testingMiracle = testingMiracle;
+
+                    function testingMiracle()
+                    {
+                       passStringToController('new value');
+                    }
+                   
+                    
+                    function checkAll(plan)
+                    {
+                      console.info('checkAll: ',plan);
+                      //lc.testingMiracle();
+                      planIsSelected = plan.isSelected;
+                      angular.forEach(plan.lineas, function(lines){
+                            lines.isSelected = planIsSelected;
+                        });
+                    }                                  
+    
+                    function verifyChecker(plan)
+                    {
+                        console.info('verifyChecker',plan);
+
+                        var count = 0;
+                        var checkeds = 0;
+
+                        angular.forEach(plan.lineas, function(lines){
+                            count++;
+                            if(lines.isSelected) checkeds++;
+                        });
+
+                        plan.isSelected = (count == checkeds);
+
+
+                        // var changeParentState = false;
+                        // var keepIterating = true;
+                        // var planIsSelected = plan.isSelected;
+                        // angular.forEach(plan.lineas, function(lines){
+                        //     if((planIsSelected != lines.isSelected) && keepIterating)
+                        //         changeParentState = true;
+                        //     else{
+                        //         changeParentState = false;
+                        //         keepIterating = false;
+                        //     }
+                        // });
+                        // if(changeParentState)
+                        //     plan.isSelected = !plan.isSelected;
+                    }
+                }
+                
+            myModule
+                .controller('ICCIDAssignmentController', ICCIDAssignmentController);
+            
+            ICCIDAssignmentController.$inject = ['$scope'];
+            function ICCIDAssignmentController($scope) {
+                var iac = this;
+                iac.iccidValid = false;
+                iac.ICCIDChange = ICCIDChange;
+                //iac.ICCIDValidation = ICCIDValidation;
+                iac.counter = 0;
+                iac.init = init;
+                iac.onTimeout = onTimeout;
+                
+                function init(counter) {
+                    iac.counter = convertMinutesToSeconds(counter);
+                }
+                
+                function convertMinutesToSeconds(value) {
+                    return (value * 1) * 60;
+                }
+                
+                function onTimeout(){
+                    iac.counter--;
+                    mytimeout = $timeout(iac.onTimeout,1000);
+                    if (!iac.counter) {
+                      stop();
+                    }
+                }
+            
+                function stop (){
+                    $timeout.cancel(mytimeout);
+                    console.info('se agoto el tiempo');
+                }
+
+                function ICCIDChange(order, line)
+                {
+                    order.serialesReservados = false;
+                    line.validacionSerial = 'Pend. Validación';
+                    checkCompleteInputs(order);
+                }
+                
+                function checkCompleteInputs(order)
+                {
+                    var emptySerial = false;
+                    
+                    angular.forEach(order.planes, function(plan)
+                    {
+                        angular.forEach(plan.lineas, function(line)
+                        {
+                            if(line.serial == null || line.serial == "")
+                                emptySerial = true;
+                        });
+                    });
+
+                    if(emptySerial)
+                    {
+                        order.serialesReservados = false;
+                    }else{
+                        order.serialesReservados = true;
+                    }
+                }
+                /*
+                function ICCIDValidation(bptree)
+                {
+                    console.info('bptree: ', bptree);
+                    Visualforce.remoting.Manager.invokeAction('taOrderController.SerialReAssingment', JSON.stringify(bptree),
+                        function(result, event) {
+                            console.info('result: ', result);
+                            $scope.bpTree.response = JSON.parse(result);
+                            $scope.$apply();
+                            console.info('bptree: ', bptree);
+                            },
+                        {escape: false} // No escaping, please
+                    );
+                }
+                */
+            }
+
+            myModule
+                .controller('InvoiceController', InvoiceController);
+            
+            InvoiceController.$inject = ['$scope', '$rootScope'];
+            function InvoiceController($scope, $rootScope) {
+                var ic = this;
+                
+                ic.processData = processData;
+                console.info('controller ejecutado');
+                function processData(data) {
+                    //alert($filter('json')(data));
+                    console.info(data);
+                    
+                    if(data.SellItems)
+                        ic.SellItems = angular.isArray(data.SellItems) ? data.SellItems : [data.SellItems];
+                    if(data.ChargeItems)
+                        ic.ChargeItems = angular.isArray(data.ChargeItems) ? data.ChargeItems : [data.ChargeItems];
+                        
+                    console.info(ic.SellItems);
+                    console.info(ic.ChargeItems);
+                };
+            }
+        </script>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

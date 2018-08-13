@@ -1,0 +1,60 @@
+{
+    "dataSource": {
+        "type": "Custom",
+        "value": {
+            "body": "[{}]"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankCardState": true,
+            "blankStateCheck": true,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'non-existent'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "$root.vlocity.userAccountId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Actualizar Datos Community",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "$root.vlocity.userAccountId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ChangePassword",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'non-existent'",
+            "flyout": {
+                "layout": "community-content-layout-flyout-sample"
+            },
+            "name": "active",
+            "templateUrl": "web360-actions"
+        }
+    ],
+    "title": "Change Password"
+}

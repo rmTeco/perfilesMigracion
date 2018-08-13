@@ -1,0 +1,121 @@
+{
+    "data": {
+        "actions": [
+        ],
+        "cardIndex": 0,
+        "cardName": "TestBilling",
+        "dataSource": {
+            "contextVariables": [
+                {
+                    "name": "params.id",
+                    "val": "0016C000009HZkC"
+                }
+            ],
+            "type": "ApexRemote",
+            "value": {
+                "inputMap": {
+                    "ContextId": "0016C000009HZkC"
+                },
+                "optionsMap": {
+                    "vlcClass": "MembershipStatus2"
+                },
+                "query": "select Id, Name from Account where RecordType.developername = 'Billing' and ParentId = '{{params.id}}'",
+                "remoteClass": "MembershipStatus2",
+                "remoteMethod": "getMembershipStatus",
+                "remoteNSPrefix": null
+            }
+        },
+        "definedActions": {
+            "actions": [
+            ]
+        },
+        "fields": [
+            {
+                "collapse": true,
+                "displayLabel": "['Account']['Contact']['DocumentType']",
+                "group": "Custom Properties",
+                "label": "Account ContactDocumentType",
+                "name": "['Account']['Contact']['DocumentType']",
+                "type": "string"
+            }
+        ],
+        "filter": {
+        },
+        "layoutName": "vlocity.layout.MKT-AccountInfo",
+        "obj": {
+            "assets": [
+                {
+                    "account": "Billing Account",
+                    "asset": "Membership Asset 2",
+                    "nombre": null,
+                    "puntos": 60,
+                    "puntosXVencer": 0
+                },
+                {
+                    "account": "Billing Account 2",
+                    "asset": "Asset BA 2",
+                    "nombre": null,
+                    "puntos": 150,
+                    "puntosXVencer": 0
+                },
+                {
+                    "account": "Billing Account",
+                    "asset": "Membership Asset",
+                    "nombre": null,
+                    "puntos": 310,
+                    "puntosXVencer": 0
+                }
+            ],
+            "bAccounts": [
+                {
+                    "account": "Billing Account 2",
+                    "asset": null,
+                    "nombre": null,
+                    "puntos": 150,
+                    "puntosXVencer": 0
+                },
+                {
+                    "account": "Billing Account",
+                    "asset": null,
+                    "nombre": null,
+                    "puntos": 260,
+                    "puntosXVencer": 0
+                }
+            ],
+            "error": "OK",
+            "errorCode": "INVOKE-200"
+        },
+        "order": 1,
+        "states": [
+            {
+                "conditions": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ],
+                "definedActions": {
+                    "actions": [
+                    ]
+                },
+                "fields": [
+                    {
+                        "collapse": true,
+                        "displayLabel": "['Account']['Contact']['DocumentType']",
+                        "group": "Custom Properties",
+                        "label": "Account ContactDocumentType",
+                        "name": "['Account']['Contact']['DocumentType']",
+                        "type": "string"
+                    }
+                ],
+                "name": "test",
+                "sObjectType": "All",
+                "templateUrl": "MKT-Transactions List"
+            }
+        ],
+        "status": "active",
+        "uniqueLayoutId": 1508444887420
+    }
+}

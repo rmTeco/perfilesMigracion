@@ -1,0 +1,19 @@
+<tr 
+    data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" 
+    ng-init="showSymptom = false;">
+    <td 
+        class="slds-truncate" 
+        data-label="{{field.label}}" 
+        ng-repeat="field in data.fields" 
+        ng-show="key != 'attributes'">
+        <a ng-click="showSymptom = !showSymptom">
+            <span ng-show="!showSymptom">+</span>
+            <span ng-show="showSymptom">-</span>    
+            <span>{{obj | getter: field | picker: field.type}}</span>
+        </a>
+        <div ng-show="showSymptom">
+            Test
+        </div>
+        </td>
+    
+</tr>

@@ -1,0 +1,96 @@
+<div class="via-slds pagination-grid" ng-controller="nplistCardCanvasINSSlds">
+    <div class="slds-card slds-m-bottom--small">
+        <div class="slds-card__header slds-grid slds-grid--vertical-align-center">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+               <!-- <div class="slds-media__figure">
+                    <!--<vloc-card-icon data="data" obj="obj" size="'medium'"></vloc-card-icon>
+                </div>-->
+                <div class="slds-media__body slds-truncate">
+                    <a href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="{{layoutName}}">
+                  <span class="slds-text-heading--small">
+                      <!--{{layoutName}}-->{{data.Deck[0].title}}
+                  </span>
+                </a>
+                </div>
+            </div>
+        </div>
+        <!--<div class="slds-no-flex slds-p-bottom--medium slds-float--right">
+            <div class="slds-form-element">
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+                    <slds-input-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-icon-text-default'"></slds-input-svg-icon>
+                    <input type="text" ng-model="query" ng-change="search()" class="input-large search-query" placeholder="Search">
+                </div>
+            </div>
+        </div>-->
+        <div class="slds-form-element slds-no-flex slds-p-bottom--medium slds-float--left slds-p-horizontal--x-small">
+          <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+            <!--<svg class="slds-input__icon slds-icon-text-default" aria-hidden="true">
+              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#search"></use>
+            </svg>-->
+            <input type="text" id="text-input-01" class="slds-input input-large search-query" placeholder="Buscar" ng-model="query" ng-change="search()" />
+          </div>
+        </div>
+        <div class="slds-card__body cards-container">
+            <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer slds-max-medium-table--stacked-horizontal">
+                <thead>
+                    <tr class="slds-text-heading--label ">
+                        <th ng-click="setSort( field)" class="slds-p-bottom--small" ng-repeat="field in cards[0].states[0].fields" scope="col">
+                            <div class="slds-truncate">{{field.label}}</div>
+                        </th>
+                        <th class="slds-p-bottom--small slds-text-align--right" scope="col">
+                            <div class="slds-truncate">Actions</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody vloc-card ng-repeat="card in pagedItems[currentPage] | orderBy:sortingOrder:reverse" ctrl="{{ctrl}}" ng-model="card"
+                    data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" use-existing-element-type>
+                </tbody>
+            </table>
+        </div>
+        <section class="slds-grid slds-wrap slds-grid--pull-padded">
+            <div class="slds-p-horizontal--small slds-size--7-of-12">
+                <ul class="slds-list--horizontal slds-has-inline-block-links--space">
+                    <li>
+                        <a ng-class="{disabled: currentPage == 0}" href ng-click="prevPage()">« Anterior</a>
+                    </li>
+                    <li ng-repeat="n in range(pagedItems.length)" ng-click="setPage()">
+                        <a ng-class="{active: n == currentPage}" href ng-bind="n + 1">1</a>
+                    </li>
+                    <li>
+                        <a ng-class="{disabled: currentPage == pagedItems.length - 1}" href ng-click="nextPage()">Siguiente »</a>
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="slds-p-horizontal--small slds-size--4-of-12 slds-text-align--right slds-align-middle slds-text-body--regular">
+                Registros por pagina:
+                </div>-->
+            <div class="slds-p-horizontal--small slds-size--5-of-12 slds-text-align--right slds-align-middle">
+                Registros por pagina:
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click pagination-grid-dropdown slds-p-right--xx-small" ng-class="{'slds-is-open': isOpen}" ng-click="isOpen = !isOpen">
+                  <div class="slds-form-element">
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                      <input type="search" id="text-input-01" class="slds-lookup__search-input slds-input" placeholder="{{itemsPerPage}}" aria-owns="option-list-01" role="combobox" aria-activedescendant="" aria-expanded="false" readonly="" />
+                        <span class="pagination-grid-optionIcon">
+                            <slds-svg-icon
+                                sprite="'utility'"
+                                icon="'down'"
+                                size="'small'"
+                                no-hint="true">
+                            </slds-svg-icon>
+                        </span>
+                    </div>
+                  </div>
+                <div class="slds-dropdown slds-dropdown--left pagination-grid-dropdown-expanded" role="listbox">
+                    <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-5" role="presentation">
+                        <li role="presentation" ng-repeat="pageSize in [5, 10, 15, 20]">
+                            <span ng-click="setItemsPerPage(pageSize);" class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="0" id="listbox-option-242">
+                                <span class="slds-truncate">{{pageSize}}</span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </section>
+    </div>
+</div>

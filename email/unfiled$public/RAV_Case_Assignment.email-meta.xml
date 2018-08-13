@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Notificacion for RAV Case Assignment</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>RAV Case Assignment</name>
+    <style>none</style>
+    <subject>Inconvenientes con cargos tasados y facturados</subject>
+    <textOnly>Hola  {!Receiving_User.FirstName}, 
+
+Recibiste este eMail porque tenes el caso Nro {!Case.CaseNumber} pendiente de aprobación.
+
+
+Creado por: {!Case.CreatedBy}
+Importe: {!Case.vlocity_cmt__Amount__c}
+Concepto: {!Case.TipoConcepto__c}
+Item: {!Case.TipoItem__c}
+Motivo: {!Case.Motivo__c}</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

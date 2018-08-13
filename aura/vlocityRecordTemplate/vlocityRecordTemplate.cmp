@@ -1,0 +1,20 @@
+<aura:component implements="lightning:recordHomeTemplate" description="Three column layout with right and left has 20% width and main column of 60% width" access="global">
+    <aura:attribute name="left" type="Aura.Component[]"  access="global" />
+    <aura:attribute name="main" type="Aura.Component[]"  access="global" />
+    <aura:attribute name="right" type="Aura.Component[]"  access="global" />
+    
+    <div>
+        <lightning:layout >
+            <lightning:layoutItem class="slds-size_3-of-12 slds-large-size_1-of-5 slds-p-around--x-small">
+                {!v.left}
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-size_6-of-12 slds-large-size_3-of-5 slds-p-around--x-small">
+                {!v.main}
+            </lightning:layoutItem>
+            <lightning:layoutItem class="slds-size_3-of-12 slds-large-size_1-of-5 slds-p-around--x-small">
+                {!v.right}
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,34 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objAPIName']": "Note"
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "name": "Note",
+            "sObjectType": "Note",
+            "templateUrl": "ta-Care-story-card"
+        }
+    ],
+    "title": "Notes"
+}

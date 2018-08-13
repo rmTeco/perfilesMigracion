@@ -1,0 +1,4 @@
+body {
+  color: red; }
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3Zsb2NfcmVsZWFzZS8uZ3J1bnQvdmlhX291aS9jc3MvT21pblNjcmlwdERlcGVuZGVuY2llcy5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFXLEVBQUUiLCJmaWxlIjoiT21pblNjcmlwdERlcGVuZGVuY2llc0Nzcy5yZXNvdXJjZSIsInNvdXJjZXNDb250ZW50IjpbImJvZHkge1xuICBjb2xvcjogcmVkOyB9XG4iXX0= */

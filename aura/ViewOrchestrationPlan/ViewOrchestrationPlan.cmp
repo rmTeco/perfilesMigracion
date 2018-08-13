@@ -1,0 +1,9 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" Controller="OrchestrationPlanViewController">
+    <style>
+        .slds-modal { display:none;}
+    </style>
+    <aura:attribute name="orchestrationId" type="Id"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+</aura:component>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>#MarketingTeam #Sprint14
+Custom Setting para definir niveles de Segmento por Producto</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ProductFamily__c</fullName>
+        <externalId>false</externalId>
+        <label>Familia de Producto</label>
+        <length>35</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SegmentLevel1__c</fullName>
+        <externalId>false</externalId>
+        <label>Segmento Nivel 1</label>
+        <length>35</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SegmentLevel2__c</fullName>
+        <externalId>false</externalId>
+        <label>Segmento Nivel 2</label>
+        <length>35</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Segmento por Familia de Producto</label>
+    <listViews>
+        <fullName>vista_de_flor</fullName>
+        <columns>NAME</columns>
+        <columns>ProductFamily__c</columns>
+        <columns>SegmentLevel1__c</columns>
+        <columns>SegmentLevel2__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>vista de flor</label>
+        <language>es</language>
+    </listViews>
+    <visibility>Public</visibility>
+</CustomObject>

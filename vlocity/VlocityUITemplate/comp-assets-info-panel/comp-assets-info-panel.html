@@ -1,0 +1,95 @@
+<div class="slds-grid slds-grid_vertical comp-assets-info-panel">
+    <div class="slds-col slds-no-flex assets-info-header">
+        <div class="slds-grid slds-grid_align-end">
+            <button class="slds-button slds-button_icon" ng-click="importedScope.close()">
+                <slds-button-svg-icon sprite="'utility'" size="'large'" icon="'close'"></slds-button-svg-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+    </div>
+    <!-- scroll class is added for ionic scroll-->
+    <div class="slds-col assets-info-container slds-form-element scroll">
+        <!-- Attributes -->    
+        <div ng-if="importedScope.attributesObj && importedScope.attributesObj.length > 0 ">
+             <div ng-repeat="attributeObj in importedScope.attributesObj">
+                <div class="slds-section">
+                    <div class="slds-section__title">
+                        <h3>{{attributeObj.Name}}</h3>
+                    </div>
+                </div>
+                <div ng-repeat="attribute in attributeObj.productAttributes.records">
+                    <span class="slds-form-element__label slds-text-body_regular">{{attribute.label}}:</span>
+
+                    <span class="assets-info-attr-value">
+                        <span ng-if="attribute.inputType !== 'dropdown' && attribute.inputType !=='radio' && attribute.inputType !=='checkbox' && attribute.inputType !=='date'">
+                            {{attribute.userValues}}
+                        </span>
+
+                        <span ng-if="attribute.inputType ==='date'">
+                            {{attribute.userValues | date}}
+                        </span>
+
+                        <span ng-if="attribute.inputType==='dropdown' || attribute.inputType==='radio' || attribute.inputType==='checkbox'">
+                            <span ng-if="!attribute.multiselect">
+                                <span ng-repeat="valueObj in attribute.values" ng-if="valueObj.value === attribute.userValues">
+                                    {{valueObj.label}}
+                                </span>
+                            </span>
+                            <span ng-if="attribute.multiselect && attribute.inputType !=='checkbox'">
+                                <span ng-repeat="valueObj in attribute.values">
+                                    <span ng-repeat="userValue in attribute.userValues" ng-if="valueObj.value === userValue">
+                                        <span ng-if="!$first">, </span>{{valueObj.label}}
+                                    </span>
+                                </span>
+                            </span>
+                            <!-- Handle checkboxes of type multi select -->
+                            <span ng-if="attribute.multiselect && attribute.inputType ==='checkbox'">
+                                <span ng-repeat="valueObj in attribute.values|filter:{'selected':true}">
+                                    <span  ng-if="!$first">, </span>{{valueObj.label}}
+                                </span>
+                            </span>
+                            <!-- Handle checkboxes of type only checkbox -->
+                            <span ng-if="!attribute.multiselect && attribute.inputType ==='checkbox'">
+                               {{attribute.userValues}}
+                            </span>
+                        </span>
+                    </span>
+                </div>
+             </div>
+        </div>
+        <div ng-if="importedScope.attributesObj && importedScope.attributesObj.length === 0">
+            No attributes for this item.
+        </div>
+        <!-- End --> 
+            
+        <div class="slds-m-top_x-large" ng-init="showInfo = true">
+            <div class="slds-section" ng-class="{'slds-is-open': showInfo, 'slds-is-closed': !showInfo}">
+                <h3 href="javascript:void(0);" class="slds-section__title" ng-click="showInfo = !showInfo">
+                    <button type="button" class="slds-button slds-section__title-action">
+                        <slds-button-svg-icon sprite="'utility'" icon="'switch'" extra-classes="'slds-section__title-action-icon slds-button__icon_left'"></slds-button-svg-icon>
+                        Additional Setting
+                    </button>
+                 </h3>
+                <div class="slds-section__content">
+                    <div class="slds-form_stacked">
+                    	<!-- Lookup Item List -->
+                        <div class="slds-form-element" ng-repeat="lookupItem in importedScope.lookupItemList">
+                            <span class="slds-form-element__label slds-text-body_regular">{{::lookupItem.label}}:</span>
+                            <span class="slds-form-element__static">{{lookupItem.displayValue}}</span>
+                        </div>
+                        <!-- End -->
+
+						<!-- Info  Item List -->
+                        <div class="slds-form-element" ng-repeat="infoItem in importedScope.infoItemList">
+                            <label class="slds-form-element__label">{{::infoItem.label}}:</label>
+                            <span>{{infoItem.value}}</span>  
+                            <span ng-if="infoItem.dataType === 'PERCENT'"> %</span>
+                            <span class="assets-error-msg">{{infoItem.qtyValidationMessage}}</span>    
+                        </div>
+                        <!-- End -->
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

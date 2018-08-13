@@ -1,0 +1,15 @@
+<div class="slds-button-group" role="group" ng-controller="MenuHorizontalActionsController as mhac">
+    <button 
+        ng-if="action.Name == 'ta-gestionDeClientes'"
+        ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)"
+        class="slds-button slds-button--neutral"
+        ng-click="mhac.openGestionDeClientesInPrimaryTab()"
+        hotkey-card-action>{{action.displayName}}</button>
+        
+    <button 
+        ng-if="action.Name != 'ta-gestionDeClientes'"
+        ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)"
+        class="slds-button slds-button--neutral"
+        ng-click="performAction(action)"
+        hotkey-card-action>{{action.displayName}}</button>
+</div>

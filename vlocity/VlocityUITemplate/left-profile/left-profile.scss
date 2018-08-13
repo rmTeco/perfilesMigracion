@@ -1,0 +1,146 @@
+.vlocity {
+    .profile-box {
+        height: auto;
+        background-color: #456B8E;
+        box-sizing: border-box;
+        padding: 10px;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: white;
+        font-size: 11px;
+        font-weight: lighter;
+        //Remove this code, temporary fix
+        * {
+            color:white;
+        }
+        .customer-type {
+            display:inline;
+            position:absolute;
+            top:5px;
+            right:15px;
+            .sentiment {
+                width:23px;
+                height:23px;
+                margin:0px 3px;
+                display:inline-block;
+                &.disgruntled {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Disgruntled.png");
+                }
+                &.dissatisfied {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Dissatisfied.png");
+                }
+                &.neutral {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Neutral.png"); 
+                }
+                &.promoter {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Promoter.png");
+                }
+                &.satisfied {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Satisfied.png");
+                }
+            }
+            .value-type {
+                width:18px;
+                height:23px;
+                margin:0px 3px;
+                display:inline-block;
+                &.bronze {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Bronze.png");
+                }
+                &.gold {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Gold.png");
+                }
+                &.platinum {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Platinum.png");
+                }
+                &.silver {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Silver.png");
+                }
+            }
+        }
+        .profile-box-img {
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (min-width: 400px) {
+        //Single Line of Business styles
+        //Sidebar Loads in iframe, media query is applicable
+            .profile-box-img {
+                display:table-cell;
+                vertical-align:top;
+                padding:8px;
+            }
+            .profile-box-details {
+                display:table-cell;
+                vertical-align:top;
+                padding-left:10px;
+                padding-top: 10px;
+                text-align:left;
+                .title-card {
+                    text-align:left;
+                }
+                .social {
+                    text-align:left;
+                }
+                .profile-links {
+                    text-align:left;
+                }
+            }
+        }
+        
+        .title-card {
+            margin: 2% auto;
+            text-align: center;
+            h1{
+                text-transform: capitalize;
+                color: white;
+                margin:10px 0 5px;
+                font-size:16px;
+            }
+        }
+        #customer-since {
+            color: white;
+            font-size: 10px;
+            font-weight: lighter;
+            text-align: center;
+        }
+
+        .profile-img  {
+            min-width:90px;
+            min-height:90px;
+            display:inline-block;
+            border: 2px solid white !important;
+        }
+        .social {
+            text-align: center;
+            margin: 15px auto;
+            color: white;
+            i {
+                cursor:pointer;
+            }
+            i::before {
+                font-size: 20px;
+            }
+            i:hover {
+                color: green;
+            }
+        }
+        .profile-links {
+            color: rgba(106, 118, 114, 1);
+            font-size: 11px;
+            text-align: center;
+            a{
+                color: white;
+                font-size:10px;
+                font-weight: lighter;
+                cursor: pointer;
+                text-transform: uppercase;
+            }
+            .separator {
+                line-height:15px;
+                color:white;
+                padding:0px 5px;
+            }
+        }
+    }
+}

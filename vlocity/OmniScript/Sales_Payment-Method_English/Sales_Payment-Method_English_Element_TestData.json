@@ -1,0 +1,257 @@
+{
+    "%vlocity_namespace%__Active__c": false,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "PaymentMethod",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sales/Payment Method/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 1,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "Type__c": {
+            "label": "Set Values",
+            "type": "action"
+        },
+        "allowSaveForLater": true,
+        "autoFocus": false,
+        "autoSaveOnStepNext": false,
+        "cancelRedirectPageName": "OmniScriptCancelled",
+        "cancelRedirectTemplateUrl": "vlcCancelled.html",
+        "cancelSource": "%ContextId%",
+        "cancelType": "SObject",
+        "consoleTabLabel": "New",
+        "controlWidth": 12,
+        "dataRaptor Input Parameters": [
+        ],
+        "documentNames": [
+            "CABHBBAJAa088abbf78af430992e1b954e738bf5b"
+        ],
+        "elementTypeToHTMLTemplateMapping": {
+        },
+        "elementValueMap": {
+            "Account": {
+                "%vlocity_namespace%__PrimaryContactId__c": "0036C000007IaZpQAK",
+                "AccountIntegrationId": "1000000167610001",
+                "BillingCity": "C.A.B.A.",
+                "BillingState": "C",
+                "Contact": {
+                    "DocumentNumber__c": "33300555",
+                    "DocumentType": "DNI",
+                    "Email": "mcespedes@vlocity.com",
+                    "FirstName": "Jose",
+                    "Gender__c": "Masculino",
+                    "LastName": "Perez",
+                    "MobilePhone": "1564695577",
+                    "Name": "Jose Perez",
+                    "Phone": "1564695577",
+                    "Salutation": "Mr."
+                },
+                "HuaweiNotice_S015": false,
+                "HuaweiNotice_S202": false,
+                "Id": "0016C000008wBd3QAE",
+                "Name": "Jose Perez"
+            },
+            "BillingOrder": {
+                "Channel": "Agentes",
+                "Delivery_Method": "Presencial",
+                "EffectiveDate": "2018-02-09",
+                "Id": "8016C0000008X7zQAE",
+                "Items": [
+                    {
+                        "%vlocity_namespace%__EffectiveOneTimeTotal__c": 8000,
+                        "%vlocity_namespace%__EffectiveRecurringTotal__c": 0,
+                        "%vlocity_namespace%__Product2Id__c": "01t6C000000a3GBQAY",
+                        "%vlocity_namespace%__Product2Id__r": {
+                            "Name": "Xperia XA",
+                            "attributes": {
+                                "type": "Product2",
+                                "url": "/services/data/v42.0/sobjects/Product2/01t6C000000a3GBQAY"
+                            }
+                        },
+                        "Huawei_Invoice_Item_Sequence__c": "1",
+                        "Id": "8026C000000DKzyQAG",
+                        "Quantity": 1,
+                        "attributes": {
+                            "type": "OrderItem",
+                            "url": "/services/data/v42.0/sobjects/OrderItem/8026C000000DKzyQAG"
+                        }
+                    }
+                ],
+                "OrderNumber": "00019143",
+                "OrderTotal": 8000,
+                "OriginStoreLocation": "a3U6C000000HmbGUAS",
+                "PreInvoiceNumber": "1520957285167",
+                "Status": "Draft",
+                "StatusCode": "D",
+                "StoreLocation": {
+                    "Channel": "Físico",
+                    "ChannelType": "Agentes"
+                },
+                "TotalAmount": 0,
+                "TrackingStatus__c": "Pendiente de pago"
+            },
+            "CreditDiscountPaymentMethod": true,
+            "DRId_Order": "8016C0000008X7zQAE",
+            "IdOrder": "8016C0000008aKNQAY",
+            "InvoicePreview": {
+                "BillingSimulationDate": "2018-03-13T18:23:06.000Z"
+            },
+            "S013_Response": {
+                "IPResult": {
+                    "calculoImpuestosRespuesta": {
+                        "idCliente": "13800010033",
+                        "importeComprobante": "8000.00",
+                        "infoResCalculoImpuestos": [
+                            {
+                                "impuestoxItemInfo": {
+                                    "importeItemComprobante": "8000.00",
+                                    "listaInfoImpuestos": [
+                                        {
+                                            "infoImpuesto": {
+                                                "alicuotaImpuesto": "21",
+                                                "codImpuesto": "IMP21",
+                                                "importeImpuestoAplicado": "8000.00",
+                                                "precioBase": "6611.5702",
+                                                "tipoCategoriaImpositiva": "IVA"
+                                            }
+                                        }
+                                    ],
+                                    "secuenciaProductoAdquirido": "1"
+                                }
+                            },
+                            {
+                                "impuestoxItemInfo": {
+                                    "importeItemComprobante": "250.00",
+                                    "listaInfoImpuestos": [
+                                        {
+                                            "infoImpuesto": {
+                                                "alicuotaImpuesto": "21",
+                                                "codImpuesto": "IMP21",
+                                                "importeImpuestoAplicado": "250.00",
+                                                "precioBase": "206.6116",
+                                                "tipoCategoriaImpositiva": "IVA"
+                                            }
+                                        }
+                                    ],
+                                    "secuenciaProductoAdquirido": "2"
+                                }
+                            },
+                            {
+                                "impuestoxItemInfo": {
+                                    "importeItemComprobante": "150.00",
+                                    "listaInfoImpuestos": [
+                                        {
+                                            "infoImpuesto": {
+                                                "alicuotaImpuesto": "21",
+                                                "codImpuesto": "IMP21",
+                                                "importeImpuestoAplicado": "150.00",
+                                                "precioBase": "123.9669",
+                                                "tipoCategoriaImpositiva": "IVA"
+                                            }
+                                        }
+                                    ],
+                                    "secuenciaProductoAdquirido": "3"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "error": "OK"
+            },
+            "accountId": "0016C000008wBd3QAE",
+            "assetId": "02i6C0000002Vih"
+        },
+        "enableKnowledge": false,
+        "failureAbortLabel": "Abort",
+        "failureAbortMessage": "Are you sure?",
+        "failureNextLabel": "Continue",
+        "inProgressMessage": "In Progress",
+        "knowledgeArticleTypeQueryFieldsMap": {
+        },
+        "label": null,
+        "message": {
+        },
+        "persistentComponent": [
+            {
+                "id": "vlcCart",
+                "itemsKey": "cartItems",
+                "label": "",
+                "modalConfigurationSetting": {
+                    "modalController": "ModalProductCtrl",
+                    "modalHTMLTemplateId": "vlcProductConfig.html",
+                    "modalSize": "lg"
+                },
+                "postTransformBundle": "",
+                "preTransformBundle": "",
+                "remoteClass": "",
+                "remoteMethod": "",
+                "remoteOptions": {
+                    "postTransformBundle": "",
+                    "preTransformBundle": ""
+                },
+                "remoteTimeout": 30000,
+                "render": false,
+                "responseJSONNode": "",
+                "responseJSONPath": "",
+                "sendJSONNode": "",
+                "sendJSONPath": ""
+            },
+            {
+                "id": "vlcKnowledge",
+                "itemsKey": "knowledgeItems",
+                "label": "",
+                "modalConfigurationSetting": {
+                    "modalController": "",
+                    "modalHTMLTemplateId": "",
+                    "modalSize": "lg"
+                },
+                "postTransformBundle": "",
+                "preTransformBundle": "",
+                "remoteClass": "",
+                "remoteMethod": "",
+                "remoteOptions": {
+                    "postTransformBundle": "",
+                    "preTransformBundle": ""
+                },
+                "remoteTimeout": 30000,
+                "render": false
+            }
+        ],
+        "postMessage": "Done",
+        "redirectNextLabel": "Next",
+        "redirectNextWidth": 3,
+        "redirectPreviousLabel": "Previous",
+        "redirectPreviousWidth": 3,
+        "redirectTemplateUrl": "vlcAcknowledge.html",
+        "remoteTimeout": 30000,
+        "saveContentEncoded": false,
+        "saveForLaterRedirectPageName": "sflRedirect",
+        "saveForLaterRedirectTemplateUrl": "vlcSaveForLaterAcknowledge.html",
+        "saveObjectId": "%ContextId%",
+        "saveURLPatterns": {
+        },
+        "seedDataJSON": {
+        },
+        "show": null,
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "timeTracking": true,
+        "trackingCustomData": {
+        },
+        "validationRequired": null,
+        "visualforcePagesAvailableInPreview": {
+        },
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Set Values",
+    "Name": "TestData",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/Payment Method/English/TestData"
+}

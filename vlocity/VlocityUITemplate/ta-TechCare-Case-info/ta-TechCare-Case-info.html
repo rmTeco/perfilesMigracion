@@ -1,0 +1,54 @@
+<!-- <pre>{{bpTree.response.Case |json}}</pre>   
+<pre>{{bpTree.response.Case.Symptom |json}}</pre>    -->
+
+<div    
+	ng-if="bpTree.response.Case"
+    class="slds-card via-slds-card--active slds-m-bottom--small taOScard"
+	ng-init="item = bpTree.response.Case">
+	
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-header">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class=" slds-text-heading--label taOScard-title">
+			    IMEI
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.IMEI}}<span ng-if="!bpTree.response.Device.IMEI"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class=" slds-text-heading--label">
+			    NRO. Gestión
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{item.CaseNumber}}<span ng-if="!item.CaseNumber"> - </span></p>				
+			</div>
+		</div>
+	</div>
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-content">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Tipo de operación</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{item.InputType}}<span ng-if="!item.InputType"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Síntoma</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{item.SymptomName}}<span ng-if="!item.SymptomName"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Comentarios</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{item.Description}}<span ng-if="!item.Description"> - </span></p>				
+			</div>
+		</div>
+	</div>
+</div>

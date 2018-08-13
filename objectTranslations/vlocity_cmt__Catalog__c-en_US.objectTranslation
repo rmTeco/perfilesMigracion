@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Catalog Code --></label>
+        <name>vlocity_cmt__CatalogCode__c</name>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>vlocity_cmt__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date Time --></label>
+        <name>vlocity_cmt__EndDateTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Global Key --></label>
+        <name>vlocity_cmt__GlobalKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>vlocity_cmt__IsActive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Catalog Root --></label>
+        <name>vlocity_cmt__IsCatalogRoot__c</name>
+    </fields>
+    <fields>
+        <help><!-- What was the source of the catalog.  Like source control. --></help>
+        <label><!-- Source Type --></label>
+        <name>vlocity_cmt__SourceType__c</name>
+        <picklistValues>
+            <masterLabel>External - Partner</masterLabel>
+            <translation><!-- External - Partner --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal - Original Source</masterLabel>
+            <translation><!-- Internal - Original Source --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internal - Replicated</masterLabel>
+            <translation><!-- Internal - Replicated --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Start Date Time --></label>
+        <name>vlocity_cmt__StartDateTime__c</name>
+    </fields>
+    <fields>
+        <label><!-- Vendor --></label>
+        <name>vlocity_cmt__VendorAccount__c</name>
+        <relationshipLabel><!-- Catalogs --></relationshipLabel>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- End Date Time must be greater than Start Date Time --></errorMessage>
+        <name>vlocity_cmt__End_After_Start</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Start Date Time must be less than End Date Time --></errorMessage>
+        <name>vlocity_cmt__Start_Before_End</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- UpdateCategoryData --></label>
+        <name>vlocity_cmt__UpdateCategoryData</name>
+    </webLinks>
+</CustomObjectTranslation>

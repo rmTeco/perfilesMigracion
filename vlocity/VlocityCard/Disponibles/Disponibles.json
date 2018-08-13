@@ -1,0 +1,94 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.vlocity.userAccountId",
+                "val": "1138305304"
+            }
+        ],
+        "type": null,
+        "value": {
+            "inputMap": {
+                "params": {
+                    "identificadorRecurso": "{{$root.vlocity.userAccountId}}"
+                }
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "IFS_S439",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "['totalUnidadesLibres']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "active"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "ContextId": "params.AssetId",
+                            "operationCode": "'Compra de Pack'",
+                            "type": "'community'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "CommunityNewPacksSale",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['codUsoUnidadesLibres']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "item",
+                    "name": "['codUsoUnidadesLibres']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['cantUnidadesRemanentes']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "cantidad",
+                    "name": "['cantUnidadesRemanentes']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Disponibles",
+            "placeholders": [
+            ],
+            "templateUrl": "ta-community-availables"
+        }
+    ],
+    "title": "Disponibles"
+}

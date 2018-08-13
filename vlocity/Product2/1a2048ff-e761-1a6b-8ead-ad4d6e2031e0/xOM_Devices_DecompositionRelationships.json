@@ -1,0 +1,62 @@
+[
+    {
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "4a1342d9-0857-2a4a-1a92-1b8c595ad92f",
+        "%vlocity_namespace%__MappingsData__c": "",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 0,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "1a2048ff-e761-1a6b-8ead-ad4d6e2031e0",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/1a2048ff-e761-1a6b-8ead-ad4d6e2031e0",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "xOM_Devices -> Vmi.net RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/xOM_Devices -> Vmi.net RFS/Product2/1a2048ff-e761-1a6b-8ead-ad4d6e2031e0"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "{\"name\":\"SimpleCondition\",\"type\":\"OR\",\"singleconditions\":[{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"Order.Gestion__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Suspension por siniestro\"},{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"Order.Delivery_Method__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Delivery\"},{\"right-side\":\"Suspend-Siniestro\",\"right-side-type\":\"value\",\"op\":\"=\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"}]}",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 0,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "7c6f396e-7b33-88e0-c14e-012a98a9a244",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/7c6f396e-7b33-88e0-c14e-012a98a9a244",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "75118dee-2350-0db6-8515-2065a002e0f7",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Attribute\",\"source_attr_name\":\"IMEI\",\"source_attr_code\":\"FAN_ATT_000125\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Número de Serie\",\"destination_attr_code\":\"XOM_NUM_SER\"},{\"source_type\":\"Field\",\"source_field_name\":\"Codigo_Movimiento_Inventario__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Código de Operación\",\"destination_attr_code\":\"XOM_COD_OPER\"},{\"source_type\":\"Field\",\"source_field_name\":\"Deposit_Code__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Código Deposito Destino\",\"destination_attr_code\":\"c2552aca-38d5-fb13-eff3-8a2db3811c5e\"},{\"value\":\"DEVICE\",\"mapping_type\":\"static\",\"destination_attr_name\":\"Gestion\",\"destination_attr_code\":\"XOM_GESTION\"},{\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Número de Serie\",\"destination_attr_code\":\"XOM_NUM_SER\",\"source_field_name\":\"%vlocity_namespace%__SerialNumber__c\",\"source_type\":\"Field\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 0,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 1,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "1a2048ff-e761-1a6b-8ead-ad4d6e2031e0",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/1a2048ff-e761-1a6b-8ead-ad4d6e2031e0",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "xOM_Devices->Vmi.net Item",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/xOM_Devices->Vmi.net Item/Product2/1a2048ff-e761-1a6b-8ead-ad4d6e2031e0"
+    }
+]

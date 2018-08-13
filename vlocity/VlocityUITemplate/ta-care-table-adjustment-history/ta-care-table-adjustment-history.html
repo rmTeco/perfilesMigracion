@@ -1,0 +1,81 @@
+<div class="via-slds slds-m-around--small ng-scope" ng-controller="tableCtrl">
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;">
+        <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+            <p><b>{{data.title}}</b></p>
+        </div>
+        <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large">
+            <div class="slds-p-bottom--small"> 
+             <div ng-if = "records != null && records.codError != 201">
+                <table  class="slds-table slds-table--bordered slds-table--resizable-cols slds-table--fixed-layout via-slds-table-pinned-header">
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-p-bottom--small"
+                                ng-repeat="field in data.fields"
+                                scope="col" 
+                                ng-class="{
+                                    'slds-is-sorted' : sortingOrder == field.name,
+                                    'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                                    'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                                <a class="slds-truncate slds-th__action" 
+                                   ng-click="sortBy(field)"
+                                   href="javascript:void(0)">
+                                    {{field.label}}
+                                    <div class="slds-icon_container">
+                                        <slds-svg-icon sprite="'utility'"
+                                                       size="'x-small'" 
+                                                       icon="'arrowdown'" 
+                                                       extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+                                        </slds-svg-icon>
+                                    </div>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>    
+                    <tbody ng-init="sortingOrder = data.sorteableField.fisrtSort; reverse = data.sorteableField.reverse;">
+                        <tr ng-repeat="record in records | orderBy:sortingOrder:reverse">
+                            <td ng-repeat="field in data.fields">
+                                <div ng-if="field.label == 'Ajuste'">
+                                    <div ng-if="(record.listaInfoAjusteUnidadesLibres[0].codUnidadDeMedida) !='MB'">
+                                         <!-- como no se tomo en cuenta que el json viene diferente para cada caso, se hace este parche
+                                        (se debe validar que el monto sea mayor a cero 0) solo para entregar la historia
+                                        esto se le notifico a raul y amelia. Hector 28-11-2017-->
+                                        <div ng-if="(record | getter: field) >124">
+                                           <div class="slds-truncate"><b>{{record | getter: field | picker: field.type}}</b></div>
+                                        </div>
+                                        
+                                        <!-- como no se tomo en cuenta que el json viene diferente para cada caso, se hace este parche
+                                        (se debe validar que el monto sea mayor a cero 0) solo para entregar la historia
+                                        esto se le notifico a raul y amelia. Hector 28-11-2017-->
+                                        <div ng-if="(record | getter: field) <=124">
+                                           <div class="slds-truncate" style='color: red'><b>- {{record | getter: field | picker: field.type}}</b></div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="(record.listaInfoAjusteUnidadesLibres[0].codUnidadDeMedida) =='MB'">
+                                        <div class="slds-truncate">{{record | getter: field}} MB</div>
+                                    </div>
+                                    
+                                </div>
+                                <div ng-if="field.label != 'Ajuste'">
+                                    <div class="slds-truncate" >{{record | getter: field | picker: field.type}}</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                 </table>
+                </div>
+                 <div ng-if="records.codError == '201'">
+                    <h2 style="text-align: center">No hay registros en los últimos 5 días</h2>
+                 </div>
+            </div>
+            
+        </div>
+        <div ng-if="records.codError != '201'"
+             class="slds-align--absolute-center slds-p-top--large"
+             ng-repeat="action in data.actions">
+            <button ng-click="performAction(action)" 
+                    class="slds-button slds-button--brand">
+                        Ver detalle
+            </button>
+        </div>
+    </div>
+</div>

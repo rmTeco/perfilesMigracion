@@ -1,0 +1,455 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "{}",
+            "query": "SELECT Name,%vlocity_namespace%__ActionIcon__c,%vlocity_namespace%__AdditionalFilter__c,%vlocity_namespace%__DisplayLabel__c,%vlocity_namespace%__DisplaySequence__c,%vlocity_namespace%__Filter__c,%vlocity_namespace%__URL__c,%vlocity_namespace%__VlocityIcon__c FROM %vlocity_namespace%__VlocityAction__c WHERE %vlocity_namespace%__Filter__c= 'Personal'"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "CanjeClubPersonal",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Pague su Factura",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "contactId": "['Contact']['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ExpiryForeignDate",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Actualizar Pago",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Cambie su Direccion de Facturacion",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Reporte Falla de Servicio",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Reporte Problema con Packs",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Añadir Familiar",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Ver Uso",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Actualizacion del servicio",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.id",
+                            "ServiceId": "false"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Diagnosis-OS-empty",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Ta Stock Availability",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "taPrefeasibilityOS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "accountId": "params.id",
+                            "catalog": "['Account']['RecordType']['Name']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Create Order",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Feedback",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-BillingGroupChanges",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "techCare-TechnicalService-OS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-MasiveEvents",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "techCare-GestionarMuleto-OS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-Consumption",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TaxConditionChanges",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "taCareBillingCycleChanges",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Knowledge",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "status": "\"Preparar Pedido\""
+                        },
+                        "hasExtraParams": true,
+                        "id": "taCheckOutControlPanel_Setup",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "status": "\"Pendiente de Entrega\""
+                        },
+                        "hasExtraParams": true,
+                        "id": "taCheckOutControlPanel_Handover",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "AutomaticDebitSubscription",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SearchClients",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-ownershipChanges-OS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-SelfManagement",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ScratchCardDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-refills-history-sos-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-history-packs-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal ABM",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal Alta",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal Baja",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Acuerdos de pago",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-Adjustments",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id",
+                            "operationFlow": "'Recarga'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-CreditRecharge-Management",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id",
+                            "operationFlow": "'SimcardChange'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-SimcardChange-Management",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "SuspensionReconexion",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "SuspensionRePorFraude",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-Marks Management",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "",
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "RefundsforGeneralPurposesAction",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "accountId": "['Account']['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-client-orders",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-Care-Right-Sidebar-Action"
+        }
+    ],
+    "title": "Iniciar Gestiones"
+}

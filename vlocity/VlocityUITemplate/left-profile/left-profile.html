@@ -1,0 +1,30 @@
+<div class="profile-box" style="background-image:url('{{$root.staticResourceURL.consoleSidebarProfile}}');">
+    <div class="customer-type">
+        <!-- Add the sentiments and values from records -->
+        <div class="sentiment satisfied"></div>
+        <div class="value-type platinum"></div>
+    </div>
+    
+    <div class="profile-box-img">
+        <div style="text-align:center;">
+            <img id="user-photo" src="{{records[0].PhotoUrl}}" class="img-circle profile-img"
+            ng-click="importedScope.openTab()" width="100px"/>
+        </div>
+    </div>
+
+    <div class="profile-box-details">
+        <div class="title-card">
+            <h1>{{obj.Name}}</h1>
+            <p>{{obj.Website}}</p>
+        </div>
+        <div class="social">
+                <a href="tel:{{records[0].Phone}}"><i class="icon-v-phone-line"></i></a>
+                <a href="mailto:{{records[0].Email__c}}" target="_top"><i class="icon-v-email-line"></i></a>
+                <i class="icon-v-payment-line"></i>
+                <a href="sms:{{records[0].Phone}}"><i class="icon-v-chat2-line"></i></a>
+        </div>
+        <div class="profile-links">
+            <a href="#" id="profile-edit" >{{::$root.vlocity.getCustomLabel('EditProfile', 'Edit Profile')}}</a> <span class="separator">|</span><a href="#">{{::$root.vlocity.getCustomLabel('InteractionLauncher_VerifyCaller', 'Verify Caller')}}</a> <span class="separator">|</span> <a href="#">{{::$root.vlocity.getCustomLabel('ResetPassword', 'Reset Password')}}</a>
+        </div>
+    </div>
+</div>

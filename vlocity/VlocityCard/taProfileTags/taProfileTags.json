@@ -1,0 +1,53 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000008eeAo"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "bundle": "GetAccountAttributesByAccountId",
+            "inputMap": {
+                "Id": "{{params.id}}",
+                "id": "0016C000008eeAo"
+            },
+            "optionsMap": {
+                "vlcClass": "ProfileTagsHandler"
+            },
+            "query": "SELECT Id, Name\nFROM %vlocity_namespace%__AttributeCategory__c WHERE %vlocity_namespace%__ApplicableTypes__c ='Account'",
+            "remoteClass": "ProfileTagsHandler",
+            "remoteMethod": "GetProfileTags",
+            "remoteNSPrefix": null
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "active",
+            "templateUrl": "taProfileTags"
+        }
+    ],
+    "title": "Profile Tags"
+}

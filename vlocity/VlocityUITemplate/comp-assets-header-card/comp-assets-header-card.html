@@ -1,0 +1,16 @@
+<div class="slds-grid comp-assets-header-card">
+    <div class="slds-col slds-has-flexi-truncate slds-m-top_small slds-m-left_small">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+              <slds-svg-icon sprite="'standard'" size="'medium'" icon="'account'" extra-classes="'slds-icon-standard-orders'"></slds-svg-icon>
+            </div>
+            <div class="slds-media__body">
+                <span class="slds-text-body_small slds-page-header__info"  
+                    ng-repeat="field in data.fields">
+                   {{obj | getter: field | picker: field.type}}
+                   <span ng-if="!$last" class="separator">"</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

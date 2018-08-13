@@ -1,0 +1,117 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.AssetId",
+                "val": "02i6C0000002SWO"
+            },
+            {
+                "name": "params.LineNumber",
+                "val": "1122334456"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "params": {
+                    "codProveedor": "-1",
+                    "marca": "0",
+                    "nroLinea": "{{params.LineNumber}}"
+                }
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "IFS_S087",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "['IPResult']['Suscripciones']",
+            "timeout": null
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaAltaSuscripcion']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Alta",
+                    "name": "['fechaAltaSuscripcion']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['CanalAlta']['codCanal']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Canal (Alta)",
+                    "name": "['CanalAlta']['codCanal']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['DatosServicioSuscrip']['codServicio']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Código de Servicio",
+                    "name": "['DatosServicioSuscrip']['codServicio']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['DatosServicioSuscrip']['codProveedor']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Proveedor",
+                    "name": "['DatosServicioSuscrip']['codProveedor']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['DatosServicioSuscrip']['descripcionCortaServicio']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Descripción",
+                    "name": "['DatosServicioSuscrip']['descripcionCortaServicio']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['palabraClaveSVA']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Palabra clave",
+                    "name": "['palabraClaveSVA']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-TechCare-Subscriptions-Card"
+        }
+    ],
+    "title": "Suscripciones"
+}

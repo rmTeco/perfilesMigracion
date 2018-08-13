@@ -1,0 +1,24 @@
+.ta-messaging-default {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 8px 12px;
+    
+    background: #ededed;
+    color: #003b67;
+    border-radius: 4px;
+    &-wrapper {
+        position: relative;
+        margin-bottom: 14px;
+        width: 100%;
+        &:hover {
+            .ta-messaging-default-toolTip {
+                opacity: 1;
+            }
+        }
+    }
+    &-toolTip {
+        opacity: 0;
+    }
+}

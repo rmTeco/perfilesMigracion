@@ -1,0 +1,15 @@
+<div class="slds-grid slds-grid_vertical slds-nowrap">
+    <div class="slds-grid via-slds-action-grid-card">
+        <div class="slds-size_1-of-3 slds-small-size_1-of-3 slds-medium-size_1-of-4 slds-large-size_1-of-6 slds-m-bottom_small slds-p-right_x-small
+        slds-p-left_x-small slds-grid"  ng-repeat="action in data.actions" >
+            <a class="slds-button via-slds-button slds-button_neutral slds-size_1-of-1 slds-p-around_small" href="javascript:void(0)" ng-click="importedScope.performAction(action, params)" hotkey-card-action>
+                <div>
+                    <vloc-card-icon data="action" obj="obj" size="'small'" extra-classes="'big slds-icon-text-default via-action-icon slds-m-bottom_xx-small'"></vloc-card-icon>
+                    <br/>
+                    <p class="slds-truncate" title="{{action.displayName}}">{{action.displayName}}
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

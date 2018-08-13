@@ -1,0 +1,44 @@
+{
+    "Cards": [
+        "taCPQPromotionItem"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "8016C0000008Sk4"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "body": "{}",
+            "ctxId": "",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v3/cpq/carts/{{params.id}}/promotions",
+            "inputMap": {
+                "cartId": "{{params.id}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "",
+            "remoteMethod": "getCartsPromotions",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "sessionVars": [
+        {
+            "name": "totalSize",
+            "val": "payload.totalSize"
+        },
+        {
+            "name": "nextPromotions",
+            "val": "payload.actions.nextpromotions"
+        }
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-CPQ-Promotions-List"
+        }
+    }
+}

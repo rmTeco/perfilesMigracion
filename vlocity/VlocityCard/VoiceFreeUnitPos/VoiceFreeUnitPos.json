@@ -1,0 +1,41 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "{\n    \"remainingPrimaryUnits\": \"100\",\n    \"remainingSecondaryUnits\": \"10000\",\n\"fechaVigenciaHastaProdAdq\": \"20/11/18\"\n}"
+        }
+    },
+    "filter": {
+        "['codUsoUnidadesLibres']": "Voice"
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "['freeUnitCode']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "ta-care-pospaid-flyout-grid-items"
+        }
+    ],
+    "title": ""
+}

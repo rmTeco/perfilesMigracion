@@ -1,0 +1,2 @@
+<vloc-card ng-repeat="card in cards | orderBy:order" ctrl="{{accountCtrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>
+<vloc-layout layout-name="vlocity-interaction-story-slds" context-id="{{records[0].Id}}"></vloc-layout>

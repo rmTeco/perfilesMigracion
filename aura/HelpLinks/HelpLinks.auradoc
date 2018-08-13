@@ -1,0 +1,55 @@
+<aura:documentation>
+	<aura:description>
+    	General Description : 
+
+		Json needs to be setup as followed and is initialized with default values, 
+        if removed then will be set to default on rendering of component. If set 
+        link_flag to false then the url related fields are optional.
+        default json, use as template but do not change field names.
+        Set as attribute of parent component and set as attribute in 
+        component tag like so et4ae5:help_links json="v.jsonName" where attribute 
+		is like so : attribute name="json" type="json" set json 
+        in helper of parent application/component on initialization.<br/>
+
+		Field definitions :<br/>
+
+		title       - header of component<br/>
+		description - body of component in case some preinformation is needed.<br/>
+		entries     - an array of help links that include an url , title and description in a json that can be repeated 		
+			 	      any number of times.<br/>
+
+		json template :<br/>
+
+
+		{<br/>
+            "title" : "Helpful Links",<br/>
+            "description" : "Duis consectetur accumsan magna. Suspendisse\
+							potenti. Etiam tristique molestie exsed tincid\
+							unt. Donec varius nisi vel pharetra ve-",<br/>
+            "entries" : [<br/>
+                { <br/>
+            		"url" : "https://www.google.com", <br/>
+            		"title" : "Setup New SalesForce Users",<br/>
+            		"description"b: "description"<br/>
+        		},<br/>
+            	{ <br/>
+                	"url" : "#", <br/>
+            		"title" : "Remind your Marketing Cloud Connector Admin",<br/>
+            		"description" : "description"<br/>
+        		},<br/>
+                { <br/>
+                	"url" : "#", <br/>
+            		"title" : "Remind your Marketing Cloud Admin",<br/>
+            		"description" : "description"<br/>
+        		},<br/>
+                { <br/>
+                	"url" : "#", <br/>
+            		"title" : "Map SalesForce and Marketing Cloud users",<br/>
+            		"description" : "description"<br/>
+        		}   <br/>
+    		]<br/>			
+      	}
+    </aura:description>
+	<aura:example name="Help_links" ref="et4ae5:help_links" label="links">
+	</aura:example>
+</aura:documentation>

@@ -1,0 +1,117 @@
+<!--SEARCH / DROPDOWN-->
+ <div class="slds-spinner_container" ng-show="importedScope.isLoading">
+    <div class="slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+    </div>
+</div> 
+<ul class="top-bar slds-list--horizontal slds-p-vertical--xx-small" ng-init="importedScope.setObj(records, params.id)">
+    <div class="slds-notify_container" ng-show="importedScope.showBanner">
+        <div class="slds-notify slds-notify--alert slds-theme--success slds-theme--alert-texture slds-p-vertical--medium" role="alert">
+            <button class="slds-button slds-float--right close-btn"  ng-click="importedScope.showBanner = false">
+                <slds-button-svg-icon sprite="'utility'" icon="'close'"></slds-button-svg-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <span class="slds-assistive-text">Success</span>
+            <h2>{{importedScope.bannerText}}</h2>
+        </div>
+    </div>
+    <div class="slds-notify_container" ng-show="importedScope.showErrorBanner">
+        <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture slds-p-vertical--medium" role="alert">
+            <button class="slds-button slds-float--right close-btn"  ng-click="importedScope.showErrorBanner = false">
+                <slds-button-svg-icon sprite="'utility'" icon="'close'"></slds-button-svg-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2>{{importedScope.bannerText}}</h2>
+        </div>
+    </div>
+    <div class="slds-m-left--x-small  slds-m-right--x-small"  onmouseover="this.style.cursor='pointer'">
+        <span class="slds-icon_container" ng-click="importedScope.showFilter();">
+            <slds-svg-icon sprite="'utility'" icon="'filterList'" extra-classes="'filter'"></slds-svg-icon>
+        </span>
+    </div>
+    <div class="slds-form-element slds-size--1-of-2">
+        <div class="slds-form-element__control">
+            <div class="slds-select_container">
+                <select id="select-01" class="slds-select" ng-change="importedScope.query(selected_filter)" ng-model="selected_filter">
+                    <option value="{{filter}}" ng-repeat="filter in importedScope.filters">{{filter.displayName}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="slds-form-element slds-size--1-of-2 slds-m-horizontal--medium">
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+            <slds-input-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-icon-text-default'"></slds-input-svg-icon>
+            <input id="text-input-01" class="slds-input" type="text" placeholder="Search Results" ng-model="importedScope.searchText" ng-change="importedScope.query(selected_filter)"/>
+        </div>
+    </div>
+</ul>
+
+<!--TABLE-->
+<table class="slds-table slds-no-row-hover slds-m-left--xxx-small" role="listbox">
+    <thead>
+        <tr class="slds-table--bordered">
+            <th class="table-cell">
+                <label class="slds-checkbox">
+                <input type="checkbox" id="checkbox-contacts" ng-model="importedScope.select_all" ng-change="importedScope.selectAll(importedScope.select_all)"/>
+                <span class="slds-checkbox--faux"></span>
+                </label>
+            </th>
+            <th scope="col">Name</th>
+            <th scope="col">Title</th>
+            <th scope="col" ng-if="importedScope.show_company">Company<span ng-if="importMembers" class="slds-float--right">({{selectedMembers.length}}/{{importMembers.length}})</span></th>
+        </tr>
+    </thead>
+    <tbody class="table-body">
+        <tr class="slds-hint-parent" ng-repeat="member in importedScope.importMembers" ng-click="importedScope.updateMember(member)" onmouseover="this.style.cursor='pointer'" ng-class="{'slds-is-selected' : member.isSelected}">
+            <th class="table-cell">
+                <label class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-contacts" ng-model="member.isSelected"/>
+                    <span class="slds-checkbox--faux"></span>
+                    </label>
+            </th>
+            <th scope="row" class="slds-cell-wrap">
+                <div class="slds-truncate">
+                    <a ng-click="navigateTo(member.Id)">{{member.Name.value}}</a></div>
+            </th>
+            <td class="slds-truncate slds-cell-wrap">{{member.Title.value}}{{member.PersonTitle.value}}</td>
+            <td ng-if="member.Company.value || member.Account.Name" class="slds-truncate slds-cell-wrap">{{member.Company.value}} {{member.Account.Name}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!--EMPTY LIST WARNING-->
+<div ng-if="importedScope.importMembers.length == 0 || importedScope.importMembers === undefined" class="slds-notify slds-notify--alert slds-theme--alert-texture" role="alert">
+    <button class="slds-button slds-button--icon-inverse slds-notify__close">
+        <slds-button-svg-icon sprite="'utility'" icon="'close'" ></slds-button-svg-icon>
+    </button>
+    <h2>There Are No Members to Add To Campaign</h2>
+    <div class="slds-text-body--small">Please Select A List form the Drop Down Above or Clear Filters</div>
+</div>
+
+<!--FOOTER-->
+<footer class="slds-shrink-none">
+    <ul class="slds-list--horizontal slds-float--right" ng-show="importedScope.calcPageNo() !== 'No Records'">
+        <div class="slds-align-middle">
+            <button class="slds-button nav-button" ng-click="importedScope.previousPage()" ng-disabled="!importedScope.prevPageAction">
+                <span class="slds-icon_container">
+                    <slds-svg-icon sprite="'utility'" icon="'chevronleft'" size="'small'" extra-classes="'nav'" ></slds-svg-icon>
+                </span>
+            </button>
+        </div>
+        <button class="slds-button nav-btn slds-align-middle" disabled='true'>
+            {{importedScope.calcPageNo()}}
+        </button>
+        <div class="slds-align-middle">
+            <button class="slds-button nav-btn" ng-click="importedScope.nextPage()" ng-disabled="!importedScope.nextPageAction"> 
+                <span class="slds-icon_container">
+                    <slds-svg-icon sprite="'utility'" icon="'chevronright'" size="'small'" extra-classes="'nav'" ></slds-svg-icon>
+                </span>
+            </button>
+        </div>
+        <div class="slds-form-element slds-m-around--medium">
+            <button class="slds-button slds-button--neutral" ng-click="importedScope.addAll()"> Add All </button>
+            <button class="slds-button slds-button--brand" ng-click="importedScope.addSelected()"> Add Selected <span ng-show="importedScope.calcTotalSelected() > 0">({{importedScope.calcTotalSelected()}})</span></button>
+        </div>
+    </ul>
+</footer>

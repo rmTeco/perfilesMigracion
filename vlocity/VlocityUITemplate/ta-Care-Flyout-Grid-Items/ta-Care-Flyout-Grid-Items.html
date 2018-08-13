@@ -1,0 +1,17 @@
+<div class="item-card">
+    <div class="item-name">{{obj.Name}}</div>
+    <ul>
+        <li ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+            <label>{{field.label}}</label>
+            <span class="value" ng-if="!obj[field.relationshipName]">
+                {{obj | getter: field | picker: field.type}}
+            </span>
+            <span class="value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</span>
+        </li>
+    </ul>
+    <div class="actions">
+        <span ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+             <a href="#" ng-click="performAction(action)" hotkey-card-action>{{action.displayName}}</a> <span class="separator" ng-show="!$last">|</span>
+        </span>
+    </div>
+</div>

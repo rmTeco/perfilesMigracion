@@ -1,0 +1,50 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "attrs.accountId",
+                "val": "0013600000QqLUZ"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/accounts/{{attrs.accountId}}/contracts",
+            "inputMap": {
+                "accountId": "{{attrs.accountId}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getContracts",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "flyout": {
+                "layout": "comp-assets-contract-layout"
+            },
+            "name": "Contract Assets",
+            "templateUrl": "comp-assets-contract-load"
+        }
+    ],
+    "title": "Contract Assets"
+}

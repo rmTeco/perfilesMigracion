@@ -1,0 +1,414 @@
+<apex:page standardStylesheets="false" showHeader="true"
+           sidebar="false" docType="html-5.0"
+           tabStyle="IntegrationProcedureHome__tab"
+           standardController="vlocity_cmt__OmniScript__c"
+           extensions="vlocity_cmt.OmniScriptDesignerController,vlocity_cmt.OmniScriptHomeController,vlocity_cmt.DRMapperController3,vlocity_cmt.DRDataPackRunnerController" language="en">
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/angular-strap/dist/angular-strap.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/angular-strap/dist/angular-strap.tpl.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/angular-rangeslider/angular.rangeSlider.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/clipboard/dist/clipboard.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vk_beautify, '/vkBeautify-master/vkbeautify.js')}"/>  
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__tinymce, '/js/tinymce/tinymce.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ui_tinymce, '/src/tinymce.js')}"/>
+  <apex:includeScript value="{!$Resource.vlocity_cmt__DataRaptor}" />
+  <apex:includeScript value="{!$Resource.vlocity_cmt__DRVComp}"/>
+  <apex:includeScript value="{!$Resource.vlocity_cmt__VlocityExpressionEngine}" />
+  <apex:includeScript value="{!$Resource.vlocity_cmt__IntegrationProcedureDesigner}" />
+  <apex:includeScript value="{!$Resource.vlocity_cmt__MonacoEditor}"/>
+  <script src="{!URLFOR($Resource.monaco, '/min/vs/loader.js')}"></script>
+  <script>
+      require.config({
+        baseUrl: "{!URLFOR($Resource.monaco, '/min')}"
+      });
+  </script>  
+  <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+  <apex:stylesheet value="{!$Resource.vlocity_cmt__OmniScriptDesignerCss}"/>
+  <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"/>
+  <apex:includeScript value="{!$Resource.vlocity_cmt__SldsAngular}"/>
+
+  <style>
+    .vlocity .fa { font-family: FontAwesome; }
+  </style>
+  <div class="via-slds"></div>
+  <div class="vloc-body ng-cloak {!$User.UIThemeDisplayed}" ng-app="omniscriptDesigner" ng-controller="omniscriptDesignerController" dir="ltr">
+    <div class="vlocity" style="margin-top: -8px;margin-left: -9px;position: absolute;">
+      <a class="btn btn-link btn-xs" href="{!intHomeUrl}" target="_self"><i class="icon icon-v-left-caret"></i>Go Back</a> 
+    </div>
+    <apex:sectionHeader subtitle="{{scriptElement.Name}}"
+                        id="sectionHeader"
+                        title="{{ ::'IntProcDesigner' | localize }}"/>
+    <div class="vlocity url-settings">
+    </div>
+    <div class="vlocity" via-screen-height="viaScreenHeight"
+         via-affix="top">
+      <div class="container">
+        <div class="three-col-body" ng-class="{'collapse-left-col': collapsePalette, 'fullScreen': fullScreen}">
+          <div class="left-col palette" ng-controller="elementPalette" via-screen-height="viaScreenHeight" >
+            <h4>{{ ::'OmniDesAvailableComps' | localize }}</h4>
+            <button type="button" class="btn btn-default btn-sm collapse-btn" ng-click="toggleCollapsePalette()">
+              <i class="icon" ng-class="{'icon-v-double-caret-left': !collapsePalette, 'icon-v-double-caret-right': collapsePalette}"></i>
+            </button>
+            <div class="paletteGroups col-body">
+              <palette-group elements="allElements | controlType:'action'"
+                             grouptitle="'OmniDesPaletteActions' | localize"
+                             expanded="true"></palette-group>
+            </div>
+          </div>
+ 
+          <!-- STRUCTURE CANVAS -->
+          <div class="center-col canvas" ng-controller="structureCanvas" via-screen-height="viaScreenHeight">
+            <h4>{{ ::'OmniDesCanvas' | localize }}</h4>
+            <div class="structureCanvas col-body" >
+              <div class="canvasElement omniscriptElement  drop {{ scriptElement | className }}"
+                   ng-class="{'active': activeElement == scriptElement}"
+                   ng-click="onCanvasElementClick(scriptElement)">
+                <ul class="show-marker-wrapper">
+                  <li ng-repeat="color in popover.controllingElementsColors[element.Name] track by $index"
+                      class="show-marker"
+                      ng-style="{'background-color': color, 'left': 0}"></li>
+                </ul>
+                <h3>
+                  <span>{{scriptElement.CanvasType}}
+                    <i class="icon icon-v-claim-line" ng-if="scriptElement.hasErrors()"
+                      data-container=".container"
+                      data-type="info" bs-tooltip="scriptElement"
+                      bs-enabled="true"
+                      data-html = "true"
+                      ng-attr-data-title="{{errors != null && errors.length > 0 && errors[0].message}}"></i>
+                  </span>
+                </h3>
+                <span ng-if="scriptElement.saving" class="spinner pull-right" style="margin-top: -32px"></span>
+                <div class="clearfix"></div>
+              </div>
+              <div ng-if="!scriptElement.Id" class="message">
+                <p>{{ ::'IntProcCanvasEmpty' | localize }}</p>
+              </div>
+              <ul class="drop-zone"
+                  ng-if="scriptElement.Id"
+                  dnd-list="scriptElement.children"
+                  dnd-allowed-types="scriptElement.allowedTypes()"
+                  dnd-disable-if="$parent.$parent.scriptElement.IsActive__c || scriptElement.saving"
+                  dnd-drop="onDNDDrop(event, index, item, external, type, 'itemType')"
+                  dnd-dragover="onDNDMove(event, index, item, external, type, 'itemType')">
+                <li
+                   class="canvasElement {{element | className}}"
+                   ng-class="{'active': activeElement == element, 'filter': element.filter}"
+                   ng-repeat="element in scriptElement.children track by $index"
+                   dnd-disable-if="$parent.$parent.scriptElement.IsActive__c || element.saving"
+                   dnd-draggable="element.Id"
+                   dnd-effect-allowed="move"
+                   dnd-type="element.Type__c.type"
+                   ng-click="onCanvasElementClick(element)"
+                   ng-include="'canvas-element-template.tpl.html'">
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- PROPERTIES TABS-->
+          <div class="right-col rightPanel" ng-controller="intProcedureTabbedController" via-screen-height="viaScreenHeight">
+            <div bs-active-pane="tabs.activeTab" bs-tabs="bs-tabs" class="right-tabs">
+              <div ng-repeat="tab in tabs" title="{{tab.title}}" disabled="" ng-bind="tab.content" bs-pane="bs-pane">
+              </div>
+            </div>
+            <div class="actions form-inline" ng-show="tabs.activeTab === 1">
+              <button class="btn btn-link pull-right" type="button"
+                      ng-click="toggleFullScreen()"><i class="icon icon-v-expand"></i></button>
+            </div>
+
+            <div class="propertiesPanel col-body" ng-show="tabs.activeTab === 0" ng-controller="propertiesController">
+              <div class="form-wrapper">
+                <a ng-click="toggleJsonEditor()"
+                   ng-if="!showJsonEditor"
+                   class="btn btn-link pull-right">{{ ::'OmniDesEditAsJson' | localize }}</a>
+                <a ng-click="toggleJsonEditor()"
+                   ng-if="showJsonEditor"
+                   class="btn btn-link pull-right">{{ ::'OmniDesEditInProp' | localize }}</a>
+                <div class="form-group pull-right" ng-if="activeElement !== scriptElement" style="margin-top: 5px;">
+                  <label style="margin-top: auto">
+                    <input  type="checkbox"
+                            ng-disabled="scriptElement.IsActive__c"
+                            ng-model="activeElement.Active__c" />
+                    {{ ::'OmniDesActive' | localize }}
+                  </label>
+                </div>
+                <h2>{{activeElement | activeElementTitle}}&nbsp;<small>{{activeElement.Type__c | elementLabel}}</small></h2>
+                <form name="form.propertiesForm">
+                  <div ng-if="!showJsonEditor"
+                       ng-repeat="row in layoutrows track by $index"
+                       ng-init="propertySet = activeElement.PropertySet__c; nsPrefix = '{!namespacePrefix}'"
+                       ng-include="'row-template.tpl.html'">
+                  </div>
+                  <div ng-if="showJsonEditor"
+                       class="form-group"
+                       ng-class="{'has-feedback has-error': propertySetInvalid}">
+                    <textarea class="form-control json-editor"
+                              ng-model="propertySetAsText"
+                              ng-change="onJsonChange(propertySetAsText)"
+                              ng-disabled="scriptElement.IsActive__c"
+                              rows="30"></textarea>
+                    <span ng-if="propertySetInvalid"
+                          class="icon-v-close-circle form-control-feedback"
+                          data-container=".container"
+                          data-type="info" bs-tooltip="tooltip"
+                          bs-enabled="true"
+                          data-title="{{ ::'OmniDesInvalidJson' | localize }}"
+                          aria-hidden="true"></span>
+                  </div>
+                </form>
+                <div class="push" ng-if="scriptElement.PropertySet__c && !showJsonEditor && activeElement === scriptElement" ></div>
+              </div>
+              <div class="freeze" ng-if="scriptElement.PropertySet__c && !showJsonEditor && activeElement === scriptElement">
+                  <dl class="dl-horizontal" >
+                    <dt>{{ ::'OmniDesVersion' | localize }}</dt>
+                    <dd>{{scriptElement.Version__c}}</dd>
+                    <dt>{{ ::'OmniDesActive' | localize }}</dt>
+                    <dd ng-if="scriptElement.IsActive__c">{{ ::'OmniDesYes' | localize }}</dd>
+                    <dd ng-if="!scriptElement.IsActive__c">{{ ::'OmniDesNo' | localize }}</dd>
+                    <dt>{{ ::'OmniDesOwner' | localize }}</dt>
+                    <dd>{{scriptElement.Owner}}</dd>
+                    <dt>{{ ::'OmniDesCreatedBy' | localize }}</dt>
+                    <dd>{{scriptElement.CreatedBy}} {{scriptElement.CreatedDate | date:"M/d/yyyy hh:mma"}}</dd>
+                    <dt>{{ ::'OmniDesLastModifiedBy' | localize }}</dt>
+                    <dd>{{scriptElement.LastModifiedBy}} {{scriptElement.LastModifiedDate | date:"M/d/yyyy hh:mma"}}</dd>
+                  </dl>
+                  <div class="button-row" ng-controller="scriptFormController">
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="scriptElement.IsActive__c || !scriptElement.Id|| scriptElement.saving"
+                            ng-click="delete()">{{ ::'OmniDesDelete' | localize }}</button>
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!scriptElement.Id|| scriptElement.saving"
+                            ng-click="createVersion()">{{ ::'OmniDesCreateVersion' | localize }}</button>
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!scriptElement.Id || scriptElement.deactivating || scriptElement.saving"
+                            ng-if="scriptElement.IsActive__c"
+                            ng-click="deactivateVersion()">{{ ::'OmniDesDeactivateVersion' | localize }}</button>
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!scriptElement.Id || scriptElement.activating || scriptElement.saving"
+                            ng-if="!scriptElement.IsActive__c"
+                            ng-click="activateVersion(scriptElement)">{{ ::'OmniDesActivateVersion' | localize }}</button>
+                    <button type="button" class="btn btn-default"
+                            ng-disabled="!scriptElement.Id || scriptElement.deactivating || scriptElement.saving"
+                            ng-click="export($event)">{{ ::'Export' | localize }}</button>
+                    <button type="button" class="btn btn-primary"
+                            ng-disabled="scriptElement.saving"
+                            ng-if="!scriptElement.IsActive__c"
+                            ng-click="saveOmniScript()">{{ ::'OmniDesSave' | localize }}</button>
+                  </div>
+                </div>
+            </div> 
+
+            <div class="via-slds previewPanel col-body int-previewPanel" ng-show="tabs.activeTab === 1">
+              <div class="previewPanel-wrapper ">
+                <int-procedure-preview-panel omniscript="scriptElement" initial-json="scriptElement.CustomJavaScript__c"></int-procedure-preview-panel>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var ns = "{!namespacePrefix}",
+    oid = "{!$Organization.Id}",
+    remoteActions = {
+    getOmniScript: "{!$RemoteAction.OmniScriptDesignerController.GetOmniScript}",
+    getDocuments: "{!$RemoteAction.OmniScriptDesignerController.GetDocuments}",
+    getReusableOmniScripts: "{!$RemoteAction.OmniScriptDesignerController.GetReusableOmniScripts}",
+    getOmniScriptTypes: "{!$RemoteAction.OmniScriptDesignerController.GetOmniScriptTypes}",
+    getElements: "{!$RemoteAction.OmniScriptDesignerController.GetElements}",
+    loadElementTypes: "{!$RemoteAction.OmniScriptDesignerController.LoadElementTypes}",
+    loadIntegrationProcedureElementTypes: "{!$RemoteAction.OmniScriptDesignerController.LoadIntegrationProcedureElementTypes}", 
+    loadScriptElementTypes: "{!$RemoteAction.OmniScriptDesignerController.LoadScriptElementTypes}",
+    loadDataRaptorBundles: "{!$RemoteAction.OmniScriptDesignerController.LoadDataRaptorBundles}",
+    loadIntegrationProcedureKeys: "{!$RemoteAction.OmniScriptDesignerController.LoadIntegrationProcedureKeys}",
+    loadVlocityUITemplates: "{!$RemoteAction.OmniScriptDesignerController.LoadVlocityUITemplates}",
+    uploadDocument: "{!$RemoteAction.OmniScriptDesignerController.uploadDocument}",
+    getAllDocuments: "{!$RemoteAction.OmniScriptDesignerController.GetAllDocuments}",
+    getLanguageCodeMap: "{!$RemoteAction.OmniScriptDesignerController.getLanguageCodeMap}",
+    loadLanguages: "{!$RemoteAction.OmniScriptDesignerController.LoadLanguages}",
+    loadPropertySetForElement: "{!$RemoteAction.OmniScriptDesignerController.LoadPropertySetForElement}",
+    getKnowledgeArticles: "{!$RemoteAction.OmniScriptDesignerController.getKnowledgeArticles}",
+    saveOmniScript: "{!$RemoteAction.OmniScriptDesignerController.SaveOmniScript}",
+    saveElement: "{!$RemoteAction.OmniScriptDesignerController.SaveElement}",
+    deleteOmniScript: "{!$RemoteAction.OmniScriptDesignerController.DeleteOmniScript}",
+    deleteElement: "{!$RemoteAction.OmniScriptDesignerController.DeleteElement}",
+    getAllObjects: "{!$RemoteAction.OmniScriptDesignerController.GetAllObjects}",
+    getExternalObjects: "{!$RemoteAction.OmniScriptDesignerController.GetExternalObjects}",
+    getObjectsWithExternalFields: "{!$RemoteAction.OmniScriptDesignerController.GetObjectsWithExternalFields}",
+    getFieldsForObject: "{!$RemoteAction.OmniScriptDesignerController.GetFieldsForObject}",
+    createVersion: "{!$RemoteAction.OmniScriptDesignerController.CreateVersion}",
+    activateVersion: "{!$RemoteAction.OmniScriptDesignerController.ActivateVersion}",
+    deactivateVersion: "{!$RemoteAction.OmniScriptDesignerController.DeactivateVersion}",
+    loadDocuSignTemplates: "{!$RemoteAction.OmniScriptDesignerController.LoadDocuSignTemplates}",
+    viewFullDataJson: "{!$RemoteAction.OmniScriptDesignerController.ViewFullDataJson}",
+    GetEmailTemplates: "{!$RemoteAction.OmniScriptDesignerController.GetEmailTemplates}",
+    GetEmailDocuments: "{!$RemoteAction.OmniScriptDesignerController.GetEmailDocuments}",
+    ensureDocumentUploads: "{!$RemoteAction.OmniScriptDesignerController.EnsureDocumentUploads}",
+    getMatrixNames: "{!$RemoteAction.OmniScriptDesignerController.GetMatrixNames}",
+    getMatrixHeaders: "{!$RemoteAction.OmniScriptDesignerController.GetMatrixHeaders}",
+    testIntegrationProcedure: {
+      action: "{!$RemoteAction.OmniScriptDesignerController.testIntegrationProcedure}",
+      config: {
+        escape: false
+      }
+    },
+    exportOmniScript: {
+        action: '{!$RemoteAction.OmniScriptHomeController.exportScripts}',
+        config: {buffer: true,escape: false}
+    },
+    BuildJSONV2: {
+        action: '{!$RemoteAction.OmniScriptHomeController.BuildJSONV2}',
+        config: {escape: false, buffer: false}
+    },
+    toggleElementTrigger: '{!$RemoteAction.OmniScriptHomeController.toggleElementTrigger}',
+    createElement: {
+        action: '{!$RemoteAction.OmniScriptHomeController.createElement}',
+        config: {escape: false, buffer: true}
+    },
+    createScript: '{!$RemoteAction.OmniScriptHomeController.createScript}'
+
+
+    };
+    /* START_VLOC_I18N */
+    var i18n = { 
+    OmniAdd: '{!$Label.OmniAdd}',
+    IntProcDesigner: '{!$Label.IntProcDesigner}',
+    OmniDesAvailableComps: '{!$Label.OmniDesAvailableComps}',
+    OmniDesPaletteGroups: '{!$Label.OmniDesPaletteGroups}',
+    OmniDesPaletteOmniScripts: '{!$Label.OmniDesPaletteOmniScripts}',
+    OmniDesPaletteControls: '{!$Label.OmniDesPaletteControls}',
+    OmniDesPaletteActions: '{!$Label.OmniDesPaletteActions}',
+    OmniDesPaletteDisplay: '{!$Label.OmniDesPaletteDisplay}',
+    OmniDesPaletteFunctions: '{!$Label.OmniDesPaletteFunctions}',
+    OmniDesPaletteEmpty: '{!$Label.OmniDesPaletteEmpty}',
+    OmniDesCanvas: '{!$Label.OmniDesCanvas}',
+    OmniDesCanvasCtrlEl: '{!$Label.OmniDesCanvasCtrlEl}',
+    OmniDesCanvasCtrlEntity: '{!$Label.OmniDesCanvasCtrlEntity}',
+    OmniDesCanvasCondition: '{!$Label.OmniDesCanvasCondition}',
+    OmniDesCanvasClear: '{!$Label.OmniDesCanvasClear}',
+    OmniDesCanvasAdd: '{!$Label.OmniDesCanvasAdd}',
+    IntProcCanvasEmpty: "{!$Label.IntProcCanvasEmpty}",    
+    OmniDesEditAsJson: '{!$Label.OmniDesEditAsJson}',
+    OmniDesEditInProp: '{!$Label.OmniDesEditInProp}',
+    OmniDesActive: '{!$Label.OmniDesActive}',
+    OmniDesCondView: '{!$Label.OmniDesCondView}',
+    OmniDesInvalidJson: '{!$Label.OmniDesInvalidJson}',
+    OmniDesTestCstmHtml: '{!$Label.OmniDesTestCstmHtml}',
+    OmniDesVersion: '{!$Label.OmniDesVersion}',
+    OmniDesYes: '{!$Label.OmniDesYes}',
+    OmniDesNo: '{!$Label.OmniDesNo}',
+    OmniDesOwner: '{!$Label.OmniDesOwner}',
+    OmniDesCreatedBy: '{!$Label.OmniDesCreatedBy}',
+    OmniDesLastModifiedBy: '{!$Label.OmniDesLastModifiedBy}',
+    OmniDesDelete: '{!$Label.OmniDesDelete}',
+    OmniDesCreateVersion: '{!$Label.OmniDesCreateVersion}',
+    OmniDesDeactivateVersion: '{!$Label.OmniDesDeactivateVersion}',
+    OmniDesActivateVersion: '{!$Label.OmniDesActivateVersion}',
+    OmniDesSave: '{!$Label.OmniDesSave}',
+    OmniDesData: '{!$Label.OmniDesData}',
+    OmniDesContextId: '{!$Label.OmniDesContextId}',
+    OmniDesFetch: '{!$Label.OmniDesFetch}',
+    OmniDesClearData: '{!$Label.OmniDesClearData}',
+    OmniDesInputParam: '{!$Label.OmniDesInputParam}',
+    OmniDesAddInputParam: '{!$Label.OmniDesAddInputParam}',
+    OmniDesDataSource: '{!$Label.OmniDesDataSource}',
+    OmniDesFilterValue: '{!$Label.OmniDesFilterValue}',
+    OmniDesEnterSource: '{!$Label.OmniDesEnterSource}',
+    OmniDesLookupQueryCfg: '{!$Label.OmniDesLookupQueryCfg}',
+    OmniDesAddMapping: '{!$Label.OmniDesAddMapping}',
+    OmniDesLookupOrder: '{!$Label.OmniDesLookupOrder}',
+    OmniDesLookupObjAndFld: '{!$Label.OmniDesLookupObjAndFld}',
+    OmniDesJSONPath: '{!$Label.OmniDesJSONPath}',
+    OmniDesPopLookupEl: '{!$Label.OmniDesPopLookupEl}',
+    OmniDesJSONPathFldName: '{!$Label.OmniDesJSONPathFldName}',
+    OmniDesInto: '{!$Label.OmniDesInto}',
+    OmniDesName: '{!$Label.OmniDesName}',
+    OmniDesValue: '{!$Label.OmniDesValue}',
+    OmniDesMapValue: '{!$Label.OmniDesMapValue}',
+    // NEW LABELS START
+    OmniDesImage: '{!$Label.OmniDesImage}',
+    OmniDesAutoAdvance: '{!$Label.OmniDesAutoAdvance}',
+    // NEW LABELS END OmniDesTipFieldNameName
+    OmniDesNewKeyValuePair: '{!$Label.OmniDesNewKeyValuePair}',
+    OmniDesNewArrayProp: '{!$Label.OmniDesNewArrayProp}',
+    OmniDesNewOption: '{!$Label.OmniDesNewOption}',
+    OmniDesShowEnterFldName: '{!$Label.OmniDesShowEnterFldName}',
+    OmniDesShowCond: '{!$Label.OmniDesShowCond}',
+    OmniDesShowEnterValue: '{!$Label.OmniDesShowEnterValue}',
+    OmniDesShowAddCond: '{!$Label.OmniDesShowAddCond}',
+    OmniDesShowAddGroup: '{!$Label.OmniDesShowAddGroup}',
+    OmniDesOk: '{!$Label.OmniDesOk}',
+    OmniDesCancel: '{!$Label.OmniDesCancel}',
+    IntProcNewIntProc: '{!$Label.IntProcNewIntProc}',
+    OmniDesIsEqualTo: '{!$Label.OmniDesIsEqualTo}',
+    OmniDesDoesNotEqual: '{!$Label.OmniDesDoesNotEqual}',
+    OmniDesIsLessThan: '{!$Label.OmniDesIsLessThan}',
+    OmniDesIsGreaterThan: '{!$Label.OmniDesIsGreaterThan}',
+    OmniDesIsLessThanEqual: '{!$Label.OmniDesIsLessThanEqual}',
+    OmniDesIsGreaterThanEqual: '{!$Label.OmniDesIsGreaterThanEqual}',
+    OmniDesAnd: '{!$Label.OmniDesAnd}',
+    OmniDesOr: '{!$Label.OmniDesOr}',
+    OmniDesSObject: '{!$Label.OmniDesSObject}',
+    OmniDesCustom: '{!$Label.OmniDesCustom}',
+    OmniDesTipInputParam: '{!$Label.OmniDesTipInputParam}',
+    OmniDesTipDataSource: '{!$Label.OmniDesTipDataSource}',
+    OmniDesTipLookupQryCfg: '{!$Label.OmniDesTipLookupQryCfg}',
+    OmniDesTipFilterValue: '{!$Label.OmniDesTipFilterValue}',
+    OmniDesTipLookupObjectName: '{!$Label.OmniDesTipLookupObjectName}',
+    OmniDesTipJsonPath: '{!$Label.OmniDesTipJsonPath}',
+    OmniDesTipPopulate: '{!$Label.OmniDesTipPopulate}',
+    OmniDesTipJsonPathFieldNameName: '{!$Label.OmniDesTipJsonPathFieldNameName}',
+    OmniDesTipJsonPathFieldNameValue: '{!$Label.OmniDesTipJsonPathFieldNameValue}',
+    OmniDesTipFieldNameName: '{!$Label.OmniDesTipFieldNameName}',
+    OmniDesTipFieldNameValue: '{!$Label.OmniDesTipFieldNameValue}',
+    OmniDesTipAutoAdvance: '{!$Label.OmniDesTipAutoAdvance}',
+    OmniDesPropertySetLoading: '{!$Label.OmniDesPropertySetLoading}',
+    OmniDesConfirmDeleteTitle: '{!$Label.OmniDesConfirmDeleteTitle}',
+    OmniDesConfirmDeleteContent: '{!$Label.OmniDesConfirmDeleteContent}',
+    OmniDesConfirmDeleteElContent: '{!$Label.OmniDesConfirmDeleteElContent}',
+    OmniDesTabProperties: '{!$Label.OmniDesTabProperties}',
+    OmniDesTabPreview: '{!$Label.OmniDesTabPreview}',
+    OmniDesTabPreviewVertMode: '{!$Label.OmniDesTabPreviewVertMode}',
+    OmniDesTabPreviewHorizMode: '{!$Label.OmniDesTabPreviewHorizMode}',
+    OmniDesScriptHeaderProps: '{!$Label.OmniDesScriptHeaderProps}',
+    IntProcHeaderProps: '{!$Label.IntProcHeaderProps}',
+    IntDesConfirmDeleteContent: '{!$Label.IntDesConfirmDeleteContent}',
+    OmniDesBundleName: '{!$Label.OmniDesBundleName}',
+    OmniDesDocuTemplate: '{!$Label.OmniDesDocuTemplate}',
+    OmniDesDocuAddRecipient: '{!$Label.OmniDesDocuAddRecipient}',
+    OmniDesDocuRoutingOrder: '{!$Label.OmniDesDocuRoutingOrder}',
+    OmniDesDocuSignerName: '{!$Label.OmniDesDocuSignerName}',
+    OmniDesDocuSignerEmail: '{!$Label.OmniDesDocuSignerEmail}',
+    OmniDesDocuTemplateRole: '{!$Label.OmniDesDocuTemplateRole}',
+    OmniDesDocuRoutingTooltip: '{!$Label.OmniDesDocuRoutingTooltip}',
+    OmniDesDocuSignReturnPageTooltip: '{!$Label.OmniDesDocuSignReturnPageTooltip}',
+    OmniDesDocuRecipientErr: '{!$Label.OmniDesDocuRecipientErr}',
+    ExpressionEngineInsertOperator: '{!$Label.ExpressionEngineInsertOperator}',
+    ExpressionEngineFunctions: '{!$Label.ExpressionEngineFunctions}',
+    OmniDesFullDataJson: '{!$Label.OmniDesFullDataJson}',
+    OmniDesDocuAddTemplate: '{!$Label.OmniDesDocuAddTemplate}',
+    OmniDesDocuIncludeToSend: '{!$Label.OmniDesDocuIncludeToSend}',
+    OmniDesDocuTemplatePick: '{!$Label.OmniDesDocuTemplatePick}',
+    OmniDesDocuDRTransformPick: '{!$Label.OmniDesDocuDRTransformPick}',
+    OmniDesDocuSendJSONPath: '{!$Label.OmniDesDocuSendJSONPath}',
+    OmniDesDocuSendJSONNode: '{!$Label.OmniDesDocuSendJSONNode}',
+    OmniDesDocuIncludeTooltip: '{!$Label.OmniDesDocuIncludeTooltip}',
+    OmniDesDocuTemplateErr: '{!$Label.OmniDesDocuTemplateErr}',
+    OmniDesDocuTemplates: '{!$Label.OmniDesDocuTemplates}',
+    OmniDesDocuRecipients: '{!$Label.OmniDesDocuRecipients}',
+    OmniDesDocuEachTemplate: '{!$Label.OmniDesDocuEachTemplate}',
+    OmniDesEditBlockSvgSpriteTooltip: '{!$Label.OmniDesEditBlockSvgSpriteTooltip}',
+    OmniDesEditBlockElementNameTooltip: '{!$Label.OmniDesEditBlockElementNameTooltip}',
+    OmniDesEditBlockSelectCheckBoxTooltip: '{!$Label.OmniDesEditBlockSelectCheckBoxTooltip}',
+    OmniDesEditBlockSumElementTooltip: '{!$Label.OmniDesEditBlockSumElementTooltip}',
+    Export: '{!$Label.Export}',
+    Execute: '{!$Label.Execute}'
+    };
+    /* END_VLOC_I18N */
+  </script>
+  <c:VFActionFunction />
+</apex:page>

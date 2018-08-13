@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Represents a question answered on an Assessment. When defined for an assessment template, this represents the definition of a question requiring an answer.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__AssessmentDateFormat__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__AssessmentId__r.vlocity_cmt__DateFormat__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Assessment Date Format</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__AssessmentId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Assessment</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>vlocity_cmt__Assessment__c.vlocity_cmt__IsTemplate__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>true</isOptional>
+        </lookupFilter>
+        <referenceTo>vlocity_cmt__Assessment__c</referenceTo>
+        <relationshipLabel>Assessment Questions</relationshipLabel>
+        <relationshipName>AssessmentQuestions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__FreetextType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Free-text Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Short Text</fullName>
+                    <default>true</default>
+                    <label>Short Text</label>
+                </value>
+                <value>
+                    <fullName>Long Text</fullName>
+                    <default>false</default>
+                    <label>Long Text</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsTemplateQuestion__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__AssessmentId__r.vlocity_cmt__IsTemplate__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Template Question</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ParentAssessmentId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__ParentQuestion__r.vlocity_cmt__AssessmentId__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ParentAssessmentId</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ParentQuestion__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Parent Question</label>
+        <referenceTo>vlocity_cmt__AssessmentQuestion__c</referenceTo>
+        <relationshipLabel>Assessment Questions</relationshipLabel>
+        <relationshipName>Assessment_Questions</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__QuestionType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Question Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Checkbox</fullName>
+                    <default>false</default>
+                    <label>Checkbox</label>
+                </value>
+                <value>
+                    <fullName>Free-text</fullName>
+                    <default>false</default>
+                    <label>Free-text</label>
+                </value>
+                <value>
+                    <fullName>Instruction</fullName>
+                    <default>false</default>
+                    <label>Instruction</label>
+                </value>
+                <value>
+                    <fullName>Multi-select</fullName>
+                    <default>false</default>
+                    <label>Multi-select</label>
+                </value>
+                <value>
+                    <fullName>Single Select</fullName>
+                    <default>false</default>
+                    <label>Single Select</label>
+                </value>
+                <value>
+                    <fullName>Date</fullName>
+                    <default>false</default>
+                    <label>Date</label>
+                </value>
+                <value>
+                    <fullName>Number</fullName>
+                    <default>false</default>
+                    <label>Number</label>
+                </value>
+                <value>
+                    <fullName>Question Table Single Select</fullName>
+                    <default>false</default>
+                    <label>Question Table Single Select</label>
+                </value>
+                <value>
+                    <fullName>Question Table MultiSelect</fullName>
+                    <default>false</default>
+                    <label>Question Table MultiSelect</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Question__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Question</label>
+        <length>131072</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Response__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Response</label>
+        <length>131072</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Scorable__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether this Question in the Assessment will receive a score.</inlineHelpText>
+        <label>Scorable</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Score__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>When completing an Assessment, stores the value resulting from the Answer to this specific Question.</inlineHelpText>
+        <label>Score</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SelectType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Select Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Radio Button</fullName>
+                    <default>true</default>
+                    <label>Radio Button</label>
+                </value>
+                <value>
+                    <fullName>Dropdown</fullName>
+                    <default>false</default>
+                    <label>Dropdown</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Weight__c</fullName>
+        <defaultValue>1</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates whether a Question is weighted more (i.e. 1.5) or less (i.e. 0.75) when scoring the Assessment.</inlineHelpText>
+        <label>Weight</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Assessment Question</label>
+    <nameField>
+        <label>Order</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Assessment Questions</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>vlocity_cmt__Checkbox</fullName>
+        <active>true</active>
+        <label>Checkbox</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Checkbox</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__Date</fullName>
+        <active>true</active>
+        <label>Date</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Date</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__FreeText</fullName>
+        <active>true</active>
+        <label>Free Text</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Free-text</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__Instruction</fullName>
+        <active>true</active>
+        <label>Instruction</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Instruction</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__MultiSelect</fullName>
+        <active>true</active>
+        <label>Multi Select</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Multi-select</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__Number</fullName>
+        <active>true</active>
+        <label>Number</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Number</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__QuestionTableMultiSelect</fullName>
+        <active>true</active>
+        <label>Question Table Multi Select</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Question Table MultiSelect</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__QuestionTableSingleSelect</fullName>
+        <active>true</active>
+        <label>Question Table Single Select</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Question Table Single Select</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__SingleSelect</fullName>
+        <active>true</active>
+        <label>Single Select</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__FreetextType__c</picklist>
+            <values>
+                <fullName>Long Text</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Short Text</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QuestionType__c</picklist>
+            <values>
+                <fullName>Single Select</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SelectType__c</picklist>
+            <values>
+                <fullName>Dropdown</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Radio Button</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,57 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "data": {
+                        "hidden": true
+                    },
+                    "displayLabel": "One Time Manual Discount",
+                    "fieldType": "standard",
+                    "group": "Custom Fields",
+                    "label": "['%vlocity_namespace%__OneTimeManualDiscount__c']['label']",
+                    "name": "['%vlocity_namespace%__OneTimeManualDiscount__c']['value']",
+                    "type": "percentage"
+                },
+                {
+                    "collapse": true,
+                    "data": {
+                        "hidden": true
+                    },
+                    "displayLabel": "Recurring Manual Discount",
+                    "fieldType": "standard",
+                    "group": "Custom Fields",
+                    "label": "['%vlocity_namespace%__RecurringManualDiscount__c']['label']",
+                    "name": "['%vlocity_namespace%__RecurringManualDiscount__c']['value']",
+                    "type": "percentage"
+                }
+            ],
+            "name": "configItemFields",
+            "templateUrl": "cpq-card-blank"
+        }
+    ],
+    "title": "cpq-product-cart-config-card"
+}

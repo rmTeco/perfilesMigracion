@@ -1,0 +1,81 @@
+<div class="orchestration-item-modal" ng-init="modelItem=$parent.$parent.$parent.obj">
+<!--div>
+<div><h3 class="slds-text-heading--small">{{::$root.vlocity.getCustomLabel('XOMOrchestrationModalItemDetails', 'Item Details')}}</h3> </div>
+<div>Item Name               : {{modelItem.item.name}}</div>
+<div>Item Type               : {{modelItem.item.type}}</div>
+<div>Item state              : {{modelItem.item.state}}
+<div>Item additionalName     :  {{modelItem.item.additionalName}}</div>
+<div>Start Date              : {{modelItem['parameters']['Start Date']}}</div>
+<div>Due Date                : {{modelItem['parameters']['Due Date']}}</div>
+<div>Requested Start Date    : {{modelItem['parameters']['Requested Start Date']}}</div>
+<div>Expected Completion Date:{{modelItem['parameters']['Expected Completion Date']}}</div>
+<div>Jeopardy Safety Interval: {{modelItem['parameters']['Jeopardy Safety Interval']}}</div>
+<div>Skip Branch             : {{modelItem['parameters']['Skip Branch']}}</div>
+</div>
+</div -->
+
+<table class="slds-table slds-table--bordered slds-table--cell-buffer">
+    <tbody>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Item Name</th>
+        <td scope="row">{{modelItem.item.name}}</td>
+    </tr>
+     <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Item Type</th>
+        <td scope="row">{{modelItem.item.type}}</td>
+    </tr>
+     <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Item State</th>
+        <td scope="row">{{modelItem.item.state}}</td>
+    </tr>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Item Additional Name</th>
+        <td scope="row">{{modelItem.item.additionalName}}</td>
+    </tr>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Start Date</th>
+        <td scope="row">{{modelItem['parameters']['Start Date']}}</td>
+    </tr>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Due Date</th>
+        <td scope="row">{{modelItem['parameters']['Due Date']}}</td>
+    </tr>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Requested Start Date</th>
+        <td scope="row">{{modelItem['parameters']['Requested Start Date']}}</td>
+    </tr>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Expected Completion Date</th>
+        <td scope="row">{{modelItem['parameters']['Expected Completion Date']}}</td>
+    </tr>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Jeopardy Safety Interval</th>
+        <td scope="row">{{modelItem['parameters']['Jeopardy Safety Interval']}}</td>
+    </tr>
+    <tr>
+        <th scope="row" class="slds-text-title" title="Attribute ID {{attribute.id}}">Skip Branch</th>
+        <td scope="row">{{modelItem['parameters']['Skip Branch']}}</td>
+    </tr>
+    </tbody>
+
+   <!--div ng-repeat="attr in modelItem['OrcAttributes']['OrcAttributeItems']">
+        <div ng-if="attr.type==modelItem.item.type && attr.attributes.length>0" ng-repeat="attrVal in attr.attributes">
+            <div ng-if="modelItem['parameters'][attrVal]">
+            {{attrVal}}       :  {{modelItem['parameters'][attrVal]}}
+            </div>
+        </div>
+    <div ng-if="attr.type==modelItem.item.type && attr.attributes.length==0">
+        
+        There is no Parameters.
+    </div>
+</div -->
+
+
+    <tbody ng-repeat="attr in modelItem['OrcAttributes']['OrcAttributeItems']">
+    <tr ng-if="attr.type==modelItem.item.type && attr.attributes.length>0" ng-repeat="attrVal in attr.attributes">
+        <th scope="row" class="slds-text-title" title="" ng-if="modelItem['parameters'][attrVal]">{{attrVal}}</th>
+        <td scope="row" ng-if="modelItem['parameters'][attrVal]">{{modelItem['parameters'][attrVal]}}</td>
+    </tr>
+    </tbody>
+</table>
+</div>

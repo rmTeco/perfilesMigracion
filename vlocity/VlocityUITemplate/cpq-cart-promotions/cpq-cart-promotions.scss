@@ -1,0 +1,44 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-cart-promotions {
+            .#{$namespace}-promotion-items-tab-content {
+                padding-top: 0px; /* slds override */
+            }
+            .#{$namespace}-promotion-item-border {
+                padding: 10px 0px;
+                margin: 0px 16px;
+                border-bottom: 1px solid #d8dde6;
+            }
+            .#{$namespace}-base-promotion {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-end;
+
+                &.#{$namespace}-promotion-header {
+                    font-size: 11px;
+                    @extend .#{$namespace}-promotion-item-border;
+                }
+                &.#{$namespace}-promotion-item {
+                    @extend .#{$namespace}-promotion-item-border;
+                }
+                .#{$namespace}-promotion-name {
+                    flex: 5;
+                    padding: 0 6px 0 0;
+
+                    .#{$namespace}-promotion-item-bookmark-change, .#{$namespace}-promotion-item-bookmark-existing, .#{$namespace}-promotion-item-bookmark-disconnect {
+                        color: $product-item-bookmark-red;
+                    }
+                    .#{$namespace}-promotion-item-bookmark-add, .#{$namespace}-promotion-item-bookmark-default {
+                        color: $product-item-bookmark-blue;
+                    }  
+                }
+            }
+        }
+    }
+}

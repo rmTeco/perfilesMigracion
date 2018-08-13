@@ -1,0 +1,75 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "a2mo0000000NeVM"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v1/acuity/offers?contextId={{params.id}}&pageSize=2",
+            "inputMap": {
+                "interactionId": "{{params.id}}",
+                "offerEndPoint": "/services/apexrest/%vlocity_namespace%/v1/acuity/offers"
+            },
+            "methodType": "GET",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.GetInteractionAcuityOffer"
+            },
+            "remoteClass": "GetInteractionAcuityOffer",
+            "remoteMethod": "getInteractionOffers",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "label": "Name",
+                    "name": "['resource']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Description",
+                    "name": "['resource']['%vlocity_namespace%__Description__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Score",
+                    "name": "['aggregatedScore']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Offer",
+            "sObjectType": null,
+            "templateUrl": "vlocity-interaction-acuity-sidebar-offer-card"
+        }
+    ],
+    "title": "Vlocity Interaction Acuity Sidebar Offer Card"
+}

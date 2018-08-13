@@ -1,0 +1,109 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "resultVar": "['PacksList']"
+        }
+    },
+    "filter": {
+    },
+    "limitRows": 4,
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "ta-care-history-packs-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['acquisitionDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['acquisitionDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['dueDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Vencimiento",
+                    "name": "['dueDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Nombre del pack",
+                    "name": "['name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['amount']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Monto",
+                    "name": "['amount']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['detail']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Servicio",
+                    "name": "['detail']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['quantity']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Cantidad",
+                    "name": "['quantity']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['UnitMeasure']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Unidad de medida",
+                    "name": "['UnitMeasure']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "card-table-row-historys"
+        }
+    ]
+}

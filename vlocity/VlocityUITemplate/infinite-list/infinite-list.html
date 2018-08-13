@@ -1,0 +1,9 @@
+<div class="via-slds riders-list-canvas card-canvas-list-infinite" ng-controller="cardCanvasListInfiniteController">
+    <div class="slds-card slds-p-around--large np-card">
+        <div class="slds-p-bottom--small">    
+            <div vloc-card ng-repeat="card in renderedItems" ng-model="card" data="card" records="records" parent-layout="this" use-existing-element-type>
+            </div>
+            <button ng-click="showMoreItems()" class="slds-button slds-button_neutral" ng-disabled="isMoreItems">{{$root.vlocity.getCustomLabel('ShowMore', 'Show More')}}</button>
+        </div>
+    </div>
+</div>

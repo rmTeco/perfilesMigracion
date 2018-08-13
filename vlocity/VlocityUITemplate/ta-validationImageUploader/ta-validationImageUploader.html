@@ -1,0 +1,91 @@
+<div  
+    class='slds-col--padded slds-size--1-of-1'
+    ng-if='!child.eleArray[0].propSetMap.show || evaluateShow(child.eleArray[0], this)'>
+
+    <ng-form 
+        name='loopform'
+        class='slds-form-element vlc-flex vlc-slds-file-picker ta-imageUploader'
+        ng-repeat='control in child.eleArray'>
+
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+            <div class="vlc-control-wrapper vlc-slds__border vlc-slds__border--primary" help="{{::control.propSetMap.help}}">
+                <div class="vlc-slds-transparent">
+                    <input 
+                        type='file'
+                        id="{{::control.name}}"
+                        name='loopname'
+                        ng-model='control.response'
+                        class='slds-input form-control'
+                        vlc-slds-file-select="{{::control.propSetMap.multiple}}"
+                        app-filereader accept="image/*" />
+                </div>
+
+                <label for="{{::control.name}}" class='slds-form-element__label'>
+                    {{::control.propSetMap.label}}
+                    <span class='vlc-asterix icon-v-asterix' ng-if='control.req'></span>
+                </label>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" ng-show="{{control.propSetMap.help}}"> i </a>
+            </div>
+
+            <slds-svg-icon 
+                aria-hidden="true"
+                sprite="'utility'"
+                icon="'upload'"
+                size="'small'"
+                extra-classes="'slds-button__icon slds-button__icon--large'">
+            </slds-svg-icon>
+
+            <div ng-if='control.response.length'>
+                <div>
+                    <div 
+                        ng-repeat='file in control.response' 
+                        class='slds-grid slds-grid slds-wrap slds-grid--pull-padded slds-grid--vertical-align-end slds-m-top--medium slds-m-bottom--small vlc-image-preview'>
+                        <div class="slds-m-right--medium">
+                            <div class="ta-imageContainer">
+                                <div 
+                                    ng-if="bpTree.filesMap[file.data] && bpTree.filesMap[file.data].substring(0,4) === 'data'"
+                                    ng-style="{'background-image':'url('+bpTree.filesMap[file.data]+')'}"
+                                    class="ta-thumb">
+
+                                </div>
+                                <div 
+                                    ng-if="!bpTree.filesMap[file.data] || bpTree.filesMap[file.data].substring(0,4) !== 'data'"
+                                    ng-style="{'background-image':'url('+instanceHost+'/servlet/servlet.FileDownload?file='+bpTree.filesMap[file.data]+')'}"
+                                    class="ta-thumb">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-col slds-m-bottom--large">
+                            <div 
+                                ng-click='removeFile(this, control, $index)'
+                                ng-show='isFileRemovable(this, control, $index)'
+                                class="slds-box slds-input-has-icon slds-input-has-icon--right ta-boxImageName">
+                                
+                                <span class="vlc-slds-box__max-width-80">
+                                    {{file.webkitRelativePath || file.filename}} 
+                                    (<span ng-switch='file.size > 1024*1024'>
+                                        <span ng-switch-when='true'>{{file.size / 1024 / 1024 | number:2}} MB</span>
+                                        <span ng-switch-default>{{file.size / 1024 | number:2}} kB</span>
+                                    </span>)
+                                </span>
+                        
+                                <slds-svg-icon 
+                                    aria-hidden="true"
+                                    sprite="'utility'"
+                                    icon="'clear'"
+                                    size="'small'"
+                                    extra-classes="'slds-button__icon slds-button__icon--large'">
+                                </slds-svg-icon>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div ng-include="::errHTMLId"></div>
+        </div>
+    </ng-form>
+</div>

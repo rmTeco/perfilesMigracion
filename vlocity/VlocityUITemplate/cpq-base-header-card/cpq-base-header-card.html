@@ -1,0 +1,72 @@
+<div class="slds-grid cpq-base-header-card">
+    <div class="slds-col slds-has-flexi-truncate">
+        <div class="slds-media">
+            <div class="slds-media__figure" ng-if="obj['Account.PhotoUrl']">
+              <img class="slds-icon slds-icon_large" src="{{obj['Account.PhotoUrl']}}" />
+            </div>
+            <div class="slds-media__figure" ng-if="!obj['Account.PhotoUrl']">
+              <slds-svg-icon sprite="'standard'" size="'large'" icon="'opportunity'" extra-classes="'slds-icon-standard-opportunity'" ng-if="obj.ObjectType === 'Opportunity'"></slds-svg-icon>
+              <slds-svg-icon sprite="'standard'" size="'large'" icon="'quotes'" extra-classes="'slds-icon-standard-quotes'" ng-if="obj.ObjectType === 'Quote'"></slds-svg-icon>
+              <slds-svg-icon sprite="'standard'" size="'large'" icon="'orders'" extra-classes="'slds-icon-standard-orders'" ng-if="obj.ObjectType === 'Order'"></slds-svg-icon>
+            </div>
+            <div class="slds-media__body">
+                <div class="slds-grid slds-nowrap slds-size_9-of-12">
+                    <div class="slds-col slds-shrink slds-text-align_left">
+                        <div class="slds-grid">
+                          <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-middle" title="{{::obj.Name}}">{{::obj.Name}}</h1>
+                        </div>
+                        <span ng-repeat="field in data.fields" class="slds-text-body--small slds-page-header__info">
+                        {{::obj.Status}}
+                        <span ng-if="!$last" class="separator">"</span>
+                        </span>
+                    </div>
+                    <div class="slds-col slds-shrink slds-text-align_left">
+                        <div ng-if="attrs.enablePricing">
+                          <vloc-layout layout-name="cpq-base-header-pricelist" ctrl="CPQPricelistsController" parent=obj></vloc-layout>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-shrink slds-text-align_left">
+                        <div ng-if="attrs.enableLoyaltyPoints === 'true'">
+                          <vloc-layout layout-name="cpq-base-header-payment-choice" ctrl="CPQPricelistsController" parent=obj></vloc-layout>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slds-col slds-no-flex slds-align-top">
+        <div class="slds-button-group" role="group">
+            
+            <button ng-repeat="action in data.actions | limitTo: 2" 
+                    class="slds-button slds-button_neutral"
+                    ng-click="performAction(action)"
+                    id="{{idPrefix}}-import-btn" 
+                    title="{{::$root.vlocity.getCustomLabel(action.displayName)}}">
+              {{::$root.vlocity.getCustomLabel(action.displayName)}}
+            </button>
+            
+          <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-button_last" ng-class="{'slds-is-open': isOpen}" type="'button-group'" aria-expanded="true" ng-if="data.actions.length > 2">
+              
+            <button cpq-dropdown-handler="isOpen = false" class="slds-button slds-button_icon-border-filled" aria-haspopup="true" ng-click="isOpen = !isOpen"
+              id="{{idPrefix}}-toggle" title="Show More">
+              <slds-button-svg-icon size="type === 'button-group' ? null : 'small'" sprite="'utility'" icon="'down'" ></slds-button-svg-icon>
+              <span class="slds-assistive-text">Show More</span>
+            </button>
+            
+            <div class="slds-dropdown slds-dropdown_down slds-dropdown_actions cpq-dropdown-to-btn">
+              <ul class="dropdown__list" role="menu">
+                 <li class="slds-dropdown__item" ng-repeat="action in data.actions" 
+                 ng-if="$index >= 2">
+                  <a role="menuitem" ng-href="#" ng-click="performAction(action)" title="{{::$root.vlocity.getCustomLabel(action.displayName, action.displayName)}}">
+                    <p class="slds-truncate">
+                      <slds-svg-icon size="'x-small'" extra-classes="'slds-m-right_x-small'"  sprite="item.icon(this).sprite" icon="item.icon(this).icon" ng-show="item.icon(this).icon"></slds-svg-icon>
+                      {{::$root.vlocity.getCustomLabel(action.displayName, action.displayName)}}
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+<script type="text/ng-template" id="xom-manualqueue-task" >
+<div class="vlocity via-slds">
+<div class="XomManualQueueTask">
+<div id="catalogConfig" ng-init="catalogConfig=
+[]" ></div>
+<!--
+sample catalogConfig data format : 
+
+ng-init="catalogConfig=
+[
+    {
+      name: 'Bandwidth',
+      code: 'BAND',
+      valueType: 'Text',
+      configurable: 'true',
+      isDisplayed: true,
+      isEditable: false
+    },
+    {
+      name: 'Client Id',
+      code: 'Client-Id',
+      valueType: 'Number',
+      configurable: 'true',
+      isDisplayed: false,
+      isEditable: false
+    },
+    {
+      name: 'Contract Term',
+      code: 'CNTR-TERM',
+      valueType: 'Text',
+      configurable: 'true',
+      isDisplayed: true,
+      isEditable: false
+    }
+]"
+-->
+<div class="slds-text-ctitle" ng-init="paramOrderItemId=bpTree.response.showtaskdetails.data.orderItemId;">Task : {{bpTree.response.showtaskdetails.data.name}}</div>
+ <br>
+
+<div class="slds-text-ctitle">Order Item Parameters</div>
+<div class="editAttribute">
+<a class="submit-button" ng-click="showEditOrderItemIframe(bpTree.response.showtaskdetails.data.orderItemId);"><span class="slds-text-ctitle">Edit OrderItem</span></a></div>
+<div id="editAttrFrame" ng-if="$root.showEditOrderItem">
+    <iframe src="{{$root.iframeUrl}}" style="width:1000px;min-height:290px;"/>
+</div>
+
+<div style="width:50%;" ng-repeat="(nodeKey, nodeValue) in bpTree.response.showOrderDetails.data track by $index" ng-if="!$root.showEditOrderItem">
+<table  class="slds-table slds-table--bordered slds-table--cell-buffer" cellpadding="10" cellspacing="10" width="100%" >
+<tr ng-repeat="field in nodeValue track by $index" ng-if="nodeKey =='fields' && !field.refId">
+    <td class="slds-text-title fixedWidth">{{field.name}}</td>
+    <td>{{field.value }}</td>
+</tr>
+<tr ng-repeat="field in nodeValue track by $index" ng-if="nodeKey =='fields' && field.value && !!field.refId">
+    <td class="slds-text-title fixedWidth">{{field.name}}</td>
+    <td><a ng-click="resolveByGlobalKey(field.refId)" >{{field.value}}</a></td>
+</tr>
+<tr ng-repeat="attr in nodeValue track by $index" ng-if="nodeKey =='attrs' && attr.value">
+    <td class="slds-text-title fixedWidth">{{attr.name}}</td>
+    <td ng-if="attr.type !='Datetime' && attr.type !='Date'">{{attr.value}}</td>
+    <td ng-if="attr.type =='Datetime' || attr.type =='Date'">{{attr.value | date:'dd-MM-yyyy,  hh:mm a'}}</td>
+</tr>
+<!--tr ng-repeat="attr in nodeValue track by $index" ng-if="bpTree.response.showOrderDetails.data.assetId!=''">
+    <td class="slds-text-title fixedWidth">Asset/Inventory Item</td>
+    <td><a ng-click="resolveNavigate(bpTree.response.showOrderDetails.data.assetId)">{{bpTree.response.showOrderDetails.data.assetName}}</a></a></td>
+</tr-->
+</table>
+</div>
+
+<div id="customAttrElement" customAttrlId="{{bpTree.response.showtaskdetails.data.id | json}}" customAttrAdditionalId="{{bpTree.response.showtaskdetails.data.additionalId | json}}" customAttrMQueueGlobalKey="{{bpTree.response.showtaskdetails.data.parameters['Manual Queue Global Key'] | json}}" customAttrAssignedMQueueGlobalKey="{{bpTree.response.showtaskdetails.data.parameters['Assigned To Manual Queue Global Key'] | json}}"   ></div>
+</div>
+</br>
+</br>
+<div class="slds-text-ctitle">Task Parameters</div><br>
+<div ng-repeat="(key, value) in bpTree.response.showtaskdetails.data track by $index" style="width:50%;">
+<table  class="slds-table slds-table--bordered slds-table--cell-buffer fixedWidthTask" cellpadding="10" cellspacing="10" width="100%" ng-if="key =='parameters' &&  key !='deps'">
+<tr>
+    <td class="slds-text-title fixedWidthTask">Type</td>
+    <td>{{bpTree.response.showtaskdetails.data.type}}</td>
+    </tr>
+<tr>
+    <td class="slds-text-title fixedWidthTask">State</td>
+    <td>{{bpTree.response.showtaskdetails.data.state}}</td>
+</tr>
+<tr ng-repeat="(pkey, pvalue) in value track by $index" ng-if="pkey !='Orchestration Item Type' && pkey !='State'">
+  <td class="slds-text-title fixedWidthTask"> {{pkey}} </td> <td> {{ pvalue }} </td>
+</tr>
+</table>
+</div>
+</script>

@@ -1,0 +1,223 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "apexRestResultVar": "records",
+            "endpoint": "https://demo9538567.mockable.io/getAvailability",
+            "methodType": "POST",
+            "remoteClass": "",
+            "remoteMethod": "getCartsProducts",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "",
+            "subType": "Web"
+        }
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Stock.Ammount",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "0"
+                    },
+                    {
+                        "field": "Product2.Tangible__c",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": true
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__Type__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Dispositivo"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && ($scope.obj.Product2.Tangible__c != true || ($scope.obj.Stock && $scope.obj.Stock.Ammount != 0)) && $scope.obj.Product2.%vlocity_namespace%__Type__c == 'Dispositivo'",
+            "flyout": {
+                "layout": "ta-Sales-CPQ-Product-Item-More"
+            },
+            "name": "Dispositivos",
+            "sObjectType": null,
+            "templateUrl": "ta-cpq-product-itemDevices"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__Type__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Bundle"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj.Product2.%vlocity_namespace%__Type__c == 'Bundle'",
+            "flyout": {
+                "layout": "ta-Sales-CPQ-Product-Item-More"
+            },
+            "name": "Bundles",
+            "sObjectType": null,
+            "templateUrl": "ta-cpq-product-itemBundle"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__SubType__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Internet"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj.Product2.%vlocity_namespace%__SubType__c == 'Internet'",
+            "flyout": {
+                "layout": "ta-Sales-CPQ-Product-Item-More"
+            },
+            "name": "Internet",
+            "sObjectType": null,
+            "templateUrl": "ta-cpq-product-itemInternet"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Stock.Ammount",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "0"
+                    },
+                    {
+                        "field": "Product2.Tangible__c",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": true
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && ($scope.obj.Product2.Tangible__c != true || ($scope.obj.Stock && $scope.obj.Stock.Ammount != 0))",
+            "flyout": {
+                "layout": "ta-Sales-CPQ-Product-Item-More"
+            },
+            "name": "Tangibles",
+            "sObjectType": null,
+            "templateUrl": "ta-cpq-product-item"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Stock.Ammount",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "0"
+                    },
+                    {
+                        "field": "Product2.Tangible__c",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": true
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && ($scope.obj.Product2.Tangible__c != true || !$scope.obj.Stock)",
+            "flyout": {
+                "layout": "ta-Sales-CPQ-Product-Item-More"
+            },
+            "name": "Default",
+            "sObjectType": null,
+            "templateUrl": "ta-cpq-product-item"
+        }
+    ],
+    "title": "ProductItem"
+}

@@ -1,0 +1,40 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": true,
+                    "fieldType": "custom",
+                    "label": "catalogName",
+                    "name": "['catalogName']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "ta-Sales-CPQ-Category-List-item"
+        }
+    ],
+    "title": "Category Item"
+}

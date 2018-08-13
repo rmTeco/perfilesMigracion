@@ -1,0 +1,151 @@
+<apex:page controller="SCP_Certa_GC.AdminProvenValueController" sidebar="false" tabStyle="Strategic_Client_Plan__tab">
+
+	<c:SCPMenu ></c:SCPMenu>
+	
+	<script  type="text/javascript">
+    
+	    $j = jQuery.noConflict();
+
+	    function ajaxshow(){
+	        $j(".ajaxloader").show();
+	    }    
+
+	    function ajaxstop(){
+	        $j(".ajaxloader").hide();
+	    }
+	    function showInput(){}
+	
+	</script>
+	
+	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+		<apex:pageMessages id="errorMsg"/>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<span style="float:left;">
+						{!$Label.scp_certa_gc__administration_trends} {!$Label.scp_certa_gc__account_past_proven_value}
+					</span>
+					<c:tutorial />
+					<span style="float:left;">
+    					<c:showVideo />
+    				</span>
+				</h2>
+				<div class="row paddingRight">
+					<div class="btn-group pull-right" role="group" aria-label="...">   					
+						<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+	   						<span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.Add_Share}
+	                    </button>
+	                    <button type="button" class="btn btn-default btn-sm" onclick="save()">
+	   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.save}
+	                    </button>
+					</div>
+				</div>
+			</div>    		
+			<div class="panel-body">
+				<apex:form id="Content">
+			        {!$Label.scp_certa_gc__region}:
+			         <apex:selectList multiselect="false" size="1" value="{!regionId}">
+			            <apex:selectOptions value="{!Regions}"/>
+			        </apex:selectList>       
+			        &nbsp;&nbsp;
+			        {!$ObjectType.Account.fields.Industry.Label}:
+			        <apex:inputField value="{!tempAccount.Industry}"/>
+			        &nbsp;&nbsp;        
+			        {!$ObjectType.Account.fields.Micro_Industry__c.Label}:
+			        <apex:inputField value="{!tempAccount.SCP_Certa_GC__Micro_Industry__c}"/>
+			        &nbsp;&nbsp;
+			        <apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__select}" action="{!doUpdate}" rerender="Content,chatter,errorMsg"/>
+				    <br/><br/>
+			     
+			        <table class="table table-striped table-bordered table-condensed">
+			        	<thead>
+							<tr>
+								<th>
+								</th>
+								<th>
+									<apex:outputText value="{!$Label.scp_certa_gc__name}"/>
+								</th>
+								<th>
+									<apex:outputText value="{!$ObjectType.SCP_Certa_GC__PastProvenValueNew__c.fields.SCP_Certa_GC__Type__c.label}"/>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:repeat value="{!ProvenValueList}" var="item" >
+								<tr>
+									<td>
+										<apex:commandButton styleClass="btn btn-default btn-sm" reRender="Content,errorMsg" action="{!del}" value="{!$Label.scp_certa_gc__delete}" rendered="{!canEdit}">
+					                        <apex:param assignTo="{!IdtoDelete}" name="IdtoDelete" value="{!item.id}" />
+					                    </apex:commandButton>
+									</td>
+									<td  style="width: 100%;">
+										<apex:outputField value="{!item.SCP_Certa_GC__Unique_Value__c}  ">
+											<apex:inlineEditSupport event="ondblclick"/>		
+					                	</apex:outputField>
+									</td>
+									<td>
+										<apex:selectList multiselect="false" size="1" value="{!item.SCP_Certa_GC__Type__c}" rendered="{!canEdit}">
+											<apex:selectOptions value="{!provenValueTypes}"/>
+					        			</apex:selectList>
+									</td>
+								</tr>
+							</apex:repeat>
+						</tbody>
+			        </table>
+			    	<!-- Modal -->
+					<apex:actionFunction action="{!save}" name="save" rerender="pageContent,errorMsg" status="renderMeStatus"/>
+					<apex:actionFunction action="{!InsertNew}" name="InsertNew" rerender="pageContent,errorMsg" status="renderMeStatus"/>
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog" style="z-index:9999;">
+					    	<div class="modal-content">
+					      		<div class="modal-header">
+					        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        		<h4 class="modal-title" id="myModalLabel">{!$Label.Add_Share}</h4>
+					      		</div>
+					      		<div class="modal-body">
+					      			<table style="border-collapse: separate;border-spacing: 5px;">
+					      				<tr>
+					      					<td style="text-align: right;">
+					      						<apex:outputText value="{!$Label.scp_certa_gc__name}" />:
+					      					</td>
+					      					<td>
+					      						<apex:inputField style="width: 335px;" value="{!newPruvenValue.SCP_Certa_GC__Unique_Value__c}" required="false"  rendered="{!canEdit}"/>
+					      					</td>
+					      				</tr>
+					      				<tr>
+					      					<td style="text-align: right;">
+					      						<apex:outputText value="{!$ObjectType.SCP_Certa_GC__PastProvenValueNew__c.fields.SCP_Certa_GC__Type__c.label}"/>:
+					      					</td>
+					      					<td>
+					      						<apex:selectList style="width: 335px;" multiselect="false" size="1" value="{!newPruvenValue.SCP_Certa_GC__Type__c}" rendered="{!canEdit}">
+													<apex:selectOptions value="{!provenValueTypes}"/>
+							        			</apex:selectList>
+					      					</td>
+					      				</tr>
+					      			</table>		        
+					      		</div>
+					      		<div class="modal-footer">
+					        		<button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.close}</button>
+					        		<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="InsertNew()">{!$Label.add_buttom}</button>
+					      		</div>
+					    	</div>
+					  	</div>
+					</div>
+					
+			    </apex:form>
+			</div>
+			<div class="panel-footer">
+				<div class="row paddingRight">
+					<div class="btn-group pull-right" role="group" aria-label="...">   					
+						<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+	   						<span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.Add_Share}
+	                    </button>
+	                    <button type="button" class="btn btn-default btn-sm" onclick="save()">
+	   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.save}
+	                    </button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</apex:outputpanel>
+</apex:page>

@@ -1,0 +1,187 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['ObjectType']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "'Opportunity'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Create Quote",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Recurring Total",
+                    "name": "['EffectiveRecurringTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "One Time Total",
+                    "name": "['EffectiveOneTimeTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Total",
+                    "name": "['EffectiveOpportunityTotal__c']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['ObjectType'] == 'Opportunity'",
+            "name": "Active Opportunity",
+            "sObjectType": "Opportunity",
+            "templateUrl": "ta-cpq-v15-total-card"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['ObjectType']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "'Quote'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Create Order",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Recurring Total",
+                    "name": "['EffectiveRecurringTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "One Time Total",
+                    "name": "['EffectiveOneTimeTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Total",
+                    "name": "['EffectiveQuoteTotal__c']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['ObjectType'] == 'Quote'",
+            "name": "Active Quote",
+            "sObjectType": "Quote",
+            "templateUrl": "ta-cpq-v15-total-card"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['ObjectType']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "'Order'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Create Assets",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Recurring Total",
+                    "name": "['EffectiveRecurringTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "One Time Total",
+                    "name": "['EffectiveOneTimeTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Total",
+                    "name": "['EffectiveOrderTotal__c']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['ObjectType'] == 'Order'",
+            "name": "Active Order",
+            "sObjectType": "Order",
+            "templateUrl": "ta-cpq-v15-total-card"
+        }
+    ],
+    "title": "Total Card"
+}

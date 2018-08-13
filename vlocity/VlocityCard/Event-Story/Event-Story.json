@@ -1,0 +1,147 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objAPIName']": "Event"
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": true,
+                    "fieldType": "standard",
+                    "label": "Account",
+                    "name": "['parentName']",
+                    "relationshipId": "parentId",
+                    "relationshipTypeField": "parentObjAPIName",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": true,
+                    "fieldType": "standard",
+                    "label": "Time",
+                    "name": "['strActivityDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Location",
+                    "name": "['subtitle']",
+                    "relationshipType": "_map",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Type",
+                    "name": "['highlight']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Attendees",
+                    "name": "attendees",
+                    "relationshipType": "_sobjects",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.obj['detailValueMap']['IsAllDayEvent'] != 'true'",
+            "name": "Event",
+            "sObjectType": null,
+            "templateUrl": "ta-Care-story-card"
+        },
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": true,
+                    "fieldType": "standard",
+                    "label": "Account",
+                    "name": "['parentName']",
+                    "relationshipId": "parentId",
+                    "relationshipTypeField": "parentObjAPIName",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": true,
+                    "fieldType": "standard",
+                    "label": "Date",
+                    "name": "['formatedLastActivityDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Location",
+                    "name": "['subtitle']",
+                    "relationshipType": "_map",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Type",
+                    "name": "['highlight']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Attendees",
+                    "name": "attendees",
+                    "relationshipType": "_sobjects",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.obj['detailValueMap']['IsAllDayEvent'] == 'true'",
+            "name": "All Day Event",
+            "sObjectType": null,
+            "templateUrl": "story-card"
+        }
+    ],
+    "title": "Events"
+}

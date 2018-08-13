@@ -1,0 +1,82 @@
+{
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "type": null,
+        "value": {
+            "query": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Description",
+                    "name": "['Description']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Create By (footer)",
+                    "name": "['CreatedBy']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Created on (footer)",
+                    "name": "['CreatedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Last Modified on (footer)",
+                    "name": "['LastModifiedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Email Template",
+                    "name": "['%vlocity_namespace%__EmailTemplate__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "OwnerId",
+                    "name": "['OwnerId']",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Detail",
+            "sObjectType": "Campaign",
+            "templateUrl": "campaign-detail"
+        }
+    ],
+    "title": "Campaign Detail"
+}

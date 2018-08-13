@@ -1,0 +1,267 @@
+<apex:page docType="html-5.0" showHeader="false" standardStylesheets="false" title="Informe de Reparación" StandardController="Case" extensions="ta_techCare_technical_service_ext_ctrl" renderAs="advanced_pdf">
+    <html>
+        <head>
+            <apex:stylesheet value="{!$Resource.taTechnicalServicePDF}" />
+        </head>
+        <body>
+            <div class="pdf-technicalService">
+                <div class="slds-section-title--divider slds-text-align--center">
+                    <p><u><b>Constancia de Ingreso a Servicio Técnico</b></u></p>
+                    <br />
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Nro. Gestión</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate"><b>{!tsCase.CaseNumber}</b></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Estado</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate"><b>{!tsCase.Status}</b></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Propietario</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate"><b>{!tsCase.Owner.Name}</b></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="slds-section-title--divider slds-text-align--center">
+                    <p><b>Datos del Cliente</b></p>
+                    <br />
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Nombre y apellido</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!tsCase.Contact.Name}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Teléfono de contacto</div>
+                                </td>
+                                <td>
+                                    <apex:outputPanel rendered="{!tsCase.SuppliedPhone != null}">
+                                        <div class="slds-truncate">{!tsCase.SuppliedPhone}</div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!tsCase.SuppliedPhone == null}">
+                                        <div class="slds-truncate">{!tsCase.Contact.Phone}</div>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Correo electrónico</div>
+                                </td>
+                                <td>
+                                    <apex:outputPanel rendered="{!tsCase.SuppliedEmail != null}">
+                                        <div class="slds-truncate">{!tsCase.SuppliedEmail}</div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!tsCase.SuppliedEmail == null}">
+                                        <div class="slds-truncate">{!tsCase.Contact.Email}</div>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate" style="width:60%">Comentarios</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!tsCase.Description}</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="slds-section-title--divider slds-text-align--center">
+                    <p><b>Datos del Equipo</b></p>
+                    <br />
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Marca</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!brand}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Modelo</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!tsCase.Asset.Name}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">IMEI</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!tsCase.Asset.Imei__c}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">NMU</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!tsCase.Asset.StockKeepingUnit}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Protección</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!tsCase.Protection__r.Name}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Muleto</div>
+                                </td>
+                                <td>
+                                    <apex:outputPanel rendered="{!tsCase.MuleTerminal__c == true}">
+                                        <div class="slds-truncate">SI</div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!tsCase.MuleTerminal__c == false}">
+                                        <div class="slds-truncate">NO</div>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Garantía de venta</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!saleWarranty['applies']}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Vigencia garantía de venta</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">Desde {!saleWarranty['from']} hasta {!saleWarranty['to']}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Garantía de reparación</div>
+                                </td>
+                                <td>
+                                    <apex:outputPanel rendered="{!tsCase.RepairWarranty__c == true}">
+                                        <div class="slds-truncate">SI</div>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!tsCase.RepairWarranty__c == false}">
+                                        <div class="slds-truncate">NO</div>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td scope="row">
+                                    <div class="slds-truncate">Fin de garantía de reparación</div>
+                                </td>
+                                <td>
+                                    <apex:outputPanel rendered="{!tsCase.RepairWarranty__c == true}">
+                                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                            <apex:param value="{!tsCase.RepairWarrantyEndDate__c}" />
+                                        </apex:outputText>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!tsCase.RepairWarranty__c == false}">
+                                        <div class="slds-truncate">-</div>
+                                    </apex:outputPanel>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <apex:outputPanel rendered="{!comments.size > 0}">
+                    <div class="slds-section-title--divider slds-text-align--center">
+                        <p><b>Comentarios de la reparación</b></p>
+                        <br />
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                            <thead>
+                                <tr>
+                                    <th><b>Fecha</b></th>
+                                    <th><b>Comentario</b></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat var="com" value="{!comments}">
+                                <tr>
+                                    <td scope="row">
+                                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                            <apex:param value="{!com.CreatedDate}" />
+                                        </apex:outputText>
+                                    </td>
+                                    <td scope="row">
+                                        <div class="slds-truncate">{!com.CommentBody}</div>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+                </apex:outputPanel>
+                
+                <div class="slds-section-title--divider slds-text-align--center">
+                    <p><b>Reparaciones Efectuadas</b></p>
+                    <br />
+                </div>
+                <div>
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <thead>
+                            <tr>
+                                <th><b>Descripción</b></th>
+                                <th>
+                                    <div class="slds-truncate slds-float--right"><b>Precio</b></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat var="rep" value="{!repairs}">
+                                <tr>
+                                    <td scope="row">
+                                        <div class="slds-truncate" title="{!rep.Product2.Name}">{!rep.Product2.Name}</div>
+                                    </td>
+                                    <td>
+                                        <div class="slds-truncate slds-float--right">{!rep.vlocity_cmt__EffectiveOneTimeTotal__c}</div>
+                                    </td>
+                                </tr>
+                        </apex:repeat>
+                      </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </body>
+    </html>
+</apex:page>

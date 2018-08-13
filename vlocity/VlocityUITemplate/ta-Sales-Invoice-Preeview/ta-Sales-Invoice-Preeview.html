@@ -1,0 +1,86 @@
+<div class="simulation slds-col" ng-if="bpTree.response.BillingOrder.Items && bpTree.response.GetPaymentAdjustments_Response" ng-controller="InvoiceController as vm">
+
+	<div class="header-simulation">
+		<div class="slds-text-body--small header-title">
+		    <div>Total a Pagar</div>
+        </div>
+		<div class="slds-truncate total">{{ vm.total | currency:"ARS " }}</div>
+	</div>
+	
+	<div class="header-simulation"
+	    ng-if="vm.payments.length > 1"
+	    ng-repeat="payment in vm.payments">
+		<div class="slds-text-body--small header-title"
+		    ng-switch="payment.%vlocity_namespace%__PaymentMethodId__r.%vlocity_namespace%__MethodType__c">
+		    <div ng-switch-when="1001">Total a Pagar Efectivo</div>
+		    <div ng-switch-when="1201">Total a Pagar Debito Proxima Factura</div>
+		    <div ng-switch-when="2001">Total a Pagar Tarjeta {{$index+1}}</div>
+        </div>
+		<div class="slds-truncate total">{{ payment.%vlocity_namespace%__Amount__c * payment.Financial_Promotion__r.Interest__c | currency:"ARS " }}</div>
+	</div>
+	
+	<div class="body-simulation slds-col padding-bottom-style">
+	    
+		<div class="items-row"
+		    ng-repeat-start="tax in vm.taxes" ng-if="tax.impuestoxItemInfo.descripcion">
+		    <div class="slds-truncate">1 x {{tax.impuestoxItemInfo.descripcion}}</div>
+		    <div class="slds-truncate price">{{ (tax.impuestoxItemInfo.listaInfoImpuestos[0].infoImpuesto.precioBase) | currency:"ARS " }}</div>
+		</div>
+		<!--DESCUENTOS-->
+		
+		<div ng-repeat-end ng-repeat="descuento in tax.impuestoxItemInfo.listaDescuentosImpuestos">
+		    <div class="items-row">
+    		    <div class="slds-truncate discount-description">{{ descuento.infoDescuento.descripcion }}</div>
+    		    <div class="slds-truncate price">{{ (vm.getTotalDiscount(descuento.infoDescuento) * -1) | currency:"ARS " }}</div>
+    		</div>    
+		</div>
+		
+		
+		<div class="padding-bottom-style element-svg">
+            <a ng-href="" ng-click="vm.toggleCustom()">
+                <span ng-class="{'ng-hide': vm.custom }">Ocultar detalle </span>
+				<span ng-class="{'ng-hide': vm.custom }"><slds-svg-icon sprite="'utility'" icon="'chevronup'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'" ></slds-svg-icon></span>
+			    <span ng-class="{'ng-hide': !vm.custom }">Ver detalle </span>
+				<span ng-class="{'ng-hide': !vm.custom }"><slds-svg-icon sprite="'utility'" icon="'chevrondown'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon></span>
+			</a>
+		</div>
+        <div ng-class="{'ng-hide': vm.custom }">
+            <div class="items-row">
+    		    <div class="slds-truncate">Subtotal <em>sin descuentos</em></div> 				
+    		    <div class="slds-truncate price">{{ vm.totalBeforeTaxes | currency:"ARS " }}</div>
+            </div>
+            
+    		<div class="items-row">
+    		    <div class="slds-truncate">Impuestos <em>sin descuentos</em></div>
+    		    <div class="slds-truncate price">{{ vm.totalTaxes | currency:"ARS " }} </div>
+    		</div>
+    		
+    		<div class="items-row">
+    		    <div class="slds-truncate">Descuentos <em>con impuestos</em></div>
+    		    <div class="slds-truncate price">{{ (vm.totalDiscounts * -1) | currency:"ARS " }} </div>
+    		</div>
+		
+            </br>
+            </br>
+            <div class="items-row" ng-if="vm.financiado.length > 0">
+    		    <div class="slds-truncate">Cargos por financiación</div>
+            </div>
+            <div ng-repeat="item in vm.financiado" >
+                <div class="items-row">
+        		    <div class="slds-truncate">Tarjeta {{$index + 1}} <em>intereses %{{item.Financial_Promotion__r.Percentage__c}}</em></div>
+        		    <div class="slds-truncate price">{{ (vm.taxes[item.Huawei_Invoice_Item_Sequence__c - 1].impuestoxItemInfo.listaInfoImpuestos[0].infoImpuesto.precioBase) | currency:"ARS " }}</div>
+    		    </div>
+    		    <div class="items-row">
+        		    <div class="slds-truncate">Tarjeta {{$index + 1}} <em>impuestos intereses %{{item.Financial_Promotion__r.Percentage__c}}</em> </div>
+        		    <div class="slds-truncate price">{{ (vm.taxes[item.Huawei_Invoice_Item_Sequence__c - 1].impuestoxItemInfo.listaInfoImpuestos[0].infoImpuesto.importeImpuestoAplicado) | currency:"ARS " }}</div>
+    		    </div>
+    		</div>
+    	</div>
+		
+		<!--<div ng-if="bpTree.response.CalculateInterest_Response.CFT"   class="items-row">-->
+		<!--    <div class="slds-truncate">Cargos financiación (Calculado al {{ bpTree.response.CalculateInterest_Response.CFT }} % )</div>-->
+		<!--    <div class="slds-truncate">{{ bpTree.response.CalculateInterest_Response.Interest | currency:"ARS " }}</div>-->
+		<!--</div>-->
+        
+	</div>
+</div>

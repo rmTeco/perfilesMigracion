@@ -1,0 +1,64 @@
+<!-- <pre>Recortds: {{records |json}}</pre>  -->
+<!-- <pre>2: {{data.Deck[0].states[0].fields |json}}</pre> -->
+<!-- <pre>Params: {{params | json}}</pre>  -->
+
+<div 
+	class="via-slds addedValueServices-container" 
+	ng-controller="containerTableSVAController as SVACtrl">
+	<div class="slds-card">
+
+		<div class="slds-card__body cards-container">				
+			<table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" role="grid">
+				<thead>
+					<tr class="slds-text-heading--label">
+						<th class="slds-border--bottom"></th>
+						<th 
+							ng-repeat="field in cards[0].states[0].fields" 
+							scope="col"
+							ng-class="{
+									'slds-is-sorted' : sortingOrder == 'obj'+field.name,									
+									'slds-is-sorted--desc' : reverse, 'slds-is-sorted--asc': !reverse
+								}"								
+							class="slds-border--bottom">							
+							<!-- <div class="slds-truncate">{{field.label}}</div> -->
+							<a 								
+								ng-click="sortBy(field)" 
+								href="javascript:void(0)">
+								{{field.label}}
+								<div class="slds-icon_container">
+									<slds-svg-icon 
+										sprite="'utility'" 
+										size="'x-small'" 
+										icon="'arrowdown'" 
+										extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+									</slds-svg-icon>
+								</div>
+							</a>
+						</th>
+						<th class="slds-cell-shrink slds-clearfix slds-border--bottom">
+							<!-- <div class="slds-align--absolute-center">
+								Acción
+							</div> -->
+						</th>
+
+					</tr>
+				</thead>				
+				<tbody class="addedValueServices"				
+					ng-init="sortingOrder = 'obj'+'['+'\''+'InstallDate'+'\''+']'; reverse = true; ">					
+					<tr
+						vloc-card 
+						ng-repeat="card in cards |orderBy:sortingOrder:reverse"
+						ctrl="{{ctrl}}" 
+						ng-model="card" 
+						data="card" 
+						records="records" 
+						index="{{$index}}" 
+						session-id="{{sessionId}}"
+						class="addedValueServices-row list" 
+						use-existing-element-type>
+					</tr>					
+				</tbody>				
+			</table>			
+		</div>
+	</div>
+</div>

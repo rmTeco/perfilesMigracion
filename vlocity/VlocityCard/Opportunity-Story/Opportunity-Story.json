@@ -1,0 +1,66 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objAPIName']": "Opportunity"
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "",
+                        "logicalOperator": "&&",
+                        "operator": "===",
+                        "type": "custom",
+                        "value": ""
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Opportunity-PersonalMarketing",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Número",
+                    "name": "['subtitle']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Fecha de creación",
+                    "name": "['localDate']",
+                    "type": "date"
+                }
+            ],
+            "name": "Opportunity",
+            "sObjectType": "Opportunity",
+            "templateUrl": "ta-Care-story-card"
+        }
+    ],
+    "title": "Opportunities"
+}

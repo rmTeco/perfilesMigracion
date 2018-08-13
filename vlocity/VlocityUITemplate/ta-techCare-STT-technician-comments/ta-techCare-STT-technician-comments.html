@@ -1,0 +1,32 @@
+<div 
+	ng-if="bpTree.response.Case" 
+	class="slds-grid slds-grid--vertical">		
+ 
+	<div 
+		ng-repeat="item in bpTree.response.Case.Comments | orderBy: '-Date'"
+		class="slds-size--1-of-1 techCare-caseComments">
+		<div class="techCare-caseComments-header">
+			{{item.User}} - 
+			<!-- <span class="techCare-caseComments-date" relative-date="{{item.Date}}"></span>	 -->
+			<span class="techCare-caseComments-date">{{item.Date | date: "dd/MM/yyyy - HH:mm"}}</span>	
+			<!-- - {{item.Date}}		 -->
+		</div>
+		<hr class="commentLine">
+		<div class="techCare-caseComments-body">
+			{{item.Body}}
+		</div>
+	</div>	
+	<div
+		class="slds-size--1-of-1 techCare-caseComments"
+		ng-if="bpTree.response.Case.Description">
+		<div class="techCare-caseComments-header">
+			{{bpTree.response.Case.User.Name}} - 
+			<!-- <span class="techCare-caseComments-date" relative-date="{{bpTree.response.Case.CreatedDate}}"></span> -->
+			<span class="techCare-caseComments-date">{{bpTree.response.Case.CreatedDate | date: "dd/MM/yyyy - HH:mm"}}</span>
+		</div>
+		<hr class="commentLine">
+		<div class="techCare-caseComments-body">
+			{{bpTree.response.Case.Description}}
+		</div>
+	</div>
+</div>

@@ -1,0 +1,77 @@
+<section 
+    class="console-card active" 
+    ng-class="{'expired': (obj.Status != 'Active'), 'selected': isSelected(cardIndex)}"
+    data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" 
+    hotkey-layout-card>
+   <div class="card-top">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-p-bottom--xxx-small card-top-header">
+            <div class="slds-p-horizontal--x-small slds-size--1-of-1">
+                <div class="header-left">
+                    <h4 class="slds-text-heading_small"
+                        style="text-align: right;">
+                       {{obj.Marca}}
+                    </h4>
+                </div>
+                <div class="header-right">
+                    <h4 class="slds-text-heading_small"
+                        style="text-align: right;">
+                       {{obj.Modelo}}
+                    </h4>
+                </div>
+            </div>
+            <div class="slds-p-horizontal--x-small slds-size--1-of-1">
+                <div class="header-left">
+                    <h4 class="slds-text-heading_small"
+                        style="text-align: right;">
+                       {{obj.IMEI}}
+                    </h4>
+                </div>
+                <div class="header-right">
+                    <h4 class="slds-text-heading_small"
+                        style="text-align: right;">
+                       {{obj.Gama}}
+                    </h4>
+                </div>
+            </div>
+        </div>
+   </div>
+   <div class="card-info">
+      <ul class="actions">
+         <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:4)">
+            <a href="#" ng-click="performAction(action)" hotkey-card-action>
+            <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+            <span ng-if="action.imageRef">
+            <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+            </span>
+            <span class="slds-text-body_regular">{{action.displayName}}</span>
+            </a>
+         </li>
+      </ul>
+      <ul class="details" ng-click="performFlyout(uniqueLayoutId + '-card-'+ cardIndex)">
+         <li class="detail" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+            <span class="slds-text-body_regular value">{{obj[field.relationshipName]['Name']}}</span>
+            <span class="slds-text-body_regular detail-label">{{field.label}}</span>
+            <span class="slds-text-body_regular value" ng-if="!obj[field.relationshipName] && field.label != 'Fecha de compra'">
+                   {{obj | getter: field | picker: field.type}}
+                <span ng-if="field.label == 'Estado'" style="padding-left: 5px; display:inline-block;">
+                  <span ng-if="obj.Status == 'Suspended'" style="position:relative; display:inline-block">
+                     <div class="slds-form-element information" style="display:inline-block;">
+                        <div class="slds-form-element__icon slds-align-middle" style="display:inline-block;">
+                           <button class="slds-button slds-button--icon" aria-describedby="help" title="Help" style="background-color: white;color: #BBBBBF;border-radius: 100%;border-color: #BBBBBF;width:16px;height:16px;top:-3px;left:-6px">
+                           i
+                           </button>
+                        </div>
+                     </div>
+                     <div class="slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" id="help" style="position:absolute;background-color: #666666; top:-48px;left:-10px;width:100px;display:none;">
+                        <div class="slds-popover__body">{{obj.SubStatus}}</div>
+                     </div>
+                  </span>
+                </span>
+            </span>
+            <span class="slds-text-body_regular value" ng-if="field.label == 'Fecha de compra'">{{obj | getter: field | date:'dd/MM/yyyy'}}</span>
+            <!--<span class="slds-text-body_regular value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}222222</span>
+            <span class="slds-text-body_regular value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}111111</span>-->
+         </li>
+      </ul>
+   </div>
+</section>

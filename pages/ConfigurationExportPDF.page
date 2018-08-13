@@ -1,0 +1,33 @@
+<apex:page standardController="Contact_Motive__c" extensions="ConfigurationExport" showHeader="false" renderAs="pdf">
+    <html>
+        <head>
+            <apex:stylesheet value="{!$Resource.ExportPage}" />
+        </head>    
+        <body>
+            <apex:pageBlock >
+                <apex:pageBlockSection title="Configuración activa de Servicios y Motivos">
+                </apex:pageBlockSection>
+                <apex:pageBlockTable styleClass="summary" value="{!configuration}" var="cfgrow" columnsWidth="25%,30%,30%,15%" border="1">
+                    <apex:column headerValue="Servicios" headerClass="summary header" value="{!cfgrow.Id_Service__r.Name}"/>
+                    <apex:column headerValue="Motivo" headerClass="summary header" value="{!cfgrow.Name}"/>
+                    <apex:column headerValue="Asociable a Incidente" headerClass="summary header" styleClass="summary boolean" value="{!cfgrow.Is_Associable__c}"/>
+                </apex:pageBlockTable>
+                <br/>
+                <hr/>
+                <apex:pageBlockSection title="Servicios configurables">
+                </apex:pageBlockSection>
+                <apex:pageBlockTable styleClass="summary" value="{!services}" var="srvrow" border="1">
+                    <apex:column headerValue="Servicios" headerClass="summary header" value="{!srvrow.Name}"/>
+                    <apex:column headerValue="Activo" headerClass="summary header" styleClass="summary boolean" value="{!srvrow.IsActive}"/>
+                </apex:pageBlockTable>
+                <br/>
+                <apex:pageBlockSection title="Motivos configurables">
+                </apex:pageBlockSection>
+                <apex:pageBlockTable styleClass="summary" value="{!motives}" var="mtvrow" border="1">
+                    <apex:column headerValue="Motivos" headerClass="summary header" value="{!mtvrow.Name}"/>
+                    <apex:column headerValue="Activo" headerClass="summary header" styleClass="summary boolean" value="{!mtvrow.Is_Active__c}"/>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </body>
+    </html>
+</apex:page>

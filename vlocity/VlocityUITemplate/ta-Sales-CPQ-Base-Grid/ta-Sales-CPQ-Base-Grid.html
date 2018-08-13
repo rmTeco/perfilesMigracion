@@ -1,0 +1,99 @@
+<div class="cpq-module">
+
+    <!-- this div is to create a controller to be used in CustomJs to initialize CPQ API settings-->
+    <div ng-controller="initApiSettingsController" />
+
+	<div 
+		class="slds-spinner_container" 
+		ng-show="!isLoaded">
+		<div 
+			class="slds-spinner--brand slds-spinner slds-spinner--medium" 
+			aria-hidden="false" 
+			role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+
+    <div class="slds-grid slds-grid--frame slds-grid--vertical">
+        
+        <vloc-layout layout-name="ta-Sales-CPQ-Header"></vloc-layout>
+
+		<div 
+			class="slds-col slds-grid slds-wrap slds-small-nowrap cpq-container" 
+			ng-class="{'cpq-outer-col-visible': !importedScope.showProductList || importedScope.isConfigAttrsPanelEnabled}">
+			<div 
+				class="slds-backdrop cpq-tablet-overlay" 
+				ng-if="importedScope.isMobileTablet" 
+				ng-click="importedScope.toggleOutsideCols()" 
+				ng-class="{'slds-backdrop--open': !importedScope.showProductList || importedScope.isConfigAttrsPanelEnabled}"></div>
+            
+            
+            <!-- Category Panel -->
+			<div class="slds-is-relative slds-col slds-grid slds-size--1-of-1 slds-small-size--1-of-3 slds-medium-size--1-of-6 slds-large-size--1-of-12">
+               
+                <vloc-layout ng-if="$root.rootCatalogId" layout-name="ta-Sales-CPQ-Categories" style="width: 100%;"></vloc-layout>
+                
+            </div>
+			
+			
+            <!-- Left Sidebar Panel -->
+			<div 
+				class="slds-is-relative slds-col slds-grid slds-size--1-of-1 slds-small-size--1-of-3 slds-medium-size--2-of-6 slds-large-size--4-of-12 cpq-left-sidebar-wrapper" 
+				ng-class="{'cpq-left-sidebar-visible': !importedScope.showProductList && !importedScope.isConfigAttrsPanelEnabled}">
+               
+                <div class="cpq-left-sidebar">
+					<button 
+						ng-if="importedScope.isMobileTablet" 
+						class="slds-button slds-button--icon-border show-hide-button" 
+						ng-click="importedScope.toggleOutsideCols()">
+						<slds-button-svg-icon 
+							sprite="'utility'" 
+							size="'medium'" 
+							icon="'right'" 
+							extra-classes="'show-hide-button-icon'">
+						</slds-button-svg-icon>
+                    </button>
+                    <vloc-layout layout-name="ta-Sales-CPQ-Left-Sidebar" ctrl="CPQItemsController"></vloc-layout>
+                </div>
+
+            </div>
+
+
+			<!-- Cart Selected List Panel -->
+			<div 
+				class="slds-is-relative slds-col slds-grid slds-size--1-of-1 cpq-cart-container-wrapper" 
+				ng-class="{'slds-small-size--2-of-4 slds-medium-size--3-of-6 slds-large-size--7-of-12': importedScope.isConfigAttrsPanelEnabled || (!importedScope.showProductList && !importedScope.isConfigAttrsPanelEnabled), 'slds-small-size--2-of-3 slds-medium-size--4-of-6 slds-large-size--8-of-12': importedScope.showProductList && !importedScope.isConfigAttrsPanelEnabled}">
+
+                <!-- Hide/Show Product List -->
+				<button 
+					ng-if="!importedScope.isMobileTablet" 
+					class="slds-button slds-button--icon-border show-hide-button" 
+					ng-class="{'cursor-point-west': !importedScope.showProductList, 'cursor-point-east': importedScope.showProductList}" 
+					ng-click="importedScope.toggleOutsideCols()">⋮
+                </button>
+
+                <div class="cpq-cart-container">
+                    <vloc-layout layout-name="ta-Sales-CPQ-Product-Cart" ctrl="CPQCartController" show-product-list="{{importedScope.showProductList}}" show-config-panel="{{importedScope.isConfigAttrsPanelEnabled}}"></vloc-layout>
+                </div>
+
+                <div>
+                    <vloc-layout layout-name="ta-Sales-CPQ-Total-Bar" ctrl="CPQTotalController" class="cpq-product-cart-order"></vloc-layout>
+                </div>
+
+			</div>
+			
+
+            <!-- Attr Config Panel -->
+			<div 
+				class="slds-is-relative slds-col slds-grid slds-size--1-of-1 slds-small-size--1-of-3 slds-medium-size--2-of-6 slds-large-size--4-of-12 cpq-product-container-wrapper" 
+				ng-class="{'cpq-product-container-visible': importedScope.isConfigAttrsPanelEnabled}">
+
+                <div class="cpq-product-container">
+                    <vloc-layout layout-name="ta-Sales-CPQ-Product-Cart-Config" ctrl="CPQCartItemConfigController"></vloc-layout>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

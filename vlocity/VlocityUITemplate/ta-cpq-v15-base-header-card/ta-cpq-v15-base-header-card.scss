@@ -1,0 +1,24 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+/*** MIXINS ***/
+@import "cpq-mixin";
+/*** STYLES ***/
+.vlocity {
+    .cpq-base-header-card {
+        .fix--slds-dropdown-to-btn {
+            left: -110%;
+        }
+        
+        .fix-last-child-btngroup {
+            border-radius: 0 .25rem .25rem 0;
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    .cpq-base-header-card {
+        .fix--slds-dropdown-to-btn {
+            right: -1rem;
+        }
+    }
+}

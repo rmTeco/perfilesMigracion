@@ -1,0 +1,5 @@
+<aura:component access="GLOBAL" implements="forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes">
+    <aura:registerEvent name="cardEvent" type="vlocity_cmt:vlocityCardEvent"/>
+    <aura:handler event="vlocity_cmt:profileUpdatedEvent" action="{!c.handleProfileUpdatedEvent}"/>
+    <aura:attribute name="layout" type="String" access='global'/>
+</aura:component>

@@ -1,0 +1,565 @@
+.THIS {
+}
+
+.THIS .docked-footer {
+    display: block;
+}
+
+.THIS .slds-spinner_container {
+    width: 100%;
+}
+
+.THIS textarea#notes-textarea {
+    height: 150px;
+    resize: none;
+}
+
+.THIS section.notes-section {
+    border-top: 1px solid #CFD7E6;
+    border-bottom: 1px solid #CFD7E6;
+}
+
+.THIS button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.THIS .vloc-il-header-panel {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid #CFD7E6;
+}
+
+.THIS .inner-pane-container {
+    padding-bottom: 9rem;
+}
+
+
+
+.THIS.lookup-container {
+    width: 100%;
+    position: relative;
+    height: 100%;
+    background: #fff;
+    overflow-x: hidden;
+}
+
+.THIS .via-top-global-alert.show-validation {
+    opacity: 1;
+    transition: all .2s ease-in;
+}
+
+.THIS .via-top-global-alert {
+    top: auto;
+    opacity: 0;
+}
+
+.THIS .via-pane.via-pane-active {
+    width: 100%;
+    left: 0;
+    box-shadow: 1px 0 10px 1px #808080;
+    visibility: visible;
+}
+
+.THIS .via-pane.via-pane-search {
+    z-index: 1;
+}
+
+.THIS .via-pane.via-pane-search-results {
+    z-index: 2;
+}
+
+.THIS .via-pane.via-pane-related-parties {
+    z-index: 3;
+}
+
+.THIS .via-pane.via-pane-verify-caller {
+    z-index: 4;
+}
+
+.THIS .via-pane.via-pane-caller-verified {
+    z-index: 5;
+}
+
+.THIS .via-pane.via-pane-search-policies {
+    z-index: 6;
+}
+
+.THIS .via-pane.via-pane-agent-search-results {
+    z-index: 7;
+}
+
+.THIS .via-pane {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: left 750ms ease-in-out;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.THIS section.search-result-section {
+    position: relative;
+    padding: 1.25rem 1rem;
+    margin: 0 0.5rem;
+    border-bottom: 1px solid #CFD7E6;
+}
+
+.THIS section.search-result-section button.slds-button {
+    position: absolute;
+    right: 1rem;
+    bottom: 1.5rem;
+}
+
+.THIS .via-pane.via-pane-inactive {
+    transition: visibility 0ms linear 750ms, left 750ms ease-in-out;
+    visibility: hidden;
+    left: 100%;
+}
+
+.THIS .docked-footer {
+    width: 100%;
+    transition: bottom 750ms ease-in-out;
+    padding-right: 18px;
+    padding-left: 18px;
+}
+
+.THIS .via-pane-inactive .docked-footer {
+    bottom: -56px;
+}
+
+.THIS .via-pane-active .docked-footer {
+    bottom: 0px;
+}
+
+.THIS .verification-section,
+.THIS section.notes-section {
+    padding: 1.25rem 1rem;
+    margin: 0 0.5rem;
+    border-bottom: 1px solid #CFD7E6;
+}
+
+.THIS .section-container .verification-section:last-child {
+    border-bottom: none;
+}
+
+.THIS .verification-section:before,
+.THIS .verification-section:after {
+    content: " ";
+    display: table;
+}
+
+.THIS .verification-section:after {
+    clear: both;
+}
+
+.THIS .via-result-actions {
+    min-height: 2rem;
+    line-height: 2rem;
+    padding: 0.5rem 1.5rem;
+    border-bottom: 1px solid #CFD7E6;
+    transition: box-shadow 150ms ease-in;
+}
+
+.THIS .via-result-actions.fix-to-top {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom: none;
+    box-shadow: 0 0px 10px #CFD7E6;
+}
+
+.THIS .via-result-actions .slds-button.via-result-action-btn i.icon.slds-button__icon {
+    font-size: 20px;
+}
+
+.THIS .via-pane-verify-caller .slds-section-title--divider.via-result-actions {
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+
+.THIS .via-result-actions .slds-button.via-result-action-btn:hover {
+    background-color: #D8DDF1;
+}
+
+.THIS .slds-button--icon-border:hover {
+    background-color: #fffcfc;
+}
+
+.THIS .via-result-actions {
+    box-shadow: 0 2px 2px #CFD7E6;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
+    z-index: 99999;
+}
+
+.THIS .via-pane.via-pane-caller-verified .success-icon {
+    background-color: #4BC076;
+}
+
+.THIS .via-pane-caller-verified {
+    text-align: center;
+}
+
+.THIS section.search-result-section.verified-agent {
+    border: none;
+}
+
+.THIS .slds-form-element__label {
+    line-height: 23px;
+    padding-right: 10px;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li {
+    padding: 0.75rem;
+    padding-left: 1.5rem;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li:before,
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li:after {
+    content: " ";
+    display: table;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li:after {
+    clear: both;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li .col {
+    float: left;
+    width: 40%;
+    min-height: 1rem;
+    line-height: 1rem;
+    position: relative;
+    height: 2rem;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li .col:nth-of-type(2) {
+    width: 35%;
+    padding: 0 0.5rem;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li .col:last-of-type {
+    width: 25%;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li .col span,
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li .col button {
+    position: absolute;
+    display: block;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li .col button {
+    left: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+    -ms-transform: translateY(-50%) translateX(-50%);
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li.list-header {
+    padding: 0.5rem 0.75rem 0.5rem 1.5rem;
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li.list-header .col {
+    height: auto;
+    text-transform: uppercase;
+    font-size: 0.688rem;
+    line-height: 1rem;
+}
+
+.THIS .brand--fill svg {
+    fill: #0070d2;
+}
+
+.THIS .unrelated-parties {
+    border-bottom: none;
+    padding-top: 1.25rem;
+    padding-bottom: 1rem;
+}
+
+.THIS .unrelated-parties-container {
+    padding: 0 1rem;
+}
+
+.THIS .unrelated-parties-container .slds-col--padded-small {
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.THIS .unrelated-parties-container button.slds-button {
+    width: 99%;
+    height: 3rem;
+    line-height: 1rem;
+}
+
+.THIS .anchor {
+    position: relative;
+    display: inline-block;
+}
+
+.THIS .slds-popover {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    right: calc(50% - 25px);
+    display: none;
+    white-space: nowrap;
+    width:auto;
+}
+
+.THIS .anchor:hover .slds-popover {
+    display: block;
+}
+
+.THIS .anchor .slds-nubbin_bottom-right:after,.THIS .anchor .slds-nubbin--bottom-right:after ,.THIS .anchor .slds-nubbin_bottom-right:before,.THIS .anchor .slds-nubbin--bottom-right:before {
+    width: 0.8rem;
+    height: 0.8rem;
+}
+
+.THIS .anchor .slds-popover__body {
+    color:black;
+    padding: .6rem .75rem;
+}
+
+/* Custom Tab Design overiding default */
+.THIS .customTab  .slds-tabs__nav-scroller--inner,.THIS .customTab .slds-tab__scroll-controls
+{
+    border:none;
+}
+
+
+.THIS .customTab .slds-tabs--default__item.slds-active a{
+    font-weight:normal;
+}
+
+
+.THIS .customTab .slds-tab__scroll-controls .slds-button[disabled] {
+    opacity:0.3;
+}
+
+.THIS .customTab .slds-tabs--default__item.slds-active:after {
+    background-color: transparent; 
+}
+
+/* tokens */
+.THIS .slds-form-element__label{
+    color: token(labelTextColor);
+}
+
+.THIS .lookup-request-form {
+    color: token(inputTextColor);
+}
+
+.THIS .customTab .slds-tabs--default__item.slds-active {
+    background: token(activeTabBackgroundColor);
+    color: token(activeTabTextColor);
+}
+
+.THIS .customTab .slds-tabs--default__item.slds-active a:hover {
+    color: token(activeTabHoverTextColor);
+}
+
+.THIS .customTab .slds-tabs--default__item {
+    background: token(tabBackgroundColor);
+    color: token(tabTextColor);
+    border-right: 2px solid #ffffff;
+}
+
+.THIS .customTab .slds-tabs--default__item a:hover {
+    color: token(tabHoverTextColor);
+}
+
+.THIS .customTab .slds-tab__scroll-controls {
+    background: token(tabBackgroundColor);
+}
+
+.THIS .customTab .slds-tab__scroll-controls .slds-button{
+    background:token(tabControlButtonBgColor);
+    color: token(tabControlButtonTextColor);
+    border: none;
+}
+
+.THIS .customTab .slds-tabs--default__nav {
+    background: token(tabBackgroundColor);
+    border-color: token(tabBackgroundColor);
+}
+
+
+.THIS .slds-text-heading--medium {
+    color: token(headingTextColor);
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li.list-header .col {
+    color: token(rpTblHeaderTextColor);
+}
+
+.THIS .via-pane.via-pane-related-parties ul.slds-has-dividers--bottom li .col {
+    color: token(rpTblBodyTextColor);
+}
+
+.THIS .via-pane.via-pane-related-parties  .list-header {
+    background : token(rpTblHeaderBgColor);
+}
+
+.THIS .via-pane .slds-section-title--divider {
+    background: token(sectionHeaderBgColor);
+    color: token(sectionHeaderTxtColor);
+}
+
+.THIS .via-pane .verification-section .section-item-label {
+    color: token(vpLabelTxtColor);
+}
+
+.THIS .via-pane .search-result-section {
+    border-color: token(spSearchResultBdrColor);
+}
+
+.THIS .via-pane .notes-section .section-item-label {
+    color: token(vpNotesLabelTxtColor);
+}
+
+.THIS .via-pane .notes-section textarea {
+    color: token(vpNotesValueTxtColor);
+}
+
+.THIS .via-pane-verify-caller .verification-section {
+    border-color: token(vpVerificationBdrColor);
+}
+
+.THIS .via-pane-verify-caller .notes-section {
+    border-color: token(vpVerificationBdrColor);
+}
+
+.THIS .via-pane .slds-section-title--divider.via-result-actions {
+    background: token(actionHeaderBgColor);
+}
+
+.THIS .slds-section-title--divider.via-result-actions span {
+    color : token(actionHeaderTxtColor);
+}
+
+.THIS .via-result-actions .slds-button.via-result-action-btn {
+    background: token(actionBtnBgColor);
+    color : token(actionBtnIconColor);
+}
+
+.THIS .via-result-actions .slds-button.via-result-action-btn:hover {
+    background: token(actionBtnHoverBgColor);
+    color : token(actionBtnHoverIconColor);
+}
+
+.THIS .via-pane-verify-caller .slds-section-title--divider span {
+    color: token(vpSectionHeaderInfoTxtColor);
+}
+
+.THIS .via-pane {
+    background : token(panelBackground);
+}
+
+.THIS .anchor .slds-popover__body {
+    color : token(actionPopupTextColor);
+}
+
+.THIS .anchor:hover .slds-popover {
+    border-color: token(actionPopupBdrColor);
+    background: token(actionPopupBgColor);
+}
+
+.THIS .result-count-text--color {
+    color: token(resultCountTextColor);
+}
+
+.THIS .via-pane .notes-section textarea {
+    color: token(scratchpadTextColor);
+}
+
+.THIS .docked-footer {
+    background: token(footerBackground);
+}
+
+.THIS .footer-action-button {
+    background: token(footerActionBtnBgColor);
+    border-color: token(footerActionBtnBdrColor);
+    color: token(footerActionBtnTextColor);
+}
+
+.THIS .footer-action-button svg {
+    fill: token(footerActionBtnTextColor);
+}
+
+.THIS .footer-action-button:hover {
+    background: token(footerActionBtnHoverBgColor);
+    border-color: token(footerActionBtnHoverBdrColor);
+    color: token(footerActionBtnHoverTextColor);
+}
+
+.THIS .footer-action-button:hover svg {
+    fill: token(footerActionBtnHoverTextColor);
+}
+
+.THIS .navigation-button {
+    background: token(footerNavBtnBgColor);
+    border-color: token(footerNavBtnBdrColor);
+    color: token(footerNavBtnTextColor);
+}
+
+.THIS .navigation-button svg {
+    fill: token(footerNavBtnTextColor);
+}
+
+.THIS .navigation-button:hover {
+    background: token(footerNavBtnHoverBgColor);
+    border-color: token(footerNavBtnHoverBdrColor);
+    color: token(footerNavBtnHoverTextColor);
+}
+
+.THIS .navigation-button:hover svg {
+    fill: token(footerNavBtnHoverTextColor);
+}
+
+.THIS .content-button {
+    background: token(contentBtnBgColor);
+    border-color: token(contentBtnBdrColor);
+    color: token(contentBtnTextColor);
+}
+
+.THIS .content-button svg {
+    fill: token(contentBtnTextColor);
+}
+
+.THIS .content-button:hover {
+    background: token(contentBtnHoverBgColor);
+    border-color: token(contentBtnHoverBdrColor);
+    color: token(contentBtnHoverTextColor);
+}
+
+.THIS .content-button:hover svg {
+    fill: token(contentBtnHoverTextColor);
+}
+
+/*ui:inputDate*/
+.THIS .uiInputDate {
+    margin-top:.75rem;
+}
+@media (min-width: 30em) {
+   .THIS .uiInputDate {
+        margin-top:.5rem;
+    }
+}
+.THIS .uiInputDate .form-element {
+    width:100%;
+}
+@media (min-width: 48em) {
+   .THIS .uiInputDate .form-element {
+        width:66%; 
+        display:inline-block; 
+        text-align:left;
+    }
+}

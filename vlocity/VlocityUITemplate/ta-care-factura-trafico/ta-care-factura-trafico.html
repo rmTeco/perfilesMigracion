@@ -1,0 +1,125 @@
+<section class="console-card active" ng-controller="careFacturaTraficoController as ctrl" ng-init="init()" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" style="padding:20px;" hotkey-layout-card>
+    <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 padding-left margin-bottom">
+        <div style="margin-top:5px;">  
+            <span class="lineNumber" tooltip-placement="bottom" tooltip="{{obj.Name}}">
+            <!-- {{data.title}} -->
+            Pago
+            </span>
+        </div>
+        <div class="slds-float--left">  
+            <span class="font-style-medium" style="font-size: smaller;">Cuenta {{params.AccountIntegrationId}} - {{params.direccionFactura}}</span>
+        </div>
+    </div>
+    <hr class="margin-line"/>
+    <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 padding-left-body margin-bottom">
+    <div class="slds-grid slds-wrap">
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Monto</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;color: #007c85">{{obj.importePago  | number:2}}</span>
+                        </div>
+                    </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Moneda</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{obj.codMoneda}}</span>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Medio de Pago</label><br>
+                        <div class="font-style-medium">
+                             <span style="font-weight: bold;">{{obj.codMedioPago}}</span>
+                        </div>
+                    </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Banco / Entidad</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{obj.infoBanco.nombreEntidadFinanciera}}</span>
+                        </div>
+                    </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Código de entidad</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{codEntidad}}</span>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    </div>
+     <hr class="margin-line"/>
+    <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 padding-left-body margin-bottom">
+    <div class="slds-grid slds-wrap">
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--smal large-sizel">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Número de la tarjeta</label><br>
+                        <div class="font-style-medium" ng-if="obj.infoBanco != null">
+                            <span style="font-weight: bold;">XXXX - {{obj.infoBanco.ultimosDigitosTarjeta}}</span>
+                        </div>
+                        <div class="font-style-medium" ng-if="obj.infoBanco == null">
+                            <span style="font-weight: bold;"></span>
+                        </div>
+                    </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--smal large-sizel">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Número de cheque</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{obj.infoBanco.nroCheque}}</span>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Cantidad de Cuotas</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{obj.infoBanco.cantidadCuotasTarjeta}}</span>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    </div>
+    <hr class="margin-line"/>
+    <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 padding-left-body margin-bottom">
+    <div class="slds-grid slds-wrapt">
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Número de cupón de Telecom</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{obj.infoVoucher.numeroSerie}}</span>
+                        </div>
+                    </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Estado</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{obj.estadoPago}}</span>
+                        </div>
+                    </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap">
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small large-size">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left font-style-small" for="text-input-01">Fecha de imputación</label><br>
+                        <div class="font-style-medium">
+                            <span style="font-weight: bold;">{{obj.fechaAplicacionPago | date:"dd/MM/yyyy"}}</span>
+                        </div>
+                    </div>
+        </div>
+        </div>
+    </div>
+</section>

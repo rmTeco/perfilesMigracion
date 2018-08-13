@@ -1,0 +1,8 @@
+<!-- TODO: Move it to respective layouts to avoid loading of extra template -->
+<vloc-card ng-repeat="card in cards | orderBy: 'order'" 
+  	ctrl="AssetsProductItemController" 
+  	ng-model="card" data="card" records="records" index="{{$index}}"
+  	aria-level="{{(attrs.ariaLevel - 0) + 1}}"
+    show-config-panel="{{attrs.showConfigPanel}}"
+    class="assets-item-product-child-level-{{(attrs.ariaLevel - 0) + 1}}">
+</vloc-card>

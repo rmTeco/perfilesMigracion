@@ -1,0 +1,121 @@
+<div class="grid-container slds-scrollable--y">
+    <table class="slds-table slds-table--bordered slds-table--resizable-cols slds-table--fixed-layout" role="grid">
+      <thead>
+        <tr class="slds-line-height--reset">
+          <th scope="col" style="width:3.25rem;" class="slds-text-align--right">
+            <div class="slds-th__action slds-th__action--form">
+              <span class="slds-checkbox">
+                <input type="checkbox" name="options" id="checkbox-122" />
+                <label class="slds-checkbox__label" for="checkbox-122">
+                  <span class="slds-checkbox--faux"></span>
+                  <span class="slds-form-element__label slds-assistive-text">Select All</span>
+                </label>
+              </span>
+            </div>
+          </th>
+          <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0">
+              <span class="slds-assistive-text">Sort </span>
+              <span class="slds-truncate" title="Jurisdiction">Jurisdicción</span>
+              <div class="slds-icon_container">
+                <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                </svg>
+              </div>
+              <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+            </a>
+            <div class="slds-resizable">
+              <label for="cell-resize-handle-567" class="slds-assistive-text">Name column width</label>
+              <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-567" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0">
+              <span class="slds-assistive-text">Sort </span>
+              <span class="slds-truncate" title="Exencion Date From">Excención fecha desde</span>
+              <div class="slds-icon_container">
+                <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                </svg>
+              </div>
+              <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+            </a>
+            <div class="slds-resizable">
+              <label for="cell-resize-handle-568" class="slds-assistive-text">Account Name column width</label>
+              <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-568" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0">
+              <span class="slds-assistive-text">Sort </span>
+              <span class="slds-truncate" title="Exencion Date To">Excención fecha hasta</span>
+              <div class="slds-icon_container">
+                <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                </svg>
+              </div>
+              <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+            </a>
+            <div class="slds-resizable">
+              <label for="cell-resize-handle-569" class="slds-assistive-text">Close Date column width</label>
+              <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-569" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+          <th class="slds-is-sortable slds-is-resizable slds-text-title--caps" scope="col">
+            <a href="javascript:void(0);" class="slds-th__action slds-text-link--reset" tabindex="0">
+              <span class="slds-assistive-text">Sort </span>
+              <span class="slds-truncate" title="Percentage">Porcentaje</span>
+              <div class="slds-icon_container">
+                <svg class="slds-icon slds-icon--x-small slds-icon-text-default slds-is-sortable__icon" aria-hidden="true">
+                  <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#arrowdown"></use>
+                </svg>
+              </div>
+              <span class="slds-assistive-text" aria-live="assertive" aria-atomic="true"></span>
+            </a>
+            <div class="slds-resizable">
+              <label for="cell-resize-handle-571" class="slds-assistive-text">Confidence column width</label>
+              <input type="range" min="20" max="1000" class="slds-resizable__input slds-assistive-text" id="cell-resize-handle-571" tabindex="0" />
+              <span class="slds-resizable__handle">
+                <span class="slds-resizable__divider"></span>
+              </span>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="slds-hint-parent" ng-repeat="provincia in ['CABA', 'Santa Fe', 'Entre Ríos', 'Córdoba', 'Misiones',
+        'Corrientes', 'Chaco', 'Santa Cruz', 'Tierra del Fuego', 'Neuquen', 'Chubut', 'La Rioja', 'Tucuman', 'Formosa', 'La Pampa', 'Catamarca', 'Jujuy']">
+          <td role="gridcell" class="slds-text-align--right" style="width:3.25rem;">
+            <span class="slds-checkbox">
+              <input type="checkbox" name="options" ng-attr-id="{{ 'checkboxJ-' + $index }}" />
+              <label class="slds-checkbox__label" ng-attr-for="{{ 'checkboxJ-' + $index }}">
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label slds-assistive-text">Select item 1</span>
+              </label>
+            </span>
+          </td>
+          <td role="gridcell">
+            <div class="slds-truncate" title="{{provincia}}">{{provincia}}</div>
+          </td>
+          <td role="gridcell">
+            <div class="slds-truncate" title="4/10/15">4/10/15</div>
+          </td>
+          <td role="gridcell">
+            <div class="slds-truncate" title="4/10/15">4/10/15</div>
+          </td>
+          <td role="gridcell">
+            <div class="slds-truncate" title="30%">30%</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

@@ -1,0 +1,23 @@
+{
+    "Cards": [
+        "profile-account-slds",
+        "profile-account-info-slds"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000008eeAo"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name, BillingAddress, Phone, PhotoURL, Type, Industry, Website, %vlocity_namespace%__CustomerValue__c FROM Account WHERE Id = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "console-sidebar-slds"
+        }
+    }
+}

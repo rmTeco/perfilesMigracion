@@ -1,0 +1,121 @@
+@import "campaign-variables";
+@import "campaign-mixins";
+
+.campaign-details-right {
+    height: 100%;
+    
+    ng-include[src="'campaign-column'"] {
+        height: 100%;
+        display: block;
+        
+        > div {
+            height: 100%;
+            
+            > div {
+                height: 100%;
+            }
+        }
+    }
+
+    ng-include[src="'campaign-detail'"] {
+        height: 100%;
+        display: block;
+    }
+}
+
+.campaign-detail {
+    @include clearfix;
+    transition: padding 500ms ease-in;
+    position: relative;
+    height: 100%;
+    background-color: $cards-gray;
+    padding: 3.75rem 1rem;
+    border-left: 1px solid $cards-border-gray;
+    z-index: 1000;
+
+    .content-box{
+        background-color: white;
+        &:hover{
+            cursor:pointer;
+        }
+    }
+
+    .campaign-progress {
+        .campaign-progress-bar {
+            @include clearfix;
+            width: 100%;
+            height: 1rem;
+            position: relative;
+
+            .campaign-member-status {
+                background-color: $primary-alternative;
+                display: inline-block;
+                float: left;
+                height: 100%;
+
+                &.campaign-member-status-0 {
+                    background-color: $primary-dark;
+                }
+                &.campaign-member-status-1 {
+                    background-color: $primary-medium;
+                }
+                &.campaign-member-status-2 {
+                    background-color: $primary-light;
+                }
+                &.campaign-member-status-3 {
+                    background-color: $primary-lightest;
+                }
+
+                + .slds-popover--tooltip {
+                    width: 6rem;
+                    text-align: center;
+                    position: absolute;
+                    top: -2.8rem !important;
+
+                    .slds-popover__body {
+                        line-height: 1rem;
+                    }
+                }
+            }
+        }
+    }
+    
+    @include columnHeader('campaign-detail-header');
+    
+    .toggle-panel {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3rem;
+        background-color: $neutral-lightest;
+        border-top: 1px solid $cards-border-gray;
+        
+        .slds-icon_container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0.75rem;
+            z-index: 2;
+            cursor: pointer;
+            
+            .slds-icon {
+                fill: $neutral-dark;
+            }
+        }
+    }
+    
+    &.toggle-right-collapsed {
+        padding-left: 3rem;
+    }
+
+    @media screen and (max-width: $bp-small) {
+        &.toggle-right-collapsed {
+            padding: 1.5rem 1rem;
+        }
+
+        .campaign-detail-header, .toggle-panel {
+            display: none;
+        }
+    }
+}

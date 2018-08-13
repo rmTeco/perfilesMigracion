@@ -1,0 +1,10 @@
+<vloc-card ng-repeat="card in cards |orderBy:order" ctrl="{{accountCtrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>
+
+<div class="slob">
+    <div class="col-xs-7">
+        <vloc-cmp name="profileTags" customtemplate="left-profile-tag" ctrl="attributeCtrl" loaded="true"></vloc-cmp>
+    </div>
+    <div class="col-xs-5">
+        <vloc-cmp name="story" customtemplate="left-story" ctrl="storyCtrl" loaded="true"></vloc-cmp>
+    </div>
+</div>

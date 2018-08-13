@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Custom Object used to store the work teams hierarchy used to handle the security at Business Process level.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AmountOfActiveChildTeams__c</fullName>
+        <description>Summary with the amount of child teams related to the work team.</description>
+        <externalId>false</externalId>
+        <label>Amount of Active Child teams</label>
+        <summaryFilterItems>
+            <field>Team_Member__c.Is_Active__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Team_Member__c.Work_Team__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>PFTA-8791 - Used to indicate if the work team is active or not.</description>
+        <externalId>false</externalId>
+        <label>Is Active?</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Manager_Profile__c</fullName>
+        <externalId>false</externalId>
+        <formula>Manager__r.Profile.Name</formula>
+        <label>Manager Profile</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Manager__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Stores the manager of the workplace</description>
+        <externalId>false</externalId>
+        <label>Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Workplaces</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Team__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Field used to handle the hierarchy relationship between the Work Teams.</description>
+        <externalId>false</externalId>
+        <label>Parent Team</label>
+        <referenceTo>WorkTeam__c</referenceTo>
+        <relationshipLabel>Child Work Teams</relationshipLabel>
+        <relationshipName>Workplaces</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>PublicGroupAPIName__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>It is used to store the API name of the public group created as a mirror of the work team.
+Used to control the synchronization between this 2 objects.</description>
+        <externalId>true</externalId>
+        <label>Public Group API Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Reviewer_Team__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Used to store the reviewer team for the RAV.</description>
+        <externalId>false</externalId>
+        <label>Reviewer Team</label>
+        <referenceTo>WorkTeam__c</referenceTo>
+        <relationshipLabel>Work Teams (Reviewer Team)</relationshipLabel>
+        <relationshipName>Work_Teams</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Team_Name__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Stores the name of the division (team).</description>
+        <externalId>true</externalId>
+        <label>Team Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Team_Queue__c</fullName>
+        <description>It is used to store the Developer name of the queue related to the team.</description>
+        <externalId>true</externalId>
+        <label>Team Queue</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Place__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Relates the Work Team with the Agency or Point of Sales.</description>
+        <externalId>false</externalId>
+        <label>Work Place</label>
+        <referenceTo>vlocity_cmt__BusinessSite__c</referenceTo>
+        <relationshipLabel>Work Teams</relationshipLabel>
+        <relationshipName>Work_Teams</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Work_Team_Number__c</fullName>
+        <description>Autogenerated number of the workteam.</description>
+        <displayFormat>WT-{0000}</displayFormat>
+        <externalId>true</externalId>
+        <label>Work Team Number</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>AutoNumber</type>
+    </fields>
+    <fields>
+        <fullName>WorkteamLevel__c</fullName>
+        <externalId>false</externalId>
+        <label>Workteam Level</label>
+        <precision>9</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Work Team</label>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>buscar_equipo</fullName>
+        <columns>NAME</columns>
+        <columns>Team_Name__c</columns>
+        <columns>Parent_Team__c</columns>
+        <columns>Manager__c</columns>
+        <columns>Work_Place__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Team_Name__c</field>
+            <operation>contains</operation>
+            <value>Age</value>
+        </filters>
+        <label>buscar equipo</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Work Team Name</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Work Teams</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

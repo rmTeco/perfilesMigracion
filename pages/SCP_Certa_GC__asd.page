@@ -1,0 +1,15 @@
+<apex:page standardController="contact" >
+    <script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+
+	}, false);
+    
+    window.onload = function() {
+		setTimeout(function(){
+	    console.log(document.getElementsByName("scp_certa_gc__botonborrar"));    
+	    document.getElementsByName("scp_certa_gc__botonborrar")[0].style.display = "none";
+}, 3000);
+	};  
+    </script>
+</apex:page>

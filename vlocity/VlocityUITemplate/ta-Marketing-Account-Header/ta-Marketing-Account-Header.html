@@ -1,0 +1,128 @@
+<div class="slds-card via-slds-card--active slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}"  data-popover-flyout="true">
+  <div class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center slds-p-around--small" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+      <div class="slds-media__figure">
+          <vloc-card-icon sprite="'standard'" icon="'person_account'" size="'medium'" extra-classes="'slds-icon-standard-orders'"></vloc-card-icon>
+      </div>
+      <div class="slds-media__body slds-truncate">
+        <a href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="{{data.title}}">
+          <span class="slds-text-heading--small">{{::$root.vlocity.getCustomLabel('Account', 'Account')}}</span>
+        </a>
+        <br />
+        <span>{{obj.Name}}</span>
+      </div>
+    </div>
+    <div class="slds-no-flex" ng-init="overflowActions = data.actions.slice(data.limitActionLinksTo?data.limitActionLinksTo:5)">
+        <slds-dropdown content="overflowActions" ng-if="overflowActions.length > 0" icon-attribute="vlocityIcon" label-attribute="displayName" action-function="performAction(item)" button-size="medium"></slds-dropdown>
+    </div>
+  </div>
+  <div class="slds-card__body via-slds-card__body slds-grid slds-wrap slds-theme--default slds-p-around--medium">
+      <div class="slds-col--padded slds-medium-size--2-of-6">
+          <div class="slds-tile slds-p-bottom--medium">
+            <p class="slds-truncate slds-text-heading--label" title="{{field.label}}">{{::$root.vlocity.getCustomLabel('ClubPersonalCategory', 'ClubPersonalCategory')}}</p>
+            <div class="slds-tile__detail slds-text-heading--small ">
+                <p class="slds-truncate">{{obj.PersonalClubCategory}}</p>
+                <!--p class="slds-truncate">{{obj[field.relationshipName]['Name']}}</p-->
+            </div>
+        </div>
+      </div>
+      <div class="slds-col--padded slds-medium-size--2-of-6">
+          <div class="slds-tile slds-p-bottom--medium">
+            <p class="slds-truncate slds-text-heading--label" title="{{field.label}}">{{::$root.vlocity.getCustomLabel('ClubPersonalPoints', 'ClubPersonalPoints')}}</p>
+            <div class="slds-tile__detail slds-text-heading--small ">
+                <p class="slds-truncate">{{obj.PersonalClubPoints}}</p>
+                <!--p class="slds-truncate">{{obj[field.relationshipName]['Name']}}</p-->
+            </div>
+        </div>
+      </div>
+      <div class="slds-col--padded slds-medium-size--2-of-6">
+          <div class="slds-tile slds-p-bottom--medium">
+            <p class="slds-truncate slds-text-heading--label" title="{{field.label}}">{{::$root.vlocity.getCustomLabel('PointstoExpire', 'PointstoExpire')}}</p>
+            <div class="slds-tile__detail slds-text-heading--small ">
+                <p class="slds-truncate">{{obj.puntosPorVencer}}</p>
+                <!--p class="slds-truncate">{{obj[field.relationshipName]['Name']}}</p-->
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+<!-- =  Service Accounts  = -->
+<div class="slds-card via-slds-card--active slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}"  data-popover-flyout="true">
+    <div class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center slds-p-around--small" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <section>
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <slds-svg-icon sprite="'standard'" size="'medium'" icon="'account'" extra-classes="'slds-icon-standard-orders'"></slds-svg-icon>
+                    </div>
+                    <div class="slds-media__body slds-truncate">
+                        <h1 href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom">
+                            <span class="slds-text-heading--small">{{::$root.vlocity.getCustomLabel('ServiceAccounts', 'ServiceAccounts')}}</span>
+                        </h1>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <table ng-if="obj.ServiceAccounts"
+        ng-init="items = obj.ServiceAccounts"
+        class="slds-table slds-table--bordered slds-table--cell-buffer techCare-PriceList">
+      <thead>
+        <tr class="slds-section-title--divider">
+          <th scope="col">
+            <div  title="Name">Nombre</div>
+          </th>
+          <th scope="col">
+            <div title="Description">Tipo</div>
+          </th>
+          <th scope="col">
+            <div title="Description">Asset</div>
+          </th>
+          <th scope="col">
+            <div title="Description">Total Puntos</div>
+          </th>
+          <th scope="col">
+            <div title="Price">Puntos Acumulados</div>
+          </th>
+          <th scope="col">
+            <div title="Price">Fecha Vencimiento</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody><!--class="techCare-PriceList-tbody"-->
+        <tr ng-repeat="item in items">
+          <td scope="row">
+            <div>{{item.Name}}</div>
+          </td>
+          <td scope="row">
+            <div>{{item.Type}}</div>
+          </td>
+          <td>
+              <ul class="fechaVto" ng-init="assets = item.assets">
+                <li ng-repeat="asset in assets">
+                    {{asset.MSISDN}}
+                </li>
+            </ul>
+          </td>
+          <td>
+            <div>{{item.puntosSocio}}</div>
+          </td>
+          <td>
+            <!--div class="" title="Price">{{item.saldos[0].puntos}}</div-->
+            <ul class="puntos" ng-init="saldos = item.saldos">
+                <li ng-repeat="saldo in saldos">
+                    {{saldo.puntos}}
+                </li>
+            </ul>
+          </td>
+          <td>
+              <ul class="fechaVto" ng-init="saldos = item.saldos">
+                <li ng-repeat="saldo in saldos">
+                    {{saldo.fechaVto}}
+                </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

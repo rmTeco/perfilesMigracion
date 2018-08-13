@@ -1,0 +1,34 @@
+<!-- Displays Manual Tasks assigned to a Queue in off-platform -->
+<apex:page showHeader="false" sidebar="false" standardController="vlocity_cmt__ManualQueue__c" extensions="vlocity_cmt.XOMCatalogObjectControllerExtension,vlocity_cmt.XOMOffPlatformAccessConfigController,vlocity_cmt.XOMThorLocalizationController" standardStylesheets="false" docType="html-5.0">
+    <apex:slds />
+    <script type="text/javascript" src="{!URLFOR($Resource.ThorJsBundle)}"></script>
+    <!-- <script src="https://localhost:8443/main.js"></script> -->
+    <script type="text/javascript" src="{!URLFOR($Resource.vlocity_assets, '/javascripts/components/remoteActions.js')}"></script>
+    <link rel="stylesheet" href="{!URLFOR($Resource.ThorBundleCss)}" />   
+    <div class="slds-scope">
+        <ng-view ng-app="xom">loading...</ng-view>
+    </div>
+    <script type="application/javascript">
+        var globalKey = '{!globalKey}';
+        console.log('globalKey', globalKey);        
+        angular.module('xom')
+            .config(['remoteActionsProvider', function(remoteActionsProvider) 
+            {
+                remoteActionsProvider.setRemoteActions({
+                    getTranslation:'{!$RemoteAction.XOMThorLocalizationController.getTranslation}',
+                    getThorBackendUrl: "{!$RemoteAction.XOMOffPlatformAccessConfigController.getOffplatformUrl}"
+                });
+            }])
+            .value('thorLayoutConfig', 
+            {
+            hideObjectHierarchy: true,
+            hideHeader: true,
+            hideLogoutButton: true,
+            defaultTabId: "4412964684871513729", // Assigned Manual Tasks tab
+            hideInactiveTabsForObjectTypes: ["4412964684871505537"], // list of Object Types with active tabs
+            contextObjectId: '{!$CurrentPage.parameters.Id}'
+            });
+            if(!window.location.hash)
+                window.location.hash = "!/globalObject/"+globalKey;
+    </script>
+</apex:page>

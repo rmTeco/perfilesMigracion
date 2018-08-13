@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Cotización de unidades libres en pesos argentinos. Se utiliza en ajustes de unidades para calcular los limites de RAV</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>DatosToPesos__c</fullName>
+        <defaultValue>20</defaultValue>
+        <description>Valor de 1MB en pesos argentinos</description>
+        <externalId>false</externalId>
+        <label>DatosToPesos</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MinutosToPesos__c</fullName>
+        <defaultValue>5</defaultValue>
+        <description>Valor de 1 minutos en pesos argentinos</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Valor de 1 minutos en pesos argentinos</inlineHelpText>
+        <label>MinutosToPesos</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SMSToPesos__c</fullName>
+        <defaultValue>10</defaultValue>
+        <description>Valor de 1 SMS en pesos argentinos</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Valor de 1 SMS en pesos argentinos</inlineHelpText>
+        <label>SMSToPesos</label>
+        <precision>8</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>RAV_UnitConversionRates</label>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,167 @@
+<apex:page docType="html-5.0" showHeader="false" standardStylesheets="false"  controller="OrderController">
+  <!-- Begin Default Content REMOVE THIS -->
+  
+     <apex:outputpanel rendered="{!error<>''}">
+         {!error}
+     </apex:outputpanel>
+
+    <apex:outputpanel rendered="{!error==''}">
+          <html>
+                <head>
+                     <apex:stylesheet value="{!$Resource.taTechnicalServicePDF}" />
+                </head>
+                <body>
+                    <div class="pdf-technicalService">
+                   
+                           <table class="slds-table--bordered slds-table--cell-buffer">
+                              
+                                  <td>
+                                       <apex:image id="theImage" value="{!$Resource.logoPersonal_Azul}" width="100" height="70" alt="Description of image here"/>
+                                  </td>
+                                  <td>
+                                       <b>Orden Nº {!orderNumberOm}</b>
+                                  </td>
+                             
+                            </table>
+                            <br/>
+                            
+                            
+                           <table class="slds-table--bordered slds-table--cell-buffer">
+                              <tbody>
+                                  <tr>
+                                      <td>
+                                           <b>Fecha Origen Orden:</b> {!orderDateCreate}
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                           <b>Fecha Modificación Orden:</b> {!orderDateModify}
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                           <b>Estado de la Orden:</b> {!orderOmState}
+                                      </td>
+                                  </tr>
+                              </tbody>
+                            </table>
+                            <br/>
+                       
+                        <div class="slds-box slds-section-title--divider slds-text-align--center">
+                            Milestones
+                        </div>
+                        <apex:outputpanel rendered="{!listMilestones.size != 0}">
+                         <table  class="slds-table slds-table--bordered slds-table--cell-buffer">
+                              <tbody>
+                              <tr>
+                                  <td class="slds-box slds-text-align--center">
+                                    Nombre
+                                  </td>
+                                  
+                                   <td class="slds-box slds-text-align--center">
+                                    Fecha
+                                  </td>
+                                   <td class="slds-box slds-text-align--center">
+                                    Estado
+                                  </td>
+                              </tr>
+                              <apex:repeat value="{!listMilestones}" var="lista">
+                                    
+                              <tr>
+                                <td>  
+                                   <apex:repeat value="{!lista['name']}" var="nameMilestones">
+                                      <apex:outputText value="{!nameMilestones}" /> 
+                                   </apex:repeat>
+                                </td>  
+                                <td>  
+                                   <apex:repeat value="{!lista['updated']}" var="updateMilestones">
+                                      <apex:outputText value="{!updateMilestones}" /> 
+                                   </apex:repeat>
+                                </td>  
+                                <td>  
+                                   <apex:repeat value="{!lista['state']}" var="stateMilestones">
+                                      <apex:outputText value="{!stateMilestones}" /> 
+                                   </apex:repeat>
+                                </td>                                      
+                              </tr>
+                             
+                              </apex:repeat>
+                              </tbody>
+                            </table>
+                         </apex:outputpanel>   
+                         <apex:outputpanel rendered="{!listMilestones.size == 0}">
+                             <div class="slds-box slds-text-align--center">
+                                 Sin Milestones para Mostrar
+                             </div>
+                         </apex:outputpanel>                                  
+                         <div class="slds-box slds-section-title--divider slds-text-align--center">
+                            Tareas
+                        </div>
+                         <apex:outputpanel rendered="{!listTask.size == 0}">
+                             <div class="slds-box slds-text-align--center">
+                                 Sin Tareas para Mostrar
+                             </div>
+                         </apex:outputpanel>  
+                         <apex:outputpanel rendered="{!listTask.size != 0}">
+                             <table  class="slds-table slds-table--bordered slds-table--cell-buffer">
+                                  <tbody>
+                                  <tr>
+                                      <td class="slds-box slds-text-align--center">
+                                        Nombre
+                                      </td>
+                                      
+                                       <td class="slds-box slds-text-align--center">
+                                        Fecha
+                                      </td>
+                                       <td class="slds-box slds-text-align--center">
+                                        Estado
+                                      </td>
+                                      <td class="slds-box slds-text-align--center">
+                                        Error
+                                      </td>
+                                      <td class="slds-box slds-text-align--center">
+                                        Inbox
+                                      </td>
+                                  </tr>
+                                  <apex:repeat value="{!listTask}" var="milistaTaks">
+                                  <tr>
+                                    <td>  
+                                       <apex:repeat value="{!milistaTaks['name']}" var="nameTaks">
+                                          <apex:outputText value="{!nameTaks}" /> 
+                                       </apex:repeat>
+                                    </td>  
+                                    <td>  
+                                       <apex:repeat value="{!milistaTaks['updated']}" var="updateTaks">
+                                          <apex:outputText value="{!updateTaks}" /> 
+                                       </apex:repeat>
+                                    </td>  
+                                    <td>  
+                                       <apex:repeat value="{!milistaTaks['state']}" var="stateTaks">
+                                          <apex:outputText value="{!stateTaks}" /> 
+                                       </apex:repeat>
+                                    </td>  
+                                    <td> 
+                                       <apex:repeat value="{!milistaTaks['falloutDetails']}" var="falloutTaks">
+                                          <apex:outputText value="{!falloutTaks}" /> 
+                                       </apex:repeat>                         
+                                    </td>    
+                                    <td>
+                                       <apex:repeat value="{!milistaTaks['manualQueueName']}" var="queueName">
+                                          <apex:outputText value="{!queueName}" /> 
+                                       </apex:repeat>                          
+                                       
+                                    </td>                                                                                  
+                                  </tr>
+                                 
+                                  </apex:repeat>
+                                  </tbody>
+                                </table> 
+                         </apex:outputpanel>                    
+                                 
+                  </div>
+               
+             </body>
+          </html>
+   </apex:outputpanel>
+
+</apex:page>

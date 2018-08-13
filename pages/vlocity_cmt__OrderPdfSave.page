@@ -1,0 +1,10 @@
+<apex:page standardcontroller="Order" action="{!renumberLineItems}" extensions="vlocity_cmt.OrderPdfController">
+	<apex:form >
+		<apex:commandButton action="{!savePDF}" value="Secure Save" id="save" />
+		<script>
+			window.onload = function() {
+			document.getElementById( '{!$Component.save}' ).click();
+			}
+		</script>
+	</apex:form>
+</apex:page>

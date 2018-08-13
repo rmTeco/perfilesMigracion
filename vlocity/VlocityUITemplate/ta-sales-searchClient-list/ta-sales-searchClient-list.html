@@ -1,0 +1,1086 @@
+<div 
+	class="slds-tabs--scoped"
+	ng-controller="SearchClientController as scc"
+	ng-init="scc.init(control.vlcSI[control.itemsKey]);"
+	ng-if="control.vlcSI[control.itemsKey].length">
+	<!-- <a ng-href="/apex/taNewContact?documentType={{bpTree.response.dataInput.DocumentType}}&documentNumber={{bpTree.response.dataInput.DocumentNumber}}" class="slds-button slds-button--neutral slds-m-bottom--medium">
+	    Crear Cliente Nuevo
+	</a> -->
+	<div class="slds-form-element__control" ng-show="scc.activeMessageBlacklist === true">
+
+        <div class="vlc-control-wrapper">
+            <div class="message description" msg="Requirement" style="margin-bottom: 15px;">
+                El DNI seleccionado figura en lista de fraude.
+            </div>
+                
+        </div>
+
+    </div>
+	<ul 
+		class="slds-tabs--scoped__nav" 
+		role="tablist">
+		<li 
+			class="slds-tabs--scoped__item slds-active"
+			ng-class="{'slds-active': scc.tabActive == 'activeClientes'}"
+			ng-show="control.vlcSI[control.itemsKey][0].activeClientes.length"
+			title="Item One" 
+			role="presentation">
+			<a 
+				class="slds-tabs--scoped__link" 
+				href="javascript:void(0);" 
+				role="tab" 
+				tabindex="0" 
+				aria-selected="{scc.tabActive == 'activeClientes'}"
+				aria-controls="tab-scoped-1" 
+				id="tab-scoped-1__item"
+				ng-click="scc.setTabActive('activeClientes');">
+				
+				Clientes Activos
+			</a>
+		</li>
+		<li 
+			class="slds-tabs--scoped__item"
+			ng-class="{'slds-active': scc.tabActive == 'inActiveClientes'}"
+			ng-show="control.vlcSI[control.itemsKey][0].inActiveClientes.length"
+			title="Item Two" role="presentation">
+			<a 
+				class="slds-tabs--scoped__link" 
+				href="javascript:void(0);" 
+				role="tab" 
+				tabindex="-1" 
+				aria-selected="{scc.tabActive == 'inActiveClientes'}"
+				aria-controls="tab-scoped-2" 
+				id="tab-scoped-2__item" 
+				ng-click="scc.setTabActive('inActiveClientes');">
+					
+				Clientes Inactivos
+			</a>
+		</li>
+		<li 
+			class="slds-tabs--scoped__item"
+			ng-class="{'slds-active': scc.tabActive == 'contactsWhithOutAccounts'}"
+			ng-show="control.vlcSI[control.itemsKey][0].contactsWhithOutAccounts.length"
+			title="Item Three" role="presentation">
+			<a 
+				class="slds-tabs--scoped__link" 
+				href="javascript:void(0);" 
+				role="tab" 
+				tabindex="-2" 
+				aria-selected="{scc.tabActive == 'contactsWhithOutAccounts'}"
+				aria-controls="tab-scoped-3" 
+				id="tab-scoped-3__item" 
+				ng-click="scc.setTabActive('contactsWhithOutAccounts');">
+					
+				Contactos
+			</a>
+		</li>
+		
+	</ul>
+	<div 
+		id="tab-scoped-1" 
+		class="slds-tabs--scoped__content" 
+		role="tabpanel" 
+		aria-labelledby="tab-scoped-1__item"
+		ng-show="scc.tabActive == 'activeClientes' && control.vlcSI[control.itemsKey][0].activeClientes.length">
+
+		<section
+			ng-init="
+				viewState = {};
+				viewState.Name;
+				viewState.trackedRows = {};
+				viewState.ignoredFields = ['vlcSelected', 'Id', 'Expiration Date', 'Active Date'];
+				viewState.nameFields = ['First Name', 'Last Name'];
+				viewState.orderByField;
+				viewState.reverseSort;"
+			class="form-inline">
+
+			<!-- ng-controller="cscLookupController as clc" -->
+
+
+			<!-- 
+				// ACTIVE CLIENTS
+			 -->
+			<div 
+				class="vloc-table-wrapper-scrollable"
+				ng-show="control.vlcSI[control.itemsKey][0].activeClientes.length">
+				<!-- <table class="slds-table slds-table--bordered slds-table--cell-buffer table table-bordered tableCSS" style="width: 100%"> -->
+				<table class="slds-table slds-table--bordered slds-tree slds-table--tree table tableCSS" role="treegrid" aria-owns="tree0-node0" aria-readonly="true">
+					<thead>
+						<tr class="slds-text-title--caps">
+							
+							<th 
+								ng-click="viewState.orderByField='AccountName'; viewState.reverseSort = !viewState.reverseSort"
+								class="slds-cell-buffer--left" 
+								scope="col">
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Razon Social">RAZON SOCIAL</div>
+									<span ng-show="viewState.orderByField == 'AccountName'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+
+							<th 
+								ng-click="viewState.orderByField='PrimaryContactName'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Nombre">NOMBRE</div>
+									<span ng-show="viewState.orderByField == 'PrimaryContactName'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+
+							<th 
+								ng-click="viewState.orderByField='Phone'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Linea">LINEA</div>
+									<span ng-show="viewState.orderByField == 'Phone'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='DocumentType'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Tipo Documento">TIPO DOCUMENTO</div>
+									<span ng-show="viewState.orderByField == 'DocumentType'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='DocumentNumber'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Documento">DOCUMENTO</div>
+									<span ng-show="viewState.orderByField == 'DocumentNumber'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='Mail'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Mail">MAIL</div>
+									<span ng-show="viewState.orderByField == 'Mail'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='AccountNumber'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="nro de cuenta">NRO DE CUENTA</div>
+									<span ng-show="viewState.orderByField == 'AccountNumber'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							<th>
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Acciones">ACCIONES</div>
+								</div>
+							</th>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<tr
+							ng-repeat-start="record in control.vlcSI[control.itemsKey][0].activeClientes | filter: viewState.query | orderBy:viewState.orderByField:viewState.reverseSort"
+							ng-init="viewState.index=$index"
+							class="searchClient-body slds-hint-parent"
+							ng-class="{'active slds-is-selected': record.vlcSelected,'is-tracked': viewState.trackedRows[$index]}"
+							aria-level="1" ng-click="accountStatus[record.AccountId] = !accountStatus[record.AccountId]">
+
+							<th 
+								ng-if="viewState.ignoredFields.indexOf(field) == -1" 
+								data-label="Account Name" 
+								scope="row" 
+								class="slds-tree__item">
+								<button 
+									ng-if="record.Lineas"
+									class="slds-button slds-button--icon slds-m-right--x-small" 
+									title="Toggle">
+									<!-- <svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+									</svg>
+									<span class="slds-assistive-text">Toggle</span> -->
+									<slds-svg-icon
+										ng-if="!accountStatus[record.AccountId]"
+										sprite="'utility'"
+										icon="'chevronright'"
+										size="'x-small'"
+										no-hint="true"
+										extra-classes="'slds-button slds-button--icon'">
+									</slds-svg-icon>
+									<slds-svg-icon
+										ng-if="accountStatus[record.AccountId]"
+										sprite="'utility'"
+										icon="'chevrondown'"
+										size="'x-small'"
+										no-hint="true"
+										extra-classes="'slds-button slds-button--icon'">
+									</slds-svg-icon>
+								</button>
+								<div 
+								    class="slds-truncate" 
+								    title="{{record.AccountName}}"
+								    ng-click="scc.openGestionDeClientesInPrimaryTab(record.AccountId); $event.stopPropagation();">
+								    <!--ng-click="scc.selectAccount(record.AccountId, record.DocumentNumber, record.DocumentType);"-->
+								    <a>{{record.AccountName}}</a>
+								</div>
+							</th>
+							
+							<td data-label="Primary Contact Name">
+								<div class="slds-truncate" title="{{record.PrimaryContactName}}">{{record.PrimaryContactName}}</div>
+							</td>
+							
+							<td data-label="Phone">
+								<div class="slds-truncate" title="{{record.Phone}}">{{record.Phone}}</div>
+							</td>
+							
+							<td data-label="Document Type">
+								<div class="slds-truncate" title="{{record.DocumentType}}">{{record.DocumentType}}</div>
+							</td>
+							
+							<td data-label="Document Number">
+								<div class="slds-truncate" title="{{record.DocumentNumber}}">{{record.DocumentNumber}}</div>
+							</td>
+
+							<td 
+								data-label="email"
+								ng-init="editEmail = false"
+								ng-class="{'slds-grid':!record.ValidEmail && editEmail}"
+								class="taEmailContainer">
+
+								<!-- OK -->
+							<div 
+									ng-show="record.ValidEmail"
+									class="slds-truncate" 
+									title="{{record.Email}}">{{record.Email}}</div>
+
+								<!-- Invalid -->
+							<div 
+									ng-click="editEmail = true" 
+									ng-show="!record.ValidEmail && !editEmail"
+									class="slds-truncate invalidEmail" 
+									title="{{record.Email}}">{{record.Email}}</div> 
+
+								<!-- invalid and edit -->
+								<input 
+									ng-show="!record.ValidEmail && editEmail"
+									type="email"
+									class="slds-input ta-email-input" 
+									ng-model="record.Email" /> 
+									
+								<button 
+									ng-show="!record.ValidEmail && editEmail"
+									ng-click="scc.updateContactEmail(record.PrimaryContactId, record.Email); editEmail = false"
+									class="slds-button slds-button--neutral">
+									Validar
+								</button>
+							</td>
+							
+							<td data-label="Account Number">
+								<div class="slds-truncate" title="{{record.AccountNumber}}">{{record.AccountNumber}}</div>
+							</td>
+							<td data-label="actions" ng-click="$event.stopPropagation()">
+								<a 
+									ng-click="scc.checkClientsAndRedirect(record, 'CPQ');"
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Catalogo" 
+									title="Catalogo">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'edit_form'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Catalogo</span>
+								</a>
+								<!-- <a 
+									ng-click="scc.checkClientsAndRedirect(record, 'NewBilling');"
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Nueva Cuenta" 
+									title="Nueva Cuenta">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'adduser'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Nueva Cuenta</span>
+								</a> -->
+							</td>
+						</tr>
+						
+						<tr 
+							ng-if="accountStatus[record.AccountId]" 	
+							ng-repeat="line in record.Lineas" 
+							aria-level="2"
+							class="slds-hint-parent "
+							>
+                            
+							<th data-label="Asset Name" scope="row" class="slds-tree__item">
+								<button class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+									<svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+									</svg>
+									<span class="slds-assistive-text">Toggle</span>
+								</button>
+								<!--	<div class="slds-truncate" title="{{line.Name}}"> {{line.Name}}</div> -->
+								<div class="slds-truncate" title="{{line.Parent.Name}}"> {{line.Name}}</div>
+							</th>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="Asset Number">
+							    <!--line--{{line.AccountId}}
+							    record.AccountId{{record.AccountId}}-->
+								<!--<div class="slds-truncate" title="{{line.%vlocity_namespace%__LineNumber__c}}">{{line.%vlocity_namespace%__LineNumber__c}}</div>-->
+								<!--<a href="/console?tsid={{control.vlcSI[control.itemsKey][0].AplicationId}}&useCache=false#%2f{{line.AccountId}}" class="slds-truncate" title="{{line.%vlocity_namespace%__LineNumber__c}}">{{line.%vlocity_namespace%__LineNumber__c}}</a>-->
+								<a 
+								    ng-href="" 
+								    ng-click="scc.openGestionDeClientesInPrimaryTab(line.AccountId)"
+								    class="slds-truncate" title="{{line.MSISDN__c}}">{{line.MSISDN__c}}</a>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title="">
+								    <span class= "color-row" ng-show="line.Account.UnnamedCustomer__c==true"> No nominado</span>
+								</div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="actions">
+								<a 
+									ng-show="line.Account.UnnamedCustomer__c==true"
+									href="/apex/%vlocity_namespace%__OmniScriptUniversalPage?id={0}&assetId={{line.Id}}&OriginAccountId={{record.AccountId}}&isNomination={{true}}&layout=lightning#/OmniScriptType/Sale/OmniScriptSubType/NominateProcess/OmniScriptLang/English/ContextId/{0}/PrefillDataRaptorBundle//true" 
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Nominar" 
+									title="Nominar">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'change_owner'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Nominar</span>
+								</a>
+							</td>
+						</tr>
+						
+						<tr
+							ng-show="accountStatus[record.AccountId]"
+							ng-repeat-start="billing in record.BillingAccounts"
+							class="searchClient-body slds-hint-parent"
+							ng-class="{'active slds-is-selected': billing.vlcSelected,'is-tracked': viewState.trackedRows[$index]}"
+							aria-level="2" 
+							ng-click="billingStatus[billing.BillingAccountId] = !billingStatus[billing.BillingAccountId]">
+
+							<th 
+								ng-if="viewState.ignoredFields.indexOf(field) == -1" 
+								data-label="Billing Name" 
+								scope="row" 
+								class="slds-tree__item">
+								<button 
+									ng-if="billing.LineasBillingAccount"
+									class="slds-button slds-button--icon slds-m-right--x-small" 
+									title="Toggle">
+									<slds-svg-icon
+										ng-if="!billingStatus[billing.BillingAccountId]"
+										sprite="'utility'"
+										icon="'chevronright'"
+										size="'x-small'"
+										no-hint="true"
+										extra-classes="'slds-button slds-button--icon'">
+									</slds-svg-icon>
+									<slds-svg-icon
+										ng-if="billingStatus[billing.BillingAccountId]"
+										sprite="'utility'"
+										icon="'chevrondown'"
+										size="'x-small'"
+										no-hint="true"
+										extra-classes="'slds-button slds-button--icon'">
+									</slds-svg-icon>
+								</button>
+								<div class="slds-truncate" title="{{billing.BillingAccountName}}">
+									<a>{{billing.BillingAccountName}}</a>
+								</div>
+							</th>
+							
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<!-- <td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td> -->
+							 <td data-label="actions" ng-click="$event.stopPropagation()">
+								<a 
+									ng-click="scc.checkClientsAndRedirect(record, 'CPQ');"
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Catalogo" 
+									title="Catalogo">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'edit_form'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Catalogo</span>
+								</a>
+								<!-- <a 
+									ng-click="scc.checkClientsAndRedirect(record, 'NewBilling');"
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Nueva Cuenta" 
+									title="Nueva Cuenta">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'adduser'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Nueva Cuenta</span>
+								</a> -->
+							</td>
+	
+						</tr>
+						
+						<tr 
+							ng-if="accountStatus[record.AccountId] && billingStatus[billing.BillingAccountId]" 	
+							ng-repeat-end=" " 
+							ng-repeat="billingLine in billing.LineasBillingAccount" 
+							aria-level="3"
+							class="slds-hint-parent">
+
+							<th data-label="Asset Name" scope="row" class="slds-tree__item">
+								<button class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+									<svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+									</svg>
+									<span class="slds-assistive-text">Toggle</span>
+								</button>
+								<div class="slds-truncate" title="{{billingLine.Name}}">{{billingLine.Name}}</div>
+							</th>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="Asset Number">
+								<!--<div class="slds-truncate" title="{{line.MSISDN__c}}">{{line.MSISDN__cc}}</div>
+								<a href="/console?tsid=02u6C0000000CwY&useCache=false#%2f{{billingLine.AccountId}}" class="slds-truncate" title="{{billingLine.MSISDN__c}}">{{billingLine.MSISDN__c}}</a>
+								
+								<a href="/console?tsid={{control.vlcSI[control.itemsKey][0].AplicationId}}&useCache=false#%2f{{billingLine.AccountId}}" class="slds-truncate" title="{{billingLine.MSISDN__c}}">{{billingLine.MSISDN__c}}</a>  -->
+								<a 
+								    ng-href="" 
+								    ng-click="scc.openGestionDeClientesInPrimaryTab(billingLine.AccountId)"
+								    class="slds-truncate" title="{{billingLine.MSISDN__c}}">{{billingLine.MSISDN__c}}</a>
+								
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="actions">
+								<a 
+									ng-show="billingLine.Account.UnnamedCustomer__c==true"
+									href="/apex/%vlocity_namespace%__OmniScriptUniversalPage?id={0}&assetId={{line.Id}}&OriginAccountId={{record.AccountId}}&isNomination={{true}}&layout=lightning#/OmniScriptType/Sale/OmniScriptSubType/NominateProcess/OmniScriptLang/English/ContextId/{0}/PrefillDataRaptorBundle//true" 
+									
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Nominar" 
+									title="Nominar">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'change_owner'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Nominar</span>
+								</a>
+							</td>
+						</tr>
+						<tr ng-repeat-end ng-hide="true"></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+	
+	<div 
+		id="tab-scoped-3" 
+		class="slds-tabs--scoped__content"
+		role="tabpanel"
+		aria-labelledby="tab-scoped-3__item" 
+		ng-show="scc.tabActive == 'contactsWhithOutAccounts' && control.vlcSI[control.itemsKey][0].contactsWhithOutAccounts.length">
+
+		<section
+			ng-init="
+				viewState = {};
+				viewState.Name;
+				viewState.trackedRows = {};
+				viewState.ignoredFields = ['vlcSelected', 'Id', 'Expiration Date', 'Active Date'];
+				viewState.nameFields = ['First Name', 'Last Name'];
+				viewState.orderByField;
+				viewState.reverseSort;"
+			class="form-inline">
+
+			<!-- ng-controller="cscLookupController as clc" -->
+			
+			<!-- 
+				// CONTACTS WITHOUT ACCOUNTS
+			 -->
+			<div 
+				class="vloc-table-wrapper-scrollable"
+				ng-show="control.vlcSI[control.itemsKey][0].contactsWhithOutAccounts.length">
+				<!-- <table class="slds-table slds-table--bordered slds-table--cell-buffer table table-bordered tableCSS"> -->
+				<table class="slds-table slds-table--bordered slds-tree slds-table--tree table tableCSS" role="treegrid" aria-owns="tree0-node0" aria-readonly="true">
+					<thead>
+						<tr class="slds-text-title--caps">
+
+							<th 
+								ng-click="viewState.orderByField='PrimaryContactName'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Nombre">NOMBRE</div>
+									<span ng-show="viewState.orderByField == 'PrimaryContactName'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='DocumentType'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Tipo Documento">TIPO DOCUMENTO</div>
+									<span ng-show="viewState.orderByField == 'DocumentType'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='DocumentNumber'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Documento">DOCUMENTO</div>
+									<span ng-show="viewState.orderByField == 'DocumentNumber'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='Mail'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Mail">MAIL</div>
+									<span ng-show="viewState.orderByField == 'Mail'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th>
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Mail">ACCIONES</div>
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat="record in control.vlcSI[control.itemsKey][0].contactsWhithOutAccounts | filter: viewState.query | orderBy:viewState.orderByField:viewState.reverseSort"
+							ng-init="viewState.index=$index"
+							class="searchClient-body slds-hint-parent"
+							ng-class="{'active slds-is-selected': record.vlcSelected,'is-tracked': viewState.trackedRows[$index]}"
+							aria-level="1"
+							ng-click="accountStatus[record.AccountId] = !accountStatus[record.AccountId]">
+							
+							<td data-label="Primary Contact Name">
+							    <a href="/apex/taNewContact?contactId={{record.PrimaryContactId}}&ClientsSearchCount=0&useCache=false&contactDetailView=true" class="slds-truncate" title="{{record.PrimaryContactName}}">{{record.PrimaryContactName}}</a>
+							    
+								
+							<!--
+							<a href="/apex/taClientCreationProcess?contactId={{record.PrimaryContactId}}&useCache=false" class="slds-truncate" title="{{record.PrimaryContactName}}">{{record.PrimaryContactName}}</a>
+								
+							<div class="slds-truncate" title="{{record.PrimaryContactName}}">{{record.PrimaryContactName}}</div> -->
+							</td>
+							
+							<td data-label="Document Type">
+								<div class="slds-truncate" title="{{record.DocumentType}}">{{record.DocumentType}}</div>
+							</td>
+							
+							<td data-label="Document Number">
+								<div class="slds-truncate" title="{{record.DocumentNumber}}">{{record.DocumentNumber}}</div>
+							</td>
+<!--cp-->
+						<td 
+								data-label="email"
+								ng-init="editEmail = false"
+								ng-class="{'slds-grid':!record.ValidEmail && editEmail}"
+								class="taEmailContainer"> 
+
+								<!-- OK -->
+							<div 
+									ng-show="record.ValidEmail"
+									class="slds-truncate" 
+									title="{{record.Email}}">{{record.Email}}</div> 
+
+								<!-- Invalid -->
+								<div 
+									ng-click="editEmail = true" 
+									ng-show="!record.ValidEmail && !editEmail"
+									class="slds-truncate invalidEmail" 
+									title="{{record.Email}}">{{record.Email}}</div> 
+
+								<!-- invalid and edit -->
+								<input 
+									ng-show="!record.ValidEmail && editEmail"
+									type="email"
+									class="slds-input ta-email-input" 
+									ng-model="record.Email" />
+									
+								<button 
+									ng-show="!record.ValidEmail && editEmail"
+									ng-click="scc.updateContactEmail(record.PrimaryContactId, record.Email); editEmail = false"
+									class="slds-button slds-button--neutral">
+									Validar
+								</button>
+							</td>
+
+							<td data-label="actions">
+								<!-- <a 
+									href="/apex/%vlocity_namespace%__OmniScriptUniversalPage?id={0}&contactId={{record.PrimaryContactId}}&layout=lightning#/OmniScriptType/CustomerMaster/OmniScriptSubType/Create Account/OmniScriptLang/English/ContextId/{0}/PrefillDataRaptorBundle//true" 
+									 
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Nueva Cuenta" 
+									title="Nueva Cuenta">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'adduser'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Nueva Cuenta</span>
+								</a> -->
+								<a 
+									href="/apex/taSalesCreateOrder?contactId={{record.PrimaryContactId}}&operationCode=VTLNCL" 
+									 
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Catalogo" 
+									title="Catalogo">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'edit_form'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Catalogo</span>
+									
+									<!-- Agregar Operacion -->
+
+								</a>
+								<a 
+									href="/{{record.PrimaryContactId}}" 
+									
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Ver Contacto" 
+									title="Ver Contacto">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'identity'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Ver Contacto</span>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+	<div 
+		id="tab-scoped-2" 
+		class="slds-tabs--scoped__content"
+		role="tabpanel"
+		aria-labelledby="tab-scoped-2__item" 
+		ng-show="scc.tabActive == 'inActiveClientes' && control.vlcSI[control.itemsKey][0].inActiveClientes.length">
+		
+		<section
+			ng-init="
+				viewState = {};
+				viewState.Name;
+				viewState.trackedRows = {};
+				viewState.ignoredFields = ['vlcSelected', 'Id', 'Expiration Date', 'Active Date'];
+				viewState.nameFields = ['First Name', 'Last Name'];
+				viewState.orderByField;
+				viewState.reverseSort;"
+			class="form-inline">
+
+			<!-- ng-controller="cscLookupController as clc" -->
+			
+
+			<!-- 
+				// INACTIVE CLIENTS
+			 -->
+			<div 
+				class="vloc-table-wrapper-scrollable"
+				ng-show="control.vlcSI[control.itemsKey][0].inActiveClientes.length">
+				<!-- <table class="slds-table slds-table--bordered slds-table--cell-buffer table table-bordered tableCSS"> -->
+				<table class="slds-table slds-table--bordered slds-tree slds-table--tree table tableCSS" role="treegrid" aria-owns="tree0-node0" aria-readonly="true">
+					<thead>
+						<tr class="slds-text-title--caps">
+							
+							<th 
+								ng-click="viewState.orderByField='AccountName'; viewState.reverseSort = !viewState.reverseSort"
+								class="slds-cell-buffer--left" 
+								scope="col">
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Razon Social">RAZON SOCIAL</div>
+									<span ng-show="viewState.orderByField == 'AccountName'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+
+							<th 
+								ng-click="viewState.orderByField='PrimaryContactName'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Nombre">NOMBRE</div>
+									<span ng-show="viewState.orderByField == 'PrimaryContactName'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+
+							<th 
+								ng-click="viewState.orderByField='Phone'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Linea">LINEA</div>
+									<span ng-show="viewState.orderByField == 'Phone'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='DocumentType'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Tipo Documento">TIPO DOCUMENTO</div>
+									<span ng-show="viewState.orderByField == 'DocumentType'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='DocumentNumber'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Documento">DOCUMENTO</div>
+									<span ng-show="viewState.orderByField == 'DocumentNumber'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='Mail'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="Mail">MAIL</div>
+									<span ng-show="viewState.orderByField == 'Mail'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+							
+							<th 
+								ng-click="viewState.orderByField='AccountNumber'; viewState.reverseSort = !viewState.reverseSort"
+								scope="col">
+								
+								<div class="slds-grid slds-grid--vertical-align-center">
+									<div class="slds-truncate" title="nro de cuenta">NRO DE CUENTA</div>
+									<span ng-show="viewState.orderByField == 'AccountNumber'">
+										<span ng-show="!viewState.reverseSort">^</span>
+										<span ng-show="viewState.reverseSort">v</span>
+									</span>		
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							ng-repeat-start="record in control.vlcSI[control.itemsKey][0].inActiveClientes | filter: viewState.query | orderBy:viewState.orderByField:viewState.reverseSort"
+							ng-init="viewState.index=$index"
+							class="searchClient-body slds-hint-parent"
+							ng-class="{'active slds-is-selected': record.vlcSelected,'is-tracked': viewState.trackedRows[$index]}"
+							aria-level="1"
+							ng-click="accountStatus[record.AccountId] = !accountStatus[record.AccountId]">
+
+							<th 
+								ng-if="viewState.ignoredFields.indexOf(field) == -1" 
+								data-label="Account Name" 
+								scope="row" 
+								class="slds-tree__item">
+								<button 
+									ng-if="record.Lineas"
+									class="slds-button slds-button--icon slds-m-right--x-small" 
+									title="Toggle">
+									<!-- <svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+									</svg>
+									<span class="slds-assistive-text">Toggle</span> -->
+									<slds-svg-icon
+										ng-if="!accountStatus[record.AccountId]"
+										sprite="'utility'"
+										icon="'chevronright'"
+										size="'x-small'"
+										no-hint="true"
+										extra-classes="'slds-button slds-button--icon'">
+									</slds-svg-icon>
+									<slds-svg-icon
+										ng-if="accountStatus[record.AccountId]"
+										sprite="'utility'"
+										icon="'chevrondown'"
+										size="'x-small'"
+										no-hint="true"
+										extra-classes="'slds-button slds-button--icon'">
+									</slds-svg-icon>
+								</button>
+								<div class="slds-truncate" title="{{record.AccountName}}"><a href="javascript:void(0);">{{record.AccountName}}</a></div>
+							</th>
+							
+							<td data-label="Primary Contact Name">
+								<div class="slds-truncate" title="{{record.PrimaryContactName}}">{{record.PrimaryContactName}}</div>
+							</td>
+							
+							<td data-label="Phone">
+								<div class="slds-truncate" title="{{record.Phone}}">{{record.Phone}}</div>
+							</td>
+							
+							<td data-label="Document Type">
+								<div class="slds-truncate" title="{{record.DocumentType}}">{{record.DocumentType}}</div>
+							</td>
+							
+							<td data-label="Document Number">
+								<div class="slds-truncate" title="{{record.DocumentNumber}}">{{record.DocumentNumber}}</div>
+							</td>
+
+							<td 
+								data-label="email"
+								ng-init="editEmail = false"
+								ng-class="{'slds-grid':!record.ValidEmail && editEmail}"
+								class="taEmailContainer">
+
+								<!-- OK -->
+								<div 
+									ng-show="record.ValidEmail"
+									class="slds-truncate" 
+									title="{{record.Email}}">{{record.Email}}</div> 
+
+								<!-- Invalid -->
+							<!--	<div 
+									ng-click="editEmail = true" 
+									ng-show="!record.ValidEmail && !editEmail"
+									class="slds-truncate invalidEmail" 
+									title="{{record.Email}}">{{record.Email}}</div> -->
+
+								<!-- invalid and edit -->
+								<input 
+									ng-show="!record.ValidEmail && editEmail"
+									type="email"
+									class="slds-input ta-email-input" 
+									ng-model="record.Email" />
+									
+								<button 
+									ng-show="!record.ValidEmail && editEmail"
+									ng-click="scc.updateContactEmail(record.PrimaryContactId, record.Email); editEmail = false"
+									class="slds-button slds-button--neutral">
+									Validar
+								</button>
+							</td>
+							
+							<td data-label="Account Number">
+								<div class="slds-truncate" title="{{record.AccountNumber}}">{{record.AccountNumber}}</div>
+							</td>
+						</tr>
+						<tr 
+							ng-if="accountStatus[record.AccountId]" 
+							ng-repeat="line in record.Lineas" 
+							ng-repeat-end=" " 
+							aria-level="2"
+							class="slds-hint-parent"
+							ng-class ="{'color-row': line.Account.UnnamedCustomer__c==true'}" >
+
+							<th data-label="Asset Name" scope="row" class="slds-tree__item">
+								<button class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+									<svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+										<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+									</svg>
+									<span class="slds-assistive-text">Toggle</span>
+								</button>
+								<div class="slds-truncate" title="{{line.Name}}">{{line.Name}}</div>
+							</th>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+							
+							<td data-label="Asset Number">
+								<!--<div class="slds-truncate" title="{{line.%vlocity_namespace%__LineNumber__c}}">{{line.%vlocity_namespace%__LineNumber__c}}</div>-->
+								<a href="/console?tsid={{control.vlcSI[control.itemsKey][0].AplicationId}}&useCache=false" class="slds-truncate" title="{{line.%vlocity_namespace%__LineNumber__c}}">{{line.%vlocity_namespace%__LineNumber__c}}</a>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="">
+								<div class="slds-truncate" title=""></div>
+							</td>
+
+							<td data-label="actions">
+								<a 
+									ng-show="line.Account.UnnamedCustomer__c==true"
+									href="/apex/%vlocity_namespace%__OmniScriptUniversalPage?id={0}&assetId={{line.Id}}&OriginAccountId={{record.AccountId}}&isNomination={{true}}&layout=lightning#/OmniScriptType/Sale/OmniScriptSubType/NominateProcess/OmniScriptLang/English/ContextId/{0}/PrefillDataRaptorBundle//true" 
+									 
+									class="slds-button slds-button slds-button--icon"
+									aria-describedby="Nominar" 
+									title="Nominar">
+									<slds-svg-icon
+										sprite="'utility'"
+										icon="'change_owner'"
+										size="'x-small'"
+										no-hint="true"
+										aria-hidden="true">
+									</slds-svg-icon>
+									<span class="slds-assistive-text">Nominar</span>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+	<!--
+	<div 
+		ng-show="!control.vlcSI[control.itemsKey][0].activeClientes.length && !control.vlcSI[control.itemsKey][0].inActiveClientes.length && !control.vlcSI[control.itemsKey][0].contactsWhithOutAccounts.length" 
+		ng-style="{color:'red'}">
+        <div class="ta-no-result-msg">La búsqueda no arrojó resultados.</div>
+    </div>
+    !-->
+</div>

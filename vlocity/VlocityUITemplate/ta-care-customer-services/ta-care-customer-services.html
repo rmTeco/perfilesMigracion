@@ -1,0 +1,17 @@
+<div>
+    <div class="lineNumber via-slds slds-m-around--small slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium">
+        <span class="asset_type">{{params.AssetType}}</span>
+        <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+            <p class="title-line">{{params.LineNumber}}</p>
+        </div>
+    </div>
+    <vloc-card ng-repeat="card in cards" 
+               ng-model="card" 
+               data="card" 
+               ctrl="{{ctrl}}"
+               records="records" 
+               index="{{$index}}" 
+               session-id="{{sessionId}}"
+               use-existing-element-type>
+    </vloc-card>
+</div>

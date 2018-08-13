@@ -1,0 +1,27 @@
+<aura:component extends="et4ae5:DataTableRowPlus">
+
+    <!-- Scripts -->
+    <ltng:require styles="/resource/et4ae5__SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="et4ae5:DataTablePlusSelectAll" action="{!c.selectAllChange}" />
+
+    <!-- Attributes -->
+    <aura:attribute name="enabled" type="Boolean" required="true" />
+    
+    <!-- Component Body -->
+    <td class="slds-truncate">
+        <label class="slds-checkbox">
+            <ui:inputCheckbox aura:id="enabledcheckbox" value="{!v.enabled}" click="{!c.enabledChange}" />
+            <span class="slds-checkbox--faux"></span>
+        </label>
+    </td>
+    <td class="slds-truncate">
+        {!v.record.et4ae5__Business_Unit_Name__c}
+    </td>
+    <td class="slds-truncate">
+        {!v.record.et4ae5__Business_Unit_ID__c}
+    </td>
+
+</aura:component>

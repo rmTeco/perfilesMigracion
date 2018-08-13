@@ -1,0 +1,39 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-promtions-list {
+            display:flex;
+            flex: 1 ;
+
+            //stretch the flex box irrespective of its contents
+            .#{$namespace}-promotions-list-vertical {
+                &.#{$namespace}-promotions-grid {
+                    flex-direction:column;
+
+                    &.#{$namespace}-promotions-list-col-stretch{
+                        flex:1 1 100%;
+                    }
+                }
+                .#{$namespace}-no-promotions-msg {
+                    margin:auto;
+                }
+                .#{$namespace}-next-product {
+                    padding: $cpq-padding-large-vertical;
+                }
+                .#{$namespace}-spinner_container {
+                    position: relative;
+                    padding-top: 10px;
+                }
+            }
+        }
+    }
+}

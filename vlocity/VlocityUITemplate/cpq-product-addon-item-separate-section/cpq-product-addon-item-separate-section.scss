@@ -1,0 +1,82 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+/*** MIXINS ***/
+@import "cpq-mixin";
+/*** STYLES ***/
+.vlocity {
+    .cpq-product-cart-item-addon-separate-section {
+        .slds-section {
+            margin: 0;
+            
+            .slds-section__title {
+                padding: 5px 0;
+            }
+            
+            .slds-section__content {
+                padding-top: 0;
+            }
+        }
+        
+        .cpq-cart-item-section-components, .cpq-cart-item-section-addons {
+            padding-left: 18px;
+            
+            .cpq-cart-item-child-product {
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-end;
+                padding: 0.2rem 0;
+                
+                .cpq-cart-item-child-product-name {
+                    flex-grow: 1;
+                }
+                
+                .cpq-cart-item-child-product-input {
+                    flex: 0 0 80px;
+                }
+                
+                .cpq-cart-item-child-product-price {
+                    flex: 0 0 120px;
+                }
+                
+                .cpq-cart-item-child-product-actions {
+                    flex: 0 0 120px;
+                }
+            }
+        }
+        
+        .cpq-cart-item-currency-value {
+            font-weight: $cpq-headings-font-weight;
+            color: $cpq-product-cart-items-attr-value-color;
+            padding-top: $cpq-padding-large-vertical/2;
+        }
+
+        .cpq-cart-item-input {
+            padding: 0 3px;
+            margin-top: $cpq-padding-large-vertical/5;
+            text-align: center;
+            width: 50px; //width can fit 3 digits
+            height: 25px;
+            min-height: calc(25px + 2px); //override slds input styles
+        }
+        
+        .cpq-component-content {
+            display: none;
+        }
+
+        .slds-section.slds-is-open .cpq-component-content {
+            display: block;
+        }
+        
+        .fix-slds-close-switch {
+            transform: rotate(-90deg) !important;
+        }
+        
+        .cpq-product-cart-item-section-heading {
+            font-size: $cpq-cart-section-title-font-size;
+        }
+        
+        .cpq-cmp-config-panel {
+            padding-left: 25px;
+        }
+    }
+}

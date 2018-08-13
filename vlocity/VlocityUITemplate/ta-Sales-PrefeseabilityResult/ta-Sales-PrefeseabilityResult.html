@@ -1,0 +1,61 @@
+<!--<pre>-->
+<!--    {{control | json}}-->
+<!--</pre>-->
+<!--<pre>-->
+<!--    {{control.vlcSI[control.itemsKey][0].tecnologiasAcceso | json}}-->
+<!--</pre>-->
+<div class="slds-grid slds-wrap">
+    <div ng-repeat="tecnologiaAcceso in control.vlcSI[control.itemsKey][0].tecnologiasAcceso" class="slds-size--1-of-1 slds-m-bottom--large taPrefaResult">
+    	<h2 class="slds-text-heading--large"><strong>{{tecnologiaAcceso.tecnologia}}</strong></h2>
+    	<article class="slds-card" ng-repeat="servicio in tecnologiaAcceso.servicios">
+    		<div class="slds-card__header slds-grid taPrefaResultHeader">
+    			<header class="slds-media slds-media--center slds-has-flexi-truncate">
+    				<div class="slds-media__body">
+    					<h2>
+    						<span class="slds-card__header-link slds-truncate">
+    							<span class="slds-text-heading--small">{{servicio.servicio}}</span>
+    						</span>
+    					</h2>
+    				</div>
+    			</header>
+    		</div>
+    		<div class="slds-card__body">
+    			<div class="slds-card__body--inner slds-grid slds-wrap slds-grid--pull-padded">
+    				<div 
+    					ng-repeat="standardTecnico in servicio.standardsTecnico"
+    					class="slds-tile slds-media slds-card__tile slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--1-of-1 slds-hint-parent">
+    
+    					<div class="slds-media__body slds-m-bottom--x-small slds-p-around--small taStandardTecnicoContainer">
+    						<div class="slds-has-flexi-truncate slds-m-bottom--small">
+    							<h2 class="slds-text-heading--large slds-truncate" title="Standard tecnico"><strong>{{standardTecnico.standardTecnico}}</strong></h2>
+    							<h3 class="slds-text-heading--small slds-truncate" title="Vel Maxima">HASTA {{standardTecnico.medicionDeBajada}} kbps</h3>
+    						</div>
+    						<div class="slds-tile__detail slds-text-body--small">
+    							<div class="slds-list--vertical slds-wrap slds-grid">
+    								<div class="slds-size--1-of-3 slds-m-bottom--small">
+    									<dt 
+    										class="slds-item--label slds-text-color--weak slds-truncate" 
+    										title="Tecnologia de acceso"><strong>Tecnologia de {{servicio.servicio == "Internet" ? "Internet" : "Acceso"}}:</strong></dt>
+    									<dd class="slds-item--detail slds-truncate">{{standardTecnico.standardTecnico}}</dd>
+    								</div>
+    								<div class="slds-size--1-of-3 slds-m-bottom--small">
+    									<dt class="slds-item--label slds-text-color--weak slds-truncate" title="Requiere cambio de numero?"><strong>Requiere cambio de numero?</strong></dt>
+    									<dd class="slds-item--detail slds-truncate">NO</dd>
+    								</div>
+    								<div class="slds-size--1-of-3 slds-m-bottom--small">
+    									<dt class="slds-item--label slds-text-color--weak slds-truncate" title="Esta disponible?"><strong>Esta disponible?</strong></dt>
+    									<dd class="slds-item--detail slds-truncate">{{standardTecnico.disponibilidad}}</dd>
+    								</div>
+    								<div class="slds-size--1-of-1 slds-m-bottom--small">
+    									<dt class="slds-item--label slds-text-color--weak slds-truncate" title="Second Label"><strong>Mensaje:</strong></dt>
+    									<dd class="slds-item--detail slds-truncate">{{tecnologiaAcceso.descMensaje}}</dd>
+    								</div>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</article>
+    </div>
+</div>

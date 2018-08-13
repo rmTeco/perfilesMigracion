@@ -1,0 +1,185 @@
+<apex:page controller="vlocity_cmt.MoveInAccountController" standardStylesheets="true" showHeader="false" sidebar="false" docType="html-5.0">
+   <br/>
+
+   <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+   </link>
+   <style>
+    body {
+      background-image: url('{!$Resource.greybg}');
+      background-repeat: repeat;}
+    strong {
+      font-weight: bold;}
+    .vlc-move-wrapper {
+      background-color: #f2f2f2;
+      color: #777;}
+      .vlc-move-wrapper .header {
+        height: 265px;
+        width: 1224px;
+        margin: 0 auto;
+        margin-top: -20px;}
+        .vlc-move-wrapper .header .headline {
+          float: right;
+          width: 750px;
+          padding: 0 215px 0 10px;
+          border-left: 1px solid #cac8c8;
+          margin-top: 20px;}
+          .vlc-move-wrapper .header .headline h1 {
+            color: #444;
+            text-shadow: #fff 1px 1px 1px;}
+          .vlc-move-wrapper .header .headline p {
+            font-size: 14px;
+            line-height: 20px;
+            color: #3b3b3b;
+            margin-bottom: 10px;}
+      .vlc-move-wrapper .vlcpanel {
+        border-top: 4px solid #cbc9c9;
+        background: url('{!$Resource.greybg}') repeat #e6e6e6;
+        margin: 50px auto 0;}
+        .vlc-move-wrapper .vlcpanel .content {
+          margin: 0 auto;
+          width: 980px;}
+          .vlc-move-wrapper .vlcpanel .content .top {
+            margin: -80px auto auto;
+            background-color: #f6f6f6;
+            padding: 15px;
+            border-top: 4px solid #cbc9c9;
+            border-left: 4px solid #cbc9c9;
+            border-bottom: 1px solid #cbc9c9;
+            border-right: 4px solid #cbc9c9;
+            -webkit-box-shadow: 0 -8px 30px 0 rgba(33, 29, 31, 0.38);
+            -moz-box-shadow: 0 -8px 30px 0 rgba(33, 29, 31, 0.38);
+            box-shadow: 0 -8px 30px 0 rgba(33, 29, 31, 0.38);}
+            .vlc-move-wrapper .vlcpanel .content .top .title {
+              background: url("{!$Resource.movepin}") no-repeat top left;
+              font-size: 18px;
+              padding: 7px 0 7px 40px;
+              color: #3b3b3b;}
+          .vlc-move-wrapper .vlcpanel .content .bot {
+            border-left: 4px solid #cbc9c9;
+            border-right: 4px solid #cbc9c9;
+            border-bottom: 4px solid #cbc9c9;
+            background: #FFF;}
+          .vlc-move-wrapper .vlcpanel .content .bot .form {
+            padding: 3px 45px;          
+            margin: 8px;      }
+            .vlc-move-wrapper .vlcpanel .content .bot .form .title {
+              margin: 0 0 10px 0;
+              line-height: 1.38em;}
+            .vlc-move-wrapper .vlcpanel .content .bot .form .vlcinput {
+              float: left;         }
+              .vlc-move-wrapper .vlcpanel .content .bot .form .vlcinput label {
+                line-height: normal;
+                font-size: 13px;}
+              .vlc-move-wrapper .vlcpanel .content .bot .form .vlc-button {
+                padding-top: 20px;}
+   </style>
+   <html>
+   <head>
+   <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__JQUERYJS)}"/>
+   </head>
+   <script type="text/javascript">
+
+    function openLookup(baseURL, width, modified, searchParam){
+    var originalbaseURL = baseURL;
+    var originalwidth = width;
+    var originalmodified = modified;
+    var originalsearchParam = searchParam;
+
+    var lookupType = baseURL.substr(baseURL.length-3, 3);
+    if (modified == '1') baseURL = baseURL + searchParam;
+
+    var isCustomLookup = false;
+
+    // Following "001" is the lookup type for Account object so change this as per your standard or custom object
+    if(lookupType == "001"){
+
+      var urlArr = baseURL.split("&");
+      var txtId = '';
+      if(urlArr.length > 2) {
+        urlArr = urlArr[1].split('=');
+        txtId = urlArr[1];
+      }
+
+      // Following is the url of Custom Lookup page. You need to change that accordingly
+      baseURL = "/apex/CustomAccountLookup?compId=Account&accType=ServiceAccount&accId=" + escapeUTF('{!moveOutId}');
+
+      // Following is the ID of inputField that is the lookup to be customized as custom lookup
+      if(txtId.indexOf('Account') > -1 ){
+        isCustomLookup = true;
+      }
+    }
+
+
+    if(isCustomLookup == true){
+      openPopup(baseURL, "lookup", 350, 480, "width="+width+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+    }
+    else {
+      if (modified == '1') originalbaseURL = originalbaseURL + originalsearchParam;
+      openPopup(originalbaseURL, "lookup", 350, 480, "width="+originalwidth+",height=480,toolbar=no,status=no,directories=no,menubar=no,resizable=yes,scrollable=no", true);
+    } 
+  }
+
+  function setLookupValue(compId,compType,compVal,compName){
+  $(".input").val(compName);
+  $(".input").prop("readonly", true);
+  setMoveInAccountId(compVal);
+  $(".button").attr('disabled', false);
+  }
+
+  function invokeOmniFlow(){
+      invokeOmniFlow();
+  }
+
+   </script> 
+  <body>
+    <div class="vlc-move-wrapper">
+      <div class="header">
+        <div class="headline">
+          <h1><br/><br/><strong>{!$Label.vlocity_cmt__mlsfdomovetitle}</strong></h1><br/><h3><strong>{!$Label.vlocity_cmt__mlsfdomovesubtitle}</strong><br/><br/><br/></h3>
+        </div>
+      </div>
+      <div class="vlcpanel">
+        <div class="content">
+          <div class="top">
+            <h2 class="title">{!$Label.vlocity_cmt__mlsfdomoveaccountselectorlabel}</h2>
+          </div>
+          <div class="bot">
+              <fieldset>
+                <div class="form">
+                  <div class="vlcinput">
+                    <label>{!$Label.vlocity_cmt__mlsfdomoveinaccountlabel}</label>
+                    <apex:form id="apexinput"> 
+                      <apex:inputField id="Account"  style="width: 300px; height: 30px" styleclass="input" label="Move-In Account : " value="{!oi.vlocity_cmt__ServiceAccountId__c}"/>
+                      </apex:form>
+                  </div>
+                  <div class="vlc-button">
+                    <apex:form id="apexbutton">
+                      <input type="button" style="width:200px;height:30px" class="button btn" disabled="true" value="{!$Label.CMTNext}" onclick="invokeOmniFlow()" />
+                      <apex:commandButton style="width:200px;height:30px" value="{!$Label.vlocity_cmt__cmtcancel}" action="{!cancelMoveFlow}"/>
+                      <apex:actionFunction name="setMoveInAccountId"
+                                    action="{!setMoveInAccountId}"
+                                    status="loading" rerender="none">
+                                <apex:param name="moveInAccId" value=""/>
+                      </apex:actionFunction>
+                       <apex:actionFunction name="invokeOmniFlow"
+                                    action="{!invokeOmniFlow}"
+                                    status="loading" rerender="none">
+                      </apex:actionFunction>
+                    </apex:form> 
+                  </div>
+                </div>
+              </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type = "text/javascript">
+    window.onload=function()       
+    {        
+        $(".input").val("");
+        $(".input").prop("readonly", true);
+    };
+</script>
+  </html>
+</apex:page>

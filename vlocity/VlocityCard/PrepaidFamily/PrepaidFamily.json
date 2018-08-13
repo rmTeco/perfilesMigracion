@@ -1,0 +1,793 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.Id",
+                "val": "0016C0000095jLJ"
+            }
+        ],
+        "type": null,
+        "value": {
+            "inputMap": {
+                "Id": "{{params.Id}}"
+            },
+            "ipMethod": "Care_GetServicesDetailsForConsole",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "query": "SELECT Asset__c, count(Id) FROM Transaction_History__c\nwhere Asset__c = '02i6C0000002g59QAA'\nGROUP BY Asset__c",
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "Care_GetAssetsDetails",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "",
+            "timeout": null
+        }
+    },
+    "filter": {
+        "['Family']": "Movil",
+        "['ProductType']": "Plan Prepago"
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Activo"
+                    },
+                    {
+                        "field": "['Sub_Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": ""
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-ConsumptionAsset",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']",
+                            "SubscriptionId": "['SubscriptionId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-customer-history-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "AssetName": "['Name']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleMyServices",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationFlow": "Recarga"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-CreditRecharge",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "RenovacionPlanDatos",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationCode": "'MACDServices'",
+                            "operationFlow": "'Alta Baja Servicios'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-MACDServices",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "BlackList": "['Blacklist']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSubscriptions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-problems-with-refills",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatingsService",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Diagnosis-Mobile",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "ShowFriendsNumberStep": true,
+                            "lineNumber": "['LineNumber']",
+                            "readOnlyMode": false
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleFreeNumbers",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationFlow": "'Cambio de SIM'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-SimCardChange",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationCode": "'CAMBIOPLAN'",
+                            "operationFlow": "'Cambio de plan'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-ChangePlan",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoBalance']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito recarga",
+                    "name": "['Balance']['totalesBalance']['saldoBalance']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito promocional",
+                    "name": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Internet disponible",
+                    "name": "['Balance']['totalesBalance']['mbAvailable']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Activo'",
+            "flyout": {
+                "data": "$scope.obj.Balance.totalUnidadesLibres.unidadLibre",
+                "layout": "ta-care-prepaid-flyout"
+            },
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-care-prepaid-card"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Inactivo"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatingsService",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-customer-history-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-ConsumptionAsset",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoBalance']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito recarga",
+                    "name": "['Balance']['totalesBalance']['saldoBalance']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito promocional",
+                    "name": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Inactivo'",
+            "flyout": {
+                "data": "",
+                "layout": null
+            },
+            "name": "Inactive",
+            "sObjectType": null,
+            "templateUrl": "ta-care-prepaid-card"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Suspendido"
+                    },
+                    {
+                        "field": "['Sub_Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Siniestro"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationFlow": "'Cambio de SIM'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-SimCardChange",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatingsService",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "AssetName": "['Name']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleMyServices",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-ConsumptionAsset",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-customer-history-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationCode": "'MACDServices'",
+                            "operationFlow": "'Alta Baja Servicios'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-MACDServices",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "BlackList": "['Blacklist']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSubscriptions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "ShowFriendsNumberStep": true,
+                            "lineNumber": "['LineNumber']",
+                            "readOnlyMode": false
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleFreeNumbers",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoBalance']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito recarga",
+                    "name": "['Balance']['totalesBalance']['saldoBalance']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito promocional",
+                    "name": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Suspendido' && $scope.obj['Sub_Status'] == 'Siniestro'",
+            "flyout": {
+                "data": "$scope.obj.Balance.totalUnidadesLibres.unidadLibre",
+                "layout": "ta-care-prepaid-flyout"
+            },
+            "name": "Suspension/Siniestro",
+            "sObjectType": null,
+            "templateUrl": "ta-care-prepaid-card"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Suspendido"
+                    },
+                    {
+                        "field": "['Sub_Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Port-out"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatingsService",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-customer-history-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-ConsumptionAsset",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoBalance']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito recarga",
+                    "name": "['Balance']['totalesBalance']['saldoBalance']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito promocional",
+                    "name": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Suspendido' && $scope.obj['Sub_Status'] == 'Port-out'",
+            "flyout": {
+                "data": "$scope.obj.Balance.totalUnidadesLibres.unidadLibre",
+                "layout": "ta-care-prepaid-flyout"
+            },
+            "name": "Suspension/Port-out",
+            "sObjectType": null,
+            "templateUrl": "ta-care-prepaid-card"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Suspendido"
+                    },
+                    {
+                        "field": "['Sub_Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Administrativo"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatingsService",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-ConsumptionAsset",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoBalance']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito recarga",
+                    "name": "['Balance']['totalesBalance']['saldoBalance']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Crédito promocional",
+                    "name": "['Balance']['totalesBalance']['saldoSuscripcionRegalado']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Suspendido' && $scope.obj['Sub_Status'] == 'Administrativo'",
+            "flyout": {
+                "data": "$scope.obj.Balance.totalUnidadesLibres.unidadLibre",
+                "layout": "ta-care-prepaid-flyout"
+            },
+            "name": "Suspension/Administrativo",
+            "sObjectType": null,
+            "templateUrl": "ta-care-prepaid-card"
+        }
+    ],
+    "title": "Servicios",
+    "zone": "middle"
+}

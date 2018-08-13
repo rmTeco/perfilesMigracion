@@ -1,0 +1,70 @@
+<div class="slds-col--padded slds-size--1-of-1">
+    
+        <ng-form name='loopform'
+            class='slds-form-element vlc-flex vlc-slds-radio-control'
+            id="{{::control.name + $index}}"
+            ng-required="control.propSetMap.required"
+            ng-repeat='control in child.eleArray'>
+    
+            <div class="slds-form-element__control">
+    
+                <label for="{{::control.name + $index}}" class='slds-form-element__label vlc-slds-inline-control__label'>
+    
+                    <!-- tooltip template -->
+                    <!--<a vlc-slds-tool-tip="test" nubbin="left" help="{{control.propSetMap.help}}"> i </a>-->
+    
+                    <div vlc-slds-include="vlcLabelController.html"></div>
+    
+                    {{::control.propSetMap.customOptions.label}}
+    
+                    <span class='vlc-asterix icon-v-asterix'
+                            ng-show='control.propSetMap.required'>
+                    </span>  
+                    
+                </label>
+                
+                <div horizontalmode="false">
+
+                    <label ng-repeat='option in control.vlcSI[control.itemsKey]'
+                        ng-class="{'itemSelected': control.response.Id==option.Id}"
+                        class="slds-radio">
+                    
+                        <input ng-attr-id="{{'radio-' + $index}}"
+                            ng-disabled='control.ro'
+                            ng-required='!control.response && control.propSetMap.required'
+                            type='radio'
+                            ng-init='init(this, control)'
+                            ng-value='option'
+                            ng-model='control.response.selectedItem'
+                            ng-change='aggregate(this, control.index, control.indexInParent, true, -1);'
+                            vlc-slds-val-checker="response"/>
+                    
+                        <span class="slds-radio--faux"></span>
+                        <span class="slds-form-element__label">{{::control.propSetMap.customOptions.fieldLabel | format:control.propSetMap.customOptions.fields:option}}</span>
+                    </label>
+                    
+                    <label ng-if='control.propSetMap.customOptions.newItem && control.propSetMap.customOptions.newItem.allow'
+                        ng-class="{'itemSelected': control.response == control.propSetMap.customOptions.newItem.value}"
+                        class="slds-radio">
+                    
+                        <input ng-attr-id="{{'radio-newItem'}}"
+                            ng-disabled='control.ro'
+                            ng-required='!control.response && control.propSetMap.required'
+                            type='radio'
+                            ng-init='init(this, control)'
+                            ng-value='control.propSetMap.customOptions.newItem.value'
+                            ng-model='control.response.selectedItem'
+                            ng-change='aggregate(this, control.index, control.indexInParent, true, -1);'
+                            vlc-slds-val-checker="response"/>
+                    
+                        <span class="slds-radio--faux"></span>
+                        <span class="slds-form-element__label">{{::control.propSetMap.customOptions.newItem.text}}</span>
+                    </label>
+                
+                </div>
+    
+            </div>
+    
+        </ng-form>
+    
+    </div>

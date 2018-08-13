@@ -1,0 +1,26 @@
+<div class="via-slds-card--left-profile" ng-controller="viaLeftProfileController as vm">
+    <div class="banner">
+    </div>
+    <!--/banner-->
+    <div class="profile-picture big-profile-picture" ng-show="obj.PhotoUrl">
+        <img ng-src="{{vm.getPhotoUrl(obj)}}">
+    </div>
+    <!--/pic-->
+    <div class="profile-detail">
+        <div class="profile-name slds-text-heading--medium">{{obj | getter: data.fields[0] | picker: data.fields[0].type}} &nbsp;<div class="ribbon {{vm.getSentiment(obj)}}">&#x2605;</div></div>
+        <div class="profile-info">
+            {{obj | getter: data.fields[1] | picker: data.fields[1].type}}
+            <span ng-if="data.fields.length > 2"> | {{obj | getter: data.fields[2] | picker: data.fields[2].type}}</span>
+        </div>
+        <div class="slds-theme--default slds-grid slds-grid--align-spread slds-p-top--small slds-p-bottom--small slds-grid--vertical-align-center" ng-if="data.actions.length > 0" >
+          <div class="slds-col via-slds-col slds-size--1-of-{{data.actions.length < (data.limitActionLinksTo?data.limitActionLinksTo:3) ? data.actions.length : (data.limitActionLinksTo?data.limitActionLinksTo:3)}} slds-text-align--center slds-grid--align-center" ng-repeat="action in data.actions" ng-if="$index < (data.limitActionLinksTo?data.limitActionLinksTo:3) || data.actions.length < (data.limitActionLinksTo?data.limitActionLinksTo:3)">
+              <a href="javascript:void(0)" ng-click="performAction(action)" hotkey-card-action title="{{action.displayName}}" class="slds-text-link--reset">
+                  <vloc-card-icon data="action" obj="obj" size="'small'" extra-classes="'big via-action-icon slds-icon-text-default'"></vloc-card-icon>
+              </a>
+          </div>
+          <div class="slds-col via-slds-col slds-size--1-of-{{(data.limitActionLinksTo?data.limitActionLinksTo:3)}} slds-text-align--center slds-grid--align-center slds-text-link--reset" ng-init="overflowActions = data.actions.slice(data.limitActionLinksTo?data.limitActionLinksTo:3)">
+            <slds-dropdown content="overflowActions" ng-if="overflowActions.length > 0" icon-attribute="vlocityIcon" label-attribute="displayName" action-function="performAction(item)" button-size="medium"></slds-dropdown>
+          </div>
+      </div>
+    </div>
+</div>

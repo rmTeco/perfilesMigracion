@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Store the permission set, queues and user roles assigned to a work team, this object is used to handle the security.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to indicate if the permission is active or not for the work team.</description>
+        <externalId>false</externalId>
+        <label>Is Active</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Permission_Set_API_Name__c</fullName>
+        <description>Used to store the API Name of a permission set assigned to a work team.</description>
+        <externalId>true</externalId>
+        <label>Permission Set API Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Queue_API_Name__c</fullName>
+        <description>It is used to store the API name of the queue related to the work team.</description>
+        <externalId>true</externalId>
+        <label>Queue API Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Queue_Function__c</fullName>
+        <description>Used to stores the function that the queue covers for the work team, like reviewer, approver.
+It is used to identify the proper queue in the RAV process.</description>
+        <externalId>false</externalId>
+        <label>Queue Function</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Approver</fullName>
+                    <default>false</default>
+                    <label>Approver</label>
+                </value>
+                <value>
+                    <fullName>Reviser</fullName>
+                    <default>false</default>
+                    <label>Reviser</label>
+                </value>
+                <value>
+                    <fullName>Case back office</fullName>
+                    <default>false</default>
+                    <label>Case back office</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Role_API_Name__c</fullName>
+        <description>Used to store the API name of a role available to be assigned to a member of a team in the Security GUI used to configure Work Team Members.</description>
+        <externalId>true</externalId>
+        <label>Role API Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Work_Team__c</fullName>
+        <description>This field is used to store the assignation of a permission with a work team that it belongs to.</description>
+        <externalId>false</externalId>
+        <label>Work Team</label>
+        <referenceTo>WorkTeam__c</referenceTo>
+        <relationshipLabel>Work Team Permissions</relationshipLabel>
+        <relationshipName>Work_Team_Permissions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Work Team Permission</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>Todos</label>
+    </listViews>
+    <nameField>
+        <displayFormat>WTP-{0000}</displayFormat>
+        <label>Work Team Permission Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Work Team Permissions</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Permissions_by_work_team</fullName>
+        <active>true</active>
+        <description>Used to configure the permission sets active by work team.</description>
+        <label>Permissions by work team</label>
+        <picklistValues>
+            <picklist>Queue_Function__c</picklist>
+            <values>
+                <fullName>Approver</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case back office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reviser</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Queues_by_work_team</fullName>
+        <active>true</active>
+        <description>Record type to configure the queues assigned by work team.</description>
+        <label>Queues by work team</label>
+        <picklistValues>
+            <picklist>Queue_Function__c</picklist>
+            <values>
+                <fullName>Approver</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case back office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reviser</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Roles_active_by_work_team</fullName>
+        <active>true</active>
+        <description>Used to configure the user roles available for the work team.</description>
+        <label>Roles active by work team</label>
+        <picklistValues>
+            <picklist>Queue_Function__c</picklist>
+            <values>
+                <fullName>Approver</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Case back office</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reviser</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

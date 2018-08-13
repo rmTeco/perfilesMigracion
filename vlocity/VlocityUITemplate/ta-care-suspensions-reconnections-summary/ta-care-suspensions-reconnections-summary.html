@@ -1,0 +1,75 @@
+<!-- <div>{{bpTree.response | json}}</div> -->
+
+<div class="ta-care-ownership-changes-containter"> 
+<div class="ta-care-ownership-changes-summary">
+    
+    <div class="slds-p-around--large" style="background: #FFF;width:100%;">
+        <div class="confirmation">
+            <slds-svg-icon sprite="'action'" 
+                           icon="'check'" 
+                           size="'small'" 
+                           no-hint="true"
+                extra-classes="'slds-icon-text-default'">
+            </slds-svg-icon>
+            <!--<i class="icon icon-v-check-circle-line green confirmed"></i>-->
+           Ya podes confirmar la gestión. Resumen del caso:
+        </div>
+        <div class="services_title">
+        Equipo/linea seleccionado(s):
+        </div>
+        <div class="services slds-size--1-of-2">
+            <div class="service">
+                <span class="line_number" ng-if="bpTree.response.selectedDevice">
+                    {{bpTree.response.selectedDevice.Name}}<br/>
+                    IMEI - {{bpTree.response.selectedDevice.Imei}}<br/>
+                    {{bpTree.response.selectedDevice.Asset_Brand__c}} 
+                    {{bpTree.response.selectedDevice.assetModel__c}} <br/>
+                </span>
+                 <span class="line_number" ng-if="bpTree.response.selectedAsset">
+                     {{bpTree.response.selectedAsset.Name}}<br/>
+                     {{bpTree.response.selectedAsset.NumberLine}} 
+                 </span>
+            </div>
+        </div>
+        
+        <!--
+        <div class="services slds-size--1-of-2">
+            <div class="service"
+            ng-repeat="selectedAsset in bpTree.response.Selected">
+                <span class="line_number">{{selectedAsset.Name}}</span><br/>
+                {{selectedAsset.MSISDN}} <br/>
+                {{selectedAsset['Name']}}<br>
+                {{selectedAsset.Id}}
+            </div>
+        </div>
+        -->
+        
+        <div class="slds-has-divider--top slds-m-bottom--xx-large"></div>
+        
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-m-bottom--x-large">
+            <div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--1-of-6 slds-large-size--1-of-12">
+                <div class="icon green usericon">
+                    <slds-svg-icon sprite="'utility'" 
+                       icon="'user'" 
+                       size="'large'" 
+                       no-hint="true"
+                       extra-classes="'slds-icon-text-green'">
+                    </slds-svg-icon>
+                </div>
+            </div>
+
+            <div class="titular slds-p-horizontal--small slds-size--2-of-3 slds-medium-size--4-of-6 slds-large-size--11-of-12">
+                <b>Tipo de gestión: {{bpTree.response['Step1-SuspensionOrReconnection']['Radio1-SuspensionOrReconnection']}}<br/>
+                <span ng-if="bpTree.response['Step4-SuspensionReason']['Radio3-ReasonSuspension']">
+                    Motivo de suspensión: {{bpTree.response['Step4-SuspensionReason']['Radio3-ReasonSuspension']}}
+                </span>
+                </b>
+            </div>
+        </div>
+        
+            
+        
+    </div>
+    </div>
+</div>

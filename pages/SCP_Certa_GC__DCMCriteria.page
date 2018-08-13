@@ -1,0 +1,553 @@
+<apex:page sidebar="false"  controller="SCP_Certa_GC.DCMEvaluateCriteriaController" tabStyle="Strategic_Client_Plan__tab">
+
+    <c:SCPMenu ></c:SCPMenu>
+    
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__html2canvas}"/>
+    
+    <style>
+    	#MapTable {     
+	        border-collapse:collapse;
+	    }
+	    
+	    #MapTable td {
+	    	text-align: center;
+	    	/*width: 50px;*/
+	    }
+	    
+	    #MapTable .border {     
+	        text-align: center;              
+	        vertical-align: middle;
+	        border: 1px solid #539fc6;       
+	        /*width: 50px !important;*/        
+	        background-color: white;
+	    }   
+	    
+	    #MapTable .notBorder {      
+	        border: 0px;
+	    }
+	    
+	    #MapTable .notBorderRight {     
+	        border-right: 0px;
+	    }
+	    
+	    #MapTable .notBorderLeft {      
+	        border-left: 0px;
+	    }
+	    
+	    #MapTable div {     
+	        font-size: 14px;
+	        font-weight: bold;      
+	    }
+	    
+	    .PopupHolder, .PopupHolderOpp {
+	        float:right;
+	        margin-right: 6px;
+	        margin: 5px;
+	        cursor: pointer;
+	    }
+	    
+	    .PopupHolder *, .PopupHolderOpp *{
+	        box-sizing: content-box;
+	    }
+	    
+	    .label {
+	    	/*margin: 5px;*/
+	    }
+    </style>
+    
+    <script>
+    $j = jQuery.noConflict();        
+    
+    $j(document).ready(function() {
+        init(); 
+        
+        //Bajar linea como imagen
+        $j(".generateImg").click(function(){
+            zoom=1;
+            $j("#timeline-embed").animate({ 'zoom': zoom }, 0);
+            var chartArea = $j('#timeline-embed');
+            html2canvas(chartArea, {
+                onrendered: function(canvas) {          
+                    var img = canvas.toDataURL("image/png");
+                    //window.location.href = img.replace('image/png', 'image/octet-stream');
+                    var ua = window.navigator.userAgent;
+                    if (ua.indexOf("Chrome") > 0) {
+                        var link = document.createElement('a');
+                        link.download = "DCM.png";
+                        link.href = img.replace('image/png', 'image/octet-stream');
+                        link.click();
+                    } else {
+                        window.location.href = img.replace('image/png', 'image/octet-stream');
+                    }
+                }
+            });    
+        });
+        
+    });
+    
+    
+    function generarImagen(){
+        
+        console.log("hola");
+        zoom=1;
+        $j("#chart").animate({ 'zoom': zoom }, 0);
+        var chartArea = $j('#chart');
+        html2canvas(chartArea, {
+            onrendered: function(canvas) {          
+                var img = canvas.toDataURL("image/png");
+                //window.location.href = img.replace('image/png', 'image/octet-stream');
+                var ua = window.navigator.userAgent;
+                if (ua.indexOf("Chrome") > 0) {
+                    var link = document.createElement('a');
+                    link.download = "{!$Label.Influence_Org}.png";
+                    link.href = img.replace('image/png', 'image/octet-stream');
+                    link.click();
+                } else {
+                    window.location.href = img.replace('image/png', 'image/octet-stream');
+                }
+            }
+        });
+    }
+    
+    function init() {	
+        $j(".PopupHolder").mouseenter(function(event){
+            if ($j(this).children(".lookupHoverDetail").css("display") == "none") {
+                $j(this).children(".lookupHoverDetail").css("top",event.clientY + 'px');
+                $j(this).children(".lookupHoverDetail").css("left",event.clientX + 'px');
+                $j(this).children(".lookupHoverDetail").css("position","fixed");
+                $j(this).children(".lookupHoverDetail").show();            	
+            }
+        });
+        
+        $j(".PopupHolder").mouseleave(function(){
+            $j(this).children(".lookupHoverDetail").hide();
+        });
+        
+        $j(".PopupHolderOpp").mouseenter(function(event){
+            if ($j(this).children(".lookupHoverDetail").css("display") == "none") {
+                $j(this).children(".lookupHoverDetail").css("top", event.clientY + 'px');
+                $j(this).children(".lookupHoverDetail").css("left",(event.clientX - 360) + 'px');
+                $j(this).children(".lookupHoverDetail").css("position","fixed");    		
+                $j(this).children(".lookupHoverDetail").show();            	
+            }
+        });
+        
+        $j(".PopupHolderOpp").mouseleave(function(){
+            $j(this).children(".lookupHoverDetail").hide();
+        });
+    }
+    </script>
+    
+    <apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="EvaluatedCriteriaPageBlock">
+    	<div class="panel panel-default">	    		
+    		<div class="panel-heading">
+    			<h3 class="panel-title">
+    				<span style="float:left;">
+    					{!$Label.scp_certa_gc__dcm}
+    				</span>
+    				<!--<c:tutorial />-->
+    				<span style="float:left;">
+    					<c:showVideo />
+    				</span>
+    			</h3>
+    			<div class="row paddingRight">
+    				<apex:form >	
+   						<apex:actionFunction action="{!exportToExcel}" name="exportToExcel"/>
+   						<apex:actionFunction action="{!$Page.DCMEvaluateCriteria}?id={!opportunity.id}" name="viewCDC"/>
+   					</apex:form>	   					
+					<div class="btn-group pull-right" role="group" aria-label="...">	
+                        <!--
+	                    <button id="generateImg" type="button" class="btn btn-default btn-sm generateImg" onClick="generarImagen()">
+	   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.save_image}
+	                    </button>
+						-->
+	                    <button type="button" class="btn btn-default btn-sm" onclick="viewCDC()">
+	   						<span class="glyphicon glyphicon-edit icon-btn-left"></span>&nbsp;Modificar Criterios
+	                    </button>
+    				</div>
+    			</div>
+    		</div>
+    		<div class="panel-body">
+		    	<apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="showInput(); ajaxstop();"/>
+	            
+	            <div class="btn-group pull-right" role="group" aria-label="...">
+		            <apex:outputLink value="{!$Page.SCP_Certa_GC__accountRDMWindow}?id={!opportunity.id}">
+	                 	<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.gotoMosaic}
+	               		</button>
+	                </apex:outputLink>
+	    			<apex:outputLink value="{!$Page.SCP_Certa_GC__OpportunitySnapshot}?id={!opportunity.id}">
+	                  	<button type="button" class="btn btn-default btn-sm">
+							<span class="glyphicon glyphicon-camera icon-btn-left"></span>&nbsp;{!$Label.gotoSnapshot}
+			            </button>
+	                </apex:outputLink>
+	            </div>
+	            <h2 style="margin-top: 0px;margin-bottom: 56px;">{!$Label.scp_certa_gc__opportunity}: <span style="font-size: 16px;"><apex:outputLink value="/{!opportunity.id}">{!opportunity.Name}</apex:outputLink></span></h2>
+	            
+	            <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+	                <img src="{!$Resource.AjaxLoader}"/><br/>Loading...
+	            </div>
+	            <!-- Grafico -->
+	            <div id="timeline-embed" class="conteinerDiv">
+					<table id="MapTable" style="width:90%" cellspacing="0" cellpadding="0">
+						<tr>
+							<td class="notBorder"></td>
+							<td class="notBorder"></td>
+							<td colspan="4" style="height: 50px; border-left: 0px; border-right: 0px; border-bottom: 0px; vertical-align: top;text-align: center;">
+								<table cellpadding="5" cellspacing="5">
+									<tr>
+										<td>
+											<span class="label label-danger label-link" style="display: block;min-width: 73px;max-width: 73px;height: 11px;float: left; margin-left: 10px;"/>
+										</td>
+										<td>
+											<apex:OutputText styleClass="our" style="float:left; margin-left:10px; font-weight: bold;" value="{!$Label.scp_certa_gc__our_standing}" />
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="label label-primary label-link" style="display: block;min-width: 73px;max-width: 73px;height: 11px;float: left; margin-left: 10px;"/>
+										</td>
+										<td>
+											<apex:OutputText styleClass="competitor" style="float: left; margin-left:10px; font-weight: bold;" value="{!$Label.scp_certa_gc__competitor_standing}" />
+										</td>
+									</tr>
+								</table>
+							</td>                                       
+						</tr>
+						<tr>
+							<td class="border" rowspan="2" style="width:50px;padding: 5px; border:0px;">
+								<div>{!$Label.scp_certa_gc__importance_to_client}</div>
+							</td>
+							<td class="border" style="height: 100px; width:50px; border-left: 0px; border-bottom: 0px; border-top: 0px; vertical-align: top;">
+							    <div>{!$Label.scp_certa_gc__dcm_high}</div>                        
+							</td>
+						    <td class="notBorderRight border" style="width: 300px; text-align: center;  height: 200px; border-top: 0px;">                      
+			                    <apex:repeat value="{!OurVK}" var="our">
+			                    	<!-- 
+			                    	<span class="label label-danger label-link">
+			                    		<apex:outputText styleClass="our" value=" {!our.SCP_Certa_GC__Criteria__c}"/>
+			                    	</span>
+			                    	 -->
+			                    	<div class="PopupHolder">
+                                       	<span class="label label-danger label-link" style="display: block;min-width: 73px;">{!Left(our.Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topLeft"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>
+						    </td>
+						    <td class="border notBorderLeft" style="width: 300px; border-top: 0px;">
+			                    <apex:repeat value="{!competitorVK}" var="our">
+		                        	<div class="PopupHolderOpp" style="float:left;">
+                                       	<span class="label label-primary label-link" style="display: block;min-width: 73px;"><span style="margin-right: 5px;">{!Left(our.SCP_Certa_GC__Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topRight"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>                                    
+						    </td>
+						    <td class="border notBorderRight" style="width: 300px; border-top: 0px;">
+			                    <apex:repeat value="{!OurVW}" var="our">
+	                        		<div class="PopupHolder">
+                                       	<span class="label label-danger label-link" style="display: block;min-width: 73px;"><span style="margin-right: 5px;">{!Left(our.SCP_Certa_GC__Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topLeft"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>                                    
+						    </td>
+						    <td class="border notBorderLeft" style="width: 300px;border-right: 0px; border-top: 0px;">
+			                    <apex:repeat value="{!competitorVW}" var="our">
+	                        		<div class="PopupHolderOpp" style="float:left;">
+                                       	<span class="label label-primary label-link" style="display: block;min-width: 73px;"><span style="margin-right: 5px;">{!Left(our.SCP_Certa_GC__Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topRight"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>
+						    </td>                   
+						</tr>
+						<tr>                    
+							<td class="border" style="height: 100px; width:50px;border-left: 0px;border-bottom: 0px; border-top: 0px;vertical-align: bottom;">
+							    <div>{!$Label.scp_certa_gc__dcm_low}</div>                     
+							</td>
+							<td class="border notBorderRight" style="height: 200px;">
+			                    <apex:repeat value="{!OurNV}" var="our">
+	                        		<div class="PopupHolder">
+                                       	<span class="label label-danger label-link" style="display: block;min-width: 73px;"><span style="margin-right: 5px;">{!Left(our.SCP_Certa_GC__Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topLeft"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>
+						    </td>
+						    <td class="border notBorderLeft">
+			                    <apex:repeat value="{!competitorNV}" var="our">
+	                        		<div class="PopupHolderOpp" style="float:left;">
+                                       	<span class="label label-primary label-link" style="display: block;min-width: 73px;"><span style="margin-right: 5px;">{!Left(our.SCP_Certa_GC__Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topRight"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>
+							</td>
+							<td class="border notBorderRight">
+								<apex:repeat value="{!OurVS}" var="our">
+                         			<div class="PopupHolder">
+                                       	<span class="label label-danger label-link" style="display: block;min-width: 73px;"><span style="margin-right: 5px;">{!Left(our.SCP_Certa_GC__Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topLeft"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>
+							</td>
+							<td class="border notBorderLeft" style="border-right: 0px;">
+								<apex:repeat value="{!competitorVS}" var="our">
+		                         	<div class="PopupHolderOpp" style="float:left;">
+                                       	<span class="label label-primary label-link" style="display: block;min-width: 73px;"><span style="margin-right: 5px;">{!Left(our.SCP_Certa_GC__Criteria__c,14)}<apex:outputText value="..." rendered="{!LEN(our.SCP_Certa_GC__Criteria__c)>14}" /></span></span>
+                                           <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                               <div class="Custom50Block topRight"><div class="bPageBlock secondaryPalette">
+                                                   <div class="pbHeader">
+                                                       <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                           <tr>
+                                                               <td colspan="2" class="pbTitle" style="text-align: center;"><h2 class="mainTitle">Criterio</h2></td>                                                               
+                                                           </tr>
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbBody">
+                                                       <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Criteria__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Criteria__c}"/></td>
+															</tr>
+															<tr>
+                                                               	<th class="labelCol" style="text-align: right;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__SCP_Criteria_DCM__c.fields.SCP_Certa_GC__Approach__c.label}"/></th>
+																<td class="dataCol" style="text-align: left;"><apex:outputText value="{!our.SCP_Certa_GC__Approach__c}"/></td>
+															</tr>															
+                                                       </tbody></table>
+                                                   </div>
+                                                   <div class="pbFooter secondaryPalette">
+                                                       <div class="bg"></div>
+                                                   </div>
+                                               </div>
+                                        	</div>
+                                  		</div>
+									</div>
+								</apex:repeat>
+							</td>
+						</tr>
+						<tr>
+							<td class="notBorder">
+				               
+							</td>
+							<td class="notBorder">
+				               
+							</td>
+							<td class="border" colspan="2" style="height: 30px; border-bottom: 0px; border-left: 0px; border-right: 0px; text-align: left;">
+								<div>{!$Label.DCM_LOW_1}</div>
+							</td>
+							<td class="border" colspan="2" style="border-bottom: 0px; border-left: 0px; border-right: 0px; text-align: right;">
+								<div>{!$Label.DCM_HIGH_1}</div>
+							</td>                                       
+						</tr>
+						<tr>
+							<td class="notBorder">
+				               
+							</td>
+							<td class="notBorder">
+				               
+							</td>
+							<td colspan="4" style="height: 50px; border-left: 0px; border-right: 0px; border-bottom: 0px; vertical-align: top;">
+								<div>{!$Label.Perceived_Performance_Client}</div>
+							</td>                                       
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="panel-footer">
+    			<div class="row paddingRight">
+					<div class="btn-group pull-right" role="group" aria-label="...">
+                        
+                        <button type="button" class="btn btn-default btn-sm generateImg" data-value="saveImg" data-msg="{!$Label.save_msg}">
+                            <span class="glyphicon glyphicon-picture icon-btn-left"></span>&nbsp;Descargar imágen
+                        </button>
+	                    <button type="button" class="btn btn-default btn-sm" onclick="viewCDC()">
+	   						<span class="glyphicon glyphicon-edit icon-btn-left"></span>&nbsp;Modificar Criterios
+	                    </button>
+    				</div>
+    			</div>
+    		</div>
+			<c:FastTask page="{!$Label.scp_certa_gc__dcm}" account="{!account.Id}" opp="{!opportunity.id}"></c:FastTask>
+			<chatter:feed entityId="{!account.Id}"/>
+		</div>
+		</apex:outputpanel>	
+</apex:page>

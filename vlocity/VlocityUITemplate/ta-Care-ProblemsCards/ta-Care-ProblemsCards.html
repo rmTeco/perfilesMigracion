@@ -1,0 +1,147 @@
+<div class="via-slds slds-m-around--small ng-scope" ng-controller="containerTableCanvarController as tcc" ng-init="tcc.init()">
+        
+        
+        <div ng-if="tcc.bpTree.response.listaInfoPagos">
+          
+            <div id="advancerFilters">
+                <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;">
+                    <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+                        <div class="slds-form-element">
+                            <label class="slds-text-heading--small" for="text-input-01">Número de tarjeta</label><br>
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+ 
+                               <!-- <input name="filter" id="filter" ng-model="tcc.searchTerm1" class="slds-input" type="text" placeholder="Buscar" ng-change="search();"/>-->
+                                
+                                <select name="filter" id="filter" ng-model="tcc.searchTerm1">
+                                    <option ng-repeat="pago in tcc.bpTree.response.listaInfoPagos.infoPago" value="{{pago.infoBanco.ultimosDigitosTarjeta}}">{{pago.infoBanco.ultimosDigitosTarjeta}}</option>
+                                </select>
+                        </div>
+                    </div>
+                  
+                </div>     
+            </div>    
+            
+            <table   class="slds-table slds-table--bordered slds-table--resizable-cols via-slds-table-pinned-header">
+                <thead>
+                    <th class="slds-p-bottom--small detailHead{{field.label}}"
+                        scope="col"
+                        ng-class="{
+                            'slds-is-sorted' : sortingOrder == field.name,
+                            'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                            'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                            <a 
+                                class="slds-truncate slds-th__action detalleDeConsumosTHead" 
+                                ng-click="sortBy(field)" 
+                                href="javascript:void(0)">
+                                Codigo de cuenta
+                            </a>
+                    </th>
+                    <th class="slds-p-bottom--small detailHead{{field.label}}"
+                        scope="col"
+                        ng-class="{
+                            'slds-is-sorted' : sortingOrder == field.name,
+                            'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                            'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                            <a 
+                                class="slds-truncate slds-th__action detalleDeConsumosTHead" 
+                                ng-click="sortBy(field)" 
+                                href="javascript:void(0)">
+                                Suscripcion
+                            </a>
+                    </th>
+                    <th class="slds-p-bottom--small detailHead{{field.label}}"
+                        scope="col"
+                        ng-class="{
+                            'slds-is-sorted' : sortingOrder == field.name,
+                            'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                            'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                            <a 
+                                class="slds-truncate slds-th__action detalleDeConsumosTHead" 
+                                ng-click="sortBy(field)" 
+                                href="javascript:void(0)">
+                                Fecha de pago
+                            </a>
+                    </th>
+                    <th class="slds-p-bottom--small detailHead{{field.label}}"
+                        scope="col"
+                        ng-class="{
+                            'slds-is-sorted' : sortingOrder == field.name,
+                            'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                            'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                            <a 
+                                class="slds-truncate slds-th__action detalleDeConsumosTHead" 
+                                ng-click="sortBy(field)" 
+                                href="javascript:void(0)">
+                                Tipo de transaccion
+                            </a>
+                    </th>
+                    <th class="slds-p-bottom--small detailHead{{field.label}}"
+                        scope="col"
+                        ng-class="{
+                            'slds-is-sorted' : sortingOrder == field.name,
+                            'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                            'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                            <a 
+                                class="slds-truncate slds-th__action detalleDeConsumosTHead" 
+                                ng-click="sortBy(field)" 
+                                href="javascript:void(0)">
+                                Importe
+                            </a>
+                    </th>
+                    <th class="slds-p-bottom--small detailHead{{field.label}}"
+                        scope="col"
+                        ng-class="{
+                            'slds-is-sorted' : sortingOrder == field.name,
+                            'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                            'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                            <a 
+                                class="slds-truncate slds-th__action detalleDeConsumosTHead" 
+                                ng-click="sortBy(field)" 
+                                href="javascript:void(0)">
+                                Ultimos digitos de Tarjeta
+                            </a>
+                    </th>
+                
+                </thead>
+                
+                <tbody>
+                    <tr ng-repeat="pago in tcc.bpTree.response.listaInfoPagos.infoPago | filter: tcc.searchTerm1">
+                        <td>
+                            
+                            <label class="slds-radio">
+
+                                <input type="radio" ng-value="{{$index}}" ng-model="tcc.favoriteBeatle" class="ng-pristine ng-untouched ng-empty ng-valid ng-valid-required" name="index" value="{{$index}}" ng-click="radioChange()">
+                            
+                                <span class="slds-radio--faux ng-scope"></span>
+                                <span class="slds-form-element__label ng-binding ng-scope">{{pago.idCuenta}}</span>
+                            </label>
+                            
+                        </td>
+                        <td class="slds-text-color--default">{{pago.codSuscripcion}}</td>
+                        <td class="slds-text-color--default">{{pago.fechaAplicacionPago}}</td>
+                        <td class="slds-text-color--default">{{pago.tipoTransaccionPago}}</td>
+                        <td class="slds-text-color--default">{{pago.importePago}}</td>
+                        <td class="slds-text-color--default">{{pago.infoBanco.ultimosDigitosTarjeta}}</td>
+                    </tr>	
+                </tbody>
+            </table>
+            <br/>
+            <span class="slds-checkbox">
+            	<input type="checkbox"
+            		   id="checkbox"
+            		   ng-model="tcc.itemChecked"
+            		   ng-change = "checkChange()"
+            		   />
+            	<label class="slds-checkbox__label" for="checkbox" >
+            		<span class="slds-checkbox--faux"></span>
+            	</label>
+            	 Pago No Existe
+            </span>           
+
+</div>
+ 
+             
+                 
+                
+
+<script src="/support/console/39.0/integration.js"></script>

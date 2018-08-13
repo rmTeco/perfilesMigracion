@@ -1,0 +1,50 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objAPIName']": "%vlocity_namespace%__InsuranceClaim__c"
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Claim Number",
+                    "name": "['subtitle']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Loss Type",
+                    "name": "['highlight']",
+                    "type": "string"
+                }
+            ],
+            "name": "Claim",
+            "sObjectType": "%vlocity_namespace%__InsuranceClaim__c",
+            "templateUrl": "ta-Care-story-card"
+        }
+    ],
+    "title": "Claims"
+}

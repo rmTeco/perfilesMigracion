@@ -1,0 +1,101 @@
+<!--<pre>{{control.vlcSI.recSet |json}}</pre>-->
+<div 
+    ng-if="control.vlcSI.recSet[0]"
+    class="slds-card via-slds-card--active slds-m-bottom--small taOScard"
+    ng-init="item = control.vlcSI.recSet[0]">
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-header">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class="slds-truncate slds-text-heading--label taOScard-title">
+			    IMEI
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate">{{item.IMEI}}<span ng-if="!item.IMEI"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class="slds-truncate slds-text-heading--label">
+			    NMU
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate">{{item.NMU}}<span ng-if="!item.NMU"> - </span></p>				
+			</div>
+		</div>
+	</div>
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-content">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Marca</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate">{{item.Marca}}<span ng-if="!item.Marca"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Modelo</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate">{{item.Model}}<span ng-if="!item.Model"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Descripción</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate">{{item.Description}}<span ng-if="!item.Description"> - </span></p>
+				<!--//Description-->
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Fecha de Venta</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate">{{item.PurchaseDate}}<span ng-if="!item.PurchaseDate"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Fecha de Vencimiento de Garantía</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate"> - </p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Garantía Tipo</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate"> - </p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Garantía Estado</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate"> - </p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Garantía Service</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate"> - </p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Stock de Uso</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate"> - </p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class="slds-truncate slds-text-heading--label">Partida</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="slds-truncate"> - </p>				
+			</div>
+		</div>
+	</div>
+</div>

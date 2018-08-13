@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Links source Order/Fulfilment Request Line and a Fulfilment Request Line that is a result of this decomposition</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__DestinationFulfilmentRequestLineId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>DestinationFulfilmentRequestLineId</description>
+        <externalId>false</externalId>
+        <inlineHelpText>DestinationFulfilmentRequestLineId</inlineHelpText>
+        <label>Destination Fulfilment Request Line</label>
+        <referenceTo>vlocity_cmt__FulfilmentRequestLine__c</referenceTo>
+        <relationshipLabel>Source Decomposition Relationships</relationshipLabel>
+        <relationshipName>SourceDecompositionRelationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SourceFulfilmentRequestLineId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>SourceFulfilmentRequestLineId</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SourceFulfilmentRequestLineId</inlineHelpText>
+        <label>Source Fulfilment Request Line</label>
+        <referenceTo>vlocity_cmt__FulfilmentRequestLine__c</referenceTo>
+        <relationshipLabel>Destination Decomposition Relationships</relationshipLabel>
+        <relationshipName>DestinationDecompositionRelationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SourceOrderItemId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>SourceOrderItemId</description>
+        <externalId>false</externalId>
+        <inlineHelpText>SourceOrderItemId</inlineHelpText>
+        <label>Source Order Item</label>
+        <referenceTo>OrderItem</referenceTo>
+        <relationshipLabel>Destination Decomposition Relationships</relationshipLabel>
+        <relationshipName>DestinationDecompositionRelationships</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>FulfilmentRequestLineDecompRelationship</label>
+    <nameField>
+        <label>Fulfilment Request Item Decomp Re Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>FulfilmentRequestLineDecompRelationships</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

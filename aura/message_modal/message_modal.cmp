@@ -1,0 +1,36 @@
+<aura:component >
+    <aura:attribute name="step_json" type="json"/>
+    <aura:attribute name="page" type="integer"/>
+    <aura:attribute name="total_pages" type="integer"/>
+    <aura:attribute name="head" type="string"/>
+    <aura:attribute name="cont" type="string"/>
+    <aura:attribute name="aur_id" type="string" access="private" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <!-- The Modal -->
+    <div>
+        <div aura:id="msg_modal" class="modal1">
+            <!-- Modal content -->
+            <div class="modal-dialog1">
+                <div class="modal-content1" >
+                    <div class="modal-header1" aura:id="modal_header">
+                        <p>
+                            <ui:outputText aura:id="modal_title" value="{!v.head}"/>
+                        </p>
+                    </div>
+                    <div class="modal-body1" aura:id="modal_body">   
+                        <aura:unescapedHtml aura:id="modal_content" value="{!v.cont}" />
+                    </div>
+                    <div class="modal-footer1" aura:id="modal_footer">
+                        <div aura:id="page_steps">
+                            <p aura:id="page_content" class="pull-left">{!v.page} of {!v.total_pages}</p>
+                        </div>
+                        <ui:button aura:id="prev_btn" class="btn btn-default hide button-component" press="{!c.move}" label="Previous"/>
+                        <ui:button aura:id="next_btn" class="btn btn-default hide button-component" press="{!c.move}" label="Next"/>
+                        <ui:button aura:id="done_btn" class="btn btn-default hide button-component" press="{!c.move}" label="Done"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

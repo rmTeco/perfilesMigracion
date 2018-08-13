@@ -1,0 +1,22 @@
+{
+    "Cards": [
+        "Campaign Detail"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "701o0000000S1AH"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT ActualCost,AmountAllOpportunities,AmountWonOpportunities,BudgetedCost,CampaignMemberRecordTypeId,CreatedById,CreatedDate,Description,EndDate,ExpectedResponse,ExpectedRevenue,Id,IsActive,Name,NumberOfContacts,NumberOfConvertedLeads,NumberOfLeads,NumberOfOpportunities,NumberOfResponses,NumberOfWonOpportunities,NumberSent,OwnerId,ParentId,RecordTypeId,StartDate,Status,Type, LastModifiedDate, CreatedBy.Name,%vlocity_namespace%__EmailTemplate__c,%vlocity_namespace%__MassEmailSubject__c, %vlocity_namespace%__MassEmailContent__c FROM Campaign WHERE Id = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "campaign-column"
+        }
+    }
+}

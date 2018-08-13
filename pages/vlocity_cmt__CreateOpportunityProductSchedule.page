@@ -1,0 +1,75 @@
+<apex:page standardcontroller="Opportunity" extensions="vlocity_cmt.OpportunityProductScheduleController" action="{!newSchedule}">
+	<head>
+		<style type="text/CSS">
+			.red{
+				color:red;
+				font-size: 120%;
+			}
+			.normal{
+				font-size: 120%;
+			}
+			.primary-btn {
+				background: linear-gradient(to bottom, #18acdd 0%, #0088dd 100%);
+				color: #fff;
+				border: 1px solid #008ab3;
+			}
+		</style>
+	</head>
+
+	<body>
+		<button onclick="returnTo();" id="button1" class="normal">{!$Label.ReturnToOpportunity}</button> 
+	    <span id="cont1" class="red">{!$Label.OpportunityHasSchedule}</span>
+	    <br/>
+	    <apex:form >
+	    	<apex:pageMessages />
+	    	<apex:commandButton action="{!emptySchedule}" onclick="showMessage()" value="{!$Label.vlocity_cmt__removescheduledata}" rendered="{!hasSchedule}" style="primary-btn" /> 
+	 	</apex:form>
+		<span id="cont3" class="normal">{!$Label.ScheduleDeleted}</span>
+
+
+	    <br/>
+		<button onclick="returnTo();" id="button2" class="normal">{!$Label.ReturnToOpportunity}</button> 
+		<span id="cont2" class="red">{!$Label.NoContractMonths}</span>
+		<br/>
+
+		
+		<script>
+			function returnTo() {
+				if (!{!hasError}){
+			   		 window.location = "../{!Opportunity.Id}";  
+			    }  
+
+			}
+				
+			    document.getElementById("button1").style.visibility="hidden";
+				document.getElementById("cont1").style.visibility="hidden";
+				document.getElementById("button2").style.visibility="hidden";
+				document.getElementById("cont2").style.visibility="hidden";	
+				document.getElementById("cont3").style.visibility="hidden";
+				
+			function showMessage() {				
+				document.getElementById("cont1").style.visibility="hidden";	
+			}
+			
+			
+		   if (!{!hasMonths}) {
+				document.getElementById("button2").style.visibility="visible";
+				document.getElementById("cont2").style.visibility="visible";
+			} else if ({!hasSchedule}) {
+				document.getElementById("button1").style.visibility="visible";
+				document.getElementById("cont1").style.visibility="visible";
+				//document.getElementById("cont3").style.visibility="visible";
+		    } else {
+		    	if ({!hasEmptied}) {	
+					document.getElementById("button1").style.visibility="visible";	
+					document.getElementById("cont3").style.visibility="visible";
+				} else {
+						returnTo();
+				}
+		    }
+
+
+		</script>
+	</body>
+
+</apex:page>

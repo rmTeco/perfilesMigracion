@@ -1,0 +1,56 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Product Id",
+                    "name": "['Product2Id']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Product Code",
+                    "name": "['ProductCode']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Unit Price",
+                    "name": "['UnitPrice']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Active",
+                    "name": "['IsActive']['value']",
+                    "type": "string"
+                }
+            ],
+            "name": "Product details",
+            "templateUrl": "ta-cpq-v15-product-item-details"
+        }
+    ],
+    "title": "Product details"
+}

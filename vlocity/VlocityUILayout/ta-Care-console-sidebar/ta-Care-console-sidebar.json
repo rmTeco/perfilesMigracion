@@ -1,0 +1,39 @@
+{
+    "Cards": [
+        "taProfileAccounts",
+        "taProfileAccount",
+        "taProfileAccountInfo",
+        "taSegmentAccount",
+        "Facturacion",
+        "taProfileTags"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000009IOSI"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "bundle": "GetAccountInfoById",
+            "inputMap": {
+                "Id": "{{params.id}}"
+            },
+            "query": "SELECT Name, Email, Phone, DocumentNumber__c FROM Contact WHERE Id = '{{params.Id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Care-console-sidebar"
+        }
+    },
+    "workspace": [
+        "taProfileAccounts/Personal/1502570576411",
+        "taProfileAccount/Personal/1502570576410",
+        "taProfileAccountInfo/Personal/1502570576411",
+        "taSegmentAccount/Personal - DESA01/1512409169140",
+        "Facturacion/Personal - DESA01/1510175399484",
+        "taProfileTags/Personal/1502570576414"
+    ]
+}

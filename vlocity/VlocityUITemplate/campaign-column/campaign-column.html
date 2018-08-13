@@ -1,0 +1,3 @@
+<div>
+    <vloc-card ng-repeat="card in cards |orderBy:order|filter: searchFunc(card)" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" campaign-member-id="{{importedScope.campaignMemberId}}"></vloc-card>
+</div>

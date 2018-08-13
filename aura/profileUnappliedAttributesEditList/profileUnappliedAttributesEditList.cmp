@@ -1,0 +1,29 @@
+<aura:component access="GLOBAL">
+    <aura:registerEvent name="applyAttribute" type="vlocity_cmt:profileApplyAttributeEvent"/>
+    <aura:handler event="vlocity_cmt:profileUnappliedAttributesFilteredEvent" action="{!c.handleFilteredEvent}"/>
+    <aura:handler event="vlocity_cmt:profileApplyAttributeSucceededEvent" action="{!c.handleApplyAttributeSucceededEvent}"/>
+    <aura:handler event="vlocity_cmt:profileApplyAttributeFailedEvent" action="{!c.handleApplyAttributeFailedEvent}"/>
+    <aura:attribute name="unappliedAttributesOriginalList" type="vlocity_cmt.SegmentElement[]"/>
+    <aura:attribute name="unappliedAttributesForDisplay" type="vlocity_cmt.SegmentElement[]"/>
+
+    <ul class="slds-has-dividers--bottom slds-has-block-links--space">
+        <aura:iteration items="{!v.unappliedAttributesForDisplay}" var="attribute">
+            <li class="needsClick slds-item" 
+                onclick="{!c.handleUnappliedAttributeClicked}" 
+                data-code="{!attribute.SegmentCode}">
+                <a href="javascript:void(0);" data-code="{!attribute.SegmentCode}">{!attribute.Name}</a>
+            </li>
+        </aura:iteration>
+
+        <div aura:id="loading-spinner" class="slds-spinner_container slds-hidden">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--small" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+
+    </ul>
+
+        
+</aura:component>

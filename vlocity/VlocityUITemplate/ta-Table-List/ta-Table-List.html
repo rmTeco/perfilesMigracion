@@ -1,0 +1,72 @@
+<table 
+	class="slds-table slds-table--bordered slds-table--cell-buffer slds-m-bottom--x-large ta-table-list"
+	ng-controller="tableListController as TLCtrl"
+	ng-init="TLCtrl.init(this)">
+
+    <thead class="ta-table-list-thead">
+
+        <tr class="slds-text-title--caps">
+
+            <th ng-repeat="t in control.propSetMap.selectableItemConfig.theader" scope="col">
+
+                <div class="slds-truncate" title="{{t.label}}">{{t.label}}</div>
+
+            </th>
+
+        </tr>
+
+	</thead>
+
+    <tbody class="ta-table-list-tbody">
+
+        <tr ng-repeat="item in TLCtrl.inputList | orderBy : control.propSetMap.selectableItemConfig.orderBy">
+
+            <td ng-repeat="td in control.propSetMap.selectableItemConfig.tbody">
+
+				<!-- Default Field -->				
+				<div 
+				    ng-if="td.type == undefined"
+				    class="slds-truncate">
+					{{item[td.field]}}
+				</div>
+
+				<!-- Field from a sub node -->
+				<div 
+				    ng-if="td.type == 'child'"
+				    class="slds-truncate">
+                    {{item[td.field][td.subField]}}
+				</div>
+				
+                <div 
+                    ng-if="td.type == 'string'" 
+                    class="slds-truncate"
+                    ng-class="{'green' : 'PAGA' == item[td.field], 'red' : 'INCUMPLIDA' == item[td.field]}"
+                    title="{{item[td.field]}}">
+                    {{item[td.field]}}
+                </div>
+
+                <div 
+                    ng-if="td.type == 'currency'" 
+                    class="slds-truncate"
+                    title="{{item[td.field]}}">
+                    ${{item[td.field]}}
+                </div>
+
+                <div 
+                    ng-if="td.type == 'hyperlink'" 
+                    class="slds-truncate"
+                    title="{{item[td.field]}}">
+                    
+                    <a ng-click="openConsoleSubTab(item[td.url]);"
+                        href="javascript:void(0);">
+                        {{item[td.field]}}
+                    </a>
+                </div>
+
+            </td>
+            
+        </tr>
+
+    </tbody>
+
+</table>

@@ -1,0 +1,79 @@
+<section class="console-card active" 
+         ng-class="{'expired': (obj.Status != 'Active'), 'selected': isSelected(cardIndex)}"
+         data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" 
+         hotkey-layout-card>
+     <div class="card-top" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="card-top-header">
+            <div class="header-left">
+                <h2 class="slds-text-heading_medium" tooltip-placement="bottom" tooltip="{{obj.Name}}" style="text-align: right;">
+                    {{obj.Name}}
+                </h2>                
+                <span class="slds-text-heading_medium expired-date" ng-class="{'expired-pink': (obj.Status != 'Active' || obj.BundleStatus != 'Active')}"></span>
+                <span class="slds-text-body_regular expired-title">Fecha de activación: {{obj.ActivationDate | date:'dd/MM/yyyy'}}</span>
+            </div>
+            <div class="header-right">
+                <div style="text-align: right;">
+                    <h2 class="slds-text-heading_medium" tooltip-placement="bottom" tooltip="{{obj.LineNumber}}">
+                    {{obj.LineNumber}}
+                </h2>
+                </div>
+                <span class="slds-text-body_regular account-number slds-p-bottom--xx-small" style="text-align: right;width: 100%;">Línea</span>
+            </div>
+
+        </div>
+        <!--<div>-->
+            <!--<span class="account-number">#{{obj.OrderNumber}}</span>-->
+            <!--<span class="expires">-->
+                <!--<i ng-if="expiresSoon(card.expires, 30)" tooltip="Last modified" class="icon icon-v-warning-cirlce">
+                </i>-->
+            <!--<span class="expired-title">Expiración</span>-->
+        <!--</div>-->
+        <!--</span>-->
+    </div>
+    <div class="card-info">
+        <ul class="actions">
+            <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:4)">
+                <a href="#" ng-click="performAction(action)" hotkey-card-action>
+                    <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+                    <span ng-if="action.imageRef">
+                        <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+                    </span>
+                    <span class="slds-text-body_regular">{{action.displayName}}</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="details" ng-click="performFlyout(uniqueLayoutId + '-card-'+ cardIndex)">
+            <li class="detail" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+                <!--<span class="detail-label">{{obj | getter: field: 'label' | picker: field.type}}</span>-->
+                <span class="slds-text-body_regular value">{{obj[field.relationshipName]['Name']}}</span>
+                <span class="slds-text-body_regular detail-label">{{field.label}}</span>
+                <div ng-if="field.label === 'Internet Disponible'">
+                      <div ng-repeat="record in records | limitTo: 1">
+                             <div ng-repeat="var in record.Balance.totalUnidadesLibres.unidadLibre | limitTo">
+                                 <span  class="slds-text-body_regular value" 
+                                        ng-if="var.freeUnitCode === 'Internet'">
+                                     {{var.remainingPrimaryUnits}} MB
+                                </span>
+                             </div>
+                      </div>
+                </div>
+                <span  class="slds-text-body_regular value" 
+                       ng-if="!obj[field.relationshipName] && field.label === 'Consumo acutal'">
+                    <!--{{obj[field.name]}}-->
+                    10 MB
+                    {{obj | getter: field | picker: field.type}}
+                </span>
+                <span  class="slds-text-body_regular value" 
+                       ng-if="!obj[field.relationshipName] && field.label !== 'Internet Disponible'">
+                    <!--{{obj[field.name]}}-->
+                    {{obj | getter: field | picker: field.type}}
+                </span>
+
+                <!-- <span  class="slds-text-body_regular value" 
+                        ng-if="obj[field.relationshipName] && field.label !== 'Internet Disponible'">{{obj[field.relationshipName]['Name']}}</span>
+                <span  class="slds-text-body_regular value" 
+                        ng-if="obj[field.relationshipName] && field.label !== 'Internet Disponible'">{{obj[field.relationshipName]['Name']}}</span>-->
+            </li>
+        </ul>
+    </div>
+</section>

@@ -1,0 +1,9 @@
+<table class="via-card--left-acount-info-slds slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+  <tbody>
+    <tr>
+      <td data-label="{{field.label}}" ng-repeat="field in data.fields">
+        <div class="slds-truncate" title="{{ obj | getter: field | picker: field.type }}">{{ obj | getter: field | picker: field.type }}&nbsp;</div>
+      </td>
+    </tr>
+  </tbody>
+</table>

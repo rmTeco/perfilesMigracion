@@ -1,0 +1,35 @@
+<!--<div >-->
+<!--    <div class="slds-form-element">-->
+<!--        <div>-->
+<!--              <input-->
+<!--                type="checkbox"-->
+<!--                id="chkCopyAddress"-->
+<!--                ng-model="AccountData.CopyLegalAddress"-->
+<!--                ng-change="nac.CopyLegalAddress(bpTree.response.AccountData);">-->
+<!--                <label class="slds-checkbox__label" for="chkCopyAddress">-->
+<!--                  Copiar datos del domicilio legal-->
+<!--                </label>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<div 
+    class="slds-form-element" 
+    ng-controller="NewAccountController as nac">
+    <div class="slds-form-element__control">
+        <span class="slds-checkbox">
+            <input 
+                type="checkbox" 
+                name="options" 
+                id="chkCopyAddress" 
+                ng-model="bpTree.response.AccountData.CopyLegalAddress"
+                ng-change="nac.CopyLegalAddress(bpTree.response.AccountData);"/>
+            <label class="slds-checkbox__label" for="chkCopyAddress">
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label">Copiar datos del domicilio legal - {{AccountData.CopyLegalAddress}}</span>
+            </label>
+        </span>
+        <pre>{{bpTree | json}}</pre>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="slds-grid">
+    <div class="ta-Care-Bundle-View-Division-Left">
+        <div class="ta-Care-Bundle-View-Actions-Title">{{data.fields[0].label}}</div>
+        <div ng-repeat="action in data.actions" class="ta-Care-Bundle-View-Actions-Actions">
+            <a ng-click="performAction(action)" hotkey-card-action>
+                <p>{{action.displayName}}</p>
+            </a>
+        </div>
+    </div>
+    <div class="ta-Care-Bundle-View-Division-Right">
+        <vloc-layout layout-name="ta-Care-Bundle-Layout" records="records.Assets"></vloc-layout>
+    </div>
+</div>

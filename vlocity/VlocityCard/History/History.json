@@ -1,0 +1,116 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.Id",
+                "val": "0016C000009IOSIQA4"
+            }
+        ],
+        "type": null,
+        "value": {
+            "bundle": "GetHistoricSuspensionsRatings_EXAMPLE",
+            "ctxId": "params.Id",
+            "resultVar": "['Result']"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+        {
+            "name": "clientAccountNumberclientAccountNumber",
+            "val": "['clientAccountNumberclientAccountNumber']"
+        }
+    ],
+    "sorteableField": {
+        "fisrtSort": "['DateTransaction']",
+        "reverse": true
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['DateTransaction']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "FECHA",
+                    "name": "['DateTransaction']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['ProcessTransaction']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "PROCEDIMIENTO",
+                    "name": "['ProcessTransaction']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['MotiveTransaction']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "MOTIVO",
+                    "name": "['MotiveTransaction']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['TypeTransaction']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "TIPO",
+                    "name": "['TypeTransaction']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['NameTransaction']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "SERVICIO",
+                    "name": "['NameTransaction']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "placeholderExpand": true,
+            "placeholders": [
+            ],
+            "sObjectType": null,
+            "templateUrl": "ta-care-history-suspensions-row"
+        }
+    ],
+    "title": ""
+}

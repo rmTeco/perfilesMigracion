@@ -1,0 +1,230 @@
+{
+    "control": {
+        "JSONPath": "TestList:BillingAccounts",
+        "bHasAttachment": false,
+        "children": [
+        ],
+        "compDisable": false,
+        "index": 0,
+        "indexInParent": 0,
+        "itemsKey": "recSet",
+        "level": 1,
+        "name": "BillingAccounts",
+        "propSetMap": {
+            "HTMLTemplateId": "ta-care-radio-button-list",
+            "accessibleInFutureSteps": false,
+            "customOptions": {
+                "addNewItem": {
+                    "allow": "true",
+                    "text": "Nueva cuenta"
+                },
+                "childrenList": {
+                    "collectionValues": "Assets",
+                    "headerText": "Ver servicios contratados",
+                    "params": [
+                        {
+                            "fieldName": "Name"
+                        }
+                    ],
+                    "text": "{0}"
+                },
+                "fields": [
+                    {
+                        "emptyTextMessage": "No posee dirección de facturación",
+                        "params": [
+                            {
+                                "fieldName": "BillingStreet"
+                            }
+                        ],
+                        "text": "{0}"
+                    },
+                    {
+                        "emptyTextMessage": "No posee dirección de facturación",
+                        "params": [
+                            {
+                                "fieldName": "BillingCity"
+                            }
+                        ],
+                        "text": "{0}"
+                    }
+                ],
+                "filters": [
+                    {
+                        "condition": "Is Equal To",
+                        "field": "TotalInvalidAssets",
+                        "value": "0"
+                    }
+                ],
+                "header": {
+                    "params": [
+                        {
+                            "fieldName": "Name"
+                        }
+                    ],
+                    "text": "Cuenta: {0}"
+                }
+            },
+            "dataJSON": false,
+            "itemsKey": "recSet",
+            "label": null,
+            "maxCompareSize": 4,
+            "modalConfigurationSetting": {
+                "modalController": "ModalProductCtrl",
+                "modalHTMLTemplateId": "vlcProductConfig.html",
+                "modalSize": "lg"
+            },
+            "modalController": "ModalInstanceCtrl",
+            "modalHTMLTemplateId": "vlcModalContent.html",
+            "modalSize": "",
+            "postTransformBundle": "",
+            "preTransformBundle": "",
+            "remoteClass": "",
+            "remoteMethod": "",
+            "remoteOptions": {
+                "postTransformBundle": "",
+                "preTransformBundle": ""
+            },
+            "remoteTimeout": 30000,
+            "responseJSONNode": "",
+            "responseJSONPath": "",
+            "selectMode": "Single",
+            "sendJSONNode": "",
+            "sendJSONPath": "",
+            "show": null
+        },
+        "req": true,
+        "response": null,
+        "rootIndex": 2,
+        "show": true,
+        "type": "Selectable Items",
+        "vlcSI": {
+            "recSet": [
+                {
+                    "Assets": [
+                        {
+                            "Id": "02i6C0000002UX0QAM",
+                            "Name": "Plan con Tarjeta Repro",
+                            "Status": "Active"
+                        },
+                        {
+                            "Id": "02i6C0000002UX1QAM",
+                            "Name": "Simcard",
+                            "Status": "Active"
+                        },
+                        {
+                            "Id": "02i6C0000002UX2QAM",
+                            "Name": "InternetXDia",
+                            "Status": "Active"
+                        },
+                        {
+                            "Id": "02i6C0000002UX3QAM",
+                            "Name": "Promocion WhatsApp Mensual",
+                            "Status": "Inactive"
+                        },
+                        {
+                            "Id": "02i6C0000002UX4QAM",
+                            "Name": "Voz"
+                        },
+                        {
+                            "Id": "02i6C0000002UX5QAM",
+                            "Name": "SMS"
+                        },
+                        {
+                            "Id": "02i6C0000002UX6QAM",
+                            "Name": "MMS"
+                        },
+                        {
+                            "Id": "02i6C0000002UX7QAM",
+                            "Name": "Datos"
+                        },
+                        {
+                            "Id": "02i6C0000002UX8QAM",
+                            "Name": "Caller Id"
+                        },
+                        {
+                            "Id": "02i6C0000002UX9QAM",
+                            "Name": "Contestador Personal"
+                        },
+                        {
+                            "Id": "02i6C0000002UXAQA2",
+                            "Name": "Transferencia de Llamadas"
+                        },
+                        {
+                            "Id": "02i6C0000002UXBQA2",
+                            "Name": "Ring Back Tones"
+                        },
+                        {
+                            "Id": "02i6C0000002UXCQA2",
+                            "Name": "DDI con Roaming Internacional"
+                        },
+                        {
+                            "Id": "02i6C0000002UXDQA2",
+                            "Name": "Numeros gratis a Personal 1 para sms y voz"
+                        },
+                        {
+                            "Id": "02i6C0000002UXEQA2",
+                            "Name": "Grupo Numeros Amigos de Voz"
+                        },
+                        {
+                            "Id": "02i6C0000002UXFQA2",
+                            "Name": "Grupo Numeros Amigos de SMS"
+                        },
+                        {
+                            "Id": "02i6C0000002URlQAM",
+                            "Name": "Plan Prepago Nacional",
+                            "Status": "Inactive",
+                            "Sub_Status__c": "Fraude"
+                        },
+                        {
+                            "Id": "02i6C0000002UtRQAU",
+                            "Name": "Plan Prepago Nacional 2",
+                            "Status": "Active"
+                        }
+                    ],
+                    "AutoPaymentMethodIdFormula": false,
+                    "BillingCity": "C0001",
+                    "BillingDay": "7",
+                    "BillingStreet": "Carlos Calvo 2833, 4 D",
+                    "CountActivePrepaidAssets": 2,
+                    "CountTotalActiveAssets": 4,
+                    "DebtFinancing": false,
+                    "Dunning": false,
+                    "Fraud": false,
+                    "Id": "0016C0000095iWoQAI",
+                    "Name": "Lino Acosta",
+                    "PurchaseFinancing": false,
+                    "Status": "Active",
+                    "TotalActiveAssets": true,
+                    "TotalInvalidAssets": 1
+                },
+                {
+                    "Assets": [
+                        {
+                            "Id": "02i6C0000002UvbQAE",
+                            "Name": "Plan Prepago Nacional",
+                            "Status": "Active"
+                        },
+                        {
+                            "Id": "02i6C0000002UvgQAE",
+                            "Name": "Plan Prepago Nacional",
+                            "Status": "Active"
+                        }
+                    ],
+                    "AutoPaymentMethodIdFormula": false,
+                    "CountActivePrepaidAssets": 2,
+                    "CountTotalActiveAssets": 2,
+                    "DebtFinancing": false,
+                    "Dunning": false,
+                    "Fraud": false,
+                    "Id": "0016C00000991iRQAQ",
+                    "Name": "Lino Acosta Billing",
+                    "ParentId": "0016C0000095iWoQAI",
+                    "PurchaseFinancing": false,
+                    "Status": "Active",
+                    "TotalActiveAssets": true,
+                    "TotalInvalidAssets": 0
+                }
+            ]
+        }
+    }
+}

@@ -1,0 +1,18 @@
+@import "variables";
+@import "community-variables";
+
+.vlocity {
+    .community {
+        /* Side bar styles, inherits styles from  .sidebar-wrapper*/
+            
+        .sidebar {
+            margin-top:-50px;
+            transition: all 0.5s ease-out;
+        }
+        @media (max-width: $tablet-width) {
+            .sidebar {
+                margin-top:-100px;
+            }
+        }
+    }
+}

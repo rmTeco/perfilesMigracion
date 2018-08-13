@@ -1,0 +1,533 @@
+<div 
+    class="slds-col taPaymentMethod" 
+    ng-controller="MultiPaymentMethodController as mpmc"
+    ng-init="mpmc.init();"
+    ng-if="bpTree.response.PaymentMethodQuantity">
+    <section>
+        
+        <div class="padding-bottom-style title-grl">
+            Completá el medio de pago para esta compra
+        </div>
+        <div class="header-simulation">
+            <div class="slds-text-body--small header-title">Total a pagar</div>
+            <div class="slds-truncate total">{{ mpmc.total | currency:"ARS " }}</div>
+            <div class="slds-text-body--small header-subtitle">
+                Subtotal  <span>{{ mpmc.totalBeforeTaxes | currency:"ARS " }}</span>
+            </div>
+        </div>
+        
+        <div class="padding-bottom-style element-svg">
+            <a ng-href="" ng-click="mpmc.toggleCustom()">Ver detalle de tarifa
+                <span ng-class="{'ng-hide': mpmc.custom }"><slds-svg-icon sprite="'utility'" icon="'chevronup'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'" ></slds-svg-icon></span>
+                <span ng-class="{'ng-hide': !mpmc.custom }"><slds-svg-icon sprite="'utility'" icon="'chevrondown'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon></span>
+            </a>
+        </div>
+        <div class="body-simulation slds-col padding-bottom-style"  ng-class="{'ng-hide': mpmc.custom }">
+            
+        <div class="items-row"
+            ng-repeat="item in mpmc.items">
+            <div class="slds-truncate">{{item.Quantity}} x {{item.%vlocity_namespace%__Product2Id__r.Name}}</div>
+            <div class="slds-truncate">{{ (mpmc.taxes[item.Huawei_Invoice_Item_Sequence__c - 1].impuestoxItemInfo.listaInfoImpuestos[0].infoImpuesto.precioBase) | currency:"ARS " }}</div>
+        </div>
+            
+            <div class="items-row">
+                <div class="slds-truncate">Cargos por financiación</div>                
+                <div class="slds-truncate">{{ mpmc.total-mpmc.originalTotal | currency:"ARS " }}</div>
+            </div>
+            
+        
+        <div class="items-row">
+            <div class="slds-truncate">Subtotal</div>               
+            <div class="slds-truncate">{{ mpmc.totalBeforeTaxes | currency:"ARS " }}</div>
+        </div>
+        
+        <div class="items-row">
+            <div class="slds-truncate">Impuestos </div>
+            <div class="slds-truncate">{{ mpmc.totalTaxes | currency:"ARS " }} </div>
+        </div>
+        
+        <div class="items-row">
+		    <div class="slds-truncate">Descuentos</div>
+		    <div class="slds-truncate price">{{ (mpmc.totalDiscounts * -1) | currency:"ARS " }} </div>
+		</div>
+            
+            <div ng-if="bpTree.response.CalculateInterest_Response.CFT"   class="items-row">
+                <div class="slds-truncate">CFT (Calculado al {{ bpTree.response.CalculateInterest_Response.CFT }} % )</div>
+                <div class="slds-truncate">{{ bpTree.response.CalculateInterest_Response.Interest | currency:"ARS " }}</div>
+            </div>
+        </div>
+
+    </section>
+    <section>
+        <div class="taPaymentMethodContainer">
+            <div class="taPaymentMethodForm">
+                <div ng-repeat="items in mpmc.paymentMethodList">
+                    <div class="container-top" ng-if="mpmc.paymentMethodList.length > 1">
+                        <h3>Medio de pago - {{ $index + 1 }} </h3>
+                        <a ng-href="" ng-click="mpmc.removeContainer($index);"> - Quitar medio de pago
+                        </a>
+                    </div>
+                    <div class="slds-m-bottom--medium">
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                
+                                <ul class="slds-list--horizontal">
+                                  <li class="slds-radio"
+                                    ng-repeat="medioDePago in items.paymentMethodRadioList">
+                                    <input type="radio" id="radio-{{$parent.$index}}-{{$index}}" name="options-{{$parent.$index}}" ng-value="medioDePago.value" ng-model="items.paymentMethodRadioSelected" ng-change="mpmc.updateAvailablePaymentMethod(items); mpmc.getFinancialPromotions($parent.$index);" ng-disabled="items.radioDisabled"/>
+                                    <label class="slds-radio__label" for="radio-{{$parent.$index}}-{{$index}}">
+                                        <span class="slds-radio--faux"></span>
+                                        <span class="slds-form-element__label">{{medioDePago.name}}</span>
+                                    </label></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <div class="vlc-slds-error-block">
+                                    <div class="error ng-hide" ng-show="items.srvErrRadio">
+                                        <small class="description">Seleccioná un medio de pago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    
+                    <div class="slds-form-element__control" ng-if=" items.srvErrGeneral == true || items.srvErrExpDate == true">
+                
+                        <div class="vlc-control-wrapper">
+                            <div class="message description" msg="Requirement" style="margin-bottom: 15px;">
+                                {{ items.msgError }}
+                            </div>
+                                
+                        </div>
+                
+                    </div>
+                    
+                    <div class="slds-col--padded slds-size--1-of-1" ng-if="items.paymentMethodRadioSelected =='Tarjeta de Credito' || items.paymentMethodRadioSelected =='Tarjeta de Debito'">
+                        <div class="container-top">
+                            <!-- SELECT BANK ENTITY -->
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right  slds-medium-size--6-of-12 padding-border">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal ">{{ items.bankSelected.value }}</span>
+                            
+                                    <select name="loopname" id="BankingEntity-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-model="items.bankSelected" class="slds-select" vlc-slds-val-checker="bankSelected" ng-options="sOption as sOption.value for sOption in  mpmc.entidadesBancarias track by sOption.name" required="required" ng-change="mpmc.getCardsByBank($index);"><option value="" class="" selected="selected">-- Clear --</option></select>
+                            
+                                    <label for="BankingEntity-{{$index}}" class="slds-form-element__label ">Banco
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req"></span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrBank">
+                                            <small class="description">Seleccioná el banco de medio de pago
+                                        </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- SELECT CARD ENTITY -->
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right slds-medium-size--3-of-12 padding-border">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal ">{{ items.cardESelected.value }}</span>
+                            
+                                    <select name="loopname" id="CardBankingEntity-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-disabled="!items.bankSelected && !items.cardsByBank"
+                                            ng-model="items.cardESelected"
+                                             class="slds-select" vlc-slds-val-checker="cardESelected" ng-options="sOption as sOption.value for sOption in  items.cardsByBank track by sOption.name" required="required" ng-change="mpmc.GetPromotionsByBankCard($index);"><option value="" class="" selected="selected">-- Clear --</option></select>
+                            
+                                    <label for="CardBankingEntity-{{$index}}" class="slds-form-element__label ">Tarjeta
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req">
+                                        </span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrCard">
+                                            <small class="description">Seleccioná la tarjeta de medio de pago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- SELECT PROMOTIONS ENTITY -->
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right slds-medium-size--3-of-12 padding-border">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal ">{{ items.promotionsByCardsBankSelected.value }}</span>
+                            
+                                    <select name="loopname" id="promotionsByCardsBank-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-disabled="!items.cardESelected && !items.promotionsByCardsBank"
+                                            ng-model="items.promotionsByCardsBankSelected"
+                                             class="slds-select" vlc-slds-val-checker="promotionsByCardsBankSelected" ng-options="sOption as sOption.value for sOption in  items.promotionsByCardsBank track by sOption.name" required="required" ng-change="mpmc.getInstallmentsByCard($index);"><option value="" class="" selected="selected">-- Clear --</option></select>
+                            
+                                    <label for="promotionsByCardsBank-{{$index}}" class="slds-form-element__label ">Promocion financiera
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req">
+                                        </span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrPromo">
+                                            <small class="description">Seleccioná la promoción financiera</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- SELECT INSTALLMENTS ENTITY -->
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right slds-medium-size--3-of-12">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal " ng-if="items.installmentSelected !== '' && items.installmentSelected !== undefined">{{ items.installmentSelected.name }} - CFT %{{ items.installmentSelected.value }} </span>
+                            
+                                    <select name="loopname" id="Installment-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-disabled="!items.installmentByCardBank && !items.promotionsByCardsBankSelected" ng-model="items.installmentSelected" class="slds-select" vlc-slds-val-checker="installmentSelected" ng-options="sOption as (sOption.name + ' - CFT %' +  sOption.value) for sOption in  items.installmentByCardBank track by sOption.name" required="required" ng-change="mpmc.getInstallmentsByCard($index);"><option value="" class="" selected="selected">-- Clear --</option></select>
+                            
+                                    <label for="Installment-{{$index}}" class="slds-form-element__label ">Cuota
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req">
+                                        </span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrInst">
+                                            <small class="description">Seleccioná el número de cuotas</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- INPUT PROMOTIONS -->
+                        <!-- div class="slds-col--padded slds-size--1-of-1 padding-bottom-style">
+    
+                            <div class="vlc-slds-control-action__container"></div>
+    
+                            <div class="slds-form-element__control">
+    
+                                <div class="vlc-control-wrapper" help="false">
+    
+                                    <input id="promotionCode-{{$index}}" type="text" name="loopname" ng-model="items.promotionCode" class="slds-input" ng-maxlength="16" vlc-slds-ng-pattern="^[0-9]*$" ng-minlength="0" vlc-slds-min-max-len="promotionCode" vlc-slds-val-checker="promotionCode">
+    
+                                    <label for="promotionCode-{{$index}}" class="slds-form-element__label">Código de promoción bancaria<span class="vlc-asterix icon-v-asterix ng-hide" ng-if="mpmc.req"></span>
+                                    </label>
+                                    
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrPromo">
+                                            <small class="description"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div-->
+                            
+                        <div class="container-top" ng-if="bpTree.response.BillingOrder.Channel == 'Web' || bpTree.response.BillingOrder.Channel == 'WEB' || bpTree.response.BillingOrder.Channel == 'Call Center' || bpTree.response.BillingOrder.Channel == 'E-Commerce' ">
+                            <!-- INPUT CARDNUMBER -->
+                            <div class="slds-medium-size--6-of-12 padding-border">
+        
+                                <div class="vlc-slds-control-action__container"></div>
+        
+                                <div class="slds-form-element__control">
+        
+                                    <div class="vlc-control-wrapper" help="false">
+        
+                                        <input id="CardNumber-{{$index}}" type="text" name="loopname" ng-required="mpmc.req" ng-model="items.cardNumber" ng-blur=""  class="slds-input" ui-mask="" ng-maxlength="16" vlc-slds-ng-pattern="^[0-9]*$" ng-minlength="0" vlc-slds-min-max-len="cardNumber" vlc-slds-val-checker="cardNumber" required="required">
+        
+                                        <label for="CardNumber-{{$index}}" class="slds-form-element__label">Número de Tarjeta<span class="vlc-asterix icon-v-asterix " ng-if="mpmc.req"></span>
+                                        </label>
+                                        
+                                        <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+        
+                                    </div>
+                                
+                                    <div>
+                                        <div class="vlc-slds-error-block">
+                                            <div class="error ng-hide" ng-show="items.srvErrCardNumber">
+                                                <small class="description ">Completá los datos de la tarjeta</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- INPUT EXPIRATIOMONTH -->
+                            
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right slds-medium-size--2-of-12  padding-border">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal " ng-if="items.expirationMonth !== '' && items.expirationMonth !== undefined">{{ items.expirationMonth }}  </span>
+                            
+                                    <select name="loopname" id="expirationMonth-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-model="items.expirationMonth" class="slds-select" vlc-slds-val-checker="expirationMonth" ng-options="sOption for sOption in mpmc.range(01,12)" ng-change="mpmc.validateExpirationDate($index)" required="required"><option value="" class="" selected="selected">-- Clear --</option></select>
+                            
+                                    <label for="expirationMonth-{{$index}}" class="slds-form-element__label ">Mes
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req">
+                                        </span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide">
+                                            <small class="description"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- INPUT EXPIRATIOYEAR -->
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right slds-medium-size--2-of-12  padding-border">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal " ng-if="items.expirationYear !== '' && items.expirationYear !== undefined">{{ items.expirationYear }}  </span>
+                            
+                                    <select name="loopname" id="expirationYear-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-model="items.expirationYear" class="slds-select" vlc-slds-val-checker="expirationYear" ng-options="sOption for sOption in mpmc.range(mpmc.myYear,mpmc.nextYears)" ng-change="mpmc.validateExpirationDate($index)" required="required"><option value="" class="" selected="selected">-- Clear --</option></select>
+                            
+                                    <label for="expirationYear-{{$index}}" class="slds-form-element__label ">Año
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req">
+                                        </span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide">
+                                            <small class="description"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- INPUT SECURITYCODE -->
+                            <div class="slds-medium-size--2-of-12">
+        
+                                <div class="vlc-slds-control-action__container"></div>
+                                
+                                <div class="slds-form-element__control">
+                        
+                                    <div class="vlc-control-wrapper" help="false">
+                        
+                                        <input id="securityCode-{{$index}}" type="text" name="loopname" ng-required="mpmc.req" ng-model="items.securityCode" ng-blur=""  class="slds-input" ui-mask="" ng-maxlength="items.securityCodeMaxLength" vlc-slds-ng-pattern="^[0-9]*$" ng-minlength="items.securityCodeMaxLength" vlc-slds-min-max-len="securityCode" vlc-slds-val-checker="securityCode" required="required">
+                        
+                                        <label for="securityCode-{{$index}}" class="slds-form-element__label ">Codigo de seguridad<span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req"></span>
+                                        </label>
+                                        
+                                        <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                        
+                                    </div>
+                                    <div>
+                                        <div class="vlc-slds-error-block">
+                                            <div class="error ng-hide" ng-show="items.srvErrSec">
+                                                <small class="description ">Completá el código de seguridad</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="container-top" ng-if="bpTree.response.BillingOrder.Channel == 'Web' || bpTree.response.BillingOrder.Channel == 'WEB' || bpTree.response.BillingOrder.Channel == 'Call Center' || bpTree.response.BillingOrder.Channel == 'E-Commerce'">
+                            <!-- SELECT DOCUMENT TYPE -->
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right slds-medium-size--6-of-12 padding-border">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal ">{{ items.documentType.value }}</span>
+                            
+                                    <select name="loopname" id="documentType-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-model="items.documentType" class="slds-select" vlc-slds-val-checker="documentType" ng-options="sOption as sOption.value for sOption in  mpmc.documentTypeList track by sOption.name" required="required"><option value="" class="" selected="selected">-- Clear --</option></select>
+                            
+                                    <label for="documentType-{{$index}}" class="slds-form-element__label ">Tipo de documento
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req">
+                                        </span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrDocType">
+                                            <small class="description">Seleccioná el tipo de documento del titutlar</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- INPUT DOCUMENT -->
+                            
+                            <div class="slds-medium-size--6-of-12">
+        
+                                <div class="vlc-slds-control-action__container"></div>
+                                
+                                <div class="slds-form-element__control">
+                        
+                                    <div class="vlc-control-wrapper" help="false">
+                        
+                                        <input id="documentNumber-{{$index}}" type="text" name="loopname" ng-required="mpmc.req" ng-model="items.documentNumber" ng-blur=""  class="slds-input" ui-mask="" ng-maxlength="8" vlc-slds-ng-pattern="^[0-9]*$" ng-minlength="0" vlc-slds-min-max-len="documentNumber" vlc-slds-val-checker="documentNumber" required="required">
+                        
+                                        <label for="documentNumber-{{$index}}" class="slds-form-element__label ">Documento<span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req"></span>
+                                        </label>
+                                        
+                                        <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                        
+                                    </div>
+                                    <div>
+                                        <div class="vlc-slds-error-block">
+                                            <div class="error ng-hide" ng-show="items.srvErrDocNum">
+                                                <small class="description ">Completá el númedo de documento del titular</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- INPUT CARDHOLDER -->
+                        <div class="slds-col--padded slds-size--1-of-1 padding-bottom-style" ng-if="bpTree.response.BillingOrder.Channel == 'Web' || bpTree.response.BillingOrder.Channel == 'WEB' || bpTree.response.BillingOrder.Channel == 'Call Center' || bpTree.response.BillingOrder.Channel == 'E-Commerce'">
+    
+                            <div class="vlc-slds-control-action__container"></div>
+    
+                            <div class="slds-form-element__control">
+    
+                                <div class="vlc-control-wrapper" help="false">
+    
+                                    <input id="cardHolder-{{$index}}" type="text" name="loopname" ng-required="mpmc.req" ng-model="items.cardHolder" class="slds-input" ng-maxlength="16" vlc-slds-ng-pattern="^[a-zA-Z\s]*$" ng-minlength="0" vlc-slds-min-max-len="cardHolder" vlc-slds-val-checker="cardHolder" required="required">
+    
+                                    <label for="cardHolder-{{$index}}" class="slds-form-element__label">Titular de tarjeta<span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req"></span>
+                                    </label>
+                                    
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrHolder">
+                                            <small class="description">Completá los datos del titular de la tarjeta</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="slds-col--padded slds-size--1-of-1" ng-if="items.paymentMethodRadioSelected =='Debito a Proxima Factura'"> <!--   && items.srvErrGeneral == false-->
+                    
+                        <!-- PFTA-7723. Por ahora se comentan los errores de credit limit
+                        <div>Límite de crédito disponible: {{ bpTree.response.SelectPaymentMethodsStep.CreditLimit }}</div>
+                        -->
+                        <div class="container-top">
+                            <!-- SELECT INSTALLMENTS DPF ENTITY -->
+                            <div class="slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right slds-medium-size--12-of-12 padding-bottom-style">
+        
+                                <div class="slds-select_container vlc-control-wrapper vlc-slds__border border--primary" help="false">
+                            
+                                    <span class="vlc-slds-form-element__center--horizontal " ng-if="items.installmentDPFSelected !== '' && items.installmentDPFSelected !== undefined">{{ items.installmentDPFSelected.name }} - CFT %{{ items.installmentDPFSelected.value }} </span>
+                            
+                                    <select name="loopname" id="InstallmentDPF-{{$index}}" style="opacity: -1;" ng-required="mpmc.req" ng-model="items.installmentDPFSelected" class="slds-select" vlc-slds-val-checker="installmentDPFSelected" ng-change="mpmc.getCftByInstallmentsDPF($index);" ng-options="sOption as (sOption.name + ' - CFT %' +  sOption.value) for sOption in mpmc.installmentDPF track by sOption.name" required="required"><option value="" class="" selected="selected">-- Clear --</option></select>
+                                    
+                            
+                                    <label for="InstallmentDPF-{{$index}}" class="slds-form-element__label ">Cuota
+                                        <span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req">
+                                        </span>
+                                    </label>
+                            
+                                    <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+                                    
+                                </div>
+                            
+                                <div>
+                                    <div class="vlc-slds-error-block">
+                                        <div class="error ng-hide" ng-show="items.srvErrInst">
+                                            <small class="description">Seleccioná el número de cuotas</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- INPUT AMOUNT -->
+                    <div class="slds-col--padded slds-size--1-of-1 padding-bottom-style" ng-if="mpmc.paymentMethodList.length > 1">
+
+                        <div class="vlc-slds-control-action__container"></div>
+
+                        <div class="slds-form-element__control">
+
+                            <div class="vlc-control-wrapper" help="false">
+
+                                <input id="amountSelected-{{$index}}" type="text" name="loopname" ng-required="mpmc.req" ng-model="items.amountSelected"  ng-blur="mpmc.updateAmountSelected($index);  mpmc.checkAmountLimit($index);" class="slds-input" ui-mask="" ng-maxlength="16" vlc-slds-ng-pattern="" ng-minlength="0" vlc-slds-min-max-len="amountSelected" vlc-slds-val-checker="amountSelected" required="required">
+                                
+                                <!--ng-change="mpmc.updateAmountSelected($index)"-->
+
+                                <label for="amountSelected-{{$index}}" class="slds-form-element__label">Monto<span class="vlc-asterix icon-v-asterix" ng-if="mpmc.req"></span>
+                                </label>
+                                
+                                <a vlc-slds-tool-tip="test" ng-show="false" class="ng-hide"> i </a>
+
+                            </div>
+                        
+                            <div>
+                                <div class="vlc-slds-error-block">
+                                    <div class="error ng-hide" ng-show="items.srvErrAmount">
+                                        <small class="description">Completá el monto pagado con este medio de pago</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="padding-bottom-style" ng-if="items.cftAmount !== '' && items.cftAmount !== 0">
+                        <span class="icon-warning-style"><span><slds-svg-icon sprite="'utility'" icon="'warning'" size="'x-small'" no-hint="true" extra-classes="'slds-button slds-button--icon'"></slds-svg-icon></span></span>
+                        <span class="padding-custom">Costo financiero de {{ items.cftAmount | currency:"ARS " }}</span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="padding-bottom-style">
+            <a ng-href="" ng-click="mpmc.cloneContainer();" ng-if="!mpmc.disableAddPaymentMethod">+ Agregar nuevo medio de pago</a>
+        </div>
+        
+        <div class="slds-size--1-of-1 slds-medium-size--3-of-12 vlc-slds-remote-action--button">
+            <div class="slds-form-element__control">
+                <div class="vlc-control-wrapper">
+                    <div id="simulationBtn" vlc-animation-slider="test" class="slds-box">
+                        <p class="ng-binding">Simular precio final</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

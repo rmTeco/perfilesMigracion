@@ -1,0 +1,11 @@
+<apex:component access="global" controller="ta_sales_DetallesDePickupController">
+
+<apex:attribute id="croId" name="croId" type="Id" description="CrossObject id" assignTo="{!crossId}"/>
+
+Direccion para retirar la orden {!loadedCro.Id}:
+
+{!address}
+
+{!horas}
+
+</apex:component>

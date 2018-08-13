@@ -1,0 +1,39 @@
+<div class="profile-box">
+    <div class="customer-type">
+        <!-- Add the sentiments and values from records -->
+        <div class="sentiment satisfied"></div>
+        <div class="value-type platinum"></div>
+    </div>
+
+    <div class="profile-box-details">
+        <div class="slds-text-heading_large title-card">
+            <h1>{{obj.Account.Name}}
+            </h1>
+        </div>
+        <div class="detail-card">
+            <table>
+                <tr ng-repeat="field in data.fields">
+                    <td class="slds-text-body_regular account-detail-label">
+                        <label>{{field.label}}</label>
+                    </td>
+                    <td class="slds-text-body_regular account-detail-content">
+                        <label>{{obj | getter: field}}</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="social">
+                <a href="tel:{{records[0].Phone}}"><i class="icon-v-phone-line"></i></a>
+                <a href="mailto:{{records[0].Email__c}}" target="_top"><i class="icon-v-email-line"></i></a>
+                <i class="icon-v-payment-line"></i>
+                <a href="sms:{{records[0].Phone}}"><i class="icon-v-chat2-line"></i></a>
+        </div>
+        
+        <div class="profile-links-wrapper">
+            <div class="slds-text-body_regular profile-links" ng-repeat="action in data.actions" >
+                    <span ng-if="!$first" class="separator">|</span>
+                    <a class="profile-edit" ng-click="performAction(action)" hotkey-card-action>{{action.displayName}}</a>
+            </div>
+        </div>
+    </div>
+</div>

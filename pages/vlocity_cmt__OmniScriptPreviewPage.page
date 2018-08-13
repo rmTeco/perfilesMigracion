@@ -1,0 +1,37 @@
+<apex:page standardStylesheets="false"
+           showHeader="false" applyHtmlTag="false" applyBodyTag="false"
+           sidebar="false" standardController="vlocity_cmt__OmniScript__c" extensions="vlocity_cmt.VFPageControllerBase" docType="html-5.0" >
+
+    <html>
+        <apex:includeScript value="/soap/ajax/37.0/connection.js"/>
+
+        <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        </head>
+
+        <body>
+
+            <div ng-app="OmniScriptPreview" class='vlocity via-slds' xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <a ng-if="!isPreviewEmbedded && (!isSforce || (isSforce && !sforce.one))" href="{!URLFOR($Page.OmniScriptHome)}"><i class="omni-preview icon icon-v-left-caret"></i>{!$Label.OmniGoback}</a>
+                <a ng-if="!isPreviewEmbedded && isSforce && sforce.one" href="javascript:sforce.one.navigateToURL('/{!currentRecord['Id']}')"><i class="omni-preview icon icon-v-left-caret"></i>{!$Label.NewBackTo}</a>
+                <hr ng-if="!isPreviewEmbedded" />
+
+                <c:BusinessProcessComponent strNamespacePrefixList="{!sNS}"
+                                            strOmniScriptId="{!vlocity_cmt__OmniScript__c.Id}"
+                                            previewMode="true"
+                                            JSONTreeHTMLTemplateName="JSONApplicationReviewHTMLTemplate.html"/>
+            </div>
+
+            <apex:includeScript value="{!$Resource.vlocity_cmt__OmniVlocity}"/>
+
+            <script type="text/javascript">
+                var modules = ['vlocity-business-process'];
+                var myModule = angular.module('OmniScriptPreview', modules);
+            </script>
+
+            <c:VFActionFunction />
+        </body>
+
+    </html>
+
+</apex:page>

@@ -1,0 +1,400 @@
+<apex:page controller="SCP_Certa_GC.LineaDeTiempoController" tabStyle="Strategic_Client_Plan__tab" sidebar="false" showHeader="true" rendered="{!mostrar}" docType="html-5.0">
+     
+    <c:SCPMenu ></c:SCPMenu>
+    
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__html2canvas}"/>
+    
+    <!--sylesheet href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"-->
+    
+    <apex:includeScript value="{!URLFOR($Resource.SCP_Certa_GC__TimeLineJs3, 'js/timeline-min.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.SCP_Certa_GC__timelinecss)}"/>
+    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"/>
+    <style>
+        .icon-Bandera{
+        width: 3%;
+        }
+        
+        .tl-storyslider{
+        //display:none !important;
+        height: 230px !important;
+        }
+        
+        .tl-menubar{
+        top:255px !important;
+        }
+        
+        .tl-attribution{
+        display:none;
+        }
+        .tl-timeline{
+        //height: 200px !important;
+        }
+        
+        .colorVencimiento{
+        background-color:red !important;
+        }
+        
+        .colorServicio{
+        background-color:yellow !important;
+        }
+        
+        .colorVencimientoCompetencia{
+        background-color:hsla(132,100%,40%,1) !important;
+        }
+        
+        .colorVencimientoSecundario{
+        background-color:hsla(132,100%,55%,1) !important;
+        }
+        
+        .RFPComunicaciones{
+        background-color:hsla(273,100%,66%,1) !important;
+        }
+        
+        .RFPTI{
+        background-color:hsla(30,100%,50%,1) !important;
+        }
+        
+        .clientes{
+        background-color:hsla(359,100%,75%,1) !important;
+        }
+        
+        .eventoRelevante{
+        background-color:hsl(218, 100%, 75%) !important;
+        }
+        
+        .topTres{
+        background-color:hsla(57,100%,69%,1) !important;
+        }
+        
+        .colorReto{
+        background-color:hsla(154,98%,39%,1) !important;
+        }
+        
+        .colorEvento{
+        background-color:hsla(359,100%,75%,1) !important;
+        }
+        
+        .menorDeSetenta{
+        background-color:#F1E100 !important;
+        border: .2em solid #000 !important;
+        }
+        
+        .menorDeVeinte{
+        background-color:#FF0009 !important;
+        border: .2em solid #000 !important;
+        }
+        .menorDeCincuenta{
+        background-color:#FF8E00 !important;
+        border: .2em solid #000 !important;
+        }
+        
+        .completo{
+        background-color:#009813 !important;
+        border: .2em solid #000 !important;
+        }
+        
+        .casiCompleto{
+        background-color:#55C500 !important;
+        border: .2em solid #000 !important;
+        }
+        
+        .tl-headline{
+        color: #000000 !important;
+        }
+        
+        .colorOtros{
+        background-color:white !important;
+        }
+    </style>
+    <script  type="text/javascript">
+    $j = jQuery.noConflict();
+    
+    $j(document).ready(function() {
+        
+        //Colores para linea de tiempo
+        colorearLineaDeTiempo();
+        
+        //Bajar linea como imagen
+        $j(".generateImg").click(function(){
+            zoom=1;
+            $j("#timeline-embed").animate({ 'zoom': zoom }, 0);
+            var chartArea = $j('#timeline-embed');
+            html2canvas(chartArea, {
+                onrendered: function(canvas) {          
+                    var img = canvas.toDataURL("image/png");
+                    //window.location.href = img.replace('image/png', 'image/octet-stream');
+                    var ua = window.navigator.userAgent;
+                    if (ua.indexOf("Chrome") > 0) {
+                        var link = document.createElement('a');
+                        link.download = "LineaDeTiempo.png";
+                        link.href = img.replace('image/png', 'image/octet-stream');
+                        link.click();
+                    } else {
+                        window.location.href = img.replace('image/png', 'image/octet-stream');
+                    }
+                }
+            });    
+        });
+        
+        
+    });
+    
+    function colorearLineaDeTiempo(){
+        $j('h2').each(function() {
+            
+            var contenido = $j(this).text();
+            
+            if(contenido == '{!$Label.Vencimiento_Contrato_Servicio}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorServicio");
+                }
+            }
+            
+            if(contenido == 'Otro' || contenido == 'Otros' || contenido== '{!$Label.Otro}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorOtros");
+                }
+            }
+            
+            if(contenido == '{!$Label.Vencimiento_Contrato_Servicio}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorServicio");
+                }
+            }
+            
+            if(contenido == 'Reto' || contenido == '{!$Label.reto}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorReto");
+                }
+            }
+            
+            if(contenido == 'Vencimiento' || contenido == '{!$Label.Venicmiento_Contrato_Nosotros}' || contenido == '{!$Label.Vencimiento_Contrato_Activo_con_Telef_nica}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorVencimiento");
+                }
+            }
+            
+            if(contenido == 'Vencimiento Contrato Activo con la Competencia' || contenido == '{!$Label.Vencimiento_Contrato_Activo_con_la_Competencia}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorVencimientoCompetencia");
+                }
+            }
+            
+            if(contenido == 'Publicación RFP Comunicaciones' || contenido == '{!$Label.Publicaci_n_RFP_Comunicaciones}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("RFPComunicaciones");
+                }
+            }
+            
+            if(contenido == 'Publicación RFP TI' || contenido == '{!$Label.Publicaci_n_RFP_TI}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("RFPTI");
+                }
+            }
+            
+            if(contenido == '{!$Label.Evento_Clientes}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorEvento");
+                }
+            }
+            
+            if(contenido == '{!$Label.Evento_Clientes}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorEvento");
+                }
+            }
+            
+            if(contenido == 'Evento Relevante de la industria'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("eventoRelevante");
+                }
+            }
+            
+            if(contenido == 'Previsión Cierre TOP 3 deals' || contenido == '{!$Label.Previsi_n_Cierre_TOP_3_deals}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("topTres");
+                }
+            }
+            
+          
+            
+        });
+    }
+    
+    function marcarTodas(elem, tabla){
+        
+        var valores = document.getElementsByClassName(tabla);
+        var i;
+        
+        for(i = 0; i< valores.length; i++){
+            
+            if(elem.checked){
+                valores[i].checked = true;
+                
+            } else {
+                valores[i].checked = false;
+            }
+        }
+    }
+    
+    </script>
+    
+    <apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+        <div class="panel panel-default">
+            <div class="panel-heading" style="height: 107px;">
+                <h2 class="panel-title">
+                    <span style="float:left;">
+                        {!$Label.Cronograma_de_Cuenta}
+                    </span>
+                    
+                    <span style="float:left;">
+    					<a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/a3I95tKsT_o"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+    				</span>
+                </h2>
+                
+                <div class="row paddingRight">
+                    <div class="btn-group pull-right" role="group" aria-label="...">
+                        
+                        <apex:outputPanel id="buttonPanel">
+                            <div class="btn-group pull-right" role="group" aria-label="...">
+                                
+                                <button type="button" class="btn btn-default btn-sm generateImg" data-value="saveImg" data-msg="{!$Label.save_msg}">
+                                    <span class="glyphicon glyphicon-picture icon-btn-left"></span>&nbsp;{!$Label.save_image}
+                                </button>                                
+                                
+                            </div>
+                        </apex:outputPanel>  
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <apex:form >
+                
+                <apex:outputPanel id="lineaDeTiempo">
+
+                        <div class="panel-body">
+                            
+                            <div class="alert alert-info" role="alert">	
+                                <span class="glyphicon glyphicon-info-sign"></span>	    				
+                                <span class="messageText"><span style="font-weight:bold;  margin:5px">{!$Label.Asignacion_de_Eventos}:</span>
+                                    <span class="colorSpanReferencias" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="colorSpanReferencias">{!$Label.Todos}</span>&nbsp;<apex:inputCheckbox styleClass="todos" value="{!todos}" onclick="marcarTodas(this, 'checkboxFiltroTimeLine')" /><br/>
+                                    
+                                    <div class="row">
+                                        <div class= "col-md-4 colorSpanReferencias">
+                                            <span class="colorVencimiento" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Vencimiento}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroVencimiento}" /><br/>
+                                            <!--
+                                            <span class="colorReto" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Reto}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroEventosDeTipoReto}" /><br/>
+											-->                                            
+											<span class="colorServicio" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span >{!$Label.Vencimiento_Contrato_Servicio}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroPrevisionTOP3}" /><br/>
+                                            <span class="colorVencimientoSecundario" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Vencimiento_Contrato_Activo_con_la_Competencia}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroVencimientoCompetencia}" /><br/>
+                                        </div>
+                                        
+                                        <div class= "col-md-4 colorSpanReferencias"> 
+                                            <span class="eventoRelevante" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Evento_Relevante_de_la_industria}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroEventoIndustria}" /><br/>
+											<span class="RFPComunicaciones" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Publicaci_n_RFP_Comunicaciones}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroPublicacionRFPComunicacion}" /><br/>
+                                        	
+                                            <span class="colorEvento" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Evento_Clientes}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroEventoTelefonica}" /><br/>
+                                        </div>
+                                        
+                                        <div class= "col-md-4 colorSpanReferencias">
+                                            <span class="RFPTI" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Publicaci_n_RFP_TI}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroPublicacionRFPTI}" /><br/> 
+                                                                                         
+                                            <span class="colorOtros" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="colorSpanReferencias">{!$Label.Otros}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroOtroTipoDeEvento}" /><br/>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </span>
+                            </div>
+                            <apex:commandButton styleClass="btn btn-default btn-xs " action="{!filtrarTimeLine}" value="{!$Label.scp_certa_gc__apply_filters}" rerender="panelesDeLineaDeTiempo, timeLine, filtrosDeLineTime, lineaDeTiempo" oncomplete="colorearLineaDeTiempo();" status="filtrarTimeLineStatus" />
+                            &nbsp;
+                            <apex:actionStatus id="filtrarTimeLineStatus">
+                                <apex:facet name="start">
+                                    <img src="/img/loading.gif"/>
+                                </apex:facet>
+                            </apex:actionStatus>
+                            
+                            <apex:outputPanel rendered="{!mostrarLineaDeTiempo}">
+                                <apex:outputPanel id="timeLine">
+                                    <div id='timeline-embed' style="width: 100%; height: 430px"></div>
+                                    <script type="text/javascript">
+                                    
+                                    var timeline_json = {!miJson};
+                                    
+                                    var options = {
+                                        hash_bookmark: false,
+                                        language: "es",
+                                        scale_factor: -50,
+                                        start_at_slide: 1,
+                                        initial_zoom: 1
+                                    }
+                                    
+                                    window.timeline = new TL.Timeline('timeline-embed',
+                                                                      timeline_json, options);
+                                    window.timeline.setZoom(0); 
+                                    </script>
+                                    
+                                    
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                    </div> 
+                    
+                    <apex:outputPanel rendered="{! !mostrarLineaDeTiempo}">
+                        <br/>
+                        <div style = "width: 98%;" class="center-block alert alert-warning" role="alert">
+                            <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                            {!$Label.No_hay_Datos_Cargados}
+                        </div>
+                    </apex:outputPanel>
+                    
+                </apex:outputPanel>
+                    
+
+                
+                <br/><br/>
+                <div class="row paddingRight">
+                    <div class="btn-group pull-right" style="margin-right:1%;" role="group" aria-label="...">
+                        
+                        <apex:outputPanel id="buttonPanelButton">
+                            <div class="btn-group pull-right" role="group" aria-label="...">
+                                
+                                <button type="button" class="btn btn-default btn-sm generateImg" data-value="saveImg" data-msg="{!$Label.save_msg}">
+                                    <span class="glyphicon glyphicon-picture icon-btn-left"></span>&nbsp;{!$Label.save_image}
+                                </button>                      
+                                
+                            </div>
+                        </apex:outputPanel>  
+                        
+                    </div>
+                </div>
+                
+            </apex:form>
+            
+            <c:FastTask page="{!$Label.scp_certa_gc__trend}" account="{!idCuenta}"></c:FastTask>
+            <chatter:feed entityId="{!idCuenta}" />
+        </div>
+    </apex:outputpanel>
+</apex:page>

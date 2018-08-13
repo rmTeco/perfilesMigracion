@@ -1,0 +1,79 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "sessionVars": [
+        {
+            "name": "Name",
+            "val": "['PricebookEntry']['Product2']['Name']"
+        }
+    ],
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Name",
+                    "name": "['PricebookEntry']['Product2']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Quantity",
+                    "name": "['Quantity']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Recurring Total",
+                    "name": "['%vlocity_namespace%__RecurringTotal__c']['value']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "One Time Total",
+                    "name": "['%vlocity_namespace%__OneTimeTotal__c']['value']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "One Time Manual Discount %",
+                    "name": "['%vlocity_namespace%__OneTimeManualDiscount__c']['value']",
+                    "type": "percentage"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Recurring Manual Discount %",
+                    "name": "['%vlocity_namespace%__RecurringManualDiscount__c']['value']",
+                    "type": "percentage"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "cpq-product-cart-item"
+        }
+    ],
+    "title": "Line Item Detail"
+}

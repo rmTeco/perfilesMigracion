@@ -1,0 +1,94 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "resultVar": "['Negotiations']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['negDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['negDate']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['negType']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Tipo",
+                    "name": "['negType']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['negNumber']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Número",
+                    "name": "['negNumber']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Nombre",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Id']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Id",
+                    "name": "['Id']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-care-console-negotiations-row"
+        }
+    ],
+    "title": "ConsoleNegotiarions"
+}

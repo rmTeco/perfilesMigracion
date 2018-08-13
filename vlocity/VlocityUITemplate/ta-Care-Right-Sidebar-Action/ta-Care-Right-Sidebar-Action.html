@@ -1,0 +1,44 @@
+<div ng-controller="TACareRightSidebarActionController as tcrsa">
+   <div class="sidebar-actions">
+       <div class="via-slds-story-cards--header spacer acct-spacer" 
+          ng-init="showInfo=true">
+          <div class="sidebar-actions-header" ng-click="showInfo = !showInfo">
+             <span class="slds-text-body_regular">{{data.title}}</span>
+             <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+             <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+          </div>
+       </div>
+   </div>
+   <div class="actions-content" ng-show="showInfo">
+      <input 
+         ng-model="searchTerm" 
+         class="slds-input actionSearch" 
+         type="text" 
+         placeholder="Buscar Gestion Ej: Cambio de Titularidad"
+         />
+        <!---->
+      <!--<div class="startActions-item" ng-repeat="action in data.actions | filter:{'displayName':searchTerm}">
+         <button class="slds-button slds-button--neutral">
+         <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+         <span ng-if="action.imageRef">
+         <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+         </span>
+         <span>{{action.displayName}}</span>
+         </button>
+      </div>, {'extraParams':{'contactId':records[0].Contact.Id}}-->
+        <div class="startActions-item" 
+             ng-repeat="action in data.actions | filter:ignoreAccents:searchTerm | limitTo: tcrsa.itemsLimit" ng-if="tcrsa.showAction(action.Name) == true " >
+                <button href="javascript:void(0);" 
+                   class="slds-button slds-button--neutral slds-truncate" 
+                   ng-click="performAction(action)">
+                    <vloc-card-icon 
+                    data="action" 
+                    obj="obj" 
+                    size="'small'" 
+                    extra-classes="'big via-action-icon slds-icon-text-default ta-button-icon'">
+                </vloc-card-icon>
+                         <span class="slds-text-body_regular ta-button-font">{{action.displayName}}</span>
+                </button>
+        </div>
+   </div>
+</div>

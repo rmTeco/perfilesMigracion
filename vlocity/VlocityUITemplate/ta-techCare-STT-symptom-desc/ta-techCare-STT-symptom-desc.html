@@ -1,0 +1,5 @@
+<div ng-repeat="item in control.vlcSI.recSet">
+	<div 
+	    ng-if="item.Id == bpTree.response.SymptomExplanation.SelectSymptomType" 
+	    class="STT-symptom-desc">{{item.Description}}</div>
+</div>

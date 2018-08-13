@@ -1,0 +1,164 @@
+<apex:page sidebar="false" controller="ta_security_wmassignment_controller">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+    <apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jstree, 'jstree/dist/jstree.js')}"></apex:includeScript>
+    <script>
+        localStorage.removeItem('jstree');
+
+       //alert(document.getElementById('vlcActionId'));
+        const getItems = async (id = null) => {
+            //alert(document.getElementById('vlcActionId'));
+            const pq = function(id){
+              return new Promise( 
+                function(fullfill, rejected){
+                    //alert(document.getElementById('vlcActionId'));
+
+                    Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ta_security_wmassignment_controller.feedTree}',
+                    function(result, event){
+
+                            //let rx = new RegExp('/&quot;/ig');
+                            //result = JSON.parse(result.replace(rx, '"'));
+                            if (event.status) {
+                                // Get DOM IDs for HTML and Visualforce elements like this
+                                fullfill( JSON.parse(result) );
+                            } else if (event.type === 'exception') {
+                                rejected(event);
+                            } else {
+                                rejected(event);
+                            }
+                        }, 
+                        {escape: false}
+                    );
+                });  
+            }  
+            let result = await pq(id);
+            return result;
+            }
+        
+        window.configObject = {
+                    "core": {
+                        "animation": 0,
+                            "check_callback": true,
+                                "themes": { "stripes": true },
+                        'data':  async (node, cb) => {
+                           
+                            let tmpdata = await getItems(node.id);
+                            return cb(tmpdata);
+                        }
+                    },
+                    "types": {
+                        "#": {
+                            "max_children": 1,
+                                "max_depth": 4,
+                                    "valid_children": ["root"]
+                        },
+                        "root": {
+                            "icon": "/static/3.3.5/assets/images/tree_icon.png",
+                                "valid_children": ["default"]
+                        },
+                        "default": {
+                            "valid_children": ["default", "file"]
+                        },
+                        "file": {
+                            "icon": "glyphicon glyphicon-file",
+                                "valid_children": []
+                        }
+                    },
+                    "checkbox": {
+                        "keep_selected_style": false
+                    },
+                    "plugins": [
+                        "contextmenu", "dnd", "search",
+                        "state", "types", "wholerow"
+                    ]
+                }
+        
+        
+        const saveState = ()=>{
+            console.log($('#jstree_demo').jstree(true).get_state().core.selected);
+        }
+
+        const CreateComponent = () => {
+            jQuery('#jstree_demo').jstree('destroy').empty();
+            window.tree = jQuery('#jstree_demo').jstree(window.configObject);
+            tree.on("changed.jstree", function (e, data) {
+            if(data.action==="select_node"){
+                View(data.node.id);
+                console.log(data.node.id);
+                }
+            });               
+        }
+     
+        const CreateComponent2 = () => {
+            jQuery('#jstree_demo2').jstree('destroy').empty();
+            window.tree = jQuery('#jstree_demo2').jstree(window.configObject);
+            tree.on("changed.jstree", function (e, data) {
+            if(data.action==="select_node"){
+                Move(data.node.id);
+                console.log(data.node.id);
+                }
+            });               
+        }
+        $( document ).ready(function() {
+            CreateComponent();
+            CreateComponent2();
+        });
+    </script>
+	<apex:form id="theForm" title="Work Team Members Assignments" > 
+	<apex:slds />
+	<apex:outputPanel ><!-- rendered="{!displayPopup==false}"-->
+	<div class="slds-scope">
+		<div class="slds-grid slds-wrap slds-grid--pull-padded">
+			<div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+				<apex:pageBlock id="tree1">
+				<h1 class="slds-section__title">{!$Label.WorkTeamofOrigin}</h1>
+					<div style="overflow: auto; height: 350px;">
+						<div id="jstree_demo"/>
+					</div>
+					<apex:actionFunction action="{!View}" name="View" rerender="membersBlock">
+						<apex:param name="recordId" value="" assignTo="{!selectedId}"/>
+					</apex:actionFunction>
+				</apex:pageBlock>
+			</div>
+			<div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+				<apex:pageBlock id="membersBlock">
+					<h1 class="slds-section__title">{!$Label.TeamMembers}</h1>
+					<div style="overflow: auto; height: 350px;">
+						<apex:pageBlockTable value="{!teamMembers}" var="wm" rendered="{!teamMembers.size > 0}">
+							<apex:column >
+								<apex:facet name="header">
+		        					<c:cvCheckAllOrNone />
+		    					</apex:facet>
+		    					<div class="slds-m-left--xx-small">
+			               			<apex:inputCheckbox value="{!wm.selected}"/>
+			               		</div>
+		               		</apex:column>
+							<apex:column value="{!wm.team_member.User_member__r.FederationIdentifier}"/>
+							<apex:column value="{!wm.team_member.User_member__c}"/>
+						</apex:pageBlockTable>
+					</div> 
+				</apex:pageBlock>
+			</div>
+		
+			<div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+				<apex:pageBlock >
+					<h1 class="slds-section__title">{!$Label.WorkTeamofDestination}</h1>
+					<div style="overflow: auto; height: 350px;">
+						<div id="jstree_demo2"/>
+						<apex:actionFunction action="{!Save}" name="Save" reRender="theForm" oncomplete="CreateComponent();CreateComponent2();"/>
+						<apex:actionFunction name="Move" action="{! Move }" rerender="saveButton">
+							<apex:param name="saveId" value="" assignTo="{!saveId}"/>
+						</apex:actionFunction>
+					</div>
+				</apex:pageBlock>
+				<div id="saveButton" class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive"  
+				onclick='Save();'>
+					{!$Label.Save}
+				</div>
+			</div>
+		</div>
+	</div>
+	</apex:outputPanel>
+	</apex:form>
+</apex:page>

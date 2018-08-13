@@ -1,0 +1,72 @@
+<div class='slds-col--padded slds-size--1-of-1'>
+
+    <ng-form name='loopform'
+             class='slds-form-element vlc-flex vlc-slds-select-control'
+             ng-repeat='control in child.eleArray'>
+
+        <div vlc-slds-include="vlcLabelController.html"></div>
+
+        <div class='slds-form-element__control slds-input-has-icon slds-has-input-has-icon--right'>
+
+            <div class="slds-select_container vlc-control-wrapper vlc-slds__border vlc-slds__border--primary" help="{{::control.propSetMap.help}}">
+
+                <span class="vlc-slds-form-element__center--horizontal">
+                    {{ control.response.value }}
+                </span>
+
+                <!-- this select control should not be visible to the user -->
+                <select name='loopname'
+                        id='{{::control.name}}'
+                        style='opacity:-1'
+                        ng-disabled='control.ro'
+                        ng-required='control.req'
+                        chainup="test"
+                        ng-model='control.response'
+                        class='slds-select'
+                        vlc-slds-val-checker="response"
+                        ng-init='init(this, control)'
+                        ng-options='sOption as sOption.value for sOption in getOptions(control, this) track by sOption.name'
+                        ng-change='autoAdvance(control.response.autoAdv);'> 
+                    <!--<option value="">{{::customLabels.OmniClear}}</option>-->
+
+                </select>
+
+                <label for="{{::control.name}}" class='slds-form-element__label'>{{::control.propSetMap.label}}
+                    <span class='vlc-asterix icon-v-asterix'
+                          ng-if='control.req'>
+                    </span>
+                </label>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" help="{{control.propSetMap.help}}"> i </a>
+                
+            </div>
+            
+            <slds-svg-icon aria-hidden="true"
+                           sprite="'utility'"
+                           icon="'down'"
+                           size="'small'"
+                           extra-classes="'slds-button__icon slds-button__icon--large'">
+            </slds-svg-icon>
+
+            <div class="vlc-slds-error-block">
+
+				<div class='error' ng-show='control.srvErr'>
+					<small class='description'>{{control.srvErr}}</small>
+				</div>
+
+				<div class='error' ng-if='loopform.loopname.$error && loopform.loopname.$dirty'>
+					<small ng-show='loopform.loopname.$error.minlength' class='description'>{{::customLabels.OmniMinLength}} {{::control.propSetMap.minLength}}</small>
+					<small ng-show='loopform.loopname.$error.maxlength' class='description'>{{::customLabels.OmniMaxLength}} {{::control.propSetMap.maxLength}}</small>
+					<small ng-show='loopform.loopname.$error.min' class='description'>{{::customLabels.OmniMinValue}} {{::control.propSetMap.min}}</small>
+					<small ng-show='loopform.loopname.$error.max' class='description'>{{::customLabels.OmniMaxValue}} {{::control.propSetMap.max}}</small>
+					<small ng-show='loopform.loopname.$error.required' class='description'>Requerido</small>
+					<small ng-show='loopform.loopname.$error.pattern' class='description'>{{::control.propSetMap.ptrnErrText}}</small>
+				</div>
+			</div>
+
+        </div>
+
+    </ng-form>
+
+</div>

@@ -1,0 +1,42 @@
+<apex:page controller="SCP_Certa_GC.ValidacionesSCPController" action="{!generarValidaciones}" sidebar="false">
+    <style>
+        .bPageBlock .detailList .labelCol {
+            width:30%;
+        }
+        .bPageBlock .detailList .dataCol {
+            width:10%;
+        }
+    </style>
+    <apex:slds />
+       
+    <apex:form id="todaLaPagina">
+        
+        <apex:pageBlock title="Permisos SCP">
+            <apex:pageBlockButtons >
+                <apex:commandButton styleClass="slds-button slds-button_neutral"  action="{!guardarPermisos}" value="Guardar" reRender="todaLaPagina" >
+                </apex:commandButton>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection columns="1">
+                
+                <apex:repeat value="{!permisosSCP}" var="permiso">
+                    <apex:pageBlock title="{!permiso.SCP_Certa_GC__nombre_del_perfil__c}">
+                        <apex:pageBlockSection columns="2">
+                            
+                            <apex:inputfield label="Puede crear cuentas cabeceras con mismo cuit y cuentas de gestión sin necesidad de una cuenta padre" value="{!permiso.SCP_Certa_GC__Validacion_sobre_cuenta_cabecera__c}" ></apex:inputfield>
+                            <apex:inputfield label="Puede crear una oportunidad independientemente de no ser ejecutivo cuenta" value="{!permiso.SCP_Certa_GC__Validacion_crear_Opp_sin_ser_ejecu__c}" ></apex:inputfield>
+                            <apex:inputfield label="Puede crear un contacto independientemente de no ser un ejecutivo de cuenta" value="{!permiso.SCP_Certa_GC__Validacion_crear_contacto_sin_ser_ejecu__c}" ></apex:inputfield>
+                            <apex:inputfield label="Puede eliminar productos que vienen de la integración de delta" value="{!permiso.SCP_Certa_GC__Permitir_borrar_productos_delta__c}" ></apex:inputfield>
+                            
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:repeat>
+                
+            </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+        
+
+        
+    </apex:form>
+</apex:page>

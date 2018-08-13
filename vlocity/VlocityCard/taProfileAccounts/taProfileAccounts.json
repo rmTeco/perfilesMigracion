@@ -1,0 +1,54 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000009KeWGQA0"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "bundle": "getContactAccounts",
+            "inputMap": {
+                "Id": "{{params.id}}"
+            },
+            "query": "SELECT Id, Name\nFROM Account WHERE %vlocity_namespace%__PrimaryContactId__c = '{{params.id}}'",
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Accounts']['Name']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Accounts']['Name']",
+                    "type": "string"
+                }
+            ],
+            "name": "active",
+            "templateUrl": "taProfileAccountsCard"
+        }
+    ],
+    "title": ""
+}

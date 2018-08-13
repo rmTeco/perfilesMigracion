@@ -1,0 +1,13 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes" controller="vlocity_cmt.ActionDisplayController" access="global" extends="vlocity_cmt:vlocityIframeComponent" >
+    <aura:attribute name="height" type="String" access="global"/> 
+    <aura:attribute name="type" type="String" access="global"/> 
+    <aura:attribute name="subtype" type="String" access="global"/> 
+    <aura:attribute name="language" type="String" access="global"/>
+    <aura:attribute name="extraParams" type="Object" access="global"/> 
+    <aura:attribute name="customVFPage" type="String" access="global"/> 
+     
+    <aura:attribute name="recordId" type="String" access="global"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+ 
+    {!v.body}
+</aura:component>

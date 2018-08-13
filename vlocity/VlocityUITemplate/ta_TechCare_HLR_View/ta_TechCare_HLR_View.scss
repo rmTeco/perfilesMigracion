@@ -1,0 +1,59 @@
+.HLR {
+	width: 100%;
+	&-container {
+		height: 800px;
+		overflow-y: scroll;
+	}
+	&-info {
+		&-header {
+			margin-bottom: 4px;
+			&.activeRow {
+				.slds-icon-text-default {
+					transform: rotate(90deg);
+				}
+			}			
+		}
+		&-body {
+			margin-bottom: 14px;
+			padding-left: 25px;
+
+			display: none;
+			// visibility: collapse;
+			// line-height: 0;
+			// height: 0;
+			&.activeGroup {
+				display: block;
+				// visibility: visible;
+				// line-height: normal;
+				// height: auto;
+			}
+			&.childInfo {
+				padding-left: 35px;
+				div.slds-border--bottom:last-child {
+					border: none;
+				}
+			}
+			div.slds-border--bottom:last-child {
+				border: none;
+			}
+		}
+	}
+	
+	.active{
+		color:#007c85;    
+	
+	}
+	
+	.inactive{
+		color:#d9186b;    
+	
+	}
+	
+	.seccionHLR{
+	 color:#00b4c5;
+	}
+	
+	.tooltip .tooltiptext{
+		color:red !important;
+	}
+}

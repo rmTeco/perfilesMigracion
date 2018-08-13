@@ -1,0 +1,127 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.SubscriptionId",
+                "val": "54726279-0157-44b9-94e8-484a8a440966"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "codSuscriptor": "{{params.SubscriptionId}}"
+            },
+            "optionsMap": {
+                "vlcClass": "ta_care_querySOSRefillsHelper"
+            },
+            "remoteClass": "ta_care_querySOSRefillsHelper",
+            "remoteMethod": "GetRefillSOSHistory",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']['listaDetallePrestamo']"
+        }
+    },
+    "filter": {
+    },
+    "sorteableField": {
+        "fisrtSort": "['fechaAltaProductoAdq']",
+        "reverse": true
+    },
+    "states": [
+        {
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "AssetId": "['AssetId']",
+                            "LineNumber": "params.LineNumber",
+                            "SubscriptionId": "params.SubscriptionId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-refills-history-sos-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['FechaHoraIni']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['fechaAltaProductoAdq']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['estado']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['estado']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaVtoPagoPrestamo']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Cancelación sin cargo",
+                    "name": "['fechaVtoPagoPrestamo']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaPago']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de Pago",
+                    "name": "['fechaPago']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['montoPrestamo']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Monto",
+                    "name": "['montoPrestamo']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "templateUrl": "ta-care-table"
+        }
+    ],
+    "title": "Historial de recargas S.O.S"
+}

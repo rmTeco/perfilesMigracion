@@ -1,0 +1,35 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "{}"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Actions",
+            "templateUrl": "ta-Care-Right-Sidebar-Promotions"
+        }
+    ],
+    "title": "Promociones"
+}

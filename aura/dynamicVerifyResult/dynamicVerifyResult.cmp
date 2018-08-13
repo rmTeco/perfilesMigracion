@@ -1,0 +1,23 @@
+<aura:component >
+    <aura:attribute type="Map" name="callerData" />
+    <aura:attribute type="String" name="field" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.callerData}" action="{!c.doInit}"/>
+    <aura:attribute type="boolean" name="isActive" />
+    <aura:attribute type="String" name="label" />
+    <aura:attribute type="String" name="value" />
+     <div class="field-data">
+         <label class="slds-text-heading--label section-item-label">
+         <abbr title="required" class="{! 'slds-required ' + (v.isActive ? 'verified' :'') }">*</abbr>{!v.label}</label>
+         <span class="section-item-value"> <aura:unescapedHtml value="{!v.value}" /> </span>
+     </div>
+     <div class="verification-buttons">
+         <button  class="{! 'slds-button verify-button via-approve ' + (v.isActive == true ? 'active' :'') }"  value="true" onclick="{!c.verifyField}" >
+              <lightning:icon iconName="action:approval" class="verification-icon" size="xx-small" alternativeText="Approve Party Field"/>
+         </button>
+         <button class="{! 'slds-button verify-button via-reject ' + (v.isActive == false ? 'active' :'') }"  value="false" onclick="{!c.verifyField}">
+              <lightning:icon iconName="action:reject" class="verification-icon" size="xx-small" alternativeText="Approve Party Field"/>
+         </button>
+     </div>
+	
+</aura:component>

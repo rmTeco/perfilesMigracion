@@ -1,0 +1,32 @@
+{
+    "Cards": [
+        "taRefillHistory"
+    ],
+    "dataSource": {
+        "type": "ApexRemote",
+        "value": {
+            "body": "{}",
+            "inputMap": {
+                "benefitFilter": "",
+                "channelFilter": "",
+                "endDateFilter": "",
+                "startDateFilter": ""
+            },
+            "optionsMap": {
+                "vlcClass": "RefillHistoryHandler"
+            },
+            "remoteClass": "RefillHistoryHandler",
+            "remoteMethod": "filterDataByChannel",
+            "remoteNSPrefix": null,
+            "resultVar": "['Result']"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-refill-history-layout"
+        }
+    },
+    "workspace": [
+        "taRefillHistory/Personal/1506091817777"
+    ]
+}

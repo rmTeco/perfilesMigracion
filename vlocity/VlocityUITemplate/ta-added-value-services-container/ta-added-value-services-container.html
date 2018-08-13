@@ -1,0 +1,100 @@
+<!-- <pre>1: {{records |json}}</pre> -->
+<!-- <pre>2: {{data.Deck[0].states[0].fields |json}}</pre> -->
+<!-- <pre>Params: {{params | json}}</pre> -->
+
+<div 
+	class="via-slds addedValueServices-container" 
+	ng-controller="containerTableSVAController as SVACtrl">
+	<div class="slds-card slds-m-bottom--small">
+		<div class="via-slds-card__header slds-card__header headerList">
+			<div><b>{{data.Deck[0].title}}</b></div>
+			<div>Servicios de la linea <strong>{{params.AssetName}} {{params.LineNumber}}</strong></div>			
+		</div>
+
+		<form class="slds-grid slds-m-around--small slds-wrap slds-grid--pull-padded">
+			<div class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--4-of-12 slds-form-element">
+				<div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+					<slds-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-input__icon'"></slds-svg-icon>
+					<!-- <input ng-model="searchTerm" class="slds-input" type="text" placeholder="{{::$root.vlocity.getCustomLabel('SearchCards', 'Search Cards')}}" /> -->
+					<input ng-model="searchTerm" class="slds-input" type="text" placeholder="Buscá el servicio o categoria" />
+				</div>
+			</div>
+			<div class="slds-col slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--4-of-12 slds-form-element">
+
+			</div>
+			<!-- <div class="slds-col slds-col--bump-left slds-button slds-col--padded">
+				<button class="slds-button slds-button--neutral slds-float--right" onclick="window.location.reload()">
+					<slds-button-svg-icon sprite="'utility'" icon="'refresh'" no-hint="true" extra-classes="'slds-button__icon--left'"></slds-button-svg-icon>
+				{{::$root.vlocity.getCustomLabel('Refresh', 'Refresh')}}</button>
+			</div> -->
+		</form>
+		<div class="slds-card__body cards-container">				
+			<table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" role="grid">
+				<thead>
+					<tr class="slds-text-heading--label">
+						<th class="slds-border--bottom"></th> 
+						<th 
+							ng-repeat="field in cards[0].states[0].fields" 
+							scope="col"
+							ng-class="{
+									'slds-is-sorted' : sortingOrder == 'obj'+field.name,									
+									'slds-is-sorted--desc' : reverse, 'slds-is-sorted--asc': !reverse
+								}"								
+							class="slds-border--bottom">							
+							<!-- <div class="slds-truncate">{{field.label}}</div> -->
+							<a 								
+								ng-click="sortBy(field)" 
+								href="javascript:void(0)">
+								{{field.label}}
+								<div class="slds-icon_container">
+									<slds-svg-icon 
+										sprite="'utility'" 
+										size="'x-small'" 
+										icon="'arrowdown'" 
+										extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+									</slds-svg-icon>
+								</div>
+							</a>
+						</th>
+						<th class="slds-cell-shrink slds-clearfix slds-border--bottom">
+							<!-- <div class="slds-align--absolute-center">
+								Acción
+							</div> -->
+						</th>
+
+					</tr>
+				</thead>				
+				<tbody class="addedValueServices"				
+					ng-init="sortingOrder = 'obj'+'['+'\''+'InstallDate'+'\''+']'; reverse = true; ">					
+					<tr
+						vloc-card 
+						ng-repeat-start="card in cards |orderBy:sortingOrder:reverse |filter: TAsearchFunc(card, searchTerm)"
+						ctrl="{{ctrl}}" 
+						ng-model="card" 
+						data="card" 
+						records="records" 
+						index="{{$index}}" 
+						session-id="{{sessionId}}"
+						class="addedValueServices-row"	
+						ng-class="{'even': $parent.$parent.$parent.cards[card.cardIndex].obj.Services}"					
+						use-existing-element-type>						
+					</tr>
+					<tr
+						ng-repeat-end
+						class="addedValueServices-row serviceGroup"								
+						ng-show="$parent.$parent.$parent.cards[card.cardIndex].obj.Services">						
+						<td 
+							colspan="6"
+							style="padding: 0">							
+							<vloc-layout 
+								layout-name="ta-added-value-services-grouped"
+								ng-if="$parent.$parent.$parent.cards[card.cardIndex].obj.Services"
+								records="$parent.$parent.$parent.cards[card.cardIndex].obj.Services">
+							</vloc-layout>
+						</td>											
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

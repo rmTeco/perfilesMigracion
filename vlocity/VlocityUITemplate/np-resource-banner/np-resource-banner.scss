@@ -1,0 +1,30 @@
+@import "npVariables";
+.vlocity{/* Always use vlocity class as a wrapper */
+.np-resource-action-link{
+    color:#fff;
+    display:block;
+    text-align:left;
+    font-size:$font-medium;
+    text-decoration:none;
+    &:hover{
+       color:#fff;
+    display:block; 
+    text-decoration:none;
+    }
+}
+    .np-hero-resource-card--desc{
+        h2{
+            line-height:1.5em;
+            font-size:$font-large-banner;
+        }
+    }
+    @media (max-width: 30em) {
+        &.via-slds{
+            .np-hero-resource-card--desc{
+                h2{
+                    font-size:$font-mobile-banner;
+                }
+             }
+        }
+    }
+}

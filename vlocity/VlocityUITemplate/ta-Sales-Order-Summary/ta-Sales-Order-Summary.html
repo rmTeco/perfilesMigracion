@@ -1,0 +1,75 @@
+<div class="slds-tabs--scoped summary-style" ng-controller="taSalesOrderSummaryController as tsom" ng-init="tsom.init();">
+    
+    
+    <div class="header-text">Confirmá los datos de esta orden: </div>
+    <div class="background-style">
+        <div class="top-data">
+            
+            <div>
+                Nro de Order: {{ bpTree.response.BillingOrder.OrderNumber  }}
+            </div>
+            
+        </div>
+        <div class="top-data">
+            <div class="header-name">
+                {{ bpTree.response.Account.Contact.FirstName }} {{ bpTree.response.Account.Contact.LastName }}
+            </div>
+            <div>
+                Titular de producto/servicio {{ bpTree.response.Account.Contact.FirstName }} {{ bpTree.response.Account.Contact.LastName }}
+            </div>
+            <div>
+                {{ bpTree.response.Account.Contact.DocumentType }} {{ bpTree.response.Account.Contact.DocumentNumber__c }}
+            </div>
+            <div>
+                Numero de Cuenta: {{ bpTree.response.Account.AccountIntegrationId }}
+            </div>
+        </div>
+        <div class="top-data" ng-repeat="plans in bpTree.response.Order.planes" ng-if="bpTree.response.operationValue != 'Simcard'">
+            <p>{{ plans.nombre | uppercase }}</p>
+            <p>Línea {{ plans.lineas[0].linea }}</p>
+        </div>
+        <div class="top-data" ng-if="bpTree.response.Order.serialList[0].serial != null && bpTree.response.operationValue != 'Simcard'">
+            <span>Equipo / Servicio</span>
+
+        </div>
+        <div class="top-data" ng-if="bpTree.response.operationValue != 'Simcard'" ng-repeat="item in bpTree.response.Order.serialList">
+            <p>Modelo:  {{ item.productName }}</p>
+            <p>Serial: {{ item.serial }}</p>
+            
+        </div>
+        <div class="top-data" ng-if="bpTree.response.operationValue == 'Simcard'" ng-repeat="item in bpTree.response.Order.serialList">
+
+            <p>Serial: {{ item.serial }}</p>
+            
+        </div>
+        <div class="top-data">
+            <span>Entrega</span>
+            {{ bpTree.response.BillingOrder.Delivery_Method }}
+            <div ng-if="bpTree.response.BillingOrder.Delivery_Method == 'Delivery'">
+                {{ bpTree.response.ShippingAddressData.Address.Street }}
+                {{ bpTree.response.ShippingAddressData.Address.StreetNumber }}
+                {{ bpTree.response.ShippingAddressData.Address.Floor }}
+                {{ bpTree.response.ShippingAddressData.Address.Department }}
+            </div>
+            <div ng-if="bpTree.response.BillingOrder.Delivery_Method == 'Store Pick Up'">
+                {{ bpTree.response.PickUpBusinessSite.Name}},
+                {{ bpTree.response.PickUpBusinessSite.StreetAddress}}
+                {{ bpTree.response.PickUpBusinessSite.AddressNumber}}
+                
+            </div>
+        </div>
+        
+        <div class="top-data" ng-if="bpTree.response.BillingOrder.OrderTotal > 0">
+            <span>Pago</span>
+            <div ng-repeat="item in bpTree.response.SelectPaymentMethodsStep.PaymentMethods">
+                <p> {{ item.PaymentMethodRadio }} </p>
+                
+                <p ng-if="item.CreditCardData || item.DPFData">Cargos por financiación {{ item.CreditCardData.AmountInstallments | currency}} </p>
+            </div>
+            
+            <p>Total:  {{ bpTree.response.SelectPaymentMethodsStep.AmountTotalCft | currency }} </p>
+        </div>
+        
+        
+    </div>
+</div>

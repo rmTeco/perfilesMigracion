@@ -1,0 +1,40 @@
+{
+    "dataSource": {
+        "type": "Query",
+        "value": {
+            "query": "SELECT Name FROM AttributeCategory__c"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Name",
+                    "name": "[Name]",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Attribute Categories",
+            "sObjectType": null,
+            "templateUrl": "campaign-member-filter"
+        }
+    ],
+    "title": "Attribute Categories"
+}

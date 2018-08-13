@@ -1,0 +1,93 @@
+<!-- <pre>{{control.vlcSI.recSet |json}}</pre> -->
+<!-- <pre>{{bpTree.response.Device}}</pre> -->
+ <div     
+    class="slds-card via-slds-card--active slds-m-bottom--small taOScard">
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-header">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class=" slds-text-heading--label taOScard-title">
+			    IMEI
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.IMEI}}<span ng-if="!bpTree.response.Device.IMEI"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class=" slds-text-heading--label">
+			    NMU
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.NMU}}<span ng-if="!bpTree.response.Device.NMU"> - </span></p>				
+			</div>
+		</div>
+	</div>
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-content">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Marca</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.Brand.displayText}}<span ng-if="!bpTree.response.Device.Brand.displayText"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Modelo</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.Model}}<span ng-if="!bpTree.response.Device.Model"> - </span></p>				
+			</div>
+		</div>
+		<!-- <div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Descripción</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.Description}}<span ng-if="!bpTree.response.Device.Description"> - </span></p>				
+			</div>
+		</div> -->
+		<!-- <div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Fecha de Venta</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.PurchaseDate}}<span ng-if="!bpTree.response.Device.PurchaseDate"> - </span></p>				
+			</div>
+		</div> -->
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Garantía de venta</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Device.SaleWarranty.applies}}<span ng-if="!bpTree.response.Device.SaleWarranty.applies"> - </span></p>
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Vigencia</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">Desde {{bpTree.response.Device.SaleWarranty.from | date:'dd/MM/y' }}<span ng-if="!bpTree.response.Device.SaleWarranty.from"> - </span></p>				
+				<p class="">Hasta {{bpTree.response.Device.SaleWarranty.to | date:'dd/MM/y' }}<span ng-if="!bpTree.response.Device.SaleWarranty.to"> - </span></p>
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Stock de Uso</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class=""> - </p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Partida</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class=""> - </p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Protección</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="">{{bpTree.response.Case.Protection}}<span ng-if="!bpTree.response.Case.Protection"> - </span></p>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,56 @@
+<div class='slds-col--padded slds-size--1-of-1'>
+    <ng-form name='loopform'
+             class='slds-form-element vlc-flex vlc-slds-radio-control'
+             id="{{::control.name + $index}}"
+             ng-repeat='control in child.eleArray'>
+
+        <div class="slds-form-element__control">
+
+
+            <label for="{{::control.name + $index}}" class='slds-form-element__label vlc-slds-inline-control__label'>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" nubbin="left" ng-if="control.propSetMap.help" help="{{control.propSetMap.help}}"> i </a>
+
+                <div vlc-slds-include="vlcLabelController.html"></div>
+
+                {{::control.propSetMap.label}}
+
+                <span class='vlc-asterix icon-v-asterix'
+                      ng-show='control.req'>
+                </span>
+                
+            </label>
+            
+            
+            <!--<div horizontalMode='{{control.propSetMap.horizontalMode}}' ng-include="'vlcRadioItem.html'">-->
+            
+            <div horizontalMode='{{control.propSetMap.horizontalMode}}'>
+                <label ng-repeat='option in getOptions(control, this) track by option.name' class="OSradioButton" ng-class="{'active': control.response == option.name, 'only-buttom': getOptions(control, this).length == 1 }"> <!--class="slds-radio"-->
+                
+                    <input id='{{::control.name}}'
+                           ng-disabled='control.ro'
+                           ng-required='!control.response && control.req'
+                           type='radio'
+                           ng-init='init(this, control)'
+                           ng-if='ngInitValidation(this, control)'
+                           ng-value='option.name'
+                           ng-model='control.response'
+                           ng-click='autoAdvance(option.autoAdv);'
+                           ng-change='aggregate(this, control.index, control.indexInParent, true, -1)'
+                    />
+                    <span class="slds-form-element__label">{{::option.value}}</span>
+                </label>
+            </div>
+            
+            <div class='vlc-slds-error-block'>
+                <div class='error' ng-show='control.srvErr'>
+                    <small ng-show='control.srvErr' class='description'>{{control.srvErr}}</small>
+                </div>
+            </div>
+
+        </div>
+
+    </ng-form>
+
+</div>

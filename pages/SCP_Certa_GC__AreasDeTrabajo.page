@@ -1,0 +1,591 @@
+<apex:page controller="SCP_Certa_GC.AreasDeTrabajoController" sidebar="false" docType="html-5.0" tabStyle="Strategic_Client_Plan__tab" >
+    
+    <c:SCPMenu ></c:SCPMenu>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+    <apex:include pageName="SCP_Certa_GC__changeFocus"/>
+    <apex:stylesheet value="{!$Resource.SCP_Certa_GC__ipad}"/>
+    
+    <style>
+        
+        .pbSubheader h3 {
+        display: inline;
+        margin-left: 5px;
+        font-weight: bold;
+        }
+        
+        #big-deal-tab-content th {
+        width : 50%;
+        text-align : left;
+        padding-left : 20%;
+        font-size: 14px;
+        font-weight: normal;
+        }
+        
+        
+        #big-deal-tab-content th label {
+        font-size: 14px;
+        font-weight: normal;
+        }
+        
+        .Custom27Tab .tertiaryPalette, .individualPalette .Custom27Block .tertiaryPalette, .layoutEdit .individualPalette .Custom27Block .tertiaryPalette{
+        border-color: rgba(207, 208, 210, 0.2) !important;
+        }
+        
+    </style>
+    
+    <script>
+    $j = jq213; //jQuery.noConflict();
+    //$j2 = jq161;
+    
+    $j(document).ready(function() {
+        
+        $j( "#tabs" ).tab();
+    });
+    
+    function setearValorIdDelRetoActual(id){
+        $j(".setearIdDelRetoDelContacto").val(id);
+    }
+    
+    </script>
+    
+    <apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1">
+        <apex:outputPanel layout="block"  styleClass="panel panel-default">
+            <apex:form >
+                <apex:outputPanel layout="block"  styleClass="panel-heading">
+                    <h2 class="panel-title">
+                        <span style="float:left;">
+                            {!$Label.scp_certa_gc__areas_de_trabajo}
+                        </span>
+                        <span style="float:left;">
+                            <c:showVideo />
+                        </span>
+                    </h2>
+                    <div class="row paddingRight">
+                        <apex:actionFunction action="{!guardar}" name="SaveChanges" rerender="pageContent" status="renderMeStatus" oncomplete="createDataTableSerch()"/>
+                        
+                        <div class="btn-group pull-right" role="group" aria-label="...">	    					
+                            
+                            <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                                <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                            </button>
+                            
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                
+                <div class="tab-content" id="big-deal-tab-content">
+                    
+                    <apex:input label="" value="{!idDelRetoDelContacto}" style="display:none" styleClass="setearIdDelRetoDelContacto" />
+                    
+                    <apex:pageBlock id="cadaArea" title="" mode="maindetail">
+                        <apex:pageBlockSection id="seccionAreas" title="{!$Label.scp_certa_gc__areas_de_trabajo}" columns="1">
+                            
+                            <apex:outputText style="width: 0%;padding-left: 13%;" label="{!$Label.scp_certa_gc__areas_nos_relacionamos}">                                        
+                            </apex:outputText>  
+                            
+                            <!-- Tabla de areas -->
+                            <apex:pageBlockSectionItem >
+                                
+                                <apex:outputPanel layout="none" >
+                                    <table style="width: 60%;margin-left: 19%;margin-bottom: 0px;" class ="table table-striped table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    {!$Label.scp_certa_gc__name}
+                                                </th>
+                                                <th style="width: 40%;padding-left: 0;text-align: center;">
+                                                    {!$Label.scp_certa_gc__tipo_de_area}
+                                                </th>
+                                                <th style="width: 40%;padding-left: 0;text-align: center;">
+                                                    {!$Label.scp_certa_gc__conocimiento_del_area}
+                                                </th>
+                                                <th style="padding-left: 0% !important;">
+                                                    
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:variable var="c" value="{!0}"/>
+                                            <apex:repeat value="{!wrappersDeArea}" var="wppArea">
+                                                <tr>
+                                                    <td>
+                                                        <apex:variable var="c" value="{!c+1}"/>
+                                                        <apex:outputField value="{!wppArea.area.SCP_Certa_GC__Titulo_Area__c}">
+                                                            <apex:inlineEditSupport event="ondblclick"/>
+                                                        </apex:outputField>
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputField value="{!wppArea.area.SCP_Certa_GC__Tipo_de_Area__c}">
+                                                            <apex:inlineEditSupport event="ondblclick"/>
+                                                        </apex:outputField>
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputField value="{!wppArea.area.SCP_Certa_GC__Conocimiento_del_Area__c}">
+                                                            <apex:inlineEditSupport event="ondblclick"/>
+                                                        </apex:outputField>
+                                                    </td>
+                                                    <td>
+                                                        <apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__delete}" reRender="cadaArea" action="{!BorrarArea}">
+                                                            <apex:param assignTo="{!areaABorrarId}" name="delareaid" value="{!wppArea.area.id}"/>
+                                                        </apex:commandButton>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>  
+                                </apex:outputPanel>
+                                
+                                
+                            </apex:pageBlockSectionItem>
+                            
+                            <button style="margin-left: 71%;" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalArea">
+                                <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.Nueva_Area}
+                            </button>
+                        </apex:pageBlockSection>
+                        <br/>
+                        <br/>
+                        
+                        <!-- Retos de cada area -->
+                        <apex:variable var="indice" value="{!0}"/>
+                        <apex:repeat value="{!wrappersDeArea}" var="wppArea">
+                            
+                            <apex:variable var="indice" value="{!indice+1}"/>
+                            
+                            <apex:outputPanel layout="block">
+                                
+                                <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+                                    <img src="/s.gif" alt="Ocultar sección - {!wppArea.area.id}" class="hideListButton" 
+                                         id="{!wppArea.area.id}" name="{!wppArea.area.id}" onclick="twistSectionInsideARepeat(this);" style="cursor:pointer;" tabindex="0" title="Ocultar sección - {!wppArea.area.id}"/>
+                                    <h3>{!wppArea.area.SCP_Certa_GC__Titulo_Area__c}</h3>
+                                </div>
+                                
+                                <div class="pbSubsection" style="display: block;">
+                                    
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#Area-{!wppArea.area.id}{!indice}1" aria-controls="Area-{!wppArea.area.id}{!indice}1" role="tab" data-toggle="tab">{!$Label.Proyecto} 1</a></li>
+                                        <li role="presentation"><a href="#Area-{!wppArea.area.id}{!indice}2" aria-controls="Area-{!wppArea.area.id}{!indice}2" role="tab" data-toggle="tab">{!$Label.Proyecto} 2</a></li>
+                                        <li role="presentation"><a href="#Area-{!wppArea.area.id}{!indice}3" aria-controls="Area-{!wppArea.area.id}{!indice}3" role="tab" data-toggle="tab">{!$Label.Proyecto} 3</a></li>
+                                    </ul>
+                                    
+                                    <div class="tab-content">
+                                        
+                                        <apex:variable var="indiceReto" value="{!0}"/>
+                                        <!-- wpp de retos -->
+                                        
+                                        <apex:repeat value="{!wppArea.retos}" var="reto">
+                                            <apex:variable var="indiceReto" value="{!indiceReto+1}"/>
+                                            
+                                            <div role="tabpanel" class="tab-pane {!IF(indiceReto == 1,'active fade in', 'fade out')}" id="Area-{!wppArea.area.id}{!indice}{!indiceReto}">
+                                                
+                                                <table class="detailList" border="0" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="labelCol vfLabelColTextWrap first" scope="row">
+                                                                <label>{!$Label.Nombre_del_Proyecto}</label>
+                                                            </th>
+                                                            <td class="data2Col first">
+                                                                <apex:inputField value="{!reto.SCP_Certa_GC__Nombre_del_Reto__c}"/> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="labelCol vfLabelColTextWrap" scope="row">
+                                                                <label>{!$Label.scp_certa_gc__etapa_del_proyecto}</label>
+                                                            </th>
+                                                            <td class="data2Col">
+                                                                <apex:inputField value="{!reto.SCP_Certa_GC__Etapa_del_Reto__c}"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="labelCol vfLabelColTextWrap" scope="row">
+                                                                <label>{!$Label.Contactos_Cliente_Deciden_Influyen}</label>
+                                                            </th>
+                                                            <td>
+                                                                &nbsp;
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        <!-- Contactos -->
+                                                        <tr>
+                                                            <td>
+                                                                &nbsp;
+                                                                <table style="margin-left:40%" class ="table table-striped table-bordered table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 40%;padding-left: 0%;text-align: center;">
+                                                                                Contacto
+                                                                            </th>
+                                                                            <th style="width: 40%;padding-left: 0%;text-align: center;">
+                                                                                {!$Label.scp_certa_gc__nivel_de_relacion}
+                                                                            </th>
+                                                                            <th style="width: 50%;padding-left: 0;text-align: center;">
+                                                                                {!$Label.scp_certa_gc__tipo_de_contacto}
+                                                                            </th>
+                                                                            <th style="width:10%;padding-left:0;text-aling: center;">
+                                                                                
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <apex:repeat value="{!reto.Reto_Contactos__r}" var="contacto" id="number">
+                                                                            <tr>
+                                                                                <td style="text-align:center">
+                                                                                    <apex:outputField value="{!contacto.SCP_Certa_GC__Contacto__c}">
+
+                                                                                    </apex:outputField>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <apex:outputField value="{!contacto.SCP_Certa_GC__Nivel_de_Relaci_n__c}">
+
+                                                                                    </apex:outputField>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <apex:outputField rendered="{!contacto.SCP_Certa_GC__Otro_contacto_del_cliente__c != null}" value="{!contacto.SCP_Certa_GC__Otro_contacto_del_cliente__c}">
+
+                                                                                    </apex:outputField>
+                                                                                    <apex:outputField rendered="{!contacto.SCP_Certa_GC__Otro_contacto_del_cliente__c == null}" value="{!contacto.SCP_Certa_GC__Tipo_de_Contacto__c}">
+
+                                                                                    </apex:outputField>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <apex:commandButton style="float:left" styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__delete}" reRender="cadaArea" action="{!borrarContacto}" status="borrandoContacto">
+                                                                                        <apex:param assignTo="{!contactoIdABorrar}" name="delContactoId" value="{!contacto.id}"/>
+                                                                                        <apex:param assignTo="{!retoDeContactoABorrar}" name="delRetoId" value="{!contacto.SCP_Certa_GC__Reto__c}"/>
+                                                                                    </apex:commandButton>
+                                                                                    
+                                                                                    <div>
+                                                                                        &nbsp;
+                                                                                        <apex:actionStatus id="borrandoContacto">
+                                                                                            <apex:facet name="start">
+                                                                                                <img src="/img/loading.gif"/>
+                                                                                            </apex:facet>
+                                                                                        </apex:actionStatus>
+                                                                                    </div>
+                                                                                    
+                                                                                    
+                                                                                </td>
+                                                                            </tr>
+                                                                        </apex:repeat>
+                                                                    </tbody>
+                                                                </table>
+                                                                
+                                                                
+                                                                <div>
+                                                                    <apex:actionStatus id="agregandoContacto">
+                                                                        <apex:facet name="start">
+                                                                            <img src="/img/loading.gif"/>
+                                                                        </apex:facet>
+                                                                    </apex:actionStatus>
+                                                                </div>
+                                                                
+                                                                <button style="margin-left: 121%;" type="button" onclick="setearValorIdDelRetoActual('{!reto.id}')" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalContactoReto">
+                                                                    <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.Nuevo_Contacto}
+                                                                </button>
+                                                                &nbsp;
+                                                            </td>
+                                                            <td>
+                                                                &nbsp;
+                                                            </td>
+                                                        </tr>
+                                                        <!-- -- -->
+                                                        
+                                                        <tr>
+                                                            <th class="labelCol vfLabelColTextWrap" scope="row">
+                                                                <label>{!$Label.Tecnologias_Responden_Proyecto}</label>
+                                                            </th>
+                                                            <td class="data2Col">
+                                                                
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        <!-- Tecnologias -->
+                                                        <tr>
+                                                            <td>
+                                                                &nbsp;
+                                                                <table style="margin-left:40%" class ="table table-striped table-bordered table-condensed">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th style="width: 30%;padding-left: 0%;text-align: center;">
+                                                                                Nivel de Desarrollo
+                                                                            </th>
+                                                                            <th style="width: 30%;padding-left: 0;text-align: center;">
+                                                                                {!$Label.Tecnologia} 
+                                                                            </th>
+                                                                            <th style="width: 30%;padding-left: 0;text-align: center;">
+                                                                                {!$Label.Description}
+                                                                            </th>
+                                                                            <th style="width:10%;padding-left:0;text-aling: center;">
+                                                                                
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <apex:repeat value="{!reto.Reto_tecnologias__r}" var="solucion" >
+                                                                            <tr>
+                                                                                <td style="text-align:center">
+                                                                                    <apex:outputField value="{!solucion.SCP_Certa_GC__Nivel_de_Desarrollo__c}">
+
+                                                                                    </apex:outputField>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <apex:outputField rendered="{!solucion.SCP_Certa_GC__Otra_Solucion__c != null}" value="{!solucion.SCP_Certa_GC__Otra_Solucion__c}">
+
+                                                                                    </apex:outputField>
+                                                                                    <apex:outputField rendered="{!solucion.SCP_Certa_GC__Otra_Solucion__c == null}" value="{!solucion.SCP_Certa_GC__Lista_de_Soluciones__c}">
+
+                                                                                    </apex:outputField>
+                                                                                </td>
+                                                                                <td style="text-align:center">
+                                                                                    <apex:outputField value="{!solucion.SCP_Certa_GC__Observaci_n_sobre_el_producto__c}">
+
+                                                                                    </apex:outputField>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <apex:commandButton style="float:left" styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__delete}" reRender="cadaArea" action="{!borrarSolucion}" status="borrandoSolucion">
+                                                                                        
+                                                                                        <apex:param assignTo="{!solucionIdABorrar}" name="delContactoId" value="{!solucion.id}"/>
+                                                                                        <apex:param assignTo="{!retoDeContactoABorrar}" name="delRetoId" value="{!solucion.SCP_Certa_GC__Reto__c}"/>
+                                                                                        
+                                                                                    </apex:commandButton>
+                                                                                    
+                                                                                    <div>
+                                                                                        &nbsp;
+                                                                                        <apex:actionStatus id="borrandoSolucion">
+                                                                                            <apex:facet name="start">
+                                                                                                <img src="/img/loading.gif"/>
+                                                                                            </apex:facet>
+                                                                                        </apex:actionStatus>
+                                                                                    </div>
+                                                                                    
+                                                                                    
+                                                                                </td>
+                                                                            </tr>
+                                                                        </apex:repeat>
+                                                                    </tbody>
+                                                                </table>
+                                                                
+                                                                
+                                                                <div>
+                                                                    <apex:actionStatus id="agregandoSolucion">
+                                                                        <apex:facet name="start">
+                                                                            <img src="/img/loading.gif"/>
+                                                                        </apex:facet>
+                                                                    </apex:actionStatus>
+                                                                </div>
+                                                                
+                                                                <button style="margin-left: 121%;" type="button" onclick="setearValorIdDelRetoActual('{!reto.id}')" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalTecnologiaReto">
+                                                                    <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.Nueva_Tecnologia}
+                                                                </button>
+                                                                &nbsp;
+                                                            </td>
+                                                            <td>
+                                                                &nbsp;
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        <!-- -- -->
+                                                        
+                                                        <tr>
+                                                            <th class="labelCol vfLabelColTextWrap" scope="row">
+                                                                <label>{!$Label.Principal_Competidor_Solucion}</label>
+                                                            </th>
+                                                            <td class="data2Col">
+                                                                <apex:inputField value="{!reto.SCP_Certa_GC__Competidor__c}"/>
+                                                            </td>      
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="labelCol vfLabelColTextWrap" scope="row">
+                                                                <label>{!$Label.scp_certa_gc__fecha_estimada_de_cierre}</label>
+                                                            </th>
+                                                            <td class="data2Col">
+                                                                <apex:inputField value="{!reto.SCP_Certa_GC__Fecha_Compromiso__c}"/>
+                                                            </td>      
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                                
+                                            </div>
+                                            
+                                        </apex:repeat>
+                                        
+                                    </div>
+                                </div>
+                                
+                                
+                                <br/>
+                                <br/>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                        
+                        
+                    </apex:pageBlock>
+                    
+                </div>
+                
+                <!-- modal - Nueva Area -->
+                <div class="modal fade" id="myModalArea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="z-index:9999;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{!$Label.Nueva_Area}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table style="border-collapse: separate;border-spacing: 5px;width:80%">
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__name}" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width: 100%;" value="{!areaAInsertar.SCP_Certa_GC__Titulo_Area__c}"/><br/> 
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__tipo_de_area}" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width:100%" value="{!areaAInsertar.SCP_Certa_GC__Tipo_de_Area__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__conocimiento_del_area}" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width:100%" value="{!areaAInsertar.SCP_Certa_GC__Conocimiento_del_Area__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                </table>		        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="InsertarArea();">{!$Label.add_buttom}</button>
+                                <apex:actionFunction action="{!InsertarArea}" name="InsertarArea" rerender="cadaArea" oncomplete="resetCamposHito()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- modal - Nuevo contacto de reto -->
+                <div class="modal fade" id="myModalContactoReto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="z-index:9999;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{!$Label.Nuevo_Contacto}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table style="border-collapse: separate;border-spacing: 5px;width:80%">
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="Contacto" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito tipoDeContacto" style="width: 100%;" value="{!contactoAInsertar.SCP_Certa_GC__Contacto__c}"/><br/> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__tipo_de_contacto}" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito tipoDeContacto" style="width: 100%;" value="{!contactoAInsertar.SCP_Certa_GC__Tipo_de_Contacto__c}"/><br/> 
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="trOtroContacto" style="display:none;">
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="Otro Contacto" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width: 100%;" value="{!contactoAInsertar.SCP_Certa_GC__Otro_contacto_del_cliente__c}"/><br/> 
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__nivel_de_relacion}" />
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width:100%" value="{!contactoAInsertar.SCP_Certa_GC__Nivel_de_Relaci_n__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                </table>		        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="InsertarContacto();">{!$Label.add_buttom}</button>
+                                <apex:actionFunction action="{!insertarContacto}" name="InsertarContacto" rerender="cadaArea" oncomplete="resetCamposHito()" status="agregandoContacto"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- modal - Nueva tecnologia del reto -->
+                <div class="modal fade" id="myModalTecnologiaReto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="z-index:9999;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{!$Label.Nueva_Tecnologia}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table style="border-collapse: separate;border-spacing: 5px;width:80%">
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__tecnologia}:" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito tipoDeContacto" style="width: 100%;" value="{!solucionAInsertar.SCP_Certa_GC__Lista_de_Soluciones__c}"/><br/> 
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="trOtraSolucion" style="display:none;">
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__otra_tecnologia}" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width: 100%;" value="{!solucionAInsertar.SCP_Certa_GC__Otra_Solucion__c}"/><br/> 
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__nivel_de_desarrollo}:" />
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width:100%" value="{!solucionAInsertar.SCP_Certa_GC__Nivel_de_Desarrollo__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__observaciones}:" />
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width:100%" value="{!solucionAInsertar.SCP_Certa_GC__Observaci_n_sobre_el_producto__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                </table>		        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="InsertarSolucion();">{!$Label.add_buttom}</button>
+                                <apex:actionFunction action="{!insertarSolucion}" name="InsertarSolucion" rerender="cadaArea" oncomplete="resetCamposHito()" status="agregandoSolucion"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </apex:form>
+            <c:FastTask page="{!$Label.scp_certa_gc__kpi}" account="{!idCuenta}"></c:FastTask>
+            <chatter:feed entityId="{!idCuenta}" />
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:page>

@@ -1,0 +1,121 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.SubcriptionId",
+                "val": "13800001139"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "body": {
+                    "cantidadItemsConsulta": 5,
+                    "cantidadMaxConsulta": 5,
+                    "codigoAcceso": {
+                        "codSuscripcion": "",
+                        "identificadorRecurso": "13800001139"
+                    },
+                    "fechaDesde": "20170205",
+                    "fechaHasta": "20171106",
+                    "referenciaItemPaginado": 0
+                },
+                "codSubcript": "{{ params.SubcriptionId }}"
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "ta_care_querySOSRefillsHelper",
+            "remoteMethod": "getPacksHistoryDetail",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']['detalleDeMovimientosLista']['elementoDetalleDeMovimientos']"
+        }
+    },
+    "filter": {
+    },
+    "sorteableField": {
+        "fisrtSort": "['fechaTasacionTrafico']",
+        "reverse": true
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "AssetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-history-packs-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaTasacionTrafico']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['fechaTasacionTrafico']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['promocionTasadaLista']['fechaVigenciaHastaProdAdq']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Vencimiento",
+                    "name": "['promocionTasadaLista']['fechaVigenciaHastaProdAdq']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['promocionTasadaLista']['nombreProducto']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Nombre del pack",
+                    "name": "['promocionTasadaLista']['nombreProducto']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['importeTasado']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Monto",
+                    "name": "['importeTasado']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "templateUrl": "ta-care-table"
+        }
+    ],
+    "title": "Historial de packs"
+}

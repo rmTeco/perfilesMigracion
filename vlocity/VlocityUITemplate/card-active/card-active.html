@@ -1,0 +1,38 @@
+<section class="console-card active" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" hotkey-layout-card>
+    <div class="card-top" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div>
+            <h2 tooltip-placement="bottom" tooltip="{{obj.Name}}">
+                {{data.title}}
+            </h2>
+        </div>
+        <span class="account-number">{{obj.Name}}</span>
+        
+        <span class="expires">
+            <i ng-if="expiresSoon(card.expires, 30)" tooltip="Last modified" class="icon icon-v-warning-cirlce"></i>
+            {{::$root.vlocity.getCustomLabel('LastModified', 'Last modified')}} {{obj.LastModifiedDate | date:'MM/dd/yy'}}</span>
+    </div>
+    <div class="card-info">
+        <ul class="actions">
+            <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+                <a href="#" ng-click="performAction(action)" hotkey-card-action>
+                    <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+                    <span ng-if="action.imageRef">
+                        <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+                    </span>
+                    <span>{{action.displayName}}</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="details" ng-click="performFlyout(uniqueLayoutId + '-card-'+ cardIndex)">
+            <li class="detail" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+                <!--<span class="detail-label">{{obj | getter: field: 'label' | picker: field.type}}</span>-->
+                <span class="detail-label">{{field.label}}</span>
+                <span class="value" ng-if="!obj[field.relationshipName]">
+                    <!--{{obj[field.name]}}-->
+                    {{obj | getter: field | picker: field.type}}
+                </span>
+                <span class="value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</span>
+            </li>
+        </ul>
+    </div>
+</section>

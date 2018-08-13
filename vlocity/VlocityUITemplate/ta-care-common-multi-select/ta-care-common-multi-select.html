@@ -1,0 +1,57 @@
+<div class="slds-col--padded slds-size--1-of-1">
+
+    <ng-form name='loopform'
+        class='slds-form-element vlc-flex vlc-slds-multiSelect-control'
+        id="{{::control.name + $index}}"
+        ng-required="control.propSetMap.req"
+        ng-repeat='control in child.eleArray'>
+
+        <div class="slds-form-element__control">
+
+            <label for="{{::control.name + $index}}" class="slds-form-element__label vlc-slds-inline-control__label ng-binding">
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" nubbin="left" help="{{control.propSetMap.help}}"> i </a>
+
+                <!--<div vlc-slds-include="vlcLabelController.html"></div>-->
+                
+                {{::control.propSetMap.customLabel}}
+
+                <span class='vlc-asterix icon-v-asterix'
+                        ng-show='control.propSetMap.req'>
+                </span>
+
+            </label>
+            
+            <div class="ng-scope">
+
+                <ul horizontalmode="false" class="slds-form-element ng-scope">
+                    <li class="slds-form-element__control"
+                        ng-repeat='option in control.vlcSI[control.itemsKey]'>
+                    
+                        <label class='slds-checkbox'>
+                
+                            <input id='{{control.Name + $index}}'
+                                ng-disabled='control.ro'
+                                ng-required="control.propSetMap.req && !control.response"
+                                type='checkbox'
+                                ng-init='onSelectItem(control, option, $index, this)'
+                                ng-model='option.vlcSelected'
+                                ng-value="option"
+                                ng-change='onSelectItem(control, option, $index, this)'/>
+                
+                            <span class="slds-checkbox--faux" ng-if='control.propSetMap.horizontalMode!=="image"'></span>
+                            <span class="slds-form-element__label" ng-if='control.propSetMap.horizontalMode!=="image"'>{{::option[control.propSetMap.customOptions.optionLabel]}}</span>
+                
+                        </label>
+                    
+                    </li>
+                </ul>
+            
+            </div>
+            
+        </div>
+
+    </ng-form>
+
+</div>

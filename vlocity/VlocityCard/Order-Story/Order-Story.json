@@ -1,0 +1,66 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objAPIName']": "Order"
+    },
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['highlight']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Numero de orden",
+                    "name": "['highlight']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['formatedLastActivityDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de creacion",
+                    "name": "['formatedLastActivityDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Estado",
+                    "name": "['subtitle']",
+                    "relationshipId": "owner",
+                    "relationshipName": "ownerValueMap",
+                    "relationshipType": "User",
+                    "type": "string"
+                }
+            ],
+            "name": "Order",
+            "sObjectType": "Order",
+            "templateUrl": "ta-Care-story-card"
+        }
+    ],
+    "title": "Order"
+}

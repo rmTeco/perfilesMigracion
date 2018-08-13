@@ -1,0 +1,41 @@
+<div class="account-card active" >
+    <div class="card-top" ng-click="cardShowMore = !cardShowMore">
+        <div class="rightActions showHideParent" ng-class="{hideMore: cardShowMore}">
+            <div class="showButton hidden-xs">{{::$root.vlocity.getCustomLabel('ShowDetails','Show Details')}} <i class="icon icon-v-down-caret"></i></div>
+            <div class="hideButton hidden-xs">{{::$root.vlocity.getCustomLabel('HideDetails','hide Details')}} <i class="icon icon-v-up-caret"></i></div>
+            <div class="actions visible-xs" ng-click="displayActions = !displayActions;$event.stopPropagation();"> <i class="icon icon-v-menu2"></i></div>
+        </div>
+        <div>
+            <h1>{{obj.Name}}</h1>
+        </div>
+    </div>
+    <div class="card-info">
+        <ul class="details" ng-class="{'hidden-xs': !cardShowMore}">
+            <li class="detail col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+                <label class="detail-label">{{field.label}}</label>
+                <div class="value" ng-if="!obj[field.relationshipName]">
+                    {{obj | getter: field | picker: field.type}}
+                </div>
+            </li>
+        </ul>
+        <div class="actions-wrapper" ng-class="{'hidden-xs': !displayActions}">
+            <div class="actions-container">
+                <ul class="actions">
+                    <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)" ng-class="{last:$last}">
+                        <a href="#" ng-click="performAction(action)">
+                            <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+                            <span ng-if="action.imageRef">
+                                <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}">
+                            </span>
+                            <span class="title">{{action.displayName}}</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="actions-cancel visible-xs" ng-click="displayActions = !displayActions;$event.stopPropagation();">{{::$root.vlocity.getCustomLabel('Cancel', 'Cancel')}}</div>
+            </div>
+            <div class="page-cover-layer" ng-class="{'hidden-xs': !displayActions}"></div>
+        </div>
+        
+        <vloc-layout layout-name="{{data.flyout.layout}}" ng-if="data.flyout.layout && cardShowMore" parent="data"></vloc-layout>
+    </div>
+</div>

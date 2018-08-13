@@ -1,0 +1,17 @@
+<div class="cpq-input-custom-template-sample slds-m-bottom_medium" ng-controller="customActionsTpl2Controller">
+    <!-- $parent.$parent.records contains the reference to field object passed from VDF-->
+    <div class="slds-form-element">
+        <label class="slds-form-element__label">
+            <abbr class="slds-required" title="required" ng-if="field.required">*</abbr>
+            {{field.label}}
+        </label>
+        <div class="slds-form-element__control slds-input-has-fixed-addon">
+            <input class="slds-input" type="text" ng-model="field.userValues"/>
+        </div>
+    </div>
+    <div class="slds-grid slds-m-top_small">
+        <div class="slds-button-group" role="group">
+            <button type="button" class="slds-button slds-button_neutral" ng-click="autoGenerate();">Lookup Phone Number</button>
+        </div>
+    </div>
+</div>

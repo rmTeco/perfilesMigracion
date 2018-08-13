@@ -1,0 +1,21 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "00Q50000016w0qf"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id,Name,Company,Email,MobilePhone,Phone,PhotoUrl, Address,City,Country,PostalCode,State,Street ,Title,Website FROM Lead WHERE Id = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "mobile-highlight-card"
+        }
+    }
+}

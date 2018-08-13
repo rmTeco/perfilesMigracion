@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Order</baseObject>
+    <category>busop</category>
+    <deployed>true</deployed>
+    <description>Pedidos y Activos</description>
+    <join>
+        <join>
+            <outerJoin>true</outerJoin>
+            <relationship>vlocity_cmt__Assets__r</relationship>
+        </join>
+        <outerJoin>false</outerJoin>
+        <relationship>OrderItems</relationship>
+    </join>
+    <label>Pedidos y Activos TA</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Name</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__AccountId__c</field>
+            <table>Order</table>
+        </columns>
+        <masterLabel>Pedidos</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__ItemName__c</field>
+            <table>Order.OrderItems</table>
+        </columns>
+        <masterLabel>Productos de pedido</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account</field>
+            <table>Order.OrderItems.vlocity_cmt__Assets__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Name</field>
+            <table>Order.OrderItems.vlocity_cmt__Assets__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Name</field>
+            <table>Order.OrderItems.vlocity_cmt__Assets__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account.Id</field>
+            <table>Order.OrderItems.vlocity_cmt__Assets__r</table>
+        </columns>
+        <masterLabel>Assets</masterLabel>
+    </sections>
+</ReportType>

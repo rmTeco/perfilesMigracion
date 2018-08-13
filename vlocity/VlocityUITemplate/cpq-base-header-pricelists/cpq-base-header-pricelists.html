@@ -1,0 +1,16 @@
+<div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click slds-is-open">
+    <button cpq-dropdown-handler="viewOpen = false" id="cpq-custom-view-button" class="slds-button custom-view-dropdown-button slds-button--neutral slds-picklist__label slds-p-right--small" aria-haspopup="true" ng-click="viewOpen = !viewOpen">
+        <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top--x-small slds-float--right custom-view-dropdown-button'"></slds-button-svg-icon>
+        {{importedScope.currentPricelist.Name}}
+    </button>
+    <div class="slds-dropdown slds-dropdown--left" ng-if="viewOpen">
+        <ul class="slds-dropdown__list slds-dropdown--length-5" role="menu">
+            <li class="slds-dropdown__item" role="presentation" ng-repeat="pricelist in records"
+                ng-click="importedScope.changePricelist(pricelist)">
+                <a ng-if="importedScope.currentPricelist.Id != pricelist.Id" href="javascript:void(0);" role="menuitemcheckbox" tabindex="0">
+                    <span class="slds-truncate">{{pricelist.Name}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

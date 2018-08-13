@@ -1,0 +1,279 @@
+<apex:page sidebar="false" controller="SCP_Certa_GC.accountForecast" tabStyle="Strategic_Client_Plan__tab">
+<style>
+.LeftCol{
+    width:auto;
+    margin-right:360px;
+}
+.RightCol{
+    width:350px;
+    float: right;
+}
+.FillWidth{
+    width:100%;
+}
+
+.bPageBlock .pbTitle{
+    width:70%;
+}
+
+.apexp{
+    float: left;
+    width: 100%;
+}
+
+
+
+.Button{
+ float: right; 
+ width: 120px; 
+ text-align: center; 
+ border: 1px solid black; 
+ border-bottom-left-radius: 5px;
+ border-top-left-radius: 5px; 
+ border-bottom-right-radius: 5px;
+ border-top-right-radius: 5px; 
+ line-height: 30px; 
+ font-size: 18px; 
+ background: white url('https://c.na14.visual.force.com/img/alohaSkin/grid_headerbg.gif'); 
+ background-position: 0px 100%; 
+ background-repeat: repeat-x;
+ cursor:pointer;
+}
+
+
+.buttonRight{
+ border-bottom-left-radius: 0px;
+ border-top-left-radius: 0px; 
+ }
+ 
+.buttonLeft{
+ border-bottom-right-radius: 0px;
+ border-top-right-radius: 0px; 
+ border-right: 0px;
+
+}
+
+
+.iframewindow{
+
+    width:100%;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    height: 1400px;
+
+}
+
+.table th{
+    white-space:pre-line;
+}
+
+ .AlignRight{
+
+    text-align:right;    
+}
+
+.AlignCenter {
+        text-align:center;    
+}
+
+</style>
+<c:SCPMenu ></c:SCPMenu>
+<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+<apex:include pageName="SCP_Certa_GC__changeFocus"/>
+<apex:stylesheet value="{!$Resource.SCP_Certa_GC__ipad}"/>
+<script  type="text/javascript">
+
+    function ajaxshow(){
+    
+        $j(".ajaxloader").show();
+    
+    }    
+    function ajaxstop(){
+    
+        $j(".ajaxloader").hide();
+    
+    }
+    
+
+    function showInput(){
+    
+        console.log("render called:" +addeval);
+    
+        if(addeval==1)
+            $j(".AddEvaluation").show();
+        else
+            $j(".AddEvaluation").hide();
+    
+    }
+    var addeval = 0;
+    $j = jQuery.noConflict();
+    $j(document).ready(function() {
+    
+        
+        $j(".iframewindow").load(function(){
+        
+            console.log("loaded");
+            console.log($j(this).contents().height());
+            
+            
+            $j(this).contents().find("bPageTitle").hide();
+            //$j(this).
+            
+        });
+    
+        $j(".AddButton").click(function(){
+        
+            addeval = 0;
+        });
+    });
+</script>
+<div class="FillWidth"> 
+    
+    <div id="Menu">
+        <apex:form >
+        <apex:pageBlock title="{!$Label.scp_certa_gc__step1}" mode="details">
+        
+        <table class="list table" border="0" cellspacing="0" cellpadding="0" style="border-bottom:0px;"><tbody>
+            <tr class="headerRow">
+                <th scope="col" class="deemphasize AlignCenter" style="width:25px;">&nbsp;</th>
+                <th scope="col" class="deemphasize AlignCenter" > {!$Label.description} </th>
+                <!-- <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Full_Contract_Value__c.Label}</th>-->
+                <!-- <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.big__c.Label}</th> -->
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Estimated_Billing_Start_Date__c.Label}</th>
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Unique_Charges__c.Label}</th>
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Monthly_Charges__c.Label}</th>
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Estimated_Year_End_Revenue__c.Label}</th>
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Probability.Label}</th>
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Unsold_Pipeline__c.Label}</th>
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.Weighted_Estimated_Year_End_Revenue__c.Label}</th>
+                <th scope="col" class="deemphasize AlignCenter" >{!$ObjectType.Opportunity.Fields.StageName.Label}</th>
+            </tr>
+            <apex:repeat value="{!opps}" var="item">
+            <!-- ListRow -->
+                <tr class="dataRow even first" onblur="if (window.hiOff){hiOff(this);}" onfocus="if (window.hiOn){hiOn(this);}" onmouseout="if (window.hiOff){hiOff(this);}" onmouseover="if (window.hiOn){hiOn(this);}">
+                    <!--
+                    <td class="dataCell">
+                        <apex:commandButton action="{!URLFOR($Action.Opportunity__c.Edit , item.opp.id,[retURL=URLFOR($Page.accountOpportunityList,null,[id = account.id])])}" value="{!$Label.Edit}"/>
+                        <apex:commandButton action="{!URLFOR($Action.Opportunity__c.Delete , item.opp.id,[retURL=URLFOR($Page.accountOpportunityList,null,[id = account.id])])}" value="{!$Label.Del_buttom}"/>
+                    </td>
+                    -->
+                    <td class="dataCell"> 
+                        <apex:outputLink value="{!$Page.SCP_Certa_GC__accountRDMWindow}?id={!item.opp.id}"><apex:image style="{!if((item.opp.ContactsAssessments__r.size>0), 'border:3px solid #069;','')}" url="{!$Resource.SCP_Certa_GC__mosaico_icono}" height="25px" width="25px"/></apex:outputLink>
+                    </td>
+                    <!--
+                    <td class="dataCell AlignCenter"> 
+                        {!item.opp.AutoId__c}
+                    </td>
+                    -->
+                    <td class="dataCell"> 
+                        <!-- <apex:outputLink value="{!$Page.SCP_Certa_GC__accountRDMWindow}?id={!item.opp.id}">{!item.opp.Name}</apex:outputLink> -->
+                        <apex:outputLink value="/{!item.opp.id}">{!item.opp.Name}</apex:outputLink>                         
+                    </td>                    
+                    <!--
+                    <td class="dataCell AlignRight"> 
+                        
+                        <apex:outputText value="{!item.Full_Contract_Value}"></apex:outputText>
+                    </td>
+                    -->
+                    <!--
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputField value="{!item.opp.BIG__c}"></apex:outputField>
+                    </td>
+                    -->
+                    <td class="dataCell"> 
+                        <apex:outputField value="{!item.opp.SCP_Certa_GC__Estimated_Billing_Start_Date__c}"></apex:outputField>
+                    </td>
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value="{!item.Unique_Charges}"></apex:outputText>
+                    </td>
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value="{!item.Monthly_Charges}"></apex:outputText>
+                    </td>                    
+                                        
+                    <td class="dataCell AlignRight MyEdit"> 
+                        
+                        <apex:outputText value="{!item.Estimated_Year_End_Revenue}"></apex:outputText>
+                    </td>                   
+                    <td class="dataCell AlignRight"> 
+                        {!item.opp.Probability}%
+                    </td>
+                    
+                    <td class="dataCell AlignRight"> 
+                        
+                        <apex:outputText value="{!item.Unsold_Pipeline}"></apex:outputText>
+                    </td>
+                    <td class="dataCell AlignRight MyEdit"> 
+                        
+                         <apex:outputText value="{!item.Weighted_Estimated_Year_End_Revenue}"></apex:outputText>         
+
+                    </td>
+                    
+                    <td class="dataCell AlignCenter MyEdit">                
+                        <apex:outputField value="{!item.opp.StageName}"></apex:outputField>         
+                    </td>
+                    
+                    <!-- <td class="dataCell" nowrap="nowrap"> 
+                         {!item.opp.Buying_Cycle__c}
+                    </td> -->
+                </tr>            
+            </apex:repeat>
+                <tr class="dataRow even first">
+                    <td class="dataCell AlignRight" colspan="1"> 
+                        <apex:outputText value=""/>
+                    </td>                
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value="{!$Label.scp_certa_gc__scp_total}:"/>
+                    </td>
+                    <!--
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value="{!s_fcv}"/>
+                    </td>
+                    -->                    
+                    <td class="dataCell AlignRight" colspan="3"> 
+                        <apex:outputText value=""/>
+                    </td>                                    
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value="{!s_estimated}"/>
+                    </td>
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value=""/>
+                    </td>
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value="{!s_unsold}"/>
+                    </td>
+                    <td class="dataCell AlignRight"> 
+                        <apex:outputText value="{!s_westimated}"/>
+                    </td>                  
+                </tr>
+            </tbody></table>
+            <br/>
+    
+
+                <apex:actionStatus id="renderMeStatus" onstart="ajaxshow();" onstop="showInput(); ajaxstop();"/>
+                <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:220px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+                    <img src="{!$Resource.SCP_Certa_GC__AjaxLoader}"/><br/>Loading...
+                </div>
+                <apex:actionFunction name="changeCurrency" action="{!loadOpps}" rerender="Content" status="renderMeStatus" >
+                </apex:actionFunction> 
+
+<br/>
+            
+        </apex:pageBlock>
+        </apex:form>
+    </div>
+
+<div>
+    
+    <c:FastTask page="Step 1: Pipeline Review" account="{!account.id}"></c:FastTask>
+    <br/>
+    
+</div>
+</div>
+
+<div>
+<span style="height:10px">&nbsp;<br/></span>
+<chatter:feed entityId="{!account.id}" />
+</div>
+
+</apex:page>

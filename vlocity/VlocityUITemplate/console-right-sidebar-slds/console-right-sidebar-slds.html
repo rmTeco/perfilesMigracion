@@ -1,0 +1,11 @@
+<div class="via-console-right-sidebar" ng-controller="viaConsoleRightSidebar">
+    <div class="slds-grid slds-p-around--small slds-wrap via-offer-header slds-theme--shade">
+        <div class="slds-p-right--x-small">
+          <div class="slds-text-heading--medium">{{::$root.vlocity.getCustomLabel('Offers', 'Offers')}}</div>
+        </div>
+    </div>
+    <div class="via-console-sidebar-card" vloc-card ng-repeat="card in cards | orderBy:order" ctrl="{{accountCtrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></div>
+
+
+    <vloc-cmp name="profileTags" customtemplate="left-profile-tag"></vloc-cmp>
+</div>

@@ -1,0 +1,696 @@
+<apex:page controller="SCP_Certa_GC.MosaicController" sidebar="false" tabStyle="Strategic_Client_Plan__tab" >
+
+	<apex:stylesheet value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'css/mosaico.css')}"/>
+		
+   <c:SCPMenu ></c:SCPMenu>
+   
+  <style>
+	
+		.ContactPlacer {
+			text-align: left;
+			/*text-transform: uppercase;*/			
+			margin-left: 5px;
+			margin-top: 6px;			
+			font-size: 12px;
+			padding-right: 6px;			
+		}
+		
+		.RelationshipNegative {
+			color: #D00A0A;
+		}
+		
+		.RelationshipPositive {
+			color: #00cc33;
+		}
+		
+		.ContactMenu {
+			z-index: 1;
+		}
+		
+		.tablaUser .celdaContenedoraDeNombre, .tablaUser .celdaContenedoraDeRol, .tablaUser .celdaContenedoraDeActitud {
+		    /*background-color: #4eb1cb;*/
+		    background-color: #C1D6D6 !important;
+		}
+		
+		.tablaTecnico .celdaContenedoraDeNombre, .tablaTecnico .celdaContenedoraDeRol, .tablaTecnico .celdaContenedoraDeActitud {
+		    /*background-color: #777;*/
+		    background-color: #ffcc99 !important;
+		}
+		
+		.tablaController .celdaContenedoraDeNombre, .tablaController .celdaContenedoraDeRol, .tablaController .celdaContenedoraDeActitud {
+		    /*background-color: #cf5c60;*/
+		    /*background-color: rgb(80,146,185);*/
+		    /*background-color: rgb(140,146,156);*/
+		    background-color: rgb(238,233,233) !important;
+		}
+		
+		.tablaSponsor .celdaContenedoraDeNombre, .tablaSponsor .celdaContenedoraDeRol, .tablaSponsor .celdaContenedoraDeActitud {
+		    /*background-color: #717ecd;*/
+		    background-color: #cccccc !important;
+		}
+		
+		.contenedorTabla td {
+			/*font-weight:bold;*/
+			color: black;
+			border-color: white;
+		}
+		
+	</style>
+   
+   <script>
+        $j = jQuery.noConflict();
+        $j(document).ready(function() {
+            $j(".ContactPlacer").mouseover(function(){
+                $j($j(this).children(".ContactMenu")).show();
+            });
+            $j(".ContactPlacer").mouseout(function(){
+                $j($j(this).children(".ContactMenu")).hide();
+            });
+            $j(".ShowEvaluation").tooltip({ 
+                bodyHandler: function() { 
+                    return $j($j(this).parent().parent().children(".EvaluationData")).html(); 
+                }, 
+                showURL: false 
+            });
+            $j(".ShowInfluences").mouseover(function(){
+            
+                 var inf = $j(this).parent().parent().children(".InfluencesData").text();
+                 var myArray = inf.split(",");
+                 
+                 var curr = $j(this).parent().parent().attr("id");
+                 
+                 $j(".ContactPlacer").each(function(){
+                     if($j(this).attr("id") != curr)
+                         $j(this).addClass("notselected");
+                  });
+                 
+                 for(var i = 0; i < myArray.length; i++){
+                     if(myArray[i])
+                          $j("#"+myArray[i]).removeClass("notselected").addClass("selected");
+                }
+    
+            
+            }).mouseout(function(){
+            
+                $j(".selected").removeClass("selected");
+                $j(".notselected").removeClass("notselected");
+            
+            });
+            $j(".ShowInfluenced").mouseover(function(){
+            
+                 var inf = $j(this).parent().parent().children(".InfluencedData").text();
+                 var myArray = inf.split(",");
+                 
+                 var curr = $j(this).parent().parent().attr("id");
+                 
+                 $j(".ContactPlacer").each(function(){
+                     if($j(this).attr("id") != curr)
+                         $j(this).addClass("notselected");
+                  });
+                 
+                 for(var i = 0; i < myArray.length; i++){
+                     if(myArray[i])
+                          $j("#"+myArray[i]).removeClass("notselected").addClass("selected");
+                }
+            }).mouseout(function(){
+            
+                $j(".selected").removeClass("selected");
+                $j(".notselected").removeClass("notselected");
+                
+            });
+
+            $j(".celdaContenedoraDeActitud").tooltip({ 
+                bodyHandler: function() { 
+                    return $j($j(this).children(".info")).html(); 
+                }, 
+                showURL: false 
+            });
+            $j(".celdaContenedoraDeRol").tooltip({ 
+                bodyHandler: function() { 
+                    return $j($j(this).children(".info")).html(); 
+                }, 
+                showURL: false 
+            });            $j(".contactRow").click(function(){
+            
+                //ContactPlacer
+            });
+            
+            var padding = 10;
+            var cellsize = $j(".celdaContenedoraDeNombre").outerWidth();
+            var smallcell = $j(".celdaContenedoraDeActitud").outerWidth();
+            var borders =  $j(".celdaContenedoraDeNombre").css("border-top-width").substr(0,1);
+            
+            var pagewidth = $j(".divContenedor").parent().width();
+            $j(".divContenedor").width(pagewidth);
+            var authImg = 40;
+            
+            var celdaWidth =  Math.floor((pagewidth-(padding*4 + smallcell*6 + borders*16 + authImg*2))/8);
+            $j(".celdaContenedoraDeNombre").width(celdaWidth);
+            
+            //$j(".toRotate").rotate({angle: -90});
+            $j(".toRotate").addClass("rotate");
+            $j(".toRotate").css("width","19px");
+            $j(".toRotate").css("display","block");
+        });
+        
+        function saveImage() {	
+	     	
+	     	var chartArea = $j('#divToImg');
+			html2canvas(chartArea, {
+			  onrendered: function(canvas) {		    			    
+			    var img = canvas.toDataURL("image/png");			    
+   				var ua = window.navigator.userAgent;
+   	            if (ua.indexOf("Chrome") > 0) {
+	                var link = document.createElement('a');
+					link.download = "{!$Label.RDM_role}.png";
+					link.href = img.replace('image/png', 'image/octet-stream');
+					link.click();
+				} else {
+					window.location.href = img.replace('image/png', 'image/octet-stream');
+				}
+			  }
+			});
+	     }
+	     
+	    function chartPage() {
+			$j('#chartPage').click();
+			window.open("{!$Page.accountOrganizationChart}?id={!IF(objectAPIName == 'Opportunity',opportunity.account,objectId)}", '_new');
+		}
+   </script>   
+   <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+   <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUI}"  />
+   <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryTooltip}"  />
+   <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryDimensions}"  />
+   <apex:stylesheet value="{!$Resource.SCP_Certa_GC__JQueryUICSS}"  />
+   <apex:includeScript value="{!$Resource.SCP_Certa_GC__html2canvas}"/>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__jspdf}"  />	
+   
+	   	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+	    	<div class="panel panel-default">
+			    <apex:form >
+	    		<div class="panel-heading">
+	    			<h3 class="panel-title">
+	    				<span style="float:left;">
+	    					{!$Label.scp_certa_gc__rdm_attitude}
+	    				</span>
+
+	    				<span style="float:left;">
+	    					<c:showVideo />
+	    				</span>
+	    			</h3>
+	    			<div class="row paddingRight">	
+	    				<div class="btn-group pull-right" role="group" aria-label="...">    					
+							<div class="btn-group pull-right" role="group" aria-label="...">	    					
+		           				<apex:actionFunction action="{!$Page.accountRDMChart}?id={!objectId}" name="viewMosaic"/>
+		           				<apex:actionFunction action="{!$Page.accountOrganizationChart}?id={!IF(objectAPIName == 'Opportunity',opportunity.account,objectId)}" name="viewOrg"/>
+		           				<apex:actionFunction action="{!$Page.accountRDMWindow}?id={!objectId}" name="modifyRDM"/>		           				
+		           				
+		           				<button type="button" class="btn btn-default btn-sm" onclick="viewMosaic()">
+			   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.view_mosaic}
+			                    </button>
+			                    <button type="button" class="btn btn-default btn-sm" onclick="chartPage()">
+			   						<span class="glyphicon glyphicon-user icon-btn-left"></span>&nbsp;{!$Label.view_org_chart}
+			                    </button>		                     
+		           				<button type="button" class="btn btn-default btn-sm" onclick="modifyRDM()">
+			   						<span class="glyphicon glyphicon-edit icon-btn-left"></span>&nbsp;{!$Label.Modify_RDM}
+			                    </button>
+	   	           				<button type="button" class="btn btn-default btn-sm" onclick="saveImage()">
+			   						<span class="glyphicon glyphicon-glyphicon icon-btn-left"></span>&nbsp;{!$Label.save_image}
+			                    </button>		                    
+		    				</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="panel-body">
+				    <apex:outputText rendered="{!objectAPIName == 'Opportunity'}">
+				    	<div class="btn-group pull-right" role="group" aria-label="...">	    					
+	           				<apex:outputLink value="{!$Page.SCP_Certa_GC__DCMEvaluateCriteria}?id={!opportunity.id}">
+	                         	<button type="button" class="btn btn-default btn-sm">
+			   						<span class="glyphicon glyphicon-comment icon-btn-left"></span>&nbsp;{!$Label.gotoCriteria}
+			                    </button>
+	                        </apex:outputLink>
+   	           				<apex:outputLink value="{!$Page.SCP_Certa_GC__OpportunitySnapshot}?id={!opportunity.id}">
+	                         	<button type="button" class="btn btn-default btn-sm">
+			   						<span class="glyphicon glyphicon-camera icon-btn-left"></span>&nbsp;{!$Label.gotoSnapshot}
+			                    </button>
+	                         </apex:outputLink>		                    
+	    				</div>
+				    	<h2 style="margin-top: 0px;">Oportunidad: <span style="font-size: 16px;"><apex:outputLink value="/{!opportunity.id}">{!opportunity.Name}</apex:outputLink></span></h2>
+				    	<br/>
+				    </apex:outputText>
+				    
+				    <div id="divToImg" class="divContenedor">
+					   	<div class="divContenedor"> 
+							<table cellspacing="0" cellpaddng="0">
+						    	<tr>
+						        	<td>
+						          		<div class="contenedorTabla">
+						              		<table class="tablaMosaico tablaUser" cellspacing="0">
+						                  		<tr>
+						                      		<td></td>
+						                      		<td colspan="2"><div class="DivInfluence">-    {!$Label.AUTHORITY}    +</div><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td colspan="2"><div class="DivInfluence">- {!$Label.AUTHORITY} +</div><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div></td>
+						                  		</tr>
+						                  		<tr>
+													<td rowspan="2" class="tdToRotate">
+														<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+								                                <td style="padding:0px">
+								                                    <div class="toRotate"> - {!$Label.Influence} +</div>
+								                                </td>
+								                                <td style="padding:0px">
+								                                    <apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+								                                </td>
+						                            		</tr>
+						                        		</table>
+						                      		</td> 
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserStatuQuoPositiveInfluenceNegativeAuthority}"/></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserStatuQuoPositiveInfluencePositiveAuthority}"/></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalStatuQuoPositiveInfluenceNegativeAuthority}"/></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalStatuQuoPositiveInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+												<tr>
+												    <td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserStatuQuoNegativeInfluenceNegativeAuthority}"/></td>
+												    <td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserStatuQuoNegativeInfluencePositiveAuthority}"/></td>
+												    <td></td>
+												    <td></td>
+												    <td></td>
+												    <td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalStatuQuoNegativeInfluenceNegativeAuthority}"/></td>
+												    <td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalStatuQuoNegativeInfluencePositiveAuthority}"/></td>
+												</tr>
+												<tr>
+												    <td></td>
+												    <td></td>
+												    <td></td>
+												    <td class="celdaContenedoraDeRol">{!$label.user}<div class="info">{!$label.end_user}</div></td>                      
+												    <td></td>                      
+												    <td class="celdaContenedoraDeRol">{!$label.technical}<div class="info">{!$label.technical_help}</div></td>
+												    <td></td>
+												    <td></td>
+												</tr>
+												<tr>
+												    <td></td>
+												    <td></td>
+												    <td></td>
+												    <td></td>
+												    <td class="celdaContenedoraDeActitud">{!$Label.Statu_quo}<div class="info">{!$Label.Statu_quo_help}</div></td>
+												    <td></td>
+												    <td></td>
+												    <td></td>
+												</tr>
+												<tr>
+												    <td></td>
+												    <td></td>
+												    <td></td>
+												    <td class="celdaContenedoraDeRol">{!$Label.controller}<div class="info">{!$Label.controller_help}</div></td>
+												    <td></td>
+												    <td class="celdaContenedoraDeRol">{!$Label.sponsor}<div class="info">{!$Label.sponsor_help}</div></td>
+												    <td></td>
+												    <td></td>
+												</tr>
+						                  		<tr>
+						                      		<td rowspan="2" class="tdToRotate">
+						                        		<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+								                                <td style="padding:0px">
+								                                    <div class="toRotate"> - {!$Label.Influence} +</div>
+								                                </td>
+								                                <td style="padding:0px">
+								                                    <apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+								                                </td>
+						                            		</tr>
+						                        		</table>
+						                      		</td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerStatuQuoPositiveInfluenceNegativeAuthority}"/></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerStatuQuoPositiveInfluencePositiveAuthority}"/></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorStatuQuoPositiveInfluenceNegativeAuthority}"/></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorStatuQuoPositiveInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerStatuQuoNegativeInfluenceNegativeAuthority}"/></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerStatuQuoNegativeInfluencePositiveAuthority}"/></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorStatuQuoNegativeInfluenceNegativeAuthority}"/></td>
+													<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorStatuQuoNegativeInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						           			</table>
+						          		</div>        
+									</td>
+									<td>
+										<div class="contenedorTabla">
+											<table class="tablaMosaico tablaTecnico" cellspacing="0">
+												<tr>
+													<td colspan="2"><div class="DivInfluence">- {!$Label.AUTHORITY} +</div><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div></td>
+							                      	<td></td>
+							                      	<td></td>
+							                      	<td></td>
+							                      	<td colspan="2"><div class="DivInfluence">- {!$Label.AUTHORITY} +</div><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div></td>
+							                      	<td></td>
+												</tr>
+												<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserDeveloperPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserDeveloperPositiveInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalDeveloperPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalDeveloperPositiveInfluencePositiveAuthority}"/></td>
+						                      		<td rowspan="2" class="tdToRotate">
+						                        		<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+						                                		<td style="padding:0px">
+						                                    		<apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+						                                		</td>
+						                                		<td style="padding:0px">
+						                                    		<div class="toRotate"> - {!$Label.scp_certa_gc__influence} +</div>
+						                                		</td>                           
+						                            		</tr>
+						                        		</table>
+						                      		</td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserDeveloperNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserDeveloperNegativeInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalDeveloperNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalDeveloperNegativeInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$label.user}<div class="info">{!$label.end_user}</div></td>                      
+						                      		<td></td>                      
+						                      		<td class="celdaContenedoraDeRol">{!$label.technical}<div class="info">{!$label.technical_help}</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeActitud">{!$label.developer}<div class="info">{!$label.developer_help}</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>                      
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$Label.controller}<div class="info">{!$Label.controller_help}</div></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$Label.sponsor}<div class="info">{!$Label.sponsor_help}</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerDeveloperPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerDeveloperPositiveInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorDeveloperPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorDeveloperPositiveInfluencePositiveAuthority}"/></td>
+						                      		<td rowspan="2" class="tdToRotate">
+						                        		<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+						                                		<td style="padding:0px">
+						                                    		<apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+						                                		</td>
+						                                		<td style="padding:0px">
+						                                    		<div class="toRotate"> - {!$Label.scp_certa_gc__influence} +</div>
+						                                		</td>                           
+						                            		</tr>
+						                        		</table>
+						                      		</td> 
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerDeveloperNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerDeveloperNegativeInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorDeveloperNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorDeveloperNegativeInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						              		</table>
+						             	</div>
+									</td>
+								</tr>
+								<tr>
+									<td>	
+						             	<div class="contenedorTabla" style="clear:left;">
+						              		<table class="tablaMosaico tablaController" cellspacing="0">
+						                  		<tr>
+						                     		<td rowspan="2" class="tdToRotate">
+						                        		<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+						                                		<td style="padding:0px">
+						                                    		<div class="toRotate"> - {!$Label.Influence} +</div>
+						                                		</td>
+						                                		<td style="padding:0px">
+						                                    		<apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+						                                		</td>
+						                            		</tr>
+						                        		</table>
+						                      		</td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserBurningPlatformPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserBurningPlatformPositiveInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalBurningPlatformPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalBurningPlatformPositiveInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserBurningPlatformNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserBurningPlatformNegativeInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalBurningPlatformNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalBurningPlatformNegativeInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+							                    	<td></td>
+							                      	<td></td>
+							                      	<td></td>
+							                      	<td class="celdaContenedoraDeRol">{!$label.user}<div class="info">{!$label.end_user}</div></td>                      
+							                      	<td></td>                      
+							                      	<td class="celdaContenedoraDeRol">{!$label.technical}<div class="info">{!$label.technical_help}</div></td>
+							                      	<td></td>
+							                      	<td></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeActitud">{!$label.burning_platform}<div class="info">{!$label.burning_platform_help}</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>
+						                   			<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$Label.controller}<div class="info">{!$Label.controller_help}</div></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$Label.sponsor}<div class="info">{!$Label.sponsor_help}</div></td>
+						                   			<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>
+						                     		<td rowspan="2" class="tdToRotate">
+						                        		<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+						                                		<td style="padding:0px">
+						                                    		<div class="toRotate"> - {!$Label.Influence} +</div>
+						                                		</td>
+						                                		<td style="padding:0px">
+						                                    		<apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+						                                		</td>
+						                            		</tr>
+						                        		</table>
+						                      		</td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerBurningPlatformPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerBurningPlatformPositiveInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorBurningPlatformPositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorBurningPlatformPositiveInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerBurningPlatformNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerBurningPlatformNegativeInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorBurningPlatformNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorBurningPlatformNegativeInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td></td>
+						                      		<td colspan="2"><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div><div class="DivInfluence">- {!$Label.AUTHORITY} +</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td colspan="2"><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div><div class="DivInfluence">- {!$Label.AUTHORITY} +</div></td>
+						                  		</tr>
+						              		</table>
+						          		</div>
+						          	</td>
+						          	<td>
+						            	<div class="contenedorTabla">
+						              		<table class="tablaMosaico tablaSponsor" cellspacing="0">
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserNegativePositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserNegativePositiveInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalNegativePositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalNegativePositiveInfluencePositiveAuthority}"/></td>
+						                      		<td rowspan="2" class="tdToRotate">
+						                        		<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+						                                		<td style="padding:0px">
+						                                    		<apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+						                                		</td>
+						                                		<td style="padding:0px">
+						                                    		<div class="toRotate"> - {!$Label.scp_certa_gc__influence} +</div>
+						                                		</td>                           
+						                            		</tr>
+						                        		</table>
+						                      		</td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserNegativeNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!EndUserNegativeNegativeInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalNegativeNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!TechnicalNegativeNegativeInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$label.user}<div class="info">{!$label.end_user}</div></td>                      
+						                      		<td></td>                      
+						                      		<td class="celdaContenedoraDeRol">{!$label.technical}<div class="info">{!$label.technical_help}</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeActitud">{!$label.negative}<div class="info">{!$label.negative_help}</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>                      
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$Label.controller}<div class="info">{!$Label.controller_help}</div></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeRol">{!$Label.sponsor}<div class="info">{!$Label.sponsor_help}</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerNegativePositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerNegativePositiveInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorNegativePositiveInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorNegativePositiveInfluencePositiveAuthority}"/></td>
+						                      		<td rowspan="2" class="tdToRotate">
+						                        		<table cellpadding="0" cellspacing="0">
+						                            		<tr>
+						                                		<td style="padding:0px">
+						                                    		<apex:image value="{!$Resource.SCP_Certa_GC__verticalArrow}" />
+						                                		</td>
+						                                		<td style="padding:0px">
+						                                    		<div class="toRotate"> - {!$Label.scp_certa_gc__influence} +</div>
+						                                		</td>                           
+						                            		</tr>
+						                        		</table>
+						                      		</td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerNegativeNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!ControllerNegativeNegativeInfluencePositiveAuthority}"/></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorNegativeNegativeInfluenceNegativeAuthority}"/></td>
+						                      		<td class="celdaContenedoraDeNombre"><c:MosaicCell list="{!SponsorNegativeNegativeInfluencePositiveAuthority}"/></td>
+						                  		</tr>
+						                  		<tr>
+						                      		<td colspan="2"><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div><div class="DivInfluence">- {!$Label.AUTHORITY} +</div></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td></td>
+						                      		<td colspan="2"><div class="DivHorizontalArrow"><div class="DivHorizontalArrowHead"></div></div><div class="DivInfluence">- {!$Label.AUTHORITY} +</div></td>
+						                      		<td></td>
+						                  		</tr>
+						              		</table>
+						          		</div>
+						       		</td>
+						   		</tr>
+							</table>						
+						</div>						
+					</div>   
+				</div>
+				<div class="panel-footer">
+	    			<div class="row paddingRight">	
+	    				<div class="btn-group pull-right" role="group" aria-label="...">    					
+							<div class="btn-group pull-right" role="group" aria-label="...">	    					
+		           				<button type="button" class="btn btn-default btn-sm" onclick="viewMosaic()">
+			   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.view_mosaic}
+			                    </button>
+			                    <button type="button" class="btn btn-default btn-sm" onclick="chartPage()">
+			   						<span class="glyphicon glyphicon-user icon-btn-left"></span>&nbsp;{!$Label.view_org_chart}
+			                    </button>		                     
+		           				<button type="button" class="btn btn-default btn-sm" onclick="modifyRDM()">
+			   						<span class="glyphicon glyphicon-edit icon-btn-left"></span>&nbsp;{!$Label.Modify_RDM}
+			                    </button>
+	   	           				<button type="button" class="btn btn-default btn-sm" onclick="saveImage()">
+			   						<span class="glyphicon glyphicon-glyphicon icon-btn-left"></span>&nbsp;{!$Label.save_image}
+			                    </button>		                    
+		    				</div>
+	    				</div>
+	    			</div>
+	    		</div>
+				</apex:form>
+				<c:FastTask page="{!$Label.scp_certa_gc__rdm_attitude}" account="{!accountId}" opp="{!opportunity.id}"></c:FastTask>
+				<chatter:feed entityId="{!accountId}" />
+			</div>
+		</apex:outputpanel>
+    
+	
+</apex:page>

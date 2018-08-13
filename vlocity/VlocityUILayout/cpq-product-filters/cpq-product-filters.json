@@ -1,0 +1,33 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "801360000000mgJ"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records[0].attributeCategories.records",
+            "apexRestResultVar": "records[0].attributeCategories.records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/attributes",
+            "inputMap": {
+                "cartId": "{{params.id}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getCartsAttributes",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "result.records[0].categories.records[0].productAttributes.records"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-product-filters"
+        }
+    }
+}

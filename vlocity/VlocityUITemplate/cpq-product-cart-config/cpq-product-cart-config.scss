@@ -1,0 +1,57 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-product-cart-config {
+            background-color: $cpq-product-container-bg-color;
+            position: absolute;
+            top: $cpq-cart-container-tabs-height + $cpq-cart-container-tabs-top-margin;
+            right: $cpq-padding-large-horizontal/2;
+            bottom: 0;
+            left: $cpq-padding-large-horizontal/2;
+            .#{$namespace}-product-cart-config-header {
+                padding: $cpq-padding-large-vertical $cpq-padding-large-horizontal;
+            }
+            .#{$namespace}-product-cart-config-form {
+                margin-bottom: 60px;
+                overflow-y: scroll;
+                margin-top: -$cpq-padding-large-vertical;
+                padding: 0px $cpq-padding-large-horizontal $cpq-padding-large-vertical*2;
+                .#{$namespace}-product-cart-config-form-savebar {
+                    position: absolute;
+                    bottom: 0px;
+                    left: 0px;
+                    right: 0px;
+                    padding: 15px 15px 18px;
+                    background: $white;
+                }
+                #{$namespace}-error-msg {
+                    color: $error;
+                    font-size: $cpq-product-cart-config-error-font-size;
+                    margin-top: $cpq-product-cart-config-error-margin-top;
+                }
+            }
+        }
+        // 64rem and 80rem
+        @media screen and (max-width: $bp-large), screen and (max-width: $bp-xlarge) {
+            .#{$namespace}-product-cart-config {
+                .#{$namespace}-product-cart-config-form {
+                    padding-bottom:0px;
+                    .#{$namespace}-product-cart-config-form-savebar {
+                        position: -webkit-sticky;
+                        position: sticky;
+                    }
+                }
+            }
+
+        }
+    }
+}

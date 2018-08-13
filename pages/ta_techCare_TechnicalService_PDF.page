@@ -1,0 +1,41 @@
+<apex:page docType="html-5.0" showHeader="false" standardStylesheets="false" title="Resumen De Gestion" controller="ta_techCare_technical_service_controller" renderAs="advanced_pdf">
+    <head>
+        <apex:stylesheet value="{!$Resource.taTechnicalServicePDF}" />
+    </head>
+    <body>
+        <div class="pdf-technicalService">
+            <div class="slds-section-title--divider slds-text-align--center">
+                <p>Gestión de Servicio Técnico</p>
+                <br />
+            </div>
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+              <tbody>
+                <tr>
+                  <th scope="row" data-label="Imei">
+                    <div class="slds-truncate" title="Imei">Imei</div>
+                  </th>
+                  <td data-label="ImeiNumber">
+                    <div class="slds-truncate" title="ImeiNumber">{!$CurrentPage.parameters.imei}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" data-label="Ingreso">
+                    <div class="slds-truncate" title="Ingreso">Tipo de Ingreso</div>
+                  </th>
+                  <td data-label="TipoDeIngreso">
+                    <div class="slds-truncate" title="TipoDeIngreso">{!$CurrentPage.parameters.inputType}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" data-label="Sintoma">
+                    <div class="slds-truncate" title="Sintoma">Síntoma</div>
+                  </th>
+                  <td data-label="Sintoma">
+                    <div class="slds-truncate" title="Sintoma">{!$CurrentPage.parameters.symptom}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>            
+        </div>
+    </body>
+</apex:page>

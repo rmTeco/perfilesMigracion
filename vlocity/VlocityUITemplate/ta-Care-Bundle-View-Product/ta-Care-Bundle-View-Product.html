@@ -1,0 +1,39 @@
+<div class="ta-Care-Bundle-View-Product slds-grid slds-wrap slds-grid--pull-padded">
+    <div ng-repeat="field in data.fields" ng-if="field.label == 'Imagen'" class="ta-Care-Bundle-View-Product-Img-Area slds-size--1-of-2 slds-text-align--center">
+        <img src="../servlet/servlet.FileDownload?file={{obj.Product.Image}}" width='70px'/>
+    </div>
+    <div class="ta-Care-Bundle-View-Product-Info-Area slds-size--1-of-2">
+        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-p-left--medium">
+            <div ng-repeat="field in data.fields" ng-if="field.label != 'Imagen'" class="slds-size--1-of-1" ng-class="{'slds-m-top--xxx-small': (field.label), 'slds-m-top--none': (!field.label)}">
+                <div ng-if="field.label">
+                    <span class="bundle-field-title">{{field.label}}</span>
+                </div>
+                <div>
+                    <span ng-if="field.label == 'Estado'" class="ta-Care-Bundle-View-Product-Field-Detail-Active">{{((obj | getter: field | picker: field.type) == "Active") ? "•" : ""}}</span>
+                    <span ng-if="field.label == 'Estado'" class="ta-Care-Bundle-View-Product-Field-Detail-Inactive">{{((obj | getter: field | picker: field.type) == "Inactive") ? "•" : ""}}</span>
+                    <span ng-class="{'bundle-field-no-title': (!field.label)}">
+                            {{obj | getter: field | picker: field.type}}
+                        </span>
+                    <!--<span ng-if="field.label == 'Crédito'" ng-class="{'bundle-field-no-title': (!field.label)}">
+                            $400
+                        </span>-->
+                    <span ng-if="obj['Product']['Family'] == 'Prepaid' && field.label == 'Estado'">
+                       <br>
+                        Crédito:
+                        <br>
+                        400$
+                    </span>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="slds-grid slds-wrap slds-grid--pull-padded">
+    <div ng-repeat="action in data.actions" class="slds-size--1-of-2 slds-text-align--center slds-grid--vertical-align-end action-links">
+        <span ng-if="!$first" class="separator">|</span>
+        <a ng-click="performAction(action)" hotkey-card-action>
+            <span>{{action.displayName}}</span>
+        </a>
+    </div>
+</div>

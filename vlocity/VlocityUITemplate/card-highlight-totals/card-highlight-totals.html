@@ -1,0 +1,103 @@
+<div class="via-slds-card--highlight-totals slds-theme--default slds-box slds-box--x-small slds-grid--vertical slds-x-small-show-only" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" data-popover-flyout="true" ng-init="viaSldsCardSlide = {index: 0}"
+    on-swipe-right="viaSldsCardSlide.index = viaSldsCardSlide.index > 0 ? viaSldsCardSlide.index - 2 : 0"  
+    on-swipe-left="viaSldsCardSlide.index = viaSldsCardSlide.index+2 >= data.fields.length ? viaSldsCardSlide.index : viaSldsCardSlide.index + 2"
+    on-tap="viaSldsCardSlide.index = viaSldsCardSlide.index+2 >= data.fields.length ? 0 : viaSldsCardSlide.index + 2">
+    <div class="slds-col slds-col--padded  slds-p-bottom--medium">
+      <h3 class="slds-text-heading--medium slds-text-align--center via-slds-card--highlight-totals__title">{{data.title}}</h3>
+    </div>
+    <div class="slds-col slds-grid slds-grid--vertical via-slds-card--highlight-carousel-wrap">
+        <ul class="via-slds-card--highlight-carousel-inner">
+            <li ng-repeat="field in data.fields" ng-if="$index%2 == 0" ng-show="viaSldsCardSlide.index == $index">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size--1-of-2 slds-text-align--center">
+                        <div class="slds-tile">
+                          <h3 class="slds-truncate slds-p-bottom--xx-small" title="{{obj | getter: field | picker: field.type}}" ng-if="!obj[field.relationshipName]"> {{obj | getter: field | picker: field.type}}</h3>
+                        <h3 class="slds-truncate" title="{{obj[field.relationshipName]['Name']}}" ng-if="obj[field.relationshipName]"><a href="javascript:void(0);">{{obj[field.relationshipName]['Name']}}</a></h3>
+                            <div class="slds-tile__detail slds-text-body--small">
+                                <p class="slds-truncate">{{field.label}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size--1-of-2 slds-text-align--center">
+                        <div class="slds-tile" ng-if="data.fields.length >= $index+1">
+                          <h3 class="slds-truncate slds-p-bottom--xx-small" title="{{obj | getter: data.fields[$index+1] | picker: data.fields[$index+1].type}}" ng-if="!obj[data.fields[$index+1].relationshipName]">{{obj | getter: data.fields[$index+1] | picker: data.fields[$index+1].type}}</h3>
+                        <h3 class="slds-truncate" title="{{obj[data.fields[$index+1].relationshipName]['Name']}}" ng-if="obj[data.fields[$index+1].relationshipName]"><a href="javascript:void(0);">{{obj[field.relationshipName]['Name']}}</a></h3>
+                            <div class="slds-tile__detail slds-text-body--small">
+                                <p class="slds-truncate">{{data.fields[$index+1].label}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div>
+            <ul class="via-slds-card--highlight-carousel-inner-buttons">
+                <li ng-repeat="field in data.fields" ng-if="$index%2 == 0">
+                    <input type="radio" id="via-slds-card--highlight-carousel-{{$index}}" name="via-slds-card--highlight-carousel-slide" ng-model="viaSldsCardSlide.index" ng-value="$index">
+                    <label for="via-slds-card--highlight-carousel-{{$index}}" ng-style="{'marginLeft':(($index < ((data.fields.length/2) -1)? ($index * -7) : ($index * 7)) - ((data.fields.length/4)*7))+ 'px'}"></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="via-slds-card--highlight-totals slds-theme--default slds-box slds-box--x-small slds-grid--vertical slds-small-show" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" data-popover-flyout="true" ng-init="viaSldsCardSlide = {index: 0}"
+    on-swipe-right="viaSldsCardSlide.index = viaSldsCardSlide.index > 0 ? viaSldsCardSlide.index - 4 : 0"  
+    on-swipe-left="viaSldsCardSlide.index = viaSldsCardSlide.index+4 >= data.fields.length ? viaSldsCardSlide.index : viaSldsCardSlide.index + 4"
+    on-tap="viaSldsCardSlide.index = viaSldsCardSlide.index+4 >= data.fields.length ? 0 : viaSldsCardSlide.index + 4">
+    <div class="slds-col slds-col--padded  slds-p-bottom--medium">
+      <h3 class="slds-text-heading--medium slds-text-align--center via-slds-card--highlight-totals__title">{{data.title}}</h3>
+    </div>
+    <div class="slds-col slds-grid slds-grid--vertical via-slds-card--highlight-carousel-wrap">
+        <ul class="via-slds-card--highlight-carousel-inner">
+            <li ng-repeat="field in data.fields" ng-if="$index%4 == 0" ng-show="viaSldsCardSlide.index == $index">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size--1-of-4 slds-text-align--center">
+                        <div class="slds-tile">
+                          <h3 class="slds-truncate slds-p-bottom--xx-small" title="{{obj | getter: field | picker: field.type}}" ng-if="!obj[field.relationshipName]"> {{obj | getter: field | picker: field.type}}</h3>
+                        <h3 class="slds-truncate" title="{{obj[field.relationshipName]['Name']}}" ng-if="obj[field.relationshipName]"><a href="javascript:void(0);">{{obj[field.relationshipName]['Name']}}</a></h3>
+                            <div class="slds-tile__detail slds-text-body--small">
+                                <p class="slds-truncate">{{field.label}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size--1-of-4 slds-text-align--center">
+                        <div class="slds-tile" ng-if="data.fields.length >= $index+1">
+                          <h3 class="slds-truncate slds-p-bottom--xx-small" title="{{obj | getter: data.fields[$index+1] | picker: data.fields[$index+1].type}}" ng-if="!obj[data.fields[$index+1].relationshipName]">{{obj | getter: data.fields[$index+1] | picker: data.fields[$index+1].type}}</h3>
+                        <h3 class="slds-truncate" title="{{obj[data.fields[$index+1].relationshipName]['Name']}}" ng-if="obj[data.fields[$index+1].relationshipName]"><a href="javascript:void(0);">{{obj[field.relationshipName]['Name']}}</a></h3>
+                            <div class="slds-tile__detail slds-text-body--small">
+                                <p class="slds-truncate">{{data.fields[$index+1].label}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size--1-of-4 slds-text-align--center">
+                        <div class="slds-tile" ng-if="data.fields.length >= $index+1">
+                          <h3 class="slds-truncate slds-p-bottom--xx-small" title="{{obj | getter: data.fields[$index+2] | picker: data.fields[$index+2].type}}" ng-if="!obj[data.fields[$index+2].relationshipName]">{{obj | getter: data.fields[$index+2] | picker: data.fields[$index+2].type}}</h3>
+                        <h3 class="slds-truncate" title="{{obj[data.fields[$index+2].relationshipName]['Name']}}" ng-if="obj[data.fields[$index+1].relationshipName]"><a href="javascript:void(0);">{{obj[field.relationshipName]['Name']}}</a></h3>
+                            <div class="slds-tile__detail slds-text-body--small">
+                                <p class="slds-truncate">{{data.fields[$index+2].label}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size--1-of-4 slds-text-align--center">
+                        <div class="slds-tile" ng-if="data.fields.length >= $index+3">
+                          <h3 class="slds-truncate slds-p-bottom--xx-small" title="{{obj | getter: data.fields[$index+3] | picker: data.fields[$index+3].type}}" ng-if="!obj[data.fields[$index+3].relationshipName]">{{obj | getter: data.fields[$index+3] | picker: data.fields[$index+3].type}}</h3>
+                        <h3 class="slds-truncate" title="{{obj[data.fields[$index+3].relationshipName]['Name']}}" ng-if="obj[data.fields[$index+3].relationshipName]"><a href="javascript:void(0);">{{obj[field.relationshipName]['Name']}}</a></h3>
+                            <div class="slds-tile__detail slds-text-body--small">
+                                <p class="slds-truncate">{{data.fields[$index+3].label}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div>
+            <ul class="via-slds-card--highlight-carousel-inner-buttons">
+                <li ng-repeat="field in data.fields" ng-if="$index%4 == 0">
+                    <input type="radio" id="via-slds-card--highlight-carousel-{{$index}}" name="via-slds-card--highlight-carousel-slide" ng-model="viaSldsCardSlide.index" ng-value="$index">
+                    <label for="via-slds-card--highlight-carousel-{{$index}}" ng-style="{'marginLeft':(($index < ((data.fields.length/4) -1)? ($index * -7) : ($index * 7)) - ((data.fields.length/4)*7))+ 'px'}"></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

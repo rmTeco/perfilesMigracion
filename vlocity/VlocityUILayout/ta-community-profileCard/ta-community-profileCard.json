@@ -1,0 +1,25 @@
+{
+    "Cards": [
+        "account-info"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.vlocity.userAccountId",
+                "val": "0016C000008eeAo"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "bundle": "GetContactInfoByAccountId",
+            "ctxId": "$root.vlocity.userAccountId",
+            "query": "SELECT Id, Name, BillingAddress, Phone, PhotoURL, Type, Industry, Website, %vlocity_namespace%__CustomerValue__c FROM Account WHERE Id = '0016C000008eeAo'",
+            "resultVar": ""
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "card-canvas-1x-simple-slds"
+        }
+    }
+}

@@ -1,0 +1,10 @@
+<apex:page standardController="Account" extensions="vlocity_cmt.RecommendedProductsController" action="{!getRecommendProducts}">
+	<apex:outputPanel layout="block">
+		<apex:outputPanel layout="block">Recommended Products</apex:outputPanel>
+		<apex:outputPanel layout="block">
+			<apex:dataList value="{!recommendationsList}" var="recommendation">
+				<apex:outputText value="{!recommendation}"/>
+			</apex:dataList>
+		</apex:outputPanel>
+	</apex:outputPanel>
+</apex:page>

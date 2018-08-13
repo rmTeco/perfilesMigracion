@@ -1,0 +1,36 @@
+<aura:component implements="force:appHostable" controller="et4ae5.LightningMarketingCloudConfigControl" extends="et4ae5:BaseComponent">  
+    <ltng:require styles="/resource/et4ae5__uxds/css/uxds-bootstrap.min.css"/>
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="et4ae5:StartWizzard" action="{!c.runWizzard}" /> 
+    <aura:handler event="et4ae5:SkipWizzard" action="{!c.skipWizzard}" />
+    <aura:handler event="et4ae5:ThrowErrorMessage" action="{!c.throwErrorMessage}" />
+
+    <!-- Attributes -->
+    <aura:attribute name="runWizard" type="boolean" default="false" access="private"/>
+    <aura:attribute name="skipWizard" type="boolean" default="false" access="private"/>
+    <aura:attribute name="showSetup" type="boolean" default="false" access="private" />
+
+    
+    <!--Markup -->
+    <div class="uxds">
+        <div class="uxds container pull-left" style="width:100%;">
+            <div aura:id="errorMessage"></div>
+            <div class="pull-right" style="padding:20px;height:0px;">
+                <a target="_blank" href="https://help.exacttarget.com/v5_marketing_cloud_connector_home">
+                    {!$Label.et4ae5.hlpTrain}
+                </a>
+            </div>  	 	
+            <div aura:id="divSetup" class="hide">
+                <et4ae5:Setup />
+            </div>        
+            <div aura:id="divAutomation" class="hide" >
+                <et4ae5:Automation /> 
+            </div>
+            <div aura:id="divManual" class="hide">
+                <et4ae5:Manual />
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -1,0 +1,156 @@
+<div class="profile-highlight" ng-controller="viaMobileHighlightProfileController as vm">
+    <div class="banner">
+    </div>
+    <!--/banner-->
+    <div class="profile-picture big-profile-picture" ng-show="records[0].PhotoUrl && $root.instanceUrl">
+        <img ng-src="{{$root.instanceUrl + records[0].PhotoUrl}}">
+    </div>
+    <div class="profile-picture big-profile-picture" ng-show="records[0].PhotoUrl && !$root.instanceUrl">
+        <img ng-src="{{records[0].PhotoUrl}}">
+    </div>
+    <!--/pic-->
+    <!-- Object is Contact -->
+    <div class="profile-detail" ng-if="records[0].attributes.type == 'Contact'">
+        <div class="profile-name slds-text-heading--medium"> {{records[0].Name}}
+            <div class="ribbon {{vm.getSentiment(records[0])}}">★</div>
+        </div>
+        <div class="profile-info">
+            {{records[0].Title}}
+            <span ng-if="records[0].Title && records[0].Account"> | </span>
+            <a ng-if="records[0].Account && records[0].Account.Name" ng-data-url="/app/univ/account/{{records[0].Account.Id}}/"> {{records[0].Account.Name}}</a>
+        </div>
+        <div class="slds-grid profile-action slds-m-top--small slds-m-bottom--small">
+            <div class="slds-col left-border" ng-if="records[0].Email">
+                <a ng-click="importedScope.openEmailComposer(records[0].Email)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'email'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text">Email</span>
+                </a>
+            </div>
+            <div class="slds-col left-border" ng-if="records[0].Phone">
+                <a ng-click="importedScope.makePhoneCall(records[0].Phone)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'call'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Call</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="records[0].MobilePhone">
+                <a ng-click="importedScope.sendMessage(records[0].MobilePhone)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'share_post'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Message</span>
+                </a>
+            </div>
+            <div class="slds-col left-border" ng-if="importedScope.isIOS">
+                <a ng-click="importedScope.openNavigator(records[0])">
+                    <slds-button-svg-icon sprite="'utility'" icon="'checkin'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Location</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="importedScope.isAndroid">
+                <a ng-click="importedScope.openNavigator(records[0])">
+                    <slds-button-svg-icon sprite="'utility'" icon="'checkin'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Location</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--/Contact-->
+    <!-- Object is Account -->
+    <div class="profile-detail" ng-if="records[0].attributes.type=='Account' ">
+        <div class="profile-name slds-text-heading--medium"> {{records[0].Name}}
+            <div class="ribbon {{vm.getSentiment(records[0])}}">★</div>
+        </div>
+        <div class="profile-info">
+            <span ng-if="records[0].Type "> {{records[0].Type}} 
+         </span>
+            <span ng-if="records[0].Type && records[0].BillingCity "> | 
+         </span>
+            <span ng-if="records[0].BillingCity "> {{records[0].BillingCity}} </span>
+            <span ng-if="records[0].BillingState "> , {{records[0].BillingState}}
+        </span>
+        </div>
+        <div class="slds-grid profile-action slds-m-top--small slds-m-bottom--small">
+            <div class="slds-col " ng-if="records[0].Website">
+                <a href="#" ng-click="importedScope.launchWebsite(records[0].Website)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'link'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Website</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="records[0].Phone ">
+                <a ng-click="importedScope.makePhoneCall(records[0].Phone)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'call'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Call</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="records[0].Phone ">
+                <a ng-click="importedScope.sendMessage(records[0].Phone)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'share_post'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Message</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="importedScope.isIOS">
+                <a ng-click="importedScope.openNavigator(records[0])">
+                    <slds-button-svg-icon sprite="'utility'" icon="'checkin'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Location</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="importedScope.isAndroid">
+                <a ng-click="importedScope.openNavigator(records[0])">
+                    <slds-button-svg-icon sprite="'utility'" icon="'checkin'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Location</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--/Account-->
+    <!-- Object is Lead -->
+    <div class="profile-detail" ng-if="records[0].attributes.type=='Lead' ">
+        <div class="profile-name slds-text-heading--medium"> {{records[0].Name}}
+            <div class="ribbon {{vm.getSentiment(records[0])}}">★</div>
+        </div>
+        <div class="profile-info">
+            {{records[0].Title}}
+            <span ng-if="records[0].Company "> | {{records[0].Company}} </span>
+        </div>
+        <div class="slds-grid slds-m-top--small slds-m-bottom--small profile-action">
+            <div class="slds-col " ng-if="records[0].Email">
+                <a ng-click="importedScope.openEmailComposer(records[0].Email)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'email'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Email</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="records[0].Website">
+                <a href="# " ng-click="importedScope.launchWebsite(records[0].Website)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'link'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Website</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="records[0].Phone ">
+                <a ng-click="importedScope.makePhoneCall(records[0].Phone)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'call'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Call</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="records[0].Phone ">
+                <a ng-click="importedScope.sendMessage(records[0].Phone)">
+                    <slds-button-svg-icon sprite="'utility'" icon="'share_post'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Message</span>
+                </a>
+            </div>
+            <div class="slds-col left-border" ng-if="importedScope.isIOS">
+                <a ng-click="importedScope.openNavigator(records[0])" data-rel="external ">
+                    <slds-button-svg-icon sprite="'utility'" icon="'checkin'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Location</span>
+                </a>
+            </div>
+            <div class="slds-col left-border " ng-if="importedScope.isAndroid">
+                <a ng-click="importedScope.openNavigator(records[0])">
+                    <slds-button-svg-icon sprite="'utility'" icon="'checkin'"></slds-button-svg-icon>
+                    <span class="slds-assistive-text ">Location</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!--/Lead-->
+</div>
+<div class="vlocity via-slds">
+    <vloc-layout layout-name="story-slds" ctrl="MobileController"></vloc-layout>
+</div>

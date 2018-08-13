@@ -1,0 +1,85 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="taClientSearchController">
+    {!valor}
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="tasalessearchClient">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Sales"
+            strOmniScriptSubType="Search Client"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>    
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('tasalessearchClient', modules);
+            
+            myModule
+                .controller('SearchClientController', SearchClientController);
+    
+                SearchClientController.$inject = ['$scope', '$http'];
+                function SearchClientController($scope, $http) {
+                    
+                    var scc = this;
+                    
+                    scc.init = init;
+                    scc.setTabActive = setTabActive;
+                    scc.updateContactEmail = updateContactEmail;
+                    scc.selectAccount = selectAccount;
+                    
+                    function init() {
+                        $scope.$watch('control.vlcSI[control.itemsKey][0]', function(newVal, oldVal){
+                            _setDefaultTab(newVal);
+                        });    
+                    }
+                    
+                    function setTabActive(tabName) {
+                        scc.tabActive = tabName;
+                    }
+
+                    function updateContactEmail(contactId, emailUpdated) {
+                        Visualforce.remoting.Manager.invokeAction(
+                            "taClientSearchController.UpdateContact", contactId, emailUpdated,
+                                    function(result, event) {
+                                        console.info('ContactSearcher.UpdateContact: ', result, event);
+                                    },
+                            {escape: false} // No escaping, please
+                        );
+                    }
+
+                    function _setDefaultTab(searchResult) {
+                        scc.tabActive = 'activeClientes';
+                        angular.forEach(searchResult, function(value, key) {
+                            if (value.length) {
+                                scc.tabActive = key;
+                                return;
+                            }
+                        });
+                    }
+
+                    function selectAccount(accountId, accountDocumentNumber) {
+                        Visualforce.remoting.Manager.invokeAction(
+                            "taClientSearchController.CheckClientInBlackList", accountId, accountDocumentNumber,
+                                    function(result, event) {
+                                        console.info('Account Id: ' + accountId);
+                                        console.info('Account DNI: ' + accountDocumentNumber);
+                                        console.info('taClientSearchController.CheckClientInBlackList: ', result, event);
+                                        if (result === 'true') {
+                                            console.log('Account on the BlackList');
+                                        }
+                                        else {
+                                            window.location.href = '/apex/taSalesCreateOrder?accountId=' + accountId +'&useCache=false';
+                                        }
+                                    },
+                            {escape: false} // No escaping, please
+                        );
+                    }
+                }
+            
+        </script>
+    <style>
+        #Clients .slds-form-element__control {
+            width: 100%
+        }
+    </style>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

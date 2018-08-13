@@ -1,0 +1,32 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="taCareProfileChanges">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+            strOmniScriptSubType="Profile Changes"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('taCareProfileChanges', modules);
+        </script>
+        <script type="text/javascript">
+            function txDate_Keyup()
+            {
+                var d = new Date();
+                var Obj=event.srcElement;
+                    
+                if (event.keyCode != 8)
+                {
+                    if (Obj.value.length == 2)
+                        Obj.value += '/';
+                    
+                    if (Obj.value.length == 5)
+                        Obj.value += '/'        //+ d.getFullYear();
+                }
+            }
+        </script>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

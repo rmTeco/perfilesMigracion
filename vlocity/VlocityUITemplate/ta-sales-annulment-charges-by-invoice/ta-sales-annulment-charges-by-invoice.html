@@ -1,0 +1,60 @@
+<div class="simulation slds-col" ng-controller="AnnulmentCharges as vm">
+	
+	<!--<div class="header-simulation">-->
+	<!--	<div class="slds-text-body--small header-title">-->
+	<!--	    <div>Total a Pagar</div>-->
+ <!--       </div>-->
+	<!--	<div class="slds-truncate total">{{ vm.total | currency:"ARS " }}</div>-->
+	<!--</div>-->
+	
+	<!--<div class="header-simulation"-->
+	<!--    ng-if="vm.payments.length > 1"-->
+	<!--    ng-repeat="payment in vm.payments">-->
+	<!--	<div class="slds-text-body--small header-title"-->
+	<!--	    ng-switch="payment.%vlocity_namespace%__PaymentMethodId__r.%vlocity_namespace%__MethodType__c">-->
+	<!--	    <div ng-switch-when="1001">Total a Pagar Efectivo</div>-->
+	<!--	    <div ng-switch-when="1201">Total a Pagar Debito Proxima Factura</div>-->
+	<!--	    <div ng-switch-when="2001">Total a Pagar Tarjeta {{$index+1}}</div>-->
+ <!--       </div>-->
+	<!--	<div class="slds-truncate total">{{ payment.%vlocity_namespace%__Amount__c + payment.%vlocity_namespace%__InstallmentAmount__c | currency:"ARS " }}</div>-->
+	<!--</div>-->
+	<div class="body-simulation slds-col padding-bottom-style">
+	    
+		<div class="items-row"
+		    ng-repeat="item in bpTree.response.GetChargesByInvoiceCBS_Response.IPResult.solicitudCorreccionInformacion.listaDetalle.elementoDetalle">
+		    <div class="slds-truncate">{{item.descripcionServicio}}</div>
+		    <div class="slds-truncate">{{ item.importeFacturaFinal.importeItemComprobante | currency:"ARS " }}</div>
+		</div>
+        
+  <!--      <div class="items-row">-->
+		<!--    <div class="slds-truncate">Subtotal</div> 				-->
+		<!--    <div class="slds-truncate">{{ vm.totalBeforeTaxes | currency:"ARS " }}</div>-->
+  <!--      </div>-->
+        
+		<!--<div class="items-row">-->
+		<!--    <div class="slds-truncate">Impuestos </div>-->
+		<!--    <div class="slds-truncate">{{ vm.totalTaxes | currency:"ARS " }} </div>-->
+		<!--</div>-->
+  <!--      </br>-->
+  <!--      </br>-->
+  <!--      <div class="items-row" ng-if="vm.financiado.length > 0">-->
+		<!--    <div class="slds-truncate">Cargos por financiación</div>-->
+  <!--      </div>-->
+  <!--      <div ng-repeat="item in vm.financiado" >-->
+  <!--          <div class="items-row">-->
+  <!--  		    <div class="slds-truncate">Intereses %{{item.Financial_Promotion__r.Percentage__c}} tarjeta {{$index + 1}}</div>-->
+  <!--  		    <div class="slds-truncate">{{ (vm.taxes[item.Huawei_Invoice_Item_Sequence__c - 1].impuestoxItemInfo.listaInfoImpuestos[0].infoImpuesto.precioBase) | currency:"ARS " }}</div>-->
+		<!--    </div>-->
+		<!--    <div class="items-row">-->
+  <!--  		    <div class="slds-truncate">Impuestos intereses %{{item.Financial_Promotion__r.Percentage__c}} tarjeta {{$index + 1}}</div>-->
+  <!--  		    <div class="slds-truncate">{{ (vm.taxes[item.Huawei_Invoice_Item_Sequence__c - 1].impuestoxItemInfo.listaInfoImpuestos[0].infoImpuesto.importeImpuestoAplicado - vm.taxes[item.Huawei_Invoice_Item_Sequence__c - 1].impuestoxItemInfo.listaInfoImpuestos[0].infoImpuesto.precioBase) | currency:"ARS " }}</div>-->
+		<!--    </div>-->
+		<!--</div>-->
+		
+		<!--<div ng-if="bpTree.response.CalculateInterest_Response.CFT"   class="items-row">-->
+		<!--    <div class="slds-truncate">Cargos financiación (Calculado al {{ bpTree.response.CalculateInterest_Response.CFT }} % )</div>-->
+		<!--    <div class="slds-truncate">{{ bpTree.response.CalculateInterest_Response.Interest | currency:"ARS " }}</div>-->
+		<!--</div>-->
+        
+	</div>
+</div>

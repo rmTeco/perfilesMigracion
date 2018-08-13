@@ -1,0 +1,35 @@
+{
+    "Cards": [
+        "RefillHistory",
+        "PacksHistory",
+        "SOSHistory",
+        "AdjustmentHistory"
+    ],
+    "dataSource": {
+        "type": "Inherit",
+        "value": {
+            "inputMap": {
+            },
+            "optionsMap": {
+                "vlcClass": "CustomHistoryHandler"
+            },
+            "remoteClass": "CustomerHistoryHandler",
+            "remoteMethod": "getDummyData",
+            "remoteNSPrefix": null,
+            "resultVar": "['Result']"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-customer-history"
+        }
+    },
+    "workspace": [
+        "RefillHistory/Telecom/1507565525646",
+        "PacksHistory/Telecom/1507570291953",
+        "SOSHistory/Telecom/1507574059479",
+        "AdjustmentHistory/Telecom/1507659645401"
+    ]
+}

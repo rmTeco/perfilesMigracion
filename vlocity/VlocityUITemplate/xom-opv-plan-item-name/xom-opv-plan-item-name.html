@@ -1,0 +1,13 @@
+<div ng-init="swimlane=$parent.$parent.$parent.swimlane;" >
+    
+    <div ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)" ng-if="swimlane.orderName || swimlane.planDefName" class="order-label-container">
+ <a target="_blank" ng-bind="swimlane.orderName" ng-click="importedScope.customPerformAction(action,params,swimlane.orderId)" class="order-label"></a> - <a target="_blank" ng-bind="swimlane.planDefName" ng-click="importedScope.customPerformAction(action,params,swimlane.planDefId)" class="order-label"></a>
+ </div>
+ </div>
+<div class="TaskAction" ng-init="item=$parent.$parent.$parent.$parent.item;">
+        <div class="" ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+            <a ng-bind="item.name" href="#" ng-click="importedScope.customPerformAction(action,params,item.id);" class="item-label" ng-class="['item-header']">
+                {{item.name}}
+            </a>
+       </div>
+</div>

@@ -1,0 +1,94 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 1,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "TechCare-Budget",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/TechCare/Component:Budget/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 2,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/TechCare/Component:Budget/English",
+        "Name": "SymptomExplanation",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/Component:Budget/English/SymptomExplanation",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "SymptomExplanation",
+    "%vlocity_namespace%__ParentElementType__c": "Step",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "accessibleInFutureSteps": false,
+        "clearValue": true,
+        "conditionType": "Hide if False",
+        "controlWidth": 6,
+        "dataSource": {
+            "mapItems": {
+                "inputParameters": [
+                ],
+                "phase1MapItems": [
+                    {
+                        "DomainObjectFieldAPIName__c": "Rec",
+                        "FilterOperator__c": "=",
+                        "FilterValue__c": "\"Technical_Service_Symptom\"",
+                        "InterfaceFieldAPIName__c": "DeveloperName",
+                        "InterfaceObjectLookupOrder__c": 1,
+                        "InterfaceObjectName__c": "RecordType"
+                    },
+                    {
+                        "DomainObjectFieldAPIName__c": "Symps",
+                        "FilterOperator__c": "=",
+                        "FilterValue__c": "Rec:Id",
+                        "InterfaceFieldAPIName__c": "RecordTypeId",
+                        "InterfaceObjectLookupOrder__c": 2,
+                        "InterfaceObjectName__c": "Contact_Motive__c"
+                    },
+                    {
+                        "DomainObjectFieldAPIName__c": "Symps",
+                        "FilterOperator__c": "=",
+                        "FilterValue__c": "\"TRUE\"",
+                        "InterfaceFieldAPIName__c": "Is_Active__c",
+                        "InterfaceObjectLookupOrder__c": 2,
+                        "InterfaceObjectName__c": "Contact_Motive__c"
+                    }
+                ],
+                "phase2MapItems": [
+                    {
+                        "DomainObjectAPIName__c": "JSON",
+                        "DomainObjectCreationOrder__c": 1,
+                        "DomainObjectFieldAPIName__c": "name",
+                        "InterfaceFieldAPIName__c": "Symps:Id"
+                    },
+                    {
+                        "DomainObjectAPIName__c": "JSON",
+                        "DomainObjectCreationOrder__c": 1,
+                        "DomainObjectFieldAPIName__c": "value",
+                        "InterfaceFieldAPIName__c": "Symps:Name"
+                    }
+                ]
+            },
+            "source": "",
+            "type": "SObject"
+        },
+        "disOnTplt": false,
+        "help": false,
+        "helpText": "",
+        "hide": false,
+        "inputWidth": 12,
+        "label": "Síntoma",
+        "placeholder": "",
+        "readOnly": false,
+        "repeat": false,
+        "repeatClone": false,
+        "required": true,
+        "show": null,
+        "showInputWidth": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Lookup",
+    "Name": "SelectSymptomType",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/Component:Budget/English/SelectSymptomType"
+}

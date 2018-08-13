@@ -1,0 +1,52 @@
+<div class="cpq-product-item-plan-details slds-scrollable--y" ng-controller="ProductItemMorePlanDetailsController as pimppdc" ng-init="pimppdc.init();">
+    <!--form is used for input validations-->
+    <form>
+        
+        <div class="header-cost">
+            <div class="slds-media__body">
+                <div class="slds-tile__title slds-text-heading--large">
+                    {{ ::obj['UnitPrice']['value']  | currency}}
+                </div>
+            </div>
+            <p>
+                {{::obj.Name.value}}
+            </p>
+        </div>
+        
+        <div class="services">
+            <div ng-repeat="items in pimppdc.service" class="service" ng-if="((items.service_type=='SMS' || items.service_type=='VOICE' ) && items.trafic=='Saliente') || items.service_type=='MMS' || items.service_type=='DATA' || items.service_description=='Numeros Amigos'">
+                <div class="margin-space">
+                    <slds-svg-icon ng-if="items.service_description!='Numeros Amigos' && items.service_type=='SMS' && items.trafic=='Saliente'" sprite="'utility'" icon="'sms'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.service_description!='Numeros Amigos' && items.service_type=='VOICE'&& items.trafic=='Saliente'" sprite="'utility'" icon="'call'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.service_description!='Numeros Amigos' && items.service_type=='DATA'" sprite="'utility'" icon="'broadcast'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.service_description!='Numeros Amigos' && items.service_type=='MMS'" sprite="'utility'" icon="'image'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    <slds-svg-icon ng-if="items.service_description=='Numeros Amigos'" sprite="'utility'" icon="'groups'" size="'large'" no-hint="true" aria-hidden="true">
+                    </slds-svg-icon>
+                    
+        		</div>
+        		<div class="margin-space">
+        		    {{ items.service_cost_value | currency }} 
+        		</div>
+        		<div>
+            		<div class="margin-space"> {{ items.service_description }}</div>
+        		</div>
+        		<div ng-if="items.service_description=='Numeros Amigos'">
+        		    <div class="margin-space faf-service" ng-repeat="type in items.service_type"> {{ type.value }} {{ type.type == 'VOICE' ? 'VOZ' : type.type }}</div>
+        		</div>
+        		
+            </div>
+        </div>
+        
+        <div class="basic">
+            <div class="service-basic">Servicios Básicos</div>
+            <div class="service-basic-item" ng-repeat="item in pimppdc.basicServices">
+                <span>{{ item }}</span>
+            </div>
+        </div>
+        
+    </form>
+</div>

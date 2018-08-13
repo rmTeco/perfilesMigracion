@@ -1,0 +1,17 @@
+<aura:component access="GLOBAL">
+	<aura:registerEvent name="addAttribute" type="vlocity_cmt:profileAddAttributeEvent"/>
+	<aura:handler event="vlocity_cmt:profileUnappliedAttributesFilteredEvent" action="{!c.handleFilteredEvent}"/>    
+	<aura:handler event="vlocity_cmt:profileApplyAttributeSucceededEvent" action="{!c.handleApplyAttributeSucceededEvent}"/>
+	<aura:handler event="vlocity_cmt:profileApplyAttributeFailedEvent" action="{!c.handleApplyAttributeFailedEvent}"/>
+	<aura:attribute name="searchPattern" type="String" default="xyz"/>
+	
+	<ul>
+		<li aura:id="no-result-text" class="hidden">
+			No Result for {!v.searchPattern}
+		</li>
+		<li aura:id="add-attribute-text" class="hidden">
+			Add <a href="javascript:void(0);" onclick="{!c.handleAddAttribute}">{!v.searchPattern}</a> as a new attribute
+		</li>
+	</ul>
+	
+</aura:component>

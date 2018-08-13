@@ -1,0 +1,15 @@
+<div>
+    <!--<pre>{{cards | json}}</pre>-->
+    <vloc-card 
+        ng-repeat="card in cards" 
+        
+        ng-model="card" 
+        data="card" 
+        
+        index="{{$index}}" 
+        session-id="{{sessionId}}"></vloc-card>
+        
+        <!--|orderBy:order|filter: searchFunc(card)-->
+        <!--ctrl="{{ctrl}}" -->
+        <!--records="records" -->
+</div>

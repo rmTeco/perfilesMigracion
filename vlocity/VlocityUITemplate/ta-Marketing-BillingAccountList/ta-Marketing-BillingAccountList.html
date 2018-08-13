@@ -1,0 +1,114 @@
+<!-- ====================== -->
+<!-- =  BILLING ACCOUNTS  = -->
+<!-- ====================== -->
+<div class="slds-card via-slds-card--active slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}"  data-popover-flyout="true">
+    <div class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center slds-p-around--small" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <section>
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+      <!--
+      <vloc-card-icon  sprite="'standard'" icon="'related_list'" size="'medium'" no-hint="true" extra-classes="'slds-icon-text-default'"></vloc-card-icon>-->
+                    <div class="slds-media__figure">
+                        <slds-svg-icon sprite="'standard'" size="'medium'" icon="'account'" extra-classes="'slds-icon-standard-orders'"></slds-svg-icon>
+                    </div>
+                    <div class="slds-media__body slds-truncate">
+                        <h1 href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="'Billing Accounts'">
+                            <span class="slds-text-heading--small">Billing Accounts</span>
+                        </h1>
+                        <span>{{data.fields[0].label}} {{obj | getter:data.fields[0] | picker:data.fields[0].type}}</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <table 
+        ng-if="data.obj.billingAccounts"
+        ng-init="items = data.obj.billingAccounts"
+        class="slds-table slds-table--bordered slds-table--cell-buffer techCare-PriceList">
+      <thead>
+        <tr class="slds-text-title--caps">
+          <th scope="col">
+            <div class="slds-truncate" title="Name">Nombre</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Description">Puntos</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Price">Puntos a vencer</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="techCare-PriceList-tbody">
+        <tr ng-repeat="item in items">
+          <th scope="row" data-label="Name">
+            <div class="" title="Name">{{item.accountName}}</div>
+          </th>
+          <td data-label="Description">
+            <div class="" title="Description">{{item.points}}</div>
+          </td>
+          <td data-label="Price">
+            <div class="" title="Price">{{item.pointsToExpire}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+<!-- ====================== -->
+<!-- =       ASSETS       = -->
+<!-- ====================== -->
+<div class="slds-card via-slds-card--active slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}"  data-popover-flyout="true">
+    <div class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center slds-p-around--small" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <section>
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <slds-svg-icon sprite="'standard'" size="'medium'" icon="'record'" extra-classes="'slds-icon-standard-orders'"></slds-svg-icon>
+                    </div>
+                    <div class="slds-media__body slds-truncate">
+                        <h1 href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="'Assets'">
+                            <span class="slds-text-heading--small">Assets</span>
+                        </h1>
+                        <span>{{data.fields[0].label}} {{obj | getter:data.fields[0] | picker:data.fields[0].type}}</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <table 
+        ng-if="data.obj.assets"
+        ng-init="items = data.obj.assets"
+        class="slds-table slds-table--bordered slds-table--cell-buffer techCare-PriceList">
+      <thead>
+        <tr class="slds-text-title--caps">
+          <th scope="col">
+            <div class="slds-truncate" title="Name">Nombre</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Description">Billing Account</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Description">Puntos</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Price">Puntos a vencer</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="techCare-PriceList-tbody">
+        <tr ng-repeat="item in items">
+          <th scope="row" data-label="Name">
+            <div class="" title="Name">{{item.name}}</div>
+          </th>
+          <th scope="row" data-label="BillingAccount">
+            <div class="" title="BillingAccount">{{item.billingAccount}}</div>
+          </th>
+          <td data-label="Description">
+            <div class="" title="Description">{{item.points}}</div>
+          </td>
+          <td data-label="Price">
+            <div class="" title="Price">{{item.pointsToExpire}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

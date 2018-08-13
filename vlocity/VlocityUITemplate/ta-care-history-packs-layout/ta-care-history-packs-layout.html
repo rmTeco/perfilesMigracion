@@ -1,0 +1,252 @@
+<div class="via-slds slds-m-around--small ng-scope" 
+     ng-controller="PacksHistoryController as ctrl"
+     ng-init="init()">
+    
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;">
+            
+            <div class="slds-text-heading--large slds-border--bottom slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--x-large">
+                <p><b>Historial de packs</b></p>
+            </div>
+            
+            <div class="slds-grid slds-wrap slds-grid--pull-padded">
+    
+                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--2-of-4 slds-large-size--2-of-4">
+                    <div id="divExterno" class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+                        <label class="slds-text-heading--small">Fecha de inicio
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control">
+                                    <div    class="slds-button slds-input__icon slds-text-color--default" 
+                                            aria-expanded="false" 
+                                            tabindex="1" 
+                                            for="text-input-id-1">
+                                            <slds-svg-icon  sprite="'utility'" 
+                                                            icon="'event'" 
+                                                            size="'x-small'" 
+                                                            no-hint="true"
+                                                            extra-classes="'slds-icon-text-default'">
+                                            </slds-svg-icon>
+                                    </div>
+                                    <input  
+                                        id="text-input-id-1"
+                                        class="slds-input" 
+                                        type="datetime" 
+                                        ng-change="setMinMaxDate()"
+                                        ng-model="filterOptionRangoDesde"
+                                        onkeydown="return false"
+                                        slds-date-picker
+                                        date-format="dd/MM/yyyy"
+                                        max-date="{{maxDateValueFrom}}"
+                                        min-date="{{minDateValueFrom}}"/>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--2-of-4 slds-large-size--2-of-4">
+                    <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+                        <label class="slds-text-heading--small">Fecha de fin
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control">
+                                <div    class="slds-button slds-input__icon slds-text-color--default" 
+                                        aria-expanded="false" 
+                                        tabindex="2" 
+                                        for="text-input-id-2">
+                                        <slds-svg-icon  sprite="'utility'" 
+                                                        icon="'event'" 
+                                                        size="'x-small'" 
+                                                        no-hint="true"
+                                                        extra-classes="'slds-icon-text-default'">
+                                        </slds-svg-icon>
+                                </div>
+                                <input  id="text-input-id-2"
+                                        class="slds-input" 
+                                        type="datetime"
+                                        placeholder="" 
+                                        onkeydown="return false"
+                                        ng-model="filterOptionRangoHasta"
+                                        slds-date-picker 
+                                        date-format="dd/MM/yyyy"
+                                        min-date="{{minDateValueTo}}"
+                                        max-date="{{maxDateValueTo}}"/>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-4 slds-large-size--1-of-4">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click"
+                     ng-init="isOpenPack = false;"
+                     ng-class="{'slds-is-open': isOpenPack}"
+                     ng-click="isOpenPack = !isOpenPack">
+                    <div class="slds-form-element">
+                        <label class="slds-text-heading--small"
+                               for="text-input-03">Nombre del pack
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control">
+                                <input type="search"
+                                       id="text-input-03"
+                                       class="slds-lookup__search-input slds-input"
+                                       role="combobox"
+                                       aria-expanded="false"
+                                       readonly="true"
+                                       placeholder="{{filterOptionPack}}"
+                                       ng-blur="isOpenPack = false;"
+                                       ng-model="filterOptionPack"/>
+                                <button class="slds-button slds-input__icon slds-text-color--default"
+                                        aria-expanded="false"
+                                        tabindex="3"
+                                        ng-blur="isOpenPack = false;">
+                                    <slds-svg-icon sprite="'utility'"
+                                                   icon="'down'"
+                                                   size="'x-small'"
+                                                   no-hint="true"
+                                                   extra-classes="'slds-icon-text-default'">
+                                    </slds-svg-icon>
+                                </button>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown--left resize-dropdowns" role="listbox">
+                        <ul class="slds-dropdown__list slds-dropdown--length-5" role="presentation">
+                            <li role="presentation"
+                                title="Todos"
+                                ng-mousedown="changeFilterPack('Todos');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="1">
+                                <span class="slds-truncate">Todos</span>
+                                </span>
+                            </li>
+                            <li role="presentation"
+                                title="{{record.namePack}}"
+                                ng-repeat="record in records.PacksFilter"
+                                ng-mousedown="changeFilterPack(record.namePack);">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="1">
+                                <span class="slds-truncate">{{record.namePack}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div  ng-class="errorFound ? 'slds-visible' : 'slds-hidden'"
+                  class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--small">
+                 <div class="slds-text-align--left slds-text-color--error">{{errorMessage}}
+                 </div>
+            </div>
+            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--small">
+                <button ng-click="filtersAccepted()" class="slds-button slds-button--brand">Consultar</button>
+            </div>
+        
+        <div ng-class="{'slds-hide': !showGrid}">
+            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large">
+                <div class="slds-p-bottom--small">   
+                    <table  class="slds-table slds-table--bordered slds-table--resizable-cols slds-table--fixed-layout via-slds-table-pinned-header">
+                      <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-p-bottom--small"
+                                ng-repeat="field in cards[0].states[0].fields | limitTo: 4"
+                                scope="col" 
+                                ng-class="{
+                                    'slds-is-sorted' : sortingOrder == field.name,
+                                    'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                                    'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                                <a class="slds-truncate slds-th__action" 
+                                   ng-click="sortBy(field)"
+                                   href="javascript:void(0)">
+                                    {{field.label}}
+                                    <div class="slds-icon_container">
+                                        <slds-svg-icon sprite="'utility'"
+                                                       size="'x-small'" 
+                                                       icon="'arrowdown'" 
+                                                       extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+                                        </slds-svg-icon>
+                                    </div>
+                                </a>
+                            </th>
+                        </tr>
+                      </thead>
+                      <tbody ng-init="sortingOrder = '['+'\''+'acquisitionDate'+'\''+']'; reverse = true;">
+                        <tr vloc-card 
+                            ng-repeat-start="card in getCardList() | orderBy:sortingOrder:reverse track by card.cardIndex"
+                            ng-model="card" 
+                            data="card"
+                            data-status="closed"
+                            data-card={{data.cardIndex}}
+                            ng-click="$parent.$parent.$parent.toogleOpen($event, this);"
+                            records="records" 
+                            use-existing-element-type>
+                        </tr>
+                        <tr ng-repeat-end
+                            data-status="closed"
+                            data-id = children{{card.cardIndex}}
+                            class = "nghided"
+                            ng-if= "$parent.$parent.$parent.cards[card.cardIndex].status == 'expanded'" >
+                            <td colspan="5">
+                                <div class="slds-grid">
+                                  <div class="slds-col">
+                                    <div class="slds-box--small">
+                                        <table>
+                                          <thead>
+                                            <tr ng-repeat="field in cards[0].states[0].fields | limitTo : 3 : 4">
+                                                <th class="slds-text-heading--label slds-p-around--x-small">
+                                                    <b>{{field.label}}</b>
+                                                </th>
+                                                <th>
+                                                     <div class="slds-truncate slds-p-around--xx-small">
+                                                         {{getCardList()[getIndexForPage(card.cardIndex)].obj | getter: field | picker: field.type}}
+                                                     </div>
+                                                </th>
+                                            </tr>
+                                          </thead>
+                                        </table>
+                                    </div>
+                                  </div>
+                                  <div class="slds-col">
+                                    <div class="slds-box--small">
+                                        <table>
+                                          <thead>
+                                            <tr ng-repeat="field in cards[0].states[0].fields | limitTo : 3 : 4">
+                                                <th class="slds-text-heading--label slds-p-around--x-small">
+                                                    <b>{{field.label}}</b>
+                                                </th>
+                                                <th>
+                                                     <div class="slds-truncate slds-p-around--xx-small">
+                                                         {{getCardList()[getIndexForPage(card.cardIndex)].obj | getter: field | picker: field.type}}
+                                                     </div>
+                                                </th>
+                                            </tr>
+                                          </thead>
+                                        </table>
+                                    </div>
+                                  </div>
+                                </div>
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="slds-grid slds-p-top--small">
+                <div class="slds-grid slds-col">
+                  <label class="slds-form-element__label">Filas por página</label>
+                  <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                      <select class="slds-select" ng-options="item for item in numberOfRowsOption" ng-model="itemsPerPage">
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="slds-col"></div>
+                <div class="slds-col">
+                    <div class="slds-form-element slds-button-group pull-right" role="group">
+                        <button class="slds-button slds-button--neutral" title="Previous" ng-click="goToPage(previousPage);" ng-disabled="currentPage == 0">« Anterior</button>
+                        <button ng-repeat="n in currentRange" class="slds-button slds-button--neutral" ng-click="goToPage(n);" ng-disabled="n == currentPage">
+                            {{n + 1}}
+                        </button>
+                        <button class="slds-button slds-button--neutral" ng-click="goToPage(nextPage);" ng-disabled="currentPage == pagedItems.length - 1">Siguiente »
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

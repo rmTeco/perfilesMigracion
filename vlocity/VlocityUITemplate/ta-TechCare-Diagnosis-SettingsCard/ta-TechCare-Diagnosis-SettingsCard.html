@@ -1,0 +1,33 @@
+<div>data test{{data.obj | json}}</div>
+
+
+<tr data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" >
+    <td 
+        class="slds-truncate" 
+        data-label="{{field.label}}" 
+        ng-repeat="field in data.fields" 
+        ng-show="key != 'attributes'">
+        {{obj | getter: field | picker: field.type}}</td>
+        
+    <td 
+        class="slds-cell-shrink" 
+        data-label="Actions" 
+        style="overflow: visible">
+        <select>
+            <options>test</options>
+        </select>
+    </td>
+    <td 
+        class="slds-cell-shrink" 
+        data-label="Actions" 
+        style="overflow: visible">
+        <input type="text"/>
+    </td>
+    <td 
+        class="slds-cell-shrink" 
+        data-label="Actions" 
+        style="overflow: visible">
+        <input type="text"/>
+    </td>
+    
+</tr>

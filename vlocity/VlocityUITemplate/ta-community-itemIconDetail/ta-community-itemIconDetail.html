@@ -1,0 +1,43 @@
+<div class="">
+   <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center"
+         ng-show="obj.codUsoUnidadesLibres == 'Voice'">
+        <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                <slds-svg-icon  sprite="'utility'"
+                icon="'call'"
+                size="'medium'"
+                style="fill:#333333"
+                extra-classes="'slds-input__icon availables_svg'">
+            </slds-svg-icon>
+        </div>
+        <div class="slds-size--1-of-1 availables_ammount">{{obj.cantUnidadesRemanentes / 60 | number:0}}</div>
+        <div class="slds-size--1-of-1 availables_unit">Minutos</div>
+    </div>
+    
+    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center"
+         ng-show="obj.codUsoUnidadesLibres == 'SMS'">
+         <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                <slds-svg-icon  sprite="'utility'"
+                icon="'sms'"
+                size="'medium'"
+                style="fill:#333333"
+                extra-classes="'slds-input__icon availables_svg'">
+            </slds-svg-icon>
+        </div>
+        <div class="slds-size--1-of-1 availables_ammount">{{obj.cantUnidadesRemanentes}}</div>
+        <div class="slds-size--1-of-1 availables_unit">SMS</div>
+    </div>
+    
+    <div class="slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center"
+         ng-show="obj.codUsoUnidadesLibres == 'Data'">
+         <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                <slds-svg-icon  sprite="'utility'"
+                icon="'broadcast'"
+                size="'medium'"
+                style="fill:#333333"
+                extra-classes="'slds-input__icon availables_svg'">
+            </slds-svg-icon>
+        </div>
+        <div class="slds-size--1-of-1 availables_ammount">{{obj.cantUnidadesRemanentes / 1024 | number:0}}</div>
+        <div class="slds-size--1-of-1 availables_unit">MB</div>
+    </div> 
+</div>

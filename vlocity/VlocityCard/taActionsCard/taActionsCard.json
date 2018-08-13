@@ -1,0 +1,72 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "[{\n \n        \"actions\": [\n            {\n                \"displayName\": \"Accion 6\",\n                \"vlocityIcon\": \"icon-v-alert\"\n            },\n            {\n                \"displayName\": \"Accion 7\",\n                \"vlocityIcon\": \"icon-v-note\"\n            },\n            {\n                \"displayName\": \"Accion 8\",\n                \"vlocityIcon\": \"icon-v-print\"\n            }\n           \n        ],\n        \"fields\": [\n            {\n                \"label\": \"Dato 1:\",\n                \"name\": \"Dato1\"\n                \n            },\n            {\n                \"label\": \"Contenido 2\",\n                \"name\": \"Dato2\"\n            },\n            {\n                \"label\": \"Dato 3:\",\n                \"name\": \"Dato3\"\n            }\n\n          \n        ],\n        \"title\": \"Datos Adicionales\"\n\n\n}]",
+            "bundle": "GetChildAssetsByAssetId",
+            "ctxId": "Params.Id",
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "active"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Actualizar Datos",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA accion Siete",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA accion Ocho",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "ACCIONES",
+                    "name": "title",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "flyout": {
+                "layout": null
+            },
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-Care-Bundle-View-Actions"
+        }
+    ],
+    "title": "Datos adicionales de servicios"
+}

@@ -1,0 +1,87 @@
+<div class="slds-container--medium slds-container--center">
+    <div class="campaign-spinner-container" ng-show="importedScope.isLoading">
+      <div class="slds-spinner_container campaign-list-spinner">
+          <div class="slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+              <div class="slds-spinner__dot-a"></div>
+              <div class="slds-spinner__dot-b"></div>
+          </div>
+      </div>
+  </div>
+  <div class="slds-notify_container" ng-show="importedScope.showBanner">
+        <div class="slds-notify slds-notify--alert slds-theme--success slds-theme--alert-texture slds-p-vertical--medium" role="alert">
+            <button class="slds-button slds-float--right"  ng-click="importedScope.showBanner = false">
+                <slds-button-svg-icon sprite="'utility'" icon="'close'" extra-classes="'close-btn'"></slds-button-svg-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <span class="slds-assistive-text">Success</span>
+            <h2>{{importedScope.bannerText}}</h2>
+        </div>
+    </div>
+    <div class="slds-notify_container" ng-show="importedScope.showErrorBanner">
+        <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture slds-p-vertical--medium" role="alert">
+            <button class="slds-button slds-float--right"  ng-click="importedScope.showErrorBanner = false">
+                <slds-button-svg-icon sprite="'utility'" icon="'close'" extra-classes="'close-btn'"></slds-button-svg-icon>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2>{{importedScope.bannerText}}</h2>
+        </div>
+  </div>
+  <table class="slds-table slds-table--bordered slds-table--cell-buffer" ng-init="importedScope.setObj(records.result.records); importedScope.campaignId = params.id">
+    <thead>
+      <tr class="slds-text-title--caps heading">
+        <th scope="col">
+          <div class="slds-form-element__label" title="Member Status">Member Status</div>
+        </th>
+        <th scope="col">
+          <legend class="slds-form-element__legend slds-form-element__label">
+              <abbr class="slds-required" title="required">*</abbr>Responded</legend>
+        </th>
+        <th scope="col">
+          <legend class="slds-form-element__legend slds-form-element__label">
+              <abbr class="slds-required" title="required">*</abbr>Default</legend>
+        </th>
+        <th scope="col">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="status in importedScope.status track by $index| orderBy : 'sortOrder'">
+        <th scope="row" data-label="Member Status">
+          <div class="slds-truncate" title="{{status.statusLabel}}">
+          <input id="text-input-01" class="slds-input" type="text" ng-model="status.statusLabel"/>
+          </div>
+        </th>
+        <td data-label="{{status.hasResponded}}">
+          <div class="slds-truncate" title="{{status.hasResponded}}">
+             <label class="slds-checkbox items-center">
+                  <input type="checkbox" id="checkbox-contacts" ng-model="status.hasResponded"/>
+                  <span class="slds-checkbox--faux"></span>
+              </label>
+          </div>
+        </td>
+        <td data-label="{{status.isDefault}}">
+              <div class="slds-form-element__control">
+                <span class="slds-radio items-center">
+                    <input type="radio" id="radio-{{$index}}" name="options" ng-checked="status.isDefault" ng-model="status.isDefault" ng-change="importedScope.updateDefault($index)"/>
+                     <label class="slds-radio__label"  for="radio-{{$index}}">
+                      <span class="slds-radio--faux"></span>
+                      <span class="slds-form-element__label"></span>
+                    </label>
+                  </span>
+              </div>
+        </td>
+        <td data-label="delete">
+          <button class="slds-button items-center" ng-click="importedScope.removeElement($index)">
+            <span class="slds-icon_container" ng-click="importedScope.refreshList()">
+                  <slds-svg-icon sprite="'utility'" icon="'delete'" size="'x-small'" extra-classes="'slds-icon-text-default'"></slds-svg-icon>
+              </span>
+            </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="slds-docked-form-footer slds-p-around--small">
+    <button class="slds-button slds-m-left--small" ng-click="importedScope.campaignMemberStatusObj('', '', false, false)">Add More</button>
+    <button class="slds-button slds-button--brand slds-float--right slds-m-right--xx-small" type="button" ng-click="importedScope.saveStatus()">Save</button> 
+  </div>
+</div>

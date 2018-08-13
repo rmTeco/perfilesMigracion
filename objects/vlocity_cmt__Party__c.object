@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>A party is an individual, business, government entity, household, association, or other entity represented by one or more individuals. In Vlocity applications, each account, contact, and household tracked in the system is also tracked as a party.
+The party object holds minimal information, but extends Salesforce to support business-to-consumer (B2C) and business-to-business-to-consumer (B2B2C) practices in addition to business-to-business (B2B) practices.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>vlocity_cmt__GroupMember</fullName>
+        <availableFields>
+            <field>vlocity_cmt__AccountId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__ContactId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__HouseholdId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Id</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__Location__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>OwnerId</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__PartyEntityId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__PartyEntityName__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__PartyEntityType__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__PartyNumber__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <description>This list of fields is used to display member information under group.</description>
+        <label>Group Member</label>
+    </fieldSets>
+    <fields>
+        <fullName>vlocity_cmt__AccountId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>ID of the primary Account identified as this Party when the party is an Account. Where possible use Account.PartyId__c instead of this field to determine the Party which identifies any given Account.</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipName>Party</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ContactId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>ID of the primary Contact identified as this Party when the party is a Contact. Where possible use Contact.PartyId__c instead of this field to determine the Party which identifies any given Contact.</description>
+        <externalId>false</externalId>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipName>Party</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__HouseholdId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>ID of the primary Household identified as this Party when the party is a Household. Where possible use Household.PartyId__c instead of this field to determine the Party which identifies any given Household.</description>
+        <externalId>false</externalId>
+        <label>Household</label>
+        <referenceTo>vlocity_cmt__Household__c</referenceTo>
+        <relationshipName>Party</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsAccountIdMismatch__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Formula: True if the AccountId value of this Party record is different from the PartyEntityId value. Used in certain corner cases to repair the Party record.</description>
+        <externalId>false</externalId>
+        <formula>If(vlocity_cmt__AccountId__c!=null &amp;&amp; vlocity_cmt__PartyEntityId__c !=null &amp;&amp; vlocity_cmt__PartyEntityId__c != CASESAFEID(vlocity_cmt__AccountId__c), true, false)</formula>
+        <label>Is Account Id Mismatch</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsContactIdMismatch__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Formula: True if the ContactId value of this Party record is different from the PartyEntityId value. Used in certain corner cases to repair the Party record.</description>
+        <externalId>false</externalId>
+        <formula>If(vlocity_cmt__PartyEntityId__c != null &amp;&amp; vlocity_cmt__ContactId__c!=null &amp;&amp; vlocity_cmt__PartyEntityId__c != CASESAFEID(vlocity_cmt__ContactId__c), true, false)</formula>
+        <label>Is Contact Id Mismatch</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsPersonAccount__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates if this Party is identified as a Person Account.</description>
+        <externalId>false</externalId>
+        <label>Is Person Account</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Location__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Formula: The value of the Contact.Location__c (Region) field if this party is a Contact.</description>
+        <externalId>false</externalId>
+        <formula>IF(vlocity_cmt__PartyEntityType__c ==&apos;Contact&apos;,  vlocity_cmt__ContactId__r.vlocity_cmt__Location__c,
+IF(vlocity_cmt__PartyEntityType__c ==&apos;Household&apos; || vlocity_cmt__PartyEntityType__c ==&apos;Group&apos; || vlocity_cmt__PartyEntityType__c ==&apos;Account&apos; , &quot;&quot;, &quot;&quot;))</formula>
+        <label>Region</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__OwnerName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Formula: The alias of the owner user for the associated Account, Contact or Household.</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__HouseholdId__r.Owner:User.Alias &amp;  vlocity_cmt__AccountId__r.Owner.Alias &amp;  vlocity_cmt__ContactId__r.Owner.Alias</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RM</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PartyEntityId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>This field is used internally to store Ids from different objects. If the party type is contact, this field stores Contact.Id, if it is household, it stores Household__c.Id. Used to provide a link to the source record.</description>
+        <externalId>false</externalId>
+        <label>Party Entity Id</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PartyEntityName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Formula: The Name from this Party record.</description>
+        <externalId>false</externalId>
+        <formula>Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Party Entity Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PartyEntityType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The type of party such as Account or Contact.</description>
+        <externalId>false</externalId>
+        <label>Party Type</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PartyNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>An external or cross-system identifier for this Party such as one provided by a customer data hub or customer information file.</description>
+        <externalId>true</externalId>
+        <label>Party Number</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RelationshipGroup__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Relationship group identifier.</description>
+        <externalId>false</externalId>
+        <label>Relationship Group</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Party</label>
+    <listViews>
+        <fullName>vlocity_cmt__All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Party Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Parties</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>vlocity_cmt__PartyEntityName__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__PartyEntityType__c</lookupDialogsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__PartyEntityId__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__PartyEntityName__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>vlocity_cmt__Relationship_Popup</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Add Relationship</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!vlocity_cmt__Party__c.vlocity_cmt__PartyEntityName__c}</url>
+    </webLinks>
+</CustomObject>

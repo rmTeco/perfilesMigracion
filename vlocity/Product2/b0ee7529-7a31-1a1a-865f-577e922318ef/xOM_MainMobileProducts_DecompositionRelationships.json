@@ -1,0 +1,122 @@
+[
+    {
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "39737eb7-c572-b91c-b3aa-b5fc91c2d78f",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Attribute\",\"source_attr_name\":\"CodeCountryPrefix\",\"source_attr_code\":\"XOM_COD_COUN_PREF\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"CodeCountryPrefix\",\"destination_attr_code\":\"XOM_COD_COUN_PREF\"},{\"source_attr_name\":\"Numero de Linea\",\"source_attr_code\":\"FAN_ATT_000038\",\"source_type\":\"Attribute\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"MSISDN2\",\"destination_attr_code\":\"XOM_MSISDN\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 0,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "xOM_MainMobileProducts->Comptel RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/xOM_MainMobileProducts->Comptel RFS/Product2/b0ee7529-7a31-1a1a-865f-577e922318ef"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "a4b8c36a-cbab-0061-1bdb-960e16c01c92",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/a4b8c36a-cbab-0061-1bdb-960e16c01c92",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "71817109-6415-03b7-e2b2-018c8af9c6b1",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Attribute\",\"source_attr_name\":\"Numero de Linea\",\"source_attr_code\":\"FAN_ATT_000038\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"MSISDN2\",\"destination_attr_code\":\"XOM_MSISDN\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 0,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "xOM_MainMobileProducts->Numeracion Movil RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/xOM_MainMobileProducts->Numeracion Movil RFS/Product2/b0ee7529-7a31-1a1a-865f-577e922318ef"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "{\"name\":\"SimpleCondition\",\"type\":\"OR\",\"singleconditions\":[{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"Order.Gestion__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Suspension por siniestro\"},{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"Order.Delivery_Method__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Delivery\"},{\"right-side\":\"Suspend-Siniestro\",\"right-side-type\":\"value\",\"op\":\"=\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"},{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Suspend-Robo\"},{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Suspend-Hurto\"},{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Suspend-Extravio\"}]}",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": "",
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "6946c1e1-8b14-4c03-18d0-bdcf669cff19",
+        "%vlocity_namespace%__MappingsData__c": "[{\"transform_mappings\":[{\"source_value\":\"Delivery\",\"destination_value\":\"true\"}],\"source_type\":\"Field\",\"source_field_name\":\"Order.Delivery_Method__c\",\"mapping_type\":\"list\",\"destination_attr_name\":\"Delivery required?\",\"destination_attr_code\":\"XOM_DELIVERY_REQUIRED\"},{\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Gestion\",\"destination_attr_code\":\"XOM_GESTION\",\"source_field_name\":\"Order.Gestion__c\",\"source_type\":\"Field\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 0,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 0,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "xOM_MainMobileProducts->Vmi.net RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/xOM_MainMobileProducts->Vmi.net RFS/Product2/b0ee7529-7a31-1a1a-865f-577e922318ef"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "{\"singleconditions\":[{\"right-side\":\"Preactivacion Repro\",\"right-side-type\":\"value\",\"op\":\"!=\",\"left-side\":\"Order.Gestion__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"}],\"type\":\"AND\",\"name\":\"SimpleCondition\"}",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "07da17ac-ef0b-5660-23b6-98e1734c0e1b",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/07da17ac-ef0b-5660-23b6-98e1734c0e1b",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "d1ac033e-2b65-c044-d5f1-db6883fc6cca",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Attribute\",\"source_attr_name\":\"Numero de Linea\",\"source_attr_code\":\"FAN_ATT_000038\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"MSISDN2\",\"destination_attr_code\":\"XOM_MSISDN\"},{\"source_type\":\"Field\",\"source_field_name\":\"%vlocity_namespace%__Product2Id__r.ID_Sistema_Origen__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Huawei Offer Id\",\"destination_attr_code\":\"XOM_HWOFF\"},{\"source_type\":\"Field\",\"source_field_name\":\"LocationCode__r.Municipality__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Municipalidad\",\"destination_attr_code\":\"XOM_MUNICIPALIDAD\"},{\"source_type\":\"Field\",\"source_field_name\":\"LocationCode__r.StateName__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Provincia\",\"destination_attr_code\":\"XOM_PROVINCIA\"},{\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"TrackingNumberAttr\",\"destination_attr_code\":\"XOM_TRACK_NUM\",\"source_field_name\":\"Order.%vlocity_namespace%__TrackingNumber__c\",\"source_type\":\"Field\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 0,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/b0ee7529-7a31-1a1a-865f-577e922318ef",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "xOM_MainMobileProducts -> Huawei CBS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/xOM_MainMobileProducts -> Huawei CBS/Product2/b0ee7529-7a31-1a1a-865f-577e922318ef"
+    }
+]

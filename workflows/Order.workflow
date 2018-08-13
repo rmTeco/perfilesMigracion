@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Email_alert_test</fullName>
+        <description>Email alert test</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>dabudin@teco.com.ar</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Calidad</template>
+    </alerts>
+    <alerts>
+        <fullName>SalesAlertApprovalADV</fullName>
+        <description>rejection and return Approval ADV</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ApprovalUserMail__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>DefaultWorkflowUser</senderType>
+        <template>unfiled$public/Sales_ADV_rejection_and_return</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>updateTrackingStatusToError</fullName>
+        <field>TrackingStatus__c</field>
+        <literalValue>FAILED</literalValue>
+        <name>updateTrackingStatusToError</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>SalesAnullOrderWithTangibleItems</fullName>
+        <active>false</active>
+        <formula>NOT(ISNULL(EffectiveDate))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>SalesNotificAprobalADV</fullName>
+        <actions>
+            <name>SalesAlertApprovalADV</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Order.OrderApprovalStatus__c</field>
+            <operation>equals</operation>
+            <value>Devuelto al Vendedor,Rechazada por ADV</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.SaleMotivoRechazoADV__c</field>
+            <operation>notEqual</operation>
+        </criteriaItems>
+        <description>workflow rule created for solution the requirement of history , the what require send notification email for user with profile of agent.</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>TechCare-OrderConcilitionOM_NotResponse</fullName>
+        <active>false</active>
+        <criteriaItems>
+            <field>Order.TrackingStatus__c</field>
+            <operation>equals</operation>
+            <value>Inicial</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.Gestion__c</field>
+            <operation>equals</operation>
+            <value>Conciliate</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Order.vlocity_cmt__FulfilmentStatus__c</field>
+            <operation>equals</operation>
+            <value>In Progress</value>
+        </criteriaItems>
+        <description>Cambiar TrackingStatus__c  a valor FAILED, por no repuesta de OM</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>updateTrackingStatusToError</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <offsetFromField>Order.Conciliador_Time_Based_Workflow__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+</Workflow>

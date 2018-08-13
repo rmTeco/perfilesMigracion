@@ -1,0 +1,53 @@
+{
+    "dataSource": {
+        "type": "Custom",
+        "value": {
+            "body": "{\"errores\":[{\"descripcionAlerta\": \"Se aproxima la fecha de pago. Balance $120. Fecha de vencimiento 20/06/2017\"}]}"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+        {
+            "name": "zone",
+            "val": "middle"
+        }
+    ],
+    "states": [
+        {
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['errores']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "errores",
+                    "name": "['errores']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Active",
+            "templateUrl": "ta-Care-AlertCard"
+        }
+    ],
+    "title": "Alert",
+    "zone": "top"
+}

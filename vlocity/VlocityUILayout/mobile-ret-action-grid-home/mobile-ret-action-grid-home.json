@@ -1,0 +1,24 @@
+{
+    "Cards": [
+        "mobile-ret-action-home"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.userId",
+                "val": "0056A000000VAdj"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "body": "{\"result\":[]}",
+            "query": "SELECT Id,  %vlocity_namespace%__Store_Associate_Status__c FROM User Where id = '{{params.userId}}'",
+            "resultVar": ""
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "card-canvas-1x-simple-slds"
+        }
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "Cards": [
+        "ta-cpq-product-details"
+    ],
+    "bypassSave": true,
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "8016C0000008b2UQAQ"
+            },
+            {
+                "name": "parent.Id.value",
+                "val": "01u6C000000xQQnQAM"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/products?id={{parent.Id.value}}&hierarchy=3&includeAttachment=true",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "fields": "IsActive,Id,Name,UnitPrice,ProductCode,%vlocity_namespace%__RecurringPrice__c,product2.description,product2.Tipo_de_Bien_de_Uso__c,Product2.Marca__c,Product2.%vlocity_namespace%__HelpText__c,Product2.PrefaRequired__c,Product2.%vlocity_namespace%__CategoryData__c,Product2.Family,Product2.TA_Custom_Description__c,Product2.%vlocity_namespace%__JSONAttribute__c,Product2.%vlocity_namespace%__Type__c",
+                "filters": "Id:{{parent.Id.value}}",
+                "hierarchy": "10",
+                "includeAttachment": "true"
+            },
+            "methodType": "GET",
+            "remoteClass": "taCpqAppHandler",
+            "remoteMethod": "getCartsProducts",
+            "remoteNSPrefix": null
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-sales-cpq-product-item-more"
+        }
+    },
+    "workspace": [
+        "ta-cpq-product-details/Personal/1502570576415"
+    ]
+}

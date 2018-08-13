@@ -1,0 +1,17 @@
+{
+    "Cards": [
+        "profile-account",
+        "profile-account-info"
+    ],
+    "dataSource": {
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name, BillingAddress,Phone, PhotoURL, Website FROM Account WHERE Id = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "console-sidebar"
+        }
+    }
+}

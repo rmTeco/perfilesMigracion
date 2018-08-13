@@ -1,0 +1,11 @@
+<aura:component access="GLOBAL" controller="vlocity_cmt.ProfileClientAttributeController" extends="vlocity_cmt:profileAbstractAttributeCategoryView">    
+    <section onclick="{!c.editAttributes}">
+        <h3 class="slds-section-title--divider">{!v.attributeCategoryName}</h3>
+        <article class="onoff-attribute-list group">
+            <vlocity_cmt:profileOnOffAttributeList appliedAttributes="{!v.appliedAttributes}" 
+                                         renderUsingColorCodes="{!v.renderUsingColorCodes}"
+                                         isLanguageRTL="{!v.isLanguageRTL}"/>
+        </article>
+    </section>
+        
+</aura:component>

@@ -1,0 +1,24 @@
+<li class="vlc-list-card-row row">
+<section data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" hotkey-layout-card>
+  <div class="vlc-list-card">
+    <div>
+      <div class="col-sm-{{12/(data.fields.length + (data.actions.length  > 0 ? 1 : 0))| number:0}}"
+            ng-repeat="field in data.fields | limitTo:(data.actions.length  > 0 ? 11 : 12)">
+         {{obj | getter: field | picker: field.type}}
+      </div>
+      <div class="col-sm-{{12/(data.fields.length + (data.actions.length  > 0 ? 1 : 0))}}" ng-if="data.actions.length > 0">
+        <ul class="actions">
+            <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+                <a href="#" ng-click="performAction(action)" hotkey-card-action>
+                    <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+                    <span ng-if="action.imageRef">
+                        <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+                    </span>
+                </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+</li>

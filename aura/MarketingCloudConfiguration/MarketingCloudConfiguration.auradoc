@@ -1,0 +1,15 @@
+<aura:documentation>
+	<aura:description>
+        <p>
+            An <code>et4ae5:SidebySide</code> component is a list of labels on the left and content for each label on the right when selected. The component
+            can take JSON or a Map (String, String) as an argument. (Keys will be the labels and content will be the value) 
+        </p>
+        <pre>
+            &lt;aura:attribute name="json" type="String" default='{"SidebySideItems": [{"label": "IP Whitelisting","content":"Whitelisting Content"},{"label": "Creating Workflows","content": "Creating Workflows Content"},{"label": "Custom Domain Setup","content": "Custom Domain Setup Content"},{"label": "Enable Field Level Security","content": "Enable Field Level Security Content"}]}' />
+        	&lt;et4ae5:SidebySide json="{!v.json}" /> 
+        </pre>
+    </aura:description>
+	<aura:example name="SidebySideExample" ref="et4ae5:SidebySideExample" label="Using the et4ae5:SidebySide Component">
+        <p>This example shows how to setup a <code>et4ae5:SidebySide</code> using JSON.</p>
+    </aura:example>
+</aura:documentation>

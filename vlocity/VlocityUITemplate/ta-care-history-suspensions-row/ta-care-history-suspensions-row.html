@@ -1,0 +1,121 @@
+<div class="via-slds slds-m-around--small ng-scope" 
+    ng-controller="tableCtrl as ctrl"
+    ng-init="init()">
+    
+
+  
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;" ng-if="ctrl.mobile">
+        <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+            <p><b>{{data.title}}</b></p>
+        </div>
+        <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large">
+            <div class="slds-p-bottom--small">   
+
+                <div ng-repeat="field in data.fields | limitTo: 5" 
+                                scope="col" 
+                                ng-class="{
+                                    'slds-is-sorted' : sortingOrder == field.name,
+                                    'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                                    'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}">
+    
+                </div>
+            </div>
+        </div>
+        <div class="slds-align--absolute-center slds-p-top--large"
+             ng-repeat="action in data.actions">
+        </div>
+    </div>
+    <!-- Web -->
+
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;" ng-if="!ctrl.mobile">
+        <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+            <p><b>{{data.title}}</b></p>
+        </div>
+        <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large">
+            <div class="slds-p-bottom--small">  
+            
+                <table  class="slds-table slds-table--bordered slds-table--resizable-cols slds-table--fixed-layout via-slds-table-pinned-header">
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-p-bottom--small"
+                                ng-repeat="field in data.fields"
+                                scope="col" 
+                                ng-class="{
+                                    'slds-is-sorted' : sortingOrder == field.name,
+                                    'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                                    'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                                <a class="slds-truncate slds-th__action" 
+                                   ng-click="sortBy(field,$event)"
+                                   href="javascript:void(0)">
+                                    {{field.label}}
+                                    <div class="slds-icon_container">
+                                        <slds-svg-icon sprite="'utility'"
+                                                       size="'x-small'" 
+                                                       icon="'arrowdown'" 
+                                                       extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+                                        </slds-svg-icon>
+                                    </div>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>    
+                    <tbody ng-init="sortingOrder = data.sorteableField.fisrtSort; reverse = data.sorteableField.reverse;groupToPages();">
+                        <tr ng-repeat="record in pagedItems[currentPage] | orderBy:sortingOrder:reverse  ">
+                            <td ng-repeat="field in data.fields">
+                                <div ng-if="field.label == 'Fecha'">
+                                     <p>{{record | getter: field| date:'MM/dd/yyyy - h:mma'}}
+                                </p></div>
+                                <div ng-if="field.label != 'Fecha'">
+                                    <p>{{record | getter: field | picker: field.type}}</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- PAGINATOR -->
+        <div
+			class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large">
+			<div class="slds-m-around--medium">
+				<div class="slds-grid slds-p-top--small">
+					<div class="slds-grid slds-col">
+						<label class="slds-form-element__label">Filas por página</label>
+						<div class="slds-form-element__control">
+							<div class="slds-select_container">
+								<select class="slds-select"
+									ng-options="item for item in numberOfRowsOption"
+									ng-model="itemsPerPage" ng-change="groupToPages(itemsPerPage)">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="slds-col"></div>
+					<div class="slds-col">
+						<div class="slds-form-element slds-button-group pull-right"
+							role="group">
+							<button class="slds-button slds-button--neutral" title="Previous"
+								ng-click="goToPage(previousPage);"
+								ng-disabled="currentPage == 0">« Anterior</button>
+							<button ng-repeat="n in currentRange"
+								class="slds-button slds-button--neutral" ng-click="goToPage(n);"
+								ng-disabled="n == currentPage">{{n + 1}}</button>
+							<button class="slds-button slds-button--neutral"
+								ng-click="goToPage(nextPage);"
+								ng-disabled="currentPage == pagedItems.length - 1">Siguiente
+								»</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+    
+    </div>
+    
+        <script>
+       
+            
+    </script>
+</div>

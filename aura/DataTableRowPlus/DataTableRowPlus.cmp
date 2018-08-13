@@ -1,0 +1,26 @@
+<aura:component extensible="true" >
+    
+    <!-- Scripts -->
+    <ltng:require styles="/resource/et4ae5__SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    
+    <!-- Handlers -->
+    <aura:handler event="et4ae5:DataTablePlusPaginationUpdate" action="{!c.displayRowUpdate}" />
+    <aura:handler event="et4ae5:DataTablePlusSearch" action="{!c.upddateIndex}" />
+    
+    <!-- Events -->
+    <aura:registerevent name="UpdateRecord" type="et4ae5:UpdateRecord" />
+
+    <!-- External Attributes -->
+    <aura:attribute name="record" type="sObject" required="true" />
+    <aura:attribute name="page" type="Integer" required="true" />
+    <aura:attribute name="itemsperpage" type="Integer" required="true" />
+    <aura:attribute name="index" type="String" required="true" />
+    <aura:attribute name="highindex" type="String" required="true" />
+    <aura:attribute name="lowindex" type="String" required="true" />
+
+    <!-- Component Body -->
+    <tr aura:id="row" class="slds-hint-parent">
+        {!v.body}
+    </tr>
+
+</aura:component>

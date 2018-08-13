@@ -1,0 +1,53 @@
+<!-- <div>
+	<pre>{{control.vlcSI[control.propSetMap.itemsKey] |json}}</pre> 
+</div>    -->
+
+<!-- <div 
+	ng-if="!control.vlcSI[control.propSetMap.itemsKey] && bpTree.response.RepairHistoryImei == bpTree.response['Step1-1'].Block2.IMEICode"
+	style="width: 100%;"> 
+	<p style="font-weight: bold; color: #ff0000;">No existen reparaciones previas para este equipo.</p>
+</div> -->
+
+
+<table 
+	ng-if="control.vlcSI[control.propSetMap.itemsKey] && bpTree.response.showRepairHistory"
+	class="slds-table slds-table--bordered slds-table--cell-buffer techCare-RepairHistory">
+	<thead>
+		<tr class="slds-text-title--caps">
+			<th scope="col">
+				<div class="slds-truncate" title="Description">Fecha de creación</div>
+			</th>
+			<th scope="col">
+				<div class="slds-truncate" title="Repair">Soluciones</div>
+			</th>
+			<th scope="col">
+				<div class="slds-truncate" title="OpType">Tipo de Operación</div>
+			</th>
+			<th scope="col">
+				<div class="slds-truncate" title="Status">Estado</div>
+			</th>
+			<th scope="col">
+				<div class="slds-truncate" title="Case">N* de gestión</div>
+			</th>
+		</tr>
+	</thead>
+	<tbody class="techCare-RepairHistory-tbody">
+		<tr ng-repeat="i in control.vlcSI[control.propSetMap.itemsKey] | orderBy: '-CreatedDate'">
+			<td data-label="Description">
+				<div class="" title="Description">{{i.CreatedDate | date: "dd/MM/y"}}</div>
+			</td>
+			<th scope="row" data-label="Name">
+				<div class="" ng-repeat="repair in i.Repairs">- {{repair.Name}}</div>
+			</th>
+			<th scope="row" data-label="OpType">
+				<div class="" title="OpType">{{i.OperationType}}</div>
+			</th>
+			<th scope="row" data-label="Status">
+				<div class="" title="Status">{{i.CaseStatus}}</div>
+			</th>
+			<td data-label="Price">
+				<div class="" title="Case">{{i.CaseNumber}}</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

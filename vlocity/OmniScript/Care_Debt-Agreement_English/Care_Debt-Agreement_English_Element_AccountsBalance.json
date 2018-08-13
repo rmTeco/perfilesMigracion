@@ -1,0 +1,100 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__InternalNotes__c": "SetCountValidBillingAccounts &gt; 0",
+    "%vlocity_namespace%__Level__c": 1,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-debtAgreement",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Care/Debt Agreement/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 1,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/Care/Debt Agreement/English",
+        "Name": "Step-SelectBillingAccount",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Care/Debt Agreement/English/Step-SelectBillingAccount",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "Step-SelectBillingAccount",
+    "%vlocity_namespace%__ParentElementType__c": "Step",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "ta-care-radio-button-list",
+        "accessibleInFutureSteps": true,
+        "customOptions": {
+            "addNewItem": {
+                "allow": "AllowNewBillingAccount",
+                "text": "Nueva cuenta"
+            },
+            "childrenList": {
+                "collectionValues": "Assets",
+                "headerText": "Ver servicios contratados",
+                "params": [
+                    "Name"
+                ],
+                "text": "{0}"
+            },
+            "enabledRecord": "isValidBillingAccount",
+            "fields": [
+                {
+                    "emptyTextMessage": "No posee dirección de facturación",
+                    "params": [
+                        "BillingStreet"
+                    ],
+                    "text": "{0}"
+                },
+                {
+                    "emptyTextMessage": "Monto a financiar: $100",
+                    "params": [
+                        "saldoVencido"
+                    ],
+                    "text": "Monto a financiar: ${0}"
+                }
+            ],
+            "filters": [
+            ],
+            "header": {
+                "params": [
+                    "AccountIntegrationId"
+                ],
+                "text": "Cuenta: {0}"
+            },
+            "radioGroupLabel": "Seleccioná la cuenta destino:",
+            "selectedItemPath": "selectedBillingAccount"
+        },
+        "dataJSON": false,
+        "itemsKey": "recSet",
+        "label": null,
+        "maxCompareSize": 4,
+        "modalConfigurationSetting": {
+            "modalController": "ModalProductCtrl",
+            "modalHTMLTemplateId": "vlcProductConfig.html",
+            "modalSize": "lg"
+        },
+        "modalController": "ModalInstanceCtrl",
+        "modalHTMLTemplateId": "vlcModalContent.html",
+        "modalSize": "",
+        "postTransformBundle": "",
+        "preTransformBundle": "",
+        "remoteClass": "",
+        "remoteMethod": "",
+        "remoteOptions": {
+            "postTransformBundle": "",
+            "preTransformBundle": ""
+        },
+        "remoteTimeout": 30000,
+        "required": true,
+        "responseJSONNode": "",
+        "responseJSONPath": "",
+        "selectMode": "Single",
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "show": null
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Selectable Items",
+    "Name": "AccountsBalance",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Care/Debt Agreement/English/AccountsBalance"
+}

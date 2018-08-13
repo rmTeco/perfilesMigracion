@@ -1,0 +1,26 @@
+<apex:page docType="html-5.0" standardController="Order" extensions="OrderGetMilestoneExtension">
+    <style>
+        .status {
+            font-size: 12px;
+            float:left;
+            height: 25px;
+            vertical-align: center;
+        }
+        
+        .content-button {
+            float:left;
+            margin-left: 10px;
+        }
+        
+        .hasMotif
+        {
+            margin : 0px;
+        }
+    </style>
+    <apex:form id="changeStatusForm">
+        <div class="status">{!sendStatus}</div> 
+        <div class="content-button">
+            <apex:commandButton action="{!getMilestone}" value="Get Status"/>
+        </div>
+    </apex:form>
+</apex:page>

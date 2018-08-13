@@ -1,0 +1,91 @@
+<!--<pre>1 {{obj.Balance.TotalUnidadesLibres|json}}</pre>-->
+ <!--  <pre>2 {{data|json}}</pre>
+   <div ng-if="obj.Family =='Internet'">
+       <pre>3 {{uniqueLayoutId}}</pre>
+   </div>-->
+<section class="console-card active" 
+   ng-class="{'expired': (obj.Status != 'Active'), 'selected': isSelected(cardIndex)}"
+   data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" 
+   hotkey-layout-card
+   ng-controller="cardAssetPrepaidController">
+   <div class="card-top" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+      <div class="card-top-header">
+         <div class="header-left">
+            <h2 class="slds-text-heading_medium" tooltip-placement="bottom" tooltip="{{obj.Name}}" style="text-align: right;">
+               {{obj.Name}}
+            </h2>
+            <span class="slds-text-heading_medium expired-date" ng-class="{'expired-pink': (obj.Status != 'Active' || obj.BundleStatus != 'Active')}"></span>
+            <span class="slds-text-body_regular expired-title">Fecha de activación: {{obj.ActivationDate | date:'dd/MM/yyyy'}}</span>
+         </div>
+         <div class="header-right">
+            <div style="text-align: right;">
+               <h2 class="slds-text-heading_medium" tooltip-placement="bottom" tooltip="{{obj.LineNumber}}">
+                  {{obj.LineNumber}}
+               </h2>
+            </div>
+            <span class="slds-text-body_regular account-number slds-p-bottom--xx-small" style="text-align: right;width: 100%;">Línea</span>
+         </div>
+      </div>
+      <!--<div>-->
+      <!--<span class="account-number">#{{obj.OrderNumber}}</span>-->
+      <!--<span class="expires">-->
+      <!--<i ng-if="expiresSoon(card.expires, 30)" tooltip="Last modified" class="icon icon-v-warning-cirlce">
+         </i>-->
+      <!--<span class="expired-title">Expiración</span>-->
+      <!--</div>-->
+      <!--</span>-->
+   </div>
+   <div class="card-info">
+      <ul class="actions">
+         <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:4)">
+            <a href="#" ng-click="performAction(action)" hotkey-card-action>
+            <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+            <span ng-if="action.imageRef">
+            <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+            </span>
+            <span class="slds-text-body_regular">{{action.displayName}}</span>
+            </a>
+         </li>
+      </ul>
+      <ul class="details" ng-click="performFlyout(uniqueLayoutId + '-card-'+ cardIndex)">
+         <li class="detail" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+            <!--<span class="detail-label">{{obj | getter: field: 'label' | picker: field.type}}</span>-->
+            <span class="slds-text-body_regular value">{{obj[field.relationshipName]['Name']}}</span>
+            <span class="slds-text-body_regular detail-label">{{field.label}}</span>
+            <span class="slds-text-body_regular value" ng-if="!obj[field.relationshipName]">
+               <!--{{obj[field.name]}}-->
+                <!--<span ng-if="obj.Balance.totalUnidadesLibres != null || field.label == 'Estado'">-->
+                   {{obj | getter: field | picker: field.type}}
+                <!--</span>-->
+                <span ng-if="obj.Balance.totalesBalance == null && field.label != 'Estado'">
+                   Información no disponible
+                </span>
+                
+                <span ng-if="field.label == 'Internet disponible' && obj.Balance.totalesBalance != null">
+                   MB
+                </span>
+               
+                <span ng-if="field.label == 'Estado'" style="padding-left: 5px; display:inline-block;">
+                  <span ng-if="obj.Status == 'Suspended'" style="position:relative; display:inline-block">
+                       
+                     <div class="slds-form-element information" style="display:inline-block;">
+                        <div class="slds-form-element__icon slds-align-middle" style="display:inline-block;">
+                           <button class="slds-button slds-button--icon" aria-describedby="help" title="Help" style="background-color: white;color: #BBBBBF;border-radius: 100%;border-color: #BBBBBF;width:16px;height:16px;top:-3px;left:-6px">
+                           i
+                           </button>
+                        </div>
+                     </div>
+                     <div class="slds-popover slds-popover--tooltip slds-nubbin--bottom-left" role="tooltip" id="help" style="position:absolute;background-color: #666666; top:-48px;left:-10px;width:100px;display:none;">
+                        <div class="slds-popover__body">{{(obj.Sub_Status === 'Fraude') ? 'Administrativa' : obj.Sub_Status}}</div>
+                     </div>
+                  </span>
+                </span>
+            </span>
+            <span class="slds-text-body_regular value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</span>
+            <span class="slds-text-body_regular value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</span>
+         </li>
+         <!--<span class="slds-text-body_regular detail-label">Internet disponible</span>
+         <span class="slds-text-body_regular value">20 MB</span>-->
+      </ul>
+   </div>
+</section>

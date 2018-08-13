@@ -1,0 +1,434 @@
+<apex:page sidebar="false" controller="SCP_Certa_GC.accountOverallRelationshipWindow" tabStyle="Strategic_Client_Plan__tab">
+    
+    <c:SCPMenu ></c:SCPMenu>
+    
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+    
+    <style>
+        .inlineEditWriteOn, .inlineEditWrite {
+        padding-right: 15px;
+        }
+        
+        .inputFullWidth input {
+        width: 100%;
+        }
+        
+        .label-link a {
+        color: white;
+        }
+        
+        .inlineEditUndo {
+        display: none;
+        }
+        
+        .inlineEditLockOn:hover {
+        background: rgba(0, 0, 0, 0) url("/img/func_icons/util/lock12.gif") no-repeat scroll right 2px;
+        }
+        .inlineEditWriteOn {
+        background: rgba(0, 0, 0, 0) url("/img/func_icons/util/pencil12.gif") no-repeat scroll right 2px;		    
+        }
+        
+        .pbSubheader h3 {
+        display: inline;
+        margin-left: 5px;
+        font-weight: bold;
+        }
+        
+        .pbSubheader.brandTertiaryBgr.first.tertiaryPalette {
+        background-color: transparent;
+        border-width: 2px 0 0;
+        border-style: solid;
+        color: #27282e;
+        padding: 4px 3px;
+        }
+        
+        .hideListButton.hideShowSection {
+        background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 -11px no-repeat;
+        padding-top: 13px;
+        margin-top: -8px;
+        }
+        
+        .hideShowSection.showListButton {
+        background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 0 no-repeat;
+        padding-top: 13px;
+        margin-top: -8px;
+        }
+        
+        .separator {
+        width: 100%;
+        margin-top: 50px;
+        }
+        
+        #icons-table {
+        width:100%;
+        }
+        
+        #icons-table td {
+        text-align: center;            
+        max-width: 90px;
+        vertical-align: top;
+        padding-top: 5px;
+        border: 0px solid #539fc6;
+        }
+        
+        #icons-table td.selected {
+        border: 2px solid #539fc6;
+        }    
+        
+        .icon-sectors {
+        width: 120px;
+        cursor: pointer;
+        }
+        
+        .hiddenTable {
+        display: none;
+        }
+        
+        .solutionTable th {
+        vertical-align: top ! important;
+        white-space: normal ! important;
+        }
+    </style>
+    
+    <script  type="text/javascript">
+    $j = jq213;
+    
+    $j(document).ready(function() {
+
+        
+        $j(".icon-sectors").click(function(){
+            
+            var parent = $j(this).parent();
+            var div = $j("."+parent.attr("id"));
+            if (div.css("display") == "block") {
+                div.fadeOut();
+                parent.removeClass('selected');
+            } else {
+                div.fadeIn();
+                parent.addClass('selected');
+            }
+        });
+                
+            });
+    
+    function ajaxshow(){
+        $j(".ajaxloader").show();
+    }    
+    function ajaxstop(){
+        $j(".ajaxloader").hide();
+    }
+    
+    function showInput(){}
+    </script>
+    
+    <apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1">
+        <apex:pageMessages id="errorMsg"/>
+        <apex:outputPanel layout="block"  styleClass="panel panel-default">
+            <apex:form id="Form">
+                <apex:outputPanel layout="block"  styleClass="panel-heading">
+                    <h3 class="panel-title">
+                        <span style="float:left;">
+                            {!$Label.scp_certa_gc__overall_relationship}
+                        </span>
+                        <c:tutorial />
+                        <span style="float:left;">
+                            <c:showVideo />
+                        </span>
+                    </h3>
+                    <div class="row paddingRight">
+                        <apex:actionFunction action="{!SaveChanges}" name="SaveChanges" rerender="pageContent,errorMsg" status="renderMeStatus"/>
+                        <div class="btn-group pull-right" role="group" aria-label="...">	    					
+                            <apex:outputText rendered="{!canEdit}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                                    <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                                </button>
+                            </apex:outputText>
+                        </div>
+                    </div>	    			
+                </apex:outputPanel>
+                
+                <br/><br/>
+                <table id="icons-table">
+                    <tr>
+                        <td id="hidden-mainCompetitors">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/market-flow-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__main_competitors}</h2>
+                        </td>
+                        <td id="hidden-swot">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/find-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__swot}</h2>
+                        </td>
+                        <td id="hidden-csat">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/order-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__csat}</h2>
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/>
+                <br/><br/>
+                
+                <apex:outputPanel layout="block" styleClass="panel-body" id="pageContent">
+                    <apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="showInput(); ajaxstop();"/>
+                    <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+                        <img src="{!$Resource.AjaxLoader}"/><br/>Loading...
+                    </div>
+                    
+                    <!-- Competidores -->
+                    <div class = "hiddenTable hidden-mainCompetitors">
+                    <h2>{!$Label.main_competitors}</h2>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            <tr>                       
+                                <th style="min-width: 250px;">
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Account_Competitor__c.fields.Name.label}" />                         
+                                </th>
+                                <th style="width:100%;">                           
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Account_Competitor__c.fields.SCP_Certa_GC__Fact__c.label}" />
+                                </th>
+                                <th style="min-width:230px; text-align: center;">                         
+                                    <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}" />
+                                </th>
+                                <th style="width:75px;">                          
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!newCompetitors}" var="item">
+                                <tr>                                           
+                                    <td class="inputFullWidth">
+                                        <apex:outputField value="{!item.Name}">
+                                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                        </apex:outputField>
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!item.SCP_Certa_GC__Fact__c}">
+                                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                        </apex:outputField>
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <apex:outputField value="{!item.LastModifiedDate}" />
+                                    </td>
+                                    <td style="text-align: center;">
+                                        <apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__delete}"  reRender="pageContent,errorMsg" status="renderMeStatus" action="{!DeleteCompetitor}" rendered="{!canEdit && item.id != null}">
+                                            <apex:param assignTo="{!delid}" name="delid" value="{!item.id}"/>
+                                        </apex:commandButton>                     
+                                    </td>                 
+                                </tr>
+                            </apex:repeat>
+                        </tbody>                           
+                    </table>
+                    <apex:outputText rendered="{!canEdit}">
+                        <apex:actionFunction action="{!add}" name="add" rerender="pageContent,errorMsg" status="renderMeStatus" />
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+                            <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.add}&nbsp;{!$Label.Competitor} 
+                        </button>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!canEdit}"><div style="clear:both; text-align:center; font-style: italic;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+                    </div>
+                        
+                    <!-- FODA -->
+                    <div class = "hiddenTable hidden-swot">
+                    <h2>{!$Label.swot}</h2>
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">{!$Label.type}</th>
+                                <th style="width: 20%;">{!$Label.Brand}</th>
+                                <th style="width: 20%;">{!$Label.Product_Services}</th>
+                                <th style="width: 20%;">{!$Label.people}</th>
+                                <th style="width: 20%;">{!$Label.Other}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>{!$Label.strenght}</th>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Brand_Strengths__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Products_Services_Strengths__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__People_Strengths__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Other_Strengths__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{!$Label.scp_certa_gc__weakness}</th>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Brand_Weakness__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Products_Services_Weakness__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__People_Weakness__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Other_Weakness__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{!$Label.scp_certa_gc__opportunities}</th>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Brand_Opportunities__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Products_Services_Opportunities__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__People_Opportunities__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Other_Opportunities__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>{!$Label.scp_certa_gc__threats}</th>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Brand_Threats__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Products_Services_Threats__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__People_Threats__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td>
+                                    <apex:outputField value="{!account.SCP_Certa_GC__Other_Threats__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <apex:outputText rendered="{!canEdit}"><div style="clear:both; text-align:center; font-style: italic;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+                    </div>
+                        
+                    <!-- Satisfaccion cliente -->
+                    <div class = "hiddenTable hidden-csat">
+                    <h2>{!$Label.csat}</h2>                
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>                                          
+                            <tr>
+                                <th style="width:20%"></th>
+                                <th style="width:20%">{!$label.Unit}</th>
+                                <th style="text-align:right;width:20%">{!(year)}</th>
+                                <th style="text-align:right;width:20%">{!(year-1)}</th>
+                                <th style="text-align:right;width:20%">{!(year-2)}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>{!$Label.csat}</th>
+                                <td class="inputFullWidth">
+                                    <apex:outputField style="width:100%;" value="{!account.SCP_Certa_GC__CSAT_Unit__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td style="text-align:right;" class="inputFullWidth">
+                                    <apex:outputField value="{!account.SCP_Certa_GC__CSAT_Current_Year__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>
+                                <td style="text-align:right;" class="inputFullWidth">
+                                    <apex:outputField value="{!account.SCP_Certa_GC__CSAT_Last_Year__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>                    
+                                <td style="text-align:right;" class="inputFullWidth">
+                                    <apex:outputField value="{!account.SCP_Certa_GC__CSAT_Second_To_Last_Year__c}">
+                                        <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" rendered="{!canEdit}"/>
+                                    </apex:outputField>
+                                </td>                    
+                            </tr>                
+                        </tbody>
+                    </table>
+                    <apex:outputText rendered="{!canEdit}"><div style="clear:both; text-align:center; font-style: italic;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+                    </div>    
+                        
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" style="z-index:9999;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">{!$Label.add}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <table style="border-collapse: separate;border-spacing: 5px; width: 100%;">
+                                        <tr>
+                                            <td style="text-align: right;">
+                                                <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Account_Competitor__c.fields.Name.label}" />:
+                                            </td>
+                                            <td style="text-align: left;">
+                                                <apex:inputField style="width:335px;" value="{!newCompetitor.Name}"/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: right;">
+                                                <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Account_Competitor__c.fields.SCP_Certa_GC__Fact__c.label}" />:
+                                            </td>
+                                            <td style="text-align: left;">
+                                                <apex:inputField style="width:335px;" value="{!newCompetitor.SCP_Certa_GC__Fact__c}"/><br/>
+                                            </td>
+                                        </tr>
+                                    </table>		        
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="add()">{!$Label.add}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>	
+                </apex:outputPanel>
+                <apex:outputPanel layout="block"  styleClass="panel-footer">
+                    <div class="row paddingRight">
+                        <div class="btn-group pull-right" role="group" aria-label="...">	    					
+                            <apex:outputText rendered="{!canEdit}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                                    <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                                </button>
+                            </apex:outputText>
+                        </div>
+                    </div>	    			
+                </apex:outputPanel>
+            </apex:form>
+            <c:FastTask page="{!$Label.scp_certa_gc__overall_relationship}" account="{!account.id}"/>
+            <chatter:feed entityId="{!Account.Id}"/>
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:page>

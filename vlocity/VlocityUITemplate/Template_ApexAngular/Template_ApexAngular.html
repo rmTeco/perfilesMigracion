@@ -1,0 +1,64 @@
+<div class="slds-container--fluid" ng-repeat="o in control.vlcSI[control.itemsKey]" >
+
+    <button id="btnEdit" class="slds-button slds-button--brand btnPersonal" ng-click='onSelectItem(control, o, $index, this, true)' ng-class="{'icon-v-check': p.vlcSelected}" style="display:none" onclick="mostrarEdit()" >Editar</button>
+    
+    <button id="btnSave" class="slds-button slds-button--destructive btnPersonal" ng-click='onSelectItem(control, o, $index, this, true)' ng-class="{'icon-v-check': p.vlcSelected}" onclick="save()">Guardar</button>
+   
+      
+      
+    <div class="slds-box boxPersonal slds-container--fluid" style="margin-top:4% !important;" ng-repeat="p in o.ServicesStatus">
+        
+        <div class="slds-text-heading--medium" id="nombreCategoria">
+            <h3 class="slds-text-heading--large">{{p.service}}</h3>
+        </div>
+        
+        <table class="tablaEntidades " >
+            
+            <tr ng-repeat="i in p.io">
+                
+                <td id="nombreEntidad" >
+                  <div class="marginTop">{{i.label}}</div> 
+                </td>
+                
+                <td>
+                    <div class="slds-select_container marginTop">
+                        <select class="slds-select " onchange='mostrarMinMax(this)' id="{{i.id}}">
+                             <option ></option>
+                             <option ng-repeat="s in i.status">{{s.label}}</option>
+                        </select>
+                    </div>
+                </td>
+                
+                <td class="rango marginTop" id="colEdit">
+                    <div ng-repeat="s2 in i.status" >
+                        <div style="display:none;" class="minMaxClass{{i.id}}" id="div{{i.id}}{{::$index+1}}">
+                            <div class="marginTop">
+                            <input class="slds-input inps " type="text" ng-model="s2.min" />
+                            <input class="slds-input inps " type="text" ng-model="s2.max" />
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                
+                <td class="rango marginTop" id="colLabel">
+                    <div ng-repeat="s2 in i.status">
+                    
+                        <div style="display:none;" class="minMaxClass{{i.id}}" id="div{{i.id}}{{::$index+1}}">
+                            <div class="marginTop">
+                            <div class="slds-input inps " >
+                                {{s2.min}}
+                            </div>
+                            <div class="slds-input inps " >
+                                {{s2.max}}
+                            </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </td>
+                
+            </tr>
+        </table>
+
+    </div>
+</div>

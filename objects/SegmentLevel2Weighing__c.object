@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>#Sprint16 #Marketing Lista de Segmentos y su ponderación</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Grouper__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Define si el segmento es agrupador cuando haya segmento compuesto.
+Ejemplo: Sólo Movil + Hogar = Hogar Convergente (agrupador)
+Las familias de producto que tengan asignado Hogar deberán tener asignado también su agrupador para transformarlo en Hogar Convergente en caso que haya otro producto que no aplique al hogar.</description>
+        <externalId>false</externalId>
+        <label>Agrupador</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Segment__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Nombre del Segmento a ponderar</description>
+        <externalId>false</externalId>
+        <label>Segmento</label>
+        <length>35</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Weighing__c</fullName>
+        <description>Ponderación del segmento</description>
+        <externalId>false</externalId>
+        <label>Ponderación</label>
+        <precision>3</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Ponderación de Segmento</label>
+    <listViews>
+        <fullName>vista_de_flor</fullName>
+        <columns>NAME</columns>
+        <columns>Weighing__c</columns>
+        <columns>Grouper__c</columns>
+        <columns>Segment__c</columns>
+        <columns>SETUP_OWNER_NAME</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>vista de flor</label>
+        <language>es</language>
+    </listViews>
+    <visibility>Public</visibility>
+</CustomObject>

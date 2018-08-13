@@ -1,0 +1,68 @@
+[
+    {
+        "%vlocity_namespace%__Action__c": "Add",
+        "%vlocity_namespace%__ConditionData__c": "{\r\n    \"name\": \"SimpleCondition\",\r\n    \"type\": \"OR\",\r\n    \"singleconditions\": [\r\n        {\r\n            \"conditionname\": \"Condition 1\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Cambio de SIM\",\r\n            \"product\": {}\r\n        },\r\n        {\r\n            \"conditionname\": \"Condition 2\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Cambio de SIM por siniestro\",\r\n            \"product\": {}\r\n        },\r\n        {\r\n            \"conditionname\": \"Condition 3\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Venta\",\r\n            \"product\": {}\r\n        },\r\n        {\r\n            \"conditionname\": \"Condition 4\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Alta\",\r\n            \"product\": {}\r\n        }\r\n    ]\r\n}",
+        "%vlocity_namespace%__GlobalKey__c": "52c82348-8e7f-d7dc-72df-16406c7ba2b9",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "9ae78031-f4db-fdeb-8524-ab55d130904a",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/Vmi.net new inventory orch plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "Vmi.net new inventory orch scenario",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/Vmi.net new inventory orch scenario/Product2/f6884c4a-8443-baab-3161-f12b9f20c824"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Add;Suspend",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "5a50f025-f010-6798-7f94-8f1c02c08266",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "60d96d75-5282-4f85-60f3-e3335b3637a8",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/Vmi.net Suspend Orch Plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "Suspend-Siniestro",
+        "Name": "Vmi.net Suspend",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/Vmi.net Suspend/Product2/f6884c4a-8443-baab-3161-f12b9f20c824"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Disconnect;Resume",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "ed5596d0-620e-9803-b5c1-97fac08143bf",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "d1bf3686-487e-7f9d-9a8a-fd1d15af104c",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/Vmi.net Resume Orch Plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/f6884c4a-8443-baab-3161-f12b9f20c824",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "Resume-Siniestro",
+        "Name": "Vmi.net Resume",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/Vmi.net Resume/Product2/f6884c4a-8443-baab-3161-f12b9f20c824"
+    }
+]

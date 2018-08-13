@@ -1,0 +1,203 @@
+<apex:page controller="vlocity_cmt.CMTAdminController" showHeader="true" sidebar="true" standardStylesheets="false" docType="html-5.0" title="{!$Label.vlocity_cmt__vlocitycmtadministration}">
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ng="http://angularjs.org" ng-app="CMTAdmin">
+		<head>
+			<base href="/"/>
+			<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.slds, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+			<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.CMTAdminCss)}" />
+			<script type="text/javascript" src="/support/console/31.0/integration.js"></script>
+			<script type="text/javascript" src="/soap/ajax/31.0/connection.js"></script>
+			<script type="text/javascript" src="{!URLFOR($Resource.vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script type="text/javascript" src="{!URLFOR($Resource.SldsAngular)}"></script>
+            <script type="text/javascript" src="{!URLFOR($Resource.CMTAdmin)}"></script>
+            <script type="text/javascript" src="{!$Resource.EPCAdmin}"></script>
+            <script type="text/javascript" src="{!$Resource.FieldLookupAngDirective}"></script>
+            <script type="text/javascript" src="{!$Resource.AttributeLookupAngDirective}"></script>
+		</head>
+		<body ng-controller="CMTAdminController">
+			<div class="via-slds">
+                <div class="slds-page-header slds-theme_shade" role="banner">
+                    <div class="slds-media slds-media_center">
+                        <div class="slds-media__figure">
+                            <svg aria-hidden="true" class="slds-icon">
+                                <use xlink:href="{{SLDSICON.SETTINGS}}"></use>
+                            </svg>
+                        </div>
+                        <div class="slds-media__body">
+                            <p class="slds-page-header__title slds-truncate slds-align-middle" title="Vlocity Admin">{{labels.CMTAdminHeaderLabel}}</p>
+                            <p class="slds-text-body_small page-header__info">{{labels.CMTAdminHeaderDescLabel}}</p>
+                        </div>
+                    </div>
+                </div>
+                <ng-include src="activeMenu.getActiveMenu()"></ng-include>
+                <div class="slds-spinner_container" ng-show="spinner.getSpinner()">
+                    <div class="slds-spinner_brand slds-spinner slds-spinner_large" aria-hidden="false" role="alert">
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+			</div>
+			<script type="text/javascript">
+				'use strict';
+				window.j$ = jQuery.noConflict();
+                window.$ = jQuery.noConflict();
+				//Define remote actions.
+				var remoteActions = {
+                    getAdminOptions: {
+                        action: "{!$RemoteAction.CMTAdminController.getAdminOptions}",
+                        config: {escape: false}
+                    },
+                    getPageList: {
+                        action: "{!$RemoteAction.CMTAdminController.getPageList}",
+                        config: {escape: false}
+                    },
+                    getCustomSettingsMetadata: {
+                    	action: "{!$RemoteAction.CMTAdminController.getCustomSettingsMetadata}",
+                    	config: {escape: false}
+                    },
+                    getCustomSettingsRecord: {
+                    	action: "{!$RemoteAction.CMTAdminController.getCustomSettingsRecord}",
+                    	config: {escape: false}
+                    },
+                    saveCustomSettings: {
+                    	action: "{!$RemoteAction.CMTAdminController.saveCustomSettings}",
+                    	config: {escape: false}
+                    },
+                    getObjectList: {
+                    	action: "{!$RemoteAction.CMTAdminController.invokeMethod}",
+                    	config: {escape: false}
+                    },
+                    deleteCustomSettings: {
+                    	action: "{!$RemoteAction.CMTAdminController.deleteCustomSettings}",
+                    	config: {escape: false}
+                    },
+                    adminInvokeMethod: {
+                    	action: "{!$RemoteAction.CMTAdminController.invokeMethod}",
+                    	config: {escape: false}
+                    },
+                    telcoAdminConsloleInvokeMethod: {
+                        action: "{!$RemoteAction.CMTAdminController.telcoAdminConsloleInvokeMethod}",
+                        config: {escape: false}
+                    },
+                    testConfigurationsJob: {
+                    	action: "{!$RemoteAction.CMTAdminController.testConfigurationsJob}",
+                    	config: {escape: false}
+                    },
+                    AddXLITime: {
+                    	action: "{!$RemoteAction.CMTAdminController.AddXLITime}",
+                    	config: {escape: false}
+                    }
+                };
+                //Config data from APEX
+                var configData = {
+                	adminClassType: "{!adminUtilitiesClassType}",
+                    telcoAdminConsoleClassType: "{!telcoAdminConsoleClassType}",
+                	nsPrefix: "{!nsPrefix}",
+                	waitingImage: "{!$Resource.WAITGIF}",
+                    adminInvokeMethod: "{!$RemoteAction.CMTAdminController.invokeMethod}"
+                }
+                //labels
+                var labels = {
+                    CMTAdminHeaderLabel: "{!$Label.vlocity_cmt__vlocitycmtadministration}",
+                    CMTAdminHeaderDescLabel: "{!$Label.CMTAdminConfigurations}",
+                    AccountHierarchyMaintenance:"{!$Label.AccountHierarchyMaintenance}",
+                    JobRestoreAccountHierarchy: "{!$Label.JobRestoreAccountHierarchy}",
+                    StartDT: "{!$Label.StartDT}",
+                    JobName: "{!$Label.JobName}",
+                    ResolveRootAccounts: "{!$Label.ResolveRootAccounts}",
+                    InterfaceImplementationMaintenanceRestore: "{!$Label.InterfaceImplementationMaintenanceRestore}",
+                    InterfaceImplementationMaintenanceMerge: "{!$Label.InterfaceImplementationMaintenanceMerge}",
+                    ProductHierarchyMaintenanceTitle: "{!$Label.ProductHierarchyMaintenanceTitle}",
+                    ProductHierarchyMaintenanceDescription: "{!$Label.ProductHierarchyMaintenanceDescription}",
+                    ProductHierarchyMaintenanceJobName: "{!$Label.ProductHierarchyMaintenanceJobName}",
+                    JobRestoreImplementations: "{!$Label.JobRestoreImplementations}",
+                    MergeInterfaceImplementations: "{!$Label.MergeInterfaceImplementations}",
+                    FieldMapsMaintenance: "{!$Label.FieldMapsMaintenance}",
+                    JobRestoreFieldMaps: "{!$Label.JobRestoreFieldMaps}",
+                    ObjectMapMaintenance: "{!$Label.ObjectMapMaintenance}",
+                    ObjectMapMaintenanceDescription: "{!$Label.ObjectMapMaintenanceDesc}",
+                    BatchValidation: "{!$Label.BatchValidation}",
+                    StartBatchJobValidation: "{!$Label.BatchValidationDesc}",
+                    ResetXLIValiatonData: "{!$Label.ResetXLIValidationData}",
+                    ValidateOrdersReset: "{!$Label.ResetXLIValidationDataDesc}",
+                    ClearManagedPlatformCache: "{!$Label.ClearManagedPlatformCache}",
+                    ClearManagedPlatformCacheDescription: "{!$Label.ClearManagedPlatformCacheDesc}",
+                    RefreshPricebook: "{!$Label.RefreshPricebook}",
+                    RefreshPricebookDescription: "{!$Label.RefreshPricebookDesc}",
+                    InstallDefaultLayouts: "{!$Label.InstallDefaultVlocityObjects}",
+                    InstallDefaultLayoutsDesc:"{!$Label.InstallDefaultVlocityObjectsDesc}",
+                    InstallDefaultPPD: "{!$Label.InstallPricingPlanData}",
+                    InstallDefaultPPDDesc:"{!$Label.InstallPricingPlanDataDesc}",
+                    DeleteDefaultObjectLayouts: "{!$Label.DeleteDefaultObjectLayouts}",
+                    DeleteLayoutsDesc: "{!$Label.DeleteLayoutsObjectClasses}",
+                    CreateDefaultPVB: "{!$Label.CreateDefaultPricingVariables}",
+                    CreateDefaultPVBDesc: "{!$Label.CreateDefaultPricingVariablesDesc}",
+                    GenerateGlobalKey: "{!$Label.GenerateGlobalKeys}",
+                    GenerateGlobalKeyDesc: "{!$Label.GenerateGlobalKeysDesc1} {!$Label.GenerateGlobalKeysDesc2}",
+                    CreateDefaultObjectClass: "{!$Label.CreateObjectClasses}",
+                    CreateDefaultObjectClassDesc: "{!$Label.CreateObjectClassesDesc}",
+                    CreateDefaultLayout: "{!$Label.CreateDefaultLayouts}",
+                    CreateDefaultLayoutDesc: "{!$Label.CreateDefaultLayoutsDesc}",
+                    RootPCIUpgrade: "{!$Label.RootProductChildItemUpgrade}",
+                    RootPCIUpgradeDesc: "{!$Label.RootProductChildItemUpgradeDesc1} {!$Label.RootProductChildItemUpgradeDesc2}",
+                    EnableFeatureError: "{!$Label.EnableFeatureError}",
+                    CancelLabel: "{!$Label.Cancel}",
+                    OKLabel: "{!$Label.Ok}",
+                    InstallLabel: "{!$Label.Install}",
+                    DeprecatedLabel: "{!$Label.Deprecated}",
+                    BackToDashboardLabel: "{!$Label.BackToDashboard}",
+                    XLIAPILabel: "{!$Label.XLIAPI}",
+                    XLIAPIDesc: "{!$Label.XLIAPIDesc1} {!$Label.XLIAPIDesc2}",
+                    AddXLILabel: "{!$Label.AddXLI}",
+                    CloseLabel: "{!$Label.Close}",
+                    SearchLabel: "{!$Label.Search}",
+                    SelectLabel: "{!$Label.Select}",
+                    LabelLabel: "{!$Label.Label}",
+                    ApiVersionLabel: "{!$Label.ApiVersion}",
+                    NoPageFoundError: "{!$Label.NoPageFoundError}",
+                    SaveLabel: "{!$Label.Save}",
+                    AddLabel: "{!$Label.Add}",
+                    BasicConfigLabel: "{!$Label.BasicConfigurations}",
+                    BasicConfigDesc: "{!$Label.BasicConfigurationsDesc}",
+                    CheckLabel: "{!$Label.Check}",
+                    EnabledLabel: "{!$Label.Enabled}",
+                    DisabledLabel: "{!$Label.Disabled}",
+                    CustomSettingsError: "{!$Label.CustomSettingsErrorLabel}",
+                    CMTAdminError: "{!$Label.CMTAdminErrorLabel}",
+                    Enable: "{!$Label.Enable}",
+                    Disable: "{!$Label.Disable}",
+                    EnableSettingWarning: "{!$Label.EnableSettingWarning}",
+                    EnableFeatureSuccessMessage: "{!$Label.EnableFeatureSuccessMessage}",
+                    DisableFeatureSuccessMessage: "{!$Label.DisableFeatureSuccessMessage}",
+                    PageSelectionLabel: "{!$Label.PageSelection}",
+                    DeleteCustomSettingsLabel: "{!$Label.DeleteCustomSettingsLabel}",
+                    DeleteCustomSettingsWarningMessage: "{!$Label.DeleteCustomSettingsWarningMessage}",
+                    DeleteLabel: "{!$Label.Delete}",
+                    FieldSelectionLabel: "{!$Label.FieldSelection}",
+                    CMTOptionMaintenanceJobsLabel: "{!$Label.CMTOptionMaintenanceJobsLabel}",
+                    CMTOptionUpgradeJobsLabel: "{!$Label.CMTOptionUpgradeJobsLabel}",
+                    CMTOptionEPCJobsLabel: "{!$Label.CMTOptionEPCJobsLabel}",
+                    CMTOptionFunctionalJobsLabel: "{!$Label.CMTOptionFunctionalJobsLabel}",
+                    CMTOptionPerformanceJobsLabel: "{!$Label.CMTOptionPerformanceJobsLabel}"
+                }
+                var asyncApexJobFieldsLabels = {
+                    status: "{!$ObjectType.AsyncApexJob.Fields.Status.Label}",
+                    totalJobItems: "{!$ObjectType.AsyncApexJob.Fields.TotalJobItems.Label}",
+                    jobItemsProcessed: "{!$ObjectType.AsyncApexJob.Fields.JobItemsProcessed.Label}",
+                    createdDate: "{!$ObjectType.AsyncApexJob.Fields.CreatedDate.Label}",
+                    completedDate: "{!$ObjectType.AsyncApexJob.Fields.CompletedDate.Label}",
+                    extendedStatus: "{!$ObjectType.AsyncApexJob.Fields.ExtendedStatus.Label}"
+                }
+                //Define ICONs
+                var SLDSICON = {
+                    'SETTINGS': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#settings")}',
+                    'RIGHT_ARROW': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#right")}',
+                    'SEARCH': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#search")}',
+                    'EDIT': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#edit")}',
+                    'ADD': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#add")}',
+                    'DELETE': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#delete")}',
+                    'CLOSE': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#close")}'
+                };
+			</script>
+		</body>
+	</html>
+</apex:page>

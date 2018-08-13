@@ -1,0 +1,92 @@
+<div ng-init="idSelected = records.ProfileName == 'FAN_Administracion_de_Ventas' ? 'tab-default-3__item' : 'tab-default-1__item';
+$root.profileName=records.ProfileName;">
+    <vloc-layout layout-name="ta-home-actionBar"></vloc-layout>
+    <div class="slds-tabs--default">
+        <ul 
+            class="slds-tabs--default__nav" 
+            role="tablist">
+            <li 
+                ng-show="records.ProfileName != 'FAN_Administracion_de_Ventas'"
+                class="slds-tabs--default__item" 
+                title="Item One" 
+                role="presentation"
+                ng-class="{'slds-active' : idSelected == 'tab-default-1__item'}">
+                <a
+                    class="slds-tabs--default__link" 
+                    href="javascript:void(0);" 
+                    role="tab" 
+                    tabindex="0" 
+                    aria-selected="true" 
+                    aria-controls="tab-default-1" 
+                    id="tab-default-1__item"
+                    ng-click="idSelected = 'tab-default-1__item'">
+                    Ordenes
+                </a>
+            </li>
+            <li 
+                ng-show="records.UserChannel=='Agentes' && records.ProfileName != 'FAN_Administracion_de_Ventas'"
+                class="slds-tabs--default__item" 
+                title="Item Two" 
+                role="presentation"
+                ng-class="{'slds-active' : idSelected == 'tab-default-2__item'}">
+                <a 
+                    class="slds-tabs--default__link" 
+                    href="javascript:void(0);" 
+                    role="tab" 
+                    tabindex="-1" 
+                    aria-selected="false" 
+                    aria-controls="tab-default-2" 
+                    id="tab-default-2__item"
+                    ng-click="idSelected = 'tab-default-2__item'">
+                    Pendientes de retiro
+                </a>
+            </li>
+            <li 
+                ng-show="records.ProfileName=='FAN_Administracion_de_Ventas'"
+                class="slds-tabs--default__item" 
+                title="Item Three" 
+                role="presentation"
+                ng-class="{'slds-active' : idSelected == 'tab-default-3__item'}">
+                <a 
+                    class="slds-tabs--default__link" 
+                    href="javascript:void(0);" 
+                    role="tab" 
+                    tabindex="-1" 
+                    aria-selected="false" 
+                    aria-controls="tab-default-2" 
+                    id="tab-default-3__item"
+                    ng-click="idSelected = 'tab-default-3__item'">
+                    Ordenes ADV
+                </a>
+            </li>
+        </ul>
+        <div 
+            ng-show="records.ProfileName != 'FAN_Administracion_de_Ventas'"
+            id="tab-default-1" 
+            class="slds-tabs--default__content" 
+            role="tabpanel" 
+            aria-labelledby="tab-default-1__item"
+            ng-class="{'slds-show' : idSelected == 'tab-default-1__item', 'slds-hide' : idSelected != 'tab-default-1__item'}">
+            <vloc-layout layout-name="ta-Sales-ordersByUser"></vloc-layout>
+        </div>
+        
+        <div 
+            ng-show="records.UserChannel=='Agentes' && records.ProfileName != 'FAN_Administracion_de_Ventas'"
+            id="tab-default-2"
+            class="slds-tabs--default__content" 
+            role="tabpanel"
+            aria-labelledby="tab-default-2__item"
+            ng-class="{'slds-show' : idSelected == 'tab-default-2__item', 'slds-hide' : idSelected != 'tab-default-2__item'}">
+            <vloc-layout layout-name="ta-logistic-control-panel--prepareOrder"></vloc-layout>
+        </div>
+        <div 
+            ng-show="records.ProfileName=='FAN_Administracion_de_Ventas'"
+            id="tab-default-3"
+            class="slds-tabs--default__content" 
+            role="tabpanel"
+            aria-labelledby="tab-default-3__item"
+            ng-class="{'slds-show' : idSelected == 'tab-default-3__item', 'slds-hide' : idSelected != 'tab-default-3__item'}">
+            <vloc-layout layout-name="ta-Sales-ordersByUserADV"></vloc-layout>
+        </div>
+    </div>
+</div>

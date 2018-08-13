@@ -1,0 +1,37 @@
+<fieldset class="slds-form-element tax-condition">
+    <legend class="slds-form-element__legend slds-form-element__label tax-condition-billing-accounts">Seleccione las Cuenta(s) de facturación:</legend>
+    <div class="slds-form-element__control slds-m-top--small slds-m-bottom--medium">
+        <div ng-if="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange == 'DNI'">
+            <span class="slds-checkbox slds-m-top--xx-small slds-m-bottom--xx-small" ng-if="bpTree.response.Contact.Consumer.Account.BillingAccounts.length > 0" ng-repeat="billingAccounts in bpTree.response.Contact.Consumer.Account.BillingAccounts | filter: { Status: 'Active' }"> 
+                <input type="checkbox" name="options" ng-attr-id="{{ 'checkbox-' + $index }}" ng-model="billingAccounts.selected" />
+                <label class="slds-checkbox__label" ng-attr-for="{{ 'checkbox-' + $index }}">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label tax-condition-billing-accounts-name">{{billingAccounts.Name}}</span>
+                </label>
+            </span>
+            <span ng-if="bpTree.response.Contact.Consumer.Account.BillingAccounts && bpTree.response.Contact.Consumer.Account.BillingAccounts.length == undefined" class="slds-checkbox slds-checkbox slds-m-top--xx-small slds-m-bottom--xx-small">
+                <input type="checkbox" name="options" ng-attr-id="{{ 'checkbox-' + $index }}" ng-model="bpTree.response.Contact.Consumer.Account.BillingAccounts.selected"/>
+                <label class="slds-checkbox__label" ng-attr-for="{{ 'checkbox-' + $index }}">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label tax-condition-billing-accounts-name">{{bpTree.response.Contact.Consumer.Account.BillingAccounts.Name}}</span>
+                </label>
+            </span>
+        </div>
+        <div ng-if="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange == 'CUIT'">
+            <span class="slds-checkbox slds-checkbox slds-m-top--xx-small slds-m-bottom--xx-small" ng-if="bpTree.response.Contact.Business.Account.BillingAccounts.length > 0" ng-repeat="billingAccounts in bpTree.response.Contact.Business.Account.BillingAccounts | filter: { Status: 'Active' }"> 
+                <input type="checkbox" name="options" ng-attr-id="{{ 'checkbox-' + $index }}" ng-model="billingAccounts.selected" />
+                <label class="slds-checkbox__label" ng-attr-for="{{ 'checkbox-' + $index }}">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label tax-condition-billing-accounts-name">{{billingAccounts.Name}}</span>
+                </label>
+            </span>
+            <span ng-if="bpTree.response.Contact.Business.Account.BillingAccounts && bpTree.response.Contact.Business.Account.BillingAccounts.length == undefined" class="slds-checkbox slds-checkbox slds-m-top--xx-small slds-m-bottom--xx-small">
+                <input type="checkbox" name="options" ng-attr-id="{{ 'checkbox-' + $index }}" ng-model="bpTree.response.Contact.Business.Account.BillingAccounts.selected"/>
+                <label class="slds-checkbox__label" ng-attr-for="{{ 'checkbox-' + $index }}">
+                    <span class="slds-checkbox--faux"></span>
+                    <span class="slds-form-element__label tax-condition-billing-accounts-name">{{bpTree.response.Contact.Business.Account.BillingAccounts.Name}}</span>
+                </label>
+            </span>
+        </div>
+    </div>
+</fieldset>

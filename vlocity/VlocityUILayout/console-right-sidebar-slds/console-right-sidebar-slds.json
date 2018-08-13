@@ -1,0 +1,22 @@
+{
+    "Cards": [
+        "acuity-sidebar-offer-card"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "001o000000SLNueAAH"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name, BillingAddress, Phone, PhotoURL, Type, Industry, Website, %vlocity_namespace%__CustomerValue__c FROM Account WHERE Id = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "console-right-sidebar-slds"
+        }
+    }
+}

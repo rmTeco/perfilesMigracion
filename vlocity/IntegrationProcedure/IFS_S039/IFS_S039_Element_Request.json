@@ -1,0 +1,47 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "IFS_S039",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/IFS/S039/Procedure",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 1,
+    "%vlocity_namespace%__PropertySet__c": {
+        "executionConditionalFormula": "",
+        "extraPayload": {
+        },
+        "failOnStepError": false,
+        "failureConditionalFormula": "",
+        "label": "HTTPAction1",
+        "namedCredential": "",
+        "responseJSONNode": "response",
+        "responseJSONPath": "",
+        "restMethod": "PUT",
+        "restOptions": {
+            "URIEncode": false,
+            "cache": false,
+            "headers": {
+                "Content-type": "Application/Json"
+            },
+            "params": {
+            },
+            "sendBody": true,
+            "timeout": null,
+            "withCredentials": false,
+            "xmlEscapeResponse": false
+        },
+        "restPath": "http://52.67.109.234:8080/S039_updateAccountData/rest/cuenta",
+        "retryCount": 0,
+        "sendJSONNode": "",
+        "sendJSONPath": "body",
+        "type": "Integration"
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Rest Action",
+    "Name": "Request",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/IFS/S039/Procedure/Request"
+}

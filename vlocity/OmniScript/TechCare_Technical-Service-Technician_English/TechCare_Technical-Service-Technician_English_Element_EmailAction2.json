@@ -1,0 +1,87 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-techCare-Technical-Service-Technician",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/TechCare/Technical Service - Technician/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 55,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "attachmentList": "",
+        "controlWidth": 12,
+        "disOnTplt": false,
+        "docList": "",
+        "elementValueMap": {
+        },
+        "emailInformation": {
+            "bccAddressList": [
+            ],
+            "ccAddressList": [
+            ],
+            "emailBody": "<html>\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" lang=\"en\">\n    </head>\n<body><div style=\"padding-left: 20px;\n\t\t\tpadding-right: 20px;\">\n\t<table   border=\"0\" align=\"center\" style=\" font-family: arial,Helvetica, sans-serif;\">\n    \t\t<tbody style=\"background-color: #fff;\">\n\t\t\t<tr>\n\t\t\t\t<td height=\"150\" style=\"background-color: #007c85;font-size:32px;color:#fff;text-align: center;\">Tu presupuesto está listo</td>\n\t\t\t</tr>\n\t\t\t<tr bgcolor=\"#fff\">\n                    \t\t<td style=\" font-family: arial,Helvetica, sans-serif;padding:10px;font-size: 14px;line-height: 19px;\">\n                        \t<p>Hola %Case:Contact:Name%,</p>\n                      \t\t<p>Te escribimos para avisarte que el presupuesto de reparación de tu <b>%Case:Asset:Name%</b> ya está disponible. </p>\n                        \t<p>Hacé <b><a href=\"%link%\" style=\"color:#00b4c5; text-decoration: none;font-size:14px;\"> Click aquí</a></b> para revisarlo.</p>\n                        \n                    \t\t</td>\n                \t</tr><br><tr><td></td></tr>\n               <tr bgcolor=\"#eee\">\n                  <td height=\"150\" valign=\"middle\" align=\"center\"><img src=\"%imagen%\" alt=\"Personal\" height=\"80\" class=\"logo\" /></td>   \n              </tr>\n\n\t\t\t<tr>\n\t\t\t\t<td height=\"20\" style=\"font-size:10px;text-align: center;color:#85929E;\">Éste es un mensaje generado automáticamente. <br> Por favor no lo responda</td>\n\t\t\t</tr></div>\n \n\t\t</tbody>\n\t</table>\n</body>\n</html>",
+            "emailSubject": "Presupuesto de reparación",
+            "setHtmlBody": true,
+            "toAddressList": [
+                "%Email%"
+            ]
+        },
+        "emailTemplateInformation": {
+            "emailTargetObjectId": "",
+            "emailTemplateName": "",
+            "saveAsActivity": false,
+            "whatId": ""
+        },
+        "failureAbortLabel": "Abort",
+        "failureAbortMessage": "Are you sure?",
+        "failureNextLabel": "Continue",
+        "fileAttachments": "",
+        "inProgressMessage": "In Progress",
+        "label": "EmailAction2",
+        "message": {
+        },
+        "postMessage": "Done",
+        "redirectNextLabel": "Next",
+        "redirectNextWidth": 3,
+        "redirectPageName": "",
+        "redirectPreviousLabel": "Previous",
+        "redirectPreviousWidth": 3,
+        "redirectTemplateUrl": "vlcAcknowledge.html",
+        "remoteTimeout": 30000,
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "Mail",
+                        "field": "Case:ContactChannel"
+                    },
+                    {
+                        "condition": "=",
+                        "data": "",
+                        "field": ""
+                    }
+                ]
+            }
+        },
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "staticDocList": [
+        ],
+        "useTemplate": false,
+        "validationRequired": null,
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Email Action",
+    "Name": "EmailAction2",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/Technical Service - Technician/English/EmailAction2"
+}

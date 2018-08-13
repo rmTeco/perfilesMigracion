@@ -1,0 +1,54 @@
+<div class="via-slds" ng-controller="LogisticNotificationsController as lnc" ng-init="lnc.init();">
+    <div class="slds-card slds-m-bottom--small">
+        <div class="slds-card__header slds-grid slds-grid--vertical-align-center">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+              <div class="slds-media__figure">
+                  <vloc-card-icon data="data" obj="obj" size="'medium'"></vloc-card-icon>
+              </div>
+              <div class="slds-media__body slds-truncate">
+                <a href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="{{layoutName}}">
+                  <span class="slds-text-heading--small">{{data.Deck[0].title}}</span>
+                </a>
+              </div>
+            </div>
+        </div>
+        
+        <!--Notificaction Panel-->
+        <div
+            ng-controller="NotificationController as nc"
+            class="taNotificactionPanel"
+            ng-class="{'expanded' : $root.notificationQty > 0}">
+            <a 
+                ng-hide="$root.UserId"
+                ng-href=""
+                ng-click="nc.reloadControlPanel();">
+                {{$root.notificationQty}} Nueva<span ng-show="$root.notificationQty > 1">s</span> Orden<span ng-show="$root.notificationQty > 1">es</span>
+            </a>
+            <a  ng-show="$root.UserId"
+                ng-href=""
+                ng-click="$root.notificationQty = 0">
+                {{$root.notificationQty}} Orden<span ng-show="$root.notificationQty > 1">es</span> Activada<span ng-show="$root.notificationQty > 1">s</span>
+            </a>
+        </div>
+        <!--End-->
+        
+        <div class="slds-card__body cards-container" ng-init="lnc.sortingOrder = '['+'\''+'CreatedDate'+'\''+']'; lnc.reverse = true;  lnc.sortingOrderType = 'date';" >
+            <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer slds-max-medium-table--stacked-horizontal">
+              <thead>
+                <tr class="slds-text-heading--label">
+                  <th ng-repeat="field in cards[0].states[0].fields" scope="col" ng-class="{
+									'slds-is-sorted' : lnc.sortingOrder == field.name,
+									'slds-is-sorted--desc' : lnc.reverse, 'slds-is-sorted--asc': !lnc.reverse
+								}"	>
+
+                      <a ng-click="lnc.sortBy(field)" href="javascript:void(0)"> {{field.label}} <div class="slds-icon_container"><slds-svg-icon sprite="'utility'" size="'x-small'" icon="'arrowdown'" extra-classes="'slds-icon-text-default slds-is-sortable__icon'"></slds-svg-icon></div></a>
+                  </th>
+                  <th class=""></th>
+                </tr>
+              </thead>
+              <tbody vloc-card ng-repeat="card in cards | orderBy:lnc.dateTransform : lnc.reverse" trl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" use-existing-element-type>
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>

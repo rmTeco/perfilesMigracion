@@ -1,0 +1,115 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "": ""
+    },
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['demo_card_formula__c']",
+                    "operator": "!=",
+                    "type": "custom",
+                    "value": "Individual_Family_INS_HealthDental"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "id": "_CommunityAccountClaimInquiry",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "_CommunityAccountChangeAddress",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "_CommunityAccountBillingMaintenance",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "_CommunityEmail",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "_CommunityPayPremium",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "_CommunityPolicyClaim",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "_CommunityAccountPreAuth",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Account-Commercial-New Quote",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Account-New Term App",
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['demo_card_formula__c'] != 'Individual_Family_INS_HealthDental'",
+            "name": "active",
+            "sObjectType": "Account",
+            "templateUrl": "action-grid-card-slds"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['demo_card_formula__c']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Individual_Family_INS_HealthDental"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "id": "Account-SearchPDP",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Account-ChangeAddress",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Account-Edit Profile",
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['demo_card_formula__c'] == 'Individual_Family_INS_HealthDental'",
+            "name": "Health-active",
+            "sObjectType": "Account",
+            "templateUrl": "action-grid-slds-INS-sidebar-ShowNoShow"
+        }
+    ],
+    "title": "Actions"
+}

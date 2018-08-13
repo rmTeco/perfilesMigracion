@@ -1,0 +1,22 @@
+<div class="comp-assets-base-grid">
+    <div class="assets-container slds-grid slds-grid_frame slds-grid_vertical">
+
+        <!-- Only Sky version of Asset component would require header -->
+        <vloc-layout layout-name="comp-assets-header" account-id="{{attrs.accountId}}" ng-if="attrs.groupAssetsByContracts === 'on'"></vloc-layout>
+
+        <div class="slds-col slds-grid slds-wrap slds-small-nowrap slds-p-top_small">
+            <div class="slds-is-relative slds-col slds-grid slds-size_1-of-1 slds-small-size_2-of-3 slds-medium-size_4-of-6 slds-large-size_8-of-12" ng-class="{'slds-small-size_3-of-3 slds-medium-size_6-of-6 slds-large-size_12-of-12': !importedScope.isConfigAttrsPanelEnabled}">
+
+                <vloc-layout layout-name="comp-assets-products" ctrl="AssetsMainController" group-assets-by-contracts="{{attrs.groupAssetsByContracts}}" asset-include-type="{{attrs.assetIncludeType}}" account-id="{{attrs.accountId}}" pricing-mode="{{attrs.pricingMode}}" promotion-mode="{{attrs.promotionMode}}" show-config-panel="{{importedScope.isConfigAttrsPanelEnabled}}"></vloc-layout>
+                
+            </div>
+            
+            <div class="slds-is-relative slds-col slds-grid slds-size_1-of-1 slds-small-size_1-of-3 slds-medium-size_2-of-6 slds-large-size_4-of-12 assets-info-container-wrapper" ng-class="{'assets-product-container-visible': importedScope.isConfigAttrsPanelEnabled}">
+
+                <vloc-layout layout-name="comp-assets-info-panel" ctrl="AssetsInfoPanelController"></vloc-layout>
+
+            </div>
+        </div>
+        
+    </div>
+</div>

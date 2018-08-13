@@ -1,0 +1,48 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" lang="en">
+    <title>Cambio de Clave</title></head>
+<body>
+<table width="100%" border="0" align="center" style=" font-family: arial,Helvetica, sans-serif;">
+    <tbody style="background-color: #fff;">
+    <tr>
+        <td height="63" style="background-color: #00b4c5;"><a href="#"> 
+        <img style="margin:15px 0 0 55px" src="https://resources.personal.com.ar/images/logos/telecom/logo_nuevo_blanco.png">
+        </a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%" border="0" align="center">
+                <tbody>
+                <tr style="margin-top:20px;">
+                    <td style=" font-family: arial,Helvetica, sans-serif;padding:10px;font-size: 24px;line-height: 19px;">
+                        <p><b>Hola <span> {!Receiving_User.FirstName}</span></b></p>
+                    </td>
+                </tr>
+
+                <tr bgcolor="#fff">
+                    <td style=" font-family: arial,Helvetica, sans-serif;padding:10px;font-size: 14px;line-height: 19px;">
+                        <p>Recibiste este eMail porque tenes el caso Nro {!Case.CaseNumber} pendiente de aprobación.</p>                                      
+
+                          <p>Creado por: {!Case.CreatedBy} </p>
+                          <p>Importe: {!Case.vlocity_cmt__Amount__c} </p>
+                          <p>Concepto: {!Case.TipoConcepto__c} </p>                    
+                          <p>Item: {!Case.TipoItem__c} </p>
+                          <p>Motivo: {!Case.Motivo__c}</p>
+                    </td>
+                </tr>
+
+            </table>
+    
+    <tr>
+                <table  border="0" cellspacing="0" cellpadding="0" style="padding:10px;" >                    
+                    <tr>
+                        <td><p style=" font-size:12px; margin:15px;">Para ingresar al caso hacé click en el siguiente link:</br><a href="{!Case.Link}" style="color:#00b4c5; text-decoration: none;font-size:12px;"><span style="color:#00b4c5;">{Caso}</span></a></p>
+                        </td>
+                    </tr>
+                </table></tbody>
+            </table>
+
+    </tr>

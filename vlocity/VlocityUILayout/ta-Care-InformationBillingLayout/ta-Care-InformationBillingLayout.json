@@ -1,0 +1,37 @@
+{
+    "Cards": [
+        "Billing"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000009NhnO"
+            }
+        ],
+        "orderBy": {
+            "name": ""
+        },
+        "type": null,
+        "value": {
+            "bundle": "getBillingInformationByAccountId",
+            "inputMap": {
+                "Id": "{{params.id}}"
+            },
+            "ipMethod": "Care_GetBillingInformationWithBalanceByAccountId",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "resultVar": "['BillingAccounts']",
+            "resultVarlayout": "['BillingAccounts']"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "card-canvas-zones"
+        }
+    },
+    "workspace": [
+        "Billing/Personal - DESA01/3/1530197466536"
+    ]
+}

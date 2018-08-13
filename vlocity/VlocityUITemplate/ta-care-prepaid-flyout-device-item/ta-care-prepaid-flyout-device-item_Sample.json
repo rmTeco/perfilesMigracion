@@ -1,0 +1,97 @@
+{
+    "data": {
+        "actions": [
+        ],
+        "cardIndex": 0,
+        "cardName": "AvailableUnity",
+        "dataSource": {
+            "type": "Custom",
+            "value": {
+                "body": "[\n    {\n        \"ServiceType\": \"Internet\",\n        \"Available\": \"3 GB\",\n        \"DueDate\": \"20/12/2017\"\n    },\n    {\n        \"ServiceType\": \"Voz\",\n        \"Available\": \"3 GB\",\n        \"DueDate\": \"10/12/2017\"\n    },\n    {\n        \"ServiceType\": \"SMS\",\n        \"Available\": \"100 Minutos\",\n        \"DueDate\": \"15/12/2017\"\n    }\n]",
+                "resultVar": ""
+            }
+        },
+        "definedActions": {
+            "actions": [
+            ]
+        },
+        "fields": [
+            {
+                "collapse": true,
+                "displayLabel": "['Device']",
+                "editing": false,
+                "fieldType": "standard",
+                "group": "Custom Properties",
+                "label": "Equipo",
+                "name": "['Device']",
+                "type": "string"
+            },
+            {
+                "collapse": true,
+                "displayLabel": "['IMEI']",
+                "editing": false,
+                "fieldType": "standard",
+                "group": "Custom Properties",
+                "label": "IMEI",
+                "name": "['IMEI']",
+                "type": "string"
+            }
+        ],
+        "filter": {
+        },
+        "layoutName": "vlocity.layout.taConsolePrepaidFlyout",
+        "obj": {
+            "Device": "Apple iPhone 6s",
+            "IMEI": "123456789012345"
+        },
+        "order": 0,
+        "states": [
+            {
+                "conditions": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ],
+                "definedActions": {
+                    "actions": [
+                    ]
+                },
+                "fields": [
+                    {
+                        "collapse": true,
+                        "displayLabel": "['Device']",
+                        "editing": false,
+                        "fieldType": "standard",
+                        "group": "Custom Properties",
+                        "label": "Equipo",
+                        "name": "['Device']",
+                        "type": "string"
+                    },
+                    {
+                        "collapse": true,
+                        "displayLabel": "['IMEI']",
+                        "editing": false,
+                        "fieldType": "standard",
+                        "group": "Custom Properties",
+                        "label": "IMEI",
+                        "name": "['IMEI']",
+                        "type": "string"
+                    }
+                ],
+                "name": "Active",
+                "sObjectType": "All",
+                "templateUrl": "ta-care-prepaid-flyout-grid-items"
+            }
+        ],
+        "status": "active",
+        "title": "",
+        "uniqueLayoutId": 1505938313600
+    },
+    "obj": {
+        "Device": "Apple iPhone 6s",
+        "IMEI": "123456789012345"
+    }
+}

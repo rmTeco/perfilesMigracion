@@ -1,0 +1,178 @@
+<apex:page controller="GP_Mantenimiento_EventosController" docType="html-5.0">
+    <head>
+        <script src="//code.jquery.com/jquery-3.3.1.min.js"/>
+        <style>
+            .noMostrar{
+                display: none;
+            }
+            .textAreaClass{
+                width:100%;
+                word-break: break-all;
+            }
+        </style>
+        <script>
+            var tipoEvento = ''; 
+            var frecEvento = '';
+            var descEvento = '';
+            var eventoId = '';
+            var editModeRowId = '';
+            
+            $(document).ready( function(){
+                initInputElems();
+                setAttribute();
+            });
+            function initElems(idEventoId,idTipoEvento,idFrecEvento,idDescEvento,idEditModeRowId) {
+                eventoId = document.getElementById(idEventoId);
+                tipoEvento = document.getElementById(idTipoEvento);
+                frecEvento = document.getElementById(idFrecEvento);
+                descEvento = document.getElementById(idDescEvento);
+                editModeRowId = document.getElementById(idEditModeRowId);
+            }
+            function setEditModeON(id, tipo, desc, frec) {
+                editModeRowId.value = id;
+                eventoId.value = id;
+                tipoEvento.value = tipo;
+                descEvento.value = desc;
+                frecEvento.value = frec;
+                reRenderTable();
+            }
+            function setEditModeOFF(value) {
+                editModeRowId.value = '';
+                if(value) {
+                    reRenderTable();
+                }
+            }
+            function insertRow() {
+                if (tipoEvento.value && frecEvento.value) {
+                    insertRecord();
+                }
+            }
+            function updateRow(Id) {
+                if (Id) {
+                    eventoId.value = Id;
+                    if (tipoEvento.value && frecEvento.value) {
+                        setEditModeOFF();
+                        updateRecord();
+                    }
+                } else {
+                    window.alert('Error al actualizar: Id \'' + Id + '\' inválido.');
+                }
+            }
+            function deleteRow(Id,elem) {
+                if(Id) {
+                    eventoId.value = Id;
+                    deleteRecord();
+                }
+            }
+            function goBack() {
+                setEditModeOFF();
+                initListEvento();
+            }
+            
+            function setAttribute() {
+                $('.textAreaClass').attr("maxlength","255");
+            }
+        </script>
+        
+        <apex:slds />
+        <apex:messages />
+    </head>
+    <body>
+        <apex:form id="formulario">
+        
+            <apex:inputHidden value="{!editModeRowId}" id="editModeRowId" />
+            <apex:inputHidden value="{!nuevoEvento.Tipo_de_evento__c}" id="tipoEvento" />
+            <apex:inputHidden value="{!nuevoEvento.Frecuencia_permitida__c}" id="frecEvento" />
+            <apex:inputHidden value="{!nuevoEvento.Descripcion__c}" id="descEvento" />
+            <apex:inputHidden value="{!nuevoEvento.Id}" id="eventoId" />
+            <apex:actionFunction action="{!insertRecord}" name="insertRecord" reRender="tableId" />
+            <apex:actionFunction action="{!deleteRecord}" name="deleteRecord" reRender="tableId" />
+            <apex:actionFunction action="{!updateRecord}" name="updateRecord" reRender="tableId"/>
+            <apex:actionFunction action="{!conseguirInitEventos}" name="initListEvento" reRender="tableId"/>
+            
+            <apex:actionFunction action="{!doNothing}" name="initInputElems" oncomplete="initElems('{!$Component.eventoId}','{!$Component.tipoEvento}','{!$Component.frecEvento}','{!$Component.descEvento}','{!$Component.editModeRowId}')"/>
+            <apex:actionFunction action="{!doNothing}" name="reRenderTable" reRender="tableId" ONcomplete="setAttribute();"/>
+            
+            <apex:pageBlock title="Mantenimiento de Tipos de Evento" id="pageBlockId">
+                <apex:pageBlockTable value="{!listaEventos}" var="evento" styleClass="slds-size--2-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--2-of-3" id="tableId">
+                
+                    <apex:column headerValue="Acciones" width="5%" rendered="{!evento.Id != null}">
+                        <div class="slds-grid slds-grid--align-spread">
+                        
+                            <apex:outputPanel rendered="{!evento.Id != editModeRowId}" styleClass="slds-p-around--xx-small">
+                                <span class="slds-icon_container slds-icon_container--circle slds-icon-action-edit slds-align--absolute-center" style="cursor:pointer;" onClick="setEditModeON('{!evento.Id}','{!evento.Tipo_de_evento__c}','{!evento.Descripcion__c}','{!evento.Frecuencia_permitida__c}')">
+                                    <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                        <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#edit')}"></use>
+                                    </svg>
+                                </span>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!evento.Id != editModeRowId}" styleClass="slds-p-around--xx-small">
+                                <span class="slds-icon_container slds-icon_container--circle slds-icon-action-delete slds-align--absolute-center" style="cursor:pointer;" onClick="deleteRow('{!evento.Id}')">
+                                    <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                        <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#delete')}"></use>
+                                    </svg>
+                                </span>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!evento.Id == editModeRowId}" styleClass="slds-p-around--xx-small">
+                                <span class="slds-icon_container slds-icon_container--circle slds-icon-action-approval slds-align--absolute-center" style="cursor:pointer;" onClick="updateRow('{!evento.Id}')">
+                                    <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                        <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#approval')}"></use>
+                                    </svg>
+                                </span>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!evento.Id == editModeRowId}" styleClass="slds-p-around--xx-small">
+                                <span class="slds-icon_container slds-icon_container--circle slds-icon-action-close slds-align--absolute-center" style="cursor:pointer;" onClick="goBack()">
+                                    <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                        <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#close')}"></use>
+                                    </svg>
+                                </span>
+                            </apex:outputPanel>
+                            
+                        </div>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Acciones" width="5%" rendered="{!evento.Id == null}">
+                        <apex:outputPanel rendered="{!evento.Id == editModeRowId}">
+                            <div class="slds-grid slds-grid--align-center">
+                                <span class="slds-p-around--xx-small">
+                                    <span class="slds-icon_container slds-icon_container--circle slds-icon-action-description slds-align--absolute-center" onClick="insertRow()" style="cursor:pointer;">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                            <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#new')}"></use>
+                                        </svg>
+                                    </span>
+                                </span>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:column>
+                    
+                    <apex:column headerValue="Tipo de evento" width="31.6%">
+                    
+                        <apex:outputField value="{!evento.Tipo_de_evento__c}" rendered="{!evento.Id != editModeRowId}" />
+                        <apex:inputField value="{!evento.Tipo_de_evento__c}" onchange="tipoEvento.value = this.value" rendered="{!evento.Id == editModeRowId}" />
+                        
+                    </apex:column>
+                    
+                    <apex:column headerValue="Descripción" width="31.6%">
+                    
+                        <div style="word-break: break-all;" class="slds-m-horizontal--small">
+                            <apex:outputField value="{!evento.Descripcion__c}" rendered="{!evento.Id != editModeRowId}"/>
+                        </div>
+                        <div class="slds-m-horizontal--small">
+                            <!-- <apex:inputField value="{!evento.Descripcion__c}" onchange="descEvento.value = this.value" style="width:100%;word-break: break-all;" rendered="{!evento.Id == editModeRowId}" /> -->
+                            <apex:inputTextarea value="{!evento.Descripcion__c}"  onchange="descEvento.value = this.value" styleClass="textAreaClass" rendered="{!evento.Id == editModeRowId}" />
+                        </div>
+                    
+                    </apex:column>
+                    
+                    <apex:column headerValue="Frecuencia permitida" width="31.6%">
+                    
+                        <apex:outputField value="{!evento.Frecuencia_permitida__c}" rendered="{!evento.Id != editModeRowId}" />
+                        <apex:inputField value="{!evento.Frecuencia_permitida__c}" onchange="frecEvento.value = this.value" rendered="{!evento.Id == editModeRowId}" />
+                        
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
+    </body>
+</apex:page>

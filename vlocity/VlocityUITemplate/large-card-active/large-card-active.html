@@ -1,0 +1,47 @@
+<section class="big-console-card active" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(obj.Id)}">
+    <div class="card-top" ng-click="performFlyout(obj.Id, uniqueLayoutId + '-card-'+cardIndex)">
+        <div>
+            <h1 tooltip-placement="bottom" tooltip="{{obj.Name}}">
+                {{obj.Name}}
+            </h1>
+        </div>
+        <!--<span class="account-number">{{obj.Name}}</span>-->
+        
+        <!--<span class="expires">-->
+        <!--    <i ng-if="expiresSoon(card.expires, 30)" tooltip="Policy Expires Soon" class="icon icon-v-warning-cirlce"></i>-->
+        <!--    Expires {{obj.LastModifiedDate | date:'MM/dd/yy'}}</span>-->
+    </div>
+    <div class="card-info">
+        <div class="column">
+            <h2>{{::$root.vlocity.getCustomLabel('Details', 'Details')}}</h2>
+            <ul class="details" ng-click="performFlyout(obj.Id, uniqueLayoutId + '-card-'+cardIndex)">
+                <li class="detail" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+                    <span class="detail-label">{{field.label}}</span>
+                    <span class="value" ng-if="!obj[field.relationshipName]">
+                        <!--{{obj[field.name]}}-->
+                        {{obj | getter: field}}
+                    </span>
+                    <span class="value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="column">
+            <h2>{{::$root.vlocity.getCustomLabel('Actions', 'Actions')}}</h2>
+            <ul class="actions">
+                <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+                    <a href="#" ng-click="performAction(action)">
+                        <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+                        <span ng-if="action.imageRef">
+                            <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+                        </span>
+                        <span>{{action.displayName}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="column" ng-if="data.flyout.layout">
+            <h2>{{::$root.vlocity.getCustomLabel('Devices', 'Devices')}}</h2>
+            <vloc-layout layout-name="{{data.flyout.layout}}"></vloc-layout>
+        </div>
+    </div>
+</section>

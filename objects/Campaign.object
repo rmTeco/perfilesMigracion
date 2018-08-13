@@ -1,0 +1,2981 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>AddCampaign</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>AdvancedSetup</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>vlocity_cmt__HighlightPanel</fullName>
+        <fields>Name</fields>
+        <fields>Type</fields>
+        <fields>Status</fields>
+        <fields>EndDate</fields>
+        <fields>StartDate</fields>
+        <label>Highlight Panel</label>
+    </compactLayouts>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <fieldSets>
+        <fullName>AdditionalMCCampaignFields</fullName>
+        <description>This Field Set is used to select which fields are going to be sent to Marketing Cloud</description>
+        <displayedFields>
+            <field>CampaignObjetive__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Description</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Campaign_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Campaign_Subtype__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Campaign_Subtype_2__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Channel_Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Channel__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>StartDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>EndDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>Additional MC Campaign Fields</label>
+    </fieldSets>
+    <fieldSets>
+        <fullName>vlocity_cmt__StoryFieldSet</fullName>
+        <description>Story board</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Status</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>IsActive</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Type</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>StoryFieldSet</label>
+    </fieldSets>
+    <fields>
+        <fullName>ActualCost</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>AmountAllOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>AmountWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>BudgetedCost</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>CampaignImageId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CampaignMemberRecordTypeId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CampaignMemberStatuses__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Member Statuses</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Iniciado</fullName>
+                    <default>false</default>
+                    <label>Iniciado</label>
+                </value>
+                <value>
+                    <fullName>Mensaje Enviado</fullName>
+                    <default>false</default>
+                    <label>Mensaje Enviado</label>
+                </value>
+                <value>
+                    <fullName>Interesado</fullName>
+                    <default>false</default>
+                    <label>Interesado</label>
+                </value>
+                <value>
+                    <fullName>No Interesado</fullName>
+                    <default>false</default>
+                    <label>No Interesado</label>
+                </value>
+                <value>
+                    <fullName>Clickeado</fullName>
+                    <default>false</default>
+                    <label>Clickeado</label>
+                </value>
+                <value>
+                    <fullName>Finalizado</fullName>
+                    <default>false</default>
+                    <label>Finalizado</label>
+                </value>
+                <value>
+                    <fullName>Concretado</fullName>
+                    <default>false</default>
+                    <label>Concretado</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>CampaignObjetive__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Objetive</label>
+        <length>32768</length>
+        <trackHistory>true</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Campaign_Destiny__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Destiny</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Masivo</fullName>
+                    <default>false</default>
+                    <label>Masivo</label>
+                </value>
+                <value>
+                    <fullName>Empresa</fullName>
+                    <default>false</default>
+                    <label>Empresa</label>
+                </value>
+                <value>
+                    <fullName>Masivo y Empresa</fullName>
+                    <default>false</default>
+                    <label>Masivo y Empresa</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Campaign_Subtype_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Subtype 2</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alta/Portin (DNI/CUIT existente)</fullName>
+                    <default>false</default>
+                    <label>Alta/Portin (DNI/CUIT existente)</label>
+                </value>
+                <value>
+                    <fullName>Cambio de Terminal</fullName>
+                    <default>false</default>
+                    <label>Cambio de Terminal</label>
+                </value>
+                <value>
+                    <fullName>Nuevo Servicio OTT/VAS</fullName>
+                    <default>false</default>
+                    <label>Nuevo Servicio OTT/VAS</label>
+                </value>
+                <value>
+                    <fullName>Cambio de Producto</fullName>
+                    <default>false</default>
+                    <label>Cambio de Producto</label>
+                </value>
+                <value>
+                    <fullName>Upselling</fullName>
+                    <default>false</default>
+                    <label>Upselling</label>
+                </value>
+                <value>
+                    <fullName>Cash-in (recargas)</fullName>
+                    <default>false</default>
+                    <label>Cash-in (recargas)</label>
+                </value>
+                <value>
+                    <fullName>Cash-Out (contenidos, packs, etc)</fullName>
+                    <default>false</default>
+                    <label>Cash-Out (contenidos, packs, etc)</label>
+                </value>
+                <value>
+                    <fullName>Alianzas</fullName>
+                    <default>false</default>
+                    <label>Alianzas</label>
+                </value>
+                <value>
+                    <fullName>Club Personal</fullName>
+                    <default>false</default>
+                    <label>Club Personal</label>
+                </value>
+                <value>
+                    <fullName>Configuración de servicios</fullName>
+                    <default>false</default>
+                    <label>Configuración de servicios</label>
+                </value>
+                <value>
+                    <fullName>Confiabilización de Datos</fullName>
+                    <default>false</default>
+                    <label>Confiabilización de Datos</label>
+                </value>
+                <value>
+                    <fullName>Morosidad</fullName>
+                    <default>false</default>
+                    <label>Morosidad</label>
+                </value>
+                <value>
+                    <fullName>Modificaciones en los servicios</fullName>
+                    <default>false</default>
+                    <label>Modificaciones en los servicios</label>
+                </value>
+                <value>
+                    <fullName>Newsletters</fullName>
+                    <default>false</default>
+                    <label>Newsletters</label>
+                </value>
+                <value>
+                    <fullName>Testing ad hoc, NPS</fullName>
+                    <default>false</default>
+                    <label>Testing ad hoc, NPS</label>
+                </value>
+                <value>
+                    <fullName>Cart View</fullName>
+                    <default>false</default>
+                    <label>Cart View</label>
+                </value>
+                <value>
+                    <fullName>Cart Abandon</fullName>
+                    <default>false</default>
+                    <label>Cart Abandon</label>
+                </value>
+                <value>
+                    <fullName>Promotional</fullName>
+                    <default>false</default>
+                    <label>Promotional</label>
+                </value>
+                <value>
+                    <fullName>Cross Sell</fullName>
+                    <default>false</default>
+                    <label>Cross Sell</label>
+                </value>
+                <value>
+                    <fullName>Educacional</fullName>
+                    <default>false</default>
+                    <label>Educacional</label>
+                </value>
+                <value>
+                    <fullName>Saludos especial</fullName>
+                    <default>false</default>
+                    <label>Saludos especial</label>
+                </value>
+                <value>
+                    <fullName>Bienvenida</fullName>
+                    <default>false</default>
+                    <label>Bienvenida</label>
+                </value>
+                <value>
+                    <fullName>Soporte</fullName>
+                    <default>false</default>
+                    <label>Soporte</label>
+                </value>
+                <value>
+                    <fullName>Factura</fullName>
+                    <default>false</default>
+                    <label>Factura</label>
+                </value>
+                <value>
+                    <fullName>Detalle de consumo</fullName>
+                    <default>false</default>
+                    <label>Detalle de consumo</label>
+                </value>
+                <value>
+                    <fullName>Churn Mitigation</fullName>
+                    <default>false</default>
+                    <label>Churn Mitigation</label>
+                </value>
+                <value>
+                    <fullName>Recupero</fullName>
+                    <default>false</default>
+                    <label>Recupero</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>NAWinback</fullName>
+                    <default>false</default>
+                    <label>N/A.</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Campaign_Subtype__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Subtype</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)</fullName>
+                    <default>false</default>
+                    <label>Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)</label>
+                </value>
+                <value>
+                    <fullName>Bienvenida</fullName>
+                    <default>false</default>
+                    <label>Bienvenida</label>
+                </value>
+                <value>
+                    <fullName>Activ. Comercial</fullName>
+                    <default>false</default>
+                    <label>Activ. Comercial</label>
+                </value>
+                <value>
+                    <fullName>Fidelización</fullName>
+                    <default>false</default>
+                    <label>Fidelización</label>
+                </value>
+                <value>
+                    <fullName>Comunicación/Educativa</fullName>
+                    <default>false</default>
+                    <label>Comunicación/Educativa</label>
+                </value>
+                <value>
+                    <fullName>Encuesta</fullName>
+                    <default>false</default>
+                    <label>Encuesta</label>
+                </value>
+                <value>
+                    <fullName>Conversión</fullName>
+                    <default>false</default>
+                    <label>Conversión</label>
+                </value>
+                <value>
+                    <fullName>Relacionamiento</fullName>
+                    <default>false</default>
+                    <label>Relacionamiento</label>
+                </value>
+                <value>
+                    <fullName>Transaccional</fullName>
+                    <default>false</default>
+                    <label>Transaccional</label>
+                </value>
+                <value>
+                    <fullName>Retención</fullName>
+                    <default>false</default>
+                    <label>Retención</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Campaign_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Captura</fullName>
+                    <default>false</default>
+                    <label>Captura</label>
+                </value>
+                <value>
+                    <fullName>Onboarding</fullName>
+                    <default>false</default>
+                    <label>Onboarding</label>
+                </value>
+                <value>
+                    <fullName>Desarrollo</fullName>
+                    <default>false</default>
+                    <label>Desarrollo</label>
+                </value>
+                <value>
+                    <fullName>Winback</fullName>
+                    <default>false</default>
+                    <label>Winback</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Channel_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Channel Type</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>SubtypeL2__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IN</fullName>
+                    <default>false</default>
+                    <label>IN</label>
+                </value>
+                <value>
+                    <fullName>OUT</fullName>
+                    <default>false</default>
+                    <label>OUT</label>
+                </value>
+                <value>
+                    <fullName>IN/OUT</fullName>
+                    <default>false</default>
+                    <label>IN/OUT</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Alta/Portin (DNI/CUIT existente)</controllingFieldValue>
+                <controllingFieldValue>Cambio de Terminal</controllingFieldValue>
+                <controllingFieldValue>Nuevo Servicio OTT/VAS</controllingFieldValue>
+                <controllingFieldValue>Cambio de Producto</controllingFieldValue>
+                <controllingFieldValue>Upselling</controllingFieldValue>
+                <valueName>IN</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Alta/Portin (DNI/CUIT existente)</controllingFieldValue>
+                <controllingFieldValue>Cambio de Terminal</controllingFieldValue>
+                <controllingFieldValue>Nuevo Servicio OTT/VAS</controllingFieldValue>
+                <controllingFieldValue>Cambio de Producto</controllingFieldValue>
+                <controllingFieldValue>Upselling</controllingFieldValue>
+                <valueName>OUT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Alta/Portin (DNI/CUIT existente)</controllingFieldValue>
+                <controllingFieldValue>Cambio de Terminal</controllingFieldValue>
+                <controllingFieldValue>Nuevo Servicio OTT/VAS</controllingFieldValue>
+                <controllingFieldValue>Cambio de Producto</controllingFieldValue>
+                <controllingFieldValue>Upselling</controllingFieldValue>
+                <valueName>IN/OUT</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Channel__c</fullName>
+        <externalId>false</externalId>
+        <label>Channel</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <controllingField>Channel_Type__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>SMS</fullName>
+                    <default>false</default>
+                    <label>SMS</label>
+                </value>
+                <value>
+                    <fullName>IVR</fullName>
+                    <default>false</default>
+                    <label>IVR</label>
+                </value>
+                <value>
+                    <fullName>Web</fullName>
+                    <default>false</default>
+                    <label>Web</label>
+                </value>
+                <value>
+                    <fullName>CRM</fullName>
+                    <default>false</default>
+                    <label>CRM</label>
+                </value>
+                <value>
+                    <fullName>RRSS</fullName>
+                    <default>false</default>
+                    <label>RRSS</label>
+                </value>
+                <value>
+                    <fullName>ISMS</fullName>
+                    <default>false</default>
+                    <label>ISMS</label>
+                </value>
+                <value>
+                    <fullName>E-Mail</fullName>
+                    <default>false</default>
+                    <label>E-Mail</label>
+                </value>
+                <value>
+                    <fullName>Sat Push</fullName>
+                    <default>false</default>
+                    <label>Sat Push</label>
+                </value>
+                <value>
+                    <fullName>APP Push</fullName>
+                    <default>false</default>
+                    <label>APP Push</label>
+                </value>
+                <value>
+                    <fullName>Web Push</fullName>
+                    <default>false</default>
+                    <label>Web Push</label>
+                </value>
+                <value>
+                    <fullName>Discador</fullName>
+                    <default>false</default>
+                    <label>Discador</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>IN</controllingFieldValue>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <controllingFieldValue>IN/OUT</controllingFieldValue>
+                <valueName>SMS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IN</controllingFieldValue>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <controllingFieldValue>IN/OUT</controllingFieldValue>
+                <valueName>IVR</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IN</controllingFieldValue>
+                <valueName>Web</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IN</controllingFieldValue>
+                <valueName>CRM</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IN</controllingFieldValue>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <controllingFieldValue>IN/OUT</controllingFieldValue>
+                <valueName>RRSS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IN</controllingFieldValue>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <controllingFieldValue>IN/OUT</controllingFieldValue>
+                <valueName>ISMS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <valueName>E-Mail</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <valueName>Sat Push</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <valueName>APP Push</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <valueName>Web Push</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>OUT</controllingFieldValue>
+                <valueName>Discador</valueName>
+            </valueSettings>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Description</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Destination__c</fullName>
+        <externalId>false</externalId>
+        <label>Destination</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Masivo</fullName>
+                    <default>false</default>
+                    <label>Masivo</label>
+                </value>
+                <value>
+                    <fullName>Empresa</fullName>
+                    <default>false</default>
+                    <label>Empresa</label>
+                </value>
+                <value>
+                    <fullName>Masivo y Empresa</fullName>
+                    <default>false</default>
+                    <label>Masivo y Empresa</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>EndDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>ExpectedResponse</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>ExpectedRevenue</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>HierarchyActualCost</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyAmountAllOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyAmountWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyBudgetedCost</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyExpectedRevenue</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfContacts</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfConvertedLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfResponses</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberOfWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>HierarchyNumberSent</fullName>
+    </fields>
+    <fields>
+        <fullName>IsActive</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>MarketingCloudCampaignId__c</fullName>
+        <externalId>true</externalId>
+        <label>Marketing Cloud Campaign Id</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Name</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>NumberOfContacts</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfConvertedLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfLeads</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfResponses</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberOfWonOpportunities</fullName>
+    </fields>
+    <fields>
+        <fullName>NumberSent</fullName>
+        <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Objetive__c</fullName>
+        <externalId>false</externalId>
+        <label>Objetive</label>
+        <length>32768</length>
+        <trackHistory>true</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>OwnerId</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>ParentId</fullName>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>StartDate</fullName>
+        <trackHistory>true</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Status</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SubtypeL1__c</fullName>
+        <externalId>false</externalId>
+        <label>Subtype L1</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Type</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)</fullName>
+                    <default>false</default>
+                    <label>Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)</label>
+                </value>
+                <value>
+                    <fullName>Bienvenida</fullName>
+                    <default>false</default>
+                    <label>Bienvenida</label>
+                </value>
+                <value>
+                    <fullName>Activ. Comercial</fullName>
+                    <default>false</default>
+                    <label>Activ. Comercial</label>
+                </value>
+                <value>
+                    <fullName>Fidelización</fullName>
+                    <default>false</default>
+                    <label>Fidelización</label>
+                </value>
+                <value>
+                    <fullName>Comunicación/Educativa</fullName>
+                    <default>false</default>
+                    <label>Comunicación/Educativa</label>
+                </value>
+                <value>
+                    <fullName>Encuesta</fullName>
+                    <default>false</default>
+                    <label>Encuesta</label>
+                </value>
+                <value>
+                    <fullName>Conversión</fullName>
+                    <default>false</default>
+                    <label>Conversión</label>
+                </value>
+                <value>
+                    <fullName>Relacionamiento</fullName>
+                    <default>false</default>
+                    <label>Relacionamiento</label>
+                </value>
+                <value>
+                    <fullName>Transaccional</fullName>
+                    <default>false</default>
+                    <label>Transaccional</label>
+                </value>
+                <value>
+                    <fullName>Retención</fullName>
+                    <default>false</default>
+                    <label>Retención</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Onboarding</controllingFieldValue>
+                <valueName>Bienvenida</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Activ. Comercial</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Fidelización</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Comunicación/Educativa</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Encuesta</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Conversión</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Relacionamiento</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Transaccional</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Desarrollo</controllingFieldValue>
+                <valueName>Retención</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Winback</controllingFieldValue>
+                <valueName>N/A</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Captura</controllingFieldValue>
+                <valueName>Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SubtypeL2__c</fullName>
+        <externalId>false</externalId>
+        <label>Subtype L2</label>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>SubtypeL1__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Alta/Portin (DNI/CUIT existente)</fullName>
+                    <default>false</default>
+                    <label>Alta/Portin (DNI/CUIT existente)</label>
+                </value>
+                <value>
+                    <fullName>Cambio de Terminal</fullName>
+                    <default>false</default>
+                    <label>Cambio de Terminal</label>
+                </value>
+                <value>
+                    <fullName>Nuevo Servicio OTT/VAS</fullName>
+                    <default>false</default>
+                    <label>Nuevo Servicio OTT/VAS</label>
+                </value>
+                <value>
+                    <fullName>Cambio de Producto</fullName>
+                    <default>false</default>
+                    <label>Cambio de Producto</label>
+                </value>
+                <value>
+                    <fullName>Upselling</fullName>
+                    <default>false</default>
+                    <label>Upselling</label>
+                </value>
+                <value>
+                    <fullName>Cash-in (recargas)</fullName>
+                    <default>false</default>
+                    <label>Cash-in (recargas)</label>
+                </value>
+                <value>
+                    <fullName>Cash-Out (contenidos, packs, etc)</fullName>
+                    <default>false</default>
+                    <label>Cash-Out (contenidos, packs, etc)</label>
+                </value>
+                <value>
+                    <fullName>Alianzas</fullName>
+                    <default>false</default>
+                    <label>Alianzas</label>
+                </value>
+                <value>
+                    <fullName>Club Personal</fullName>
+                    <default>false</default>
+                    <label>Club Personal</label>
+                </value>
+                <value>
+                    <fullName>Configuración de servicios</fullName>
+                    <default>false</default>
+                    <label>Configuración de servicios</label>
+                </value>
+                <value>
+                    <fullName>Confiabilización de Datos</fullName>
+                    <default>false</default>
+                    <label>Confiabilización de Datos</label>
+                </value>
+                <value>
+                    <fullName>Morosidad</fullName>
+                    <default>false</default>
+                    <label>Morosidad</label>
+                </value>
+                <value>
+                    <fullName>Modificaciones en los servicios</fullName>
+                    <default>false</default>
+                    <label>Modificaciones en los servicios</label>
+                </value>
+                <value>
+                    <fullName>Newsletters</fullName>
+                    <default>false</default>
+                    <label>Newsletters</label>
+                </value>
+                <value>
+                    <fullName>Testing ad hoc, NPS</fullName>
+                    <default>false</default>
+                    <label>Testing ad hoc, NPS</label>
+                </value>
+                <value>
+                    <fullName>Cart View</fullName>
+                    <default>false</default>
+                    <label>Cart View</label>
+                </value>
+                <value>
+                    <fullName>Cart Abandon</fullName>
+                    <default>false</default>
+                    <label>Cart Abandon</label>
+                </value>
+                <value>
+                    <fullName>Promotional</fullName>
+                    <default>false</default>
+                    <label>Promotional</label>
+                </value>
+                <value>
+                    <fullName>Cross Sell</fullName>
+                    <default>false</default>
+                    <label>Cross Sell</label>
+                </value>
+                <value>
+                    <fullName>Educacional</fullName>
+                    <default>false</default>
+                    <label>Educacional</label>
+                </value>
+                <value>
+                    <fullName>Saludos especial</fullName>
+                    <default>false</default>
+                    <label>Saludos especial</label>
+                </value>
+                <value>
+                    <fullName>Bienvenida</fullName>
+                    <default>false</default>
+                    <label>Bienvenida</label>
+                </value>
+                <value>
+                    <fullName>Soporte</fullName>
+                    <default>false</default>
+                    <label>Soporte</label>
+                </value>
+                <value>
+                    <fullName>Factura</fullName>
+                    <default>false</default>
+                    <label>Factura</label>
+                </value>
+                <value>
+                    <fullName>Detalle de consumo</fullName>
+                    <default>false</default>
+                    <label>Detalle de consumo</label>
+                </value>
+                <value>
+                    <fullName>Churn Mitigation</fullName>
+                    <default>false</default>
+                    <label>Churn Mitigation</label>
+                </value>
+                <value>
+                    <fullName>Recupero</fullName>
+                    <default>false</default>
+                    <label>Recupero</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>NAWinback</fullName>
+                    <default>false</default>
+                    <label>N/A.</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>N/A</controllingFieldValue>
+                <valueName>NAWinback</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)</controllingFieldValue>
+                <controllingFieldValue>Bienvenida</controllingFieldValue>
+                <valueName>N/A</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Alta/Portin (DNI/CUIT existente)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Cambio de Terminal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Nuevo Servicio OTT/VAS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Cambio de Producto</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Upselling</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Cash-in (recargas)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Cash-Out (contenidos, packs, etc)</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Activ. Comercial</controllingFieldValue>
+                <valueName>Alianzas</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Fidelización</controllingFieldValue>
+                <valueName>Club Personal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Fidelización</controllingFieldValue>
+                <valueName>Configuración de servicios</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Fidelización</controllingFieldValue>
+                <valueName>Confiabilización de Datos</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Comunicación/Educativa</controllingFieldValue>
+                <valueName>Morosidad</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Comunicación/Educativa</controllingFieldValue>
+                <valueName>Modificaciones en los servicios</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Comunicación/Educativa</controllingFieldValue>
+                <valueName>Newsletters</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Encuesta</controllingFieldValue>
+                <valueName>Testing ad hoc, NPS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Conversión</controllingFieldValue>
+                <valueName>Cart View</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Conversión</controllingFieldValue>
+                <valueName>Cart Abandon</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Conversión</controllingFieldValue>
+                <valueName>Promotional</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Conversión</controllingFieldValue>
+                <valueName>Cross Sell</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Relacionamiento</controllingFieldValue>
+                <valueName>Educacional</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Relacionamiento</controllingFieldValue>
+                <valueName>Saludos especial</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Relacionamiento</controllingFieldValue>
+                <valueName>Bienvenida</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Relacionamiento</controllingFieldValue>
+                <valueName>Soporte</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Transaccional</controllingFieldValue>
+                <valueName>Factura</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Transaccional</controllingFieldValue>
+                <valueName>Detalle de consumo</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Retención</controllingFieldValue>
+                <valueName>Churn Mitigation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Retención</controllingFieldValue>
+                <valueName>Recupero</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Type</fullName>
+        <trackHistory>true</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>associated_offersand_products__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Associated Offers and Products</label>
+        <referenceTo>Product2</referenceTo>
+        <relationshipLabel>Campaigns</relationshipLabel>
+        <relationshipName>Campaigns</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CampaignContentDocumentId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Campaign Content Document</label>
+        <lookupFilter>
+            <active>true</active>
+            <filterItems>
+                <field>vlocity_cmt__CampaignContentDocument__c.vlocity_cmt__CampaignId__c</field>
+                <operation>equals</operation>
+                <valueField>$Source.Id</valueField>
+            </filterItems>
+            <filterItems>
+                <field>vlocity_cmt__CampaignContentDocument__c.vlocity_cmt__IsPrimary__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </filterItems>
+            <isOptional>false</isOptional>
+        </lookupFilter>
+        <referenceTo>vlocity_cmt__CampaignContentDocument__c</referenceTo>
+        <relationshipLabel>Campaigns</relationshipLabel>
+        <relationshipName>Campaigns</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ContentDocumentTitle__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__CampaignContentDocumentId__r.vlocity_cmt__ContentTitle__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Content Document Title</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__EmailTemplate__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Email template used to send email to campaign member.</inlineHelpText>
+        <label>Email Template</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__FollowUpTo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>If this activity is a follow up to a previous Activity</description>
+        <externalId>false</externalId>
+        <label>Follow Up To</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__MassEmailContent__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Content</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__MassEmailSubject__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Email Subject</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ProcessLanguage__c</fullName>
+        <defaultValue>&apos;English&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Process Language</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ProcessPrefillBundle__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Process Prefill Bundle</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ProcessSubType__c</fullName>
+        <defaultValue>&apos;Default&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Process Sub Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ProcessType__c</fullName>
+        <defaultValue>&apos;Campaign&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <description>It is the OmniScript Type</description>
+        <externalId>false</externalId>
+        <label>Process Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <listViews>
+        <fullName>AllActiveCampaigns</fullName>
+        <columns>CAMPAIGN.NAME</columns>
+        <columns>CAMPAIGN.START_DATE</columns>
+        <columns>CAMPAIGN.END_DATE</columns>
+        <columns>CAMPAIGN.CAMPAIGN_TYPE</columns>
+        <columns>CAMPAIGN.STATUS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CAMPAIGN.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>All Active Campaigns</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>MyActiveCampaigns</fullName>
+        <columns>CAMPAIGN.NAME</columns>
+        <columns>CAMPAIGN.START_DATE</columns>
+        <columns>CAMPAIGN.END_DATE</columns>
+        <columns>CAMPAIGN.CAMPAIGN_TYPE</columns>
+        <columns>CAMPAIGN.STATUS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>CAMPAIGN.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>My Active Campaigns</label>
+    </listViews>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <recordTypes>
+        <fullName>Commercial_Campaigns</fullName>
+        <active>true</active>
+        <description>Commercial Campaigns with Marketing Cloud</description>
+        <label>Commercial Campaigns</label>
+        <picklistValues>
+            <picklist>CampaignMemberStatuses__c</picklist>
+            <values>
+                <fullName>Clickeado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Concretado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finalizado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iniciado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interesado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mensaje Enviado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Interesado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Destiny__c</picklist>
+            <values>
+                <fullName>Empresa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo y Empresa</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Subtype_2__c</picklist>
+            <values>
+                <fullName>Alianzas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin %28DNI%2FCUIT existente%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Producto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart Abandon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-Out %28contenidos%2C packs%2C etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-in %28recargas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Churn Mitigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Club Personal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confiabilización de Datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuración de servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross Sell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detalle de consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Factura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Modificaciones en los servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morosidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAWinback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newsletters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nuevo Servicio OTT%2FVAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saludos especial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Soporte</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Testing ad hoc%2C NPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upselling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Subtype__c</picklist>
+            <values>
+                <fullName>Activ%2E Comercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin Nuevo Cliente  %28Nuevo DNI%2FCUIT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Comunicación%2FEducativa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversión</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Encuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fidelización</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Relacionamiento</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retención</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transaccional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Type__c</picklist>
+            <values>
+                <fullName>Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Desarrollo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Onboarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Winback</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel_Type__c</picklist>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN%2FOUT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OUT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel__c</picklist>
+            <values>
+                <fullName>APP Push</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IVR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RRSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sat Push</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Push</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Destination__c</picklist>
+            <values>
+                <fullName>Empresa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo y Empresa</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SubtypeL1__c</picklist>
+            <values>
+                <fullName>Activ%2E Comercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin Nuevo Cliente  %28Nuevo DNI%2FCUIT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Comunicación%2FEducativa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversión</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Encuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fidelización</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Relacionamiento</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retención</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transaccional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SubtypeL2__c</picklist>
+            <values>
+                <fullName>Alianzas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin %28DNI%2FCUIT existente%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Producto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart Abandon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-Out %28contenidos%2C packs%2C etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-in %28recargas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Churn Mitigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Club Personal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confiabilización de Datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuración de servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross Sell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detalle de consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Factura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Modificaciones en los servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morosidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAWinback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newsletters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nuevo Servicio OTT%2FVAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saludos especial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Soporte</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Testing ad hoc%2C NPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upselling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Desarrollo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Onboarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Winback</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>RecordDesa01</fullName>
+        <active>true</active>
+        <label>RecordDesa01</label>
+        <picklistValues>
+            <picklist>CampaignMemberStatuses__c</picklist>
+            <values>
+                <fullName>Clickeado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Concretado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finalizado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iniciado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interesado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mensaje Enviado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Interesado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Destiny__c</picklist>
+            <values>
+                <fullName>Empresa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo y Empresa</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Subtype_2__c</picklist>
+            <values>
+                <fullName>Alianzas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin %28DNI%2FCUIT existente%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Producto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart Abandon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-Out %28contenidos%2C packs%2C etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-in %28recargas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Churn Mitigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Club Personal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confiabilización de Datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuración de servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross Sell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detalle de consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Factura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Modificaciones en los servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morosidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newsletters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nuevo Servicio OTT%2FVAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saludos especial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Soporte</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Testing ad hoc%2C NPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upselling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Subtype__c</picklist>
+            <values>
+                <fullName>Activ%2E Comercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin Nuevo Cliente  %28Nuevo DNI%2FCUIT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Comunicación%2FEducativa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversión</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Encuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fidelización</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Relacionamiento</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retención</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transaccional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Type__c</picklist>
+            <values>
+                <fullName>Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Desarrollo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Onboarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Winback</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel_Type__c</picklist>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN%2FOUT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OUT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel__c</picklist>
+            <values>
+                <fullName>APP Push</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CRM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Discador</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Mail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ISMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IVR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RRSS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sat Push</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Push</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Destination__c</picklist>
+            <values>
+                <fullName>Empresa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo y Empresa</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SubtypeL1__c</picklist>
+            <values>
+                <fullName>Activ%2E Comercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin Nuevo Cliente  %28Nuevo DNI%2FCUIT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Comunicación%2FEducativa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversión</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Encuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fidelización</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Relacionamiento</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retención</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transaccional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SubtypeL2__c</picklist>
+            <values>
+                <fullName>Alianzas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin %28DNI%2FCUIT existente%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Producto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart Abandon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-Out %28contenidos%2C packs%2C etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-in %28recargas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Churn Mitigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Club Personal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confiabilización de Datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuración de servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross Sell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detalle de consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Factura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Modificaciones en los servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morosidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAWinback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newsletters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nuevo Servicio OTT%2FVAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saludos especial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Soporte</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Testing ad hoc%2C NPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upselling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Desarrollo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Onboarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Winback</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__MobilePhoneCampaign</fullName>
+        <active>true</active>
+        <description>Mobile Phone Campaign</description>
+        <label>MobilePhoneCampaign</label>
+        <picklistValues>
+            <picklist>CampaignMemberStatuses__c</picklist>
+            <values>
+                <fullName>Clickeado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Concretado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finalizado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Iniciado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interesado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mensaje Enviado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No Interesado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Destiny__c</picklist>
+            <values>
+                <fullName>Empresa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo y Empresa</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Subtype_2__c</picklist>
+            <values>
+                <fullName>Alianzas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin %28DNI%2FCUIT existente%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Producto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart Abandon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-Out %28contenidos%2C packs%2C etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-in %28recargas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Churn Mitigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Club Personal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confiabilización de Datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuración de servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross Sell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detalle de consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Factura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Modificaciones en los servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morosidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newsletters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nuevo Servicio OTT%2FVAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saludos especial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Soporte</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Testing ad hoc%2C NPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upselling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Subtype__c</picklist>
+            <values>
+                <fullName>Activ%2E Comercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin Nuevo Cliente  %28Nuevo DNI%2FCUIT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Comunicación%2FEducativa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversión</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Encuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fidelización</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Relacionamiento</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retención</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transaccional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Campaign_Type__c</picklist>
+            <values>
+                <fullName>Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Desarrollo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Onboarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Winback</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel_Type__c</picklist>
+            <values>
+                <fullName>IN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IN%2FOUT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OUT</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Channel__c</picklist>
+            <values>
+                <fullName>SMS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Destination__c</picklist>
+            <values>
+                <fullName>Empresa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo y Empresa</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status</picklist>
+            <values>
+                <fullName>Aborted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>In Progress</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SubtypeL1__c</picklist>
+            <values>
+                <fullName>Activ%2E Comercial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin Nuevo Cliente  %28Nuevo DNI%2FCUIT%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Comunicación%2FEducativa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conversión</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Encuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fidelización</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Relacionamiento</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retención</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transaccional</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SubtypeL2__c</picklist>
+            <values>
+                <fullName>Alianzas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alta%2FPortin %28DNI%2FCUIT existente%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bienvenida</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Producto</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cambio de Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart Abandon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cart View</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-Out %28contenidos%2C packs%2C etc%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash-in %28recargas%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Churn Mitigation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Club Personal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confiabilización de Datos</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Configuración de servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cross Sell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Detalle de consumo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Educacional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Factura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Modificaciones en los servicios</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Morosidad</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NAWinback</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Newsletters</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nuevo Servicio OTT%2FVAS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotional</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recupero</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Saludos especial</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Soporte</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Testing ad hoc%2C NPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upselling</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Captura</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Desarrollo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Onboarding</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Winback</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>CAMPAIGN.NAME</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.STATUS</customTabListAdditionalFields>
+        <customTabListAdditionalFields>CAMPAIGN.START_DATE</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>CAMPAIGN.NAME</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CAMPAIGN.NAME</lookupPhoneDialogsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PARENT_NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.CAMPAIGN_TYPE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.STATUS</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.START_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.END_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CAMPAIGN.NUM_RESPONSES</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>FullAccess</sharingModel>
+    <webLinks>
+        <fullName>ViewAllCampaignMembers</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>500</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>View All Campaign Members</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/camp/rptcmpgncalldown.jsp?scope=1&amp;scopeid={!Campaign_Name}</url>
+        <width>500</width>
+    </webLinks>
+    <webLinks>
+        <fullName>ViewCampaignInfluenceReport</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>500</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>View Campaign Influence Report</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00O?rt=117&amp;break0=CAN&amp;scope=1&amp;scopeid_lkid={!Campaign.Id}&amp;scopeid={!Campaign_Name}&amp;c=CAN&amp;c=MR&amp;c=PCS&amp;c=CFN&amp;c=RN&amp;c=ON&amp;c=OA&amp;c=OS&amp;c=OCD&amp;c=AN&amp;s=OA&amp;duel0=CAN%2CMR%2CCFN%2CRN%2CAN%2CON%2CPCS%2COS%2COCD%2COA&amp;details=yes&amp;format=t</url>
+        <width>500</width>
+    </webLinks>
+    <webLinks>
+        <fullName>et4ae5__Send_ExactTarget_Email</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Send Marketing Cloud Email</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/19.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/15.0/apex.js&quot;)}
+try
+{
+var urlPrefix = sforce.apex.execute(&quot;et4ae5/jsButtonMethods&quot;,&quot;namespace&quot;, {});
+var theUrl = &quot;https://&quot;+urlPrefix+&quot;/apex/singleSendETEmail?campaignId={!CASESAFEID( Campaign.Id )}&quot;;
+parent.location.href = theUrl;
+}
+catch (e)
+{
+var theUrl = &quot;/apex/singleSendETEmail?campaignId={!CASESAFEID( Campaign.Id )}&quot;;
+parent.location.href = theUrl;
+}</url>
+    </webLinks>
+    <webLinks>
+        <fullName>et4ae5__ViewCampaignInfluenceReport</fullName>
+        <availability>online</availability>
+        <displayType>link</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <hasMenubar>false</hasMenubar>
+        <hasScrollbars>true</hasScrollbars>
+        <hasToolbar>false</hasToolbar>
+        <height>500</height>
+        <isResizable>true</isResizable>
+        <linkType>url</linkType>
+        <masterLabel>View Campaign Influence Report</masterLabel>
+        <openType>newWindow</openType>
+        <position>none</position>
+        <protected>false</protected>
+        <showsLocation>false</showsLocation>
+        <showsStatus>false</showsStatus>
+        <url>/00O?rt=117&amp;break0=CAN&amp;scope=1&amp;scopeid_lkid={!Campaign.Id}&amp;scopeid={!Campaign.Name}&amp;c=CAN&amp;c=MR&amp;c=PCS&amp;c=CFN&amp;c=RN&amp;c=ON&amp;c=OA&amp;c=OS&amp;c=OCD&amp;c=AN&amp;s=OA&amp;duel0=CAN%2CMR%2CCFN%2CRN%2CAN%2CON%2CPCS%2COS%2COCD%2COA&amp;details=yes&amp;format=t</url>
+        <width>500</width>
+    </webLinks>
+</CustomObject>

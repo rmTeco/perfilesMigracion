@@ -1,0 +1,436 @@
+<apex:page standardStylesheets="false" showHeader="true" sidebar="false" controller="vlocity_cmt.DocumentTemplateDisplayController" tabStyle="VlocityContractDocumentTemplate__tab">
+    <apex:includeLightning />
+
+    <html xmlns:ng="http://angularjs.org" lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <base href="/apex/DocumentTemplate"/>
+
+            <apex:includeScript value="/soap/ajax/37.0/connection.js"/>
+            <apex:includeScript value="/xdomain/xdomain.js"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__angular_strap_bundle_1_6)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__dropzone, '/dist/min/dropzone.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__tinymce, '/js/tinymce/tinymce.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ui_tinymce, '/src/tinymce.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__docxtemplater_bundle, '/jszip/jszip.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__docxtemplater_bundle, '/vendor/jszip-utils.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__docxtemplater_bundle, '/build/docxtemplater.v3.5.0.min.js')}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__SEGJS}" />
+            <apex:includeScript value="{!$Resource.vlocity_cmt__ViaDirectives}"/> 
+            <apex:includeScript value="{!$Resource.vlocity_cmt__SldsAngular}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__DocumentTemplateApp}"/>
+            
+            <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/font-hack.css')}"/> 
+            <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__dropzone, '/dist/min/dropzone.min.css')}"/>
+            <apex:stylesheet value="{!$Resource.vlocity_cmt__DocumentBaseCss}" />
+            <apex:stylesheet value="{!$Resource.vlocity_cmt__DocumentTemplateCss}" />
+            <apex:stylesheet value="{!$Resource.vlocity_cmt__ContractEntityFilterOverrideCss}" id="contract-entity-filter-override" />
+        </head>
+        <body>
+            <div class="vloc-body ng-cloak" ng-app="documentTemplateApp" ng-controller="initDocumentTemplateCtrl">
+                <div class="slds-spinner_container" ng-show="vlcLoading">
+                    <div class="slds-spinner slds-spinner_brand slds-spinner_large" aria-hidden="false" role="status">
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+                <div ng-if="pageParams.templateType === CONST.WEB || pageParams.templateType === CONST.UNDEFINED">
+                    <web-template-type page-params="pageParams"></web-template-type>
+                </div>
+                <div ng-if="pageParams.templateType === CONST.DOCX || pageParams.templateType === CONST.PPTX">
+                    <docx-template-type page-params="pageParams"></docx-template-type>
+                </div>
+                <div id="lightningFilePreview"></div>
+            </div>
+
+            <c:ContractTokenMappingComponent />
+
+            <script type="text/javascript">
+                window.sessionId = '{!$Api.Session_ID}';
+                var nameSpacePrefix = '{!nameSpacePrefix}';
+                var remoteActions = {
+                    getAllCloneableTemplates: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getAllCloneableTemplates}',
+                        config: {escape: false}
+                    },
+                    getSectionsForTemplate: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getSectionsForTemplate}',
+                        config: {escape: false}
+                    },
+                    getTypeValues: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getTypeValues}',
+                        config: {escape: false}
+                    },
+                    getApplicableTypeValues: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getApplicableTypeValues}',
+                        config: {escape: false}
+                    },
+                    getApplicableItemTypeValues: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getApplicableItemTypeValues}',
+                        config: {escape: false}
+                    },
+                    getSectionTypes: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getSectionTypes}',
+                        config: {escape: false}
+                    },
+                    getClauses: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getClauses}',
+                        config: {escape: false}
+                    },
+                    getTemplateData: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getTemplateData}',
+                        config: {escape: false}
+                    },
+                    getGenericClauses: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getGenericClauses}',
+                        config: {escape: false}
+                    },
+                    getTemplateTypeValues: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getTemplateTypeValues}',
+                        config: {escape: false}
+                    },
+                    saveTemplate: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.saveDocTemplate}',
+                        config: {escape: false}
+                    },
+                    saveTemplateSection: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.saveTemplateSection}',
+                        config: {escape: false}
+                    },
+                    saveAllSections: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.saveAllSections}',
+                        config: {escape: false}
+                    },
+                    deleteTemplateSection: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.deleteTemplateSection}',
+                        config: {escape: false}
+                    },
+                    cloneAllSections: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.cloneAllSections}',
+                        config: {escape: false}
+                    },
+                    cloneDocumentTemplate: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.cloneDocumentTemplate}',
+                        config: {escape: false}
+                    },
+                    deactivateTemplate: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.deactivateTemplate}',
+                        config: {escape: false}
+                    },
+                    deleteTemplate: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.deleteTemplate}',
+                        config: {escape: false}
+                    },
+                    createNewVersion: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.createNewVersionOfDocumentTemplate}',
+                        config: {escape: false}
+                    },
+                    getAllFolders: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getAllFolders}',
+                        config: {escape: false}
+                    },
+                    getAllImages: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getAllImages}',
+                        config: {escape: false}
+                    },
+                    getSignatureTabs: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getSignatureTabs}',
+                        config: {escape: false}
+                    },
+                    getTemplateProducts: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getTemplateProducts}',
+                        config: {escape: false}
+                    },
+                    getProducts: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getProducts}',
+                        config: {escape: false}
+                    },
+                    getEntityFilters: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getEntityFilters}',
+                        config: {escape: false}
+                    },
+                    getTemplateConditions: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getTemplateConditions}',
+                        config: {escape: false}
+                    },
+                    validateCustomClass: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.validateCustomClass}',
+                        config: {escape: false}
+                    },
+                    createEntityFilter: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.createEntityFilter}',
+                        config: {escape: false}
+                    },
+                    getTrackChangeSetting: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getTrackChangeSetting}',
+                        config: {escape: false}
+                    },
+                    getContractTypeList: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getContractTypeList}',
+                        config: {escape: false}
+                    },
+                    getDefaultContractType: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getDefaultContractType}',
+                        config: {escape: false}
+                    },
+                    isEntityFilterEmpty: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.isEntityFilterEmpty}',
+                        config: {escape: false}
+                    },
+                    getFieldLabels: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getFieldLabels}',
+                        config: {escape: false}
+                    },
+                    getDRBundleId: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getDRBundleId}',
+                        config: {escape: false}
+                    },
+                    getUsageValues: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getUsageValues}',
+                        config: {escape: false}
+                    },
+                    saveDocxRelMetadata: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.saveDocxRelMetadata}',
+                        config: {escape: false}
+                    },
+                    getGenericDocGenOSURL: {
+                        action: '{!$RemoteAction.DocumentTemplateDisplayController.getGenericDocGenOSURL}',
+                        config: {escape: false}
+                    }
+                };
+                var modalLabels = {
+                    'CLMClauseClose': '{!$Label.vlocity_cmt__clmclauseclose}',
+                    'CLMTemplateTemplateDetails': "{!$Label.vlocity_cmt__clmtemplatetemplatedetails}",
+                    'CLMTemplateTemplateName': '{!$Label.vlocity_cmt__clmtemplatetemplatename}',
+                    'CLMTemplateActive': '{!$Label.vlocity_cmt__clmtemplateactive}',
+                    'CLMTemplateVersion': '{!$Label.vlocity_cmt__clmtemplateversion}',
+                    'CLMTemplateSelectAllApplicableObjHeaders': '{!$Label.vlocity_cmt__clmtemplateselectallapplicableobjheaders}',
+                    'CLMTemplateSelectAllApplicableObjLines': '{!$Label.vlocity_cmt__clmtemplateselectallapplicableobjlines}',
+                    'CLMTemplateTrackContractRedlines': '{!$Label.vlocity_cmt__clmtemplatetrackcontractredlines}',
+                    'CLMTemplateTrackRedlines': '{!$Label.vlocity_cmt__clmtemplatetrackredlines}',
+                    'CLMTemplateRestrictTemplateToContractTypes': '{!$Label.vlocity_cmt__clmtemplaterestricttemplatetocontracttypes}',
+                    'CLMTemplateSpecifyContractTypes': '{!$Label.vlocity_cmt__clmtemplatespecifycontracttypes}',
+                    'CLMTemplateAllContractTypes': '{!$Label.vlocity_cmt__clmtemplateallcontracttypes}',
+                    'CLMTemplateSwitchToDefault': '{!$Label.vlocity_cmt__clmtemplateswitchtodefault}',
+                    'CLMTemplateEditDocumentDefaultStyling': '{!$Label.vlocity_cmt__clmtemplateeditdocumentdefaultstyling}',
+                    'CLMTemplateDefaultFontFamilyDocument': '{!$Label.vlocity_cmt__clmtemplatedefaultfontfamilydocument}',
+                    'CLMTemplateDefineStyleEachSectionHeading': '{!$Label.vlocity_cmt__clmtemplatedefinestyleeachsectionheading}',
+                    'CLMTemplateSample': '{!$Label.vlocity_cmt__clmtemplatesample}',
+                    'CLMTemplateText': '{!$Label.vlocity_cmt__clmtemplatetext}',
+                    'CLMTemplateSelectAllFontFormatsToApply': '{!$Label.vlocity_cmt__clmtemplateselectallfontformatstoapply}',
+                    'CLMTemplateFontSize': '{!$Label.vlocity_cmt__clmtemplatefontsize}',
+                    'CLMTemplateFontColor': '{!$Label.vlocity_cmt__clmtemplatefontcolor}',
+                    'CLMTemplateFontFamily': '{!$Label.vlocity_cmt__clmtemplatefontfamily}',
+                    'CLMTemplateSelectTextAlignment': '{!$Label.vlocity_cmt__clmtemplateselecttextalignment}',
+                    'CLMTemplateSelectIndentation': '{!$Label.vlocity_cmt__clmtemplateselectindentation}',
+                    'CLMTemplateCloneExistingTemplate': '{!$Label.vlocity_cmt__clmtemplatecloneexistingtemplate}',
+                    'CLMTemplateCancel': '{!$Label.vlocity_cmt__clmtemplatecancel}',
+                    'CLMTemplateClearClone': '{!$Label.vlocity_cmt__clmtemplateclearclone}',
+                    'CLMTemplateDeactivateTemplate': '{!$Label.vlocity_cmt__clmtemplatedeactivatetemplate}',
+                    'CLMTemplateCreateNewVersion': '{!$Label.vlocity_cmt__clmtemplatecreatenewversion}',
+                    'CLMTemplateDeleteTemplate': '{!$Label.vlocity_cmt__clmtemplatedeletetemplate}',
+                    'CLMTemplateTestTemplate': '{!$Label.vlocity_cmt__clmtemplatetesttemplate}',
+                    'CLMTemplateSignatureRequired': '{!$Label.vlocity_cmt__clmtemplatesignaturerequired}',
+                    'CLMTemplateSectionErrorsMsg': '{!$Label.vlocity_cmt__clmtemplatesectionerrorsmsg}',
+                    'CLMTemplateOkay': '{!$Label.vlocity_cmt__clmtemplateokay}',
+                    'CLMTemplateUnsavedSectionsMsg': '{!$Label.vlocity_cmt__clmtemplateunsavedsectionsmsg}',
+                    'CLMTemplateSaveTemplateVersionMsg': '{!$Label.vlocity_cmt__clmtemplatesavetemplateversionmsg}',
+                    'CLMTemplateSaveTemplate': '{!$Label.vlocity_cmt__clmtemplatesavetemplate}',
+                    'CLMTemplatePickImg': '{!$Label.vlocity_cmt__clmtemplatepickimg}',
+                    'CLMTemplateSelectedImg': '{!$Label.vlocity_cmt__clmtemplateselectedimg}',
+                    'CLMTemplateInsert': '{!$Label.vlocity_cmt__clmtemplateinsert}',
+                    'CLMTemplatePickSignerRole' :'{!$Label.vlocity_cmt__clmtemplatepicksignerrole}',
+                    'CLMTemplateAnchorString' :'{!$Label.vlocity_cmt__clmtemplateanchorstring}',
+                    'CLMTemplateSignerRoles' : '{!$Label.vlocity_cmt__clmtemplatesignerroles}',
+                    'CLMTemplateSaveTemplateDetails': '{!$Label.vlocity_cmt__clmtemplatesavetemplatedetails}',
+                    'CLMTemplateCloneTemplate': '{!$Label.vlocity_cmt__clmtemplateclonetemplate}',
+                    'CLMTemplateDeleteSection': '{!$Label.vlocity_cmt__clmtemplatedeletesection}',
+                    'CLMClauseAreYouSureDeleteSection': '{!$Label.vlocity_cmt__clmclauseareyousuredeletesection}',
+                    'CLMClauseAreYouSureDeleteTemplate': '{!$Label.vlocity_cmt__clmclauseareyousuredeletetemplate}',
+                    'CLMTemplateType': '{!$Label.vlocity_cmt__clmtemplatetype}',
+                    'CLMTemplateTokenMapping': '{!$Label.vlocity_cmt__clmtemplatetokenmapping}',
+                    'CLMTemplateTokenMappingChangeWarning': '{!$Label.vlocity_cmt__clmtemplatetokenmappingchangewarning}',
+                    'CLMTemplateDefineDataMappingForToken':'{!$Label.vlocity_cmt__clmtemplatedefinedatamappingfortoken}',
+                    'CLMTemplateForApplicableType':'{!$Label.vlocity_cmt__clmtemplateforapplicabletype}',
+                    'CLMTemplateTokenMappingObjNoField':'{!$Label.vlocity_cmt__clmtemplatetokenmappingobjnofield}',
+                    'CLMTemplateApply':'{!$Label.vlocity_cmt__clmtemplateapply}',
+                    'CLMTemplateDefineMapping': '{!$Label.vlocity_cmt__clmtemplatedefinemapping}',
+                    'CLMTemplateEdit': '{!$Label.vlocity_cmt__clmtemplateedit}', 
+                    'CLMTemplateEmptyFolder': '{!$Label.vlocity_cmt__clmtemplateemptyfolder}'
+                };
+                var labels = {
+                    'CLMTemplateSectionErrorsExist' : '{!$Label.vlocity_cmt__clmtemplatesectionerrorsexist}',
+                    'CLMTemplateSectionNotSaved' : '{!$Label.vlocity_cmt__clmtemplatesectionnotsaved}',
+                    'CLMTemplateNoSectionsTemplate': '{!$Label.vlocity_cmt__clmtemplatenosectionstemplate}',
+                    'CLMTemplateClickAddNewSection' : '{!$Label.vlocity_cmt__clmtemplateclickaddnewsection}',
+                    'CLMTemplateCreateNewTemplateSetting': '{!$Label.vlocity_cmt__clmtemplateclickaddnewsection}',
+                    'CLMTemplateSectionNumbering': '{!$Label.vlocity_cmt__clmtemplatesectionnumbering}',
+                    'CLMTemplateSaveTemplateDetails': '{!$Label.vlocity_cmt__clmtemplatesavetemplatedetails}',
+                    'CLMTemplateStartNewTemplate': '{!$Label.vlocity_cmt__clmtemplatestartnewtemplate}',
+                    'CLMTemplateEditTemplateDetails': '{!$Label.vlocity_cmt__clmtemplateedittemplatedetails}',
+                    'CLMTemplateSaveAllSections': '{!$Label.vlocity_cmt__clmtemplatesaveallsections}',
+                    'CLMTemplateCopy': '{!$Label.vlocity_cmt__clmtemplatecopy}',
+                    'CLMTemplateEmbeddedTemplate': '{!$Label.vlocity_cmt__clmtemplateembeddedtemplate}',
+                    'CLMTemplateViewing': '{!$Label.vlocity_cmt__clmtemplateviewing}',
+                    'CLMTemplateEditing': '{!$Label.vlocity_cmt__clmtemplateediting}',
+                    'CLMTemplateOfTemplate':'{!$Label.vlocity_cmt__clmtemplateoftemplate}',
+                    'CLMTemplateNowEditingVersion':'{!$Label.vlocity_cmt__clmtemplatenoweditingversion}',
+                    'CLMTemplateTemplateIs':'{!$Label.vlocity_cmt__clmtemplatetemplateis}',
+                    'CLMTemplateInactive':'{!$Label.vlocity_cmt__clmtemplateinactive}',
+                    'CLMTemplateCloneTemplate':'{!$Label.vlocity_cmt__clmtemplateclonetemplate}',
+                    'CLMTemplateSelectExistingTempalte':'{!$Label.vlocity_cmt__clmtemplateselectexistingtempalte}',
+                    'CLMTemplateDataFrom':'{!$Label.vlocity_cmt__clmtemplatedatafrom}',
+                    'CLMTemplateStartNewTemplate':'{!$Label.vlocity_cmt__clmtemplatestartnewtemplate}',
+                    'CLMTemplateChooseSectionType':'{!$Label.vlocity_cmt__clmtemplatechoosesectiontype}',
+                    'CLMTemplateSaveSection':'{!$Label.vlocity_cmt__clmtemplatesavesection}',
+                    'CLMTemplateDeleteSection':'{!$Label.vlocity_cmt__clmtemplatedeletesection}',
+                    'CLMTemplateEditingSection':'{!$Label.vlocity_cmt__clmtemplateeditingsection}',
+                    'CLMTemplateActiveReadOnly':'{!$Label.vlocity_cmt__clmtemplateactivereadonly}',
+                    'CLMTemplateSaveTemplateDetails': '{!$Label.vlocity_cmt__clmtemplatesavetemplatedetails}',
+                    'CLMTemplateSuccessfully':'{!$Label.vlocity_cmt__clmtemplatesuccessfully}',
+                    'CLMTemplateAllSectionsSaved':'{!$Label.vlocity_cmt__clmtemplateallsectionssaved}',
+                    'CLMTemplateSavedTemplateSection':'{!$Label.vlocity_cmt__clmtemplatesavedtemplatesection}',
+                    'CLMTemplateCustomClassNoImplementation':'{!$Label.vlocity_cmt__clmtemplatecustomclassnoimplementation}',
+                    'CLMTemplateCustomClassNoExtension':'{!$Label.vlocity_cmt__clmtemplatecustomclassnoextension}',
+                    'CLMTemplateCustomClassNotExist':'{!$Label.vlocity_cmt__clmtemplatecustomclassnotexist}',
+                    'CLMTemplateAllSectionsForTemplate':'{!$Label.vlocity_cmt__clmtemplateallsectionsfortemplate}',
+                    'CLMTemplateHaveSavedSuccessfully':'{!$Label.vlocity_cmt__clmtemplatehavesavedsuccessfully}',
+                    'CLMTemplateClonedSuccessfully':'{!$Label.vlocity_cmt__clmtemplateclonedsuccessfully}',
+                    'CLMTemplateCustomClassCustomSectionNoImplementation':'{!$Label.vlocity_cmt__clmtemplatecustomclasscustomsectionnoimplementation}',
+                    'CLMTemplateValidationErrorsOneOrMoreSections':'{!$Label.vlocity_cmt__clmtemplatevalidationerrorsoneormoresections}',
+                    'CLMTemplateClonedNewTemplate':'{!$Label.vlocity_cmt__clmtemplateclonednewtemplate}',
+                    'CLMTemplateTheTemplate':'{!$Label.vlocity_cmt__clmtemplatethetemplate}',
+                    'CLMTemplateInactiveAndEditable':'{!$Label.vlocity_cmt__clmtemplateinactiveandeditable}',
+                    'CLMTemplateHasBeenDeleted':'{!$Label.vlocity_cmt__clmtemplatehasbeendeleted}',
+                    'CLMTemplateSeeMoreContracts':'{!$Label.vlocity_cmt__clmtemplateseemorecontracts}',
+                    'CLMTemplateCannotBeDeletedUsed':'{!$Label.vlocity_cmt__clmtemplatecannotbedeletedused}',
+                    'CLMTemplateCannotBeDeactivatedUsed':'{!$Label.vlocity_cmt__clmtemplatecannotbedeactivatedused}',
+                    'CLMTemplateEnterSectionName':'{!$Label.vlocity_cmt__clmtemplateentersectionname}',
+                    'CLMTemplateContentIs':'{!$Label.vlocity_cmt__clmtemplatecontentis}',
+                    'CLMTemplateCharactersExceedsLimit':'{!$Label.vlocity_cmt__clmtemplatecharactersexceedslimit}',
+                    'CLMTemplateEnterSectionLineItem':'{!$Label.vlocity_cmt__clmtemplateentersectionlineitem}',
+                    'CLMTemplateEnterCustomClassName':'{!$Label.vlocity_cmt__clmtemplateentercustomclassname}',
+                    'CLMTemplateEnterTokenMapping':'{!$Label.vlocity_cmt__clmtemplateentertokenmapping}',
+                    'CLMTemplateEnterColumnHeader':'{!$Label.vlocity_cmt__clmtemplateentercolumnheader}',
+                    'CLMTemplateEnterColumnToken':'{!$Label.vlocity_cmt__clmtemplateentercolumntoken}',
+                    'CLMTemplateEnterColumnHeaderAndToken':'{!$Label.vlocity_cmt__clmtemplateentercolumnheaderandtoken}',
+                    'CLMTemplateEnterColumnTokenFormat':'{!$Label.vlocity_cmt__clmtemplateentercolumntokenformat}',
+                    'CLMTemplateTemplateNameExists':'{!$Label.vlocity_cmt__clmtemplatetemplatenameexists}',
+                    'CLMTemplateNameCharacterLimit':'{!$Label.vlocity_cmt__clmtemplatenamecharacterlimit}',
+                    'CLMTemplatePlsShorten':'{!$Label.vlocity_cmt__clmtemplateplsshorten}',
+                    'CLMTemplateEnterTemplateName':'{!$Label.vlocity_cmt__clmtemplateentertemplatename}',
+                    'CLMTemplateSelectAtleastOne':'{!$Label.vlocity_cmt__clmtemplateselectatleastone}',
+                    'CLMTemplateSelectAFile':'{!$Label.vlocity_cmt__clmtemplateselectafile}',
+                    'CLMTemplateEnterSectionContent': '{!$Label.vlocity_cmt__clmtemplateentersectioncontent}',
+                    'CLMTemplateActive': '{!$Label.vlocity_cmt__clmtemplateactive}',
+                    'CLMTemplateColumnHeader':'{!$Label.vlocity_cmt__clmtemplatecolumnheader}',
+                    'CLMTemplateColumnTokens':'{!$Label.vlocity_cmt__clmtemplatecolumntokens}',
+                    'CLMTemplateTotalTokens':'{!$Label.vlocity_cmt__clmtemplatetotaltokens}',
+                    'CLMTemplateSectionHeading': '{!$Label.vlocity_cmt__clmtemplatesectionheading}',
+                    'CLMTemplateConditionalJson': '{!$Label.vlocity_cmt__clmtemplateconditionaljson}',
+                    'CLMTemplateConditionalJsonSectionTabLabel': '{!$Label.vlocity_cmt__clmtemplateconditionaljsonsectiontablabel}',
+                    'CLMTemplateConditionalJsonRepeatableTabLabel': '{!$Label.vlocity_cmt__clmtemplateconditionaljsonrepeatabletablabel}',
+                    'CLMTemplateConditionalJsonPlaceholder': '{!$Label.vlocity_cmt__clmtemplateconditionaljsonplaceholder}',
+                    'CLMTemplateConditionalJsonRepeatable': '{!$Label.vlocity_cmt__clmtemplateconditionaljsonrepeatable}',
+                    'CLMTemplateDRBundleName': '{!$Label.vlocity_cmt__clmtemplatedrbundlename}',
+                    'CLMTemplateDRBundleNamePlaceholder': '{!$Label.vlocity_cmt__clmtemplatedrbundlenameplaceholder}',
+                    'CLMTemplateDRBundleIconText': '{!$Label.vlocity_cmt__clmtemplatedrbundleicontext}',
+                    'CLMTemplateDEDRBundleIconText': '{!$Label.vlocity_cmt__clmtemplatededrbundleicontext}',
+                    'CLMTemplateWordDocTemplateName': '{!$Label.vlocity_cmt__clmtemplateworddoctemplatename}',
+                    'CLMTemplateWordDocTemplateNamePlaceholder': '{!$Label.vlocity_cmt__clmtemplateworddoctemplatenameplaceholder}',
+                    'CLMTemplateDataExtractDataBundleName': '{!$Label.vlocity_cmt__clmtemplatedataextractdatabundlename}',
+                    'CLMTemplateDataExtractDataBundleNamePlaceholder': '{!$Label.vlocity_cmt__clmtemplatedataextractdatabundlenameplaceholder}',
+                    'CLMTemplateUsageType': '{!$Label.vlocity_cmt__clmtemplateusagetype}',
+                    'CLMTemplateDisplayUnmappedTokens': '{!$Label.vlocity_cmt__clmtemplatedisplayunmappedtokens}',
+                    'CLMTemplateBackToList': '{!$Label.vlocity_cmt__clmtemplatebacktolist}',
+                    'CLMTemplateTemplateSettings': '{!$Label.vlocity_cmt__clmtemplatetemplatesettings}',
+                    'CLMTemplateBackToSection': '{!$Label.vlocity_cmt__clmtemplatebacktosection}',
+                    'CLMTemplateActivate': '{!$Label.vlocity_cmt__clmtemplateactivate}',
+                    'CLMTemplateNoConditionalClauseFound': '{!$Label.vlocity_cmt__clmtemplatenoconditionalclausefound}',
+                    'CLMTemplateSectionApplicableLineItemTypes': '{!$Label.vlocity_cmt__clmtemplatesectionapplicablelineitemtypes}',
+                    'CLMTemplateDisplayTotal': '{!$Label.vlocity_cmt__clmtemplatedisplaytotal}',
+                    'CLMTemplateToken': '{!$Label.vlocity_cmt__clmtemplatetoken}',
+                    'CLMTemplateErrorEmptyFilters': '{!$Label.vlocity_cmt__clmtemplateerroremptyfilters}',
+                    'CLMTemplateEditAdvEntityFilters': '{!$Label.vlocity_cmt__clmtemplateeditadventityfilters}',
+                    'CLMTemplateDocumentSections': '{!$Label.vlocity_cmt__clmtemplatedocumentsections}',
+                    'CLMTemplateChooseClause': '{!$Label.vlocity_cmt__clmtemplatechooseclause}',
+                    'CLMTemplateNoGenericClause': '{!$Label.vlocity_cmt__clmtemplatenogenericclause}',
+                    'CLMTemplateSearchClauses': '{!$Label.vlocity_cmt__clmtemplatesearchclauses}',
+                    'CLMTemplateEmbedTemplate': '{!$Label.vlocity_cmt__clmtemplateembedtemplate}',
+                    'CLMTemplateSearchTempaltes': '{!$Label.vlocity_cmt__clmtemplatesearchtempaltes}',
+                    'CLMTemplateEnterTheSectionName': '{!$Label.vlocity_cmt__clmtemplateenterthesectionname}',
+                    'CLMTemplateSectionType': '{!$Label.vlocity_cmt__clmtemplatesectiontype}',
+                    'CLMTemplateSectionApplicableItemTypes': '{!$Label.vlocity_cmt__clmtemplatesectionapplicableitemtypes}',
+                    'CLMTemplateSectionProperties': '{!$Label.vlocity_cmt__clmtemplatesectionproperties}',
+                    'CLMTemplateAutoNumber': '{!$Label.vlocity_cmt__clmtemplateautonumber}',
+                    'CLMTemplateResetAutoNumber': '{!$Label.vlocity_cmt__clmtemplateresetautonumber}',
+                    'CLMTemplateConstructTable': '{!$Label.vlocity_cmt__clmtemplateconstructtable}',
+                    'CLMTemplateRedHexColorCode': '{!$Label.vlocity_cmt__clmtemplateredhexcolorcode}',
+                    'CLMTemplateFillColor': '{!$Label.vlocity_cmt__clmtemplatefillcolor}',
+                    'CLMTemplateBorder': '{!$Label.vlocity_cmt__clmtemplateborder}',
+                    'CLMTemplateAllColumnsHeaderToken': '{!$Label.vlocity_cmt__clmtemplateallcolumnsheadertoken}',
+                    'CLMTemplateEnterTotalToken': '{!$Label.vlocity_cmt__clmtemplateentertotaltoken}',
+                    'CLMTemplateAddColumn': '{!$Label.vlocity_cmt__clmtemplateaddcolumn}',
+                    'CLMTemplateConditionalProducts': '{!$Label.vlocity_cmt__clmtemplateconditionalproducts}',
+                    'CLMTemplateApexClassImplementVlocityOpenInterface': '{!$Label.vlocity_cmt__clmtemplateapexclassimplementvlocityopeninterface}',
+                    'CLMTemplateAdvEntityFilters': '{!$Label.vlocity_cmt__clmtemplateadventityfilters}',
+                    'CLMTemplateSearchAvailProducts': '{!$Label.vlocity_cmt__clmtemplatesearchavailproducts}',
+                    'CLMTemplateSearchAvailProd': '{!$Label.vlocity_cmt__clmtemplatesearchavailprod}',
+                    'CLMTemplateEntityConditionalFilters': '{!$Label.vlocity_cmt__clmtemplateentityconditionalfilters}',
+                    'CLMTemplateBasicProductFilters': '{!$Label.vlocity_cmt__clmtemplatebasicproductfilters}',
+                    'CLMTemplateEnterSelectCreateEntityFilterName': '{!$Label.vlocity_cmt__clmtemplateenterselectcreateentityfiltername}',
+                    'CLMTemplateEntityFilterName': '{!$Label.vlocity_cmt__clmtemplateentityfiltername}',
+                    'CLMTemplateEntityFilterFormula': '{!$Label.vlocity_cmt__clmtemplateentityfilterformula}',
+                    'CLMTemplateCreateFilter': '{!$Label.vlocity_cmt__clmtemplatecreatefilter}',
+                    'CLMTemplateSelectExistingEntityFilter': '{!$Label.vlocity_cmt__clmtemplateselectexistingentityfilter}',
+                    'CLMTemplateRemoveEntityFilter': '{!$Label.vlocity_cmt__clmtemplateremoveentityfilter}',
+                    'CLMTemplateAdvSearch': '{!$Label.vlocity_cmt__clmtemplateadvsearch}',
+                    'CLMTemplateClearSearch': '{!$Label.vlocity_cmt__clmtemplateclearsearch}',
+                    'CLMTemplateSearchTemplateName': '{!$Label.vlocity_cmt__clmtemplatesearchtemplatename}',
+                    'CLMTemplateSearchSectionName': '{!$Label.vlocity_cmt__clmtemplatesearchsectionname}',
+                    'CLMTemplateSearchSectionContent': '{!$Label.vlocity_cmt__clmtemplatesearchsectioncontent}',
+                    'CLMTemplateViewSettings': '{!$Label.vlocity_cmt__clmtemplateviewsettings}',
+                    'CLMTemplateAddNewSection': '{!$Label.vlocity_cmt__clmtemplateaddnewsection}',
+                    'CLMTemplateApexClassExtendDocTemplateMappingAbstractClass': '{!$Label.vlocity_cmt__clmtemplateapexclassextenddoctemplatemappingabstractclass}',
+                    'CLMContractDocDragDropFiles': '{!$Label.vlocity_cmt__clmcontractdocdragdropfiles}',
+                    'CLMContractDocBrowse': '{!$Label.vlocity_cmt__clmcontractdocbrowse}',
+                    'CLMTemplateDocMaxFileSize': '{!$Label.vlocity_cmt__clmtemplatedocmaxfilesize}',
+                    'CLMTemplateAttachFile': '{!$Label.vlocity_cmt__clmtemplateattachfile}',
+                    'CLMTemplateDownloadFile': '{!$Label.vlocity_cmt__clmtemplatedownloadfile}',
+                    'CLMTemplateReplaceFile': '{!$Label.vlocity_cmt__clmtemplatereplacefile}',
+                    'CLMTemplateViewFile': '{!$Label.vlocity_cmt__clmtemplateviewfile}',
+                    'CLMTemplateUseExistingFile': '{!$Label.vlocity_cmt__clmtemplateuseexistingfile}',
+                    'CLMDocGenDownloadWord': '{!$Label.vlocity_cmt__clmdocgendownloadword}',
+                    'CLMDocGenDownloadPowerPoint': '{!$Label.vlocity_cmt__clmdocgendownloadpowerpoint}',
+                    'CLMDocGenDownloadPDF': '{!$Label.vlocity_cmt__clmdocgendownloadpdf}'
+                };
+
+                angular.module('documentTemplateApp').controller('initDocumentTemplateCtrl', function($scope, CONST) {
+                    'use strict';
+
+                    $scope.pageParams = {
+                        'templateType': '{!LOWER($CurrentPage.parameters.templateType)}' || CONST.UNDEFINED,
+                        'templateId': '{!$CurrentPage.parameters.templateId}' || CONST.UNDEFINED,
+                        'templateData': null,
+                        'templateMetadata': null
+                    };
+                    $scope.CONST = CONST;
+                });
+
+                function launchFilePreview(contentVersionId) {
+                    $Lightning.use('c:FilePreviewApp', function() {
+                        $Lightning.createComponent(
+                            'c:FilePreviewComponent', 
+                            {'contentVersionId': contentVersionId}, 
+                            'lightningFilePreview', 
+                            function(cmp) {}
+                        );
+                    });
+                }
+            </script>
+        </body>
+    </html>
+</apex:page>

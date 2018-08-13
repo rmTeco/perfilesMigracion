@@ -1,0 +1,27 @@
+<div class="cpq-cart-item-product-children slds-col scroll">
+    <!--search items code block -->
+    <div ng-controller="CPQCartItemController">
+        <div ng-controller="searchItemsTplController" ng-if="records.actions.getproducts">
+            <div class="slds-form-element slds-lookup slds-is-open" data-select="single">
+                <label class="slds-form-element__label" for="lookup-366">Search Item</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-input-has-icon slds-input-has-icon--left">
+                        <slds-svg-icon sprite="'utility'" size="'x-small'" icon="'search'" extra-classes="'slds-input__icon slds-icon-text-default'"></slds-svg-icon>
+                        <input class="slds-lookup__search-input slds-input" type="search" placeholder="Search" role="combobox" aria-activedescendent="" aria-expanded="true" aria-autocomplete="list" ng-model="searchItem" slds-options="item.UnitPrice.value  as item.Name.value for item in getSearchItems(records, $viewValue, tempScope)" data-template="{{typeaheadTemplate}}" data-trigger="focus" data-limit="100" slds-typeahead/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <vloc-card ng-repeat="card in cards | orderBy: 'order'" 
+    	ctrl="CPQCartItemController" 
+    	ng-model="card" data="card" records="records" index="{{$index}}"
+    	aria-level="{{(attrs.ariaLevel - 0) + 1}}" 
+    	line-item-modal="{{attrs.lineItemModal}}" 
+    	processing-line="{{attrs.processingLine}}"
+    	provisioning-status="{{attrs.provisioningStatus}}"
+        show-product-list="{{attrs.showProductList}}"
+        show-config-panel="{{attrs.showConfigPanel}}"
+        class="cpq-item-product-child-level-{{(attrs.ariaLevel - 0) + 1}}">
+    </vloc-card>
+</div>

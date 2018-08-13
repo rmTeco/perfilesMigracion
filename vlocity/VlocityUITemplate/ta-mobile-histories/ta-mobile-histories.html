@@ -1,0 +1,21 @@
+<div class="via-slds slds-grid slds-wrap"
+     style="background-color:#FFF;">
+    <div class="slds-size--12-of-12 slds-text-heading--large slds-p-around--large slds-border--bottom">
+        <p>Historiales</p>
+    </div>
+    <div class="slds-p-bottom--large slds-size--12-of-12">
+        <div class="slds-size--12-of-12 slds-grid slds-grid--align-spread slds-grid--vertical-align-center slds-border--bottom"
+             ng-repeat="action in data.actions"
+             ng-click="performAction(action)">
+            <div class="slds-p-around--large slds-text-body--regular labelFont">{{action.displayName}}</div>
+            <div class="slds-p-around--large">
+                <slds-svg-icon
+    				sprite="'utility'"
+    				icon="'chevronright'"
+    				size="'small'"
+    				extra-classes="'chevronIcon'">
+    			</slds-svg-icon>
+    		</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2926 @@
+{
+    "bpTree": {
+        "response": {
+            "IFS132_Response": {
+                "autentificacion": "true",
+                "autentificacion3G": "true",
+                "authd": "true",
+                "camel": {
+                    "nivel1": [
+                        {
+                            "clave": "CAMEL services",
+                            "nivel2": [
+                                {
+                                    "clave": "CAMEL CSI  Trigger Detection Points(TDP)",
+                                    "nivel3": [
+                                        {
+                                            "clave": "Originating CSI",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "Estado",
+                                                    "clave": "OCSISTATE",
+                                                    "sever": "VERDE",
+                                                    "valor": "TRUE",
+                                                    "vdesc": "Activo"
+                                                },
+                                                {
+                                                    "cdesc": "OSCI Camel Template ID",
+                                                    "clave": "OCSI_ID",
+                                                    "valor": "10"
+                                                },
+                                                {
+                                                    "cdesc": "OSCI Camel Template Name",
+                                                    "clave": "OCSI_NAME",
+                                                    "valor": "OCSI PPS bajo umbral numero par"
+                                                },
+                                                {
+                                                    "cdesc": "OCSI Camel phase",
+                                                    "clave": "OCSI.TPLID10.CAMEL",
+                                                    "valor": "PHASE2"
+                                                },
+                                                {
+                                                    "cdesc": "Trigger Detection Point",
+                                                    "clave": "OCSI.TPLID10.DP",
+                                                    "valor": "COLLECTINFO",
+                                                    "vdesc": "DP2"
+                                                },
+                                                {
+                                                    "cdesc": "Default call handling",
+                                                    "clave": "OCSI.TPLID10.DEFAULTCALL",
+                                                    "valor": "Release Call"
+                                                },
+                                                {
+                                                    "cdesc": "Service Key",
+                                                    "clave": "OCSI.TPLID10.SK",
+                                                    "valor": "6901"
+                                                },
+                                                {
+                                                    "cdesc": "gsmSCF Address",
+                                                    "clave": "OCSI.TPLID10.GSMSCFADD",
+                                                    "valor": "5434990064"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Terminating CSI",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "Estado",
+                                                    "clave": "TCSISTATE",
+                                                    "sever": "VERDE",
+                                                    "valor": "TRUE",
+                                                    "vdesc": "Activo"
+                                                },
+                                                {
+                                                    "cdesc": "TSCI Camel Template ID",
+                                                    "clave": "TCSI_ID",
+                                                    "valor": "10"
+                                                },
+                                                {
+                                                    "cdesc": "TSCI Camel Template Name",
+                                                    "clave": "TCSI_NAME",
+                                                    "valor": "TCSI PPS bajo umbral numero par"
+                                                },
+                                                {
+                                                    "cdesc": "Area where a called subscriber is roaming",
+                                                    "clave": "TCSI.TPLID10.AVAILABLE_PLMN",
+                                                    "valor": "INTERNATIONAL",
+                                                    "vdesc": "Roaming fuera del país"
+                                                },
+                                                {
+                                                    "cdesc": "TCSI Camel phase",
+                                                    "clave": "TCSI.TPLID10.CAMEL",
+                                                    "valor": "PHASE2"
+                                                },
+                                                {
+                                                    "cdesc": "Trigger Detection Point",
+                                                    "clave": "TCSI.TPLID10.DP",
+                                                    "valor": "TAA",
+                                                    "vdesc": "DP12"
+                                                },
+                                                {
+                                                    "cdesc": "Provide subscriber information (PSI) request message",
+                                                    "clave": "TCSI.TPLID10.PSICONF",
+                                                    "valor": "TRUE"
+                                                },
+                                                {
+                                                    "cdesc": "Default call handling",
+                                                    "clave": "TCSI.TPLID10.DEFAULTCALL",
+                                                    "valor": "continueCall"
+                                                },
+                                                {
+                                                    "cdesc": "Service Key",
+                                                    "clave": "TCSI.TPLID10.SK",
+                                                    "valor": "6903"
+                                                },
+                                                {
+                                                    "cdesc": "gsmSCF Address",
+                                                    "clave": "TCSI.TPLID10.GSMSCFADD",
+                                                    "valor": "5434990064"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "causaError": "No hay error",
+                "codigoError": "0",
+                "estado": {
+                    "activo": [
+                        {
+                            "cdesc": "Línea Tarjeta / Abono Fijo Activa (Llamadas Entrantes y Salientes)",
+                            "clave": "2.1.5",
+                            "vdesc": [
+                                [
+                                    "TCSISTATE = 'TRUE'"
+                                ],
+                                [
+                                    "OCSISTATE = 'TRUE'"
+                                ],
+                                [
+                                    "ECATEGORY = 1  ó  ECATEGORY = 5"
+                                ],
+                                [
+                                    "TS21 = 'TRUE'"
+                                ],
+                                [
+                                    "TS22 = 'TRUE'"
+                                ],
+                                [
+                                    "ODBSS = 'FALSE'"
+                                ],
+                                [
+                                    "ODBOC = 'NOBOC'"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = '1580'"
+                                ],
+                                [
+                                    "ODBIC = 'NOBIC'"
+                                ],
+                                [
+                                    "NAM = 'BOTH'"
+                                ],
+                                [
+                                    "GSM_IC = 'FALSE'"
+                                ],
+                                [
+                                    "GSM_OC = 'FALSE'"
+                                ],
+                                [
+                                    "GPRSLOCK = 'FALSE'"
+                                ],
+                                [
+                                    "EPSLOCK = 'FALSE'"
+                                ],
+                                [
+                                    "CSUPLLCK = 'FALSE'"
+                                ],
+                                [
+                                    "PSUPLLCK = 'FALSE'"
+                                ]
+                            ]
+                        }
+                    ],
+                    "clave": "Estado",
+                    "inactivo": [
+                        {
+                            "cdesc": "Línea Pospaga Activa",
+                            "clave": "2.1.1.0",
+                            "vdesc": [
+                                [
+                                    "TS11 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ECATEGORY  no configurado  ó  ECATEGORY = 3",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 0800  ó  SCHARGE_GLOBAL desconocido",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "EPSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = FALSE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Pospaga WIN Activa",
+                            "clave": "2.1.1.0/1",
+                            "vdesc": [
+                                [
+                                    "TS11 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ECATEGORY  no configurado  ó  ECATEGORY = 3",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "EPSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = FALSE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Linea M2M SMS Active (Plan 1)",
+                            "clave": "2.1.1.1",
+                            "vdesc": [
+                                [
+                                    "TS11 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS22 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ECATEGORY  no configurado",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL desconocido",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea M2M SMS y Datos Active (Plan 2)",
+                            "clave": "2.1.1.2",
+                            "vdesc": [
+                                [
+                                    "TS11 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS22 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ECATEGORY  no configurado",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 0800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "EPSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = FALSE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Pospaga Suspendida x Límite o Mora1",
+                            "clave": "2.1.2.0",
+                            "vdesc": [
+                                [
+                                    "TS11 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBSS = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBPB3 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ECATEGORY = 2",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "ODBOC = BOCROAM",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "ODBENTE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 0800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Pospaga WIN Suspendida x Límite o Mora1",
+                            "clave": "2.1.2.0/1",
+                            "vdesc": [
+                                [
+                                    "TS11 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBSS = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBPB3 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ECATEGORY = 2",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "ODBOC = BOCROAM",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "ODBENTE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Linea M2M SMS Active (Plan 1) en Mora 1",
+                            "clave": "2.1.2.1",
+                            "vdesc": [
+                                [
+                                    "TS11 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ECATEGORY = 2  ó  ECATEGORY  no configurado",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "ODBOC = BOIC",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL desconocido",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea M2M SMS y Datos Active (Plan 2) en Mora 1",
+                            "clave": "2.1.2.2",
+                            "vdesc": [
+                                [
+                                    "TS11 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ECATEGORY = 2  ó  ECATEGORY  no configurado",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "ODBOC = BOIC",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 0800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Pospaga Suspendida x Mora2 o Siniestro",
+                            "clave": "2.1.3.0",
+                            "vdesc": [
+                                [
+                                    "TS11 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS21 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBPB3 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBSS = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBOC = BOCROAM",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 0800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBENTE = TRUE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Pospaga WIN Suspendida x Mora2 o Siniestro",
+                            "clave": "2.1.3.0/1",
+                            "vdesc": [
+                                [
+                                    "TS11 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS21 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBPB3 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBSS = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBOC = BOCROAM",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBENTE = TRUE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Linea M2M SMS Active (Plan 1) en Mora 2",
+                            "clave": "2.1.3.1",
+                            "vdesc": [
+                                [
+                                    "TS11 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS21 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBOC = BOIC",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL desconocido",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "ECATEGORY = 2  ó  ECATEGORY  no configurado",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea M2M SMS y Datos Active (Plan 2) en Mora 2",
+                            "clave": "2.1.3.1",
+                            "vdesc": [
+                                [
+                                    "TS11 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS21 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBOC = BOIC",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 0800",
+                                    "NO OK    Valor actual = 1580"
+                                ],
+                                [
+                                    "ECATEGORY = 2  ó  ECATEGORY  no configurado",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Tarjeta / Abono Fijo Pre-Activa",
+                            "clave": "2.1.4",
+                            "vdesc": [
+                                [
+                                    "TCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "OCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ECATEGORY = 23",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "ODBSS = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "ODBOC = BAOC",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1580  ó  SCHARGE_GLOBAL desconocido",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBIC = BAIC",
+                                    "NO OK    Valor actual = NOBIC"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Tarjeta / Abono Fijo Suspendida Mora1 / Saldo Negativo",
+                            "clave": "2.1.6",
+                            "vdesc": [
+                                [
+                                    "ODBOC = BOCROAM",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "OCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBPB3 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBSS = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ECATEGORY = 23  ó  ECATEGORY = 24",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "ODBIC = NOBIC",
+                                    "OK"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1580",
+                                    "OK"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBENTE = TRUE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Tarjeta / Abono Fijo Bloqueada x Siniestro / Mora2",
+                            "clave": "2.1.7",
+                            "vdesc": [
+                                [
+                                    "TS21 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "OCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBPB3 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBSS = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBOC = BOCROAM",
+                                    "NO OK    Valor actual = NOBOC"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1580",
+                                    "OK"
+                                ],
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "ODBENTE = TRUE",
+                                    "OK"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                "estadoSMSEncolado": {
+                    "-xsi:nil": "true"
+                },
+                "estadoTerminal": "White listed",
+                "fechaHoraRta": "20180405173714438",
+                "hlr": "BELBDUSP01",
+                "hlrSubscriberData": {
+                    "nivel1": [
+                        {
+                            "clave": "RESUMEN",
+                            "nivel2": [
+                                {
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "MSISDN",
+                                            "clave": "XSUB_ISDN",
+                                            "valor": "541162538538"
+                                        },
+                                        {
+                                            "cdesc": "IMSI",
+                                            "clave": "IMSI",
+                                            "valor": "722341238807873"
+                                        },
+                                        {
+                                            "cdesc": "Tipo de SIM card",
+                                            "clave": "CARDTYPE",
+                                            "valor": "USIM"
+                                        },
+                                        {
+                                            "cdesc": "Telefonía de voz",
+                                            "clave": "TS11",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Servicio de voz Activo"
+                                        },
+                                        {
+                                            "cdesc": "Envío de SMSs",
+                                            "clave": "TS22",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Envío de SMS Activo"
+                                        },
+                                        {
+                                            "cdesc": "Recepción de SMSs",
+                                            "clave": "TS21",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Recepción de SMS Activo"
+                                        },
+                                        {
+                                            "clave": "Standard global charging characteristic",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "SCHARGE_GLOBAL",
+                                                    "valor": "1580",
+                                                    "vdesc": "Prepago, AFE y Pospago (online), Tipo de Tasación Online para GPRS"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Map Extensions, Subscriber Type",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "ECATEGORY",
+                                                    "valor": "1",
+                                                    "vdesc": "Prepago - Permita la recepción de llamadas con cargo"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Network Access Mode",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "NAM",
+                                                    "valor": "BOTH",
+                                                    "vdesc": "Acceso a redes de voz y datos (2G/3G y LTE)"
+                                                },
+                                                {
+                                                    "cdesc": "GSM_IC",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Servicio de recepción de llamadas no restringido"
+                                                },
+                                                {
+                                                    "cdesc": "GSM_OC",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Servicio de llamadas salientes no restringido"
+                                                },
+                                                {
+                                                    "cdesc": "GPRSLOCK",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Servicio 2G/3G no restringido"
+                                                },
+                                                {
+                                                    "cdesc": "EPSLOCK",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Servicio LTE no restringido"
+                                                },
+                                                {
+                                                    "cdesc": "NON3GPPLOCK",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Servicios non-3GPP  no restringidos"
+                                                },
+                                                {
+                                                    "cdesc": "CSUPLLCK",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Servicio de actualización de localización en GSM no restringido"
+                                                },
+                                                {
+                                                    "cdesc": "PSUPLLCK",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Servicio de actualización de localización en GPRS no restringido"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "GPRS, Mobile Station (MS) Status",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "Current Serving SGSN",
+                                                    "clave": "SGSNNUM",
+                                                    "valor": "5434990043"
+                                                },
+                                                {
+                                                    "cdesc": " ",
+                                                    "clave": "MSPURGEDFORGPRS",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Registrado en SGSN"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "GSM, Mobile Station (MS) Status",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "Current Serving VLR",
+                                                    "clave": "VLRNUM",
+                                                    "valor": "541151740094"
+                                                },
+                                                {
+                                                    "cdesc": " ",
+                                                    "clave": "MSPURGEDFORNONGPRS",
+                                                    "sever": "VERDE",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "Registrado en VLR"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "clave": "DETALLE",
+                            "nivel2": [
+                                {
+                                    "clave": "Servicios Suplementarios",
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "Call Waiting Service",
+                                            "clave": "CW",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": " ",
+                                            "clave": "CW_TS1X",
+                                            "sever": "VERDE",
+                                            "valor": "PROV | ACT",
+                                            "vdesc": "Activo"
+                                        },
+                                        {
+                                            "cdesc": "Hold Service",
+                                            "clave": "HOLD",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Multi Party service",
+                                            "clave": "MPTY",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Servicio de Presentación del ANI",
+                                            "clave": "CLIP",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Servicio de Presentación del ANI Forzado",
+                                            "clave": "CLIP_OVERRIDE",
+                                            "sever": "AZUL",
+                                            "valor": "FALSE",
+                                            "vdesc": "No activo"
+                                        },
+                                        {
+                                            "cdesc": "Restricción de envío de ID",
+                                            "clave": "CLIR",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Opción Restricción de envío de ID (CLIR)",
+                                            "clave": "MODE",
+                                            "sever": "VERDE",
+                                            "valor": "TEMPALLOWED",
+                                            "vdesc": "Siempre envía ANI, excepto anteponiendo (#31#)"
+                                        },
+                                        {
+                                            "clave": "PLMN-specific supplementary services",
+                                            "nivel4": [
+                                            ]
+                                        },
+                                        {
+                                            "cdesc": "PLMN-SPECIFICSS-8",
+                                            "sever": "AZUL",
+                                            "valor": "NOTPROV",
+                                            "vdesc": "Ring back tone Service Inactivo"
+                                        },
+                                        {
+                                            "clave": "NAEA-carrier identification code",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "NAEA_CIC",
+                                                    "valor": "74"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Subscriber Category",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "CATEGORY",
+                                                    "valor": "COMMON"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Subscriber’s OFA templates",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "Default OFA template",
+                                                    "clave": "DEFAULTOFA_ID",
+                                                    "sever": "VERDE",
+                                                    "valor": "150",
+                                                    "vdesc": "Internacional"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "VLR/SGSN-Specific Roaming Restriction Service",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "VLR roaming restriction template ID",
+                                                    "clave": "VLRLIST_ID",
+                                                    "valor": "101"
+                                                },
+                                                {
+                                                    "cdesc": "VLR roaming restriction template Name",
+                                                    "clave": "VLRLIST_NAME",
+                                                    "valor": "101"
+                                                },
+                                                {
+                                                    "cdesc": "SGSN roaming restriction template ID",
+                                                    "clave": "SGSNLIST_ID",
+                                                    "valor": "1"
+                                                },
+                                                {
+                                                    "cdesc": "SGSN roaming restriction template Name",
+                                                    "clave": "SGSNLIST_NAME",
+                                                    "valor": "1"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "clave": "Restricción de llamada",
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "All Incoming Calls Barring service",
+                                            "clave": "BAIC",
+                                            "sever": "VERDE",
+                                            "valor": "NOTPROV",
+                                            "vdesc": "No provisionado"
+                                        },
+                                        {
+                                            "cdesc": "All Incoming Calls when Roaming Outside the Home PLMN Country",
+                                            "clave": "BICROAM",
+                                            "sever": "VERDE",
+                                            "valor": "NOTPROV",
+                                            "vdesc": "No provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Operator Determined Barring of All Incoming Calls",
+                                            "clave": "ODBIC",
+                                            "sever": "VERDE",
+                                            "valor": "NOBIC",
+                                            "vdesc": "Bloqueo de Todas las llamadas Entrantes inactivo"
+                                        },
+                                        {
+                                            "cdesc": "Barring of All Outgoing Calls service",
+                                            "clave": "BAOC",
+                                            "sever": "VERDE",
+                                            "valor": "NOTPROV",
+                                            "vdesc": "No provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Barring of All Outgoing international Calls service",
+                                            "clave": "BOIC",
+                                            "sever": "VERDE",
+                                            "valor": "NOTPROV",
+                                            "vdesc": "No provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Operator Determined Barring of Outgoing Calls",
+                                            "clave": "ODBOC",
+                                            "sever": "VERDE",
+                                            "valor": "NOBOC",
+                                            "vdesc": "Sin Restricción de llamadas salientes"
+                                        },
+                                        {
+                                            "cdesc": "Barring of International Outgoing Calls (except calls to HPLMN)",
+                                            "clave": "BOICEXHC",
+                                            "sever": "VERDE",
+                                            "valor": "NOTPROV",
+                                            "vdesc": "No provisionado"
+                                        },
+                                        {
+                                            "cdesc": "Operator Determined Barring of Roaming service",
+                                            "clave": "ODBROAM",
+                                            "sever": "VERDE",
+                                            "valor": "NOBAR",
+                                            "vdesc": "Habilitación del Roaming cuando se encuentra fuera del País"
+                                        },
+                                        {
+                                            "cdesc": "Barring of Premium Rate entertainment calls",
+                                            "clave": "ODBENTE",
+                                            "sever": "ROJO",
+                                            "valor": "TRUE",
+                                            "vdesc": "Con restricción del uso de centros de servicios externos a TP"
+                                        },
+                                        {
+                                            "cdesc": "Barring of Premium Rate information calls",
+                                            "clave": "ODBINFO",
+                                            "sever": "VERDE",
+                                            "valor": "FALSE",
+                                            "vdesc": "Sin Bloqueo a OP Internacional"
+                                        },
+                                        {
+                                            "cdesc": "Barring of all SS Management",
+                                            "clave": "ODBSS",
+                                            "sever": "VERDE",
+                                            "valor": "FALSE",
+                                            "vdesc": "Manejo de Servicios suplementarios habilitado"
+                                        },
+                                        {
+                                            "cdesc": "Llamadas salientes solo a Asteriscos Gratuitos",
+                                            "clave": "ODBPB3",
+                                            "sever": "VERDE",
+                                            "valor": "FALSE",
+                                            "vdesc": "Inactivo"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "clave": "Teleservicios",
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "Speech Telephony Service:",
+                                            "clave": "TS11",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Servicio de voz Activo"
+                                        },
+                                        {
+                                            "cdesc": "Mobile terminated point-to-point short message service:",
+                                            "clave": "TS21",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Recepción de SMS Activo"
+                                        },
+                                        {
+                                            "cdesc": "Mobile originated point-to-point short message service:",
+                                            "clave": "TS22",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Envío de SMS Activo"
+                                        },
+                                        {
+                                            "cdesc": "Alternate Speech Facsimile Group 3 Service:",
+                                            "clave": "TS61",
+                                            "sever": "AZUL",
+                                            "valor": "FALSE",
+                                            "vdesc": "Fax Speech No activo"
+                                        },
+                                        {
+                                            "cdesc": "Automatic Facsimile Group 3 Service:",
+                                            "clave": "TS62",
+                                            "sever": "AZUL",
+                                            "valor": "FALSE",
+                                            "vdesc": "Fax Auto No activo"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "clave": "Servicios de transporte de información",
+                                    "nivel3": [
+                                        {
+                                            "clave": "Asynchronous General Bearer Services",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "Bearer Service 21, CDA-300 bps",
+                                                    "clave": "BS21",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 22, CDA-1200 bps",
+                                                    "clave": "BS22",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 23, CDA-1200-75 bps",
+                                                    "clave": "BS23",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 24, CDA-2400 bps",
+                                                    "clave": "BS24",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 25, CDA-4800 bps",
+                                                    "clave": "BS25",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 26, CDA-9600 bps",
+                                                    "clave": "BS26",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Synchronous General Bearer Services",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "Bearer Service 30, Duplex Sync data service (Video Call)",
+                                                    "clave": "BS30",
+                                                    "sever": "VERDE",
+                                                    "valor": "TRUE",
+                                                    "vdesc": "Activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 31, Data CDS-1200 bps",
+                                                    "clave": "BS31",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 32, Data CDS-2400 bps",
+                                                    "clave": "BS32",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 33, Data CDS-4800 bps",
+                                                    "clave": "BS33",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                },
+                                                {
+                                                    "cdesc": "Bearer Service 34, Data CDS-9600 bps",
+                                                    "clave": "BS34",
+                                                    "sever": "AZUL",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No activo"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "clave": "Transferencia de llamadas",
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "Default call Forward (CFD) service",
+                                            "clave": "CFD",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS1X",
+                                            "clave": "CFD_BSG_TS1X",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Desvío configurado para Telefonía"
+                                        },
+                                        {
+                                            "cdesc": "   - Forward to Number",
+                                            "clave": "CFD_FTN_TS1X",
+                                            "valor": "541151009255"
+                                        },
+                                        {
+                                            "cdesc": "   - Status",
+                                            "clave": "CFD_STATUS_TS1X",
+                                            "sever": "VERDE",
+                                            "valor": "PROV | REG | ACT",
+                                            "vdesc": "Activo"
+                                        },
+                                        {
+                                            "cdesc": "   - No reply Condition Time",
+                                            "clave": "CFD_NOTREPLYTIME_TS1X",
+                                            "valor": "25",
+                                            "vdesc": "25 seconds"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS6X",
+                                            "clave": "CFD_BSG_TS6X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Fax"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS2X",
+                                            "clave": "CFD_BSG_BS2X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Async Data"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS3X",
+                                            "clave": "CFD_BSG_BS3X",
+                                            "sever": "VERDE",
+                                            "valor": "TRUE",
+                                            "vdesc": "Desvío configurado para Sync Data"
+                                        },
+                                        {
+                                            "cdesc": "   - Forward to Number",
+                                            "clave": "CFD_FTN_BS3X",
+                                            "valor": "541151009255"
+                                        },
+                                        {
+                                            "cdesc": "   - Status",
+                                            "clave": "CFD_STATUS_BS3X",
+                                            "sever": "VERDE",
+                                            "valor": "PROV | REG | ACT",
+                                            "vdesc": "Activo"
+                                        },
+                                        {
+                                            "cdesc": "   - No reply Condition Time",
+                                            "clave": "CFD_NOTREPLYTIME_BS3X",
+                                            "valor": "25",
+                                            "vdesc": "25 seconds"
+                                        },
+                                        {
+                                            "cdesc": "Unconditional call Forward (CFU) service",
+                                            "clave": "CFU",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS1X",
+                                            "clave": "CFU_BSG_TS1X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Telefonía"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS6X",
+                                            "clave": "CFU_BSG_TS6X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Fax"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS2X",
+                                            "clave": "CFU_BSG_BS2X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Async Data"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS3X",
+                                            "clave": "CFU_BSG_BS3X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Sync Data"
+                                        },
+                                        {
+                                            "cdesc": "Busy call Forward (CFB) service",
+                                            "clave": "CFB",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS1X",
+                                            "clave": "CFB_BSG_TS1X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Telefonía"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS6X",
+                                            "clave": "CFB_BSG_TS6X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Fax"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS2X",
+                                            "clave": "CFB_BSG_BS2X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Async Data"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS3X",
+                                            "clave": "CFB_BSG_BS3X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Sync Data"
+                                        },
+                                        {
+                                            "cdesc": "No Reply call Forward (CFNRY) service",
+                                            "clave": "CFNRY",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS1X",
+                                            "clave": "CFNRY_BSG_TS1X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Telefonía"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS6X",
+                                            "clave": "CFNRY_BSG_TS6X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Fax"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS2X",
+                                            "clave": "CFNRY_BSG_BS2X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Async Data"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS3X",
+                                            "clave": "CFNRY_BSG_BS3X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Sync Data"
+                                        },
+                                        {
+                                            "cdesc": "Unreachable call Forward (CFNRC) service",
+                                            "clave": "CFNRC",
+                                            "sever": "VERDE",
+                                            "valor": "PROV",
+                                            "vdesc": "Provisionado"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS1X",
+                                            "clave": "CFNRC_BSG_TS1X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Telefonía"
+                                        },
+                                        {
+                                            "cdesc": "܀ TS6X",
+                                            "clave": "CFNRC_BSG_TS6X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Fax"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS2X",
+                                            "clave": "CFNRC_BSG_BS2X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Async Data"
+                                        },
+                                        {
+                                            "cdesc": "܀ BS3X",
+                                            "clave": "CFNRC_BSG_BS3X",
+                                            "sever": "AZUL",
+                                            "valor": null,
+                                            "vdesc": "Desvío no configurado para Sync Data"
+                                        },
+                                        {
+                                            "clave": "Default Call Forward para TS1X, BS3X",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "CFD_VALIDCCF",
+                                                    "valor": "CFB&CFNRy&CFNRc",
+                                                    "vdesc": "Transferencia DCF en ocupado, no localizable y no contesta"
+                                                },
+                                                {
+                                                    "cdesc": "CFD_NFS",
+                                                    "valor": "FALSE",
+                                                    "vdesc": "No envía notificación cuando se realiza una transferencia"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Default Call Forward support in international roaming",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "CFD_SUPINTERCFD",
+                                                    "sever": "VERDE",
+                                                    "valor": "TRUE",
+                                                    "vdesc": "Activo"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "clave": "Puntos de Acceso",
+                                    "nivel3": [
+                                        {
+                                            "clave": "Lista de APNs",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "CTXID",
+                                                    "clave": "Nombre APN",
+                                                    "valor": "QOS Template",
+                                                    "vdesc": "Descripción"
+                                                },
+                                                {
+                                                    "cdesc": "6",
+                                                    "clave": "104",
+                                                    "valor": "4",
+                                                    "vdesc": "BIPGEMALTO.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "5",
+                                                    "clave": "1",
+                                                    "valor": "4",
+                                                    "vdesc": "MMS"
+                                                },
+                                                {
+                                                    "cdesc": "4",
+                                                    "clave": "111",
+                                                    "valor": "4",
+                                                    "vdesc": "TABLETS.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "3",
+                                                    "clave": "100",
+                                                    "valor": "4",
+                                                    "vdesc": "DATOS.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "2",
+                                                    "clave": "71",
+                                                    "valor": "4",
+                                                    "vdesc": "INTERNET.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "1",
+                                                    "clave": "0",
+                                                    "valor": "4",
+                                                    "vdesc": "GPRS.PERSONAL.COM"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "IPs asignadas al terminal por APN",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "CTXID",
+                                                    "clave": "Nombre APN",
+                                                    "valor": "PDPTYPE IP",
+                                                    "vdesc": "PDP/PDN"
+                                                },
+                                                {
+                                                    "cdesc": "6",
+                                                    "clave": "104",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "5",
+                                                    "clave": "1",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "4",
+                                                    "clave": "111",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "3",
+                                                    "clave": "100",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "2",
+                                                    "clave": "71",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "1",
+                                                    "clave": "0",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "hssSubscriberCategorias": {
+                    "nivel1": [
+                        {
+                            "nivel2": [
+                                {
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "AMBRUL-UE",
+                                            "valor": "4000000000"
+                                        },
+                                        {
+                                            "cdesc": "AMBRDL-UE",
+                                            "valor": "4000000000"
+                                        },
+                                        {
+                                            "clave": "APN por defecto",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "DATOS.PERSONAL.COM",
+                                                    "valor": null
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "Lista de APNs 4G",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "CTXID",
+                                                    "clave": "Nombre APN",
+                                                    "valor": "QOS Template",
+                                                    "vdesc": "Descripción"
+                                                },
+                                                {
+                                                    "cdesc": "6",
+                                                    "clave": "104",
+                                                    "valor": "4",
+                                                    "vdesc": "BIPGEMALTO.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "5",
+                                                    "clave": "1",
+                                                    "valor": "4",
+                                                    "vdesc": "MMS"
+                                                },
+                                                {
+                                                    "cdesc": "4",
+                                                    "clave": "111",
+                                                    "valor": "4",
+                                                    "vdesc": "TABLETS.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "3",
+                                                    "clave": "100",
+                                                    "valor": "4",
+                                                    "vdesc": "DATOS.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "2",
+                                                    "clave": "71",
+                                                    "valor": "4",
+                                                    "vdesc": "INTERNET.PERSONAL.COM"
+                                                },
+                                                {
+                                                    "cdesc": "1",
+                                                    "clave": "0",
+                                                    "valor": "4",
+                                                    "vdesc": "GPRS.PERSONAL.COM"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "clave": "IPs asignadas al terminal por APN",
+                                            "nivel4": [
+                                                {
+                                                    "cdesc": "CTXID",
+                                                    "clave": "Nombre APN",
+                                                    "valor": "PDPTYPE IP",
+                                                    "vdesc": "PDP/PDN"
+                                                },
+                                                {
+                                                    "cdesc": "6",
+                                                    "clave": "104",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "5",
+                                                    "clave": "1",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "4",
+                                                    "clave": "111",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "3",
+                                                    "clave": "100",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "2",
+                                                    "clave": "71",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                },
+                                                {
+                                                    "cdesc": "1",
+                                                    "clave": "0",
+                                                    "valor": "IPV4 ",
+                                                    "vdesc": "DYNAMIC ADDRESS"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "hssSubscriberData": {
+                    "nivel1": [
+                        {
+                            "nivel2": [
+                                {
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "EPSODBPOS",
+                                            "valor": "NOBPOS",
+                                            "vdesc": "not bar packet oriented services"
+                                        },
+                                        {
+                                            "cdesc": "MMEHOST",
+                                            "valor": "mme2mun.personal.com.ar"
+                                        },
+                                        {
+                                            "cdesc": "MMEREALM",
+                                            "valor": "personal.com.ar"
+                                        },
+                                        {
+                                            "cdesc": "M-VPLMN",
+                                            "valor": "72234",
+                                            "vdesc": "Atachado dentro del Pais"
+                                        },
+                                        {
+                                            "cdesc": "MME-UPDATELOCATION-TIME",
+                                            "valor": "2018-04-04 14:40:54"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "idSolicitudWS": "201801195531992018040517371266167247",
+                "imeiDelTerminal": "351967075599964",
+                "imsi": "722341238807873",
+                "locacionDelMovil": "mun01dcMSOFTX - TP Argentina",
+                "locacionGPRS": "MME2MUN - TP Argentina",
+                "marca": "Samsung Korea",
+                "misisdn": "541162538538",
+                "modelo": "Samsung SM-J700M/DS",
+                "mtMobileSubscriberStat": {
+                    "Access network type": "UTRAN",
+                    "Date and time of last action             : 2018-04-05 16:19:48-03:00": "",
+                    "Date and time of registration            : 2018-04-04 14:40:54-03:00": "",
+                    "Enhance Roaming Restrict": "No",
+                    "Equipment status": "White listed",
+                    "IMEI": "35196707559996",
+                    "IMEI check counter": "2",
+                    "IMSI": "722341238807873",
+                    "IMSI Attach Flag": "Attached",
+                    "Location Area Identity": "722341461",
+                    "MME Number": "722034800290",
+                    "MSISDN": "541162538538",
+                    "Mobile Station Not Reachable Flag(MNRF)": "Reachable",
+                    "National Roaming Restrict": "No",
+                    "RR Status": "Idle",
+                    "Roaming Type": "Local Subscriber",
+                    "SGs Association Status": "Associated",
+                    "Type of last action": "SGs Associated Location Update",
+                    "UnSupport feature Roaming Restrict": "No",
+                    "Zone code Roaming Restrict": "No"
+                },
+                "portabilidad": "Abonado de Telecom Personal",
+                "regionALM": "NACIONAL",
+                "restriccion": {
+                    "activo": [
+                    ],
+                    "clave": "Restricciones",
+                    "inactivo": [
+                        {
+                            "cdesc": "Línea Tarjeta / Abono Fijo  sin CAMEL",
+                            "clave": "2/3.4.1",
+                            "vdesc": [
+                                [
+                                    "TCSISTATE  no configurado",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "OCSISTATE  no configurado",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1580",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Tarjeta / Abono Fijo sin terminación CAMEL",
+                            "clave": "2/3.4.1.2",
+                            "vdesc": [
+                                [
+                                    "OCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TCSISTATE  no configurado",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1580",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Línea Tarjeta / Abono Fijo sin originación CAMEL",
+                            "clave": "2/3.4.1.3",
+                            "vdesc": [
+                                [
+                                    "OCSISTATE  no configurado",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1580",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción de las llamadas Entrantes - No Recibe",
+                            "clave": "2/3.4.2",
+                            "vdesc": [
+                                [
+                                    "ODBIC = BAIC",
+                                    "NO OK    Valor actual = NOBIC"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción de las llamadas Salientes (Todas) - No Emite",
+                            "clave": "2/3.4.3",
+                            "vdesc": [
+                                [
+                                    "ODBOC = BAOC",
+                                    "NO OK    Valor actual = NOBOC"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción de las llamadas Salientes (Roam) - No Emite estando en Roaming",
+                            "clave": "2/3.4.4",
+                            "vdesc": [
+                                [
+                                    "ODBOC = BOCROAM",
+                                    "NO OK    Valor actual = NOBOC"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción para Recepción de SMS - No Recibe SMS - sólo puede Enviar",
+                            "clave": "2/3.4.5",
+                            "vdesc": [
+                                [
+                                    "TS21 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS22 = TRUE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción para emision de SMS - No Envía SMS - sólo puede recibir",
+                            "clave": "2/3.4.6",
+                            "vdesc": [
+                                [
+                                    "TS21 = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción para Envío y Recepción de SMS - No Envía y No Recibe SMS",
+                            "clave": "2/3.4.7",
+                            "vdesc": [
+                                [
+                                    "TS21 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ],
+                                [
+                                    "TS22 = FALSE",
+                                    "NO OK    Valor actual = TRUE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción de las llamadas entrantes con cargo para la línea",
+                            "clave": "2/3.4.8",
+                            "vdesc": [
+                                [
+                                    "ECATEGORY = 2  ó  ECATEGORY = 23",
+                                    "NO OK    Valor actual = 1"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio de voz sobre IP restringido",
+                            "clave": "2/3.4.9",
+                            "vdesc": [
+                                [
+                                    "NON3GPPSUPP = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "VOWIFI_TAG = VoWIFI",
+                                    "NO OK    Valor actual = "
+                                ],
+                                [
+                                    "NON3GPPLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción de las llamadas Salientes (Locales) - Puede acceder sólo a Asteriscos Gratuitos y *555",
+                            "clave": "2.5.1",
+                            "vdesc": [
+                                [
+                                    "ODBPB2 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción de las llamadas Salientes (Locales) - Puede acceder sólo a Asteriscos Gratuitos",
+                            "clave": "2.5.2",
+                            "vdesc": [
+                                [
+                                    "ODBPB3 = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio 4G - SUSPENDIDO",
+                            "clave": "2.3.10",
+                            "vdesc": [
+                                [
+                                    "AMBRUL-UE  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "AMBRDL-UE  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                "serviciosActivos": {
+                    "activo": [
+                        {
+                            "cdesc": "Llamada en Espera",
+                            "clave": "2/3.2.1",
+                            "vdesc": [
+                                [
+                                    "HOLD = 'PROV'"
+                                ],
+                                [
+                                    "CW = 'PROV'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Conferencia Multipartita",
+                            "clave": "2/3.2.2",
+                            "vdesc": [
+                                [
+                                    "HOLD = 'PROV'"
+                                ],
+                                [
+                                    "CW = 'PROV'"
+                                ],
+                                [
+                                    "MPTY = 'PROV'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Identificación de Llamadas",
+                            "clave": "2/3.2.3.1",
+                            "vdesc": [
+                                [
+                                    "CLIR = 'PROV'"
+                                ],
+                                [
+                                    "MODE = 'TEMPALLOWED'"
+                                ],
+                                [
+                                    "CLIP_OVERRIDE = 'FALSE'"
+                                ],
+                                [
+                                    "CLIP = 'PROV'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Transferencias de Llamadas",
+                            "clave": "2/3.2.5",
+                            "vdesc": [
+                                [
+                                    "CFNRC = 'PROV'"
+                                ],
+                                [
+                                    "CFNRY = 'PROV'"
+                                ],
+                                [
+                                    "CFU = 'PROV'"
+                                ],
+                                [
+                                    "CFB = 'PROV'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Notificación de mensajes de voz y Recepción de SMS",
+                            "clave": "2/3.2.6",
+                            "vdesc": [
+                                [
+                                    "TS21 = 'TRUE'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Mensaje Personal - Envío y Recepción de SMS",
+                            "clave": "2/3.2.7",
+                            "vdesc": [
+                                [
+                                    "TS21 = 'TRUE'"
+                                ],
+                                [
+                                    "TS22 = 'TRUE'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio de voz y datos - GPRS Activo",
+                            "clave": "2/3.2.10",
+                            "vdesc": [
+                                [
+                                    "NAM = 'BOTH'"
+                                ],
+                                [
+                                    "GSM_IC = 'FALSE'"
+                                ],
+                                [
+                                    "GSM_OC = 'FALSE'"
+                                ],
+                                [
+                                    "GPRSLOCK = 'FALSE'"
+                                ],
+                                [
+                                    "EPSLOCK = 'FALSE'"
+                                ],
+                                [
+                                    "CSUPLLCK = 'FALSE'"
+                                ],
+                                [
+                                    "PSUPLLCK = 'FALSE'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Video Call",
+                            "clave": "2/3.2.13",
+                            "vdesc": [
+                                [
+                                    "BS30 = 'TRUE'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Contestador Personal",
+                            "clave": "2/3.3.4",
+                            "vdesc": [
+                                [
+                                    "CFD_VALIDCCF = 'CFB&CFNRy&CFNRc'"
+                                ],
+                                [
+                                    "CFD_NFS = 'FALSE'"
+                                ],
+                                [
+                                    "NAEA_CIC = 70  ó  NAEA_CIC = 73  ó  NAEA_CIC = 74"
+                                ],
+                                [
+                                    "CFD_BSG_TS1X = 'TRUE'"
+                                ],
+                                [
+                                    "CFD_STATUS_TS1X = 'PROV | REG | ACT'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Discado Directo Internacional con Roaming Int.(solo Con transferencia internacional)",
+                            "clave": "2.3.3",
+                            "vdesc": [
+                                [
+                                    "ODBROAM = 'NOBAR'"
+                                ],
+                                [
+                                    "DEFAULTOFA_ID = 150"
+                                ],
+                                [
+                                    "ODBSS = 'FALSE'"
+                                ],
+                                [
+                                    "ODBOC = 'NOBOC'"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio MMS",
+                            "clave": "2.3.6",
+                            "vdesc": [
+                                [
+                                    "APN '1' asignado a la línea"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio 4G Registrado - Activo",
+                            "clave": "2.3.8",
+                            "sever": "VERDE",
+                            "vdesc": [
+                                [
+                                    "AMBRUL-UE  configurado OK"
+                                ],
+                                [
+                                    "AMBRDL-UE  configurado OK"
+                                ],
+                                [
+                                    "M-VPLMN  configurado OK"
+                                ],
+                                [
+                                    "MMEHOST  configurado OK"
+                                ],
+                                [
+                                    "MMEREALM  configurado OK"
+                                ],
+                                [
+                                    "MME-UPDATELOCATION-TIME  configurado OK"
+                                ],
+                                [
+                                    "EPSLOCK = 'FALSE'"
+                                ]
+                            ]
+                        }
+                    ],
+                    "clave": "Servicios",
+                    "inactivo": [
+                        {
+                            "cdesc": "Identificación de llamadas aún con restricción",
+                            "clave": "2/3.2.3.2",
+                            "vdesc": [
+                                [
+                                    "CLIR = PROV",
+                                    "OK"
+                                ],
+                                [
+                                    "MODE = TEMPALLOWED",
+                                    "OK"
+                                ],
+                                [
+                                    "CLIP_OVERRIDE = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CLIP = PROV",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Restricción de la Identificación de Llamadas",
+                            "clave": "2/3.2.4",
+                            "vdesc": [
+                                [
+                                    "MODE = TEMPRESTRICTED",
+                                    "NO OK    Valor actual = TEMPALLOWED"
+                                ],
+                                [
+                                    "CLIP = PROV",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Backtone",
+                            "clave": "2/3.2.8",
+                            "vdesc": [
+                                [
+                                    "PLMN-SPECIFICSS-8 = PROV",
+                                    "NO OK    Valor actual = NOTPROV"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio Pospago CAMEL - WIN",
+                            "clave": "2/3.2.9.1",
+                            "vdesc": [
+                                [
+                                    "TCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "OCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ECATEGORY  no configurado  ó  ECATEGORY = 3",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1800",
+                                    "NO OK    Valor actual = 1580"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio prepago CAMEL - AFE",
+                            "clave": "2/3.2.9.3",
+                            "vdesc": [
+                                [
+                                    "TCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "OCSISTATE = TRUE",
+                                    "OK"
+                                ],
+                                [
+                                    "ECATEGORY = 5",
+                                    "NO OK    Valor actual = 1"
+                                ],
+                                [
+                                    "SCHARGE_GLOBAL = 1580",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio de voz y datos - GPRS Inactivo",
+                            "clave": "2/3.2.11",
+                            "vdesc": [
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_OC = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "GPRSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "EPSLOCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "CSUPLLCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "PSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio de voz y datos - GPRS Activo - Restricción de servicios de voz",
+                            "clave": "2/3.2.12",
+                            "vdesc": [
+                                [
+                                    "NAM = BOTH",
+                                    "OK"
+                                ],
+                                [
+                                    "GSM_IC = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "GSM_OC = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "GPRSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "EPSLOCK = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "CSUPLLCK = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "PSUPLLCK = FALSE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio de voz sobre IP",
+                            "clave": "2/3.3.15",
+                            "vdesc": [
+                                [
+                                    "NON3GPPSUPP = TRUE",
+                                    "NO OK    Valor actual = FALSE"
+                                ],
+                                [
+                                    "VOWIFI_TAG = VoWIFI",
+                                    "NO OK    Valor actual = "
+                                ],
+                                [
+                                    "NON3GPPLOCK = FALSE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Discado Directo Nacional",
+                            "clave": "2.3.1",
+                            "vdesc": [
+                                [
+                                    "DEFAULTOFA_ID = 140",
+                                    "NO OK    Valor actual = 150"
+                                ],
+                                [
+                                    "ODBROAM = BROHPLMNC",
+                                    "NO OK    Valor actual = NOBAR"
+                                ],
+                                [
+                                    "ODBOC = BOIC",
+                                    "NO OK    Valor actual = NOBOC"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Discado Directo Internacional sin Roaming Int.",
+                            "clave": "2.3.2",
+                            "vdesc": [
+                                [
+                                    "ODBSS = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBOC = NOBOC",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBROAM = BROHPLMNC",
+                                    "NO OK    Valor actual = NOBAR"
+                                ],
+                                [
+                                    "DEFAULTOFA_ID = 140",
+                                    "NO OK    Valor actual = 150"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Discado Directo Internacional con Roaming Int.(solo Con transferencia nacional)",
+                            "clave": "2.3.3",
+                            "vdesc": [
+                                [
+                                    "ODBROAM = NOBAR",
+                                    "OK"
+                                ],
+                                [
+                                    "DEFAULTOFA_ID = 140",
+                                    "NO OK    Valor actual = 150"
+                                ],
+                                [
+                                    "ODBSS = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBOC = NOBOC",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Discado Directo Internacional con Roaming Int.",
+                            "clave": "2.3.3",
+                            "vdesc": [
+                                [
+                                    "ODBSS = FALSE",
+                                    "OK"
+                                ],
+                                [
+                                    "DEFAULTOFA_ID  no configurado",
+                                    "NO OK    Valor actual = 150"
+                                ],
+                                [
+                                    "ODBOC = NOBOC",
+                                    "OK"
+                                ],
+                                [
+                                    "ODBROAM = NOBAR",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio BlackBerry",
+                            "clave": "2.3.5",
+                            "vdesc": [
+                                [
+                                    "APN 3 asignado a la línea",
+                                    ""
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio 4G No Registrado",
+                            "clave": "2.3.7",
+                            "vdesc": [
+                                [
+                                    "AMBRUL-UE  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "AMBRDL-UE  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "M-VPLMN  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "MMEHOST  no configurado",
+                                    "NO OK    Valor actual = mme2mun.personal.com.ar"
+                                ],
+                                [
+                                    "MMEREALM  no configurado",
+                                    "NO OK    Valor actual = personal.com.ar"
+                                ],
+                                [
+                                    "MME-UPDATELOCATION-TIME  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "EPSLOCK = FALSE",
+                                    "OK"
+                                ]
+                            ]
+                        },
+                        {
+                            "cdesc": "Servicio 4G Nunca Registrado",
+                            "clave": "2.3.9",
+                            "vdesc": [
+                                [
+                                    "AMBRUL-UE  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "AMBRDL-UE  configurado OK",
+                                    "OK"
+                                ],
+                                [
+                                    "M-VPLMN  no configurado",
+                                    "NO OK    Valor actual = 72234"
+                                ],
+                                [
+                                    "MME-UPDATELOCATION-TIME  no configurado",
+                                    "NO OK    Valor actual = 2018-04-04 14:40:54"
+                                ],
+                                [
+                                    "EPSLOCK = FALSE",
+                                    "OK"
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                "smsEncolado": {
+                    "nivel1": [
+                        {
+                            "clave": "Estado del móvil",
+                            "nivel2": [
+                                {
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "Mobile subscriber Not Reachable Flag",
+                                            "clave": "MNRF",
+                                            "sever": "VERDE",
+                                            "valor": "FALSE",
+                                            "vdesc": "Alcanzable"
+                                        },
+                                        {
+                                            "cdesc": "Mobile station Not Reachable for GPRS flag",
+                                            "clave": "MNRG",
+                                            "sever": "VERDE",
+                                            "valor": "FALSE",
+                                            "vdesc": "Alcanzable"
+                                        },
+                                        {
+                                            "cdesc": "Mobile Station Not Reachable Reason",
+                                            "clave": "MNRRFORGSM",
+                                            "valor": "No Reason for Non-GPRS",
+                                            "vdesc": "No Reason for Non-GPRS"
+                                        },
+                                        {
+                                            "cdesc": "Memory Capacity Exceeded Flag",
+                                            "clave": "MCEFFORGSM",
+                                            "sever": "VERDE",
+                                            "valor": "FALSE",
+                                            "vdesc": "Capacidad de memoria GSM no excedida"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "clave": "Centros de mensajería encolando mensajes",
+                                    "nivel3": [
+                                        {
+                                            "cdesc": "SMSs encolados",
+                                            "sever": "VERDE",
+                                            "valor": "No",
+                                            "vdesc": "No hay SMSs encolados"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "state": "CONNECTED",
+                "tecMsc": "Huawei",
+                "tecnologia": "4G LTE - Smartphone - OS= Android",
+                "tipoRespuesta": "OK",
+                "voiceMail": "CORRECTO (VM MUNRO ZTE)",
+                "voiceMailCategoria": "NAEA 74"
+            }
+        }
+    }
+}

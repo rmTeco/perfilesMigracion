@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>vlocity_cmt__CompositeUniqueFieldName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>(Optional) The name of a unique field on the object which stores the concatenated user key values to enforce the uniqueness of this user key.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Composite Unique Field</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__MatchingKeyFields__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Comma-delimited list of Field API names which identify the set of fields that make up the key.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Matching Key Fields</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__MatchingKeyObject__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Name of the object to use for matching. Used to support looking up the Id of an object from a child object or other related object. For example, looking up the Account Id by Party Number.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Matching Key Object</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ObjectAPIName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The API name of the Salesforce or custom object to which the user key applies.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Object API Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ReturnKeyField__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The field in the Matching Key Object which returns the Id of the match.</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Return Key Field</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Vlocity Matching Key</label>
+    <pluralLabel>Vlocity Matching Keys</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

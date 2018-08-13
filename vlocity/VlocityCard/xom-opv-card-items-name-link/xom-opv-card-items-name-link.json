@@ -1,0 +1,40 @@
+{
+    "dataSource": {
+        "type": "Custom",
+        "value": {
+            "body": "{\n  \"OrcAttributes\":{\n    \"OrcAttributeItems\": [\n      {\n        \"type\": \"Callout\",\n        \"attributes\": [\n          \"System Interface\",\n          \"Orchestration Queue\",\n          \"Error Queue\",\n          \"Timeout (ms)\",\n          \"Priority\",\n          \"Actual Number Of Retries\",\n          \"Maximum Number Of Retries\"\n        ]\n      },\n      {\n        \"type\": \"AutoTask\",\n        \"attributes\": []\n      },\n      {\n        \"type\": \"Milestone\",\n        \"attributes\": []\n      },\n      {\n        \"type\": \"ManualTask\",\n        \"attributes\": [\n          \"Assigned To User\",\n          \"Assigned To Manual Queue\",\n          \"Manual Queue\"\n        ]\n      },\n      {\n        \"type\": \"PullEvent\",\n        \"attributes\": []\n      },\n      {\n        \"type\": \"PushEvent\",\n        \"attributes\": []\n      }\n    ]}\n  }",
+            "fields": "ALL FIELDS"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "XOM Planview Item Name",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "name": "Item name action link",
+            "sObjectType": "%vlocity_namespace%__VlocityAction__c",
+            "templateUrl": "xom-opv-plan-item-name"
+        }
+    ],
+    "title": "Orch item name action link"
+}

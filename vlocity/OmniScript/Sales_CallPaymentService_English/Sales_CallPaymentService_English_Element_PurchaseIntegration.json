@@ -1,0 +1,92 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__InternalNotes__c": "Se cobra si\n- Tengo algo que cobrar.\n- Se genero correctamente la prefactura.\n- Y estoy en un canal no presencial\n- Y tengo pagos con tarjeta de credito/debito",
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "CallPaymentService",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sales/CallPaymentService/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 9,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "disOnTplt": false,
+        "documentNames": [
+            "CABIABAJA38d501d61e584ad89de0f86a459c4c6e",
+            "CABHBBAJAa088abbf78af430992e1b954e738bf5b"
+        ],
+        "extraPayload": {
+        },
+        "failureAbortLabel": "Abortar",
+        "failureAbortMessage": "¿Seguro?",
+        "failureNextLabel": "Continuar",
+        "inProgressMessage": "En Progreso",
+        "label": "PurchaseIntegration",
+        "message": {
+        },
+        "postMessage": "Hecho",
+        "postTransformBundle": "",
+        "preTransformBundle": "",
+        "redirectNextLabel": "Siguiente",
+        "redirectNextWidth": 3,
+        "redirectPageName": "",
+        "redirectPreviousLabel": "Previous",
+        "redirectPreviousWidth": 3,
+        "redirectTemplateUrl": "vlcAcknowledge.html",
+        "remoteClass": "IFS_S348",
+        "remoteMethod": "PurchaseIntegration",
+        "remoteOptions": {
+            "postTransformBundle": "",
+            "preTransformBundle": ""
+        },
+        "remoteTimeout": 30000,
+        "responseJSONNode": "PurchaseIntegration_Response",
+        "responseJSONPath": "",
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": ">",
+                        "data": "0",
+                        "field": "BillingOrder:OrderTotal"
+                    },
+                    {
+                        "condition": "<>",
+                        "data": null,
+                        "field": "S029_Response:IP_Response:IPResult:numeroComprobante"
+                    },
+                    {
+                        "condition": "<>",
+                        "data": "Físico",
+                        "field": "BillingOrder:StoreLocation:Channel"
+                    },
+                    {
+                        "condition": "<>",
+                        "data": null,
+                        "field": "CardsPaymentsCharged:data|1:CardNumber"
+                    }
+                ]
+            }
+        },
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "svgIcon": "",
+        "svgSprite": "",
+        "validationRequired": null,
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Remote Action",
+    "Name": "PurchaseIntegration",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/CallPaymentService/English/PurchaseIntegration"
+}

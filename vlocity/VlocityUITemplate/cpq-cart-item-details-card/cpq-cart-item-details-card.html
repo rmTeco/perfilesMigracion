@@ -1,0 +1,77 @@
+<div class="cpq-cart-items-details-card">
+    <ul ng-if="obj.messages.length > 0">
+         <li ng-repeat="msg in obj.messages">
+            <span class="error-msg" ng-if="msg.severity === 'ERROR'">
+                {{msg.message}}
+                <i ng-init="data.hasError = true"></i>
+            </span>
+            <span class="warning-msg" ng-if="msg.severity !== 'ERROR'">
+                {{msg.message}}
+            </span>
+        </li>
+    </ul>
+  <div class="slds-tabs--default">
+    <ul class="slds-tabs--default__nav" role="tablist" ng-init="activeTab = 'detailsTab'">
+        
+      <li class="slds-tabs--default__item slds-text-heading--label" title="Item One" role="presentation" ng-class="{'slds-active' : activeTab == 'detailsTab'}">
+          <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab-default-1__item" ng-click="activeTab = 'detailsTab'">
+              Details
+          </a>
+      </li>
+      
+      <li class="slds-tabs--default__item slds-text-heading--label" title="Item Two" role="presentation" ng-class="{'slds-active' : activeTab == 'attrsTab'}">
+          <a class="slds-tabs--default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab-default-2__item" ng-click="activeTab = 'attrsTab'">
+              Attributes
+          </a>
+      </li>
+    </ul>
+    <div id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item" ng-show="activeTab == 'detailsTab'">
+        <table class="slds-table slds-m-top--medium slds-table--bordered">
+            <tr ng-repeat="field in data.fields" ng-if="key != 'attributes'">
+                <td class="slds-cell-shrink">
+                    <div class="slds-text-heading--label">{{field.label}}</div>
+                </td>
+                <td>
+                    <div class="slds-text-body--regular"
+                        ng-if="field.label != 'Quantity' && field.label != 'One Time Manual Discount %' && field.label != 'Recurring Manual Discount %'">                      {{obj | getter: field | picker: field.type}}
+                    </div>
+                    <input type='number' min="0" class="slds-input cpq-cart-item-input" ng-model='obj.Quantity.value' ng-if="field.label == 'Quantity'"/>
+                    <input type='number' min="0" class="slds-input cpq-cart-item-input" ng-model="obj[$root.nsPrefix+'OneTimeManualDiscount__c']['value']" ng-if="field.label == 'One Time Manual Discount %'"/>
+                    <input type='number' min="0" class="slds-input cpq-cart-item-input" ng-model="obj[$root.nsPrefix+'RecurringManualDiscount__c']['value']" ng-if="field.label == 'Recurring Manual Discount %'"/>
+                </td>
+            </tr>
+        </table>
+      <div ng-if="obj.childProducts.records.length > 0 || obj.lineItems.records.length > 0">
+        <div class="Table">
+          <div class="Table-row Table-header">
+            <div class="Table-row-item u-Flex-product"></div>
+            <div class="Table-row-item u-Flex-qty cpq-cart-item-attr-label">{{obj['Quantity']['label'] | uppercase}}</div>
+            <div class="Table-row-item u-Flex-recur cpq-cart-item-attr-label">{{obj[$root.nsPrefix+'RecurringTotal__c']['label'] | uppercase}}</div>
+            <div class="Table-row-item u-Flex-onetime cpq-cart-item-attr-label">{{obj[$root.nsPrefix+'OneTimeTotal__c']['label'] | uppercase}}</div>
+            <div class="Table-row-item u-Flex-discount cpq-cart-item-attr-label">{{obj[$root.nsPrefix+'OneTimeManualDiscount__c']['label'] | uppercase}} %</div>
+            <div class="Table-row-item u-Flex-discount cpq-cart-item-attr-label">{{obj[$root.nsPrefix+'RecurringManualDiscount__c']['label'] | uppercase}} %</div>
+            <div class="Table-row-item u-Flex-operation"></div>
+          </div>
+        </div>
+        <div class="cpq-product-addon-container">
+            <vloc-layout layout-name="cpq-product-addon" ctrl="" ng-model="card" data="card" records="obj" location="itemDetail"></vloc-layout>
+        </div>
+      </div>
+    </div>
+    <div id="tab-default-2" class="slds-tabs--default__content" role="tabpanel" aria-labelledby="tab-default-2__item" ng-show="activeTab == 'attrsTab'">
+      <!--<vloc-layout layout-name="cpq-product-cart-config" ctrl="CPQCartItemConfigController" records="obj.attributeCategories.records"></vloc-layout>-->
+        
+      <div class="slds-col cpq-product-cart-config-form scroll">
+          <!-- form -->
+          <!--<div ng-if="obj.attributeCategories.records.length >0">-->
+          <div>
+              <vlocity-dynamic-form name="productconfig" ng-model="obj.attributeCategories.records" map-object="{{importedScope.mapObject()}}" class="slds-form--stacked" ng-submit="importedScope.configSubmit(obj.attributeCategories.records, obj)" tooltip-container=".slds-modal">
+              </vlocity-dynamic-form>
+          </div>
+          <!--<div ng-if="obj.attributeCategories.records.length === 0">-->
+          <!--    No configurable attributes for this item.-->
+          <!--</div>-->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,179 @@
+{
+    "%vlocity_namespace%__Active__c": false,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "SimCardAssignment",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sales/Sim Card Assignment/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 1,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "Type__c": {
+            "label": "Set Values",
+            "type": "action"
+        },
+        "accessibleInFutureSteps": false,
+        "allowSaveForLater": true,
+        "autoFocus": false,
+        "autoSaveOnStepNext": false,
+        "cancelRedirectPageName": "OmniScriptCancelled",
+        "cancelRedirectTemplateUrl": "vlcCancelled.html",
+        "cancelSource": "%ContextId%",
+        "cancelType": "SObject",
+        "consoleTabLabel": "New",
+        "controlWidth": 12,
+        "dataJSON": false,
+        "elementTypeToHTMLTemplateMapping": {
+        },
+        "elementValueMap": {
+            "BillingOrder": {
+                "Channel": "Presencial Agente",
+                "Delivery_Method": "Store Pick Up",
+                "EffectiveDate": "2018-01-08",
+                "Id": "8016C0000000VQvQAM",
+                "OrderNumber": "00016997",
+                "OrderTotal": 0,
+                "OriginStoreLocation": "a3U6C000000301nUAA",
+                "PickUpStoreLocation": "a3U6C000000301nUAA",
+                "Status": "Draft",
+                "StatusCode": "D",
+                "StoreLocation": {
+                    "Channel": "Físico",
+                    "ChannelType": "Agentes"
+                },
+                "TotalAmount": 0
+            },
+            "IdOrder": "8016C0000000VQv",
+            "Order": {
+                "lineasReservadas": true,
+                "planes": [
+                    {
+                        "isSelected": true,
+                        "lineas": [
+                            {
+                                "NMU": "Plan con tarjeta",
+                                "isSelected": true,
+                                "linea": "1155688401",
+                                "orderItemId": "8026C0000005E4hQAE",
+                                "serial": null,
+                                "validacionLinea": null,
+                                "validacionSerial": null
+                            }
+                        ],
+                        "nombre": "Plan con tarjeta"
+                    }
+                ],
+                "serialList": [
+                    {
+                        "IMSI": "722341168058254",
+                        "KI": "D9CEBA98D4CDC36BED3C3F8B092007E2",
+                        "itemId": "8026C0000005E4hQAE",
+                        "productCode": "PTPC64PSI",
+                        "productName": "Simcard",
+                        "serial": "89543410307680582547",
+                        "serialValidado": "89543410307680582547",
+                        "stockProducto": "MTPL",
+                        "validacionSerial": "El ICCID fue asignado"
+                    }
+                ],
+                "serialesReservados": true
+            }
+        },
+        "enableKnowledge": false,
+        "itemsKey": "recSet",
+        "knowledgeArticleTypeQueryFieldsMap": {
+        },
+        "label": null,
+        "maxCompareSize": 4,
+        "message": {
+        },
+        "modalConfigurationSetting": {
+            "modalController": "ModalProductCtrl",
+            "modalHTMLTemplateId": "vlcProductConfig.html",
+            "modalSize": "lg"
+        },
+        "modalController": "ModalInstanceCtrl",
+        "modalHTMLTemplateId": "vlcModalContent.html",
+        "persistentComponent": [
+            {
+                "id": "vlcCart",
+                "itemsKey": "cartItems",
+                "label": "",
+                "modalConfigurationSetting": {
+                    "modalController": "ModalProductCtrl",
+                    "modalHTMLTemplateId": "vlcProductConfig.html",
+                    "modalSize": "lg"
+                },
+                "postTransformBundle": "",
+                "preTransformBundle": "",
+                "remoteClass": "",
+                "remoteMethod": "",
+                "remoteOptions": {
+                    "postTransformBundle": "",
+                    "preTransformBundle": ""
+                },
+                "remoteTimeout": 30000,
+                "render": false,
+                "responseJSONNode": "",
+                "responseJSONPath": "",
+                "sendJSONNode": "",
+                "sendJSONPath": ""
+            },
+            {
+                "id": "vlcKnowledge",
+                "itemsKey": "knowledgeItems",
+                "label": "",
+                "modalConfigurationSetting": {
+                    "modalController": "",
+                    "modalHTMLTemplateId": "",
+                    "modalSize": "lg"
+                },
+                "postTransformBundle": "",
+                "preTransformBundle": "",
+                "remoteClass": "",
+                "remoteMethod": "",
+                "remoteOptions": {
+                    "postTransformBundle": "",
+                    "preTransformBundle": ""
+                },
+                "remoteTimeout": 30000,
+                "render": false
+            }
+        ],
+        "remoteOptions": {
+            "postTransformBundle": "",
+            "preTransformBundle": ""
+        },
+        "remoteTimeout": 30000,
+        "saveContentEncoded": false,
+        "saveForLaterRedirectPageName": "sflRedirect",
+        "saveForLaterRedirectTemplateUrl": "vlcSaveForLaterAcknowledge.html",
+        "saveObjectId": "%ContextId%",
+        "saveURLPatterns": {
+        },
+        "seedDataJSON": {
+        },
+        "selectMode": "Single",
+        "show": null,
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "timeTracking": true,
+        "trackingCustomData": {
+        },
+        "validationRequired": null,
+        "visualforcePagesAvailableInPreview": {
+        },
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Set Values",
+    "Name": "TestData",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/Sim Card Assignment/English/TestData"
+}

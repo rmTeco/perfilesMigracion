@@ -1,0 +1,57 @@
+<apex:page docType="html-5.0" showHeader="false" standardStylesheets="false" title="Resumen De Gestion" controller="ta_techCare_technical_service_controller" renderAs="advanced_pdf">
+    <head>
+        <apex:stylesheet value="{!$Resource.taTechnicalServicePDF}" />
+    </head>
+    <body>
+        <div class="pdf-technicalService">
+            <div class="slds-section-title--divider slds-text-align--center">
+                <p>Remito: Entrega de Muleto</p>
+                <br />
+            </div>
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+              <tbody>
+                <tr>
+                  <th scope="row" data-label="Imei">
+                    <div class="slds-truncate" title="Imei">Imei</div>
+                  </th>
+                  <td data-label="ImeiNumber">
+                    <div class="slds-truncate" title="ImeiNumber">{!$CurrentPage.parameters.imei}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" data-label="NMU">
+                    <div class="slds-truncate" title="NMU">NMU</div>
+                  </th>
+                  <td data-label="NMU">
+                    <div class="slds-truncate" title="NMU">{!$CurrentPage.parameters.NMU}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" data-label="Descripcion">
+                    <div class="slds-truncate" title="Descripcion">Descripción</div>
+                  </th>
+                  <td data-label="Descripcion">
+                    <div class="slds-truncate" title="Descripcion">{!$CurrentPage.parameters.Descripcion}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" data-label="Marca">
+                    <div class="slds-truncate" title="Marca">Marca</div>
+                  </th>
+                  <td data-label="Marca">
+                    <div class="slds-truncate" title="Marca">{!$CurrentPage.parameters.Marca}</div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row" data-label="Accesorios">
+                    <div class="slds-truncate" title="Accesorios">Accesorios</div>
+                  </th>
+                  <td data-label="Accesorios">
+                    <div class="slds-truncate" title="Accesorios">{!$CurrentPage.parameters.Accesorios}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>            
+        </div>
+    </body>
+</apex:page>

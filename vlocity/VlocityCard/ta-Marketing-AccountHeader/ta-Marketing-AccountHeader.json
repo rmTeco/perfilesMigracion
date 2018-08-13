@@ -1,0 +1,49 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.ContextId",
+                "val": "0016C000009KPML"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "bundle": "GetAccountInfoById",
+            "inputMap": {
+                "ContextId": "{{params.ContextId}}"
+            },
+            "optionsMap": {
+                "vlcClass": "mkt_clubPersonalTab"
+            },
+            "remoteClass": "mkt_clubPersonalTab",
+            "remoteMethod": "getAccountHeader",
+            "remoteNSPrefix": null
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "name": "Account",
+            "templateUrl": "ta-Marketing-Account-Header"
+        }
+    ],
+    "title": "Account"
+}

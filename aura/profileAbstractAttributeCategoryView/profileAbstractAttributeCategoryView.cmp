@@ -1,0 +1,17 @@
+<aura:component access="public" abstract="true" controller="vlocity_cmt.ProfileClientAttributeController">
+    <aura:registerEvent name="profileUpdated" type="vlocity_cmt:profileUpdatedEvent"/>
+    <aura:registerEvent name="updatedEvent" type="vlocity_cmt:profileAttributeValueUpdatedEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="vlocity_cmt:profileAttributeCategoryUpdatedEvent" action="{!c.handleAttributeCategoryUpdatedEvent}"/>
+    <aura:handler event="vlocity_cmt:profileUpdatedEvent" action="{!c.handleExternalUpdate}"/>
+    <aura:attribute name="entityId" type="String"/> 
+    <aura:attribute name="nsPrefix" type="String"/>
+    <aura:attribute name="attributeCategoryCode" type="String"/>
+    <aura:attribute name="attributeCategoryLocked" type="Boolean"/>
+    <aura:attribute name="attributeCategoryName" type="String"/>
+    <aura:attribute name="isLanguageRTL" type="Boolean"/>
+    <aura:attribute name="renderUsingColorCodes" type="Boolean" />
+    <aura:attribute name="appliedAttributes" type="vlocity_cmt.SegmentElement"/>
+        
+    {!v.body}
+</aura:component>

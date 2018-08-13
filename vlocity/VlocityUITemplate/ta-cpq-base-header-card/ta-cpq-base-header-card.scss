@@ -1,0 +1,78 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+$cyan-color: #00b4c5;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-base-header-card {
+            .#{$namespace}-dropdown-to-btn {
+                left: -110%;
+            }
+            .#{$namespace}-base-header-picklist-label {
+                width:9rem;
+            }
+            .#{$namespace}-base-header-dropdown {
+                width:9rem;
+            }
+            .#{$namespace}-base-header-title {
+                display: block;
+                word-wrap: break-word;
+                max-width: 10rem;
+            }
+            
+            .installationAddressModal .slds-modal__container {
+    			width: 100%;
+    			max-width: 1250px;
+    		}
+    
+    		.installationAddressIframe {
+    			border: none;
+    			width: 100%;
+    			min-height: 500px;
+    		}
+    		
+    		.slds-button-group {
+    		    .slds-button {
+    		        color: #00b4c5;
+    		    }
+    		}
+    		
+    		.taHeaderInfoContainer {
+    		    display: inline-block;
+    		    vertical-align: middle;
+    		    margin-right: 10px;
+    		    .taGetPrefeasibility {
+    		        color: $cyan-color;
+    		    }
+    		}
+    		
+    		.taPricingSelect {
+    		    display: inline-block;
+    		    vertical-align: middle;
+    		    text-align: right;
+    		    .taDevider:after {
+    		        content: "|";
+    		        display: inline-block;
+    		        
+    		    }
+    		}
+        }
+        .clientAccountSelect {
+            display: inline-block;
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .#{$namespace}-base-header-card {
+            .#{$namespace}-dropdown-to-btn {
+                right: -1rem;
+            }
+        }
+    }
+}

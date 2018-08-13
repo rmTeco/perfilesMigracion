@@ -1,0 +1,62 @@
+<div class="slds-tabs_default slds-p-horizontal_small comp-assets-contract">
+  <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+
+      <article class="slds-card">
+          <div class="slds-card__header slds-grid">
+              <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                  <!-- Checkbox -->
+                  <!-- HYB-1784, commenting out the checkbox, this section will be used in the future feature for terminating contracts -->
+                  <!--<div class="slds-form-element">
+                      <div class="slds-form-element__control slds-float_left">
+                          <span class="slds-checkbox">
+                              <input type="checkbox" name="options" id="checkbox-{{parent.Id.value}}" checked="" />
+                              <label class="slds-checkbox__label" for="checkbox-{{parent.Id.value}}">
+                                  <span class="slds-checkbox_faux"></span>
+                              </label>
+                          </span>
+                          <span>
+                       </div> 
+                  </div>-->
+
+                    <span class="slds-text-heading_small">Contract: {{parent.Id.value}}</span>
+                </div>
+              </header>
+              <div class="slds-no-flex slds-p-right_x-small">
+                <div>Number: {{parent.name}}</div>
+              </div>
+              <!-- <div class="slds-no-flex slds-p-left_x-small">
+                <div>Sort Date: Mar 16</div>
+              </div> -->
+           	</div>
+          
+            <div class="slds-table slds-table_bordered slds-p-bottom_small" >
+                <div ng-controller="AssetsMainController">
+								    <vloc-card ng-repeat="card in cards" ctrl="AssetsProductItemController" 
+                        ng-model="card" data="card" records="records" 
+                        on-loaded="$first ? getCardsCallback(1) : null"
+                        show-config-panel="{{attrs.showConfigPanel}}" index="{{$index}}" session-id="{{sessionId}}">
+								    </vloc-card>
+								</div>
+                
+                <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-center" ng-if="!records || records.length === 0 ">
+                  {{::importedScope.customLabels.CPQCartIsEmpty}}
+                </div>
+
+                <div class="assets-next-asset slds-col slds-text-align_center slds-m-vertical_medium"  ng-if="session.nextAssets">
+                    <div class="slds-spinner_container assets-spinner-container" ng-show="loadingMore">
+                        <div class="slds-spinner_brand slds-spinner slds-spinner_small" aria-hidden="false" role="alert">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                    <a ng-click="importedScope.nextPageAssets()" ng-hide="loadingMore || !isLoaded">
+                      {{::importedScope.customLabels.CPQLoadMore}}
+                    </a>
+                </div>
+
+            </div>
+      </article>
+  </div>
+  
+</div>

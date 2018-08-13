@@ -1,0 +1,19 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .cpq-product-filters {
+            padding: $cpq-padding-large-vertical 0px;
+            margin: 0px $cpq-padding-large-horizontal;
+
+            form input::-webkit-input-placeholder {
+                color: $middle-dark-gray;
+            }
+        }
+    }
+}

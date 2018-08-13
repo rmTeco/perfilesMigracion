@@ -1,0 +1,47 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objType']": "Opportunity"
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Stage",
+                    "name": "['subtitle']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Amount",
+                    "name": "['highlight']",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Policy Expiration",
+            "sObjectType": "Opportunity",
+            "templateUrl": "campaign-member-story-card"
+        }
+    ],
+    "title": "Opportunity"
+}

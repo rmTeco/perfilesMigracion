@@ -1,0 +1,76 @@
+<div ng-controller="MyAssetDetailCtrl as mac"
+    ng-init="mac.init()">
+    <!-- WEB -->
+    <div ng-if="!mac.mobile"
+         style="height: 181px;"
+         class="slds-grid slds-size--6-of-6 slds-grid--vertical-stretch slds-grid--vertical-align-center">
+        
+        <div class="slds-size--4-of-6 slds-align-middle">
+            <div class="slds-grid slds-size--6-of-6 slds-grid--vertical-stretch slds-grid--vertical-align-center">
+                <div class="slds-align-middle slds-m-horizontal--large">
+                       <slds-svg-icon  sprite="'utility'" 
+                            icon="'phone_portrait'"
+                            size="'large'" 
+                            style="fill:#00B4C5"
+                            extra-classes="'slds-input__icon'">
+                        </slds-svg-icon>
+                </div>
+                <div class="slds-size--10-of-12">
+                    <div class="slds-text-heading--large HeadingLarge">{{obj.AccountName}}</div>
+                    <div class="slds-text-heading--small HeadingSmall slds-m-vertical--x-small"><b>{{obj.LineNumber}}</b> {{obj.ProductName}}</div>
+                    <div class="slds-text-heading--small BodyDefault">
+                        {{obj.Name}}    
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="slds-size-6-of-6 slds-align-middle slds-col--bump-left slds-m-right--small">
+            <div ng-if="obj.Status == 'Active'"
+                 class="activeCopy slds-align-middle slds-m-right--small slds-p-right--small">
+                <slds-svg-icon
+                    sprite="'utility'"
+                    icon="'success'"                
+                    size="'small'"
+                    style="fill:#0a767f;"
+                    extra-classes="'activeIcon'">
+                </slds-svg-icon> Activa
+            </div>
+        </div>
+    
+    </div>
+    <!-- MOBILE -->
+    <div ng-if="mac.mobile"
+         class="slds-grid slds-size--1-of-1 slds-grid--vertical-stretch slds-grid--vertical-align-center">
+        
+        <div class="slds-align-middle slds-p-around--medium slds-m-left--small">
+            <slds-svg-icon  sprite="'utility'" 
+                            icon="'phone_portrait'"
+                            size="'large'" 
+                            style="fill:#00B4C5"
+                            extra-classes="'slds-input__icon'">
+            </slds-svg-icon>
+        </div>
+        <div class="slds-align-middle slds-nowrap slds-p-vertical--small">
+            <div class="slds-grid--vertical-stretch slds-grid--vertical-align-center">
+                <div class="slds-text-heading--large gris HeadingLargeMac">{{obj.AccountName}}</div>
+                <div class="slds-text-heading--small gris slds-m-vertical--x-small HeadingSmallMac"><b>{{obj.LineNumber}}</b> {{obj.ProductName}}</div>
+                <div class="slds-text-heading--small BodyDefault">{{obj.Name}}    </div>
+            </div>
+        </div>
+        <div class="slds-align-middle slds-p-around--medium slds-m-right--small">
+            <div ng-if="obj.Status == 'Active'"
+                 class="slds-align-middle activeCopy">
+                <slds-svg-icon
+                    sprite="'utility'"
+                    icon="'success'"                
+                    size="'small'"
+                    style="fill:#0a767f;"
+                    extra-classes="'slds-align--absolute-center activeIcon'">
+                </slds-svg-icon>
+                <p class="slds-text-align--center">Activa</p>
+            </div>
+        </div>
+    
+    </div>
+</div>

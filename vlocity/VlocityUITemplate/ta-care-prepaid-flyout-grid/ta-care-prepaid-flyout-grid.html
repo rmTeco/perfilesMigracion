@@ -1,0 +1,12 @@
+<!--<pre>1-{{data}}</pre>
+<pre>4-{{parent}}</pre>-->
+<!--<pre>{{parent.obj.LineNumber}}</pre>
+<pre>{{obj.LineNumber}}</pre>-->
+<div class="slds-grid community-flyout-content">
+    <div class="slds-small-size--3-of-12 slds-medium-size--3-of-12 slds-large-size--3-of-12 flyout-actions">
+        <vloc-card name="Flyout Grid Actions" customtemplate="ta-care-flyout-grid-actions" data="parent" loaded="true"> </vloc-card>
+    </div>
+    <div class="slds-small-size--9-of-12 slds-medium-size--9-of-12 slds-large-size--9-of-12 items slds-grid slds-grid--vertical slds-align-middle">
+        <vloc-card ng-repeat="card in cards |orderBy:order|filter: searchFunc(card)" class="items-card" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>
+    </div>
+</div>

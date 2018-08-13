@@ -1,0 +1,159 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "TechCare - DataService",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/TechCare/DataService_Diagnosis/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 36,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "accessibleInFutureSteps": false,
+        "conditionType": "Hide if False",
+        "controlWidth": 5,
+        "debounceValue": 0,
+        "disOnTplt": false,
+        "documentNames": [
+            "CABIAIABA53ea5976d8404470b836520267410096"
+        ],
+        "extraPayload": {
+            "body": {
+                "imei": "%ImeiCodeInput%",
+                "listsFind": [
+                    {
+                        "codListaNegra": "WLEI"
+                    }
+                ]
+            }
+        },
+        "failureAbortLabel": "Abort",
+        "failureAbortMessage": "Are you sure?",
+        "failureNextLabel": "Continue",
+        "help": false,
+        "hide": false,
+        "inProgressMessage": "In Progress",
+        "inputWidth": 12,
+        "integrationProcedureKey": "IFS_S480",
+        "label": "Validar IMEI",
+        "maxLength": 255,
+        "message": {
+        },
+        "minLength": 0,
+        "postMessage": "Done",
+        "postTransformBundle": "",
+        "preTransformBundle": "",
+        "readOnly": false,
+        "redirectNextLabel": "Next",
+        "redirectNextWidth": 3,
+        "redirectPageName": "",
+        "redirectPreviousLabel": "Previous",
+        "redirectPreviousWidth": 3,
+        "redirectTemplateUrl": "vlcAcknowledge.html",
+        "remoteOptions": {
+            "postTransformBundle": "",
+            "preTransformBundle": ""
+        },
+        "remoteTimeout": 30000,
+        "repeat": false,
+        "repeatClone": false,
+        "required": false,
+        "responseJSONNode": "blackListValidationResponse",
+        "responseJSONPath": "",
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "Active",
+                        "field": "DependentServiceInfo:Status"
+                    },
+                    {
+                        "group": {
+                            "operator": "OR",
+                            "rules": [
+                                {
+                                    "group": {
+                                        "operator": "AND",
+                                        "rules": [
+                                            {
+                                                "condition": "=",
+                                                "data": "No puedo navegar",
+                                                "field": "Motive"
+                                            },
+                                            {
+                                                "condition": "=",
+                                                "data": "TRUE",
+                                                "field": "AvailableDataQuota"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "group": {
+                                        "operator": "AND",
+                                        "rules": [
+                                            {
+                                                "condition": "=",
+                                                "data": "TRUE",
+                                                "field": "AvailableVoiceBalance"
+                                            },
+                                            {
+                                                "group": {
+                                                    "operator": "OR",
+                                                    "rules": [
+                                                        {
+                                                            "condition": "=",
+                                                            "data": "No puedo realizar ni recibir llamadas",
+                                                            "field": "Motive"
+                                                        },
+                                                        {
+                                                            "condition": "=",
+                                                            "data": "No puedo realizar llamadas",
+                                                            "field": "Motive"
+                                                        },
+                                                        {
+                                                            "condition": "=",
+                                                            "data": "No puedo recibir llamadas",
+                                                            "field": "Motive"
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "condition": "=",
+                        "data": "No",
+                        "field": "DeviceInUseQuestion"
+                    }
+                ]
+            }
+        },
+        "showInputWidth": false,
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "svgIcon": "",
+        "svgSprite": "",
+        "useContinuation": false,
+        "validationRequired": "None",
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Integration Procedure Action",
+    "Name": "IPAction_ValidateImei",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/DataService_Diagnosis/English/IPAction_ValidateImei"
+}

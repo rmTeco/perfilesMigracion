@@ -1,0 +1,43 @@
+.via-slds {
+    
+    .slds-form-element.vlc-flex.vlc-slds-radio-control {
+        margin-bottom: .65rem;
+    }
+    
+    .OSradioButton {
+        border: 1px solid #d8dde6;
+        border-right: #ffffff;
+    	padding: 6px 12px;
+        background-color: #ffffff;
+        span.slds-form-element__label { 
+            margin: 0; 
+        }
+        &.active {
+            border: 1px solid #50e3c2;
+        	background-color: #50e3c2;
+        	span.slds-form-element__label {
+                color: #ffffff;    
+            }
+        }
+        
+        &:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+        
+        &:last-child {
+            border: 1px solid #d8dde6;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        &.only-buttom{
+            border-radius: 0;
+            text-align: center;
+            background-color: #00B4C5;
+            border-color: #00B4C5;
+            cursor: pointer;
+            span.slds-form-element__label {
+                color: #ffffff !important;    
+            }
+        }
+    }
+}

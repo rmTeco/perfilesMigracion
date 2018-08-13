@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Object to store Zones (Industrial Parks, Gated Communities, Working-class Communities) from Callejero in SFDC.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>AddressNumber__c</fullName>
+        <description>Main Street Number of Zone / Altura de Calle Principal de la Zona</description>
+        <externalId>false</externalId>
+        <label>Address Number</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Altura_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Altura Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>BARRIOMU__c</fullName>
+        <description>BARRIO Name in CV Callejero</description>
+        <externalId>false</externalId>
+        <label>BARRIOMU</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BuildingType__c</fullName>
+        <description>Building Structure Type / Tipo de Estructura habitacional</description>
+        <externalId>false</externalId>
+        <label>Building Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1-CASA</fullName>
+                    <default>false</default>
+                    <label>1-CASA</label>
+                </value>
+                <value>
+                    <fullName>2-LOCAL</fullName>
+                    <default>false</default>
+                    <label>2-LOCAL</label>
+                </value>
+                <value>
+                    <fullName>3-EDIFICIO</fullName>
+                    <default>false</default>
+                    <label>3-EDIFICIO</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Calle_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Calle Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Comment__c</fullName>
+        <description>Zone Comment / Comentario de Zona</description>
+        <externalId>false</externalId>
+        <label>Comment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Croquis_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Croquis Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Depto_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Depto Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Entrecalles_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Entrecalles Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>FATB_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>FATB Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Grupo_Edificio_Requerido__c</fullName>
+        <description>Indicates if the Building Group is Mandatory / Indica el nivel de obligatoriedad de informar el Grupo del Edificio</description>
+        <externalId>false</externalId>
+        <label>Grupo Edificio Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag if a Zone record is Active or Inactive</description>
+        <externalId>false</externalId>
+        <label>Zone Status</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Location to which the Zone belongs / Localidad a la que pertenece la Zona</description>
+        <externalId>false</externalId>
+        <label>Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Zones</relationshipLabel>
+        <relationshipName>Zones</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Lote_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Lote Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Manzana_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Manzana Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Nombre_Edificio_Requerido__c</fullName>
+        <description>Indicates if the Building Number is Mandatory / Indica el nivel de obligatoriedad de informar el Nombre del Edificio</description>
+        <externalId>false</externalId>
+        <label>Nombre Edificio Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>NroEdificio_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Nro Edificio Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Piso_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Piso Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Sector_Requerido__c</fullName>
+        <description>Define si un campo es Requerido, Opcional, o no debe mostrarse en pantalla</description>
+        <externalId>false</externalId>
+        <label>Sector Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Street__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Zone Main Street / Calle Principal de la Zona</description>
+        <externalId>false</externalId>
+        <label>Street</label>
+        <referenceTo>Street__c</referenceTo>
+        <relationshipLabel>Zones</relationshipLabel>
+        <relationshipName>Zones</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tipo_Edificio_Requerido__c</fullName>
+        <description>Indicates if the Building Number is Mandatory / Indica el nivel de obligatoriedad de informar el Nombre del Edificio</description>
+        <externalId>false</externalId>
+        <label>Tipo Edificio Requerido</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 Obligatorio</fullName>
+                    <default>false</default>
+                    <label>1 Obligatorio</label>
+                </value>
+                <value>
+                    <fullName>2 Opcional</fullName>
+                    <default>false</default>
+                    <label>2 Opcional</label>
+                </value>
+                <value>
+                    <fullName>3 No Mostrar</fullName>
+                    <default>false</default>
+                    <label>3 No Mostrar</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ZoneID__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>Callejero External Zone ID</description>
+        <externalId>true</externalId>
+        <label>Callejero Zone ID</label>
+        <length>80</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>ZoneType__c</fullName>
+        <description>Zone Type / Tipo de Zona del Barrio</description>
+        <externalId>false</externalId>
+        <label>Zone Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1 URBANA</fullName>
+                    <default>false</default>
+                    <label>1 URBANA</label>
+                </value>
+                <value>
+                    <fullName>2 BARRIO MUNICIPAL</fullName>
+                    <default>false</default>
+                    <label>2 BARRIO MUNICIPAL</label>
+                </value>
+                <value>
+                    <fullName>3 BARRIO PRIVADO</fullName>
+                    <default>false</default>
+                    <label>3 BARRIO PRIVADO</label>
+                </value>
+                <value>
+                    <fullName>4 RURAL</fullName>
+                    <default>false</default>
+                    <label>4 RURAL</label>
+                </value>
+                <value>
+                    <fullName>5 ISLAS</fullName>
+                    <default>false</default>
+                    <label>5 ISLAS</label>
+                </value>
+                <value>
+                    <fullName>6 PARQUE INDUSTRIAL</fullName>
+                    <default>false</default>
+                    <label>6 PARQUE INDUSTRIAL</label>
+                </value>
+                <value>
+                    <fullName>7 STANDARD</fullName>
+                    <default>false</default>
+                    <label>7 STANDARD</label>
+                </value>
+                <value>
+                    <fullName>8 CASILLA DE CORREO</fullName>
+                    <default>false</default>
+                    <label>8 CASILLA DE CORREO</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Zone</label>
+    <nameField>
+        <label>Zone Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Zones</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

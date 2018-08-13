@@ -1,0 +1,52 @@
+<apex:page standardController="Pricebook2" extensions="vlocity_cmt.PricebookEntryEditorController">
+ <apex:outputPanel >
+  <apex:pageMessages />
+ </apex:outputPanel>
+    <apex:outputPanel layout="block" style="overflow:auto;" >
+    <apex:form >
+        <apex:pageBlock mode="inlineEdit">  
+            <apex:pageBlockButtons >    
+                <apex:commandLink value="{!$Label.vlocity_cmt__save}" action="{!save}" id="saveButton"  styleClass="btn" style="padding: 3px 10px; margin: 1px; text-decoration: none;" />
+                <apex:outputLink value="{!'/_ui/core/pricebook/SelectSearch?addTo=' + pricebookId}" styleClass="btn" target="_top"  style="padding: 3px 10px; margin: 1px; text-decoration: none;">{!$Label.vlocity_cmt__add}</apex:outputLink>    
+                <apex:outputLink value="{!'/01u?fcf=' + pricebookId}" styleClass="btn" target="_top" style="padding: 3px 10px; margin: 1px; text-decoration: none;">{!$Label.vlocity_cmt__viewall}</apex:outputLink>
+                <apex:outputLink value="{!IF(isStandardPricebook, '/pbk/editStandardPrice.jsp?id=' + pricebookId, '/apex/EditPricebookPrices?id=' + pricebookId)}" styleClass="btn" target="_top" style="padding: 3px 10px; margin: 1px; text-decoration: none;">{!$Label.vlocity_cmt__editall}</apex:outputLink>
+                <apex:commandLink value="{!$Label.vlocity_cmt__refreshcache}" rendered="{!cacheEnabled}" action="{!refreshCache}" id="refreshButton" styleClass="btn" style="padding: 3px 10px; margin: 1px; text-decoration: none;" />
+                <apex:commandLink value="{!$Label.vlocity_cmt__refreshpricebook}" action="{!refreshAttributesCached}" id="refreshPricebook" styleClass="btn" style="padding: 3px 10px; margin: 1px; text-decoration: none;" />
+            </apex:pageBlockButtons>    
+            <apex:pageBlockTable value="{!pricebookEntries}" var="pricebookEntry" id="workerTable" >
+                <apex:column headerValue="{!$Label.vlocity_cmt__action}">
+                    <apex:outputLink value="{!'/'+pricebookEntry.Id+'/e?retURL=%2F' + pricebookId}" target="_top" style="color: #015ba7;text-decoration: none;" >{!$Label.vlocity_cmt__edit}</apex:outputLink>   &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <apex:outputLink value="{!'/'+pricebookEntry.Id}" target="_top" style="color: #015ba7;text-decoration: none;" >{!$Label.vlocity_cmt__view}</apex:outputLink>
+                </apex:column>
+                <apex:column headerValue="{!$Label.vlocity_cmt__productname}" >
+                    <apex:outputText value="{!pricebookEntry.Product2.Name}" />
+                </apex:column>
+                <apex:column headerValue="{!$Label.vlocity_cmt__productcode}" >
+                    <apex:outputText value="{!pricebookEntry.Product2.ProductCode}" />
+                </apex:column>
+                <apex:column headerValue="{!$Label.vlocity_cmt__listprice}" >
+                    <apex:outputField value="{!pricebookEntry.UnitPrice}" >
+                        <apex:inlineEditSupport event="ondblclick" />
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headerValue="{!$Label.vlocity_cmt__recurringprice}" >
+                    <apex:outputField value="{!pricebookEntry.vlocity_cmt__RecurringPrice__c}" >
+                        <apex:inlineEditSupport event="ondblclick" />
+                    </apex:outputField>
+                </apex:column>
+                    <apex:column headerValue="{!$Label.vlocity_cmt__recurringfrequency}" >
+                    <apex:outputField value="{!pricebookEntry.vlocity_cmt__RecurringUOM__c}" >
+                        <apex:inlineEditSupport event="ondblclick" />
+                    </apex:outputField>
+                </apex:column>
+                <apex:column headerValue="{!$Label.vlocity_cmt__active}">
+                    <apex:outputField value="{!pricebookEntry.IsActive}" >
+                        <apex:inlineEditSupport showOnEdit="saveButton" event="ondblclick" />
+                    </apex:outputField>
+                </apex:column>
+            </apex:pageBlockTable>
+            <VFPagination pageController="{!pController}" />
+        </apex:pageBlock>
+    </apex:form>    
+    </apex:outputPanel>
+</apex:page>

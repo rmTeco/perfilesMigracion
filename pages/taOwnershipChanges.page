@@ -1,0 +1,60 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="taOwnershipChanges">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+            strOmniScriptSubType="Ownership Changes"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('taOwnershipChanges', modules);
+            
+            myModule
+                .filter('secondsToDateTime', secondsToDateTime);
+            
+            function secondsToDateTime() {
+                return function(seconds) {
+                    return new Date(1970, 0, 1).setSeconds(seconds);
+                };
+            }
+            
+            
+            /* CONTROLLERS */
+            myModule
+                .controller('QAController', QAController);
+            
+            QAController.$inject = ['$scope', '$timeout'];
+            function QAController($scope, $timeout) {
+                var qac = this;
+                qac.counter = 0;
+                qac.init = init;
+                qac.onTimeout = onTimeout;
+                
+                function init(counter) {
+                    qac.counter = convertMinutesToSeconds(counter);
+                }
+                
+                function convertMinutesToSeconds(value) {
+                    return (value * 1) * 60;
+                }
+                
+                function onTimeout(){
+                    qac.counter--;
+                    mytimeout = $timeout(qac.onTimeout,1000);
+                    if (!qac.counter) {
+                      stop();
+                    }
+                }
+            
+                function stop (){
+                    $timeout.cancel(mytimeout);
+                }
+            }
+            
+        </script>
+
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

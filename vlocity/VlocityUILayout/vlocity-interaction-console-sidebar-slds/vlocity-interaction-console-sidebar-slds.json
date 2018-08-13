@@ -1,0 +1,36 @@
+{
+    "Cards": [
+        "interaction-profile-account-slds2",
+        "interaction-profile-account-info-slds2",
+        "interaction-profile-account-ActionGrid-slds2",
+        "interaction-profile-contact2",
+        "interaction-profile-contact-info2"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "a2mo0000000NeVMAA0"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "interactionId": "{{params.id}}"
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.GetObjectFromInteraction"
+            },
+            "query": "SELECT %vlocity_namespace%__PrimaryContactId__c , %vlocity_namespace%__CustomerValue__c, \ndemo_card_formula__c,\nId, Industry,Name, BillingAddress, RecordType.DeveloperName,Type,\nPersonBirthdate , PersonEmail, Phone, PersonTitle , PhotoURL, Website, \n%vlocity_namespace%__CalculatedAddress__c\t,\n%vlocity_namespace%__Email__c\nFROM Account WHERE Id = (select accountId__c from CustomerInteraction__c where Id ='{{params.id}}')",
+            "remoteClass": "GetObjectFromInteraction",
+            "remoteMethod": "getObjectIdFromInteractionObject",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "vlocity-interaction-console-sidebar-slds"
+        }
+    }
+}

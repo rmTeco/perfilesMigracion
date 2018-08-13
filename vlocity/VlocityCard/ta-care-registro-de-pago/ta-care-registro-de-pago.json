@@ -1,0 +1,262 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.AccountIntegrationId",
+                "val": "9900000194610001"
+            },
+            {
+                "name": "params.txId",
+                "val": "CBSAR208011"
+            },
+            {
+                "name": "params.fechaDesde",
+                "val": ""
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "body": {
+                    "accesoCuenta": {
+                        "codCuenta": "{{params.AccountIntegrationId}}"
+                    },
+                    "cantidadItemsConsulta": 1,
+                    "cantidadMaxConsulta": 1,
+                    "fechaDesde": "{{params.fechaDesde}}",
+                    "referenciaItemPaginado": 1,
+                    "txId": "{{params.txId}}"
+                }
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "ta_care_PaymentRecord",
+            "remoteMethod": "GetPaymentRecord",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']['listaInfoPagos']['infoPago'][0]"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['codMedioPago']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Medio de Pago",
+                    "name": "['codMedioPago']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['codMoneda']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Moneda",
+                    "name": "['codMoneda']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['infoBanco']['codEntidadFinanciera']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Banco",
+                    "name": "['infoBanco']['codEntidadFinanciera']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['infoBanco']['codSucursalEntidad']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Entidad",
+                    "name": "['infoBanco']['codSucursalEntidad']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['infoBanco']['ultimosDigitosTarjeta']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Numero de tarjeta",
+                    "name": "['infoBanco']['ultimosDigitosTarjeta']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['infoBanco']['nroCheque']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Numero de Cheque",
+                    "name": "['infoBanco']['nroCheque']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['infoVoucher']['numeroSerie']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Numero de cupón de Telecom Argentina",
+                    "name": "['infoVoucher']['numeroSerie']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['infoBanco']['cantidadCuotasTarjeta']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Cantidad de cuotas",
+                    "name": "['infoBanco']['cantidadCuotasTarjeta']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Monto total",
+                    "name": "['listaDetallesPagos']['detallePago'][0]['importeComprobante']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Tipo Cupón",
+                    "name": "tipoCupon",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaAplicacionPago']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de imputacion",
+                    "name": "['fechaAplicacionPago']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Fecha de lectura",
+                    "name": "Fechalectura",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Monto parcial",
+                    "name": "montoParcial",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Tipo de Comprobante",
+                    "name": "tipoComprobante",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['codUsuario']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Usuario",
+                    "name": "['codUsuario']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['codGerencia']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Código gerencia",
+                    "name": "['codGerencia']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Usuario modificación",
+                    "name": "usuarioModificacion",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Fecha ATM",
+                    "name": "fechaATM",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['codCanal']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Canal de cobranza",
+                    "name": "['codCanal']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['idCliente']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Cliente",
+                    "name": "['idCliente']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Descripción de motivo",
+                    "name": "descripcionMotivo",
+                    "type": "string"
+                }
+            ],
+            "name": "Registro de Pago",
+            "templateUrl": "ta-care-factura-trafico"
+        }
+    ],
+    "title": "Registro de pago"
+}

@@ -1,0 +1,216 @@
+<!-- <div>{{bpTree.response | json}}</div> -->
+
+<div class="tax-condition-changes-summary">
+    <div class="slds-section__title slds-m-top--small tax-condition-changes-summary-title">Tipo de cambio:</div>
+    <div ng-switch="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange">
+        <div ng-switch-when="DNI">DNI a CUIT</div>
+        <div ng-switch-when="CUIT">CUIT a DNI</div>
+        <div ng-switch-when="CUITConditionChange">Modificaciones de CUIT</div>
+    </div>
+    <div class="slds-section__title slds-m-top--small tax-condition-changes-summary-title">Número de documento:</div>
+    <div>{{bpTree.response.Step_8_Summary.NewDocumentNumber}}</div>
+    <section id="Accounts" class="slds-m-top--small">
+        <div class="slds-section__title tax-condition-changes-summary-title">Cuenta(s) de facturación:</div>
+        <div ng-if="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange == 'DNI'">
+            <div class="slds-tree_container">
+                <!--<h4 class="slds-text-title--caps" id="treeheading">Tree Group Header</h4>-->
+                <ul class="slds-tree" role="tree" aria-labelledby="treeheading">
+                    <li ng-attr-id="{{ 'tree0-node' + $index }}" role="treeitem" aria-level="1" ng-if="bpTree.response.Contact.Consumer.Account.BillingAccounts.length > 0"
+                        ng-repeat="billingAccounts in bpTree.response.Contact.Consumer.Account.BillingAccounts | filter: { Status: 'Active' } | filter: { selected: true }">
+                        <div>
+                            <slds-svg-icon ng-if="billingAccounts.selected" sprite="'utility'" icon="'check'" size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <slds-svg-icon ng-if="!billingAccounts.selected" sprite="'utility'" icon="''" size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <span class="slds-truncate" title="{{billingAccounts.Name}}">{{billingAccounts.Name}}</span>
+                        </div>
+                    </li>
+                    <li id="tree0-node0" role="treeitem" aria-level="1" ng-if="bpTree.response.Contact.Consumer.Account.BillingAccounts && bpTree.response.Contact.Consumer.Account.BillingAccounts.length == undefined">
+                        <div>
+                            <slds-svg-icon ng-if="bpTree.response.Contact.Consumer.Account.BillingAccounts.selected" sprite="'utility'" icon="'check'"
+                                size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <slds-svg-icon ng-if="!bpTree.response.Contact.Consumer.Account.BillingAccounts.selected" sprite="'utility'" icon="''" size="'x-small'"
+                                no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <span class="slds-truncate" title="{{bpTree.response.Contact.Consumer.Account.BillingAccounts.Name}}">{{bpTree.response.Contact.Consumer.Account.BillingAccounts.Name}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-if="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange == 'CUIT'">
+            <div class="slds-tree_container">
+                <ul class="slds-tree" role="tree" aria-labelledby="treeheading">
+                    <li ng-attr-id="{{ 'tree0-node' + $index }}" role="treeitem" aria-level="1" ng-if="bpTree.response.Contact.Business.Account.BillingAccounts.length > 0"
+                        ng-repeat="billingAccounts in bpTree.response.Contact.Business.Account.BillingAccounts | filter: { Status: 'Active' } | filter: { selected: true }">
+                        <div>
+                            <slds-svg-icon ng-if="billingAccounts.selected" sprite="'utility'" icon="'check'" size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <slds-svg-icon ng-if="!billingAccounts.selected" sprite="'utility'" icon="''" size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <span class="slds-truncate" title="{{billingAccounts.Name}}">{{billingAccounts.Name}}</span>
+                        </div>
+                    </li>
+                    <li id="tree0-node0" role="treeitem" aria-level="1" ng-if="bpTree.response.Contact.Business.Account.BillingAccounts && bpTree.response.Contact.Business.Account.BillingAccounts.length == undefined">
+                        <div>
+                            <slds-svg-icon ng-if="bpTree.response.Contact.Business.Account.BillingAccounts.selected" sprite="'utility'" icon="'check'"
+                                size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <slds-svg-icon ng-if="!bpTree.response.Contact.Business.Account.BillingAccounts.selected" sprite="'utility'" icon="''" size="'x-small'"
+                                no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <span class="slds-truncate" title="{{bpTree.response.Contact.Business.Account.BillingAccounts.Name}}">{{bpTree.response.Contact.Business.Account.BillingAccounts.Name}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-if="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange == 'CUITConditionChange'">
+            <div class="slds-tree_container">
+                <ul class="slds-tree" role="tree" aria-labelledby="treeheading">
+                    <li ng-attr-id="{{ 'tree0-node' + $index }}" role="treeitem" aria-level="1" ng-if="bpTree.response.Contact.Business.Account.BillingAccounts.length > 0"
+                        ng-repeat="billingAccounts in bpTree.response.Contact.Business.Account.BillingAccounts | filter: { Status: 'Active' } ">
+                        <div>
+                            <slds-svg-icon sprite="'utility'" icon="'check'" size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <span class="slds-truncate" title="{{billingAccounts.Name}}">{{billingAccounts.Name}}</span>
+                        </div>
+                    </li>
+                    <li id="tree0-node0" role="treeitem" aria-level="1" ng-if="bpTree.response.Contact.Business.Account.BillingAccounts && bpTree.response.Contact.Business.Account.BillingAccounts.length == undefined">
+                        <div>
+                            <slds-svg-icon sprite="'utility'" icon="'check'"
+                                size="'x-small'" no-hint="true" extra-classes="'tax-condition-changes-summary-icon'">
+                            </slds-svg-icon>
+                            <span class="slds-truncate" title="{{bpTree.response.Contact.Business.Account.BillingAccounts.Name}}">{{bpTree.response.Contact.Business.Account.BillingAccounts.Name}}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="IVATaxCondition" class="slds-m-top--small">
+        <div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT">
+            <div class="slds-section__title tax-condition-changes-summary-title">Condición impositiva - IVA</div>
+            <div ng-if="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.BusinessAccountCUITType != 'CUIT3X'"
+                ng-switch="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.NewIVAConditionBlock.IVACondition">
+                <div ng-switch-when="IVA_M">IVA Monotributista</div>
+                <div ng-switch-when="IVA_SNC">IVA Sujeto No Categorizado</div>
+                <div ng-switch-when="IVA_RI">IVA Responsable Inscripto</div>
+                <div ng-switch-when="IVA_ENA">IVA Exento / No Alcanzado</div>
+            </div>
+            <div ng-if="bpTree.response.Step_2_Select_Tax_Condition_To_Modify.BusinessAccountCUITType == 'CUIT3X'"
+                ng-switch="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.NewIVAConditionBlock.IVAConditionCUIT3X">
+                <div ng-switch-when="IVA_M">IVA Monotributista</div>
+                <div ng-switch-when="IVA_SNC">IVA Sujeto No Categorizado</div>
+                <div ng-switch-when="IVA_RI">IVA Responsable Inscripto</div>
+                <div ng-switch-when="IVA_ENA">IVA Exento / No Alcanzado</div>
+                <div ng-switch-when="IVA_RG3290">IVA Exento RG 3290 3349/91</div>
+                <div ng-switch-when="IVA_LEY23905">IVA Exento Art. 22 Ley 23.905</div>
+                <div ng-switch-when="IVA_LEY20646">IVA Exento Ley 20.646 6/2/74</div>
+            </div>
+            <div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.NewIVAConditionBlock.IVAExemptionDateTo">
+                Desde {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.NewIVAConditionBlock.IVAExemptionDateFrom | date:'dd/MM/yyyy'}}
+                hasta {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.NewIVAConditionBlock.IVAExemptionDateTo | date:'dd/MM/yyyy'}}
+            </div>
+            <div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.NewIVAConditionBlock.IVAExemptionPercentage">
+                Exención: {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.NewIVAConditionBlock.IVAExemptionPercentage}}%
+            </div>
+        </div>
+        <div ng-if="bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI">
+            <div class="slds-section__title tax-condition-changes-summary-title">Condición impositiva - IVA</div>
+            <div ng-switch="bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI.NewIVAConditionBlockDNI.IVAConditionDNI">
+                <div ng-switch-when="IVA_CF">IVA Consumidor final</div>
+            </div>
+            <div ng-if="bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI.NewIVAConditionBlockDNI.IVAExemptionDateToDNI">
+                Desde {{bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI.NewIVAConditionBlockDNI.IVAExemptionDateFromDNI | date:'dd/MM/yyyy'}}
+                hasta {{bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI.NewIVAConditionBlockDNI.IVAExemptionDateToDNI | date:'dd/MM/yyyy'}}
+            </div>
+            <div ng-if="bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI.NewIVAConditionBlockDNI.IVAExemptionPercentageDNI">
+                Exención: {{bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI.NewIVAConditionBlockDNI.IVAExemptionPercentageDNI}}%
+            </div>
+        </div>
+        <div ng-if="!bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT && !bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI">
+            <div class="slds-section__title tax-condition-changes-summary-title">Condición impositiva - IVA</div>
+            <div ng-switch="bpTree.response.IVA.Category">
+                <div ng-switch-when="IVA_M">IVA Monotributista</div>
+                <div ng-switch-when="IVA_SNC">IVA Sujeto No Categorizado</div>
+                <div ng-switch-when="IVA_RI">IVA Responsable Inscripto</div>
+                <div ng-switch-when="IVA_ENA">IVA Exento / No Alcanzado</div>
+                <div ng-switch-when="IVA_CF">IVA Consumidor final</div>
+            </div>
+            <div ng-if="bpTree.response.IVA.ExemptionDateTo">
+                Desde {{bpTree.response.IVA.ExemptionDateFrom | date:'dd/MM/yyyy'}}
+                hasta {{bpTree.response.IVA.ExemptionDateTo | date:'dd/MM/yyyy'}}
+            </div>
+            <div ng-if="bpTree.response.IVA.ExemptionPercentage">
+                Exención: {{bpTree.response.IVA.ExemptionPercentage}}%
+            </div>
+        </div>
+    </section>
+    <section id="IIBBTaxCondition" class="slds-m-top--small">
+        <div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT">
+            <div class="slds-section__title tax-condition-changes-summary-title">Condiciones Impositivas - Ingresos Brutos:</div>
+            <div ng-switch="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.IIBBCondition">
+                <div ng-switch-when="IIBB_ICM">Inscripto en Convenio Multilateral</div>
+                <div ng-switch-when="IIBB_IL">IIBB Inscripto Local</div>
+                <div ng-switch-when="IIBB_ENA">IIBB Exento / No Alcanzado</div>
+                <div ng-switch-when="IIBB_NIS">IIBB No informó situación</div>
+            </div>
+            <div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.IIBBCondition != 'IIBB_ENA' &&
+                    bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.IIBBCondition != 'IIBB_NIS'">
+                <div class="slds-m-top--small" ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.length > 0"
+                    ng-repeat="iibbExemption in bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions">
+                    <div>Jurisdicción: {{iibbExemption.IIBBExemptionJurisdiction}}</div>
+                    <div ng-if="iibbExemption.IIBBExemptionDateTo">
+                        Desde {{iibbExemption.IIBBExemptionDateFrom | date:'dd/MM/yyyy'}}
+                        hasta {{iibbExemption.IIBBExemptionDateTo | date:'dd/MM/yyyy'}}
+                    </div>
+                    <div ng-if="iibbExemption.IIBBExemptionPercentage">Exención: {{iibbExemption.IIBBExemptionPercentage}} %</div>
+                </div>
+                <div class="slds-m-top--small" ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.length == undefined">
+                    <div>Jurisdicción: {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.IIBBExemptionJurisdiction}}</div>
+                    <div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.IIBBExemptionDateTo">
+                        Desde {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.IIBBExemptionDateFrom | date:'dd/MM/yyyy'}}
+                        hasta {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.IIBBExemptionDateTo | date:'dd/MM/yyyy'}}
+                    </div>
+                    <div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.IIBBExemptionPercentage">
+                        Exención: {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.IIBBExemptionPercentage}}%
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="!bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT
+            && !bpTree.response.Step_7_Select_New_Tax_Condition_CUIT_To_DNI
+            && bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange != 'CUIT'">
+            <div class="slds-section__title tax-condition-changes-summary-title">Condiciones Impositivas - Ingresos Brutos:</div>
+            <div ng-switch="bpTree.response.IIBB.Category">
+                <div ng-switch-when="IIBB_ICM">Inscripto en Convenio Multilateral</div>
+                <div ng-switch-when="IIBB_IL">IIBB Inscripto Local</div>
+                <div ng-switch-when="IIBB_ENA">IIBB Exento / No Alcanzado</div>
+                <div ng-switch-when="IIBB_NIS">IIBB No informó situación</div>
+            </div>
+            <div ng-if="bpTree.response.IIBB.Category != 'IIBB_ENA' && bpTree.response.IIBB.Category != 'IIBB_NIS'">
+                <div class="slds-m-top--small" ng-if="bpTree.response.IIBBExemptions.length > 0"
+                    ng-repeat="iibbExemption in bpTree.response.IIBBExemptions">
+                    <div>Jurisdicción: {{iibbExemption.Jurisdiction}}</div>
+                    <div ng-if="iibbExemption.DateTo">
+                        Desde {{iibbExemption.DateFrom}}
+                        hasta {{iibbExemption.DateTo}}
+                    </div>
+                    <div ng-if="iibbExemption.Percentage">Exención: {{iibbExemption.Percentage}}%</div>
+                </div>
+                <div class="slds-m-top--small" ng-if="bpTree.response.IIBBExemptions && bpTree.response.IIBBExemptions.length == undefined">
+                    <div>Jurisdicción: {{bpTree.response.IIBBExemptions.Jurisdiction}}</div>
+                    <div ng-if="bpTree.response.IIBBExemptions.DateTo">
+                        Desde {{bpTree.response.IIBBExemptions.DateFrom}}
+                        hasta {{bpTree.response.IIBBExemptions.DateTo}}
+                    </div>
+                    <div ng-if="bpTree.response.IIBBExemptions.Percentage">
+                        Exención: {{bpTree.response.IIBBExemptions.Percentage}}%
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

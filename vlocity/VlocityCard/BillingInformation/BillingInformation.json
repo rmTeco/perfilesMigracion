@@ -1,0 +1,132 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "[\n\n\t\t{\n\t\t\t\"service\": \"Servicio de Internet\",\n\t\t\t\"accountName\": \"Sandra Ramos\",\n\t\t\t\"fol\": true\n\t\t},\n\t\t{\n\t\t\t\"service\": \"Servicio Movil\",\n\t\t\t\"accountName\": \"Sandra Ramos\",\n\t\t\t\"fol\": false\n\t\t}\n\t\n]",
+            "resultVar": "['Services']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Name']",
+                    "operator": "!=",
+                    "type": "custom",
+                    "value": "null"
+                },
+                {
+                    "field": "['AccountId']",
+                    "operator": "!=",
+                    "type": "custom",
+                    "value": "null"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": true,
+                        "id": "View Record",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Create Quote",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Servicio",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['AccountName']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Nombre de la Cuenta",
+                    "name": "['AccountName']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Fol']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fol",
+                    "name": "['Fol']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Name'] != 'null' && $scope.obj['AccountId'] != null",
+            "name": "Active",
+            "templateUrl": "ta-Care-ListFOL-item"
+        },
+        {
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "active"
+                },
+                {
+                    "field": "['Name']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "null"
+                },
+                {
+                    "field": "['AccountId']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "null"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "El cliente no posee ninguna cuenta de facturación.",
+                    "name": "Message",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Name'] == 'null' && $scope.obj['AccountId'] == null",
+            "name": "Message",
+            "templateUrl": "ta-Care-ListFOL-item-Error"
+        }
+    ],
+    "title": "Información de facturación"
+}

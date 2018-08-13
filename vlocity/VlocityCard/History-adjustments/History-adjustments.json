@@ -1,0 +1,68 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaAjuste']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['fechaAjuste']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Vencimiento",
+                    "name": "['expire']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['motivoAjuste']",
+                    "editing": true,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Motivo",
+                    "name": "['motivoAjuste']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Ajuste",
+                    "name": "['amount']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "ta-care-history-adjustments-row"
+        }
+    ],
+    "title": "Historial de ajustes"
+}

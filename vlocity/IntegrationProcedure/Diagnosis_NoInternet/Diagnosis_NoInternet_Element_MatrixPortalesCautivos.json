@@ -1,0 +1,45 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "Diagnosis_NoInternet",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Diagnosis/NoInternet/Procedure",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 8,
+    "%vlocity_namespace%__PropertySet__c": {
+        "additionalOutput": {
+        },
+        "defaultMatrixResult": {
+        },
+        "executionConditionalFormula": "MOCK_PortalesCautivosStatus == true",
+        "failOnStepError": true,
+        "failureConditionalFormula": "",
+        "failureResponse": {
+        },
+        "label": "MatrixAction1",
+        "matrix Input Parameters": [
+            {
+                "name": "MOCK_PortalesCautivos:listaSesion:codPortalCautivo",
+                "value": "Parametro"
+            }
+        ],
+        "remoteOptions": {
+            "matrixName": "DiagnosisPortalMatrix"
+        },
+        "responseJSONNode": "",
+        "responseJSONPath": "",
+        "returnOnlyAdditionalOutput": false,
+        "returnOnlyFailureResponse": false,
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "useFormulas": true
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Matrix Action",
+    "Name": "MatrixPortalesCautivos",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Diagnosis/NoInternet/Procedure/MatrixPortalesCautivos"
+}

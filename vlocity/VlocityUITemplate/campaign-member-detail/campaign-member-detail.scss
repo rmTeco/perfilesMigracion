@@ -1,0 +1,358 @@
+@import 'campaign-variables';
+@import 'campaign-mixins';
+$right-col-width: 10rem;
+$right-col-padding: 0.75rem;
+$right-col-total: $right-col-width + $right-col-padding;
+
+
+.campaign-member-detail-top {
+    .member-information {
+        @include clearfix;
+        width: 100%;
+        padding: 0 0 0.5rem 0;
+        min-height: 5.95rem;
+        
+        .left {
+            width: calc(100% - #{$right-col-width});
+            flex: none;
+
+            h2 {
+                font-size: 1.35rem;
+                line-height: 1.4em;
+                color: $primary-dark;
+
+                a {
+                    font-family: $slds-font;
+                }
+            }
+            .line  {
+                display: block;
+                line-height: 1.2em;
+                color: $neutral-dark;
+                position: relative;
+                
+                &.title-employer {
+                    font-size: 1rem;
+                }
+                
+                &.phone-email {
+                    font-size: 0.75rem;
+
+                    .member-more-info-container {
+                        display: inline-block;
+                        position: relative;
+                        z-index: 30;
+                            &:before, &:after {
+                                bottom: -1.2rem;
+                                display: block;
+                                background-color: #fff;
+                                z-index: 1;
+                                left: 50%;
+                                opacity: 0;
+                                visibility: hidden;
+                                transition: all 100ms ease-in;
+                            }
+
+                            &:before {
+                                width: 1rem;
+                                height: 1rem;
+                                position: absolute;
+                                transform: rotate(45deg) translateX(-50%);
+                                content: '';
+                            }
+
+                            &:after {
+                                box-shadow: -1px -1px 0 0 rgba(0,0,0,0.16);
+                                z-index: 1;
+                                width: 1rem;
+                                height: 1rem;
+                                position: absolute;
+                                transform: rotate(45deg) translateX(-50%);
+                                content: '';
+                            }
+
+                        &.via-show-nubbin {
+                            &:before, &:after {
+                                opacity: 1; 
+                                visibility: visible;
+                            }
+                        }
+                    }
+                    
+                    .member-more-info {
+                        position: absolute;
+                        width: calc(100% + #{$right-col-total});
+                        min-height: 5rem;
+                        top: 2.25rem;
+                        z-index: 25;
+                        opacity: 0; 
+                        visibility: hidden;
+                        transition: all 100ms ease-in;
+
+                        &.via-show-info {
+                            opacity: 1; 
+                            visibility: visible;
+                        }
+
+                        .slds-popover.more-info {
+                            width: 100%;
+
+                            .slds-popover__body {
+                                padding: 1rem 1.25rem;
+                            }
+                        }
+
+                        
+                        .slds-col{
+                            &.no-overflow {
+                                overflow-y: hidden;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        .right {
+            position: relative;
+            width: $right-col-width;
+            
+            .member-status-select {
+                width: 100%;
+
+                .slds-button, .slds-dropdown {
+                    text-align: left;
+                    width: 100%;
+                }
+                .slds-dropdown {
+                    width: auto;
+                }
+            }
+        }
+    }
+    
+    .member-actions {
+        @include clearfix;
+        padding: 0;
+        
+        .target-call-date-wrapper {
+            float: left;
+            
+            .slds-text-heading--label {
+                line-height: 1.3em;
+            }
+            .target-call-date {
+                color: $primary-alternative;
+                font-size: 0.75rem;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                font-family: $slds-font;
+                width: auto;
+                height: auto;
+                min-height: 1.25rem;
+                line-height: 1.4;
+                padding: 0;
+                background-color: transparent;
+            }   
+        }
+        
+        .member-action {
+            margin-right: 0.5rem;
+            background-color: $secondary-aqua;
+            border-color: $secondary-aqua;
+            user-select: none;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            
+            &:hover, &:active, &:focus {
+                background-color: darken($secondary-aqua, 10%);
+            }
+            
+            .slds-button__icon {
+                width: 1.3rem;
+                height: 1.3rem;
+                position: relative;
+                top: -2px;
+            }
+            
+            &.delete-action {
+                float: right;
+                margin-right: 0;
+                background-color: $notify-danger;
+                border-color: $notify-danger;
+                
+                &:hover, &:active, &:focus {
+                    background-color: darken($notify-danger, 10%);
+                }
+                
+                .slds-button__icon {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 70em) {
+        .member-information {
+            position: relative;
+            margin-bottom: 3.75rem;
+            padding: 0; 
+            min-height: 0;
+
+            .left {
+                width: 100%;
+                padding-right: 0;
+
+                .line {
+                    &.title-employer {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+
+                    &.phone-email {
+                        .member-more-info {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .right {
+                position: absolute;
+                top: auto;
+                bottom: -3rem;
+                right: 0;
+                width: auto;
+
+                .member-status-select {
+                    min-width: 7rem;
+                }
+            }
+        }
+        .member-actions {
+            position: relative;
+            padding-top: 0.5rem;
+
+            .target-call-date-wrapper {
+                position: absolute;
+                top: -2.85rem;
+                left: 0;
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    @media screen and (max-width: $bp-large) {
+        .member-information {
+            .left {
+                .line {
+                    &.phone-email {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: $bp-xmedium) {
+        .member-actions {
+            margin-bottom: 0.5rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            .member-action {
+                height: 1.5rem;
+                width: 3rem;
+                text-align: center;
+                padding: 0;
+                background-color: transparent;
+                border: none;
+                border-radius: 0;
+                border-right: 1px solid $cards-border-gray;
+                flex: 1 1 auto;
+                padding: 0 0.5rem;
+                margin: 0;
+
+                .slds-button__icon {
+                    transition: fill 50ms ease-in;
+                }
+
+                &.delete-action {
+                    background-color: transparent;
+                    border: none;
+                    float: none;
+
+                    &:hover, &:active, &:focus {
+                        background-color: transparent;
+                    }
+                }
+
+                &:hover, &:active, &:focus {
+                    background-color: transparent;
+                }
+
+                &:active {
+                    .slds-button__icon {
+                        fill: $neutral-dark;
+                    }
+                }
+
+                &:first-of-type {
+                    padding-left: 0;
+                }
+
+                &:last-child {
+                    border-right: none;
+                    padding-right: 0;
+                }
+
+                .slds-button__icon--left {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    position: absolute;
+                    top: 50%;
+                    margin-right: 0;
+                    transform: translateY(-50%) translateX(-50%);
+                    left: 50%;
+                    fill: $mobile-icons-gray;
+                }
+
+                .action-label {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: $bp-small) {
+        .member-actions {
+            .target-call-date-wrapper {
+                .target-call-date {
+                    width: 100%;
+                    line-height: 1.6;
+                }
+            }
+        }
+    }
+}
+.platform-ios, .platform-android {
+    .campaign-member-detail-top {
+        .member-actions {
+            .target-call-date-wrapper {
+                .target-call-date {
+                    &:before {
+                        content: attr(placeholder);
+                    }
+
+                    &.date-picked {
+                        &:before {
+                            content: '';
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

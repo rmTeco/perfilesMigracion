@@ -1,0 +1,148 @@
+{
+    "filter": {
+        "['%vlocity_namespace%__PolicyType__c']": "Long Term Disability"
+    },
+    "icon": "custom91",
+    "sprite": "custom",
+    "states": [
+        {
+            "actionCtxId": "['InteractionPolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "id": "Change Coverage",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Policy-Pay Premium",
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy #",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Role",
+                    "name": "['Role']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Type",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Term",
+                    "name": "['%vlocity_namespace%__Term__c']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Beneficiary Role",
+            "sObjectType": "%vlocity_namespace%__CustomerInteractionTopic__c",
+            "templateUrl": "card-active-slds-clone"
+        },
+        {
+            "actionCtxId": "['PolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Role']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Agency"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Type",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Role",
+                    "name": "['Role']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Number",
+                    "name": "['Name']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Role'] == 'Agency'",
+            "name": "Agency Role",
+            "sObjectType": "%vlocity_namespace%__Policy__c",
+            "templateUrl": "card-active-slds"
+        },
+        {
+            "blankCardState": true,
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'non-existent'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "id": "Account-New Term Life",
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'non-existent'",
+            "name": "Add Long Term Disability",
+            "sObjectType": "Account",
+            "templateUrl": "card-open-slds"
+        }
+    ],
+    "title": "Long Term Disability"
+}

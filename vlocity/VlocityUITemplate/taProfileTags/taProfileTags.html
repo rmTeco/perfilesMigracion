@@ -1,0 +1,127 @@
+<div class="via-slds profile-tags" ng-controller="profileTagsController as ptc" ng-init="showInfo = false;">
+    <div class="via-slds-story-cards--canvas  slds-grid slds-grid--vertical slds-grid--vertical-stretch">
+        <div class="slds-grid slds-p-around--small slds-wrap via-slds-story-cards--header slds-theme--shade profile-tags-header" vloc-sticky-top>
+            <div class="slds-p-right--x-small via-slds-story-cards--header-title">
+                <div class="slds-text-heading--medium" ng-click="showInfo = !showInfo">
+                        Perfil
+                        <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+                        <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+                </div>
+            </div>
+            <div class="slds-col--bump-left slds-p-left--x-small via-slds-story-cards--header-title" ng-init="ptc.isOpen = false">
+                  <!--<select ng-model="categoryModel">
+                        <option value="" ng-selected="$first">Todas las categorias</option>
+                        <option ng-repeat="category in obj.Categories">{{category.Name}}</option>
+                  </select>-->
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click" ng-class="{'slds-is-open': ptc.isOpen}" ng-click="ptc.isOpen = !ptc.isOpen">
+                  <div class="slds-form-element">
+                    
+                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                      <input type="search" id="text-input-01" class="slds-lookup__search-input slds-input" placeholder="{{ptc.filterOption}}" aria-owns="option-list-01" role="combobox" aria-activedescendant="" aria-expanded="false" readonly="" ng-model="searchText" />
+                        <span class="customerStory-optionIcon">
+                            <slds-svg-icon
+                                sprite="'utility'"
+                                icon="'down'"
+                                size="'small'"
+                                no-hint="true">
+                            </slds-svg-icon>
+                        </span>
+                    </div>
+                  </div>
+                    <div class="slds-dropdown slds-dropdown--left customerStory-dropdown" role="listbox">
+                         <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-5" role="presentation">
+                            <li role="presentation" ng-click="ptc.changeFilter('Todos'); ptc.isOpen = !ptc.isOpen">
+                            <span class="slds-lookup__item-action slds-lookup__item-action--label customer-story-label" role="option" tabindex="0" id="listbox-option-242">
+                              <!--<svg class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small slds-shrink-none" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                              </svg>-->
+                              <span class="slds-truncate">Todos</span>
+                            </span>
+                          </li>
+                          <li ng-if="obj.Categories.length > 0" role="presentation" ng-repeat="category in obj.Categories" ng-click="ptc.changeFilter(category.Name); ptc.isOpen = !ptc.isOpen">
+                            <span class="slds-lookup__item-action slds-lookup__item-action--label customer-story-label" role="option" tabindex="0" id="listbox-option-242">
+                              <!--<svg class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small slds-shrink-none" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                              </svg>-->
+                              <span class="slds-truncate">{{category.Name}}</span>
+                            </span>
+                          </li>
+                          <li ng-if="obj.Categories && obj.Categories.length == undefined" role="presentation" ng-click="ptc.changeFilter(obj.Categories.Name); ptc.isOpen = !ptc.isOpen">
+                            <span class="slds-lookup__item-action slds-lookup__item-action--label customer-story-label" role="option" tabindex="0" id="listbox-option-242">
+                              <!--<svg class="slds-icon slds-icon--selected slds-icon--x-small slds-icon-text-default slds-m-right--x-small slds-shrink-none" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>
+                              </svg>-->
+                              <span class="slds-truncate">{{obj.Categories.Name}}</span>
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                  </div>
+                </div>
+           
+        </div>
+    </div>
+
+    <div ng-show="showInfo || (showInfo && ptc.categoryModel)">
+        <div ng-if="obj.Categories.length > 0">
+            <div class="profile-tags-container" ng-repeat="category in obj.Categories | filter : { 'Name' : ptc.categoryModel }">
+                <header>
+                    <h1>{{category.Name}}</h1>
+                </header>
+                <div class="slds-grid slds-wrap">
+                    <div ng-if="category.Attributes.length > 0" ng-repeat="attribute in category.Attributes">
+                        <div class="slds-button slds-button--neutral profile-tags-btn" style="color: #0DBBD9;">{{attribute.Name}}</div>
+                    </div>
+                    <div ng-if="category.Attributes && category.Attributes.length == undefined">
+                        <div class="slds-button slds-button--neutral profile-tags-btn" style="color: #0DBBD9;">{{category.Attributes.Name}}</div>
+                    </div>
+                    <div>
+                        <button class="slds-button slds-button--neutral profile-tags-btn" style="color: #0DBBD9;">
+                           <svg class="slds-icon slds-icon--x-small slds-col slds-no-flex " aria-hidden="true">
+                                <slds-svg-icon
+                                    sprite="'utility'"
+                                    icon="'add'"
+                                    size="'small'"
+                                    no-hint="true"
+                                    style="fill: #0DBBD9;"
+                                    extra-class="'slds-icon-text-default'"
+                                ></slds-svg-icon>
+                            
+                            </svg>
+                            Añada Nuevo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-if="obj.Categories && obj.Categories.length == undefined" class="profile-tags-container">
+            <header>
+                <h1>{{obj.Categories.Name}}</h1>
+            </header>
+            <div class="slds-grid slds-wrap">
+                <div ng-if="obj.Categories.Attributes.length > 0" ng-repeat="attribute in obj.Categories.Attributes">
+                    <div class="slds-button slds-button--neutral profile-tags-btn" style="color: #0DBBD9;">{{attribute.Name}}</div>
+                </div>
+                <div ng-if="obj.Categories.Attributes && obj.Categories.Attributes.length == undefined">
+                    <div class="slds-button slds-button--neutral profile-tags-btn" style="color: #0DBBD9;">{{obj.Categories.Attributes.Name}}</div>
+                </div>
+                <div>
+                    <button class="slds-button slds-button--neutral profile-tags-btn" style="color: #0DBBD9;">
+                       <svg class="slds-icon slds-icon--x-small slds-col slds-no-flex " aria-hidden="true">
+                            <slds-svg-icon
+                                sprite="'utility'"
+                                icon="'add'"
+                                size="'small'"
+                                no-hint="true"
+                                style="fill: #0DBBD9;"
+                                extra-class="'slds-icon-text-default'"
+                            ></slds-svg-icon>
+                        
+                        </svg>
+                        Añada Nuevo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

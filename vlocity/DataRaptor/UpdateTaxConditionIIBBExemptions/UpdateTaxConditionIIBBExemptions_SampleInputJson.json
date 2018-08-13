@@ -1,0 +1,184 @@
+{
+    "Account": {
+        "Contact": {
+            "Birthdate": "1990-01-01 00:00:00",
+            "DocumentNumber": "1234512",
+            "DocumentType": "DNI",
+            "Email": "sandrita@test.com",
+            "FirstName": "SANDRA",
+            "Fraud": false,
+            "Gender": "Femenino",
+            "Id": "0036C000007Ib6pQAC",
+            "LastName": "RAMOS"
+        },
+        "DocumentNumber": "30-34073329-1",
+        "DocumentType": "CUIT",
+        "FOL": false,
+        "Fraud": false,
+        "Id": "0016C000008wBlvQAE",
+        "Name": "Empresa 3X"
+    },
+    "AccountId": "0016C000008wBlvQAE",
+    "AccountToId": "0016C000008wCsUQAU",
+    "Case": {
+        "AccountId": "0016C000008wBlvQAE",
+        "CaseNumber": "00005256",
+        "CreatedDate": "2017-08-24T20:44:57.000Z",
+        "DeferredRepair": false,
+        "Description": "Sesión guiada para cambio de condición impositiva",
+        "Id": "5006C000003DDIYQA4",
+        "MuleTerminal": false,
+        "ResolutionComment": "El proceso finalizó correctamente.",
+        "Status": "Closed",
+        "Subject": "Cambio de condición impositiva",
+        "Type": "",
+        "User": {
+            "Name": "Lino Acosta"
+        }
+    },
+    "Contact": {
+        "Business": {
+            "Account": {
+                "BillingAccounts": {
+                    "Id": "0016C0000099pC7QAI",
+                    "Name": "Empresa 3X Billing 1",
+                    "Status": "Active"
+                },
+                "DocumentNumber": "30-34073329-1",
+                "DocumentType": "CUIT",
+                "Id": "0016C000008wBlvQAE",
+                "Name": "Empresa 3X",
+                "Status": "Active"
+            },
+            "Name": "Business"
+        },
+        "CanStartProcess": true,
+        "Consumer": {
+            "Account": {
+                "Id": "0016C000008wCsUQAU",
+                "Name": "SANDRA RAMOS"
+            },
+            "Name": "Consumer"
+        },
+        "DocumentNumber": "1234512",
+        "DocumentType": "DNI",
+        "Id": "0036C000007Ib6pQAC",
+        "TotalActiveBillingAccounts": 1
+    },
+    "ContextId": "0016C000008wBlv",
+    "CurrentTaxConditionId": "a3t6C000000GogVQAS",
+    "DRId_Attachment": "00P6C000000GOhCUAW",
+    "DRId_Case": "5006C000003DDIYQA4",
+    "DRId_TaxConditionDetail__c": "a3z6C000000ClGmQAK",
+    "DRId_TaxCondition__c": "a3t6C000000GogaQAC",
+    "IVAConditionDNI": "IVA_CF",
+    "IVAExemptionDateFromDNI": "2017-08-24T03:00:00.000Z",
+    "Step_2_Select_Tax_Condition_To_Modify": {
+        "BusinessAccountCUITType": "CUIT3X",
+        "HasBusinessAccountOnly": false,
+        "HasConsumerAccountOnly": false,
+        "HasConsumerAndBusinessAccount": true,
+        "TaxConditionBlock": {
+            "TaxConditionAll": null,
+            "TaxConditionAllCUIT": null,
+            "TaxConditionAllDNI": null,
+            "TaxConditionCUIT2XOnly": null,
+            "TaxConditionCUIT3XOnly": "CUITConditionChange",
+            "TaxConditionChange": "CUITConditionChange",
+            "TaxConditionDNIOnly": null
+        },
+        "TotalActiveBusinessBillingAccounts": 1,
+        "TotalActiveConsumerBillingAccounts": 0
+    },
+    "Step_3_Select_Billing_Accounts": {
+        "BillingAccountsBlock": {
+            "BillingAccountSelected": null,
+            "TotalBusinessBillingAccountsSelected": null,
+            "TotalConsumerBillingAccountsSelected": null,
+            "ValidationAtLeastOneBillingAccountSelected": null
+        }
+    },
+    "Step_6_Select_New_Tax_Condition_DNI_To_CUIT": {
+        "AllIIBBExemptionsDateToGreaterThanToday": 0,
+        "AtLeastOneJurisdiction": null,
+        "FormulaDuplicatedJurisdictions": null,
+        "IIBBExemptions": {
+            "IIBBExemptionDateFrom": "2017-08-24T03:00:00.000Z",
+            "IIBBExemptionDateTo": null,
+            "IIBBExemptionDateToGreaterThanToday": true,
+            "IIBBExemptionJurisdiction": "Córdoba",
+            "IIBBExemptionPercentage": "46"
+        },
+        "IIBBTaxCondition": {
+            "IIBBCondition": "IIBB_IL",
+            "IIBBControllingFieldValue": "IIBB"
+        },
+        "NewIVAConditionBlock": {
+            "IVACondition": "IVA_RI",
+            "IVAConditionCUIT3X": "IVA_RI",
+            "IVAControllingFieldValue": "IVA",
+            "IVAExemptionDateFrom": "2017-08-18T03:00:00.000Z",
+            "IVAExemptionDateTo": "2017-08-25T03:00:00.000Z",
+            "IVAExemptionDateToGreaterThanToday": true,
+            "IVAExemptionPercentage": "30.00",
+            "ValidationIVAExemptionDateToGreaterThanToday": true,
+            "WarningMessage": null
+        },
+        "RespaldatoryDocumentationBlock": {
+            "RespaldatoryDocumentationFile": [
+                {
+                    "$$hashKey": "object:1217",
+                    "data": "14c7f463-de6f-4caf-8759-a2dc93165024",
+                    "filename": "apex-07L6C000002mOvUUAU.log",
+                    "size": 27581
+                }
+            ],
+            "TotalRespaldatoryDocumentation": 1,
+            "ValidationAtLeastOneFileAttached": true
+        },
+        "TotalJurisdictionSelectedIL": 1,
+        "TotalJurisdictionsSelected": 1,
+        "ValidationAtLeastOneJurisdictionSelected": null,
+        "ValidationAtMostOneJurisdictionSelected": true,
+        "ValidationAtMostTwenty-threeJurisdictionsSelected": null,
+        "ValidationDuplicatedJurisdictions": null,
+        "ValidationIIBBExemptionDateToGreaterThanToday": true
+    },
+    "Step_8_Summary": {
+        "NewCompleteCUITNumber": "undefined-1234512-undefined",
+        "NewDocumentNumber": "30-34073329-1"
+    },
+    "id": "a1q6C000000afvcQAA",
+    "layout": "lightning",
+    "sInstanceId": "a1p6C0000001S9cQAE",
+    "timeStamp": "2017-08-24T20:44:53.439Z",
+    "userId": "0056C000000gQeEQAU",
+    "userName": "lino.acosta@accenture.com",
+    "userProfile": "Vlocity_Developer",
+    "vlcPersistentComponent": {
+    },
+    "vlcTimeTracking": {
+        "DataRaptorCreateCase": 786,
+        "DataRaptorDeactivatePreviousTaxCondition": 479,
+        "DataRaptorGetAccountInfoById": 719,
+        "DataRaptorGetAccountsByPrimaryContactId": 1196,
+        "DataRaptorGetCaseInfoById": 802,
+        "DataRaptorGetIIBBConditionByAccountId": 697,
+        "DataRaptorGetIIBBExemptionsByAccountId": 685,
+        "DataRaptorGetIVAConditionByAccountId": 718,
+        "DataRaptorGetTaxConditionIdByAccountId": 615,
+        "DataRaptorUpdateTaxCondition": 665,
+        "DataRaptorUpdateTaxConditionIIBBExemptions": 523,
+        "OmniScriptSessionToken": "ff268437-2518-4f77-be6f-7dc1011ad9c9",
+        "SetValuesExistingAccountId": 54,
+        "SetValuesForCase": 6,
+        "SetValuesForCaseStatus": 37,
+        "SetValuesForStep6": 83,
+        "SetValuesForStep7": 50,
+        "SetValuesForTestingEmpresa3X": 8,
+        "SetValuesIVAConditionCUIT3X": 40,
+        "Step_2_Select_Tax_Condition_To_Modify": 4314,
+        "Step_6_Select_New_Tax_Condition_DNI_To_CUIT": 33294,
+        "Step_8_Summary": 4781
+    }
+}

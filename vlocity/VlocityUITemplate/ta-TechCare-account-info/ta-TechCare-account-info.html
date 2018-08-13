@@ -1,0 +1,56 @@
+<!-- <pre>{{control.vlcSI.recSet |json}}</pre> -->
+<!-- <pre>{{bpTree.response.Account}}</pre> -->
+
+ <div    
+    class="slds-card via-slds-card--active slds-m-bottom--small taOScard">
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-header">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class="slds-text-heading--label taOScard-title">
+			    {{bpTree.response.Account.Contact.FirstName}} {{bpTree.response.Account.Contact.LastName}}<span ng-if="!bpTree.response.Account.Contact.FirstName"> - </span>
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p>
+				    {{bpTree.response.Account.Contact.DocumentType}}
+				    <span ng-if="!bpTree.response.Account.Contact.DocumentType"> - </span> 
+				    <span class="breakWord">{{bpTree.response.Account.Contact.DocumentNumber}}</span> 
+				    <span ng-if="!bpTree.response.Account.Contact.DocumentNumber"> - </span>
+				</p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p 
+			    class=" slds-text-heading--label">
+			    Razón social
+			</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<span> - </span>
+			</div>
+		</div>
+	</div>
+	<div class="slds-grid slds-wrap slds-theme--default taOScard-content">
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Email</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="breakWord">{{bpTree.response.Account.Contact.Email}}<span ng-if="!bpTree.response.Account.Contact.Email"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Teléfono</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p class="breakWord">{{bpTree.response.Account.Contact.Phone}}<span ng-if="!bpTree.response.Account.Contact.Phone"> - </span></p>				
+			</div>
+		</div>
+		<div 
+			class="slds-tile slds-p-bottom--medium slds-col--padded slds-size--1-of-2">
+			<p class=" slds-text-heading--label">Segmento</p>
+			<div class="slds-tile__detail slds-text-heading--small ">
+				<p>{{bpTree.response.Account.Segment}}<span ng-if="!bpTree.response.Account.Segment"> - </span></p>				
+			</div>
+		</div>
+	</div>
+</div>

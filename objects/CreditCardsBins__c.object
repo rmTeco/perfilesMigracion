@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Custom Setting  para registrar bins de  las tarjetas de credito</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>CredicardTypeId__c</fullName>
+        <externalId>false</externalId>
+        <label>CredicardTypeId</label>
+        <length>55</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sequence__c</fullName>
+        <externalId>false</externalId>
+        <label>Sequence</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Valid__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valid</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>CreditCardsBins</label>
+    <listViews>
+        <fullName>CreditCardsBins</fullName>
+        <columns>Sequence__c</columns>
+        <columns>NAME</columns>
+        <columns>CredicardTypeId__c</columns>
+        <columns>Valid__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Credit Cards Bins</label>
+        <language>es</language>
+    </listViews>
+    <visibility>Public</visibility>
+</CustomObject>

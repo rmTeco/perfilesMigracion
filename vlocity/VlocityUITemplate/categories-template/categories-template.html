@@ -1,0 +1,12 @@
+<section class="selectable" ng-repeat="p in control.vlcSI[control.itemsKey]" ng-class="{'vlc-selectableitem-selected' : p.vlcSelected}">
+
+                <div class="top-container" ng-class="{'recommended': p.ProductRecommend}">
+                 <div style="text-align:center">
+                 <h1>{{p.DescripcionMotivo}}</h1>
+				 <img src="https://dynamicimagesmx-v2b.netdna-ssl.com/product_class_external_product/iphone.png" width = 100%>
+                  </div>
+                  <button class="form-control" ng-click='onSelectItem(control, p, $index, this, true)'
+                            ng-class="{'icon-v-check': p.vlcSelected}">Select Plan</button>
+                </div>
+
+       </section>

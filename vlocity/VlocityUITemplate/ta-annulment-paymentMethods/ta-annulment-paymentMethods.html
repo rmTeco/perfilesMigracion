@@ -1,0 +1,105 @@
+<ul class="ta-annulment-paymentMethods">
+    <li class="slds-grid" ng-repeat="paymentMethod in bpTree.response.CardsPaymentsCharged.data">
+
+    <div class="slds-col--padded slds-size--8-of-12">
+            <ng-form name='loopform'
+                    class='slds-form-element vlc-flex'>
+                <div vlc-slds-include="vlcLabelController.html"></div>
+                <div class="slds-form-element__control">
+                    <div 
+                        class="vlc-control-wrapper" 
+                        help="">
+                        <input 
+                            ng-init= "paymentMethod.AmmountFormatted = (paymentMethod.Ammount | currency: 'ARS ')"
+                            id='paymentMethod-cardNumber-{{$index}}'
+                            type='text'
+                            name='loopname'
+                            ng-disabled='true'
+                            ng-required=''
+                            ng-blur='aggregate(this, 0, 0, true, -1)'
+                            ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': false, 'focusout': 0, 'blur': 0 } }"
+                            class='slds-input'
+                            ng-class="{'slds-input ng-valid-minlength ng-valid-maxlength ng-touched ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required':paymentMethod.CardNumber}"
+                            ui-mask=''
+                            ng-maxlength=''
+                            vlc-slds-ng-pattern=''
+                            ng-minlength=''
+                            vlc-slds-min-max-len=""
+                            vlc-slds-val-checker=""
+                            ng-model="paymentMethod.AmmountFormatted"/>
+                        <label for="paymentMethod-cardNumber-{{$index}}" class='slds-form-element__label'>Monto
+                        </label>
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+
+        <div class="slds-col--padded slds-size--8-of-12">
+            <ng-form name='loopform'
+                    class='slds-form-element vlc-flex'>
+                <div vlc-slds-include="vlcLabelController.html"></div>
+                <div class="slds-form-element__control">
+                    <div 
+                        class="vlc-control-wrapper" 
+                        help="">
+                        <input 
+                            id='paymentMethod-cardNumber-{{$index}}'
+                            type='text'
+                            name='loopname'
+                            ng-disabled='true'
+                            ng-required=''
+                            ng-model='paymentMethod.CardNumber'
+                            ng-blur='aggregate(this, 0, 0, true, -1)'
+                            ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': false, 'focusout': 0, 'blur': 0 } }"
+                            class='slds-input'
+                            ng-class="{'slds-input ng-valid-minlength ng-valid-maxlength ng-touched ng-not-empty ng-dirty ng-valid-parse ng-valid ng-valid-required':paymentMethod.CardNumber}"
+                            ui-mask=''
+                            ng-maxlength=''
+                            vlc-slds-ng-pattern=''
+                            ng-minlength=''
+                            vlc-slds-min-max-len=""
+                            vlc-slds-val-checker=""/>
+                        <label for="paymentMethod-cardNumber-{{$index}}" class='slds-form-element__label'>Número de tarjeta
+                        </label>
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+
+        <div class="slds-col--padded slds-size--4-of-12">
+            <ng-form name='loopform'
+                    class='slds-form-element vlc-flex'>
+                <div vlc-slds-include="vlcLabelController.html"></div>
+                <div class="slds-form-element__control">
+                    <div 
+                        class="vlc-control-wrapper" 
+                        help="">
+                        <input 
+                            id='paymentMethod-securityCode-{{$index}}'
+                            type='text'
+                            name='loopname'
+                            ng-disabled='false'
+                            ng-required='true'
+                            ng-model='paymentMethod.SecurityCode'
+                            ng-blur='aggregate(this, 1, 0, true, -1)'
+                            ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': paymentMethod.SecurityCode, 'focusout': 0, 'blur': 0 } }"
+                            class='slds-input'
+                            ui-mask=''
+                            ng-maxlength=''
+                            vlc-slds-ng-pattern=''
+                            ng-minlength=''
+                            vlc-slds-min-max-len=""
+                            vlc-slds-val-checker=""/>
+                        <label for="paymentMethod-securityCode-{{$index}}" class='slds-form-element__label'>PIN
+                            <span class='vlc-asterix icon-v-asterix'
+                                ng-if='true'>
+                            </span>
+                        </label>
+                    </div>
+                    <!-- this is the error block -->
+                    <div ng-include="errHTMLId"></div>
+                </div>
+            </ng-form>
+        </div>
+    </li>
+</ul>

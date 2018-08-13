@@ -1,0 +1,24 @@
+<apex:page standardController="Opportunity" extensions="vlocity_cmt.LineItemManagementStandardController" showHeader="false" sidebar="false">
+	<!-- <c:AdvProdSearchComponent buttonTitle="{!$Label.vlocity_cmt__createquotes}" cartUrl="/apex/OpportunityManager?id={!$CurrentPage.parameters.Id}"  showItemLinks="true"/> -->
+	<!--<c:ProductConfigurationComponent buttonTitle="{!$Label.vlocity_cmt__createquotes}" summaryTitle="Opportunity Summary" cartUrl="/apex/OpportunityManager?id={!$CurrentPage.parameters.Id}" />-->
+	<html xmlns:ng="http://angularjs.org">
+		<head>
+			<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+			<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__OrderSummaryCss)}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__ProductConfigurationCss)}"/>
+			<apex:includeScript value="/support/console/31.0/integration.js"/>
+	        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__JQUERYJS)}"/>
+	        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularJS)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ANGULARBOOT)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__bootstrapslider)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularStrapJS)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularStrapTplJS)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ProductConfiguration)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularUIMask, '/src/mask.js')}"/>
+		</head>
+		<body>
+			<c:SummaryConfigurationComponent summaryTitle="Opportunity Summary"/>
+			<c:ProductConfigurationComponent buttonTitle="{!$Label.vlocity_cmt__createquotes}" summaryTitle="Opportunity Summary" cartUrl="/apex/OpportunityManager?id={!$CurrentPage.parameters.Id}" />
+		</body>
+	</html>
+</apex:page>

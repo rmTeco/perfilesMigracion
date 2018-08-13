@@ -1,0 +1,13 @@
+<aura:component access="GLOBAL">
+    <aura:attribute name="appliedAttributes" type="vlocity_cmt.SegmentElement[]"/> 
+    <aura:attribute name="isLanguageRTL" type="Boolean"/>
+    <aura:attribute name="renderUsingColorCodes" type="Boolean"/>
+
+    <ul dir="{! (v.isLanguageRTL ? 'rtl' : 'ltr') }">
+        <aura:iteration items="{!v.appliedAttributes}" var="attribute">
+            <li style="{! v.renderUsingColorCodes ? 'background-color:' + attribute.Color : ''}">
+                {!attribute.Name}
+            </li>
+        </aura:iteration>
+    </ul>
+</aura:component>

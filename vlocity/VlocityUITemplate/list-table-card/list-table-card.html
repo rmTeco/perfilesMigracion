@@ -1,0 +1,12 @@
+<td class="slds-truncate slds-p-vertical--medium" ng-if="data" data-label="{{field.label}}" ng-repeat="field in data.fields" ng-show="key != 'attributes'">{{obj | getter: field | picker: field.type}}</td>
+
+<td class="slds-truncate slds-p-vertical--medium" ng-if="data.actions.length">
+    <div class="slds-col--padded">
+      <div class="slds-p-top--x-small slds-p-bottom--small slds-truncate" ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+          <p class="slds-truncate slds-text-heading--label"> </p>
+          <a href="javascript:void(0);" class="slds-truncate via-action-link slds-text-link--reset" ng-click="performAction(action)">
+            <vloc-card-icon data="action" obj="obj" size="'small'" extra-classes="'big via-action-icon slds-icon-text-default'"></vloc-card-icon>{{action.displayName}}
+          </a>
+      </div>
+  </div>
+</td>

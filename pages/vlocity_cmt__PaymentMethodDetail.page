@@ -1,0 +1,27 @@
+<apex:page StandardController="vlocity_cmt__PaymentMethod__c">
+	<apex:form >
+		<apex:pageBlock mode="maindetail">
+		<apex:pageBlockSection id="xxxpbs1" columns="1" rendered="{!IF(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Credit Card',true,false)}">
+			<apex:outputField id="MethodType" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c}"/>
+			<apex:outputField id="cardType" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardType__c}"/>
+			<apex:outputField id="cardHolder" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardHolderName__c}"/>
+			<apex:outputField id="cardNumber" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardNumber__c}"/>
+			<apex:outputField id="expMonth" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__ExpirationMonth__c}"/>
+			<apex:outputField id="expYear" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__ExpirationYear__c}"/>
+		</apex:pageBlockSection>
+		
+		<apex:pageBlockSection id="xxxpbs2" columns="1" rendered="{!IF(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Bank Account',true,false)}">
+			<apex:outputField id="MethodType" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c}"/>
+			<apex:outputField id="BankAccountHolder" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardHolderName__c}"/>
+			<apex:outputField id="BankAccountType" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__BankAccountType__c}"/>
+			<apex:outputField id="BankNumber" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__BankAccountNumber__c}"/>
+			<apex:outputField id="RoutingTransitNumber" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__RoutingTransitNumber__c}"/>
+		</apex:pageBlockSection>
+		
+		<apex:pageBlockSection columns="1">
+			<apex:outputField id="isActive" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__IsActive__c}"/>
+			<apex:outputField id="isPrimary" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__IsPrimary__c}"/>
+		</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Dependency relationship between Fulfilment Request Items</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__FulfilmentRequestLineId__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Fulfilment Request Item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Fulfilment Request Item</inlineHelpText>
+        <label>Fulfilment Request Line Item</label>
+        <referenceTo>vlocity_cmt__FulfilmentRequestLine__c</referenceTo>
+        <relationshipLabel>FulfilmentRequestLineRelationships</relationshipLabel>
+        <relationshipName>FulfilmentRequestLineRelationships</relationshipName>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RelatedFulfilmentRequestLineId__c</fullName>
+        <deleteConstraint>Restrict</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Related Fulfilment Request Item</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Related Fulfilment Request Item</inlineHelpText>
+        <label>Related Fulfilment Request Line</label>
+        <referenceTo>vlocity_cmt__FulfilmentRequestLine__c</referenceTo>
+        <relationshipLabel>FulfilmentRequestLineRelationships (Related Fulfilment Request Line)</relationshipLabel>
+        <relationshipName>FulfilmentRequestLineRelationships1</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Relationship Type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Relationship Type</inlineHelpText>
+        <label>Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Dependency</fullName>
+                    <default>false</default>
+                    <label>Dependency</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>FulfilmentRequestLineRelationship</label>
+    <nameField>
+        <label>FulfilmentRequestLineRelationship Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>FulfilmentRequestLineRelationships</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

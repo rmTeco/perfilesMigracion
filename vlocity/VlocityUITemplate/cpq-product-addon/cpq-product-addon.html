@@ -1,0 +1,5 @@
+<div class="cpq-product-addon slds-col scroll slds-section"  ng-class="{'slds-is-open': componentState}">
+    <div>
+        <vloc-card ng-repeat="card in cards |orderBy:order" ctrl="CPQCartItemController" ng-model="card" data="card" records="records" index="{{$index}}" aria-level="{{(attrs.ariaLevel - 0) + 1}}" line-item-modal="{{attrs.lineItemModal}}"></vloc-card>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+<div class="slds-popover slds-popover--panel slds-nubbin--top slds-grid slds-wrap via-slds-flyout-grid slds-grid--vertical-stretch" role="dialog" style="width: auto;">
+    <div class="slds-medium-size--1-of-{{cards.length < 2 ? cards.length+1 : 3}} slds-size--1-of-1 slds-p-around--small slds-theme--shade">
+        <div vloc-card name="Flyout Grid Actions Slds" customtemplate="flyout-grid-actions-slds" data="parent" loaded="true" use-existing-element-type>
+        </div>
+    </div>
+    <div class="slds-size--1-of-1 slds-p-around--small slds-medium-size--1-of-{{cards.length < 2 ? cards.length+1 : 3}}" ng-repeat="card in cards | orderBy:order " ><div vloc-card ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" use-existing-element-type></div></div>
+</div>

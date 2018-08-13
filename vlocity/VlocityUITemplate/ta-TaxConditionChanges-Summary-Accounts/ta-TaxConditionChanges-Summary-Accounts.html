@@ -1,0 +1,14 @@
+<div class="slds-grid slds-grid--pull-padded vlc-slds-small--size-column Accounts">
+    <div class="slds-col">
+        <div ng-if="bpTree.response.Contact.Accounts.length > 0" ng-repeat="account in bpTree.response.Contact.Accounts | filter: { DocumentType: bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange }">
+            <!-- Si no se selecciono, no se mmuestra la siguiente imagen -->
+            <img src="../servlet/servlet.FileDownload?file=0156C000000EaYXQA0&&docName=CABHAHBHA5cc4201df3ae48ffb5be5cb612cc0370" alt="taValidationOK" width="32" height="32" />
+            {{account.Name}}
+        </div>
+        <div ng-if="bpTree.response.Contact.Accounts.length == undefined">
+            <!-- Si no se selecciono, no se mmuestra la siguiente imagen -->
+            <img src="../servlet/servlet.FileDownload?file=0156C000000EaYXQA0&&docName=CABHAHBHA5cc4201df3ae48ffb5be5cb612cc0370" alt="taValidationOK" width="32" height="32" />
+            {{bpTree.response.Contact.Accounts.Name}}
+        </div>
+    </div>
+</div>

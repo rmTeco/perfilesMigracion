@@ -1,0 +1,289 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" 
+   controller="ta_techCare_technical_service_controller" extensions="taOrderController">
+    {!valor}
+    <head>
+        <apex:includeScript value="/soap/ajax/33.0/connection.js" />
+        <apex:includeScript value="/support/console/34.0/integration.js"/>
+        <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+        <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script> -->
+        <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+        <script src="{!$Resource.AngularMomentLocale}"></script>
+        <apex:slds />
+    </head>
+
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="tatechCareTechnicalServiceTechnician">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="TechCare"
+            strOmniScriptSubType="Technical Service - Technician"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('tatechCareTechnicalServiceTechnician', modules);
+
+            myModule
+                .controller('TSModuleCtrl', TSModuleCtrl);
+
+                TSModuleCtrl.$inject = ['$scope', '$timeout'];
+
+            function TSModuleCtrl($scope, $timeout) {
+                var mmc = this;
+                var _scope;
+
+                mmc.init = init;
+                mmc.getURL = getURL;                
+                mmc.addProduct = addProduct;
+                mmc.addItemstoOrder = addItemstoOrder;
+                mmc.createOrder = createOrder;              
+                mmc.validateOrder = validateOrder;
+                mmc.updateItemsInOrder = updateItemsInOrder;
+                mmc.isArray = isArray;
+
+                function init(scope) {
+                    _scope = scope;
+                }
+
+                function addProduct(totalList) {
+                    var i;
+                    var selectionSummary = {};
+
+                    selectionSummary.total = 0;
+                    selectionSummary.Items = [];
+                    
+                    for (i = 0; i < totalList.length; i++) {
+                        if(totalList[i].active) {
+                            if(!totalList[i].WarrantyApplies)
+                                selectionSummary.total += totalList[i].Price;
+
+                            selectionSummary.Items.push(totalList[i]);
+                        }
+                    }
+
+                    if(!$scope.bpTree.response.RepairSelected) {
+                        if(selectionSummary.Items.length > 0) {
+                            $scope.bpTree.response.RepairSelected = true;                       
+                        }
+                    } else if(selectionSummary.Items.length == 0) {
+                        $scope.bpTree.response.RepairSelected = false;                      
+                    }                   
+
+                    return selectionSummary;
+                }
+
+                function validateOrder(IdOrderOld, listItems, AccountId) {
+                    var result;
+                    // console.info("IdOrderOld: ", IdOrderOld);
+                    if(!IdOrderOld) {
+                        createOrder(listItems, AccountId);                      
+                    } else {''
+                        // console.info("Orden existente!");
+                        deleteOrder(IdOrderOld);
+                        createOrder(listItems, AccountId);
+                    }
+                }
+
+                function createOrder(listItems, AccountId) {                                    
+                    // Show spinner
+                    angular.element('.mask.vlc-slds-mask').removeClass('ng-hide');                  
+                    
+                    Visualforce.remoting.Manager.invokeAction(
+                        "ta_techCare_technical_service_controller.CreateOrder",
+                        AccountId,
+                        function(IdOrder, event) {                           
+                            console.info("IdOrderOfCreateOrder", IdOrder);
+                            _scope.bpTree.response.IdBudgetOrder = IdOrder;
+
+                            addItemstoOrder(angular.copy(listItems), IdOrder, function() {
+                                $timeout(function() {
+                                    // console.info('_scope.bpTree.response.OrderCreated',_scope.bpTree.response.OrderCreated );
+                                    _scope.applyCallResp({
+                                        OrderCreated: true
+                                    });
+                                    // console.info('_scope.bpTree.response.OrderCreated',_scope.bpTree.response.OrderCreated );
+                                    angular.element('.mask.vlc-slds-mask').addClass('ng-hide');
+                                },100);
+                            });
+                        },
+                        {escape: false}
+                    );
+                    return result;
+                }
+
+                function addItemstoOrder(remainingItems, IdOrder, callback) {
+                    // console.info("addItemstoOrder");
+                    // console.info("RemainingItems: ", remainingItems.length, remainingItems);
+                    // console.info("Id of order: ", IdOrder);                                  
+
+                    var itemToAdd = remainingItems.shift();
+
+                    console.info("Item: ", itemToAdd);
+
+                    if(itemToAdd){
+
+                        Visualforce.remoting.Manager.invokeAction(
+                            "ta_techCare_technical_service_controller.AddRepairToOrder",
+                            itemToAdd.itemId, IdOrder, itemToAdd.WarrantyApplies,
+                            function(result, event) {                           
+                                console.info("resultOfOrder: ", result);
+                                
+                                if(remainingItems.length) {
+                                    addItemstoOrder(remainingItems, IdOrder, callback);
+                                } else {
+                                    callback();
+                                }
+                            },
+                            {escape: false}
+                        );
+                    } else{
+                        callback();
+                    }
+                }
+
+                function deleteOrder(IdOrder) {
+                    Visualforce.remoting.Manager.invokeAction(
+                        "ta_techCare_technical_service_controller.DeleteOrder",
+                        IdOrder,
+                        function(result, event) {                           
+                            // console.info("result Of Delete Order", result);
+                        },
+                        {escape: false}
+                    );
+                }
+
+                function updateItemsInOrder(IdOrderOld, AccountId, OriginalFirstItems, selectdOrderItems) {
+                    var deleteItemsArray = [];
+                    var addItemsArray = [];
+
+                    // Show spinner
+                    angular.element('.mask.vlc-slds-mask').removeClass('ng-hide');
+                    
+                    // console.info(
+                    //  "IdOrderOld: ",IdOrderOld,
+                    //  " AccountId: ", AccountId,                      
+                    //      " OriginalFirstItems: ", OriginalFirstItems,
+                    //      " selectdOrderItems: ",selectdOrderItems);
+
+
+                    // Find the removed items from the original budget
+                        // *Class*: ta_techCare_technical_service_controller
+                        // *Method*: RemoveItems(List<String> itemsId, String orderId) Array de strings (items Id)
+
+                    for(var i = 0; i < OriginalFirstItems.length; i++) { // Original item
+                        var itemRemaind = false;
+                        for(var j = 0; j < selectdOrderItems.length; j++) { // Selected Items
+                            if(OriginalFirstItems[i].ProductCode == selectdOrderItems[j].productCode) {
+                                itemRemaind = true;
+
+                                // Find the new Items to add to the Order
+                                // var index = addItemsArray.indexOf(selectdOrderItems[j]);
+                                // addItemsArray.splice(index, 1);
+
+                                break;
+                            }
+                        }
+                        if(!itemRemaind) {
+                            deleteItemsArray.push(OriginalFirstItems[i].Id);
+                        }
+                    }
+
+                    // Find the new Items to add to the Order
+
+                    for(j = 0; j < selectdOrderItems.length; j++) { // Selected Items
+                        var addItem = false;
+                        for(i = 0; i < OriginalFirstItems.length; i++) { // Original item
+                            if(selectdOrderItems[j].productCode == OriginalFirstItems[i].ProductCode) {
+                                addItem = true;
+                            }
+                        }                       
+                        if(!addItem) {
+                            addItemsArray.push(selectdOrderItems[j]);
+                        }
+                    }
+
+                    console.info("deleteItemsArray: ", deleteItemsArray);                   
+                    console.info("addItemsArray: ", addItemsArray);
+
+
+                    Visualforce.remoting.Manager.invokeAction(
+                        "ta_techCare_technical_service_controller.RemoveItems",
+                        deleteItemsArray,
+                        IdOrderOld,
+                        function(result, event) {                           
+                            console.info("result Of Delete Items", result);
+
+                            if(result == null || result == false){
+                                
+                                _scope.bpTree.response.OrderUpdateError = true;
+                                _scope.applyCallResp({
+                                    OrderUpdateError: true
+                                }); 
+
+                                angular.element('.mask.vlc-slds-mask').addClass('ng-hide');
+                            } else{
+                            
+                                addItemstoOrder(addItemsArray, IdOrderOld, function() {
+                                    $timeout(function() {
+                                        // console.info('_scope.bpTree.response.OrderCreated',_scope.bpTree.response.OrderCreated );
+                                        _scope.applyCallResp({
+                                            OrderUpdated: true,
+                                            OrderUpdateError: false
+                                        });
+                                        // console.info('_scope.bpTree.response.OrderCreated',_scope.bpTree.response.OrderCreated );
+                                        angular.element('.mask.vlc-slds-mask').addClass('ng-hide');
+                                    },100);
+                                });
+                            }
+                        },
+                        {escape: false}
+                    );               
+                }
+
+                function getURL(bpTreeJson) {
+                    /*var imei = bpTreeJson.Case.Asset.Imei == undefined ? "" : bpTreeJson.Case.Asset.Imei;
+                    var caseNumber = bpTreeJson.Case.CaseNumber == undefined ? "" : bpTreeJson.Case.CaseNumber;
+                    var inputType = bpTreeJson.Case.InputType == undefined ? "" : bpTreeJson.Case.InputType;
+                    var symptom = bpTreeJson.Case.SymptomName == undefined ? "" : bpTreeJson.Case.SymptomName;*/
+                    var caseId = bpTreeJson.Case.Id;
+                    
+                    Visualforce.remoting.Manager.invokeAction(
+                        "ta_techCare_technical_service_controller.getTechnicalCarePDF",
+                        caseId,
+                        function(result, event) {                           
+                            window.open(result, '_blank');
+                        },
+                        {escape: false}
+                    );
+                }
+
+                function isArray(element) {                    
+                    return angular.isArray(element) ? element : [element];
+                }
+            }
+
+            angular
+                .module('tatechCareTechnicalServiceTechnician')
+                .directive('relativeDate', relativeDate);
+            
+            function relativeDate() {
+                return {
+                    template: "{{convertedDate}}",
+                    link: relativeDate_link
+                }
+
+                function relativeDate_link ($scope, $el, $attr) {
+                    moment.locale('es');
+                    // console.info("|"+$attr.relativeDate+"|");
+                    //var parsedDate = $attr.relativeDate;
+                    $scope.convertedDate = moment($attr.relativeDate).fromNow();
+                }
+            }
+
+        </script>
+
+    </div>
+    <vlocity_cmt:VFActionFunction />
+
+</apex:page>

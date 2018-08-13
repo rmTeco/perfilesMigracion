@@ -1,0 +1,1112 @@
+<apex:page controller="SCP_Certa_GC.SCPTabController" sidebar="false" showHeader="true" docType="html-5.0">
+    
+    <apex:includeScript value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'js/JQueryToBS.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'js/bootstrap.min.js')}"/>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUI}"  />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUITouch}" />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__DataTable}"  />
+    
+    <!--<apex:includeScript value="{!$Resource.DataTable11012}"  /> -->
+
+    
+    <!-- Sacado de https://plot.ly/javascript/ -->
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__Ploty}"/>    
+    
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__html2canvas}"/>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__RGBColor}"/>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__Canvg}"/>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__StackBlur}"/>
+    <apex:includeScript value="{!URLFOR($Resource.SCP_Certa_GC__TimeLineJs3, 'js/timeline-min.js')}" />
+    
+    <apex:stylesheet value="{!URLFOR($Resource.SCP_Certa_GC__timelinecss)}"/>
+    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"/>
+    <!--apex:stylesheet value="{!URLFOR($Resource.TimeLineJs3, 'css/timeline.css')}"/-->
+    
+    <script>
+    $j = jQuery.noConflict();
+    
+    window.onload = function() {
+        //load '../path/to/your.svg' in the canvas with id = 'canvas'
+        //canvg();
+    }
+    
+    $j(document).ready(function() {
+        
+        iniciarDataTable();
+        
+        $j('#myModal').on('shown.bs.modal', function () {
+            $j('body').animate({ scrollTop: 25 }, 400);
+        });
+        
+        $j(window).on("resize", function () {
+            ajustarTamanio();
+        }).resize(); 
+
+        colorearLineaDeTiempo();
+        
+        $j(".removeSpan").on("click",function(){
+            $j("input",$j("#value"+$j(this).attr("id"))).val("");
+            $j("select",$j("#field"+$j(this).attr("id"))).val("ninguno").change();
+            $j("select",$j("#operator"+$j(this).attr("id"))).val("ninguno").change();
+        });
+        
+        verFiltros($j("select",$j("#field1Span")));
+        
+        $j("select",$j("#field1Span")).change(function(){
+            verFiltros($j(this));  
+        });
+        
+    });
+    
+    function verFiltros(elem){
+        if(elem.val() === 'true'){
+            $j(".filtrosSiBuscaConFourPlanning").fadeIn();
+        }else{
+            $j(".filtrosSiBuscaConFourPlanning").fadeOut();
+        }
+    }
+    
+    
+    
+    function marcarTodas(elem, tabla){
+        
+        var valores = document.getElementsByClassName(tabla);
+        var i;
+        
+        for(i = 0; i< valores.length; i++){
+            
+            if(elem.checked){
+                valores[i].checked = true;
+                
+            } else {
+                valores[i].checked = false;
+            }
+        }
+    }
+	
+	function inputLookupUsuario(){
+        $j('.inputLookupUsuario').val('');
+    	}
+    
+    function ajustarTamanio(){
+        var WidthGraficos = $j('#bodyTable').width();
+        
+        var margenIzquierdo = 200 - ($j('#barraSeparadoraDeGraficos').width()/2);
+        
+        margenIzquierdo = margenIzquierdo * -1;
+        
+        $j('.svg-container').css("margin-left",margenIzquierdo);
+        
+    }
+    
+    var ids = [];
+    
+    function cambiarTexto(Id, idCuenta){
+
+		var texto = document.getElementById(Id).value;
+        
+		
+        
+        if(texto == '{!$Label.excluir_del_gr_fico}'){
+            document.getElementById(Id).value = "{!$Label.Incluir_al_gr_fico}";
+            ids.push(idCuenta);
+        }else{
+            document.getElementById(Id).value = "{!$Label.excluir_del_gr_fico}";
+            var index = ids.indexOf(idCuenta);
+            ids.splice(index,1);
+        }
+        console.log(ids);
+        ajustarTamanio();
+    }
+    
+    function ajustarTextoExcluir(){
+        console.log(ids);
+        console.log($j('.botonDeLaTabla'));
+        
+        $j('.botonDeLaTabla').each(
+            function(index,value){
+                for(var i=0; i < ids.length; i++){
+                    console.log($j(this));
+                    console.log(ids[i]);
+                    if($j(this).hasClass(ids[i])){
+                        console.log('entre');
+                        document.getElementById($j(this).attr('id')).value = "{!$Label.Incluir_al_gr_fico}";
+                    } 
+                }
+            });
+    }
+   
+    
+    function colorearLineaDeTiempo(){
+        $j('h2').each(function() {
+            
+            var contenido = $j(this).text();
+            
+            var parent = $j(this).parent().parent().parent();
+            if(parent.hasClass("tl-timemarker-content-container")){
+                parent.addClass("colorBlanco");
+            }
+            
+            if(contenido == 'Reto' || contenido == '{!$Label.Reto}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorReto");
+                }
+            }
+            
+            if(contenido == 'Vencimiento' || contenido == '{!$Label.Venicmiento_Contrato_Nosotros}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorVencimiento");
+                }
+            }
+            
+            if(contenido == 'Vencimiento Contrato Activo con la Competencia' ){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("colorVencimientoCompetencia");
+                }
+            }
+            
+            if(contenido == 'Publicación RFP Comunicaciones' || contenido == '{!$Label.Publicaci_n_RFP_Comunicaciones}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("RFPComunicaciones");
+                }
+            }
+            
+            if(contenido == 'Publicación RFP TI' || contenido == '{!$Label.Publicaci_n_RFP_TI}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("RFPTI");
+                }
+            }
+            
+            if(contenido == 'Evento para clientes de Telefonica' || contenido == 'Evento Telefónica' || contenido == '{!$Label.Evento_Clientes}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("clientes");
+                }
+            }
+            
+            if(contenido == 'Evento Relevante de la industria' || contenido == '{!$Label.Evento_Relevante_de_la_industria}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("eventoRelevante");
+                }
+            }
+            
+            if(contenido == '{!$Label.Vencimiento_Contrato_Servicio}'){
+                var parent = $j(this).parent().parent().parent();
+                if(parent.hasClass("tl-timemarker-content-container")){
+                    parent.addClass("topTres");
+                }
+            }
+            
+        });
+        
+        ajustarTamanio();
+    }
+    
+    </script>
+    
+    <style>
+        table.dataTable thead .sorting {
+        background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_both.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_asc {
+        background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_desc {
+        background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_asc_disabled {
+        background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc_disabled.png')}") no-repeat center right ! important;
+        }
+        table.dataTable thead .sorting_desc_disabled {
+        background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc_disabled.png')}") no-repeat center right ! important;
+        }
+        
+        table.dataTable thead .sorting_asc,
+        table.dataTable thead .sorting_desc,
+        table.dataTable thead .sorting {
+        cursor: pointer;
+        *cursor: hand;
+        }
+        
+        .dataTables_filter {
+        text-align: right ! important;
+        padding-right: 15px ! important;
+        }
+        
+        .abbrTd div {
+        width: 200px;
+        }
+        
+        .bootstrap-sf1 * {
+        font-family:  Calibri, ProximaNovaSoft-Regular, 'Helvetica Neue', 'Gill Sans', 'Gill Sans MT', Candara, Segoe, 'Segoe UI', Arial, sans-serif;
+        //background-color: white; 
+        }
+        
+        .paddingRight {
+        padding-right: 15px;
+        }
+        
+        .inlineEditUndo {
+        display: none;
+        }
+        
+        .inlineEditWriteOn {
+        background: rgba(0, 0, 0, 0) url("/img/func_icons/util/pencil12.gif") no-repeat scroll right 2px;		    
+        }
+        
+        .PopupHolderOpp {
+        float:right;
+        margin-right: 6px;
+        margin: 5px;
+        cursor: pointer;
+        }
+        
+        .PopupHolderOpp *{
+        box-sizing: content-box ! important;
+        }
+        
+        .pbSubheader h3 {
+        display: inline;
+        margin-left: 5px;
+        font-weight: bold;
+        }
+        
+        .PopupHolderOpp .pbHeader {
+        border:0px;
+        border-top: 3px solid #f3ae4e !important;
+        }
+        
+        .PopupHolderOpp .pbHeader .mainTitle {
+        font-size: 18px !important;
+        font-weight: bold !important;	
+        }
+        
+        .PopupHolderOpp .pbBody .labelCol {
+        font-size: 16px !important;
+        font-weight: bold !important;	
+        }
+        
+        .PopupHolderOpp .pbBody .dataCol {
+        font-size: 16px !important;
+        font-weight: normal !important;
+        }
+        
+        .abbrTd span {
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap; 
+        display: inline-block;
+        }
+        
+        .abbrOpp {
+        width: 60px;
+        overflow: hidden;
+        display: inline-flex;
+        }
+        
+        .PopupHolder {
+        float:left;
+        margin-right: 6px;
+        }
+        
+        .NotUsed{
+        background-color: #FF2D2D ! important;
+        }
+        
+        .hasPotentialBussiness {
+        background-color: #3796F7 ! important;    
+        }
+        
+        .hasOpportunity {
+        background-color: #128E2C  ! important;        
+        }
+        
+        .vendidoEnElPasado{
+        background-color: #FFC200 ! important;
+        }
+        
+        .noAplica{
+        background-color: #808080 ! important;
+        }
+        
+        .hasOpportunityAndPotencial{
+        background: #3796F7 ; 
+        background-color:  #128E2C ! important;
+        }
+        
+        .NotUsedSampleText, .hasPotentialBussinessSampleText, .hasOpportunitySampleText {
+        /*font-weight:bold;  margin:10px*/
+        font-size:14px;
+        }
+        
+        .NotUsedSample, .hasPotentialBussinessSample, .hasOpportunitySample {
+        /*border: 1px solid black;*/    
+        width: 20px;
+        height: 20px;
+        /*line-height: 30px;*/    
+        }
+        
+        .NotUsedSampleText {    
+        color: white ! important;
+        color: #2d839a ! important;
+        }
+        .NotUsedSample {    		    
+        background-color: #FF2D2D ! important;		    
+        }
+        
+        .hasPotentialBussinessSampleText {    
+        color: #1797c0 ! important;
+        color: #2d839a ! important;
+        }
+        .hasPotentialBussinessSample {    		    
+        background-color: #3796F7 ! important;        	
+        }
+        
+        .hasOpportunitySampleText {    
+        color: #FEE ! important;
+        color: #2d839a ! important;
+        } 
+        
+        .hasOpportunitySample {
+        background-color: #128E2C ! important;       	
+        }
+        
+        .ScrollingDiv{
+        overflow-y:auto;
+        overflow-x: auto;
+        max-height:300px;
+        /*max-width: 800px;*/
+        }
+        
+        .AddPopup {
+        position: absolute;
+        margin-top: 14px;
+        padding: 5px;
+        background-color: #eee;
+        border: 1px solid black;
+        width: 100px;
+        white-space: normal;
+        min-height: 14px;
+        margin-left: -43px;
+        border-radius: 3px;
+        display:none;
+        }
+        
+        .ui-state-hover{
+        background-color: lightgreen ! important;
+        }
+        
+        .ui-draggable-dragging{
+        background-color: white;
+        border: 1px solid gray;
+        }
+        
+        .ui-draggable-dragging>td{
+        padding-left: 4px;
+        padding-right: 2px;
+        }
+        
+        .ui-draggable-dragging>.TdName, .ui-draggable-dragging>.TdLink{
+        display:none;
+        }
+        
+        .DraggableRow{
+        cursor:move;
+        }
+        
+        .PopupHolder{
+        float:right;
+        margin-right: 6px;
+        margin: 5px;
+        }
+        
+        .PopupHolder *{
+        box-sizing: content-box;
+        }
+        
+        #mainTable th, #mainOppsTable th{
+        padding-right: 15px;
+        }
+        
+        .dataTables_filter {
+        text-align: right ! important;
+        padding-right: 15px ! important;
+        } 
+        
+        .label-link a {
+        color: white;
+        }
+        
+        .removeSpan {
+        cursor: pointer;
+        text-decoration: underline;
+        }
+        
+        .filterHelpImage {
+        width: 20px;
+        height: 20px;
+        background: url('/img/help/helpOrbs.gif');
+        background-size: 55px 20px;
+        background-repeat: no-repeat;
+        background-position: -30px 0px;
+        cursor: pointer; 
+        }
+        
+        #filterDiv select {
+        width: 120px;
+        }
+        
+        #filterDiv input {
+        width: 120px;
+        }
+        
+        #mainTableSolutions td.itemSelected {
+        border: 2px solid #539fc6;
+        border-style:double;
+        }
+        
+        .hiddenTable {
+        //display: none;
+        }
+        
+        .solucionItems{
+        padding:inherit;
+        }
+        
+        div.divS{
+        border: 2px solid #539fc6 !important;
+        }
+        
+        div.bordesSinColor{
+        border: 2px solid #FFFFFF;
+        margin: 1% 0% 1% 0%;
+        }
+        
+        .filtrosSiBuscaConFourPlanning{
+        display: none;
+        }
+        
+        .modebar{
+        display:none;
+        }
+        
+        .colorVencimiento{
+        background-color:red !important;
+        }
+        
+        .colorVencimientoCompetencia{
+        background-color:hsla(132,100%,55%,1) !important;
+        }
+		
+        .colorBlanco{
+        background-color: white !important;
+        }
+        
+        .colorVencimientoSecundario{
+        background-color:hsla(132,100%,55%,1) !important;
+        }
+        
+        .RFPComunicaciones{
+        background-color:hsla(273,100%,66%,1) !important;
+        }
+        
+        .RFPTI{
+        background-color:hsla(30,100%,50%,1) !important;
+        }
+        
+        .clientes{
+        background-color:hsla(359,100%,75%,1) !important;
+        }
+        
+        .eventoRelevante{
+        background-color:hsl(218, 100%, 75%) !important;
+        }
+        
+        .topTres{
+        background-color:hsla(57,100%,69%,1) !important;
+        }
+        
+        .colorReto{
+        background-color:hsla(154,98%,39%,1) !important;
+        }
+        
+        .colorOtros{
+        background-color: white !important;
+        }
+        
+        .colorSpanReferencias{
+        background-color: #d9edf2;
+        }
+        
+        .separador{
+        border: solid 0.5px #edeff0;
+        }
+        
+        .tl-attribution{
+        display:none !important;
+        }
+        /*
+        .svg-container{
+        width: 50% !important;
+        margin: 0 auto !important;
+        } */
+        
+        .modal-dialog{
+        overflow-y: initial !important
+        }
+        .modal-body{
+        height: 250px;
+        overflow-y: auto;
+        }
+        
+        .main-svg{
+        background-color: transparent !important;
+        }
+        
+    </style>
+    
+    <apex:stylesheet value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'css/bootstrap-namespaced.min.css')}"/>	 
+    <apex:stylesheet value="{!URLFOR($Resource.SCP_Certa_GC__bootstrapSF, 'css/BSCustomSyles.css')}"/>
+    
+    <link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"/>
+    
+    <apex:form id="pageForm">
+        <apex:actionFunction action="{!establecerValoresDeLaLineaDeTiempo}" oncomplete="colorearLineaDeTiempo();iniciarDataTable();" name="renderizarLineaDeTiempoConDatosActuales" rerender="listaDeClientes, timeLine, panelesDeLineaDeTiempo, filtrosDeLineTime, imagenes" />
+        
+        <!--<div class="bPageTitle">
+            <div class="ptBody">
+                <div class="content" style="width:100%">
+                    <apex:image id="theImage" value="{!$Resource.SCP_Certa_GC__logoSCP}" height="100" style="display: block;margin-left: auto;margin-right: auto;margin-top: 1px"/>
+                </div>
+            </div>
+        </div>-->
+        
+        
+        <!-- Graficos Ploty -->
+        <!-- primer Grafico, coeficiente de desarrollo de territorio -->
+        
+        <div style="border: solid 1px #1690b7;"></div>
+        <div id="linea-izquierda" style="width: 2px;
+                                         height: 535px;
+                                         position: absolute;
+                                         background-color: #1690b7;"></div>
+        <div id="graficos">
+            
+            <apex:outputPanel id="graficosARenderizar">
+                
+                
+                <!-- segundo grafico promedio simple -->
+                
+                <div id="promedioSimple" style="width:422px;height: 450px; margin-bottom: -180px;position:relative;z-index:0;"></div>
+                
+                <script>
+                // Enter a speed between 0 and 180
+                var level = 175;
+                
+                // Trig to calc meter point.
+                //{!conocimientoTerritorio}
+                
+                var conocimiento = {!conocimientoTerritorio};
+                if(conocimiento > 49.2 && conocimiento <= 50){
+                	conocimiento = 49.1;
+                }
+                if(conocimiento > 50 && conocimiento < 50.8){
+                	conocimiento = 51;
+                }
+                
+                var degrees = ((100-conocimiento)*90)/50,
+                    radius = .5;
+                var radians = degrees * Math.PI / 180;
+                var x = radius * Math.cos(radians);
+                var y = radius * Math.sin(radians);
+                
+                // Path: may have to change to create a better triangle
+                var mainPath = 'M -.0 -0.025 L .0 0.025 L ',
+                    pathX = String(x),
+                    space = ' ',
+                    pathY = String(y),
+                    pathEnd = ' Z';
+                var path = mainPath.concat(pathX,space,pathY,pathEnd);
+                
+                var data = [{ type: 'scatter',
+                             x: [0], y:[0],
+                             marker: {size: 28, color:'850000'},
+                             showlegend: false,
+                             name: '%',
+                             text: {!conocimientoTerritorio},//level,
+                             hoverinfo: 'text+name'},
+                            { values: [50/4, 50/4, 50/4, 50/4, 50],
+                             rotation: 90,
+                             text: ['75-100 %', '50-75 %', '25-50 %', '0-25 %', ''],
+                             textinfo: 'text',
+                             textposition:'inside',
+                             marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
+                                              'rgba(221, 232, 0, .5)', 'rgba(204, 0, 0, .5)', 'rgba(255, 255, 255, 0.1)']},
+                             labels: ['75-100 %', '50-75 %', '25-50 %', '0-25 %','Coeficiente de desarrollo de territorio'],
+                             hoverinfo: 'label',
+                             hole: .5,
+                             type: 'pie',
+                             showlegend: false
+                            }];
+                
+                var layout = {
+                    shapes:[{
+                        type: 'path',
+                        path: path,
+                        fillcolor: '850000',
+                        line: {
+                            color: '850000'
+                        }
+                    }],
+                    title: '{!$Label.Conocimiento_del_Territorio}',
+                    height: 400,
+                    width: 400,
+                    xaxis: {zeroline:false, showticklabels:false,
+                            showgrid: false, range: [-1, 1],fixedrange: true},
+                    yaxis: {zeroline:false, showticklabels:false,
+                            showgrid: false, range: [-1, 1],fixedrange: true}
+                };
+                
+                Plotly.newPlot('promedioSimple', data, layout, {displayModeBar: true, displaylogo: false, showlegend: false, modeBarButtonsToRemove: ['resetScale2d','hoverClosestCartesian','zoomOut2d','zoomIn2d','pan2d','toImage','sendDataToCloud','zoom2d','select2d','lasso2d','hoverClosestCartesian','hoverCompareCartesian','autoScale2d'] });
+                </script>
+                
+                <!-- tercer grafico promedio de cuentas con fourPlanning creados -->
+                
+                <div id="barraSeparadoraDeGraficos" style="border: solid #1690b7 1px;
+                                                           width: 25%;
+                                                           margin-top: -2%;
+                                                           margin-left: 0%;
+                                                           z-index: 0;
+                                                           position: relative;"></div>
+                
+                <div id="promedioDe4PlanningCreados" style="width:422px;height: 450px; margin-bottom: -180px;position:relative;z-index:0;"></div>
+                
+                <script>
+                // Enter a speed between 0 and 180
+                var level = 175;
+                
+                // Trig to calc meter point
+                var conocimiento = {!porcentajeSegundoGrafico};
+                if(conocimiento > 49.2 && conocimiento <= 50){
+                    conocimiento = 49.1;
+                }
+                if(conocimiento > 50 && conocimiento < 50.8){
+                    conocimiento = 51;
+                }
+                
+                var degrees = ((100-conocimiento)*90)/50,
+                    radius = .5;
+                var radians = degrees * Math.PI / 180;
+                var x = radius * Math.cos(radians);
+                var y = radius * Math.sin(radians);
+                
+                // Path: may have to change to create a better triangle
+                var mainPath = 'M -.0 -0.025 L .0 0.025 L ',
+                    pathX = String(x),
+                    space = ' ',
+                    pathY = String(y),
+                    pathEnd = ' Z';
+                var path = mainPath.concat(pathX,space,pathY,pathEnd);
+                
+                var data = [{ type: 'scatter',
+                             x: [0], y:[0],
+                             marker: {size: 28, color:'850000'},
+                             showlegend: false,
+                             name: '%',
+                             text: {!porcentajeSegundoGrafico},//level,
+                             hoverinfo: 'text+name'},
+                            { values: [50/4, 50/4, 50/4, 50/4, 50],
+                             rotation: 90,
+                             text: ['75-100 %', '50-75 %', '25-50 %', '0-25 %', ''],
+                             textinfo: 'text',
+                             textposition:'inside',
+                             marker: {colors:['rgba(14, 127, 0, .5)', 'rgba(110, 154, 22, .5)',
+                                              'rgba(221, 232, 0, .5)', 'rgba(204, 0, 0, .5)', 'rgba(255, 255, 255, 0.1)']},
+                             labels: ['75-100 %', '50-75 %', '25-50 %', '0-25 %','Coeficiente de desarrollo de territorio'],
+                             hoverinfo: 'label',
+                             hole: .5,
+                             type: 'pie',
+                             showlegend: false
+                            }];
+                
+                var layout = {
+                    shapes:[{
+                        type: 'path',
+                        path: path,
+                        fillcolor: '850000',
+                        line: {
+                            color: '850000'
+                        }
+                    }],
+                    title: '{!$Label.Indice_de_actividad}',
+                    height: 400,
+                    width: 400,
+                    xaxis: {zeroline:false, showticklabels:false,
+                            showgrid: false, range: [-1, 1],fixedrange: true},
+                    yaxis: {zeroline:false, showticklabels:false,
+                            showgrid: false, range: [-1, 1],fixedrange: true}
+                };
+                
+                Plotly.newPlot('promedioDe4PlanningCreados', data, layout, {displayModeBar: true, displaylogo: false, showlegend: false, modeBarButtonsToRemove: ['resetScale2d','hoverClosestCartesian','zoomOut2d','zoomIn2d','pan2d','toImage','sendDataToCloud','zoom2d','select2d','lasso2d','hoverClosestCartesian','hoverCompareCartesian','autoScale2d'] });
+                </script>
+            </apex:outputPanel>
+        </div>
+        <!-- FIN GRAFICOS -->
+        
+        <!-- Tabla de clientes -->
+        <apex:outputpanel style="background-color:white;z-index:1;position:relative" styleClass="container-fluid bootstrap-sf1" id="Content">
+            
+            <!-- FILTROS -->
+            
+			
+            
+            <br/>
+            <div id="tablayfiltros" style="height: 535px; width: 75%;margin-left: 25%;margin-top:-562px;border-left: solid 2px #1690b7;padding-left: 1%;border-left: solid 2px #1690b7;
+                                           border-right: solid 2px #1690b7;padding-right: 1%;">
+						
+                <div class="bPageTitle">
+                    <div class="ptBody">
+                        <div class="content" style="width:100%">
+                            <apex:image id="theImage" value="{!$Resource.SCP_Certa_GC__logoSCP}" height="70" style="display: block;margin-left: auto;margin-right: auto;margin-top: 1px"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <br/>
+                
+                <div id="filterDiv">
+                    
+                    <apex:outputPanel id="filtros">
+                        <!-- filtrar por nombre -->
+                        <apex:outputText style="width:12%" value="{!$Label.scp_certa_gc__nombre_de_la_cuenta}:  " />
+                        <apex:input value="{!filtroDeNombre}" />
+                        
+                       
+                        
+                        
+                        
+                        <!--<br/>
+                        <div style="width: 10px;height: 5px"></div>
+                        <br/>-->
+                        
+                         &nbsp;
+                        &nbsp;
+                        
+                        <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+                            <span class="glyphicon glyphicon-filter"></span>&nbsp;{!$Label.Filtrar_por_Cliente}
+                        </button>
+                        
+                        
+                        &nbsp;
+                        &nbsp;
+                        
+                        
+                        <apex:commandButton styleClass="btn btn-default btn-xs" action="{!filtrar}" value="{!$Label.scp_certa_gc__obtener_cuentas}" id="theButton" oncomplete="colorearLineaDeTiempo();" rerender="listaDeClientes, timeLine, panelesDeLineaDeTiempo, filtrosDeLineTime, imagenes, graficosARenderizar" status="filtrarClientesStatus" />
+                        
+                        
+                        
+                        
+                        
+                        <apex:actionStatus id="filtrarClientesStatus">
+                            <apex:facet name="start">
+                                <img src="/img/loading.gif"/>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        <!-- oncomplete="createDataTableSerch()"/ -->
+                        
+                    </apex:outputPanel>
+                </div>
+                <!-- fin filtros -->
+                
+                <br/><br/>
+                
+                <!-- tabla de clientes -->
+                <apex:outputPanel style="background-color: white" id="listaDeClientes">
+                    
+                    
+                    <span style="float: left;font-weight: bold;">{!$Label.Cuentas}</span>
+                    <table id="mainOppsTable" class="table table-striped table-bordered table-condensed dataTablePrincipal" style="width: 100%;">
+                        <thead>
+                            <tr class="headerRow">                              
+                                <th scope="col" class=" deemphasize" style="vertical-align:top;">{!$Label.Nombre_de_la_Cuenta}</th>
+                                <th>{!$Label.Propietario}</th>
+                                <th>{!$Label.Detalle_de_Cuenta}</th>
+                               <!-- <th></th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <apex:repeat value="{!CuentasSetController}" var="yuyu" id="necesidadSectorial">
+                                <tr>
+                                    <td class="dataCell">
+                                        {!yuyu.name}
+                                    </td>
+                                    <td>
+                                        {!yuyu.owner.name}
+                                    </td>
+                                    <td>
+                                        <apex:outputLink value="/{!yuyu.id}"  >{!$Label.scp_certa_gc__ir_detalle_cuenta}</apex:outputLink>
+                                    </td>
+                                   <!-- <td>
+                                        
+                                        <apex:commandButton styleClass="btn btn-default btn-xs {!yuyu.id} botonDeLaTabla" value="{!$Label.scp_telecom__excluir_del_gr_fico}" reRender="imagenes, graficosARenderizar" onclick="cambiarTexto(this.id, '{!yuyu.id}');" oncomplete="ajustarTamanio();" action="{!sacarDelGrafico}">
+                                            <apex:param assignTo="{!cuentaASacarDelGrafico}" name="delid" value="{!yuyu.id}"/>
+                                        </apex:commandButton>
+                                        
+                                    </td>-->
+                                </tr>
+                            </apex:repeat>
+                            
+                        </tbody>
+                    </table>
+                    
+                    <div class="btn-group pull-right" role="group" aria-label="...">
+                        <b>{!$Label.Pagina}: {!setCuentas.pageNumber} {!$Label.de} {!IF(MOD(setCuentas.resultSize,6)>0,FLOOR(setCuentas.resultSize/6)+1,FLOOR(setCuentas.resultSize/6))} &nbsp;</b>    
+                        <div class="btn-group pull-right" role="group" aria-label="...">
+                            <apex:commandButton disabled="{!!setCuentas.hasPrevious}" oncomplete="renderizarLineaDeTiempoConDatosActuales(); ajustarTextoExcluir();" styleClass="btn btn-default btn-xs" action="{!obtenerPrimerPagina}" value="{!$Label.scp_certa_gc__primera}" id="Primera"  rerender="filtrosDeLineTime" status="cambiarDePagina"/>
+                            <apex:commandButton disabled="{!!setCuentas.hasPrevious}" oncomplete="renderizarLineaDeTiempoConDatosActuales(); ajustarTextoExcluir();" styleClass="btn btn-default btn-xs" action="{!obtenerAnterior}" value="{!$Label.scp_certa_gc__anterior}" id="anterior"  rerender="filtrosDeLineTime" status="cambiarDePagina"/>
+                            <apex:commandButton disabled="{!!setCuentas.hasNext}"  oncomplete="renderizarLineaDeTiempoConDatosActuales(); ajustarTextoExcluir();" styleClass="btn btn-default btn-xs" action="{!obtenerSiguiente}" value="{!$Label.scp_certa_gc__siguiente}" id="siguiente"  rerender="filtrosDeLineTime" status="cambiarDePagina"/>
+                            <apex:commandButton disabled="{!!setCuentas.hasNext}" oncomplete="renderizarLineaDeTiempoConDatosActuales(); ajustarTextoExcluir();" styleClass="btn btn-default btn-xs" action="{!obtenerUltimaPagina}" value="{!$Label.scp_certa_gc__ultima}" id="Ultima"  rerender="filtrosDeLineTime" status="cambiarDePagina" />
+                        </div>
+                    </div>
+                    
+                    <apex:actionStatus id="cambiarDePagina" styleClass="pull-right">
+                        <apex:facet name="start">
+                            <img src="/img/loading.gif"/>
+                        </apex:facet>
+                    </apex:actionStatus>
+                    <br/>
+                    
+                </apex:outputPanel>
+                
+                <script>
+                function iniciarDataTable(){
+                    
+                    $j('#mainOppsTable').DataTable({
+                        "bFilter": false,
+                        "searching": false,
+                        "bPaginate": false,        
+                        "bInfo": false,
+                        "columns": [
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            { "width": "13%" },
+                            { "width": "13%" },
+                        ],
+                            "language": {
+                            "search": "Buscar ",
+                            "sEmptyTable": "{!$Label.No_hay_cuentas_cargadas}",
+                            "zeroRecords": "{!$Label.No_hay_cuentas_criterio}"
+                            }
+                            });
+                            
+                            }
+                            </script>
+                <!-- FIN TABLA CLIENTES-->
+                <br/><br/><br/>
+            </div>
+            
+            
+            
+            
+            
+            
+           <!-- Modal filtro usr -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="z-index:9999;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">{!$Label.Filtrar_por_Cliente}</h4>
+                        </div>
+                        
+                        <div class="modal-body">
+                            
+                            
+                            <table style="border-collapse: separate;border-spacing: 5px;width:80%;margin-left: 10%;">
+                               <tr>
+                                <td>
+                                <apex:outputPanel id="gas"> 
+                               {!$Label.User_Region}: &nbsp; &nbsp; <apex:inputField id="inputLookUpUsuario" value="{!filtro.SCP_Certa_GC__UsuarioFiltro__c}"  />
+                                </apex:outputPanel>
+                                <!--<button type="button" styleClass="inputLookupUsuario" class="btn btn-default btn-sm agregarButton" action="agrego()" oncomplete="inputLookUpUsuario();" reRender = "tabla" >
+                           		 <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;Agregar
+                        			</button>-->
+                                
+                                 &nbsp; &nbsp;
+                                
+                                
+                                
+                                <apex:commandButton styleClass="btn btn-default btn-sm" action="{!agrego}" value="{!$Label.scp_certa_gc__add}" oncomplete="inputLookUpUsuario();" reRender="tabla, gas" />
+                                
+                                <br/>
+                                <br/>
+                                
+                                </td>
+                                </tr>
+                                <tr>
+                                 <td>   
+                                <apex:outputPanel id="tabla">
+                                    <table class="table table-striped table-bordered table-condensed"> 
+                                       
+                                            <thead>
+                                                <tr>
+                                                    <th>{!$Label.scp_certa_gc__name}</th>
+                                                    <th style="text-align: center;">{!$Label.scp_certa_gc__seleccionado}</th> 
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                               <apex:repeat value="{!usersWpp}" var="usr" rows="900" rendered="{!usuariosDelFiltro.size > 0}" >  
+                                                <tr>
+                                                    <td >
+                                                        {!usr.nombre} &nbsp; &nbsp;
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <apex:inputCheckBox value="{!usr.eliminar}" />                                                            
+                                                    </td>
+                                                   </tr>
+                                                   
+                                                   
+                                                </apex:repeat>
+                                        </tbody>
+                                        
+                                        
+                                    </table> 
+                                    
+                                     </apex:outputPanel> 
+                                    </td></tr>
+                            </table>  
+                            
+                        </div>
+                        
+                            
+                        
+                        <div class="modal-footer">
+                            <!--<button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>-->
+                            <apex:commandButton styleClass="btn btn-default btn-sm" action="{!borrar}" value="{!$Label.scp_certa_gc__eliminar_marcados}" reRender="tabla"  />
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">{!$Label.Aceptar}</button>
+                            
+                            
+                        </div>
+                          
+                            
+                    </div>
+                </div>
+            </div>
+     
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <div style="border: solid 1px #1690b7;"></div>
+            
+            <h3 style="font-size: 22px;font-weight: 700;">
+                Timeline
+            </h3>
+            <!-- linea de tiempo --> 
+            <br/>
+            
+            <apex:outputPanel id="filtrosDeLineTime">
+                <div class="alert alert-info" role="alert">	
+                    <span class="glyphicon glyphicon-info-sign"></span>	    				
+                    <span class="messageText colorSpanReferencias"><span class="colorSpanReferencias" style="font-weight:bold;  margin:5px">{!$Label.Asignacion_de_Eventos}</span>
+                        <span class="colorSpanReferencias" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <span class="colorSpanReferencias">{!$Label.Todos}</span>&nbsp;<apex:inputCheckbox styleClass="todos" value="{!todos}" onclick="marcarTodas(this, 'checkboxFiltroTimeLine')" /><br/>
+                        
+                        <div class="row">
+                            <div class= "col-md-4 colorSpanReferencias">
+                                <span class="colorVencimiento" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Vencimiento}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroVencimiento}" /><br/>
+                                <!--
+                                <span class="colorReto" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Reto}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroEventosDeTipoReto}" /><br/>
+								-->
+								<span class="topTres" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Vencimiento_Contrato_Servicio}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroPrevisionTOP3}" /><br/>                                
+								<span class="colorVencimientoSecundario" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Vencimiento_Contrato_Activo_con_la_Competencia}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroVencimientoCompetencia}" /><br/>
+                            </div>
+                            
+                            <div class= "col-md-4 colorSpanReferencias"> 
+                                <span class="eventoRelevante" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Evento_Relevante_de_la_industria}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroEventoIndustria}" /><br/>
+                                <span class="RFPTI" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Publicaci_n_RFP_TI}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroPublicacionRFPTI}" /><br/> 
+                                <span class="clientes" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Evento_Clientes}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroEventoTelefonica}" /><br/> 
+                            </div>
+                            
+                            <div class= "col-md-4 colorSpanReferencias">
+                                <span class="RFPComunicaciones" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Publicaci_n_RFP_Comunicaciones}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroPublicacionRFPComunicacion}" /><br/>
+                                <span class="colorOtros" style="margin-left:3px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <span class="colorSpanReferencias">{!$Label.Otros}</span>&nbsp;<apex:inputCheckbox styleClass="checkboxFiltroTimeLine" value="{!filtroOtroTipoDeEvento}" /><br/>
+                            </div>
+                        </div>
+                        
+                    </span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:commandButton styleClass="btn btn-default btn-xs " action="{!filtrarTimeLine}" value="{!$Label.scp_certa_gc__apply_filters}" rerender="panelesDeLineaDeTiempo, timeLine, filtrosDeLineTime" oncomplete="colorearLineaDeTiempo();" status="filtrarTimeLineStatus" />
+            
+            <apex:actionStatus id="filtrarTimeLineStatus">
+                <apex:facet name="start">
+                    <img src="/img/loading.gif"/>
+                </apex:facet>
+            </apex:actionStatus>
+            
+            <br/>
+            
+            <apex:outputPanel id="panelesDeLineaDeTiempo"> 
+                <apex:outputPanel rendered="{! !mostrarLineaDeTiempo}">
+                    <br/>
+                    <div style = "width: 98%;" class="center-block alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                        {!$Label.No_Eventos_Cuentas}
+                    </div>
+                    
+                </apex:outputPanel>
+                
+                <apex:outputPanel id="timeLine" rendered="{!mostrarLineaDeTiempo}">
+                    <div id='timeline-embed' style="width: 100%; height: 430px"></div>
+                    <script type="text/javascript">
+                    
+                    var timeline_json = {!miJson};
+                    
+                    var options = {
+                        hash_bookmark: false,
+                        language: "es",
+                        scale_factor: -50,
+                        start_at_slide: 1,
+                        initial_zoom: 1
+                    }
+                    
+                    window.timeline = new TL.Timeline('timeline-embed',
+                                                      timeline_json, options);
+                    window.timeline.setZoom(0); 
+                    </script>
+                </apex:outputPanel>
+            </apex:outputPanel>
+
+            
+        </apex:outputpanel>
+        
+    </apex:form>
+</apex:page>

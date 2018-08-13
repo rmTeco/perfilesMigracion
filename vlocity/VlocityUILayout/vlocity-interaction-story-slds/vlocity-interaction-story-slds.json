@@ -1,0 +1,42 @@
+{
+    "Cards": [
+        "Campaign Story",
+        "Case Story",
+        "Claim Story",
+        "Event Story",
+        "Non Held Policy Story",
+        "Note Story",
+        "Opportunity Story",
+        "Policy Story",
+        "Saved OmniScript Story",
+        "Task Story"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "attrs.contextId",
+                "val": "00141000005MbhP"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "Stories",
+            "apexRestResultVar": "Stories",
+            "endpoint": "/%vlocity_namespace%/v1/story/{{attrs.contextId}}?pageSize={{pageSize}}",
+            "inputMap": {
+                "pageSize": "3",
+                "storyId": "{{attrs.contextId}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "StoryListHandler",
+            "remoteMethod": "getStories",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "Stories"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "story-card-canvas"
+        }
+    }
+}

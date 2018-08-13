@@ -1,0 +1,20 @@
+<div class="ta-care-omniscript-done" ng-controller="NewCaseTabCtrl as ctrl" ng-init="ctrl.init()">
+    <slds-svg-icon
+        sprite="'action'"
+        icon="'info'"
+        size="'large'" 
+        no-hint="true"
+        extra-classes="'ta-care-omniscript-pending-icon'">
+    </slds-svg-icon>
+    <header>
+        <h1>{{bpTree.response.process.resultMessage}}</h1>
+        <a href="#"
+            class="slds-text-link ta-care-link"
+            ng-click="ctrl.openTab()"><h2>{{bpTree.response.CaseNumberFound.CaseNumber}}</h2></a>
+     
+        <p ng-if="bpTree.response.process.aditionalMessage">
+            <label class="vlc-slds-inline-control__label">{{bpTree.response.process.aditionalMessage}}</label>
+        </p>
+    </header>
+</div>
+<script src="/support/console/42.0/integration.js"></script>

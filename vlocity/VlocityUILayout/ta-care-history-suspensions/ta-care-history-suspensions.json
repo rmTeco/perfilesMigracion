@@ -1,0 +1,44 @@
+{
+    "Cards": [
+        "History"
+    ],
+    "customPreviewPages": [
+        {
+            "group": "Custom Pages",
+            "label": "",
+            "page": ""
+        }
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.assetId",
+                "val": "02i6C0000002g8oQAA"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "bundle": "GetHistoricSuspensionsRatings_EXAMPLE",
+            "inputMap": {
+                "accountId": "{{params.Id}}",
+                "assetId": "{{params.assetId}}"
+            },
+            "optionsMap": {
+                "vlcClass": "SuspensionsAndRatings"
+            },
+            "remoteClass": "SuspensionsAndRatings",
+            "remoteMethod": "getHistoric",
+            "remoteNSPrefix": null
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-history-suspensions"
+        }
+    },
+    "workspace": [
+        "History/Personal - DESA01/1516246162112"
+    ]
+}

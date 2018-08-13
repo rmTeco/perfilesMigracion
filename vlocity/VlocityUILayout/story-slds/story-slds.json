@@ -1,0 +1,59 @@
+{
+    "Cards": [
+        "Case Story",
+        "Campaign Story",
+        "Claim Story",
+        "Customer Interaction Story",
+        "Event Story",
+        "Non Held Policy Story",
+        "Note Story",
+        "Opportunity Story",
+        "Policy Story",
+        "Task Story",
+        "Order Cancelled Story",
+        "Order Story"
+    ],
+    "bypassSave": true,
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C00000993Ju"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "Stories",
+            "apexRestResultVar": "Stories",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v1/story/{{params.id}}?pageSize=10",
+            "inputMap": {
+                "pageSize": "50",
+                "storyId": "{{params.id}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "StoryListHandler",
+            "remoteMethod": "getStories",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "Stories"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Care-story-card-canvas"
+        }
+    },
+    "workspace": [
+        "Case Story/Telecom/1502743566675",
+        "Campaign Story/Telecom/1504658185301",
+        "Claim Story/Telecom/1502743572840",
+        "Customer Interaction Story/Telecom/1502743576277",
+        "Event Story/Telecom/1502743580503",
+        "Non Held Policy Story/Telecom/1502743583551",
+        "Note Story/Telecom/1502743586369",
+        "Opportunity Story/Telecom/1502743589204",
+        "Policy Story/Telecom/1502743592989",
+        "Task Story/Personal/1502570576409",
+        "Order Cancelled Story/Telecom/1510863788109",
+        "Order Story/Telecom/1/1520362160043"
+    ]
+}

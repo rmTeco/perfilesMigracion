@@ -1,0 +1,301 @@
+<apex:page showHeader="true" sidebar="true" controller="vlocity_cmt.XOMSyncDeltaControllerExtension" standardStylesheets="false" docType="html-5.0" >
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ng="http://angularjs.org" ng-app="deltaSync">
+        <head>
+          <base href="/"/>
+          <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.slds, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+          <script type="text/javascript" src="{!URLFOR($Resource.JQUERYJS)}"></script>
+          <script type="text/javascript" src="/support/console/31.0/integration.js"></script>
+          <script type="text/javascript" src="{!URLFOR($Resource.vlocity_assets, '/javascripts/vlocity.js')}"></script>
+          <script type="text/javascript" src="{!URLFOR($Resource.SldsAngular)}"></script>
+          <script type="text/javascript" src="{!URLFOR($Resource.XomThorIntegration)}"></script>
+
+          <script>
+            function disableBack() {
+            	if(document.referrer.indexOf('salesforce')!=-1){
+            		window.history.forward();
+            	}
+            };
+
+            window.onload = disableBack();
+                
+            var app = angular.module('deltaSync', ["vlocity", "ngSanitize", 'thorIntegration']);
+
+            app.config(['remoteActionsProvider', function(remoteActionsProvider) {
+              remoteActionsProvider.setRemoteActions({
+                getNumberOfBatches: "{!$RemoteAction.XOMSyncDeltaControllerExtension.getNumberOfBatches}",
+                getBatch: {action: "{!$RemoteAction.XOMSyncDeltaControllerExtension.getBatch}", config: {escape: false}},
+                commitBatch: "{!$RemoteAction.XOMSyncDeltaControllerExtension.commitBatch}"
+              });
+            }]);
+            var urlBase = '{!JSENCODE(HTMLENCODE(thorSyncUrl))}';
+         
+            var uiServicesUrl = '{!JSENCODE(HTMLENCODE(uiServicesUrl))}'; 
+
+            var localUrl = '{!JSENCODE(HTMLENCODE($CurrentPage.parameters.localUrl))}';
+            
+            if (localUrl)
+            {
+              // Override with local URL
+              uiServicesUrl = localUrl;
+              urlBase = localUrl;
+            }
+
+            app.service('deltaSyncService', ['$http', function ($http) {
+
+                this.syncDelta = function (delta) {
+                    return $http.post(urlBase, delta, {withCredentials: true});
+                };
+
+                this.ping = function (delta) {
+                    return $http.head(urlBase, {withCredentials: true});
+                };
+
+            }]);
+
+            app.controller ('myController', function ($scope, $timeout, remoteActions, thorIntegrationService, deltaSyncService) {
+                $scope.items = [];
+
+                $scope.batchSizes = [10, 50, 100];
+
+                $scope.batchSize = 100;
+
+                $scope.totalSize = 'Calculating...';
+
+                $scope.sendEnabled = false;
+
+                $scope.batches = [];
+
+                $scope.currentBatch = 0;
+
+                $scope.progress = 0;
+
+                var nextSyncShouldReset = false;
+
+                function reset() {
+
+                    $scope.batches[0].current = true;
+                    $scope.currentBatch = 0;
+                    $scope.progress = 0;
+                    nextSyncShouldReset = false;
+                }
+
+                function retrieveNumberOfBatches(cont) {
+                    console.log('retrieveNumberOfBatches: begin');
+                    remoteActions.getNumberOfBatches($scope.batchSize).then(function(sizeInfo) {
+                        $scope.totalSize = sizeInfo.totalSize;
+                        $scope.sendEnabled = true;
+
+                        $scope.batches.length = 0;
+
+                        console.log('Retrieve number of batches:', sizeInfo);
+                        console.log($scope);
+
+                        for (var i=0; i<sizeInfo.numberOfBatches; i++) {
+                            $scope.batches.push({
+                                name: 'Batch ' + (i+1)
+                            });
+                        }
+
+                        // Completed stage to improve visualization
+                        $scope.batches.push({
+                          name: 'Completed'
+                        });
+
+                        reset();
+
+                        if (cont) {
+                            cont();
+                        }
+                    });
+                }
+
+                function syncBatch() {
+
+                  thorIntegrationService.retryOperationInCaseAuthenticationError(
+                        function() {
+                          return deltaSyncService.ping().then(function()
+                          {
+                            syncBatchInternal();
+                          });
+                        },
+                        uiServicesUrl
+                    );
+                }
+
+                function syncBatchInternal() {
+                    $scope.sendEnabled = false;
+
+                    if (nextSyncShouldReset) {
+                        retrieveNumberOfBatches(function() {
+                            nextSyncShouldReset = false;
+                            syncBatch();
+                        });
+
+                        return;
+                    }
+
+                    remoteActions.getBatch($scope.batchSize).then(function(batchJson) {
+                        if (batchJson.length) {
+                            console.log(batchJson);
+
+                            deltaSyncService.syncDelta(batchJson)
+                                .then(
+                                    function() {
+
+                                      var syncedIds = [];
+
+                                      for (var i=0; i<batchJson.length; i++) {
+                                        syncedIds.push(batchJson[i].Id);
+                                      }
+
+                                      console.log('Committing ' + syncedIds);
+
+                                      remoteActions.commitBatch(syncedIds).then(function() {
+
+                                        $scope.batches[$scope.currentBatch++].completed = true;
+
+                                        if ($scope.currentBatch < $scope.batches.length) {
+                                            $scope.batches[$scope.currentBatch].current = true;
+                                            $scope.progress = Math.floor($scope.currentBatch/$scope.batches.length);
+                                            syncBatch();
+                                        } else {
+                                          console.log('Finishing');
+                                          retrieveNumberOfBatches(function() {
+                                            $scope.sendEnabled = true;
+                                            nextSyncShouldReset = true;
+                                          });
+                                        }
+
+                                      });
+                                    }, function(err) {
+                                        console.log(err);
+                                        $scope.batches[$scope.currentBatch].error = true;
+                                        $scope.sendEnabled = true;
+                                        nextSyncShouldReset = true;
+                                    });
+                        } else {
+                            // We finish
+                            // But still need to tick the last one
+                            retrieveNumberOfBatches(function() {
+                              $scope.batches[$scope.currentBatch++].completed = true;
+                              $scope.sendEnabled = true;
+                              nextSyncShouldReset = true;
+                            });
+                        }
+                    });
+
+                }
+
+                $scope.syncBatch = syncBatch;
+
+                retrieveNumberOfBatches();
+
+                $scope.$watch('batchSize', function() {
+                    retrieveNumberOfBatches();
+                });
+                
+                $scope.isReturnEnabled = function()
+                {
+                    if(document.referrer.indexOf('salesforce')==-1)
+                    {
+                        return true;
+                    }
+                    return false;
+                };
+                
+                $scope.backToAdminDashboard = function () {
+                    history.back();
+                };
+                
+            });
+
+          </script>
+
+        </head>
+        <body class="ng-cloak" ng-controller="myController" ng-init="">
+          <div class="via-slds">
+            <div ng-include="'notification.html'" ng-if="showNotification"/>
+            <div class="_slds-align--absolute-center">
+              <div class="slds-panel">
+                <div class="slds-panel__section slds-has-divider--bottom">
+                    <h2 class="slds-text-heading--large slds-m-bottom--large">Catalog Synchronization</h2>
+                    <form class="slds-form--inline">
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="name">Number of delta records</label>
+                        <div class="slds-form-element__control">
+                          <span ng-bind = "totalSize"/>
+                        </div>
+                      </div>
+                      <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="batchSize">Batch size</label>
+                        <div class="slds-form-element__control">
+                           <div class="slds-select_container">
+                              <select ng-disabled="!sendEnabled" class="slds-select" ng-options="size as size for size in batchSizes track by size" ng-model="batchSize">
+                              </select>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="slds-form-element">
+                        <button ng-disabled="!sendEnabled" type="button" class="slds-button slds-button--brand" ng-click="syncBatch()">Synchronize</button>
+                      </div>
+                      <div class="slds-form-element">
+                        <button ng-if="isReturnEnabled()" type="button" class="slds-button slds-button--brand" ng-click="backToAdminDashboard()">Back</button>
+                      </div>
+                    </form>
+                </div>
+              </div>
+                <div class="slds-panel__section">
+                    <h3 class="slds-text-heading--small slds-m-bottom--medium">Synchronization Progress</h3>
+                    <div class="slds-progress">
+                        <ol class="slds-progress__list">
+                            <li class="slds-progress__item ng-class:{'slds-is-active': !batch.completed && !batch.error && batch.current, 'slds-is-completed': batch.completed, 'slds-has-error': batch.error}"
+                                ng-repeat="batch in batches">
+                                <button class="slds-button slds-button--icon slds-progress__marker slds-progress__marker--icon"
+                                        ng-if="batch.error"
+                                        title="{{batch.name}}">
+                                    <svg class="slds-button__icon" aria-hidden="true">
+                                      <use xlink:href="{!URLFOR($Resource.slds, '/assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">{{batch.name}}</span>
+                                </button>
+                                <button class="slds-button slds-button--icon slds-progress__marker slds-progress__marker--icon"
+                                        ng-if="batch.completed"
+                                        title="{{batch.name}}">
+                                    <svg class="slds-button__icon" aria-hidden="true">
+                                      <use xlink:href="{!URLFOR($Resource.slds, '/assets/icons/utility-sprite/svg/symbols.svg#success')}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">{{batch.name}}</span>
+                                </button>
+                                <button class="slds-button' ng-class:{'slds-progress__marker': batch.current}"
+                                            ng-if="!batch.completed && !batch.error">
+                                    <span class="slds-assistive-text">{{batch.name}}</span>
+                                </button>
+                            </li>
+                          </ol>
+                          <div class="slds-progress-bar">
+                            <span class="slds-progress-bar__value" style="width:0%;">
+                              <span class="slds-assistive-text">Progress: {{progress}}%</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <script type="text/javascript">
+            j$ = jQuery.noConflict();
+
+            var SLDSICON = {
+              'ADD': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#add")}',
+              'NEW': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#new")}',
+              'EDIT': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#edit")}',
+              'PREVIEW': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#preview")}',
+              'DELETE': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#delete")}',
+              'SEARCH': '{!URLFOR($Resource.slds, "/assets/icons/utility-sprite/svg/symbols.svg#search")}'
+            };
+          </script>
+
+        </body>
+    </html>
+</apex:page>

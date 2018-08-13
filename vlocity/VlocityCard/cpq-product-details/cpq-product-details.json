@@ -1,0 +1,52 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "Product2Id",
+                    "name": "['Product2Id']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "ProductCode",
+                    "name": "['ProductCode']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "label": "IsActive",
+                    "name": "['IsActive']['value']",
+                    "type": "string"
+                }
+            ],
+            "name": "Product details",
+            "templateUrl": "cpq-product-item-details"
+        }
+    ],
+    "title": "Product details"
+}

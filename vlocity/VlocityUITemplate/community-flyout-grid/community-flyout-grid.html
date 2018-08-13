@@ -1,0 +1,8 @@
+<div class="community-flyout-content">
+    <div class="flyout-actions">
+        <vloc-card name="Flyout Grid Actions" customtemplate="community-flyout-grid-actions" data="parent" loaded="true"> </vloc-card>
+    </div>
+    <div class="items">
+        <vloc-card ng-repeat="card in cards |orderBy:order|filter: searchFunc(card)" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>
+    </div>
+</div>

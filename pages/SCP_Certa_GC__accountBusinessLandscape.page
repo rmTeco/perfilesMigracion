@@ -1,0 +1,350 @@
+<apex:page controller="SCP_Certa_GC.AccountBusinessLandscapeController" sidebar="false" tabStyle="Strategic_Client_Plan__tab" >
+    
+    <c:SCPMenu ></c:SCPMenu>
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+    <apex:include pageName="SCP_Certa_GC__changeFocus"/>
+    <apex:stylesheet value="{!$Resource.SCP_Certa_GC__ipad}"/>
+    
+    <style>
+        
+        .level1, .levelGreen {
+        background-color: #CEFD9F;
+        }
+        
+        .level2, .levelYellow {
+        background-color: rgb(255, 255, 139);
+        }
+        
+        .level3, .levelRed {
+        background-color: rgb(255, 158, 158);
+        }
+        
+        #tableList tr.hover:hover {
+        background-color: #d4ebf2;
+        }
+        
+        .category_service {
+        background-color: #006699;
+        background-color: #d4ebf2;
+        }
+        
+        .sub_category_service {
+        background-color: #8C8C8C;
+        background-color: #e2e2e2;
+        }
+        
+        h1 {
+        /*color: #ffffff;*/ 
+        }
+        
+        h2 {
+        /*color: #ffffff;*/
+        }
+        
+        #tableList {
+        border-collapse: collapse;
+        }
+        
+        .pbBody {
+        padding: 12px ! important;
+        }
+        
+        .separator, .separator td {
+        height:30px;
+        background-color: #f8f8f8 ! important;
+        border-left: 1px solid #f8f8f8 ! important;
+        border-right: 1px solid #f8f8f8 ! important;
+        }
+        
+        .message {
+        background-color: transparent ! important;
+        }
+        
+    </style>
+    
+    <script>
+    $j = jQuery.noConflict();
+    
+    $j(document).ready(function() {
+        
+        //Bajar linea como imagen
+        $j(".generateImg").click(function(){
+            zoom=1;
+            $j("#ImagenAGenerar").animate({ 'zoom': zoom }, 0);
+            var chartArea = $j('#ImagenAGenerar');
+            html2canvas(chartArea, {
+                onrendered: function(canvas) {          
+                    var img = canvas.toDataURL("image/png");
+                    //window.location.href = img.replace('image/png', 'image/octet-stream');
+                    var ua = window.navigator.userAgent;
+                    if (ua.indexOf("Chrome") > 0) {
+                        var link = document.createElement('a');
+                        link.download = "EjesDeTrabajo.png";
+                        link.href = img.replace('image/png', 'image/octet-stream');
+                        link.click();
+                    } else {
+                        window.location.href = img.replace('image/png', 'image/octet-stream');
+                    }
+                }
+            });    
+        });
+        
+        
+    });
+    </script>
+    
+
+    <apex:outputPanel layout="block" style="background-color:white" styleClass="container-fluid bootstrap-sf1">
+        <apex:form >
+        <apex:outputPanel layout="block"  styleClass="panel panel-default">
+				
+                <apex:outputPanel layout="block"  styleClass="panel-heading">
+                    <h2 class="panel-title">
+                        <span style="float:left;">
+                            {!$Label.scp_certa_gc__parque_de_servicios}
+                        </span>
+
+                        <span style="float:left;">
+                            <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/rykBfmIrres"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                        </span>
+                    </h2>
+                    <div class="row paddingRight">
+                        <apex:actionFunction action="{!exportToExcel}" name="exportToExcel"/>
+                        <apex:actionFunction action="{!Save}" name="SaveChanges" rerender="pageContent" status="renderMeStatus" oncomplete="createDataTableSerch()"/>
+                        <apex:actionFunction action="{!add}" name="add" reRender="pageContent" />
+                        
+                        <div class="btn-group pull-right" role="group" aria-label="...">	    					
+                            <apex:outputText >
+                                <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                                    <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                                </button>
+                            </apex:outputText>    
+                            <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+                                <span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+                            </button>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                
+                <apex:outputPanel layout="block" styleClass="panel-body" id="pageContent">
+                    <!--<apex:pageMessage summary="{!$Label.tutorial_accountBusinessLandscape}" severity="Info" strength="1" />-->
+                    
+                    
+                    <div id="form-servicios" style="float: left;">
+                        
+                    
+                    <table class="addService">
+                        <tr class="">
+                            <td colspan="100%" style="padding:5px;">
+                                <h2><apex:outputText value="{!$Label.scp_certa_gc__add_new_service}"/></h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;{!$Label.Categoria_de_los_servicios}:
+                            </td>
+                            <td>
+                                <apex:actionFunction name="renderizar" reRender="serviciosRender"  />
+                                <apex:selectList size="1" multiselect="false" onchange="renderizar();"  value="{!categoriaSeleccionada}">
+                                    <apex:selectOptions value="{!items}"/>
+                                </apex:selectList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;{!$Label.Servicio}:
+                            </td>
+                            <td>
+                                <apex:selectList id="serviciosRender" size="1" multiselect="false"  value="{!servicioSeleccionado}">
+                                    <apex:selectOptions value="{!Servicios}"/>
+                                </apex:selectList>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp; <apex:outputText value="{!$Label.scp_certa_gc__estado_del_servicio}:"/>                                               
+                            </td>
+                            <td>
+                                <apex:inputField value="{!newBusinesLandscape.SCP_Certa_GC__Level__c}"/>
+                                <img class="helpIcon" alt="" src="/s.gif" title="{!$ObjectType.Business_Landscape__c.fields.level__c.inlineHelpText}" style="visibility: {!IF($ObjectType.Business_Landscape__c.fields.level__c.inlineHelpText='','hidden','displayed')}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;<apex:outputText style="width: 100%;" value="{!$Label.scp_certa_gc__fecha_vencimiento}:" />
+                            </td>
+                            <td>
+                                <apex:inputField id="datepicker" showDatePicker="true"  value="{!hitoAInsertar.SCP_Certa_GC__Fecha__c}"/><br/>
+                            </td>
+                        </tr>    
+                        <tr>
+                            <td colspan="100%" >
+                                <br/>
+                                <button type="button" style="margin-left : 1%;" class="btn btn-default btn-sm" onclick="add()">
+                                    <span class="glyphicon glyphicon-plus"></span>&nbsp;{!$Label.add}
+                                </button>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                     </div>
+                    
+                    <div style = "margin-left: 46%; width: 31%; margin-top: 5%; height: 100px;" class="center-block alert alert-info" role="alert">
+                        
+                        <span class="messageText"><span style="font-weight:bold;  margin:5px"></span><br/>
+                            <br/><br/><br/>  
+                            <div class="row">
+                                <div class= "col-md-4" style="margin-left: 7%; margin-top: -15%; width: 100%;">
+                                    <span class="NotUsed" style="margin-left:3px;background-color:#b3fd9f;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="NotUsedSampleText">{!$Label.Servicios_Actualmente_Nosotros}</span><br/>
+                                </div>
+                                <br/>
+                                <div class= "col-md-4" style="margin-left: 7%; margin-top: -15%; width: 100%;">
+                                    <span class="hasPotentialBussiness" style="margin-left:3px;background-color:#ffff8b;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="hasPotentialBussinessSampleText">{!$Label.Servicios_Planeamos_Futuro}</span><br/>
+                                </div>
+                                <br/>
+                                <div class= "col-md-4" style="margin-left: 7%; margin-top: -15%; width: 100%;">
+                                    <span class="hasOpportunity" style="margin-left:3px;background-color:#ff9e9e;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                    <span class="hasOpportunitySampleText">{!$Label.Servicios_Actualmente_Competencia}</span><br/>
+                                </div>
+                            </div>
+                            
+                        </span>
+                    </div>
+                    
+                    <br/><br/>
+                    
+                    <table id="tableList" class="table list " style="width:100%;" border="0" cellpadding="0" cellspacing="0">         
+                        <apex:variable var="cnt" value="{!0}" /> 
+                        <apex:repeat value="{!businessLandscapeWrapperList}" var="businessLandscapeWrapperCategory">                
+                            
+                            <apex:outputPanel rendered="{!cnt != 0}">               
+                                <tr class="headerRow separator">                        
+                                    <td colspan="100%">                     
+                                    </td>
+                                </tr>
+                            </apex:outputPanel>
+                            
+                            <apex:variable var="cnt" value="{!cnt+1}"/>
+                            <tr class="category_service">
+                                <td colspan="100%" class="dataCell titleService">
+                                    <h1 style="font-size:17px;"><apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__Category_Service__c.label}: "/><apex:outputField value="{!businessLandscapeWrapperCategory.bl.SCP_Certa_GC__Category_Service__c}"/></h1>
+                                </td>
+                            </tr>     
+                            <tr class="headerRow">                  
+                                
+                                <th width="10%">                  
+                                </th>                       
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__Service__c.label}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$Label.scp_certa_gc__editar_estado}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__CurrentProvider__c.label}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__AnnualSpend__c.label}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$Label.scp_certa_gc__tomar_acci_n_antes_de}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__Country__c.label}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__Compra_a_nivel__c.label}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__Decision_maker__c.label}"/>
+                                </th>
+                                <th class="headerRow">                          
+                                    <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Business_Landscape__c.fields.SCP_Certa_GC__OtherInformation__c.label}"/>
+                                </th>
+                            </tr>
+                            
+                            
+                            <apex:repeat value="{!businessLandscapeWrapperCategory.servicios}" var="businessLabusinessLandscapeWrapperService">
+                                
+                                <tr class="">
+                                    <!-- 
+<td class="dataCell" style="width:100px;">
+</td>
+<td class="dataCell" style="width:100px;">
+</td>
+-->                            
+                                    <td class="dataCell">
+                                        <apex:commandButton styleClass="btn btn-default btn-sm" action="{!del}" value="{!$Label.scp_certa_gc__delete}" rerender="pageContent">
+                                            <apex:param name="del" value="{!businessLabusinessLandscapeWrapperService.servicio.id}" assignTo="{!toDel}" />
+                                        </apex:commandButton>
+                                    </td>
+                                    <td class="dataCell level{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__Level__c}">         
+                                        <span style="display:none;">
+                                            <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__Category_Service__c}">
+                                                <apex:inlineEditSupport event="ondblclick"/>
+                                            </apex:outputField>
+                                            
+                                        </span>
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__Service__c}" >
+                                        </apex:outputField>
+                                    </td>                   
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__Level__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td>
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__CurrentProvider__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td>   
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__AnnualSpend__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td>   
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__ContractEndDate__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td>   
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__Country__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td>
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__Compra_a_nivel__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td> 
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__Decision_maker__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td> 
+                                    <td class="dataCell">       
+                                        <apex:outputField value="{!businessLabusinessLandscapeWrapperService.servicio.SCP_Certa_GC__OtherInformation__c}" >
+                                            <apex:inlineEditSupport event="ondblclick"/>
+                                        </apex:outputField>
+                                    </td>                       
+                                </tr>                       
+                            </apex:repeat>
+                            
+                        </apex:repeat>
+                    </table>
+                    
+            </apex:outputPanel>
+            
+            </apex:outputPanel>
+        </apex:form>
+        
+        <div style="background-color:white;">
+            <c:FastTask page="{!$Label.scp_certa_gc__influence_org}" account="{!account.id}"></c:FastTask>
+            <chatter:feed entityId="{!Account.id}" />
+        </div>
+
+    </apex:outputPanel>
+</apex:page>

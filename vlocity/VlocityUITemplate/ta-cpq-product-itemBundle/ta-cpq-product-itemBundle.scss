@@ -1,0 +1,144 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-product-item {
+            border-bottom: $cpq-product-item-padding solid $cpq-page-bg-color;
+            
+            .#{$namespace}-product-item-container {
+                padding: $cpq-padding-large-vertical 0px;
+                margin: 0px $cpq-padding-large-horizontal;
+            
+                .#{$namespace}-product-item-select-checkbox {
+                    // Ensure atleast 40px width for inputs for device touch area
+                    padding: $cpq-padding-small-horizontal;
+                    margin-top: -$cpq-padding-small-horizontal/2;
+                }
+                .#{$namespace}-product-name {
+                    font-weight: $cpq-headings-font-weight;
+                    line-height: 30px;
+                }
+                .#{$namespace}-product-link {
+                    line-height: 30px;
+                    color: $cpq-product-link-color;
+                }
+                .#{$namespace}-product-price {
+                    padding-right: $cpq-padding-large-horizontal;
+                    padding-top:$cpq-padding-large-vertical;
+                    color: $dark-gray;
+                    &:last-child {
+                        padding-bottom:$cpq-padding-large-vertical;
+                    }
+                    .#{$namespace}-price-label {
+                      font-size: $cpq-cart-item-attr-label-font-size;
+                    }
+                    .#{$namespace}-loyalty-points {
+                        color: $cpq-loyalty-points-color;
+                    }
+                }
+                .#{$namespace}-product-price .#{$namespace}-item-product-messages {
+                    font-size: 95%;
+
+                    .#{$namespace}-error-msg {
+                        color: $error;
+                    }
+                    .#{$namespace}-warning-msg {
+                        color: $warning;
+                    }
+                }
+                
+                .product-name {
+                    font-size: 12px;
+                    font-weight: $cpq-headings-font-weight;
+                    line-height: 30px;
+                    .prefaseablitiyLabel {
+                        display: inline-block;
+                        padding: 0px 5px;
+                        background: #e7e7e7;
+                        text-transform: uppercase;
+                        font-size: 8px;
+                        height: 14px;
+                        line-height: 14px;
+                        border-radius: 7px;
+                        margin-left: 2px;
+                    }
+                }
+                
+                .taTextSuccess {
+                    color: #118752;
+                    font-weight: bold;
+                }
+                
+                .product-description {
+                    font-size: 10px;
+                    .taPriceContainer {
+                        color: #16325c;
+                        .taPrice {
+                            display: inline-block;
+                            margin-right: 10px;
+                            font-size: 20px;
+                        }
+                        .taPriceStrikeOut {
+                            text-decoration: line-through;
+                        }
+                    }
+                    .taProductDescription {
+                        color: #00912a;
+                    }
+                    .taItemDesc {
+                        color: #7c7c7c;
+                    }
+                }
+                
+                .cpq-product-price div {
+                    padding-right: $cpq-padding-large-horizontal;
+                    padding-top:$cpq-padding-large-vertical;
+                    color: $dark-gray;
+                    &:last-child {
+                        padding-bottom:$cpq-padding-large-vertical;
+                    }
+                    
+                    .cpq-price-label {
+                      font-size: $cpq-cart-item-attr-label-font-size;
+                    }
+                }
+            }
+            
+            .#{$namespace}-product-actions {
+                padding-top:$cpq-padding-large-vertical;
+                padding-bottom:$cpq-padding-large-vertical; 
+                
+                .#{$namespace}-add-button {
+                    padding-left:$cpq-padding-small-horizontal;
+                    padding-right:$cpq-padding-small-horizontal;
+                    color: #00b4c5;
+               }
+               
+               .ta-button-neutral {
+                    color: #00b4c5;
+                }
+            }
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .#{$namespace}-product-item {
+            .#{$namespace}-product-item-container {
+                .#{$namespace}-product-price div {
+                    padding-right: 0;
+                    padding-left: $cpq-padding-large-horizontal;
+                }
+            }
+        }
+    }
+}

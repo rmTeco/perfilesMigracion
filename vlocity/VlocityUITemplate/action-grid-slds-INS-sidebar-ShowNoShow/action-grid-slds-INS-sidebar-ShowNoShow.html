@@ -1,0 +1,27 @@
+<div class="slds-panel slds-grid slds-grid--vertical slds-nowrap">
+  <div class="slds-form--stacked slds-grow slds-scrollable--y">
+    <div class="slds-panel__section slds-has-divider--bottom">
+        <p class="slds-truncate slds-text-heading--small">
+          {{data.title}}
+          <button class="slds-button slds-button--icon" ng-click="hideContents = !hideContents">
+            <slds-button-svg-icon sprite="'utility'" icon="'chevrondown'" ng-if="!hideContents"></slds-button-svg-icon>
+            <slds-button-svg-icon sprite="'utility'" icon="'chevronup'" ng-if="hideContents"></slds-button-svg-icon>
+            <span class="slds-assistive-text">Toggle</span>
+          </button>
+        </p>
+    </div>
+    <div class="slds-panel__section" ng-show="!hideContents">
+        <div class="slds-grid slds-wrap via-slds-action-grid-card slds-m-left--xx-small slds-m-right--xx-small">
+            <div class="slds-size--1-of-3 slds-small-size--1-of-3 slds-medium-size--1-of-4 slds-large-size--1-of-6 slds-align--absolute-center slds-m-bottom--x-small slds-m-top--x-small slds-p-left--xx-small slds-p-right--xx-small slds-grid"  ng-repeat="action in data.actions" >
+                <a class="slds-button via-slds-button slds-button--neutral slds-size--1-of-1 slds-p-top--small slds-p-bottom--small slds-align--absolute-center" href="javascript:void(0)" ng-click="performAction(action)" hotkey-card-action style="padding: 2px 2px 2px 2px; line-height: 16px;" >
+                    <div class="slds-truncate" >
+                        <i class="icon via-icon {{action.vlocityIcon}}"></i>
+                        <br/>
+                        <p class="slds-truncate" title="{{action.displayName}}">{{action.displayName}}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

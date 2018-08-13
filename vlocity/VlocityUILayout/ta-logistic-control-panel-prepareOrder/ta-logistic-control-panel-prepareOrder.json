@@ -1,0 +1,32 @@
+{
+    "Cards": [
+        "Orders"
+    ],
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "orderStatus": "Preparar pedido"
+            },
+            "optionsMap": {
+                "vlcClass": "OrdersUtilMethods"
+            },
+            "query": "SELECT CreatedDate,Delivery_Method__c,Id,OrderNumber,Status\nFROM Order\nWHERE Status = 'Preparar Pedido'",
+            "remoteClass": "OrdersUtilMethods",
+            "remoteMethod": "getOrdersWithContactInfo",
+            "remoteNSPrefix": null,
+            "resultVar": "ordersResult"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-list-card-canvas"
+        }
+    },
+    "workspace": [
+        "Orders/Personal - DESA01/1504107004343",
+        "Orders/Personal - DESA01/1/1528203652085"
+    ]
+}

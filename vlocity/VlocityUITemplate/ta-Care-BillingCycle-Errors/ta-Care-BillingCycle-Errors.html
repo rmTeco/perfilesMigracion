@@ -1,0 +1,55 @@
+<div class="" ng-repeat=" baDunning in bpTree.response.DunningAccName" ng-if="baDunning">
+  <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+    <span class="slds-assistive-text">Error</span>
+    
+    <div class="slds-notify__content slds-grid">
+      <div class="slds-col slds-align-middle">
+        <h2 class="slds-text-heading--small">
+        En esta Cuenta de Facturación {{baDunning.Name}}, el cambio no se puede efectuar porque está en mora.
+        </h2>
+      </div>
+    </div>
+ </div>
+</div>
+
+<div class="" ng-repeat=" baPF in bpTree.response.PurchaseFinancingAccName" ng-if="baPF">
+  <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+    <span class="slds-assistive-text">Error</span>
+    
+    <div class="slds-notify__content slds-grid">
+      <div class="slds-col slds-align-middle">
+        <h2 class="slds-text-heading--small">
+        En esta Cuenta de Facturación {{baPF.Name}}, el cambio no se puede efectuar porque tiene un acuerdo de pago.
+        </h2>
+      </div>
+    </div>
+ </div>
+</div>
+
+<div class="" ng-repeat=" baDF in bpTree.response.DebtFinancingAccName" ng-if="baDF">
+  <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+    <span class="slds-assistive-text">Error</span>
+    
+    <div class="slds-notify__content slds-grid">
+      <div class="slds-col slds-align-middle">
+        <h2 class="slds-text-heading--small">
+        En esta Cuenta de Facturación {{baDF.Name}}, el cambio no se puede efectuar porque tiene un financiamiento de deuda.
+        </h2>
+      </div>
+    </div>
+ </div>
+</div>
+
+<div class="" ng-repeat=" cc in bpTree.response.CycleChange" ng-if="cc && cc.CycleChangeAllowed == 'false' "><!-- && cc.length != 'undefined'  -->
+  <div class="slds-notify slds-notify--toast slds-theme--error" role="alert">
+    <span class="slds-assistive-text">Error</span>
+    
+    <div class="slds-notify__content slds-grid">
+      <div class="slds-col slds-align-middle">
+        <h2 class="slds-text-heading--small">
+        No se puede realizar el cambio de ciclo de facturación para la Cuenta de Facturación {{cc.CyclingBillingAccount}} porque ya ha tenido un cambio en los últimos {{bpTree.response.CyclingLimitDay}} días.
+        </h2>
+      </div>
+    </div>
+ </div>
+</div>

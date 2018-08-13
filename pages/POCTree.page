@@ -1,0 +1,144 @@
+<apex:page controller="POCTreeController"
+           showHeader="true"
+           sidebar="false"
+           lightningStylesheets="true" 
+           applyBodyTag="false" 
+           docType="html-5.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet" href="{!URLFOR($Resource.JQueryUILib, 'jquery-ui-1.12.1.custom/jquery-ui.css')}" />
+        <apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+        <apex:includeScript value="{!URLFOR($Resource.JQueryUILib, 'jquery-ui-1.12.1.custom/jquery-ui.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jstree, 'jstree/dist/jstree.js')}"></apex:includeScript>
+<script>
+localStorage.removeItem('jstree');
+</script>
+<body class="slds-scope" style="background: white;"> 
+            <apex:slds />
+            <div class="slds-scope">       
+                <apex:form styleClass="slds-form slds-form_stacked" id="processForm" onsubmit="return ()=>false;">
+                    <apex:pageBlock title="" mode="maindetail" id="blockProcess">
+                        <apex:pageBlockSection id="sectionProcess" title="Información de los Permisos" collapsible="false" columns="1" dir="LTR"  >
+                            <apex:outputPanel id="panelProcess" >
+                                <div id="divProcess" class="sample-form">
+                                     <div class="slds-grid slds-wrap slds-grid--pull-padded">       
+                                        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--4-of-6 slds-large-size--6-of-12">
+                                          <label> Permiso:</label>  
+                                          <div class="slds-form-element">
+                                            <apex:inputText id="customPermissionInputId" list="{!customPermissionLabelList}" value="{!selectedPermissionName}" styleClass="slds-input" />
+                                            <input type="button" onclick="callGetWTeams();" class="slds-button slds-button--brand" value="Buscar" />
+                                            <button class="slds-button slds-button--brand" onclick="saveState();">Guardar</button>
+                                            <apex:commandButton action="{!reloadPage}" value="Refrescar" styleClass="slds-button slds-button--brand"/>
+                                          </div>
+                                        </div>
+                                       </div> 
+                                    <script>
+                                        function callGetWTeams(){
+                                            var permissionSetName = document.getElementById('{!$Component.customPermissionInputId}').value;
+                                            Visualforce.remoting.Manager.invokeAction(
+                                                        '{!$RemoteAction.POCTreeController.getWorkTeam}',permissionSetName, 
+                                                        function(result, event){
+                                                            $('#jstree_demo').on('init.jstree', function (e, data) {
+                                                                data.instance.settings.checkbox.cascade = "";
+                                                            });                                         
+
+                                                            if (event.status) {
+                                                                window.configObject = {
+                                                                    "core": {
+                                                                        "animation": 0,
+                                                                        "check_callback": true,
+                                                                        "themes": { "stripes": true },
+                                                                        'data': JSON.parse(result),
+                                                                    },
+                                                                    "types": {
+                                                                        "#": {
+                                                                            "max_children": 1,
+                                                                                "max_depth": 4,
+                                                                                    "valid_children": ["root"]
+                                                                        },
+                                                                        "root": {
+                                                                            "icon": "/static/3.3.5/assets/images/tree_icon.png",
+                                                                                "valid_children": ["default"]
+                                                                        },
+                                                                        "default": {
+                                                                            "valid_children": ["default", "file"]
+                                                                        },
+                                                                        "file": {
+                                                                            "icon": "glyphicon glyphicon-file",
+                                                                                "valid_children": []
+                                                                        }
+                                                                    },
+                                                                    "checkbox" : {
+                                                                        "three_state" : false,
+                                                                        "cascade" : "down",
+                                                                        "tie_selection" : "false"
+                                                                    },
+                                                                    "plugins": [
+                                                                        "checkbox","types", "wholerow", "changed"
+                                                                    ]
+                                                                }
+                                                                window.tree = $('#jstree_demo').jstree(window.configObject);
+                                                            }
+
+                                                            let tree = $('#jstree_demo').jstree(true);
+                                                            tree.refresh(); 
+                                                            cleanNodeStates();
+                                                        }, 
+                                                        {escape: false}
+                                                    );
+                                                }                                              
+                                                function cleanNodeStates(){
+                                                    setTimeout(function () {
+                                                        $('#jstree_demo').jstree(true).settings.checkbox.cascade = "down";
+                                                    }, 500);
+                                                }
+                                                const saveState = ()=>{
+                                                    let permission = document.getElementById('{!$Component.customPermissionInputId}').value;
+                                                    let tree = $('#jstree_demo').jstree(true);
+                                                    let currentState = tree.get_json('#',{flat:true}).sort( (current, next)=> current.id.localeCompare(next.id) );
+                                                    let initialList = tree.settings.core.data.sort( (current, next)=> current.id.localeCompare(next.id) );
+                                                    let active = {ids:[]};
+                                                    let inactive = {ids:[]};
+                                                    let baseObject = {selected: false}
+                                                    currentState.map( (item, index) => {
+                                                        initialList[index].state = Object.assign({}, baseObject, initialList[index].state);
+
+                                                        if(item.state.selected!==initialList[index].state.selected){
+                                                            if(item.state.selected){
+                                                                return active.ids.push(item.id);
+                                                            }
+                                                            return inactive.ids.push(item.id);
+                                                        }
+                                                    });
+
+                                                    //debugger
+                                                    Visualforce.remoting.Manager.invokeAction(
+                                                        '{!$RemoteAction.POCTreeController.checkNodes}',
+                                                            JSON.stringify(active),
+                                                            permission,
+                                                        (result, event) => {
+                                                            //debugger;
+                                                            } ,
+                                                        {escape: false});
+                                                    
+                                                    Visualforce.remoting.Manager.invokeAction(
+                                                        '{!$RemoteAction.POCTreeController.unCheckNodes}',
+                                                            JSON.stringify(inactive),
+                                                            permission,
+                                                        (result, event) => {
+                                                            //debugger;
+                                                            } ,
+                                                        {escape: false});
+                                                    return true;
+                                                }
+
+                                            </script>
+                                </div>
+                                <br/>
+                                <div id="jstree_demo"></div>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>      
+                </apex:form> 
+            </div>
+        </body> 
+</apex:page>

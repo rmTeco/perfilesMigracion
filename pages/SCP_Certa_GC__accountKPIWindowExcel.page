@@ -1,0 +1,8 @@
+<apex:page controller="SCP_Certa_GC.accountKPIWindow" contentType="application/vnd.ms-excel#{!excelName}" showheader="false">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    </head>
+    
+    <h2><apex:outputText value="{!$Label.scp_certa_gc__kpi}"/></h2>
+    <c:accountKPIWindowComponent />
+</apex:page>

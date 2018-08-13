@@ -1,0 +1,435 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="vlocity_cmt.LookupRequestResultController" access="global" >
+	<ltng:require styles="{!$Resource.vlocity_cmt__vlocity_assets + '/css/font-hack.css'}" />
+	<lightning:workspaceAPI aura:id="workspace" />
+    <lightning:utilityBarAPI aura:id="utilitybar" />
+    
+    <aura:attribute name="lookupRequests" type="Map"/>
+    <aura:attribute name="vlcLoading" type="boolean" default="true"/>
+    <aura:attribute name="activePane" type="Integer" default="0"/>
+    <aura:attribute name="validationErrorHandler" type="Map" default="{message:'',type:''}" />
+    <aura:attribute name="searchResult" type="Map" />
+    <aura:attribute name="callerData" type="Map" />
+    <aura:attribute name="partyTable" type="Map" />
+    <aura:attribute name="isSearchTypeCaller" type="boolean" />
+    <aura:attribute name="namespace" type="String" access="global" />
+    <aura:attribute name="tabId" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:attribute name="isTabBased" type="boolean" default="false" access="global"/>
+    <aura:attribute name="isPadEnabled" type="boolean" default="false" access="global"/>
+    
+    <aura:attribute name="resultActions" type="Map" />
+    <aura:attribute name="verificationActions" type="Map" />
+    <aura:attribute name="roleBasedActions" type="Map" />
+    <aura:attribute name="launchAction" type="Map" />
+    
+    <aura:attribute name="nextLookupRequests" type="Map" />
+    <aura:attribute name="moreRequests" type="Map" />
+
+    <aura:handler event="vlocity_cmt:vlocityInteractionLauncherEvent" action="{!c.handleILEvent}"/>
+    
+    
+    <div class="lookup-container" onkeyup="{!c.handleSubmit}">
+        <aura:if isTrue="{!v.vlcLoading}">
+            <div class="slds-spinner_container">
+                <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_medium">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+        	</div>
+  		</aura:if>
+        <div  class="{! 'slds-notify_container via-top-global-alert ' + (v.validationErrorHandler.message ? 'show-validation' : 'slds-hide')}">
+             <div  role="alert" class="{! 'slds-notify slds-notify--alert slds-theme--alert-texture ' + (v.validationErrorHandler.type == 'error' ? 'slds-theme--error':'')}">
+                        <button class="slds-button slds-button--icon-inverse slds-notify__close" onclick="{!c.clearErrorMessage}">
+                             <lightning:icon iconName="utility:close" size="x-small" variant="inverse" alternativeText="Close"/>
+                        </button>
+                        <span class="slds-assistive-text">Error</span>
+                        <h2>
+                            {!v.validationErrorHandler.message}
+                        </h2>
+             </div>
+        </div>
+        <div class="{! 'via-pane via-pane-0 via-pane-search ' + (v.activePane >= 0 ? 'via-pane-active' : 'via-pane-inactive')}">
+            <div class="inner-pane-container">
+                    <aura:if isTrue="{!v.isTabBased}">
+                        <lightning:tabset class="customTab" selectedTabId="tab0">
+                            <aura:iteration items="{!v.lookupRequests}" var="request" indexVar="lkindex">
+                                <lightning:tab label="{!request.searchObjectLabel}" id="{! 'tab' + lkindex }">
+                                    <div class="lookup-request-form">
+                                        <div class="slds-p-around--small  slds-form_horizontal">
+                                            <aura:iteration items="{!request.searchFieldList}" var="searchField">
+                                                <vlocity_cmt:dynamicFieldGenerator searchField="{!searchField}" request="{!request}"></vlocity_cmt:dynamicFieldGenerator>
+                                            </aura:iteration>
+                                        </div>
+                                    </div>
+                                </lightning:tab>
+                            </aura:iteration>
+                        </lightning:tabset>
+                        <aura:set attribute="else">
+                            <aura:iteration items="{!v.lookupRequests}" var="request">
+                                <div class="lookup-request-form">
+                                    <h3 class="slds-section-title--divider section-header">{!request.searchObjectLabel}</h3>
+                                    <div class="slds-p-around--small  slds-form_horizontal">
+                                        <aura:iteration items="{!request.searchFieldList}" var="searchField">
+                                            <vlocity_cmt:dynamicFieldGenerator searchField="{!searchField}" request="{!request}"></vlocity_cmt:dynamicFieldGenerator>
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </aura:iteration>
+                        </aura:set>
+                    </aura:if>
+                <div class="slds-docked-form-footer docked-footer slds-p-around--small">
+                    <div>
+                        <lightning:buttonIcon iconName="utility:redo" class="navigation-button" onclick="{!c.refresh}" alternativeText="Reset Search" />
+                        <ui:button class="slds-float_right slds-button_brand footer-action-button" label="Search" press="{!c.search}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="{! 'via-pane via-pane-1 via-pane-search-results ' + (v.activePane >= 1 ? 'via-pane-active' : 'via-pane-inactive')}">
+            <div class="inner-pane-container">
+                <div class="slds-clearfix vloc-il-header-panel">
+                   <div class="slds-text-heading--medium slds-float--left"> {!$Label.vlocity_cmt.InteractionLauncher_SearchResult} </div>
+                   <p class="slds-float--right result-count-text--color">Showing {!v.searchResult.length} Results</p>
+                </div>
+                <aura:if isTrue="{!v.resultActions.length}">
+                    <h3 class="slds-section-title--divider via-result-actions slds-clearfix" fix-to-top="fix-to-top" scroll-element=".via-pane-1" top-sibling=".via-pane-1 .vloc-il-header-panel">
+                        <aura:if isTrue="{!lessthan(v.resultActions.length, 7)}">
+                            <span  class="step-verification-actions-label"> {!$Label.vlocity_cmt.InteractionLauncher_UnrelatedParty}</span>
+                        </aura:if>
+                        
+                        <div class="{! 'slds-button-group ' + (lessthan(v.resultActions.length, 7) ?'slds-float--right' :'') }" role="group">
+                           <aura:iteration items="{!v.resultActions}" var="action" indexVar="index">
+                                <button data-value="{!index}" data-isResultAction="true" class="{! 'slds-button anchor slds-button--icon-border via-result-action-btn via-result-action-' + index }" onclick="{!c.invokeAction}">
+                                        <aura:if isTrue="{!action.vlocityIcon}">
+                                            <i class="{! 'icon slds-button__icon ' + action.vlocityIcon }"></i>
+                                        </aura:if>
+                                        <aura:if isTrue="{!action.imageRef}">
+                                             <img class="slds-button__icon" src="{!action.imageRef}" />
+                                        </aura:if>
+                                       
+                                         <span class="slds-assistive-text">{!action.displayName}</span>
+                                         <div class="slds-popover slds-nubbin--bottom-right" role="dialog">
+                                                <div class="slds-popover__body">
+                                                        {!action.displayName}
+                                                </div>
+                                            </div>
+                                 </button>
+                           </aura:iteration>
+                     	</div>
+                 	</h3>
+                </aura:if>
+                <aura:iteration items="{!v.searchResult}" var="result" indexVar="index">
+                <section class="search-result-section">
+                    <aura:iteration items="{!result.resultFieldList}" var="field">
+                      <vlocity_cmt:dynamicSearchResult result="{!result}" field="{!field}" ></vlocity_cmt:dynamicSearchResult>
+                    </aura:iteration>
+                    <lightning:button class="slds-button slds-button--neutral content-button" value="{!result}" label="{!$Label.vlocity_cmt.InteractionLauncher_Verify}" onclick="{!c.verifySearchResult}"/>
+                </section>
+                </aura:iteration>
+                <div class="slds-docked-form-footer docked-footer slds-p-around--small">
+                    <div>
+                        <div class="slds-button-group">
+                            <lightning:buttonIcon iconName="utility:back" class="navigation-button"  value="0" onclick="{!c.setActivePane}" alternativeText="Back"/>
+                       		<lightning:buttonIcon iconName="utility:redo" class="navigation-button" onclick="{!c.refresh}"  alternativeText="Reset Search"/>
+                        </div>
+                    </div>
+            	</div>
+            </div>
+            
+        </div>
+           <div class="{! 'via-pane via-pane-2 via-pane-related-parties ' + (v.activePane >= 2 ? 'via-pane-active' : 'via-pane-inactive')}">
+            <div class="inner-pane-container">
+                <div class="slds-clearfix vloc-il-header-panel">
+                   <div class="slds-text-heading--medium slds-float--left"> {!$Label.vlocity_cmt.InteractionLauncher_RelatedParty} </div>
+                   <p class="slds-float--right result-count-text--color">Showing {!v.searchResult.length} Results</p>
+                </div>
+                <aura:if isTrue="{!v.resultActions.length}">
+                    <h3 class="slds-section-title--divider via-result-actions slds-clearfix" fix-to-top="fix-to-top" scroll-element=".via-pane-1" top-sibling=".via-pane-1 .vloc-il-header-panel">
+                        <aura:if isTrue="{!lessthan(v.resultActions.length, 7)}">
+                            <span  class="step-verification-actions-label"> {!$Label.vlocity_cmt.InteractionLauncher_UnrelatedParty}</span>
+                        </aura:if>
+                        <div class="{! 'slds-button-group ' + (lessthan(v.resultActions.length, 7) ?'slds-float--right' :'') }" role="group">
+                           <aura:iteration items="{!v.resultActions}" var="action" indexVar="index">
+                               <button data-value="{!index}" data-isResultAction="true" class="{! 'slds-button anchor slds-button--icon-border via-result-action-btn via-result-action-' + index }" onclick="{!c.invokeAction}" >
+                                     <aura:if isTrue="{!action.vlocityIcon}">
+                                          <i class="{! 'icon slds-button__icon ' + action.vlocityIcon }"></i>
+                                    </aura:if>
+                                      <aura:if isTrue="{!action.imageRef}">
+                                     <img class="slds-button__icon" src="{!action.imageRef}" />
+                                    </aura:if>
+                                   
+                                     <span class="slds-assistive-text">{!action.displayName}</span>
+                                     <div class="slds-popover slds-nubbin--bottom-right" role="dialog">
+                                            <div class="slds-popover__body">
+                                                    {!action.displayName}
+                                            </div>
+                                        </div>
+                                </button>
+                           </aura:iteration>
+                     	</div>
+                 	</h3>
+                </aura:if>
+                <ul class="slds-has-dividers--bottom">
+                    <li class="slds-item list-header">
+                        <aura:iteration items="{!v.partyTable.header}" var="header" indexVar="index">
+                        	<div class="col"><span>{! header}</span></div>
+                        </aura:iteration>
+                        <div class="col"></div>
+                    </li>
+                    <aura:iteration items="{!v.searchResult}" var="result" indexVar="ind">
+                    <li class="slds-item list-related-party" >
+                        <aura:iteration items="{!result.body}" var="rowData" indexVar="index">
+                         <div class="col">
+                             <span> <aura:unescapedHtml value="{!rowData}" /> </span>
+                         </div>
+                        </aura:iteration>
+                         <div class="col">
+                            <lightning:button class="slds-button slds-button--neutral content-button" value="{!result}" label="{!$Label.vlocity_cmt.InteractionLauncher_Verify}" onclick="{!c.verifySearchResult}"/>
+             
+                         </div>
+                    </li>
+                    </aura:iteration>
+                </ul>
+                  
+                
+               <aura:if isTrue="{!v.roleBasedActions.length}">
+                   <div class="slds-clearfix slds-p-horizontal--large slds-p-vertical--small">
+                       <div class="slds-text-heading--medium slds-float--left"> Unrelated Parties </div> </div>
+                   <div class="unrelated-parties-container">
+                   <div class="slds-grid slds-wrap">
+                           <aura:iteration items="{!v.roleBasedActions}" var="action" indexVar="index">
+                               
+                            <div class="slds-p-horizontal--small slds-p-bottom--small slds-size_1-of-3">
+                                <button type="button" class="slds-button  slds-p-horizontal--small slds-button--neutral unrelated-parties-button content-button" >{!action.displayName}</button>
+                         
+                             </div>
+   
+                           </aura:iteration>
+                       </div></div>
+               </aura:if>
+                <div class="slds-docked-form-footer docked-footer slds-p-around--small">
+                    <div>
+                        <div class="slds-button-group">
+                            <lightning:buttonIcon iconName="utility:back" class="navigation-button" value="0" onclick="{!c.setActivePane}" alternativeText="Back"/>
+                       		<lightning:buttonIcon iconName="utility:redo" class="navigation-button" onclick="{!c.refresh}"  alternativeText="Reset Search"/>
+                        </div>
+                    </div>
+            	</div>
+            </div>
+            
+        </div>
+      
+        <div class="{! 'via-pane via-pane-3 via-pane-verify-caller ' + (v.activePane >= 3 ? 'via-pane-active' : 'via-pane-inactive')}">
+            <div class="inner-pane-container">
+                <div class="slds-clearfix vloc-il-header-panel">
+                    <aura:if isTrue="{!v.callerData.resultValueMap.Name}">
+                        <div class="slds-text-heading--medium" > {!$Label.vlocity_cmt.InteractionLauncher_VerifyCaller} : {!v.callerData.resultValueMap.Name}</div>
+                        <aura:set attribute="else">
+                            <div class="slds-text-heading--medium" > {!$Label.vlocity_cmt.InteractionLauncher_VerifyCaller}</div>
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <aura:if isTrue="{!v.verificationActions.length}">
+                    <h3 class="slds-section-title--divider via-result-actions slds-clearfix" fix-to-top="fix-to-top" scroll-element=".via-pane-1" top-sibling=".via-pane-1 .vloc-il-header-panel">
+                        <aura:if isTrue="{!lessthan(v.verificationActions.length, 7)}">
+                            <span  class="step-verification-actions-label"> {!$Label.vlocity_cmt.InteractionLauncher_UnrelatedParty} </span>
+                        </aura:if>
+                        <div class="{! 'slds-button-group ' + (lessthan(v.verificationActions.length, 7) ?'slds-float--right' :'') }" role="group">
+                           <aura:iteration items="{!v.verificationActions}" var="action" indexVar="index">
+                               <button data-value="{!index}" data-isResultAction="false" class="{! 'slds-button anchor slds-button--icon-border via-result-action-btn via-result-action-' + index }" onclick="{!c.invokeAction}">
+                                     <aura:if isTrue="{!action.vlocityIcon}">
+                                          <i class="{! 'icon slds-button__icon ' + action.vlocityIcon }"></i>
+                                    </aura:if>
+                                      <aura:if isTrue="{!action.imageRef}">
+                                     <img class="slds-button__icon" src="{!action.imageRef}" />
+                                    </aura:if>
+                                   
+                                     <span class="slds-assistive-text">{!action.displayName}</span>
+                                     <div class="slds-popover slds-nubbin--bottom-right" role="dialog">
+                                            <div class="slds-popover__body">
+                                                    {!action.displayName}
+                                            </div>
+                                        </div>
+                                </button>
+                           </aura:iteration>
+                     	</div>
+                 	</h3>
+                </aura:if>
+                <div class="section-container">
+                <aura:if isTrue="{!v.callerData.verificationFieldList.length}">
+                    <h3 class="slds-section-title--divider"> <aura:unescapedHtml value="{!$Label.vlocity_cmt.InteractionLauncher_VerifyHeading}" /> </h3>
+                    <aura:iteration items="{!v.callerData.verificationFieldList}" var="vField">
+                        <section class="verification-section verification-section-verify" >
+                            <vlocity_cmt:dynamicVerifyResult callerData="{!v.callerData}" field="{!vField}" />
+                        </section>
+                    </aura:iteration>
+                </aura:if>
+                 </div>
+                <div class="section-container">
+                <aura:if isTrue="{!v.callerData.optionalVerificationFieldList.length}">
+                	<h3 class="slds-section-title--divider"> {!$Label.vlocity_cmt.InteractionLauncher_OptionalVerifyHeading}
+                    <span>
+                        &nbsp;({!$Label.vlocity_cmt.InteractionLauncher_MustVerify}
+                        <aura:if isTrue="{!v.callerData.numOfOptionalVerificationFields}">
+                            &nbsp;{! v.callerData.numOfOptionalVerificationFields}
+                        </aura:if>)
+                    </span>
+                    </h3>
+                    <aura:iteration items="{!v.callerData.optionalVerificationFieldList}" var="vField">
+                        <section class="verification-section verification-section-verify" >
+                            <vlocity_cmt:dynamicVerifyResult callerData="{!v.callerData}" field="{!vField}" />
+                        </section>
+                    </aura:iteration>
+                </aura:if>
+                </div>
+                <aura:if isTrue="{!v.isPadEnabled}">
+                    <section class="notes-section">
+                        <div class="slds-form-element">
+                            <label class="slds-text-heading--label section-item-label" for="notes-textarea">Notes</label>
+                            <div class="slds-form-element__control">
+                                <textarea id="notes-textarea" class="slds-textarea scratchpad--color" placeholder="Use as Scratchpad "></textarea>
+                            </div>
+                        </div>
+                    </section>
+                </aura:if>
+            </div>
+			<div class="slds-docked-form-footer docked-footer slds-p-around--small">
+                    <div>
+                        <div class="slds-button-group slds-float_left">
+                            <lightning:buttonIcon iconName="utility:back" class="navigation-button"  value="{!v.isSearchTypeCaller ? 1 : 2 }" onclick="{!c.setActivePane}" alternativeText="Back"/>
+                       		<lightning:buttonIcon iconName="utility:redo" class="navigation-button"  onclick="{!c.refresh}"  alternativeText="Reset Search"/>
+                        </div>
+                        <aura:if isTrue="{!v.callerData.request.continueSearch }">
+                             <button class="slds-button slds-button--brand slds-float_right launch-console footer-action-button" onclick="{!c.verifyAndSearch}" >
+                                  {!$Label.vlocity_cmt.InteractionLauncher_VerifyAndSearch}
+                        		</button>
+                            <aura:set attribute="else">
+                                <button class="slds-button slds-button--brand slds-float_right launch-console footer-action-button" onclick="{!c.launchConsole}" >
+                               		<lightning:icon size="xx-small" variant="inverse" iconName="utility:tabset" class="slds-button__icon--left" alternativeText="{!$Label.vlocity_cmt.InteractionLauncher_Launch}"/>
+                                  {!$Label.vlocity_cmt.InteractionLauncher_Launch}
+                        		</button>
+                            </aura:set>
+                        </aura:if>
+                       
+                    </div>
+                 
+            	</div>            
+        </div>
+   		<div class="{! 'via-pane via-pane-4 via-pane-caller-verified ' + (v.activePane >= 4 ? 'via-pane-active' : 'via-pane-inactive')}">
+            <div class="inner-pane-container">
+                <div class="slds-m-top--small">
+                <aura:if isTrue="{!v.callerData.resultValueMap.Name}">
+                	<div class="slds-text-heading--medium" >{!v.callerData.resultValueMap.Name} Verified</div>     
+                    <aura:set attribute="else">
+                             <div class="slds-text-heading--medium" >Verified Caller</div>
+                    </aura:set>
+                </aura:if>
+                    <div class="slds-p-top--x-large">
+                        <span  title="The caller has been verified" class="">
+                    		<lightning:icon iconName="action:check" class="success-icon" ></lightning:icon>
+                    		<span class="slds-assistive-text">The caller has been verified</span>
+                		</span>
+                    </div>
+                
+                <div class="slds-text-heading--small slds-text-align--center slds-p-top--small slds-p-bottom--x-large">The caller has been verified.</div>
+                <button  class="slds-button slds-button--brand start-new-search footer-action-button" onclick="{!c.refresh}" >Start New Search</button>  
+                </div>
+            </div>
+        </div>
+        <div class="{! 'via-pane via-pane-5 via-pane-search-policies ' + (v.activePane >= 5 ? 'via-pane-active' : 'via-pane-inactive')}">
+            <div class="inner-pane-container">
+                 <h3 class="slds-section-title--divider section-header no-margin-bottom"> {!v.callerData.request.searchObjectLabel}</h3>
+                           
+             <aura:iteration items="{!v.nextLookupRequests}" var="result" indexVar="index">
+                <section class="search-result-section verified-agent">
+                    <aura:iteration items="{!result.resultFieldList}" var="field">
+                      <vlocity_cmt:dynamicSearchResult result="{!result}" field="{!field}" ></vlocity_cmt:dynamicSearchResult>
+                    </aura:iteration>
+                    <aura:if isTrue="{!result.interactionObjName}">
+                        <button class="slds-button slds-button--neutral slds-float_right launch-console content-button" data-index="{!index}" onclick="{!c.viewVerifiedRequest}" >
+                       <lightning:icon size="xx-small" iconName="utility:tabset" class="slds-button__icon--left brand--fill" alternativeText="View"/>
+                          View
+                        </button>
+
+                    </aura:if>
+                    
+                   </section>
+            </aura:iteration>
+            <aura:iteration items="{!v.moreRequests}" var="request">
+                <div class="lookup-request-form">
+                   <h3 class="slds-section-title--divider section-header">{!request.searchObjectLabel}</h3>
+                    <div  class="slds-p-around--small  slds-form_horizontal">
+                    <aura:iteration items="{!request.searchFieldList}" var="searchField">
+                        <vlocity_cmt:dynamicFieldGenerator searchField="{!searchField}" request="{!request}" ></vlocity_cmt:dynamicFieldGenerator>
+                    </aura:iteration>
+                    </div>
+                </div>
+            </aura:iteration>
+            <div class="slds-docked-form-footer docked-footer slds-p-around--small">
+                <div>
+                   <lightning:buttonIcon iconName="utility:redo" class="navigation-button" onclick="{!c.refresh}" alternativeText="Reset Search"/>
+                    <ui:button class="slds-float_right slds-button_brand footer-action-button" label="Search" press="{!c.secondSearch}"/>
+                </div>
+            </div>
+                
+            </div>
+        </div>
+        
+        <div class="{! 'via-pane via-pane-6 via-pane-agent-search-results ' + (v.activePane >= 6 ? 'via-pane-active' : 'via-pane-inactive')}">
+            <div class="inner-pane-container">
+                <div class="slds-clearfix vloc-il-header-panel">
+                   <div class="slds-text-heading--medium slds-float--left"> {!$Label.vlocity_cmt.InteractionLauncher_SearchResult} </div>
+                   <p class="slds-float--right result-count-text--color">Showing {!v.searchResult.length} Results</p>
+                </div>
+                <aura:if isTrue="{!v.resultActions.length}">
+                    <h3 class="slds-section-title--divider via-result-actions slds-clearfix" fix-to-top="fix-to-top" scroll-element=".via-pane-1" top-sibling=".via-pane-1 .vloc-il-header-panel">
+                        <aura:if isTrue="{!lessthan(v.resultActions.length, 7)}">
+                            <span  class="step-verification-actions-label"> {!$Label.vlocity_cmt.InteractionLauncher_UnrelatedParty}</span>
+                        </aura:if>
+                        <div class="{! 'slds-button-group ' + (lessthan(v.resultActions.length, 7) ?'slds-float--right' :'') }" role="group">
+                           <aura:iteration items="{!v.resultActions}" var="action" indexVar="index">
+                               <button data-value="{!index}" data-isResultAction="true" class="{! 'slds-button anchor slds-button--icon-border via-result-action-btn via-result-action-' + index }" onclick="{!c.invokeAction}">
+                                     <aura:if isTrue="{!action.vlocityIcon}">
+                                          <i class="{! 'icon slds-button__icon ' + action.vlocityIcon }"></i>
+                                    </aura:if>
+                                      <aura:if isTrue="{!action.imageRef}">
+                                     <img class="slds-button__icon" src="{!action.imageRef}" />
+                                    </aura:if>
+                                   
+                                     <span class="slds-assistive-text">{!action.displayName}</span>
+                                     <div class="slds-popover slds-nubbin--bottom-right" role="dialog">
+                                            <div class="slds-popover__body">
+                                                    {!action.displayName}
+                                            </div>
+                                        </div>
+                                </button>
+                           </aura:iteration>
+                     	</div>
+                 	</h3>
+                </aura:if>
+                <aura:iteration items="{!v.searchResult}" var="result" indexVar="index">
+                <section class="search-result-section">
+                    <aura:iteration items="{!result.resultFieldList}" var="field">
+                      <vlocity_cmt:dynamicSearchResult result="{!result}" field="{!field}" ></vlocity_cmt:dynamicSearchResult>
+                    </aura:iteration>
+                    <button class="slds-button slds-button--neutral slds-float_right launch-console content-button" data-index="{!index}" onclick="{!c.view}" >
+                       <lightning:icon size="xx-small" iconName="utility:tabset" class="slds-button__icon--left brand--fill" alternativeText="View"/>
+                          View
+                    </button>
+                </section>
+                </aura:iteration>
+                <div class="slds-docked-form-footer docked-footer slds-p-around--small">
+                    <div>
+                        <div class="slds-button-group">
+                            <lightning:buttonIcon iconName="utility:back" class="navigation-button"  value="5" onclick="{!c.setActivePane}" alternativeText="Back"/>
+                       		<lightning:buttonIcon iconName="utility:redo" class="navigation-button"  onclick="{!c.refresh}"  alternativeText="Reset Search"/>
+                        </div>
+                    </div>
+            	</div>
+            </div>
+            
+        </div>
+    </div>
+</aura:component>

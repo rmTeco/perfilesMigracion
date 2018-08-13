@@ -1,0 +1,605 @@
+<apex:page docType="html-5.0" controller="GP_Condicionales_Controller" tabStyle="ReglasGestorPuntos__tab">
+    <head>
+        <script src="//code.jquery.com/jquery-3.3.1.min.js"/>
+        <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"/>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+        <style>
+            .modal {
+                z-index: 100; /* Sit on top */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+            .modalContent {
+                margin: 15% auto;
+            }
+            .noMostrar{
+                display: none;
+            }
+        </style>
+        <script type="text/javascript">
+            if (!modalUpdate) {
+                var modalUpdate = '';
+            }
+            if (!modalCalcular) {
+                var modalCalcular = '';
+            }
+            if (!modalFechaVTO) {
+                var modalFechaVTO = '';
+            }
+            if (!nombreRegla) {
+                var nombreRegla = '';
+            }
+            if (!eventoRegla) {
+                var eventoRegla = '';
+            }
+            if (!IdCond) {
+                var IdCond = null;
+            }
+            if (!tableId) {
+                var tableId = '';
+            }
+            if (!selectedVar) {
+                var selectedVar = '';
+            }
+            if (!tipoCalculoValue) {
+                var tipoCalculoValue = '';
+            }
+            if (!varTipoFechaVTO) {
+                var varTipoFechaVTO = '';
+            }
+            if (!varCalcVTOText) {
+                var varCalcVTOText = '';
+            }
+            if (!varSectItemINP) {
+                var varSectItemINP = '';
+            }
+            var selectField = '';
+            var intField = '';
+            var boolField = '';
+            var buttonUpd = '';
+            var buttonIns = '';
+            var table = '';
+            $.fn.dataTable.ext.order['dom-checkbox'] = function  ( settings, col ) {
+                return this.api().column( col, {order:'index'} ).nodes().map( function ( td, i ) {
+                    return $('input', td).prop('checked') ? '1' : '0';
+                } );
+            }
+            $(document).ready(function(){
+                initIdElems1();
+                initIdElems2();
+
+                varSectItemINP = $('.SectionItemInput')[0];
+                insertTitle();
+
+                varCalcVTOText = $('.CalculoVtoText')[0];
+                insertTitleFechaVTO();
+
+                $('.datePicker').css('z-index','9001');
+                fieldType();
+            });
+            function initElems(listaCond,IdCondicion){
+                if(listaCond) {
+                    tableId = document.getElementById(listaCond);
+                    openDataTable();
+                }
+                if(IdCondicion) {
+                    IdCond = document.getElementById(IdCondicion);
+                }
+            }
+            function openDataTable(){
+                if (!nombreRegla){
+                    nombreRegla = '{!regla.Name}';
+                }
+                if (!eventoRegla){
+                    eventoRegla = '{!regla.Tipo_de_evento__c}';
+                }
+                modalUpdate = document.getElementById('updateModal');
+                modalCalcular = document.getElementById('modalCalcular');
+                modalFechaVTO = document.getElementById('modalFechaVTO');
+                buttonUpd = document.getElementById('divButtonUpd');
+                buttonIns = document.getElementById('divButtonIns');
+                selectField = document.getElementById('spanSelectValor');
+                intField = document.getElementById('spanIntValor');
+                boolField = document.getElementById('spanBoolValor');
+                
+                table = $('.listaCondiciones').dataTable({
+                    "paging": true,
+                    "bInfo": false,
+                    "columnDefs": [
+                        { "orderable": false, targets: 0 },
+                        { "type": "text", targets: [1,2,3]}
+                    ],
+                    "order": [[1,'asc']],
+                    "language": {
+                        "paginate": {
+                            "previous": "Anterior",
+                            "next": "Siguiente"
+                        },
+                        "lengthMenu": "Mostrar _MENU_ registros",
+                        "sSearch": "Buscar",
+                        "search": "Buscar",
+                        "sEmptyTable": "No se encontraron condiciones",
+                        "zeroRecords": "No se encontraron condiciones"
+                    }
+                });
+            }
+            function fieldChange(data, nombreId, eventoId) {
+                if(data.id == nombreId) {
+                    nombreRegla = data.value;
+                }
+                if(data.id == eventoId) {
+                    eventoRegla = data.value;
+                }
+                initPicklist();
+
+                if( $(".nombreRegla").val() == '' || $(".tipoEvento").val() == ''){
+                    $(".botonCondicion").addClass('noMostrar');
+                    $(".cartelCondicion").removeClass('noMostrar');
+                }else{
+                    $(".cartelCondicion").addClass('noMostrar');
+                    $(".botonCondicion").removeClass('noMostrar');
+                }
+            }
+            function update(id) {
+                validateFields();
+                //IdCond = document.getElementById('j_id0:formulario:IdCond');
+                if (nombreRegla && eventoRegla) {
+                    if(id) {
+                        IdCond.value = id;
+                    } else {
+                        IdCond.value = null;
+                        window.alert('Error al modificar registro: Id inexistente');
+                        return;
+                    }
+                    $(buttonIns).addClass('noMostrar');
+                    $(buttonUpd).removeClass('noMostrar');
+                    getCond();
+                    //rerenderPick();
+                    openModal('condUPD');
+                } else {
+                    return;
+                }
+            }
+            function deleteCondJS(id) {
+                //IdCond = document.getElementById('j_id0:formulario:IdCond');
+                if (id) {
+                    IdCond.value = id;
+                    deleteCond();
+                } else {
+                    IdCond.value = null;
+                    window.alert('Error al eliminar condición');
+                    return;
+                }
+            }
+            function insert() {
+                validateFields();
+                inicializarCond();
+                $(buttonUpd).addClass('noMostrar');
+                $(buttonIns).removeClass('noMostrar');
+                openModal('condUPD');
+            }
+            function validateFields() {
+                if (!nombreRegla) {
+                    nombreRegla = '{!regla.Name}';
+                }
+                if (!eventoRegla) {
+                    eventoRegla = '{!regla.Tipo_de_evento__c}';
+                }
+            }
+            function refreshVarSelect(SOptId, selectedVarId) {
+                var SOptDOM = document.getElementById(SOptId);
+                selectedVar = document.getElementById(selectedVarId);
+                selectedVar.value = SOptDOM.value;
+                refreshPicklists();
+            }
+            function fieldType() {
+                var pickElem = $('.valorContraElQueSeCompara')[0];
+                var options = $('.valorContraElQueSeCompara option');
+                var selOption = '';
+
+                if (options.length > 1) {
+                    selOption = options[1].value;
+                }
+                
+                if (selOption == 'integer') {
+                    acomodarCampos(pickElem.id, 'contenedor');
+                    acomodarCampos('spanBoolValor', 'contenedor');
+                    
+                    acomodarCampos('spanIntValor', 'spanEspacioValor');
+                    //LOCALtipoValorAUX = selOption;
+                } else if (selOption == 'bool') {
+                    acomodarCampos(pickElem.id, 'contenedor');
+                    acomodarCampos('spanIntValor', 'contenedor');
+                    
+                    acomodarCampos('spanBoolValor', 'spanEspacioValor');
+                    //LOCALtipoValorAUX = selOption;
+                } else {
+                    acomodarCampos('spanBoolValor', 'contenedor');
+                    acomodarCampos('spanIntValor', 'contenedor');
+                    
+                    acomodarCampos(pickElem.id, 'spanEspacioValor');
+                    //LOCALtipoValorAUX = '';
+                }
+            }
+            function acomodarCampos(child, parentTo) {
+                var childElem = document.getElementById(child);
+                var parentElem = document.getElementById(parentTo);
+                
+                parentElem.append(childElem);
+            }
+            function setAuxVar(selected, aux) {
+                //Seteo Variable auxiliar para Picklists Dependientes
+                if (aux) {
+                    var auxVarAComparar = document.getElementById(aux);
+                    auxVarAComparar.value = selected;
+                }
+            }
+            function setAuxValores(selected, aux) {
+                //Seteo Variables auxiliares
+                if (aux) {
+                    var elem = document.getElementById(aux);
+                    elem.value = selected;
+                }
+            }
+            function insertTitle() {
+                var firstChild = varSectItemINP;
+                if (firstChild) {
+                    var newTitle = document.createElement('span');
+                    newTitle.innerHTML = "Cálculo de puntos";
+                    newTitle.style.marginRight = '15px';
+                    firstChild.parentNode.insertBefore(newTitle, firstChild);
+                }
+            }
+            function insertTitleFechaVTO() {
+                var firstChild = varCalcVTOText;
+                if (firstChild) {
+                    var newTitle = document.createElement('span');
+                    newTitle.innerHTML = "Fecha de vencimiento";
+                    newTitle.style.marginRight = '15px';
+                    firstChild.parentNode.insertBefore(newTitle, firstChild);
+                }
+            }
+            function openModal(mod) {
+                if (mod == 'Calcular') {
+                    modalCalcular.classList.add('slds-fade-in-open');
+                } else if (mod == 'FechaVTO') {
+                    modalFechaVTO.classList.add('slds-fade-in-open');
+                } else if (mod == 'condUPD') {
+                    modalUpdate.classList.add('slds-fade-in-open');
+                }
+            }
+            function cerrarModal(mod) {
+                if (mod == 'Calcular') {
+                    modalCalcular.classList.remove('slds-fade-in-open');
+                } else if (mod == 'FechaVTO') {
+                    modalFechaVTO.classList.remove('slds-fade-in-open');
+                } else if (mod == 'condUPD') {
+                    modalUpdate.classList.remove('slds-fade-in-open');
+                }
+            }
+            function tipoCalculo() {
+                var divFijo = document.getElementById('divCalculoFijo');
+                var divVariable = document.getElementById('divCalculoVariable');
+                var selectCalculo = $('.selectTipoCalculoClass')[0];
+                
+                tipoCalculoValue = selectCalculo.value;
+                
+                if (tipoCalculoValue == 'fijo') {
+                    $(divFijo).removeClass('noMostrar');
+                    $(divVariable).addClass('noMostrar');
+                } else {
+                    $(divVariable).removeClass('noMostrar');
+                    $(divFijo).addClass('noMostrar');
+                }
+            }
+            function tipoFechaVTO() {
+                var fechaFija = document.getElementById('divFechaFija');
+                var fechaPorDias = document.getElementById('divFechaDias');
+                var selectFecha = $('.selectTipoVTOClass')[0];
+                
+                varTipoFechaVTO = selectFecha.value;
+                
+                if (varTipoFechaVTO == 'fija') {
+                    $(fechaFija).removeClass('noMostrar');
+                    $(fechaPorDias).addClass('noMostrar');
+                } else {
+                    $(fechaPorDias).removeClass('noMostrar');
+                    $(fechaFija).addClass('noMostrar');
+                }
+            }
+            function verLog(){
+                console.log('valor aca abajo');
+                console.log($('.valorContraElQueSeCompara'));
+
+                var options = $('.valorContraElQueSeCompara option');
+
+                var values = $.map(options ,function(option) {
+                return option.value;
+                });
+
+                console.log(values); 
+            }
+
+        </script>
+        <apex:slds />
+        <apex:messages />
+    </head>
+    <body>
+        <apex:form id="formulario">
+            <apex:actionFunction name="initPicklist" action="{!getPicklists}" rerender="varOptionsId, pickOper, pickValor"/>
+            <apex:actionFunction name="refreshPicklists" action="{!getPicklists}" rerender="pickOper, pickValor" oncomplete="fieldType();" />
+            <apex:actionFunction name="getCond" action="{!getCondicional}" rerender="varOptionsId, auxVarAComparar, pickOper, pickValor, auxValorEntero, auxValorBooleano, valEntero, valBooleano" oncomplete="fieldType();" />
+            <apex:actionFunction name="deleteCond" action="{!deleteCond}" rerender="divTable" oncomplete="openDataTable()" />
+            <apex:actionFunction name="rerenderPick" action="{!doNothing}" reRender="auxVarAComparar, pickOper, pickValor" oncomplete="fieldType();" />
+            <apex:actionFunction name="inicializarCond" action="{!initCondicion}" reRender="varOptionsId, auxVarAComparar, pickOper, pickValor"/>
+            <apex:inputHidden value="{!IdCond}" id="IdCond"/>
+            <apex:inputHidden value="{!selectedVar}" id="selectedVarId"/>
+
+            <apex:actionFunction action="{!doNothing}" name="initIdElems1" oncomplete="initElems('','{!$Component.IdCond}')"/>
+            
+            <apex:pageBlock >
+                <apex:pageBlockSection columns="2" title="Editor de Reglas" collapsible="false">
+                    <apex:inputField styleClass="tipoEvento" value="{!regla.Tipo_de_evento__c}" id="evento" label="Evento" onchange="fieldChange(this,'','{!$Component.evento}')" required="true"/>
+                    <apex:inputField value="{!regla.Vigencia_desde__c}" label="Vigente desde" style="width:90px;"/>
+                    <apex:inputField styleClass="nombreRegla" value="{!regla.Name}" id="nombre" label="Número de regla" onchange="fieldChange(this,'{!$Component.nombre}','')" required="true"/>
+                    <apex:inputField value="{!regla.Vigencia_hasta__c}" label="Vigente hasta" style="width:90px;"/>
+                    <apex:inputField value="{!regla.Activa__c}"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1" title="Lista de Condiciones" collapsible="false" id="divTable">
+                    <div class="slds-size--1-of-1 slds-p-around--medium">
+
+                        <apex:actionFunction action="{!doNothing}" name="initIdElems2" oncomplete="initElems('{!$Component.ListaCondiciones}','')" />
+                        
+                        <apex:dataTable value="{!listaCondiciones}" var="lc" styleClass="listaCondiciones" id="ListaCondiciones">
+                            <apex:column width="5%" headerValue="Acciones">
+                                <!-- Update button -->
+                                <div class="slds-grid">
+                                    <!-- <img src="/img/icon/custom51_100/pencil16.png" class="slds-m-horizontal--small" onClick="update('{!lc.Id}');" style="cursor:pointer;"/> -->
+                                    <span class="slds-icon_container slds-icon_container--circle slds-icon-action-edit slds-align--absolute-center slds-p-around--xx-small" style="cursor:pointer;" onClick="update('{!lc.Id}');">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                            <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#edit')}"></use>
+                                        </svg>
+                                    </span>
+                                    <!-- <img src="/img/func_icons/remove12_on.gif" class="slds-m-horizontal--small" onClick="deleteCondJS('{!lc.Id}')" style="cursor:pointer;"/> -->
+                                    <span class="slds-icon_container slds-icon_container--circle slds-icon-action-delete slds-align--absolute-center slds-p-around--xx-small" style="cursor:pointer;" onClick="deleteCondJS('{!lc.Id}');">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                            <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#delete')}"></use>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </apex:column>
+                            <apex:column value="{!lc.Variable_a_comparar__c}" headerValue="Variable"/>
+                            <apex:column value="{!lc.Operador__c}" headerValue="Operador"/>
+                            <apex:column headerValue="Valor" id="columnaValor">
+                                <apex:outputField value="{!lc.Valor_contra_el_que_se_compara__c}" rendered="{!lc.Valor_entero__c == null && lc.Valor_Booleano__c == false}"/>
+                                <apex:outputField value="{!lc.Valor_entero__c}" rendered="{!lc.Valor_entero__c != null && lc.Valor_Booleano__c == false}"/>
+                                <apex:outputField value="{!lc.Valor_Booleano__c}" rendered="{!lc.Valor_entero__c == null && lc.Valor_Booleano__c == true}"/>
+                            </apex:column>
+                        </apex:dataTable>
+
+                        <apex:outputPanel styleClass="cartelCondicion {!IF(regla.Name == null || regla.Tipo_de_evento__c == null, '', 'noMostrar')}"  >
+                            <div class="slds-notify_container">
+                                <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+                                    <span class="slds-assistive-text">Error</span>
+                                    <h2>
+                                        <svg aria-hidden="true" class="slds-icon slds-icon-text-warning slds-icon--x-small slds-m-right--small">
+                                            <use href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#warning')}"></use>
+                                        </svg>
+                                        Debe ingresar Nombre de Regla y Tipo de Evento para crear condiciones.
+                                    </h2>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel styleClass="botonCondicion {!IF(regla.Name != '' && regla.Tipo_de_evento__c != '','','noMostrar')}" >
+                            <apex:commandButton id="botonCrearCondicion" 
+                                                value="Crear nueva condición" 
+                                                styleClass="slds-align--absolute-center"
+                                                onclick="fieldType();insert()" 
+                                                oncomplete="openDataTable()"  
+                                                reRender="divTable"/>
+                        </apex:outputPanel>
+
+                    </div>
+                </apex:pageBlockSection>
+                
+                <apex:actionFunction name="rerenderPickCalculo" action="{!doNothing}" reRender="selectTipoCalculo"/>
+                <apex:pageBlockSection columns="2" title="Resultado" collapsible="false">
+
+                    <apex:pageBlockSectionItem dataStyleClass="slds-grid" dataStyle="max-width:32px;">
+                        <apex:input value="{!calculoDePuntos}" disabled="true" label="Cálculo de puntos" title="Cálculo de puntos" styleClass="SectionItemInput" id="SectionItemInput"/>
+                        <!-- <img src="/img/icon/custom51_100/pencil16.png" class="slds-m-horizontal--small" onClick="rerenderPickCalculo();tipoCalculo();openModal('Calcular');" style="cursor:pointer;"/> -->
+                        <span class="slds-icon_container slds-icon_container--circle slds-icon-action-edit slds-align--absolute-center slds-p-around--xx-small" style="cursor:pointer;" onClick="rerenderPickCalculo();tipoCalculo();openModal('Calcular');">
+                            <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#edit')}"></use>
+                            </svg>
+                        </span>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem dataStyleClass="slds-grid" dataStyle="max-width:32px;">
+                        <apex:input value="{!calculoVTO}" disabled="true" label="Fecha de vencimiento" title="Fecha de vencimiento" styleClass="CalculoVtoText" id="CalculoVtoText"/>
+                        <!-- <img src="/img/icon/custom51_100/pencil16.png" class="slds-m-horizontal--small" onClick="rerenderPickCalculo();tipoFechaVTO();openModal('FechaVTO');" style="cursor:pointer;"/> -->
+                        <span class="slds-icon_container slds-icon_container--circle slds-icon-action-edit slds-align--absolute-center slds-p-around--xx-small" style="cursor:pointer;" onClick="rerenderPickCalculo();tipoFechaVTO();openModal('FechaVTO');">
+                            <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#edit')}"></use>
+                            </svg>
+                        </span>
+                    </apex:pageBlockSectionItem>
+                    
+                </apex:pageBlockSection>
+                <div class="slds-grid slds-grid--align-center">
+                    <apex:commandButton value="Cancelar" styleClass="slds-m-around--medium" onclick="location.href = '/apex/GP_Gestor_Reglas'" reRender="formulario" oncomplete="openDataTable()"/>
+                    <apex:commandButton value="Guardar" styleClass="slds-m-around--medium" action="{!saveAndReturnToList}" reRender="formulario" oncomplete="openDataTable()"/>
+                </div>
+            </apex:pageBlock>
+
+            <!-- Modal para insertar/actualizar condiciones -->
+            <div id="updateModal" class="slds-modal modal">
+                <div class="slds-modal__container slds-p-around--none" style="margin:15% auto; height:auto; max-width:60rem; width:75%;">
+                    
+                    <apex:pageBlock >
+                        <apex:pageBlockSection columns="3" title="Editor de Condiciones" collapsible="false" id="modalEdit">
+                            <apex:outputText >Variable</apex:outputText>
+                            <apex:outputText >Operador</apex:outputText>
+                            <apex:outputText >Valor</apex:outputText>
+                            
+                            <apex:selectList size="1" value="{!selectedVar}" onchange="refreshPicklists();setAuxVar(this.value,'{!$Component.auxVarAComparar}');rerenderPick();" id="varOptionsId">
+                                <apex:selectOptions value="{!varACompararList}"/>
+                            </apex:selectList>
+                            <apex:pageBlockSectionItem >
+                                <apex:inputField value="{!GP_Condicional_logico.Operador__c}" id="pickOper"/>
+                            </apex:pageBlockSectionItem>
+                            <span id="spanEspacioValor">
+                                <apex:pageBlockSectionItem >
+                                    <apex:inputField styleClass="valorContraElQueSeCompara" value="{!GP_Condicional_logico.Valor_contra_el_que_se_compara__c}" id="pickValor"/>
+                                </apex:pageBlockSectionItem>
+                            </span>
+                            <apex:inputField value="{!GP_Condicional_logico.Variable_a_comparar__c}" styleClass="noMostrar" label="" id="auxVarAComparar"/>
+                            <apex:inputField value="{!GP_Condicional_logico.Valor_entero__c}" styleClass="noMostrar" label="" id="auxValorEntero"/>
+                            <apex:inputField value="{!GP_Condicional_logico.Valor_Booleano__c}" styleClass="noMostrar" label="" id="auxValorBooleano"/>
+                        </apex:pageBlockSection>
+                        <span id="contenedor" class="noMostrar">
+                            <span id="spanIntValor">
+                                <apex:inputField styleClass="Valor_entero__c" value="{!GP_Condicional_logico.Valor_entero__c}" onchange="setAuxValores(this.value,'{!$Component.auxValorEntero}')" label="" id="valEntero"/>
+                            </span>
+                            <span id="spanBoolValor">
+                                <apex:inputField styleClass="Valor_booleano__c" value="{!GP_Condicional_logico.Valor_Booleano__c}" onchange="setAuxValores(this.value,'{!$Component.auxValorBooleano}')" label="" id="valBooleano"/>
+                            </span>
+                        </span>
+                        <!--  <apex:input value="{!tipoValorAUX}" styleClass="noMostrar tipoValorAUX"/>  -->
+                        <div class="slds-grid slds-grid--align-center">
+                        
+                            <!-- BOTON UPDATE -->
+                            <div id="divButtonUpd">
+                                <apex:commandButton value="Guardar"
+                                                    id="updateBtn"
+                                                    styleClass="slds-m-around--medium" 
+                                                    action="{!saveCondicional}" 
+                                                    oncomplete="openDataTable(); cerrarModal('condUPD');" 
+                                                    rerender="divTable"/>
+                            </div>
+                            <!-- BOTON INSERT -->
+                            <div id="divButtonIns">
+                                <apex:commandButton value="Guardar"
+                                                    id="insertBtn" 
+                                                    styleClass="slds-m-around--medium" 
+                                                    action="{!insertarCondicion}" 
+                                                    oncomplete="openDataTable(); cerrarModal('condUPD');"
+                                                    rerender="divTable"/>
+                            </div>
+                            <!-- BOTON CANCEL -->
+                            <apex:commandButton value="Cancelar" 
+                                                styleClass="slds-m-around--medium" 
+                                                action="{!inicializarVariables}"
+                                                onclick="cerrarModal('condUPD')" 
+                                                oncomplete="openDataTable()" 
+                                                rerender="divTable, varOptionsId, pickOper, pickValor"/>
+                        </div>
+                        
+                    </apex:pageBlock>
+                </div>
+            </div>
+               
+            <!-- Modal para calcular Puntos a Asignar -->
+            <!-- <apex:actionFunction name="updateText" action="{!calculoDePuntosText}" reRender="SectionItemInput"/> -->
+            <div id="modalCalcular" class="slds-modal modal">
+                <div class="slds-modal__container slds-p-around--none" style="margin:15% auto; height:auto; max-width:60rem; width:75%;">
+                    <apex:pageBlock >
+                        <apex:pageBlockSection columns="1" title="Cálculo de puntos" collapsible="false" id="calcularPuntosEdit">
+                            <apex:pageblockSectionItem >
+                                <apex:outputText >Modo de calcular</apex:outputText>
+                                <apex:selectList size="1" styleClass="selectTipoCalculoClass" value="{!tipoCalculo}" onchange="tipoCalculo()" id="selectTipoCalculo">
+                                    <apex:selectOptions value="{!fijoVariableList}"/>
+                                </apex:selectList>
+                            </apex:pageblockSectionItem>
+                        </apex:pageBlockSection>
+                        
+                        <div class="sdls-grid" id="divCalculoFijo">
+                            <span class="slds-size--1-of-5 slds-p-around--medium">
+                                <apex:outputText >Puntos a asignar</apex:outputText>
+                            </span>
+                            <span class="slds-size--1-of-5 slds-p-around--medium">
+                                <apex:inputField value="{!regla.Valor_resultado_fijo__c}"/>
+                            </span>
+                        </div>
+                        
+                        <div class="sdls-grid slds-grid--align-spread" id="divCalculoVariable">
+                            <apex:outputLabel styleClass="slds-size--2-of-10 slds-m-around--medium">Calculo variable</apex:outputLabel>
+                            <apex:selectList styleClass="slds-size--3-of-10 slds-m-around--medium pick1" size="1" value="{!regla.Variable_calculo__c}" id="varCalculoId">
+                                <apex:selectOptions value="{!varResult}"/>
+                            </apex:selectList>
+                            <apex:inputField styleClass="slds-size--1-of-10 slds-m-around--medium" value="{!regla.Operador_calculo__c}"/>
+                            <apex:inputField styleClass="slds-size--3-of-10 slds-m-around--medium" value="{!regla.Valor_calculo__c}"/>
+                        </div>
+
+                        <div class="slds-grid slds-grid--align-center">
+                            <!-- BOTON CANCEL -->
+                            <apex:commandButton value="Cancelar"
+                                                styleClass="slds-m-around--medium"
+                                                onclick="cerrarModal('Calcular')"
+                                                oncomplete="openDataTable()"
+                                                rerender="divTable"/>
+                            <apex:commandButton value="Guardar"
+                                                action="{!calculoDePuntosText}"
+                                                styleClass="slds-m-around--medium"
+                                                onclick="cerrarModal('Calcular')"
+                                                oncomplete="openDataTable()"
+                                                rerender="divTable, SectionItemInput"/>
+                        </div>
+                        
+                    </apex:pageBlock>
+                </div>
+            </div>
+            
+            <!-- Modal para calcular Fecha de Vencimiento -->
+            <div id="modalFechaVTO" class="slds-modal modal">
+                <div class="slds-modal__container slds-p-around--none" style="margin:15% auto; height:auto; max-width:60rem; width:75%;">
+                    <apex:pageBlock >
+                        <apex:pageBlockSection columns="1" title="Fecha de vencimiento de puntos" collapsible="false" id="fechaVTOEdit">
+                            <apex:pageblockSectionItem >                            
+                                <div style="width:200px">Vencimiento de puntos según</div>
+                                <apex:selectList size="1" styleClass="selectTipoVTOClass" value="{!tipoVTO}" onchange="tipoFechaVTO()" id="selectTipoVTO">
+                                    <apex:selectOptions value="{!fechaVTOList}"/>
+                                </apex:selectList>
+                            </apex:pageblockSectionItem>
+                        </apex:pageBlockSection>
+
+                        <div class="sdls-grid" id="divFechaFija">
+                            <span class="slds-size--1-of-5 slds-p-around--medium">
+                                <apex:outputText >Fecha de vencimiento fija</apex:outputText>
+                            </span>
+                            <span class="slds-size--1-of-5 slds-p-around--medium">
+                                <apex:inputField value="{!regla.Fecha_vencimiento__c}" style="width:90px;"/>
+                            </span>
+                        </div>
+
+                        <div class="sdls-grid slds-grid--align-spread" id="divFechaDias">
+                            <span class="slds-size--1-of-5 slds-p-around--medium">
+                                <apex:outputText >Días para vencimiento</apex:outputText>
+                            </span>
+                            <span class="slds-size--1-of-5 slds-p-around--medium">
+                                <apex:inputField value="{!regla.Dias_vencimiento__c}" style="width:90px;"/>
+                            </span>
+                        </div>
+
+                        <div class="slds-grid slds-grid--align-center">
+                            <!-- BOTON CANCEL -->
+                            <apex:commandButton value="Cancelar"
+                                                styleClass="slds-m-around--medium"
+                                                onclick="cerrarModal('FechaVTO')"
+                                                oncomplete="openDataTable()"
+                                                rerender="divTable"/>
+                            <apex:commandButton value="Guardar"
+                                                action="{!fechaVTOText}"
+                                                styleClass="slds-m-around--medium"
+                                                onclick="cerrarModal('FechaVTO')"
+                                                oncomplete="openDataTable()"
+                                                rerender="divTable, CalculoVtoText"/>
+                        </div>
+
+                    </apex:pageBlock>
+                </div>
+            </div>
+        </apex:form> 
+    </body>
+</apex:page>

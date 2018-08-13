@@ -1,0 +1,37 @@
+<div 
+	ng-if="bpTree.response.serviceStatusFan.scenario.questions"
+	ng-repeat="question in bpTree.response.serviceStatusFan.scenario.questions"
+	class="diagnosisAssintance">
+	<div class="diagnosisAssintance-question">
+	    <strong>{{question.label}}</strong> 
+	    <span class="diagnosisAssintance-question-required">*</span>
+	</div>
+	<div>		
+		<fieldset class="slds-form-element">			
+			<div class="slds-form-element__control">
+				<span ng-repeat="answer in question.answers" class="slds-radio">					
+					<input
+						id="scenarioRadio-{{$index}}"
+						type="radio" 
+						ng-model="question.response" 
+						name="tesd"						 
+						value="{{answer.index}}"
+						required						
+						ng-click/>
+					<label class="slds-radio__label" for="scenarioRadio-{{$index}}">
+						<span class="slds-radio--faux"></span>
+						<span>{{answer.label}}</span>
+						<span>{{answer.value}}</span>						
+					</label>
+				</span>	
+			</div>
+		</fieldset>
+		
+	</div>
+</div>
+
+<!--<div>Form: {{loopform.$valid}}</div>-->
+<!--<pre>{{bpTree.response.serviceStatusFan.scenario.questions | json}}</pre>-->
+
+
+<div style="color: #990033; margin-top: 20px;">Escenario: <strong>{{bpTree.response.serviceStatusFan.scenario.label}}</strong></div>

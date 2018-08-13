@@ -1,0 +1,243 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "Draft"
+                    },
+                    {
+                        "field": "['TrackingStatus__c']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Cancelada - Timeout"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Número De Orden",
+                    "name": "OrderNumber",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Account']['Name']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Cuenta",
+                    "name": "['Account']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Estado de la Orden",
+                    "name": "TrackingStatus__c",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['%vlocity_namespace%__OriginatingChannel__c']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Canal",
+                    "name": "['%vlocity_namespace%__OriginatingChannel__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['CreatedDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha Creación",
+                    "name": "['CreatedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LastModifiedDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Última Modificación",
+                    "name": "['LastModifiedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Tipo de Orden",
+                    "name": "Gestion__c",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] != 'Draft' && $scope.obj['TrackingStatus__c'] == 'Cancelada - Timeout'",
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-list-card-slds"
+        },
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Draft"
+                    },
+                    {
+                        "field": "['Account']['RecordType']['Name']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Billing"
+                    },
+                    {
+                        "field": "['TrackingStatus__c']",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "Cancelada - Timeout"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "accountId": "['Account']['ParentId']",
+                            "contactId": "['Account']['%vlocity_namespace%__PrimaryContactId__c']",
+                            "newBilling": "['Account']['Id']",
+                            "operationCode": "['Operation_Code__c']",
+                            "orderId": "['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-Sales-reTakeSale",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Número De Orden",
+                    "name": "OrderNumber",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Account']['Name']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Cuenta",
+                    "name": "['Account']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Estado de la Orden",
+                    "name": "TrackingStatus__c",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['%vlocity_namespace%__OriginatingChannel__c']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Canal",
+                    "name": "['%vlocity_namespace%__OriginatingChannel__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['CreatedDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha Creación",
+                    "name": "['CreatedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LastModifiedDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Última Modificación",
+                    "name": "['LastModifiedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Tipo de Orden",
+                    "name": "Gestion__c",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Draft' && $scope.obj['Account']['RecordType']['Name'] == 'Billing' && $scope.obj['TrackingStatus__c'] != 'Cancelada - Timeout'",
+            "name": "Draft-BillingAccount",
+            "sObjectType": "Order",
+            "templateUrl": "ta-list-card-slds"
+        }
+    ],
+    "title": "Ordenes"
+}

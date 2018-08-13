@@ -1,0 +1,20 @@
+<fieldset class="slds-form-element">
+  <div class="slds-form-element__control">
+    <span class="slds-radio">
+      <input type="radio" id="radio" name="options" checked="" ng-click="bpTree.response.decisiveLine = null"/>
+      <label class="slds-radio__label" for="radio">
+        <span class="slds-radio--faux"></span>
+        <span class="slds-form-element__label">Sin seleccion</span>
+      </label>
+    </span>
+    <div ng-repeat="plan in bpTree.response.Order.planes">
+        <span class="slds-radio" ng-repeat="linea in plan.lineas">
+          <input type="radio" id="radio-{{$index}}" name="options" ng-click="bpTree.response.decisiveLine = linea.linea"/>
+          <label class="slds-radio__label" for="radio-{{$index}}">
+            <span class="slds-radio--faux"></span>
+            <span class="slds-form-element__label">{{linea.linea}}</span>
+          </label>
+        </span>
+    </div>
+  </div>
+</fieldset>

@@ -1,0 +1,45 @@
+{
+    "Cards": [
+        "cpq-cart-item-detail"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "80136000001Egps"
+            },
+            {
+                "name": "attrs.lineItemIds",
+                "val": "80236000002Y45SAAS"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/items?id={{attrs.lineItemIds}}&hierarchy=20&fields=Quantity,%vlocity_namespace%__RecurringTotal__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__RecurringManualDiscount__c,%vlocity_namespace%__ProvisioningStatus__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__OneTimeCharge__c,ListPrice,%vlocity_namespace%__ParentItemId__c,%vlocity_namespace%__BillingAccountId__r.Name,%vlocity_namespace%__ServiceAccountId__r.Name,%vlocity_namespace%__PremisesId__r.Name,%vlocity_namespace%__InCartQuantityMap__c",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "fields": "Quantity,%vlocity_namespace%__RecurringTotal__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__RecurringManualDiscount__c,%vlocity_namespace%__ProvisioningStatus__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__OneTimeCharge__c,ListPrice,%vlocity_namespace%__ParentItemId__c,%vlocity_namespace%__BillingAccountId__r.Name,%vlocity_namespace%__ServiceAccountId__r.Name,%vlocity_namespace%__PremisesId__r.Name,%vlocity_namespace%__InCartQuantityMap__c",
+                "hierarchy": "20",
+                "id": "{{attrs.lineItemIds}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getCartsItemsById",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "result.records"
+        }
+    },
+    "sessionVars": [
+        {
+            "name": "messages",
+            "val": "payload.messages"
+        }
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-cart-item-details"
+        }
+    }
+}

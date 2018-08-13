@@ -1,0 +1,63 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "icon": "custom91",
+    "sprite": "custom",
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SamplePolicyLineItem-ViewDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Type",
+                    "name": "%vlocity_namespace%__Type__c",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Description",
+                    "name": "%vlocity_namespace%__Description__c",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Items",
+            "sObjectType": "%vlocity_namespace%__PolicyLineItem__c",
+            "templateUrl": "flyout-grid-items-slds"
+        }
+    ],
+    "title": "Flyout Grid Items"
+}

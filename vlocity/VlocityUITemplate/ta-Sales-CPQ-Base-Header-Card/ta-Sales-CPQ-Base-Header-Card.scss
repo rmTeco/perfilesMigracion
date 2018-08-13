@@ -1,0 +1,68 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+/*** MIXINS ***/
+@import "cpq-mixin";
+/*** STYLES ***/
+
+$cyan-color: #00b4c5;
+
+.vlocity {
+    .cpq-base-header-card {
+        .fix--slds-dropdown-to-btn {
+            left: -110%;
+        }
+        
+        .fix-last-child-btngroup {
+            border-radius: 0 .25rem .25rem 0;
+        }
+		
+		.installationAddressModal .slds-modal__container {
+			width: 100%;
+			max-width: 1250px;
+		}
+
+		.installationAddressIframe {
+			border: none;
+			width: 100%;
+			min-height: 500px;
+		}
+		
+		.slds-button-group {
+		    .slds-button {
+		        color: #00b4c5;
+		    }
+		}
+		
+		.taHeaderInfoContainer {
+		    display: inline-block;
+		    vertical-align: middle;
+		    margin-right: 10px;
+		    .taGetPrefeasibility {
+		        color: $cyan-color;
+		    }
+		}
+		
+		.taPricingSelect {
+		    display: inline-block;
+		    vertical-align: middle;
+		    text-align: right;
+		    .taDevider:after {
+		        content: "|";
+		        display: inline-block;
+		        
+		    }
+		}
+    }
+    
+    .clientAccountSelect {
+        display: inline-block;
+    }
+}
+
+[dir=rtl] .vlocity {
+    .cpq-base-header-card {
+        .fix--slds-dropdown-to-btn {
+            right: -1rem;
+        }
+    }
+}

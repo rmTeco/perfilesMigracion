@@ -1,0 +1,42 @@
+<div 
+    ng-controller="TACPQCategoriesController"
+	class="cpq-categories-container">
+	<ul class="cpq-main-categories-container">
+		<li 
+			class="categoryButtonWrapper" 
+			ng-click="selectCategory('All')" 
+			class="cpq-category-item-container cpq-category-item-container-all">
+			<a 
+			    ng-href="" 
+			    class="categoryButton allFilter"
+			    ng-class="{'cpq-category-item-selected' : isSelectedCategory('All'), 'cat-icon': !isSelectedCategory('All')}">
+				<span>Ver Todo</span>
+			</a>
+		</li>
+		<li 
+			ng-repeat="category in obj.records[0].childCatalogs.records" 
+			ng-click="selectCategory(category)" 
+			class="categoryButtonWrapper" 
+			ng-init="category.catalogName === $root.defaultCategory && initCategory(category)"
+			class="categoryButtonWrapper"
+			ng-switch="category.catalogName">
+			<a 
+			    ng-href="" 
+			    class="categoryButton"
+			    ng-class="{'cpq-category-item-selected' : isSelectedCategory(category.catalogName), 'cat-icon': !isSelectedCategory(category.catalogName)}" >
+			    
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'crossfilter'" ng-switch-when="Bundles" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'phone_portrait'" ng-switch-when="Dispositivos" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'apps'" ng-switch-when="Planes" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'desktop'" ng-switch-when="TV" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'wifi'" ng-switch-when="Datos" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'fallback'" ng-switch-when="Contenidos" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'attach'" ng-switch-when="Accesorios" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'home'" ng-switch-when="IoT" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'sms'" ng-switch-when="Packs" extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<slds-button-svg-icon sprite="'utility'" size="'large'" icon="'wifi'" ng-switch-default extra-classes="'categoryIcon'"></slds-button-svg-icon>
+				<span class="categoryLabel slds-text-align--center">{{category.catalogName}}</span>
+			</a>
+		</li>
+	</ul> 
+</div>

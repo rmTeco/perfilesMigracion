@@ -1,0 +1,247 @@
+<aura:component controller="WorkTeamController">
+    <aura:handler name="init" action="{!c.getWorkTeam}" value="{!this}"/>
+	<aura:attribute name="WorkTeamID"
+                    type="String" />
+    
+    <aura:attribute name="WorkTeam"
+                    type="WorkTeam__c"
+                    default="{'Name':'','Team_Queue__c':''}" />
+    <aura:attribute name="WorkTeamParent"
+                    type="WorkTeam__c"
+                    default="{'Name':''}" />
+    <aura:attribute name="WorkTeamLocation"
+                    type="vlocity_cmt__BusinessSite__c"
+                    default="{'Name':''}" />                    
+    <aura:attribute name="WorkTeamParents"
+                    type="List"
+                    default="[]" />
+    <aura:attribute name="WorkTeamLocations"
+                    type="List"
+                    default="[]" />                    
+    <aura:attribute name="Manager"
+                    type="User"
+                    default="{'Profile':{'UserLicense':{'Name':'Salesforce'}},
+                              'Name':''}" />
+    <aura:attribute name="Managers"
+                    type="List"
+                    default="[]" />
+    <aura:attribute name="messageHelp"
+                    type="String" />
+    <aura:attribute name="closeWindows"
+                    type="Boolean"
+                    default="False"/>
+    
+    <aura:attribute name="showWorkTeamList"
+                    type="Boolean"
+                    default="true"/>
+    <aura:attribute name="showWorkTeamCreate"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamDetail"
+                    type="Boolean"
+                    default="false"/>
+    <aura:registerEvent name="WorkTeamDetailEventFired" type="c:WorkTeamDetailEvent"/>
+    
+    <div class="body__c">
+        <h1>Nuevo Equipo de Trabajo</h1>
+        <div class="slds-form slds-form_stacked">
+            <div class="input__c slds-max-small-size--6-of-6 slds-size--3-of-6">
+                <lightning:input name="Name" value="{! v.WorkTeam.Name }" placeholder="Nombre de equipo" label="Nombre de equipo" required="true"/>
+            </div>
+            <div class="input__c slds-max-small-size--6-of-6 slds-size--3-of-6">
+                <div class="input__c slds-max-small-size--6-of-6 slds-size--3-of-6">
+                    <lightning:select aura:id="userType" name="userType" label="Gerente" onchange="{! c.onChangeUserType }">
+                        <aura:if isTrue="{! v.Manager.Profile.UserLicense.Name == 'Salesforce'}"><option value="user" selected="true">Usuario</option></aura:if>
+                        <aura:if isTrue="{! v.Manager.Profile.UserLicense.Name == 'Partner Commuinty'}"><option value="partner" selected="true">Usuario asociado</option></aura:if>
+                        <aura:if isTrue="{! v.Manager.Profile.UserLicense.Name == 'ustomer Community'}"><option value="portal" selected="true">Usuario del portal del cliente</option></aura:if>
+                    </lightning:select>
+                </div>
+                <div class="input__c slds-max-small-size--6-of-6 slds-size--3-of-6">
+                    <lightning:input name="Gerente" value="{! v.Manager.Name }" placeholder="Buscar" label="" />
+                    <span class="search__c" onclick="{! c.searchUser }"><lightning:icon iconName="utility:search" alternativeText="Buscar" variant="success"/></span>
+                </div>
+            </div>
+            <div class="input__c slds-max-small-size--6-of-6 slds-size--3-of-6">
+                <div class="input__c slds-max-small-size--6-of-6 slds-size--6-of-6">
+                	<lightning:input name="ParentName" value="{! v.WorkTeamParent.Name }" placeholder="Equipo de trabajo padre" label="Equipo de trabajo padre" />
+                	<span class="search__c search__c2" onclick="{! c.searchWorkTeams }"><lightning:icon iconName="utility:search" alternativeText="Buscar" variant="success"/></span>
+                </div>
+            </div>
+            <div class="input__c slds-max-small-size--6-of-6 slds-size--3-of-6">
+                <div class="input__c slds-max-small-size--6-of-6 slds-size--6-of-6">
+                	<lightning:input name="LocationName" value="{! v.WorkTeamLocation.Name }" placeholder="Ubicación" label="Ubicación" />
+                	<span class="search__c search__c2" onclick="{! c.searchStoreLocations }"><lightning:icon iconName="utility:search" alternativeText="Buscar" variant="success"/></span>
+                </div>
+            </div>            
+            <div class="input__c slds-max-small-size--6-of-6 slds-size--3-of-6">
+                <lightning:input name="TeamQueue" value="{! v.WorkTeam.Team_Queue__c }" placeholder="Cola de equipo de trabajo" label="Cola de equipo de trabajo" />
+            </div>
+            <aura:if isTrue="{! v.WorkTeamID }">
+                <div class="input__c slds-max-small-size--6-of-6 slds-size--6-of-6">
+                    <lightning:input type="toggle" 
+                             label="{! v.WorkTeam.LabelWorkTeamIsActive }"
+                             name="isActive"
+                             class="slds-p-around--small"
+                             checked="{! v.WorkTeam.Is_Active__c }"
+                             messageToggleActive="Active"
+                             messageToggleInactive="Inactive"/>
+                </div>
+            </aura:if>
+        </div>
+        <div class="slds-form slds-form_stacked button__c">
+        	<lightning:buttonGroup >
+                <lightning:button variant="neutral" label="Cancelar" onclick="{! c.cancelWorkTeam }" />
+                <lightning:button variant="brand" label="Guardar" onclick="{! c.saveWorkTeam }" />
+             </lightning:buttonGroup>
+        </div>
+    </div>
+    
+    <div id="usersModal__c" class="users" style="display: none;">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <h2 id="headerUsersModal__c" class="slds-text-heading_medium slds-hyphenate">Usuarios</h2>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                  <thead>
+                      <tr class="slds-text-title_caps">
+                          <th scope="col">
+                            <div class="slds-truncate" title="Nombre">Nombre</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="Rol">Rol</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="Perfil">Perfil</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="Legajo">Legajo</div>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <aura:iteration items="{!v.Managers}" var="mngr" indexVar="index">
+                          <tr>
+                              <th scope="row" data-label="Nombre">
+                                <div class="slds-truncate" title="{! mngr.Name }">
+                                    <lightning:button variant="base" label="{! mngr.Name }" title="{! mngr }" onclick="{! c.selectThisManager }"/>
+                                </div>
+                              </th>
+                              <th scope="row" data-label="Rol">
+                                <div class="slds-truncate" title="{! mngr.UserRole.Name }">
+                                    <lightning:button variant="base" label="{! mngr.UserRole.Name }" title="{! mngr }" onclick="{! c.selectThisManager }"/>
+                                </div>
+                              </th>
+                              <th scope="row" data-label="Perfil">
+                                <div class="slds-truncate" title="{! mngr.Profile.Name }">
+                                    <lightning:button variant="base" label="{! mngr.Profile.Name }" title="{! mngr }" onclick="{! c.selectThisManager }"/>
+                                </div>
+                              </th>
+                              <th scope="row" data-label="Legajo">
+                                <div class="slds-truncate" title="{! mngr.FederationIdentifier }">
+                                    <lightning:button variant="base" label="{! mngr.FederationIdentifier }" title="{! mngr }" onclick="{! c.selectThisManager }"/>
+                                </div>
+                              </th>
+                          </tr>
+                      </aura:iteration>
+                  </tbody>
+              </table>
+          </div>
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick="{! c.hiddenUsersModal }">Cancelar</button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    
+    <div id="workTeamsModal__c" class="workTeams" style="display: none;">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <h2 id="headerUsersModal__c" class="slds-text-heading_medium slds-hyphenate">Equipos de Trabajo</h2>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                  <thead>
+                      <tr class="slds-text-title_caps">
+                          <th scope="col">
+                            <div class="slds-truncate" title="Nombre">Nombre</div>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <aura:iteration items="{!v.WorkTeamParents}" var="wtp" indexVar="index">
+                          <tr>
+                              <th scope="row" data-label="Nombre">
+                                <div class="slds-truncate" title="{! wtp.Name }">
+                                    <lightning:button variant="base" label="{! wtp.Name }" title="{! wtp }" onclick="{! c.selectThisWorkTeam }"/>
+                                </div>
+                              </th>
+                          </tr>
+                      </aura:iteration>
+                  </tbody>
+              </table>
+          </div>
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" onclick="{! c.hiddenWorkTeamsModal }">Cancelar</button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+
+    <div id="storeLocationModal__c" class="storeLocations" style="display: none;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <header class="slds-modal__header">
+              <h2 id="headerUsersModal__c" class="slds-text-heading_medium slds-hyphenate">Sitios</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                              <div class="slds-truncate" title="Nombre">Nombre</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.WorkTeamLocations}" var="stLoc" indexVar="index">
+                            <tr>
+                                <th scope="row" data-label="Nombre">
+                                  <div class="slds-truncate" title="{! stLoc.Name }">
+                                      <lightning:button variant="base" label="{! stLoc.Name }" title="{! stLoc }" onclick="{! c.selectThisStoreLocation }"/>
+                                  </div>
+                                </th>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+            <footer class="slds-modal__footer">
+              <button class="slds-button slds-button_neutral" onclick="{! c.hiddenStoreLocationsModal }">Cancelar</button>
+            </footer>
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+      </div>
+
+    <div id="message__helper" class="helper" style="display: none;">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <h2 id="headerUsersModal__c" class="slds-text-heading_medium slds-hyphenate">Información</h2>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <p>{! v.messageHelp }</p>
+          </div>
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_brand" onclick="{! c.hiddenMessageModal }">{! $Label.c.Work_Team_Submit_Button }</button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</aura:component>

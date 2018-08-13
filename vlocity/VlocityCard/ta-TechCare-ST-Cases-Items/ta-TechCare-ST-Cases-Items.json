@@ -1,0 +1,83 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "['AccountId']",
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "CaseId": "['CaseId']",
+                            "ContextId": "['AccountId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-community-st-case",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['CaseId']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "CaseId",
+                    "name": "['CaseId']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['AccountId']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "AccountId",
+                    "name": "['AccountId']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Status",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Subject']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Subject",
+                    "name": "['Subject']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "sObjectType": "Account",
+            "templateUrl": "Communtiy-Billing"
+        }
+    ],
+    "title": "Cards",
+    "zone": "top"
+}

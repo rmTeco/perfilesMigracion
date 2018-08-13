@@ -1,0 +1,29 @@
+<div class="via-slds billingInfo-container">
+    <div class="slds-card slds-m-bottom--small">
+        <div class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center headerList">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate ">
+
+                <b>{{data.Deck[0].title}}</b>
+            </div>
+        </div>
+    
+        <div class="slds-card__body cards-container">
+
+          <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" role="grid">
+            <thead>
+              <tr class="slds-text-heading--label">
+
+                <th ng-repeat="field in cards[0].states[0].fields" scope="col">
+                    <div class="slds-truncate">{{field.label}}</div>
+                </th>
+                  <th class="slds-cell-shrink slds-clearfix"><div class="slds-align--absolute-center">Accion</div></th>
+
+              </tr>
+            </thead>
+            <tbody vloc-card ng-repeat="card in cards |orderBy:order|filter: attrs.searchToken" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" use-existing-element-type></tbody>
+
+          </table>
+
+        </div>
+    </div>
+</div>

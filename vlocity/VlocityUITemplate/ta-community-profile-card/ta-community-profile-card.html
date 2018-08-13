@@ -1,0 +1,44 @@
+<div class="slds-m-bottom--small slds-p-around--medium"
+     style="background: #FFF;">
+    <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small slds-align--absolute-center" 
+         ng-repeat="field in data.fields">
+        <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-align--absolute-center">
+            <div ng-if="field.label == 'Name'">
+                <b>{{obj | getter: field | picker: field.type}}</b>
+            </div>
+            <!--div ng-if="field.label == 'ClubPoint'">
+                <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-align--absolute-center">
+                    {{obj | getter: field | picker: field.type}}
+                </div>
+                <p class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-text-body--small slds-align--absolute-center">
+                    Puntos club
+                </p>
+                
+                <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-align--absolute-center">
+                       <slds-svg-icon
+                            class="slds-button__icon slds-button__icon--right"
+                            sprite="'utility'"
+                            icon="'chevronright'"
+                            size="'x-small'"
+                            style="fill:#2E9AFE;">
+                        </slds-svg-icon>
+                </div>
+            </div-->
+        </div>
+    </div>
+    <!--div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-align--absolute-center">
+        <a ng-click="performAction(action)"
+            class="celeste"
+            hotkey-card-action>
+            Canjear puntos
+            <<p>{{action.displayName}}</p>>
+             <slds-svg-icon
+                class="slds-button__icon slds-button__icon--right"
+                sprite="'utility'"
+                icon="'chevronright'"
+                size="'x-small'"
+                style="fill:#00b2c5;">
+            </slds-svg-icon>
+        </a>
+    </div-->
+</div>

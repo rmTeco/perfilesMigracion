@@ -1,0 +1,99 @@
+<div class="comp-assets-product-item">
+    <div data-cart-item-id="{{::obj.Id.value}}">
+        <div class="assets-item-product" ng-class="{'assets-item-selected':importedScope.isSelected}">
+            <div class="assets-item-product-header assets-item-base-product">
+                <div ng-repeat="customField in $root.customViews.cpqCustomViews[$root.customViews.currentCustomView].fields" class="assets-item-base-product-{{customField.data.classSuffix}}">
+                    <span ng-if="!$root.vlocity.customLabels[customField.label]">{{obj | getter: customField: 'label' }}</span>
+                    <span ng-if="$root.vlocity.customLabels[customField.label]">{{$root.vlocity.customLabels[customField.label][$root.vlocity.userSfLocale]}}</span>
+                </div>
+                <div class="assets-item-base-product-actions" ng-class="{'compacted': !$root.customViews.productListHidden}"></div>
+            </div>
+
+            <div class="assets-item-base-product" ng-init="childProdState.show = importedScope.expandMode">
+                <div ng-repeat="customField in $root.customViews.cpqCustomViews[$root.customViews.currentCustomView].fields" class="assets-item-base-product-{{customField.data.classSuffix}}" ng-class="{'assets-item-currency-value': customField.type === 'currency', 'assets-item-text-value': customField.type === 'string', 'assets-item-loyalty-value': customField.type === 'loyalty',
+                'assets-item-product-title': customField.name === 'Name'}">
+
+                    <!-- Name -->
+                    <div ng-if="customField.name === 'Name'">
+                        <!-- Checkbox -->
+                        <div class="slds-form-element" ng-if="attrs.promotionMode !== 'off' && obj[$root.nsPrefix + 'ProvisioningStatus__c']['value'] !== 'Retired'">
+                            <div class="slds-form-element__control slds-float_left">
+                                <span class="slds-checkbox">
+                                    <input type="checkbox" name="options" id="checkbox-{{::obj.Id.value}}" checked="" ng-model="obj.selected" ng-click="importedScope.clickOnAssetCheckbox(obj)"/>
+                                    <label class="slds-checkbox__label" for="checkbox-{{::obj.Id.value}}">
+                                        <span class="slds-checkbox_faux"></span>
+                                    </label>
+                                </span>
+                             </div>
+                        </div>
+
+                        <button ng-click="childProdState.show = !childProdState.show" class="slds-button assets-item-has-children" aria-controls="tree0-node1" ng-hide="!(obj.childAssets.records || obj.lineItems.records || obj.productGroups.records)">
+                            <slds-button-svg-icon sprite="'utility'" size="'small'" icon="'switch'" extra-classes="'slds-button__icon_left'" ng-class="{'assets-fix-slds-close-switch' : !childProdState.show}"></slds-button-svg-icon>
+                            <span class="slds-assistive-text">Toggle</span>
+                            <span class="assets-product-name">{{obj[customField.fieldName]}}</span>
+                        </button>
+    
+                        <span class="assets-item-no-children" ng-show="!(obj.childAssets.records || obj.lineItems.records || obj.productGroups.records)">
+                            {{ obj[customField.fieldName]}}
+                        </span>
+                    </div>
+
+                    <!-- Text -->
+                    <div ng-if="customField.type === 'string'">{{obj[customField.fieldName]['value']}}</div>
+                    <!-- Loyalty-->
+                    <div ng-if="customField.type === 'loyalty'">
+                        <div class="assets-loyalty-points">
+                            {{obj[customField.fieldName]['value']}}
+                            {{obj.LoyaltyCode}}
+                        </div>
+                    </div>
+                    <!-- Price -->
+                    <div ng-if="customField.type === 'currency'"> 
+                        <div  cpq-dropdown-handler="showPopover = false">
+                            <div><strike>{{obj[customField.fieldName]['originalValue']}}</strike></div>
+                            <span ng-click="showPopover = !showPopover" ng-class="{'hovered': showPopover, 'assets-underline': obj[customField.fieldName]['actions']['pricedetail']}">
+                                <span  ng-class="{'assets-item-discount-price': obj[customField.fieldName]['originalValue']}">
+                                    <!-- {{obj | getter: customField: 'name' | currency}} -->
+                                    {{obj[customField.fieldName]['value'] | currency}}
+                                </span>
+                            </span>
+                            <div class="slds-popover slds-nubbin_bottom-left assets-price-actions-popover" role="dialog" ng-show="showPopover && obj[customField.fieldName]['actions']['pricedetail']">
+                                <div class="slds-popover__body assets-price-actions-popover__body">
+                                    <div class="slds-button-group" role="group">
+                                        <button class="slds-button slds-button_icon-border" aria-haspopup="true" title="{{::importedScope.customLabels.CPQPriceDetails}}" ng-click="importedScope.openAdjustmentModal(obj[customField.fieldName], 'pricedetail')">
+                                            <slds-button-svg-icon sprite="'utility'" icon="'info'"></slds-button-svg-icon>
+                                            <span class="slds-assistive-text">{{::importedScope.customLabels.CPQPriceDetails}}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div> 
+
+                    <!-- Promotions -->
+                    <div ng-if="customField.type === 'promo'">
+                        <div ng-repeat="promoItem in obj[customField.fieldName].records" ng-attr-title="{{promoItem.Name}}" class="assets-promo-text-wrap">
+                            {{promoItem.Name}}{{$last ? '' : ', '}}
+                        </div>
+                    </div> 
+                </div>
+                <div class="assets-item-base-product-actions slds-text-align_right" ng-class="{'compacted': !$root.customViews.productListHidden}">
+                    <div  ng-class="{'slds-button-group slds-float_right': importedScope.isMobileTablet}" role="group">
+                        <button class="slds-button slds-p-horizontal_xx-small" ng-click="importedScope.config(null,obj)"  title="{{::importedScope.customLabels.CPQSettings}}" ng-class="{'slds-button_icon-border': importedScope.isMobileTablet}">
+                            <slds-button-svg-icon sprite="'utility'" icon="'info'"></slds-button-svg-icon>
+                            <span class="slds-assistive-text">{{::importedScope.customLabels.CPQSettings}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="assets-item-base-product-details">
+                <div ng-if="obj.childAssets.records || obj.lineItems.records || obj.productGroups.records" ng-show="childProdState.show">
+                    <vloc-layout layout-name="comp-assets-product-children" ng-model="card" data="card" records="obj" 
+                        show-config-panel="{{attrs.showConfigPanel}}" >
+                    </vloc-layout>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>

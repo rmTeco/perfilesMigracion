@@ -1,0 +1,29 @@
+{
+    "Cards": [
+        "mobile-ret-product-card"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "80141000000iGqA"
+            },
+            {
+                "name": "params.categoryId",
+                "val": "a2H41000000f1Ks"
+            }
+        ],
+        "type": "ApexRest",
+        "value": {
+            "endpoint": "/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/products?category={{params.categoryId}}&pagesize=1000&includeAttachment=true",
+            "methodType": "GET",
+            "query": "SELECT Name FROM Product2",
+            "resultVar": "records"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "mobile-ret-product-grid"
+        }
+    }
+}

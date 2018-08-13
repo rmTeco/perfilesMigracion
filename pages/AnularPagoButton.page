@@ -1,0 +1,12 @@
+<apex:page standardController="Task" extensions="anularPagoButtonController">
+    
+    <apex:form >
+        <apex:outputPanel rendered="{!flagx}">
+           
+         <apex:commandLink styleClass="btn" value="Anular Pago" target="_blank" action="/apex/vlocity_cmt__OmniScriptUniversalPage?id={0}&OmniScriptType=Sales&OmniScriptSubType=OrderAnnulment&OmniScriptLang=English&PrefillDataRaptorBundle=&scriptMode=vertical&layout=lightning&ContextId={0}&orderId={!idOrden}"></apex:commandLink>
+                
+        </apex:outputPanel>
+        
+    </apex:form>
+    
+</apex:page>

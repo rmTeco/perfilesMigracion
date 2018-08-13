@@ -1,0 +1,70 @@
+<div class="slds-card via-slds-card--horiz via-slds-card--horiz-actions slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" data-popover-flyout="true">
+  <div class="slds-card__header via-slds-card__header slds-grid slds-p-bottom--medium slds-grid--vertical-align-center">
+    <div class="slds-media slds-media--center slds-has-flexi-truncate">
+      <div class="slds-media__figure">
+          <vloc-card-icon data="data" obj="obj" size="'medium'"></vloc-card-icon>
+      </div>
+      <div class="slds-media__body slds-truncate">
+        <a href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="{{data.title}}">
+          <span class="slds-text-heading--small">{{data.title}}</span>
+        </a>
+        <br />
+        <span class="slds-small-show">
+            {{data.fields[0].label}} {{obj | getter: data.fields[0] | picker: data.fields[0].type}} <span ng-if="obj.LastModifiedDate">| Last Modified: {{obj.LastModifiedDate | picker:'date'}}</span></span>
+      </div>
+    </div>
+    <div class="slds-no-flex slds-small-show" ng-init="overflowActions = data.actions.slice(data.limitActionLinksTo?data.limitActionLinksTo:5)">
+        <slds-dropdown content="overflowActions" ng-if="overflowActions.length > 0" label-attribute="displayName" action-function="performAction(item)" button-size="medium"></slds-dropdown>
+    </div>
+    <div class="slds-no-flex slds-x-small-show-only">
+        <slds-dropdown content="data.actions" ng-if="overflowActions.length > 0" label-attribute="displayName" action-function="performAction(item)" button-size="medium"></slds-dropdown>
+    </div>
+  </div>
+  <div class="slds-small-show slds-card__body via-slds-card__body slds-grid slds-grid--vertical slds-theme--default slds-p-left--small slds-p-right--small">
+    <div class="slds-col slds-col--padded slds-grid slds-wrap slds-grid--align-spread">
+      <div class="slds-col--padded slds-size--1-of-5 slds-small-show slds-m-top--medium slds-p-bottom--small via-slds-border--bottom" ng-repeat="field in data.fields.slice(1, 6)" ng-show="key != 'attributes'">
+          <div class="slds-truncate slds-text-heading--label" title="{{field.label}}">{{field.label}}&nbsp;</div>
+          <div class="slds-truncate slds-text-heading--small" ng-if="!obj[field.relationshipName]">
+              {{obj | getter: field | picker: field.type}}&nbsp;
+          </div>
+          <div class="slds-truncate slds-text-heading--small" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}&nbsp;
+          </div>
+      </div>
+    </div>
+    <div class="slds-col slds-col--padded slds-grid slds-wrap slds-grid--vertical-align-center slds-grid--align-spread">
+          <div class="slds-col--padded slds-small-show " ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+              <a href="#" ng-click="performAction(action)">
+                {{action.displayName}}&nbsp;
+              </a>
+          </div>
+          <div class="slds-col--padded slds-m-top--medium slds-p-bottom--medium">
+            <button class="slds-button" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+              <slds-button-svg-icon sprite="'utility'" icon="'chevrondown'" no-hint="true" ng-if="!isSelected(cardIndex)"></slds-button-svg-icon>
+              <slds-button-svg-icon sprite="'utility'" icon="'chevronup'" no-hint="true" ng-if="isSelected(cardIndex)"></slds-button-svg-icon>
+            </button>
+          </div>
+      </div>
+  </div>
+  <div class="embed-flyout slds-p-left--medium slds-p-right--medium"></div>
+  <div class="slds-x-small-show-only slds-card__body via-slds-x-small-card__body slds-grid slds-grid--vertical slds-theme--default">
+    <div class="slds-size--1-of-1 slds-x-small-show-only" ng-repeat="field in data.fields.slice(1, 6)" ng-show="key != 'attributes'">
+      <div class="slds-grid via-slds-grid slds-p-around--small">
+          <div class="slds-col slds-size--1-of-2">
+              <p class="slds-text-align--left slds-truncate slds-text-heading--label" title="{{field.label}}">{{field.label}}&nbsp;</p>
+          </div>
+          <div class="slds-col slds-size--1-of-2" ng-if="!obj[field.relationshipName]">
+              <p class="slds-text-align--right slds-truncate" >{{obj | getter: field | picker: field.type}}&nbsp;</p>
+          </div>
+          <div class="slds-col slds-size--1-of-2" ng-if="obj[field.relationshipName]">
+              <p class="slds-text-align--right slds-truncate" >{{obj[field.relationshipName]['Name']}}&nbsp;</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="slds-card__footer slds-x-small-show-only">
+    <button class="slds-button" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+      <span ng-if="!isSelected(cardIndex)">View More</span>
+      <span ng-if="isSelected(cardIndex)">View Less</span>
+    </button>
+  </div>
+</div>

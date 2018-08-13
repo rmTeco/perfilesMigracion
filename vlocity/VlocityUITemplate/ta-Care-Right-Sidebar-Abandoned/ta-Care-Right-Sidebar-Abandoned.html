@@ -1,0 +1,69 @@
+<div ng-controller="AbandonedSessionsController as asc">
+    <div class="abandoned-section">
+         <div class="via-slds-story-cards--header spacer" 
+          ng-init="showInfo=true">
+          <div class="abandoned-section-header" ng-click="showInfo = !showInfo">
+             <span>{{data.title}}</span>
+             <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+             <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+          </div>
+       </div>
+    </div>
+   <div ng-show="showInfo" class="abandoned-content scrollmenu">
+        <table class="slds-table slds-table--bordered slds-table--resizable-cols slds-table--fixed-layout via-slds-table-pinned-header">
+          <thead>
+            <tr class="slds-text-heading--label">
+              <th class="slds-p-bottom--small" scope="col">
+                <div class="slds-truncate" title="Nombre">NOMBRE</div>
+              </th>
+              <th scope="col">
+                <div class="slds-truncate" title="Fecha">FECHA</div>
+              </th>
+              <th scope="col">
+                <div class="slds-truncate" title="Accion"></div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr   class="ng-pristine ng-untouched ng-valid ng-empty"
+                    ng-if="obj.AbandonedSession.length > 0" ng-repeat="record in obj.AbandonedSession">
+                  <td class="slds-truncate" title="{{record.Name}}">{{record.Name}}</td> 
+                  <td class="slds-truncate" title="{{record.LastModifiedDate | date : 'dd/MM'}}">{{record.LastModifiedDate | date : 'dd/MM'}}</td>
+                  <td class="slds-truncate">
+                        <div class="slds-truncate" title="Accion" ng-repeat="action in data.actions">
+                            <a ng-click="performAction(action,{
+                            extraParams: {
+                                OmniScriptInstanceId: record.Id
+                            }
+                           })" hotkey-card-action>
+                                {{action.displayName}}
+                           </a>
+                        </div>
+                  </td>
+              </tr>
+              <tr   class="ng-pristine ng-untouched ng-valid ng-empty"
+                    ng-if="obj.AbandonedSession.length == undefined && obj.AbandonedSession.Name != 'null'">
+                  <td class="slds-truncate" title="{{obj.AbandonedSession.Name}}">{{obj.AbandonedSession.Name}}</td> 
+                  <td class="slds-truncate" title="{{obj.AbandonedSession.LastModifiedDate | date : 'dd/MM'}}">{{obj.AbandonedSession.LastModifiedDate | date : 'dd/MM'}}</td>
+                  <td class="slds-truncate">
+                        <div class="slds-truncate" title="Accion" ng-repeat="action in data.actions">
+                            <a ng-click="performAction(action,{
+                            extraParams: {
+                                OmniScriptInstanceId: record.Id
+                            }
+                           })" hotkey-card-action>
+                                {{action.displayName}}
+                           </a>
+                        </div>
+                  </td>
+              </tr>
+              <tr   class="ng-pristine ng-untouched ng-valid ng-empty"
+                    ng-if="obj.AbandonedSession.length == undefined && obj.AbandonedSession.Name == 'null'">
+                  <td class="slds-truncate" title="No se encontraron gestiones abandonadas">No se encontraron gestiones abandonadas</td>
+                  <td class="slds-truncate"></td>
+                  <td class="slds-truncate"></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+</div>

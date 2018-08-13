@@ -1,0 +1,23 @@
+<div>
+   <div class="promotions-section">
+       <div class="via-slds-story-cards--header spacer acct-spacer" 
+          ng-init="showInfo=true">
+          <div class="promotions-section-header" ng-click="showInfo = !showInfo">
+             <span>{{data.title}}</span>
+             <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+             <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+          </div>
+       </div>
+   </div>
+   <div ng-show="showInfo">
+    <ui-carousel slides="ctrl.fade.slides" 
+                 slides-to-show="3" 
+                 slides-to-scroll="1">
+      <carousel-item>
+        <div>
+           <img src="https://c.cs63.visual.force.com/resource/1497554695000/taPromotionv1">
+        </div>
+      </carousel-item>
+    </ui-carousel>
+   </div>
+</div>

@@ -1,0 +1,12 @@
+<apex:page >
+    <script>
+        $j = jQuery.noConflict();
+        $j(window).load(function(){
+            var inputFocus = $j("<input/>");
+            $j("body").prepend(inputFocus);
+            inputFocus.focus(); 
+            inputFocus.css("display","none"); 
+            $j(".datePicker").css("display","none");           
+        });
+    </script>
+</apex:page>

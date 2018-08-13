@@ -1,0 +1,65 @@
+<!-- <pre>-->
+<!--	{{control.propSetMap.selectMode |json}}-->
+<!--	{{control.propSetMap.result |json}}-->
+<!--</pre>-->
+<!-- <pre>-->
+<!--    1: {{control.vlcSI[control.itemsKey][0][control.propSetMap.selectableItemConfig.inputList] |json}}-->
+<!--</pre>-->
+<!-- <pre>-->
+<!--    2: {{control |json}}-->
+<!--</pre>-->
+
+
+
+<div 
+	ng-if="control.vlcSI[control.itemsKey][0][control.propSetMap.selectableItemConfig.inputList]"
+	ng-controller="TASelectableListController as SLCtrl"
+	class='slds-col--padded slds-size--1-of-1'>
+		<table class="slds-table slds-table--bordered slds-table--cell-buffer vlc-slds-table">
+		   <thead>
+				<tr class="slds-text-heading--label">
+					<th width="20px"/>
+					<th ng-repeat="t in control.propSetMap.selectableItemConfig.theader" scope="col">
+						<div class="slds-truncate">{{t.label}}</div>
+					</th>                
+				</tr>
+			</thead>
+			<tbody>				
+				<tr 
+					ng-repeat="p in SLCtrl.list | orderBy : control.propSetMap.selectableItemConfig.orderBy" 
+					ng-class="{ 'vlc-selectableitem-selected' : p.vlcSelected }">
+					<th class="slds-cell-shrink">
+						<label ng-if="control.propSetMap.selectMode == 'Multi'" class="slds-checkbox">
+							<input type="checkbox" ng-model='p.vlcSelected' ng-change='onSelectItem(control, p, $index, this)'/>
+							<span class="slds-checkbox--faux"></span>
+							<span class="slds-assistive-text">Select</span>
+						</label>
+						<label ng-if="control.propSetMap.selectMode == 'Single'" class="slds-radio">
+							<input 
+								type="radio" 
+								ng-model="bpTree.response[control.propSetMap.selectableItemConfig.vlcSelected]"
+								ng-value="p"/>							
+							<span class="slds-radio--faux"></span>
+							<span class="slds-assistive-text">Select</span>
+						</label>
+					</th>
+					<td ng-repeat="title in control.propSetMap.selectableItemConfig.theader">						
+						<div ng-if="title.type != 'date'" class="slds-truncate">{{p[title.field]}}</div>
+						<div ng-if="title.type == 'date'" class="slds-truncate">{{p[title.field] | date: "dd/MM/yyyy"}}</div>
+					</td>                
+				</tr>
+			</tbody>
+		</table>
+		<!-- <div class='vlc-slds-upgrade-btn vlc-slds-remote-action--button'>
+			<div class="slds-form-element__control">
+				<div class="vlc-control-wrapper">
+					<div id="upgradeAsset"
+						 class='slds-box'
+						 title="Upgrade"
+						 ng-click="buttonClick(bpTree.response, control, this, p, 'Upgrade')">
+						<p>Upgrade</p>
+					</div>
+				</div>
+			</div>
+		</div>     -->
+	</div>

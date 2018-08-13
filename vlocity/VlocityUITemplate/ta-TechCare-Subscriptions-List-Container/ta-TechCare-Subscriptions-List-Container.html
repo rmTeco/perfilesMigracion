@@ -1,0 +1,227 @@
+<!-- <pre>BlackList: {{records.respuesta |json}}</pre> -->
+<!-- <pre>2: {{data |json}}</pre>
+<pre>Params: {{params | json}}</pre> -->
+<!-- <pre>records: {{records |json}}</pre> -->
+
+<div 
+	class="via-slds addedValueServices-container" 
+	ng-controller="containerTableSubscriptionsController as CTSCtrl">
+    	
+	<div class="slds-card slds-m-bottom--small">
+
+		<div class="via-slds-card__header slds-card__header headerList slds-grid">
+			<div class="slds-col">
+				<div><strong>{{data.Deck[0].title}}</strong></div>
+				<div><strong>Línea: {{params.LineNumber}}</strong></div>
+			</div>
+			<!-- <div class="slds-col">
+				<div><strong>BlackList</strong></div>
+				<div ng-if="records.respuesta != 'true'">Sin registrar</div>
+				<div ng-if="records.respuesta == 'true'">Registrado</div>
+			</div>	 -->
+			<!-- <div>Asset Id: <strong>{{params.AssetId}}</strong></div> -->
+		</div>
+        	<!-- Horizontal divider -->
+        <div class="slds-has-divider--bottom slds-m-horizontal--large slds-m-bottom--medium">
+        </div>
+         <div class="slds-m-horizontal--large slds-m-bottom--medium">
+            <div ng-if="CTSCtrl.historyBlackList==false">
+                <button
+                    	class="slds-button slds-button--brand">	
+    					Lista de Suscripciones	
+                </button>
+                <button 
+                	ng-click="viewHistoryBlackList(true)" 
+                	class="slds-button slds-button--neutral">				
+                		Historial de BlackList				
+                </button>            
+            </div>
+            <div ng-if="CTSCtrl.historyBlackList==true">            
+                 <button
+                 	    ng-click="viewHistoryBlackList(false)" 
+                    	class="slds-button slds-button--neutral">	
+    					Lista de Suscripciones	
+                </button>
+                <button 
+                	class="slds-button slds-button--brand">				
+                		Historial de BlackList				
+                </button>
+            </div>
+        </div>    
+        <div class="slds-has-divider--bottom slds-m-horizontal--large slds-m-bottom--medium">
+                
+        </div>
+	<!--div ng-if="CTSCtrl.historyBlackList==false"-->
+
+		<!-- Only Actions card -->
+		<vloc-card ng-if="CTSCtrl.historyBlackList==false"  ng-repeat="card in cards | filter: {cardName:'SubscriptionsListActions'}" 
+			ng-model="card" 
+			data="card" 
+			records="records" 
+			index="{{$index}}" 
+			session-id="{{sessionId}}">
+		</vloc-card>
+		
+
+		<div class="slds-card__body cards-container" >
+
+			<table ng-if="CTSCtrl.historyBlackList==false" class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" role="grid">
+				<thead>
+					<tr class="slds-text-heading--label">
+						<th class="slds-border--bottom">
+							<label class="slds-checkbox">
+								<input type="checkbox" id="checkAll" ng-model="CTSCtrl.checkAll" ng-click="CTSCtrl.toggleAll(cards, CTSCtrl.checkAll)"/>
+								<!-- <input type="checkbox" ng-model='p.vlcSelected' ng-change='onSelectItem(control, p, $index, this)'/> -->
+								<span class="slds-checkbox--faux"></span>
+								<span class="slds-assistive-text">Select</span>
+							</label>
+						</th> 
+						<th 
+						ng-if="card.cardName != 'SubscriptionsListActions' && card.cardName != 'AssetHistoryBlacklist'"
+							ng-repeat="field in cards[0].states[0].fields" 
+							scope="col"
+							ng-class="{
+									'slds-is-sorted' : sortingOrder == 'obj'+field.name,									
+									'slds-is-sorted--desc' : reverse, 'slds-is-sorted--asc': !reverse
+								}"								
+							class="slds-border--bottom">							
+							<!-- <div class="slds-truncate">{{field.label}}</div> -->
+							<a 								
+								ng-click="sortBy(field)" 
+								href="javascript:void(0)">
+								{{field.label}}
+								<div class="slds-icon_container">
+									<slds-svg-icon 
+										sprite="'utility'" 
+										size="'x-small'" 
+										icon="'arrowdown'" 
+										extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+									</slds-svg-icon>
+								</div>
+							</a>
+						</th>
+						<th class="slds-cell-shrink slds-clearfix slds-border--bottom">
+							<!-- <div class="slds-align--absolute-center">
+								Acción
+							</div> -->
+						</th>
+
+					</tr>
+				</thead>				
+				<tbody  class="addedValueServices"				
+					ng-init="sortingOrder = 'obj'+'['+'\''+'fechaAltaSuscripcion'+'\''+']'; reverse = false; ">
+					
+					<tr
+						ng-if="card.cardName != 'SubscriptionsListActions' && card.cardName != 'AssetHistoryBlacklist'"
+						vloc-card 
+						ng-repeat-start="card in cards |orderBy:sortingOrder:reverse |filter: searchFunc(card, searchTerm)"
+						ctrl="{{ctrl}}" 
+						ng-model="card" 
+						data="card" 
+						records="records" 
+						index="{{$index}}" 
+						session-id="{{sessionId}}"
+						class="addedValueServices-row"	
+						ng-class="{'even': $parent.$parent.$parent.cards[card.cardIndex].obj.Services}"					
+						use-existing-element-type>	
+						
+					</tr>
+
+					<tr
+						ng-repeat-end
+						class="addedValueServices-row serviceGroup"								
+						ng-show="$parent.$parent.$parent.cards[card.cardIndex].obj.Services">						
+						<td 
+							colspan="6"
+							style="padding: 0">							
+							<vloc-layout 
+								layout-name="ta-added-value-services-grouped"
+								ng-if="$parent.$parent.$parent.cards[card.cardIndex].obj.Services"
+								records="$parent.$parent.$parent.cards[card.cardIndex].obj.Services">
+							</vloc-layout>
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+			<!-- HistoryBlackList -->
+	
+			
+			<table ng-if="CTSCtrl.historyBlackList==true" class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer" role="grid">
+			    
+				<thead>
+					<tr class="slds-text-heading--label">
+						<th 
+						
+							ng-repeat="field in cards[cards.length-1].states[0].fields" 
+							scope="col"
+							ng-class="{
+									'slds-is-sorted' : sortingOrder == 'obj'+field.name,									
+									'slds-is-sorted--desc' : reverse, 'slds-is-sorted--asc': !reverse
+								}"								
+							class="slds-border--bottom">							
+							<!-- <div class="slds-truncate">{{field.label}}</div> -->
+							<a 								
+								ng-click="sortBy(field)" 
+								href="javascript:void(0)">
+								{{field.label}}
+								<div class="slds-icon_container">
+									<slds-svg-icon 
+										sprite="'utility'" 
+										size="'x-small'" 
+										icon="'arrowdown'" 
+										extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+									</slds-svg-icon>
+								</div>
+							</a>
+				
+						</th>
+						<th class="slds-cell-shrink slds-clearfix slds-border--bottom">
+							<!-- <div class="slds-align--absolute-center">
+								Acción
+							</div> -->
+						</th>
+
+					</tr>
+				</thead>				
+				<tbody  class="addedValueServices"				
+					ng-init="sortingOrder = 'obj'+'['+'\''+'fechaAltaSuscripcion'+'\''+']'; reverse = false; ">
+					
+					<tr
+						ng-if="card.cardName == 'AssetHistoryBlacklist'"
+						vloc-card 
+						ng-repeat-start="card in cards |orderBy:sortingOrder:reverse |filter: searchFunc(card, searchTerm)"
+						ctrl="{{ctrl}}" 
+						ng-model="card" 
+						data="card" 
+						records="records" 
+						index="{{$index}}" 
+						session-id="{{sessionId}}"
+						class="addedValueServices-row"	
+						ng-class="{'even': $parent.$parent.$parent.cards[card.cardIndex].obj.Services}"					
+						use-existing-element-type>	
+						
+					</tr>
+
+					<tr
+						ng-repeat-end
+						class="addedValueServices-row serviceGroup"								
+						ng-show="$parent.$parent.$parent.cards[card.cardIndex].obj.Services">						
+						<td 
+							colspan="6"
+							style="padding: 0">							
+							<vloc-layout 
+								layout-name="ta-added-value-services-grouped"
+								ng-if="$parent.$parent.$parent.cards[card.cardIndex].obj.Services"
+								records="$parent.$parent.$parent.cards[card.cardIndex].obj.Services">
+							</vloc-layout>
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		   
+		</div>
+		<!--/div-->	
+	</div>
+</div>

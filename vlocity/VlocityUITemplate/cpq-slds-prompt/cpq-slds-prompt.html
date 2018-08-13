@@ -1,0 +1,22 @@
+<!-- Please use loaded object to overwrite data -->
+<!-- Example: -->
+<!-- <div ng-controller='customSldsPromptController' ng-init="getData(loaded)"></div> -->
+
+
+<div class="slds-modal__header {{loaded.theme ? 'slds-theme_' + loaded.theme : ''}} 
+{{loaded.theme == 'warning' || loaded.theme == 'error' ? 'slds-theme_alert-texture' : ''}}">
+  <h2 class="slds-text-heading_medium" ng-bind="loaded.title"></h2>
+</div>
+
+<div class="slds-modal__content slds-p-around_medium">
+    <p ng-bind-html="loaded.content"></p>
+</div>
+
+<div class="slds-modal__footer slds-theme_default">
+  <button
+    class="slds-button slds-button_{{button.type ? button.type : 'neutral'}}"
+    ng-click="button.action ? button.action() : $hide()"
+    ng-repeat="button in loaded.buttons">
+    {{button.label}}
+  </button>
+</div>

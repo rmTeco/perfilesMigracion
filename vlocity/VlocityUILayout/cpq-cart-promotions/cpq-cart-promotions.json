@@ -1,0 +1,36 @@
+{
+    "Cards": [
+        "cpq-cart-promotions-card"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "801360000035EZi"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v3/cpq/carts/{{params.id}}/promotions?subaction=getPromotionsAppliedToCart&pagesize=10",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "pagesize": "10"
+            },
+            "methodType": "GET",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.CpqAppHandler"
+            },
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getPromotionsAppliedToCart",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-cart-promotions"
+        }
+    }
+}

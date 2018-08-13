@@ -1,0 +1,21 @@
+<div class="via-slds slds-m-around--small ng-scope"
+    ng-controller="cardShowBillController as billCtrl"
+    ng-init="init()">
+    
+    
+    <div class="slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;">
+        <div>
+            <div class="slds-float--left" style="margin-top:15px;">
+					<span class="lineNumber">Detalle de factura</span>
+				</div>
+			<div class="slds-float--right" style="margin-top:25px;margin-bottom: 15px;">
+				<button class="boton" ng-click="printFile()">Imprimir</button>
+				<button class="boton2" ng-click="donwloadFile()">Descargar</button>
+			</div>
+        </div>
+       	<hr/> 
+       	<object data="{{data2}}" type="application/pdf" width="100%" height="100%" style="height:1000px"></object>
+        
+    </div>
+    
+</div>

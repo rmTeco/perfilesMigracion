@@ -1,0 +1,19 @@
+<div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">{{::$root.vlocity.getCustomLabel('ToggleNavigation', 'Toggle navigation')}}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="/" class="navbar-brand"><img width="120px" src="{{$root.staticResourceURL.logo}}" /></a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="#">{{::$root.vlocity.getCustomLabel('AccountOverview', 'Account Overview')}}</a></li>
+            <li><a href="#">{{::$root.vlocity.getCustomLabel('Claims', 'Claims')}}</a></li>
+            <li><a href="#">{{::$root.vlocity.getCustomLabel('CustomerCare', 'Customer Care')}}</a></li>
+            <li><a href="#">{{::$root.vlocity.getCustomLabel('Support', 'Support')}}</a></li>
+        </ul>
+    </div>
+</div>

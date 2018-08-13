@@ -1,0 +1,75 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.ContextId",
+                "val": "0016C000009KPML"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "bundle": "GetAccountInfoById",
+            "inputMap": {
+                "Id": "{{params.ContextId}}"
+            },
+            "query": "SELECT Id, Name FROM Account WHERE Id = '{{$root.vlocity.userAccountId}}'"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "['Account']['Id']",
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal Alta",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Club Personal Baja",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": true,
+                        "id": "CPTransferenciaDePuntos",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Active",
+            "sObjectType": "Account",
+            "templateUrl": "action-grid-card-slds"
+        }
+    ],
+    "title": "Club Personal"
+}

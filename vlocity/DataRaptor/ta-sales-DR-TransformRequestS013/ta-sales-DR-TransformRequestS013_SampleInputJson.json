@@ -1,0 +1,91 @@
+{
+    "Account": {
+        "%vlocity_namespace%__PrimaryContactId__c": "0036C000007FTsuQAG",
+        "BillingCity": "Buenos Aires",
+        "BillingState": "B",
+        "Contact": {
+            "Birthdate": "1975-05-24",
+            "DocumentNumber__c": "24839704",
+            "DocumentType": "DNI",
+            "Email": "f@outlook.com",
+            "FirstName": "Florinda",
+            "Gender__c": "Femenino",
+            "LastName": "Acosta",
+            "MobilePhone": "93093029",
+            "Name": "Florinda Acosta",
+            "Phone": "993839381"
+        },
+        "CustomerIntegrationId__c": 13800010033,
+        "HuaweiNotice_S015": true,
+        "HuaweiNotice_S202": true,
+        "Id": "0016C00000993xtQAA",
+        "Name": "Florinda Acosta"
+    },
+    "BillingOrder": {
+        "CFT": "2",
+        "Channel": "Call Center",
+        "Delivery_Method": "Delivery",
+        "EffectiveDate": "2017-11-02",
+        "Id": "8016C0000000PGQQA2",
+        "Items": [
+            {
+                "AvailableQuantity": 1,
+                "ListPrice": 0,
+                "OrderItemNumber": "0000038385",
+                "PriceType": "recurring",
+                "Product": {
+                    "Family": "Movil",
+                    "Name": "Pack 3000 SMS y 150MB x 3 dias",
+                    "ProductCode": "FAN_PRDA_00002"
+                },
+                "Quantity": 1,
+                "TotalPrice": 0,
+                "UnitPrice": 23.9
+            }
+        ],
+        "OrderNumber": "00010333",
+        "Status": "Draft",
+        "StatusCode": "D",
+        "TotalAmount": 0
+    },
+    "CalculateInterest_Response": {
+        "CFT": 2,
+        "Interest": 0.478,
+        "OrderTotal": 23.9,
+        "error": "OK"
+    },
+    "ContextId": "",
+    "IdOrder": "8016C0000000PGQQA2",
+    "S013_Request": {
+        "error": "OK",
+        "idPropietario": 13800010033,
+        "infoPetCalculoImpuestos": {
+            "listaCantidadCargos": [
+                {
+                    "infoCargo": {
+                        "cantidadUnidades": 1,
+                        "idItem": "FAN_PRDA_00002",
+                        "precioUnitario": 23.9
+                    }
+                },
+                {
+                    "infoCargo": {
+                        "cantidadUnidades": 1,
+                        "codCargo": "C_Interest__21",
+                        "precioUnitario": 0.478
+                    }
+                }
+            ]
+        },
+        "tipoPropietario": "C"
+    },
+    "S013_Response": "Unrecognized field \"error\" (Class exeo.mock.cbs.taxes.beans.Input), not marked as ignorable\n at [Source: org.apache.catalina.connector.CoyoteInputStream@1ae871bc; line: 1, column: 11] (through reference chain: exeo.mock.cbs.taxes.beans.Input[\"error\"])",
+    "id": "a1q6C0000001pggQAA",
+    "layout": "lightning",
+    "timeStamp": "2017-11-07T12:04:56.188Z",
+    "userId": "0056C000000teEsQAI",
+    "userName": "oparducci@vlocity.com.fan.desa01",
+    "userProfile": "Vlocity_Developer",
+    "vlcPersistentComponent": {
+    }
+}

@@ -1,0 +1,262 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+@mixin cardsMixin($namespace: 'cpq') {
+
+    /*** STYLES ***/
+
+    .#{$namespace}-child-products, .#{$namespace}-root-product {
+        position:relative; /* needed for selected border */
+
+        input.ng-invalid {
+            color: $error;
+        }
+
+        .#{$namespace}-item-product, .#{$namespace}-item-base-product {
+            &.#{$namespace}-item-selected {
+                &::after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    /* don't use left:0, as it will take full width rather than creating just the border to the right */
+                    border-right: 8px solid $cpq-product-cart-item-selected-border-color;
+                }
+            }
+        }
+
+        .#{$namespace}-item-product {
+            padding: $cpq-padding-large-vertical 0px;
+            margin: 0px $cpq-padding-large-horizontal;
+            border-bottom: 1px solid $middle-light-gray;
+        }
+        
+        .#{$namespace}-item-base-product {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-end;
+
+            .#{$namespace}-item-base-product-input,
+            .#{$namespace}-item-base-product-text,
+            .#{$namespace}-item-base-product-string {
+                flex: 2;
+                padding-right: $cpq-padding-base-horizontal/2;
+            }
+
+            .#{$namespace}-item-base-product-text,
+            .#{$namespace}-item-base-product-string {
+                padding-top: $cpq-padding-base-vertical;
+                overflow-wrap: break-word;
+                min-width: 0;
+            }
+
+            .#{$namespace}-item-base-product-currency, .#{$namespace}-item-base-product-promo-field {
+                .slds-popover.#{$namespace}-price-actions-popover {
+                    position: absolute;
+                    z-index: 999;
+                    width: auto;
+                    top: $cpq-product-cart-item-popover-top;
+                    left: $cpq-product-cart-item-popover-left;
+
+                    .slds-popover__body.#{$namespace}-price-actions-popover__body {
+                        &:after {
+                            content: "";
+                            display: block;
+                            width: 100%;
+                            height: 2rem;
+                            position: absolute;
+                            left: 0;
+                            bottom: -2rem;
+                        }
+                    }
+                }
+            }
+
+            .#{$namespace}-item-base-product-currency {
+                flex: 2;
+                position: relative;
+                transition: color 250ms ease-in;
+                padding: $cpq-padding-base-vertical $cpq-padding-base-horizontal/2 0 0;
+
+                .#{$namespace}-item-discount-price {
+                    color: $cpq-product-cart-discount-price;
+                }
+            }
+
+            .#{$namespace}-item-base-product-actions {
+                flex: 3;
+                padding-right: $cpq-padding-base-horizontal/2;
+
+                &.compacted {
+                    flex: 1;
+                }
+
+                .#{$namespace}-actions-dropdown-menu-dropdown {
+                    position: relative;
+
+                    .#{$namespace}-item-actions-dropdown-button {
+                        height: 1.6875rem;
+                        margin-top: 0.125rem;
+
+                        .slds-button__icon {
+                            fill: $primary-medium;
+                        }
+                    }
+
+                    .#{$namespace}-action-item-label {
+                        font-size: 11px;
+                        color: $primary-medium;
+                    }
+
+                    .slds-icon {
+                        fill: $primary-medium;
+                        position: relative;
+                        top: -1px;
+                        margin-right: 0.25rem;
+                    }
+                }
+            }
+
+            .#{$namespace}-item-base-product-name-field {
+                flex: 5;
+                padding: 0 $cpq-padding-base-horizontal/2 0 0;
+                
+                .#{$namespace}-product-item-bookmark-change, .#{$namespace}-product-item-bookmark-existing, {
+                    color: $product-item-bookmark-red;
+                }
+                .#{$namespace}-product-item-bookmark-add, .#{$namespace}-product-item-bookmark-null {
+                    color: $product-item-bookmark-blue;
+                }    
+                .#{$namespace}-product-item-bookmark-disconnect {
+                    color: $product-item-bookmark-grayish-blue;
+                }
+                
+                .#{$namespace}-item-has-children {
+                    font-size: 13px;
+                    color: $mid-black;
+
+                    &:focus{
+                        box-shadow: none;
+                    }
+
+                    .slds-button__icon {
+                        float: left;
+                        margin: 0.3rem 0.5rem 0 0;
+                    }
+
+                    .#{$namespace}-product-name {
+                        line-height: 1.6;
+                        text-align: left;
+                        max-width: 85%;
+                        float: left;
+                        display: inline-block;
+                        margin-top: 0.125rem;
+                        margin-left: 0;
+                    }
+                }
+
+                .#{$namespace}-item-no-children {
+                    margin-top: 6px;
+                    padding-left: 0;
+                }
+            }
+
+            .#{$namespace}-item-base-product-promo-field {
+                flex: 4;
+                position: relative;
+                transition: color 250ms ease-in;
+                padding: $cpq-padding-base-vertical $cpq-padding-base-horizontal/2 0 0;
+
+                .#{$namespace}-promo-name-strike {
+                    text-decoration: line-through;
+                }
+            }
+
+            .#{$namespace}-item-base-product-itemname-field {
+                flex: 3;
+                input {
+                    width: 90%;
+                    text-align: left;
+                }
+            }
+
+        }
+
+        .#{$namespace}-item-currency-value {
+            color: $cpq-product-cart-items-attr-value-color;
+            padding-top: $cpq-padding-large-vertical/2;
+        }
+
+        .#{$namespace}-item-input {
+            padding: 0px 3px;
+            margin-top: $cpq-padding-large-vertical/5;
+            text-align: center;
+            width: 50px; /* width can fit 3 digits */
+            height: 25px;
+            min-height: calc(25px + 2px); /* override slds input styles */
+        }
+
+        .#{$namespace}-item-product-messages {
+            font-size: 95%;
+        }
+
+        .#{$namespace}-item-base-product-details {
+            /* padding-left: $cpq-cart-item-product-details-padding; */
+        }
+
+        .#{$namespace}-item-base-product-cfg-attr {
+            .slds-section__title {
+                a {
+                    font-size: $cpq-cart-item-product-cfg-attr-font-size;
+                }
+
+                button {
+                    padding-bottom: 4px;
+                }
+            }
+
+            .#{$namespace}-item-attributes-form {
+                .slds-section:first-child {
+                    .slds-section__title {
+                        margin-top: 8px;
+                    }
+                }
+            }
+        }
+
+        .#{$namespace}-error-msg {
+            color: $error;
+        }
+        .#{$namespace}-warning-msg {
+            color: $warning;
+        }
+
+        .#{$namespace}-underline {
+            border-bottom: dashed 1px;
+            &:hover, &.hovered {
+                color: #0070d2;
+                cursor: pointer;
+            }
+        }
+    }
+
+    /* 64rem */
+    @media screen and (max-width: $bp-large) {
+        .#{$namespace}-item-product {
+            .#{$namespace}-item-base-product {
+                .#{$namespace}-item-base-product-actions {
+                    .slds-button {
+                        .slds-button__icon {
+                            fill: $primary-medium;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

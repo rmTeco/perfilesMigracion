@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>#Sales #Sprint12
+
+multi-purpose object that allows you to configure templates of particular use such as content configurations of SMS, EMAILS, etc. and also allows you to track the sending and reply transactions of SMS, EMAILs, etc.
+
+It has generic fields of type text, number and date which are added to several types of record types which are complemented with two fields of type pick list, thus a record type of type SMS can be combined with a sub value of type &quot;decision line&quot;</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>this field determines the relationship with the Account object.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>this field determines the relationship with the Account object.</inlineHelpText>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Cross Objects</relationshipLabel>
+        <relationshipName>Cross_Objects</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Case__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>this field determines the relationship with the Case object.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>this field determines the relationship with the Case object.</inlineHelpText>
+        <label>Case</label>
+        <referenceTo>Case</referenceTo>
+        <relationshipLabel>Cross Objects</relationshipLabel>
+        <relationshipName>Cross_Objects</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Checkbox1__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>generic checkbox field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic checkbox field type</inlineHelpText>
+        <label>Checkbox1</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Contact__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to Contact</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lookup to Contact</inlineHelpText>
+        <label>Contact</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Cross Objects</relationshipLabel>
+        <relationshipName>Cross_Objects</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CrossObjectName__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>false</externalId>
+        <label>Name</label>
+        <length>30</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Date1__c</fullName>
+        <description>generic date field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic date field type</inlineHelpText>
+        <label>Date 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Date2__c</fullName>
+        <description>generic date field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic date field type</inlineHelpText>
+        <label>Date 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>DateTime1__c</fullName>
+        <externalId>false</externalId>
+        <label>DateTime 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>DateTime2__c</fullName>
+        <externalId>false</externalId>
+        <label>DateTime 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>DateTime3__c</fullName>
+        <externalId>false</externalId>
+        <label>DateTime 3</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Email1__c</fullName>
+        <description>generic email field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic email field type</inlineHelpText>
+        <label>Email 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Integer1__c</fullName>
+        <description>generic integer field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic integer field type</inlineHelpText>
+        <label>Integer 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Integer2__c</fullName>
+        <description>generic integer field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic integer field type</inlineHelpText>
+        <label>Integer 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Integer3__c</fullName>
+        <description>generic integer field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic integer field type</inlineHelpText>
+        <label>Integer 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MarkForDeletion__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>field represent of mark for deletion record</description>
+        <externalId>false</externalId>
+        <inlineHelpText>field represent of mark for deletion record</inlineHelpText>
+        <label>Mark for deletion</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>this field determines the relationship with the Order object.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>this field determines the relationship with the Order object.</inlineHelpText>
+        <label>Order</label>
+        <referenceTo>Order</referenceTo>
+        <relationshipLabel>Cross Objects</relationshipLabel>
+        <relationshipName>Cross_Objects</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Phone1__c</fullName>
+        <description>generic phone field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic phone field type</inlineHelpText>
+        <label>Phone 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
+        <fullName>Picklist1__c</fullName>
+        <description>field of type list that is related and filtered with the record type of the object</description>
+        <externalId>false</externalId>
+        <inlineHelpText>field of type list that is related and filtered with the record type of the object</inlineHelpText>
+        <label>Picklist 1</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Verificación de Línea Decisora</fullName>
+                    <default>false</default>
+                    <label>Verificación de Línea Decisora</label>
+                </value>
+                <value>
+                    <fullName>Verificación de identidad en una orden de venta</fullName>
+                    <default>false</default>
+                    <label>Verificación de identidad en una orden de venta</label>
+                </value>
+                <value>
+                    <fullName>Vencimiento de plazo de permanencia</fullName>
+                    <default>false</default>
+                    <label>Vencimiento de plazo de permanencia</label>
+                </value>
+                <value>
+                    <fullName>Q&amp;A</fullName>
+                    <default>false</default>
+                    <label>Q&amp;A</label>
+                </value>
+                <value>
+                    <fullName>Sms</fullName>
+                    <default>false</default>
+                    <label>Sms</label>
+                </value>
+                <value>
+                    <fullName>Document</fullName>
+                    <default>false</default>
+                    <label>Document</label>
+                </value>
+                <value>
+                    <fullName>Vencimiento de Pickup</fullName>
+                    <default>false</default>
+                    <label>Vencimiento de Pickup</label>
+                </value>
+                <value>
+                    <fullName>Detalles de Pickup</fullName>
+                    <default>false</default>
+                    <label>Detalles de Pickup</label>
+                </value>
+                <value>
+                    <fullName>Error de nominacion</fullName>
+                    <default>false</default>
+                    <label>Error de nominacion</label>
+                </value>
+                <value>
+                    <fullName>Nominacion exitosa</fullName>
+                    <default>false</default>
+                    <label>Nominacion exitosa</label>
+                </value>
+                <value>
+                    <fullName>Recarga Exitosa</fullName>
+                    <default>false</default>
+                    <label>Recarga Exitosa</label>
+                </value>
+                <value>
+                    <fullName>Cambio Numeros Amigos Ok</fullName>
+                    <default>false</default>
+                    <label>Cambio Numeros Amigos Ok</label>
+                </value>
+                <value>
+                    <fullName>Renovacion de datos Exitosa</fullName>
+                    <default>false</default>
+                    <label>Renovacion de datos Exitosa</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Picklist2__c</fullName>
+        <description>field of type list that represents the type of message</description>
+        <externalId>false</externalId>
+        <inlineHelpText>field of type list that represents the type of message</inlineHelpText>
+        <label>Picklist 2</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Solo notificacion</fullName>
+                    <default>false</default>
+                    <label>Solo notificacion</label>
+                </value>
+                <value>
+                    <fullName>Requiere respuesta</fullName>
+                    <default>false</default>
+                    <label>Requiere respuesta</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pendiente</fullName>
+                    <default>false</default>
+                    <label>Pendiente</label>
+                </value>
+                <value>
+                    <fullName>Cerrado</fullName>
+                    <default>false</default>
+                    <label>Cerrado</label>
+                </value>
+                <value>
+                    <fullName>Confirmado</fullName>
+                    <default>false</default>
+                    <label>Confirmado</label>
+                </value>
+                <value>
+                    <fullName>Cancelado</fullName>
+                    <default>false</default>
+                    <label>Cancelado</label>
+                </value>
+                <value>
+                    <fullName>Fallo Envio</fullName>
+                    <default>false</default>
+                    <label>Fallo Envio</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>String1__c</fullName>
+        <description>generic string field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic string field type</inlineHelpText>
+        <label>String 1</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>String2__c</fullName>
+        <description>generic string field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic string field type</inlineHelpText>
+        <label>String 2</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>String3__c</fullName>
+        <description>generic string field type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>generic string field type</inlineHelpText>
+        <label>String 3</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TextArea__c</fullName>
+        <externalId>false</externalId>
+        <label>Text Area</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <label>Cross Object</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>Picklist1__c</columns>
+        <columns>Picklist2__c</columns>
+        <columns>MarkForDeletion__c</columns>
+        <columns>TextArea__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>SMS_Template</fullName>
+        <columns>NAME</columns>
+        <columns>Picklist1__c</columns>
+        <columns>Picklist2__c</columns>
+        <columns>String1__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Crossobject__c.SMSTemplate</value>
+        </filters>
+        <label>SMS Template</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>SMS_Tracking</fullName>
+        <columns>NAME</columns>
+        <columns>Picklist1__c</columns>
+        <columns>Picklist2__c</columns>
+        <columns>String1__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Crossobject__c.SMSTracking</value>
+        </filters>
+        <label>SMS Tracking</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>CO-{00000000}</displayFormat>
+        <label>Crossobject Number</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Cross Objects</pluralLabel>
+    <recordTypes>
+        <fullName>Account_Attribute</fullName>
+        <active>false</active>
+        <description>Account Attribute</description>
+        <label>Account Attribute</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Document</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q%26A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de plazo de permanencia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de Línea Decisora</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de identidad en una orden de venta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>EmailTemplate</fullName>
+        <active>true</active>
+        <label>Email Template</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Verificación de Línea Decisora</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de identidad en una orden de venta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>EmailToSend</fullName>
+        <active>true</active>
+        <label>Email to send</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Detalles de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nominacion exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de plazo de permanencia</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>EmailTracking</fullName>
+        <active>true</active>
+        <label>Email Tracking</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Verificación de Línea Decisora</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de identidad en una orden de venta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>ExternalChannel</fullName>
+        <active>true</active>
+        <description>External Channel</description>
+        <label>External Channel</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Detalles de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Document</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error de nominacion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nominacion exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q%26A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recarga Exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de plazo de permanencia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de Línea Decisora</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de identidad en una orden de venta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fallo Envio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Log_Identity_Validation</fullName>
+        <active>true</active>
+        <label>Log Identity Validation</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Document</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q%26A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sms</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SMSAdministrator</fullName>
+        <active>true</active>
+        <description>Mensajes para Marketing Cloud</description>
+        <label>SMS Administrator</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Detalles de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Document</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error de nominacion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nominacion exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q%26A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recarga Exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sms</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de plazo de permanencia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de Línea Decisora</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de identidad en una orden de venta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fallo Envio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SMSTemplate</fullName>
+        <active>true</active>
+        <label>SMS Template</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Cambio Numeros Amigos Ok</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error de nominacion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nominacion exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recarga Exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renovacion de datos Exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de plazo de permanencia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de Línea Decisora</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de identidad en una orden de venta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>SMSTracking</fullName>
+        <active>true</active>
+        <label>SMS Tracking</label>
+        <picklistValues>
+            <picklist>Picklist1__c</picklist>
+            <values>
+                <fullName>Cambio Numeros Amigos Ok</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Error de nominacion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Nominacion exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recarga Exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Renovacion de datos Exitosa</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de Pickup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Vencimiento de plazo de permanencia</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de Línea Decisora</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Verificación de identidad en una orden de venta</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Picklist2__c</picklist>
+            <values>
+                <fullName>Requiere respuesta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Solo notificacion</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cerrado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Confirmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fallo Envio</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>CrossObjectName__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>SMSTemplate_TextoLargo</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;SMSTemplate&apos; &amp;&amp; LEN(String1__c) &gt; 100</errorConditionFormula>
+        <errorMessage>El texto del mensaje no puede exceder los 100 caracteres.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SMSTemplate_VigenciaDesde</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;SMSTemplate&apos; &amp;&amp;  Date1__c &lt; TODAY()</errorConditionFormula>
+        <errorMessage>La fecha Vigencia Desde no puede ser menor a hoy.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>SMSTemplate_VigenciaHasta</fullName>
+        <active>true</active>
+        <errorConditionFormula>RecordType.DeveloperName = &apos;SMSTemplate&apos; &amp;&amp; OR(Date1__c &lt; TODAY(), Date2__c &lt; Date1__c)</errorConditionFormula>
+        <errorMessage>La fecha Vigencia Desde no puede ser menor a hoy ni menor a la fecha Vigencia Desde</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

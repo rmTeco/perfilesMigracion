@@ -1,0 +1,43 @@
+<div class="slds-col--padded slds-size--1-of-1">
+
+    <ng-form name='loopform'
+             class='slds-form-element vlc-flex vlc-slds-message'
+             ng-repeat='control in child.eleArray'>
+
+        <div class="slds-form-element__control">
+
+            <label ng-if='::!control.propSetMap.hideLabel' class='slds-form-element__label'>
+                {{::control.propSetMap.label}}
+            </label>
+
+            <div class="vlc-control-wrapper">
+
+                <!--msg="{{msg.type}}"-->
+                <div class="message description"
+                     ng-repeat='msg in ::control.propSetMap.messages'
+                     
+                     ng-if="msg.active === true && control.response !== null && control.response === msg.value">
+                    
+                    <img ng-if="msg.type == 'Success'" src="../servlet/servlet.ImageServer?id=0156C000000EdjiQAC&amp;&amp;docName=CABIABAJA38d501d61e584ad89de0f86a459c4c6e&amp;&amp;oid=00D6C0000000eSzUAI" alt="error-msg-icon" width="21" height="21" />
+                    
+                    <img ng-if="msg.type == 'Requirement'" src="../servlet/servlet.ImageServer?id=0156C000000Ecz6QAC&amp;&amp;docName=CABHBBAJAa088abbf78af430992e1b954e738bf5b&amp;&amp;oid=00D6C0000000eSzUAI" alt="error-msg-icon" width="21" height="21" />
+                    
+                    <em>{{control.displayMsg}}</em>
+                </div>
+
+                <input id='{{::control.name}}'
+                       type='text'
+                       name='loopname'
+                       ng-show='performValidate(this, control)'
+                       ng-model='control.response'
+                       class='slds-input'
+                       vlc-slds-val-checker="response"
+                       readonly />
+                
+            </div>
+
+        </div>
+
+    </ng-form>
+
+</div>

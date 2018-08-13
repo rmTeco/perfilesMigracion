@@ -1,0 +1,7 @@
+<div class="cpq-product-item-more" ng-controller="ProductItemMoreController as pimc" ng-init="pimc.init();">
+    <!--<pre>-->
+    <!--    container-->
+    <!--    {{records | json}}-->
+    <!--</pre>-->
+    <vloc-card ng-repeat="card in cards |orderBy:order" ctrl="CPQProductItemDetailsController" ng-model="card" data="card" records="records" index="{{$index}}"></vloc-card>
+</div>

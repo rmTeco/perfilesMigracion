@@ -1,0 +1,35 @@
+<div>
+    <div ng-repeat="plan in bpTree.response.Order.planes">
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+            <thead>
+                <tr class="slds-text-title_caps"
+                    ng-if="$first">
+                        <th width="20%">Línea</th>
+                        <th width="10%">NMU</th>
+                        <th width="30%">ICCID</th>
+                        <th width="40%">Validación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="linea in plan.lineas">
+                    <td>
+                        <label>{{linea.linea}}</label>
+                    </td>
+                    <td>
+                        <label>{{linea.NMU}}</label>
+                    </td>
+                    <td>
+                        <input
+                            type="text"
+                            ng-model="linea.serial">
+                    </td>
+                    <td>
+                        <div class="textWrapped slds-hyphenate">
+                                {{linea.validacionSerial}}
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

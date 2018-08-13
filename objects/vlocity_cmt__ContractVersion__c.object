@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Represents an online version of a contract document. A contract document can have physical files attached to it such as Word files or PDF files.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fieldSets>
+        <fullName>vlocity_cmt__ContractVersionReadonlyList</fullName>
+        <availableFields>
+            <field>vlocity_cmt__ContractId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__ContractStatus__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>CreatedById</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>CreatedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>IsDeleted</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastModifiedById</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>LastModifiedDate</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>vlocity_cmt__Status__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <availableFields>
+            <field>SystemModstamp</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </availableFields>
+        <description>Read only VF page fields</description>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>vlocity_cmt__DocumentTemplateId__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>vlocity_cmt__Type__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>vlocity_cmt__VersionNumber__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ContractVersionReadonlyList</label>
+    </fieldSets>
+    <fields>
+        <fullName>vlocity_cmt__ContainsRedlines__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Indicates whether this contract document version contains redlines</description>
+        <externalId>false</externalId>
+        <formula>If( vlocity_cmt__CountOfContainsRedlines__c&gt;0, true, false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contains Redlines</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ContractId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract document version</description>
+        <externalId>false</externalId>
+        <label>Contract</label>
+        <referenceTo>Contract</referenceTo>
+        <relationshipName>Contract_Versions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ContractStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract Status</description>
+        <externalId>false</externalId>
+        <formula>TEXT(vlocity_cmt__ContractId__r.Status)</formula>
+        <label>Contract Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ContractType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract type</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__ContractId__r.vlocity_cmt__ContractType__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Contract Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CountOfContainsRedlines__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Total count of sections that contain redlines in the document version</description>
+        <externalId>false</externalId>
+        <label>Count Of Contains Redlines</label>
+        <summaryFilterItems>
+            <field>vlocity_cmt__ContractSection__c.vlocity_cmt__ContainsRedlines__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>vlocity_cmt__ContractSection__c.vlocity_cmt__ContractVersionId__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CountOfDocuSignDocument__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Count of documents</description>
+        <externalId>false</externalId>
+        <label>Number of DocuSign Document</label>
+        <summaryForeignKey>vlocity_cmt__ContractEnvelope__c.vlocity_cmt__ContractVersionId__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CountOfNonStandardSection__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Count of non standard sections</description>
+        <externalId>false</externalId>
+        <label>Non Standard Count</label>
+        <summaryFilterItems>
+            <field>vlocity_cmt__ContractSection__c.vlocity_cmt__IsSectionNonStandard__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </summaryFilterItems>
+        <summaryForeignKey>vlocity_cmt__ContractSection__c.vlocity_cmt__ContractVersionId__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CountOfPendingDocument__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Count of pending documents</description>
+        <externalId>false</externalId>
+        <label>Number of Pending Document</label>
+        <summaryFilterItems>
+            <field>vlocity_cmt__ContractEnvelope__c.vlocity_cmt__Status__c</field>
+            <operation>equals</operation>
+            <value>sent, delivered</value>
+        </summaryFilterItems>
+        <summaryForeignKey>vlocity_cmt__ContractEnvelope__c.vlocity_cmt__ContractVersionId__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CreatorName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Creator name</description>
+        <externalId>false</externalId>
+        <formula>CreatedBy.FirstName &amp; &apos; &apos;&amp;  CreatedBy.LastName</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Created By</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DataExtractDRBundleName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__DocumentTemplateId__r.vlocity_cmt__DataExtractDRBundleName__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Template Data Extract Bundle Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentCreationSource__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Indicates how the document version was created</description>
+        <externalId>false</externalId>
+        <label>Document Creation Source</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Customize</fullName>
+                    <default>false</default>
+                    <label>Customize</label>
+                </value>
+                <value>
+                    <fullName>Generate</fullName>
+                    <default>true</default>
+                    <label>Generate</label>
+                </value>
+                <value>
+                    <fullName>Import</fullName>
+                    <default>false</default>
+                    <label>Import</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentLockedReason__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Reason why the document version is locked</description>
+        <externalId>false</externalId>
+        <label>Document Locked Reason</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentLockedUserId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>User ID of user who locked this version</description>
+        <externalId>false</externalId>
+        <label>Document Locked User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Contract_Documents</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentLockedUserName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>User name of user who locked this version</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__DocumentLockedUserId__r.FirstName &amp; &quot; &quot; &amp; vlocity_cmt__DocumentLockedUserId__r.LastName</formula>
+        <label>Locked By</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentTemplateFormatType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>TEXT(vlocity_cmt__DocumentTemplateId__r.vlocity_cmt__TemplateContentFormat__c)</formula>
+        <label>Document Template Format Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentTemplateId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Document Template Identifier</description>
+        <externalId>false</externalId>
+        <label>Document Template</label>
+        <referenceTo>vlocity_cmt__DocumentTemplate__c</referenceTo>
+        <relationshipLabel>Contract Documents</relationshipLabel>
+        <relationshipName>Contract_Versions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentTemplateName__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Document Template Name</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__DocumentTemplateId__r.Name</formula>
+        <label>Document Template Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocumentTemplateVersion__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Document Template Version</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__DocumentTemplateId__r.vlocity_cmt__VersionNumber__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Document Template Version</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__DocxTemplateName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Docx Template Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__HasDocumentSignaturePending__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Indicates whether document has any signatures pending</description>
+        <externalId>false</externalId>
+        <formula>If(vlocity_cmt__CountOfDocuSignDocument__c !=0, If( vlocity_cmt__CountOfPendingDocument__c=0, false, true), false)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Has Document Signature Pending</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsCurrentUserLockedDocument__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Indicates whether the current accessing the document has locked the document</description>
+        <externalId>false</externalId>
+        <formula>if($User.Id== vlocity_cmt__DocumentLockedUserId__c, true, false)</formula>
+        <label>Is Current User Locked Document</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsDocumentLocked__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates if the document is locked</description>
+        <externalId>false</externalId>
+        <label>Is Document Locked</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsNewTemplateVersionAvailable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates if a newer version of the template than used for generating the document is available</description>
+        <externalId>false</externalId>
+        <label>New Template Version Available</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__MappingType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>TEXT(vlocity_cmt__DocumentTemplateId__r.vlocity_cmt__MappingType__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Template Mapping Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ParentCountOfContractVersion__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Internally used formula field to help generate a new contract version number</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__ContractId__r.vlocity_cmt__CountofContractVersion__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Parent Count Of Contract Document</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SectionCount__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Section Count</label>
+        <summaryForeignKey>vlocity_cmt__ContractSection__c.vlocity_cmt__ContractVersionId__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Status__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract document version status</description>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>true</default>
+                    <label>Active</label>
+                </value>
+                <value>
+                    <fullName>Inactive</fullName>
+                    <default>false</default>
+                    <label>Inactive</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__TokenDRBundleName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__DocumentTemplateId__r.vlocity_cmt__TokenDRBundleName__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Template Token DR Bundle Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__TrackContractRedlines__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Document version status - active or inactive</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__DocumentTemplateId__r.vlocity_cmt__TrackContractRedlines__c</formula>
+        <label>Track Contract Redlines</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract document type</description>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Proposal</fullName>
+                    <default>false</default>
+                    <label>Proposal</label>
+                </value>
+                <value>
+                    <fullName>Agreement</fullName>
+                    <default>false</default>
+                    <label>Agreement</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__VersionNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Contract document version number</description>
+        <externalId>false</externalId>
+        <label>Version Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__WMLMetadata__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>WML Metadata</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <label>Contract Document</label>
+    <nameField>
+        <label>Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Contract Documents</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>vlocity_cmt__Preview</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Preview</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/xdomain/xdomain.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/support/console/31.0/integration.js&quot;)} 
+
+var namespace_prefix = &apos;&apos;; 
+var result = sforce.connection.describeGlobal(); 
+var TOKEN_OBJ = &quot;Party__c&quot;; 
+var sobjects = result.getArray(&quot;sobjects&quot;); 
+for(var i=0; i&lt;sobjects.length; i++) { 
+    var sobjName = sobjects[i].name; 
+    var str = sobjName.split(&quot;__&quot;); 
+    if (str.length == 3){ 
+
+    var sobj = str[1].valueOf() +&apos;__c&apos;; 
+    if(sobj == TOKEN_OBJ) { 
+         namespace_prefix = str[0].valueOf(); 
+    } 
+   } 
+} 
+var url;
+if(namespace_prefix == &quot;&quot;){
+    url = &apos;/apex/ContractDocumentCreation?Id=&apos;+&apos;{!vlocity_cmt__ContractVersion__c.Id}&apos;;
+}
+else {
+    url = &apos;/apex/&apos;+namespace_prefix+&apos;__ContractDocumentCreation?Id=&apos;+&apos;{!vlocity_cmt__ContractVersion__c.Id}&apos;;
+}
+
+if (sforce.console.isInConsole()) {
+   url+=&apos;&amp;isNotInConsole=false&apos;;   
+   srcUp(url);
+} else {
+   url+=&apos;&amp;isNotInConsole=true&apos;;
+   //window.open(url, &apos;_top&apos;);
+   window.location.href=url;
+}</url>
+    </webLinks>
+</CustomObject>

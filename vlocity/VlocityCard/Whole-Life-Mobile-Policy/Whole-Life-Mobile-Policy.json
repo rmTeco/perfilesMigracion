@@ -1,0 +1,77 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['%vlocity_namespace%__PolicyType__c']": "Whole Life"
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Annual Premium",
+                    "name": "['%vlocity_namespace%__AnnualPremium__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Face Value",
+                    "name": "['%vlocity_namespace%__FaceAmount__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Opportunity Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "type": "string"
+                }
+            ],
+            "name": "Policies",
+            "templateUrl": "mobile-policy-card"
+        }
+    ],
+    "title": "Whole Life"
+}

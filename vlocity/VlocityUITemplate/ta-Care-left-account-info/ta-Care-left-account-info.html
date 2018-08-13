@@ -1,0 +1,20 @@
+<div class="console-account-info" ng-init="showInfo = true">
+    <div class="slds-p-right--x-small spacer">
+        <div class="slds-text-heading--x-small" ng-click="showInfo = !showInfo">
+            {{::$root.vlocity.getCustomLabel('Datos Personales', 'Datos Personales')}} 
+            <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+            <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+        </div>
+    </div>
+    
+    <div class="acct-info" ng-show="showInfo">
+        <table>
+            <tr ng-repeat="field in data.fields">
+                <td>
+                    <div class="client-data-label">{{field.label}}</div>
+                    <div class="client-data-detail">{{obj | getter: field}}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

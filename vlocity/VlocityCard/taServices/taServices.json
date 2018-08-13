@@ -1,0 +1,484 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.Id",
+                "val": "0016C000008ZVZy"
+            }
+        ],
+        "type": null,
+        "value": {
+            "body": "[\n  {\n    \"isActive\": \"Activo\",\n    \"Id\": \"01t6C000000ZbDFQA0\",\n    \"AccountId\": \"0016C000008eeAoQAI\",\n    \"AccountName\": \"Sandra Ramos\",\n    \"OrderNumber\": \"00000106\",\n    \"PurchaseDate\": \"2017-06-21\",\n    \"Price\": 200,\n    \"Fol\": true,\n    \"Name\": \"Internet 20 Mbps\"\n  },\n  {\n    \"isActive\": \"Activo\",\n    \"Id\": \"01t6C0000003GtjQAE\",\n    \"AccountId\": \"0016C000008eeAoQAI\",\n    \"AccountName\": \"Sandra Ramos\",\n    \"OrderNumber\": \"00000105\",\n    \"PurchaseDate\": \"2017-06-21\",\n    \"Price\": 400,\n    \"Fol\": true,\n    \"Name\": \"Plan Prepago Nacional\"\n  },\n  {\n    \"isActive\": \"Activo\",\n    \"Id\": \"01t6C000000Zc9rQAC\",\n    \"AccountId\": \"0016C000008eeAoQAI\",\n    \"AccountName\": \"Sandra Ramos\",\n    \"OrderNumber\": \"00000345\",\n    \"PurchaseDate\": \"2017-06-21\",\n    \"Price\": 300,\n    \"Fol\": true,\n    \"Name\": \"Telefonía Fija\"\n  }\n]",
+            "bundle": "ta-getServicesByAccountId",
+            "ctxId": "params.Id",
+            "resultVar": "['Services']"
+        }
+    },
+    "filter": {
+        "['Parent']": "NULL"
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "active"
+                },
+                {
+                    "field": "['Family']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Fixed"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Recargar Cuenta",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Actualizar Pago",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Actualizar Equipo",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "accountId": "['AccountId']",
+                            "assetId": "['AssetId']",
+                            "catalog": "['Services']['RecordTypeName']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Create Order",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Accion Cuatro",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA accion Seis",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA accion Siete",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA accion Ocho",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "ServiceId": "['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Diagnosis-OS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "accountId": "['AccountId']",
+                            "assetId": "['AssetId']",
+                            "catalog": "['Services']['RecordTypeName']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Banda Ancha",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "accountId": "['AccountId']",
+                            "assetId": "['AssetId']",
+                            "catalog": "['Services']['RecordTypeName']",
+                            "family": "['Family']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Promo Convergente",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "accountId": "['AccountId']",
+                            "assetId": "['AssetId']",
+                            "catalog": "['Services']['RecordTypeName']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA SVA",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "ConsumptionsDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "AvailableCredit",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "taPrefeasibilityOS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Price']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Balance Mensual",
+                    "name": "['Price']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['PurchaseDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de Compra",
+                    "name": "['PurchaseDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Equipo",
+                    "name": "['Name']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Family'] == 'Fixed'",
+            "flyout": {
+                "data": "",
+                "layout": "ta-Care-Contact-Flyout"
+            },
+            "name": "Standard",
+            "sObjectType": "Product2",
+            "templateUrl": "ta-Care-Card-Active"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Family']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Bundle"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA accion Ocho",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "ServiceId": "['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Diagnosis-OS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Incluído en el Combo",
+                    "name": "['Description']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['PurchaseDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de Compra",
+                    "name": "['PurchaseDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Family'] == 'Bundle'",
+            "flyout": {
+                "data": "",
+                "layout": "ta-Care-Bundle-Flyout"
+            },
+            "name": "Bundle",
+            "sObjectType": "Product2",
+            "templateUrl": "ta-Care-Card-Active"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "active"
+                },
+                {
+                    "field": "['Family']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Prepaid"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "Id": "['AccountId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-Consumption",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "TA Care-AgregarCredito",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Price']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Balance Mensual",
+                    "name": "['Price']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['PurchaseDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de Compra",
+                    "name": "['PurchaseDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Equipo",
+                    "name": "['Name']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Family'] == 'Prepaid'",
+            "flyout": {
+                "data": "",
+                "layout": "ta-Care-Contact-Flyout"
+            },
+            "name": "Prepago",
+            "sObjectType": "Product2",
+            "templateUrl": "ta-Care-Card-Active"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Family']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Internet"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "ServiceId": "['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Diagnosis-OS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Price']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Balance Mensual",
+                    "name": "['Price']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['PurchaseDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de Compra",
+                    "name": "['PurchaseDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Equipo",
+                    "name": "['Name']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Family'] == 'Internet'",
+            "flyout": {
+                "data": "",
+                "layout": "ta-Care-Contact-Flyout"
+            },
+            "name": "Internet",
+            "sObjectType": "Product2",
+            "templateUrl": "ta-Care-Card-Active"
+        }
+    ],
+    "title": "Servicios",
+    "zone": "middle"
+}

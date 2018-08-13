@@ -1,0 +1,69 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__InternalNotes__c": "Seteo valores para el caso de ajuste por servicio de crédito en pesos",
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-care-Adjustments",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Care/Adjustments/Spanish",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 19,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "disOnTplt": false,
+        "elementValueMap": {
+            "Case": {
+                "AccountId": "%ContextId%",
+                "AdjustmentRootCause": "%resultMatrix:Clasificacion%",
+                "AssetId": "%Step-AssetSelection:SelectAsset:AssetId%",
+                "Description": "Ajustes y escalamientos",
+                "Entitlement": "%EntitlementInfo:Id%",
+                "MarcaExcepcion": "%RadioException%",
+                "Motivo": "%CboMotivo%",
+                "Priority": "High",
+                "Reason": "=IF(%RadioException%=='false', 'Reclamo', '--None--')",
+                "RecordTypeId": "%RecordType:Id%",
+                "ServiceId": "%Step-AssetSelection:SelectAsset:AssetId%",
+                "Severity__c": "Alto",
+                "Status": "New",
+                "Subject": "Inconvenientes con cargos tasados y facturados",
+                "Tipo": "%GetTipoCargo%",
+                "TipoAjuste": "%resultMatrix:TipoAjusteRAV%",
+                "TipoConcepto": "%CboConcepto%",
+                "TipoItem": "%CboItem%",
+                "TipoSeleccion": "%ApplyTo%",
+                "Type": "Inconvenientes con cargos y/o puntos"
+            }
+        },
+        "label": "SetValues7",
+        "message": {
+        },
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "Servicio",
+                        "field": "ApplyTo"
+                    }
+                ]
+            }
+        },
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "validationRequired": "None",
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Set Values",
+    "Name": "SetCasesValuesForService",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Care/Adjustments/Spanish/SetCasesValuesForService"
+}

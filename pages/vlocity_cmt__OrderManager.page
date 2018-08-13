@@ -1,0 +1,23 @@
+<apex:page standardController="Order" extensions="vlocity_cmt.LineItemManagementStandardController" showHeader="false" sidebar="false">
+	 <!--<c:LineItemManagementComponent stanController="{!stdControl}" advSearchPage="{!$Page.vlocity_cmt__AdvProductSearchPage}?id={!$CurrentPage.parameters.Id}&vlocReferer=orderManager" bulkEditPage="{!$Page.vlocity_cmt__OrderBulkEdit2}?Id={!$CurrentPage.parameters.Id}" features="Application"/>-->
+	 <html xmlns:ng="http://angularjs.org">
+		<head>
+			<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vstrap, '/css/styles.css')}"/>
+			<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+			<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__ProductConfigurationCss)}"/>
+			<apex:includeScript value="/support/console/31.0/integration.js"/>
+	        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__JQUERYJS)}"/>
+	        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularJS)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ANGULARBOOT)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__bootstrapslider)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularStrapJS)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularStrapTplJS)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ProductConfiguration)}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularUIMask, '/src/mask.js')}"/>
+		</head>
+		<body>
+			<c:SummaryConfigurationComponent summaryTitle="Order Summary"/>
+		 	<c:LineItemManagementComponent stanController="{!stdControl}" advSearchPage="{!$Page.vlocity_cmt__AdvProductSearchPage}?id={!$CurrentPage.parameters.Id}&vlocReferer=orderManager" bulkEditPage="{!$Page.vlocity_cmt__OrderBulkEdit2}?Id={!$CurrentPage.parameters.Id}" features="Application"/>
+		 </body>	
+	 </html>	  
+</apex:page>

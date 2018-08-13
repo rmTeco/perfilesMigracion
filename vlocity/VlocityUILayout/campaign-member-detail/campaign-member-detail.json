@@ -1,0 +1,33 @@
+{
+    "Cards": [
+        "Campaign Member Detail Active"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "701o0000000S1AH"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/campaigns/{{params.id}}/memberstatusvalues",
+            "inputMap": {
+                "campaignId": "{{params.id}}"
+            },
+            "methodType": "GET",
+            "query": "SELECT Id From CampaignMember Where Id = '{{params.id}}'",
+            "remoteClass": "CampaignListHandler",
+            "remoteMethod": "getMemberStatusByCampaign",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "result"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "campaign-column"
+        }
+    }
+}

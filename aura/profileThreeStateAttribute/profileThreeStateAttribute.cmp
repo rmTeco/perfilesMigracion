@@ -1,0 +1,19 @@
+<aura:component access="GLOBAL">
+    <aura:registerEvent name="change" type="vlocity_cmt:profileAttributeValueChangedEvent"/>
+    <aura:attribute name="nsPrefix" type="String"/>
+    <aura:attribute name="attributeName" type="String"/>
+    <aura:attribute name="attributeValue" type="String"/>    
+    <aura:attribute name="color" type="String"/>    
+    <aura:attribute name="appliedAttributeCode" type="String"/>
+    <aura:attribute name="isLanguageRTL" type="Boolean"/>
+    
+    <div class="group">
+        <div class="slds-form-element">
+            <label class="slds-form-element__label">{!v.attributeName}</label>
+        </div>
+        <div class="slds-form-element__control">
+            <vlocity_cmt:threeStateButton state="{!v.attributeValue}" change="{!c.handleStateChangedEvent}" nsPrefix="{!v.nsPrefix}" isLanguageRTL="{!v.isLanguageRTL}" color="{!v.color}" />
+        </div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,76 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "NominateProcess",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sale/NominateProcess/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 41,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "documentNames": [
+            "CABIABAJA38d501d61e584ad89de0f86a459c4c6e",
+            "CABHBBAJAa088abbf78af430992e1b954e738bf5b"
+        ],
+        "extraPayload": {
+        },
+        "failureAbortLabel": "Abortar",
+        "failureAbortMessage": "¿Seguro?",
+        "failureNextLabel": "Continuar",
+        "inProgressMessage": "En Progreso",
+        "label": "Call_S015_Create_Billing_Account",
+        "message": {
+        },
+        "postMessage": "Hecho",
+        "postTransformBundle": "",
+        "preTransformBundle": "",
+        "redirectNextLabel": "Siguiente",
+        "redirectNextWidth": 3,
+        "redirectPageName": "",
+        "redirectPreviousLabel": "Previous",
+        "redirectPreviousWidth": 3,
+        "redirectTemplateUrl": "vlcAcknowledge.html",
+        "remoteClass": "taSalesSimulationInvoiceHandler",
+        "remoteMethod": "Call_S015_Create_Billing_Account",
+        "remoteOptions": {
+            "AccountId": "%accountId%",
+            "OrderId": "%OrderId%",
+            "postTransformBundle": "",
+            "preTransformBundle": ""
+        },
+        "remoteTimeout": 30000,
+        "responseJSONNode": "S015_Response",
+        "responseJSONPath": "",
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "false",
+                        "field": "Account:HuaweiNotice_S015"
+                    }
+                ]
+            }
+        },
+        "showPersistentComponent": [
+            false
+        ],
+        "ssm": false,
+        "svgIcon": "",
+        "svgSprite": "",
+        "validationRequired": null,
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Remote Action",
+    "Name": "Call_S015_Create_Billing_Account",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sale/NominateProcess/English/Call_S015_Create_Billing_Account"
+}

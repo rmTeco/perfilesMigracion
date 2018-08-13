@@ -1,0 +1,36 @@
+<apex:page sidebar="true" controller="AttributesByProfileController">
+	<apex:form >
+	   <apex:pageBlock id="theBlock" title="{!$Label.AttributesByProfile}">
+	    	<apex:pageMessages id="theMessage"></apex:pageMessages>
+		   <!--apex:pageBlockSection >
+		        <apex:selectList label="{!$Label.Object}" value="{!record.Object__c}" multiselect="false" size="1" required="true">
+		            <apex:selectOptions value="{!objectsList}"/>
+		            <apex:actionSupport event="onchange" rerender="theBlock" action="{!refillPage}"/>
+		        </apex:selectList>
+	        </apex:pageBlockSection> 
+	    	<br/-->
+	    	<apex:inputField value="{!record.SetupOwnerId}" required="true"/>
+	    	<br/>
+	    	<apex:pageBlockSection title="{!$Label.AccountAttributes}" columns="1">
+	    		<c:MultiselectPicklist leftLabel="Disponibles"
+	    							   leftOption="{!account1List}"
+	    							   RightLabel="Seleccionados"
+                                       rightOption="{!account2List}"
+                                       size="10"
+                                       width="150px"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.ContactAttributes}" columns="1">
+	    	    <c:MultiselectPicklist leftLabel="Disponibles"
+	    							   leftOption="{!contact1List}"
+	    							   RightLabel="Seleccionados"
+                                       rightOption="{!contact2List}"
+                                       size="10"
+                                       width="150px"/>
+	    	</apex:pageBlockSection>
+	        <apex:pageBlockButtons >
+	            <apex:commandButton value="Guardar" action="{!save}" reRender="theMessage"/>
+	            <apex:commandButton value="Volver" action="{!cancel}"  />
+	        </apex:pageBlockButtons>
+	    </apex:pageBlock>
+	</apex:form>
+</apex:page>

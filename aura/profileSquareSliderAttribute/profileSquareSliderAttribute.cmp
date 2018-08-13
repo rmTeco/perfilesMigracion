@@ -1,0 +1,25 @@
+<aura:component access="GLOBAL">
+    <aura:registerEvent name="change" type="vlocity_cmt:profileAttributeValueChangedEvent"/>
+    <aura:attribute name="nsPrefix" type="String"/>
+    <aura:attribute name="attributeName" type="String"/>
+    <aura:attribute name="attributeValue" type="Integer"/>    
+    <aura:attribute name="appliedAttributeCode" type="String"/>    
+    <aura:attribute name="isLanguageRTL" type="Boolean"/>
+    <aura:attribute name="color" type="String"/>
+
+    <div class="slider-attribute group" onclick="{!c.cancelOnclick}" dir="{! (v.isLanguageRTL ? 'rtl' : 'ltr') }">
+        <div class="slds-form-element">
+            <label class="slds-form-element__label">{!v.attributeName}</label>
+        </div>
+        <div class="slds-form-element__control">
+            <ul>
+                <li id="1" class="{!(v.attributeValue>=1)?'turned-on':'turned-off'}" onclick="{!c.sliderValueChanged}" style="{! v.color ? 'background-color: ' + v.color : ''}"></li>
+                <li id="2" class="{!(v.attributeValue>=2)?'turned-on':'turned-off'}" onclick="{!c.sliderValueChanged}" style="{! v.color ? 'background-color: ' + v.color : ''}"></li>
+                <li id="3" class="{!(v.attributeValue>=3)?'turned-on':'turned-off'}" onclick="{!c.sliderValueChanged}" style="{! v.color ? 'background-color: ' + v.color : ''}"></li>
+                <li id="4" class="{!(v.attributeValue>=4)?'turned-on':'turned-off'}" onclick="{!c.sliderValueChanged}" style="{! v.color ? 'background-color: ' + v.color : ''}"></li>
+                <li id="5" class="{!(v.attributeValue>=5)?'turned-on':'turned-off'}" onclick="{!c.sliderValueChanged}" style="{! v.color ? 'background-color: ' + v.color : ''}"></li>
+            </ul>
+        </div>
+    </div>
+    
+</aura:component>

@@ -1,0 +1,37 @@
+.THIS .uiMessage h4{
+    margin: 10px;
+    display: block;
+}
+.THIS .uiMessage .uiOutputText {
+    margin-left: 10px;
+    float:left;
+}
+/* Absolute Center Spinner */
+.THIS .loadingMC {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.THIS .loadingMC:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.THIS .hide {
+    display: none;
+}

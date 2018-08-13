@@ -1,0 +1,199 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "name": "cart Item",
+            "templateUrl": "ta-Sales-CPQ-Product-Cart-Item"
+        },
+        {
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "Name",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Quantity']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "['Quantity']['label']",
+                    "name": "['Quantity']['value']",
+                    "type": "input"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['%vlocity_namespace%__RecurringTotal__c']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "['%vlocity_namespace%__RecurringTotal__c']['label']",
+                    "name": "['%vlocity_namespace%__RecurringTotal__c']['value']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['%vlocity_namespace%__OneTimeTotal__c']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "['%vlocity_namespace%__OneTimeTotal__c']['label']",
+                    "name": "['%vlocity_namespace%__OneTimeTotal__c']['value']",
+                    "type": "currency"
+                }
+            ],
+            "name": "CustomView_Basic",
+            "templateUrl": "cpq-card-blank"
+        },
+        {
+            "blankCardState": false,
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "Name",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "CustomView_Pricing",
+            "templateUrl": "cpq-card-blank"
+        },
+        {
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "Name",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "['Quantity']['label']",
+                    "name": "['Quantity']['value']",
+                    "type": "input"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "['%vlocity_namespace%__RecurringTotal__c']['label']",
+                    "name": "['%vlocity_namespace%__RecurringTotal__c']['value']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "OneTime Total",
+                    "name": "['%vlocity_namespace%__OneTimeTotal__c']['value']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Recurring Manual Discount",
+                    "name": "['%vlocity_namespace%__RecurringManualDiscount__c']['value']",
+                    "type": "input"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "OneTime Manual Discount",
+                    "name": "['%vlocity_namespace%__OneTimeManualDiscount__c']['value']",
+                    "type": "input"
+                }
+            ],
+            "name": "BasicView_Basic",
+            "templateUrl": "cpq-card-blank"
+        }
+    ],
+    "title": "Cart Item"
+}

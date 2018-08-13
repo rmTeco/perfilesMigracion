@@ -1,0 +1,197 @@
+.vlocity {
+    .profile-box {
+        height: auto;
+        background-color: #FFFFFF;
+        box-sizing: border-box;
+        padding: 10px;
+        // font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        // color: black;
+        // font-size: 11px;
+        // font-weight: lighter;
+        //Remove this code, temporary fix
+        // * {
+        //     color:black;
+        // }
+        .customer-type {
+            display:inline;
+            position:absolute;
+            top:5px;
+            right:15px;
+            .sentiment {
+                width:23px;
+                height:23px;
+                margin:0px 3px;
+                display:inline-block;
+                &.disgruntled {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Disgruntled.png");
+                }
+                &.dissatisfied {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Dissatisfied.png");
+                }
+                &.neutral {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Neutral.png"); 
+                }
+                &.promoter {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Promoter.png");
+                }
+                &.satisfied {
+                    background-image: url("{{'CustomerIcons' | resource}}/sentiment/Satisfied.png");
+                }
+            }
+            .value-type {
+                width:18px;
+                height:23px;
+                margin:0px 3px;
+                display:inline-block;
+                &.bronze {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Bronze.png");
+                }
+                &.gold {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Gold.png");
+                }
+                &.platinum {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Platinum.png");
+                }
+                &.silver {
+                    background-image: url("{{'CustomerIcons' | resource}}/value/Silver.png");
+                }
+            }
+        }
+        .profile-box-img {
+            align-items: center;
+            justify-content: center;
+        }
+        
+        @media (min-width: 400px) {
+        //Single Line of Business styles
+        //Sidebar Loads in iframe, media query is applicable
+            .profile-box-img {
+                display:table-cell;
+                vertical-align:top;
+                padding:8px;
+            }
+            .profile-box-details {
+                // display:table-cell;
+                // vertical-align:top;
+                // padding-left:10px;
+                // // padding-top: 10px;
+                // text-align:left;
+                .title-card {
+                    // text-align:left;
+                }
+                .social {
+                    // text-align:left;
+                }
+                .profile-links {
+                    // text-align:left;
+                    // color: #00B7D7;
+                }
+            }
+        }
+        
+        .title-card {
+            // margin: 2% auto;
+            text-align: center;
+            h1{
+                text-transform: capitalize;
+                color: #000000;
+                margin:10px 0 5px;
+                font-size: 30px;
+                line-height: 36px;
+                text-decoration: bold;
+            }
+        }
+        
+        .detail-card {
+            // margin: 2% auto;
+            text-align: center;
+            table{
+                text-transform: capitalize;
+                color: black;
+                margin:auto;
+                font-size:16px;
+                width: 100%;
+                tr {
+                    td {
+                        margin: auto;
+                        width: 50%;
+                    }
+                    td.account-detail-label {
+                        // color: #A0A0A0;
+                        text-align: right;
+                        padding-right: 10px;
+                        label {
+                        	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                            color: #999999;
+                            font-size: 12px;
+                            line-height: 14px;
+                        }
+                    }
+                    td.account-detail-content {
+                        // color: #000;
+                        text-align: left;
+                        padding-left: 10px;
+                        label {
+                        	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                            color: #333333;
+                            font-size: 12px;
+                            line-height: 14px;
+                        }
+                    }
+                }
+            }
+        }
+        
+        #customer-since {
+            color: black;
+            font-size: 10px;
+            font-weight: lighter;
+            text-align: center;
+        }
+
+        .profile-img  {
+            min-width: 90px;
+            min-height: 90px;
+            display: inline-block;
+            border: 2px solid white !important;
+        }
+        .social {
+            text-align: center;
+            margin: 15px auto;
+            i {
+                cursor: pointer;
+                color: #00B4C5;
+                text-decoration: bold;
+            }
+            i::before {
+                font-size: 20px;
+            }
+            // i:hover {
+            //     color: green;
+            // }
+        }
+        .profile-links {
+            color: #00B4C5;	
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 12px;	
+            line-height: 14px;
+            text-align: center;
+            display: inline-block;
+            &-wrapper {
+                text-align: center;
+            }
+            a{
+                color: #00B4C5;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-size: 12px;
+                line-height: 14px;
+                cursor: pointer;
+            }
+            .separator {
+                line-height:15px;
+                color: #00B4C5;
+                padding:0px 5px;
+            }
+        }
+    }
+}

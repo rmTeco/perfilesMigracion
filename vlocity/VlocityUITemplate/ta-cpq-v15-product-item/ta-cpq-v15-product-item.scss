@@ -1,0 +1,86 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    .cpq-product-item {
+        border-bottom: $cpq-product-item-padding solid $cpq-page-bg-color;
+        
+        .cpq-product-item-container {
+            padding: $cpq-padding-large-vertical 0px;
+            margin: 0px $cpq-padding-large-horizontal;
+        
+            .cpq-product-item-select-checkbox {
+                // Ensure atleast 40px width for inputs for device touch area
+                padding: $cpq-padding-small-horizontal;
+                margin-top: -$cpq-padding-small-horizontal/2;
+            }
+            
+            .product-name {
+                font-weight: $cpq-headings-font-weight;
+                line-height: 30px;
+            }
+            
+            .product-link {
+                line-height: 30px;
+                color: #0070d2;
+            }
+
+            .product-price div {
+                padding-right: $cpq-padding-large-horizontal;
+                padding-top:$cpq-padding-large-vertical;
+                color: $dark-gray;
+                &:last-child {
+                    padding-bottom:$cpq-padding-large-vertical;
+                }
+                
+                .price-label {
+                  font-size: $cpq-cart-item-attr-label-font-size;
+                }
+            }
+            
+            .product-price .cpq-item-product-messages {
+                font-size: 95%;
+
+                .cpq-error-msg {
+                    color: $error;
+                }
+                .cpq-warning-msg {
+                    color: $warning;
+                }
+            }
+
+            .offers-count {
+                background-color: #FDB734;
+                color: white;
+                margin-left: 5px;
+            }
+        }
+        
+        .cpq-product-actions {
+            padding-top:$cpq-padding-large-vertical;
+            padding-bottom:$cpq-padding-large-vertical; 
+            
+            .add-button {
+                padding-left:$cpq-padding-small-horizontal;
+                padding-right:$cpq-padding-small-horizontal;
+           }
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    .cpq-product-item {
+        .cpq-product-item-container {
+            .product-price {
+                div {
+                    padding-right: 0;
+                    padding-left: $cpq-padding-large-horizontal;
+                }
+            }
+        }
+    }
+}

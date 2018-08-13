@@ -1,0 +1,43 @@
+<aura:component extends="et4ae5:DataTablePlus">
+    
+    <!-- Scripts -->
+    <ltng:require styles="/resource/et4ae5__SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+
+    <!-- Handlers -->
+    <aura:handler event="et4ae5:DataTablePlusUpdate" action="{!c.upddateRecords}" /> 
+    <aura:handler event="et4ae5:DataTablePlusStartSearch" action="{!c.searchRecords}" />
+
+    <!-- Inherited Attributes -->
+    <aura:set attribute="showSelectAll" value="false" />
+    <aura:set attribute="sObjectAPIName" value="User" />
+    <aura:set attribute="sObjectFields" value="Id, Name, Username, et4ae5__ExactTargetForAppExchangeAdmin__c, et4ae5__ExactTargetForAppExchangeUser__c, et4ae5__ValidExactTargetUser__c, et4ae5__ValidExactTargetAdmin__c" />
+    <aura:set attribute="pageTitleLabel" value="{!$Label.et4ae5.intUsrMgmt}" />
+    <aura:set attribute="pageSubTitleLabel" value="{!$Label.et4ae5.msg0036}" />
+    <aura:set attribute="tableHeaderLabels" value="{!$Label.et4ae5.UsrMgmTableHeaders}" />
+    <aura:set attribute="paginatePreviousLabel" value="{!$Label.et4ae5.previous}" />
+    <aura:set attribute="paginateNextLabel" value="{!$Label.et4ae5.next}" />
+    <aura:set attribute="entriesPerPageLabel" value="{!$Label.et4ae5.DTEntriesPerPageSuf}" />	
+    <aura:set attribute="showingLabel" value="{!$Label.et4ae5.DTInfoPrefix}" />
+    <aura:set attribute="toLabel" value="{!$Label.et4ae5.DTInfoMid1}" />
+    <aura:set attribute="ofLabel" value="{!$Label.et4ae5.DTInfoMid2}" />
+    <aura:set attribute="entriesLabel" value="{!$Label.et4ae5.DTInfoSuffix}" />
+    <aura:set attribute="saveLabel" value="{!$Label.et4ae5.save}" />
+    <aura:set attribute="cancelLabel" value="{!$Label.et4ae5.cancel}" />
+    <aura:set attribute="saveErrorTitleLabel" value="{!$Label.et4ae5.usrMgmtSaveErrorTitle}" />
+    <aura:set attribute="saveErrorLabel" value="{!$Label.et4ae5.usrMgmtSaveError}" />
+    <aura:set attribute="saveServerErrorTitleLabel" value="{!$Label.et4ae5.usrMgmtSaveServerErrorTitle}" />
+    <aura:set attribute="saveServerErrorLabel" value="{!$Label.et4ae5.usrMgmtSaveServerError}" />
+    <aura:set attribute="saveNoChangeTitleLabel" value="{!$Label.et4ae5.usrMgmtNoChangeErrorTitle}" />
+    <aura:set attribute="saveNoChangeLabel" value="{!$Label.et4ae5.usrMgmtNoChangeError}" />
+    <aura:set attribute="recordLimitLoadTitleLabel" value="{!$Label.et4ae5.usrMgmtRecordLimitErrorTitle}" />
+    <aura:set attribute="recordLimitLoadLabel" value="{!$Label.et4ae5.usrMgmtRecordLimitError}" />
+    <aura:set attribute="recordLoadErrorTitleLabel" value="{!$Label.et4ae5.usrMgmtRecordLoadErrorTitle}" />
+    <aura:set attribute="recordLoadErrorLabel" value="{!$Label.et4ae5.usrMgmtRecordLoadError}" />
+
+    
+    <!-- Component Body -->
+    <aura:iteration items="{!v.records}" var="record" indexVar="rowindex">
+        <et4ae5:UserRow record="{!record}" page="{!v.currentpage}" itemsperpage="{!v.itemsperpage}" index="{!rowindex}" highindex="{!v.highindex}" lowindex="{!v.lowindex}" />
+    </aura:iteration>
+
+</aura:component>

@@ -1,0 +1,10 @@
+<tr class="np-requirement-table-row custom-border--bottom">
+    <td class="slds-truncate slds-p-vertical--medium" data-label="{{field[0].label}}" ng-show="key != 'attributes'">
+             <a href="javascript:void(0);" tooltip-placement="bottom" tooltip="{{data.actions[0].displayName}}" ng-click="performAction(data.actions[0])">{{obj | getter: data.fields[0] | picker: data.fields[0].type}}
+                </a>
+        </td>
+    <td class="slds-truncate slds-p-vertical--medium" data-label="{{field.label}}" ng-repeat="field in data.fields" ng-if="$index > 0" ng-show="key != 'attributes'">{{obj | getter: field | picker: field.type}} </td>
+    <td class="slds-truncate slds-p-vertical--medium slds-text-align--right ">
+       <span class="custom-link--color" ng-repeat="action in data.actions" ng-if="$index > 0"><a>{{action.displayName}}</a><span ng-if="$index < data.actions.length - 1"  >/</span></span> 
+    </td>
+</tr>

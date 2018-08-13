@@ -1,0 +1,150 @@
+<aura:component controller="WorkTeamController">     
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler name="init" action="{!c.doInitName}" value="{!this}"/>
+    <aura:attribute name="WorkTeam"
+                    type="WorkTeam__c"
+                    default="{'Name':'','Team_Queue__c':''}" />
+    <aura:attribute name="WorkTeamNameAll"
+                    type="List"
+                    default="[]" />
+    <aura:attribute name="Manager"
+                    type="User"
+                    default="{'Profile':{'UserLicense':{'Name':'Salesforce'}},
+                             'Name':''}" />
+    <aura:attribute name="Managers"
+                    type="List"
+                    default="[]" />
+    <aura:attribute name="WorkTeamID"
+                    type="String"
+                    Default="a4l6C00000006riQAA" />
+    <aura:attribute name="WorkTeamName"
+                    type="String" 
+                    default="" />
+    <aura:attribute name="WorkTeamRoleName"
+                    type="String" 
+                    default="" />        
+    <aura:attribute name="WorkTeamAPIName"
+                    type="List" 
+                    default="[]" />
+    <aura:attribute name="messageHelp"
+                    type="String" 
+                    default="" />
+    <aura:attribute name="showWorkTeamList"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamCreate"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamDetail"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamMembers"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamRoles"
+                    type="Boolean"
+                    default="false"/> 
+    <aura:attribute name="showWorkTeamQueues"
+                    type="Boolean"
+                    default="false"/>                     
+    
+    <!-- PAGE HEADER -->
+    <lightning:layout class="slds-page-header slds-page-header--object-home">
+        <lightning:layoutItem padding="horizontal-small">
+            <div class="slds-p-bottom_large">
+                <div class="page-section page-header">
+                    <h2 class="slds-text-heading--large">Roles de Equipo de Trabajo</h2>
+                </div>
+            </div>
+            
+            <div class="demo-only" style="width: 500px;">
+                <div class="slds-form slds-form_compound">
+                    <!--  Second input Search -->
+                    <fieldset class="slds-form-element">
+                        <div class="slds-form-element__group">
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-1">
+                                    <lightning:input aura:id="searchWorkTeam" name="searchWorkTeam" label="Equipo de Trabajo" value="{! v.WorkTeamName }"  placeholder="Buscar..." required="true"/>
+                                    <lightning:buttonIcon iconName="utility:search" variant="bare" onclick="{! c.searchWorkTeam }" alternativeText="Buscar" class="buttonInputSearch" />
+                                </div>
+                            </div>        
+                            <div class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <div class="slds-form-element__control">                 
+                                        <lightning:select aura:id="roleAPIname" name="roleAPIname" label="Nombre de rol de usuario">
+                                            <option value="NoSelected">--Seleccione Uno--</option>
+                                            <aura:iteration items="{!v.WorkTeamAPIName}" var="apiName">
+                                                <option value="{! apiName }"> {! apiName } </option>
+                                            </aura:iteration>
+                                        </lightning:select>                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!-- / -->
+                </div>
+            </div>      
+            <div class="slds-p-top_large">                
+                <lightning:button class="btn-neutral" variant="Neutral" label="Cancelar" onclick="{! c.cancelChanged }" />
+                <lightning:button class="btn-brand" variant="Brand" label="Guardar" name="{! v.WorkTeamID }" onclick="{! c.saveChangedAll }" />                
+            </div> 
+        </lightning:layoutItem>
+    </lightning:layout>
+    <!-- / PAGE HEADER -->
+    
+    <!-- Modal Search WorkTeam Name -->
+    <div id="usersModalWorkTeam__c" class="users" style="display: none;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="headerUsersModal__c" class="slds-text-heading_medium slds-hyphenate">Equipos de Trabajo</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                        <thead>
+                            <tr class="slds-text-title_caps">
+                                <th scope="col">
+                                    <div class="slds-truncate" title="Nombre">Nombre</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.WorkTeamNameAll}" var="work">
+                                <tr>
+                                    <th scope="row" data-label="Nombre">
+                                        <div class="slds-truncate" title="{! work.Name }">
+                                            <lightning:button variant="base" label="{! work.Name }" title="{! work }" onclick="{! c.selectThisWorkTeam }"/>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick="{! c.hiddenUsersModalWorkTeam }">Cancelar</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+    <!-- // Modal Search WorkTeam Name --> 
+    <!-- Help Message -->
+    <div id="message__helper" class="helper" style="display: none;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="headerUsersModal__c" class="slds-text-heading_medium slds-hyphenate">Información</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <p>{! v.messageHelp }</p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_brand" onclick="{! c.hiddenMessageModal }">{! $Label.c.Work_Team_Submit_Button }</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</aura:component>

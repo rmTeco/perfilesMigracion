@@ -1,0 +1,35 @@
+<div class="ta-care-omniscript-done">
+    <slds-svg-icon ng-if="bpTree.response.process.result == 'ERROR'"
+        sprite="'action'"
+        icon="'close'"
+        size="'large'"
+        no-hint="true"
+        extra-classes="'ta-care-omniscript-error-icon'">
+    </slds-svg-icon>
+    <slds-svg-icon ng-if="bpTree.response.process.result == 'OK'"
+        sprite="'action'"
+        icon="'approval'"
+        size="'large'"
+        no-hint="true"
+        extra-classes="'ta-care-omniscript-done-icon'">
+    </slds-svg-icon>
+    <slds-svg-icon ng-if="bpTree.response.process.result == 'PENDING'"
+        sprite="'action'"
+        icon="'info'"
+        size="'large'" 
+        no-hint="true"
+        extra-classes="'ta-care-omniscript-pending-icon'">
+    </slds-svg-icon>
+    <header>
+        <h1>{{bpTree.response.process.resultMessage}}</h1>
+        <!--TODO: replace with custom labels-->
+        <p ng-if="bpTree.response.process.aditionalMessage">
+            <label class="vlc-slds-inline-control__label">{{bpTree.response.process.aditionalMessage}}</label>
+        </p>
+        <p ng-if="bpTree.response.process.aditionalMessages" ng-repeat="item in bpTree.response[bpTree.response.process.aditionalMessages.listValues]">
+            <label class="vlc-slds-inline-control__label">
+                {{bpTree.response.process.aditionalMessages.text | format:bpTree.response.process.aditionalMessages.params:item}}
+            </label>
+        </p>
+    </header>
+</div>

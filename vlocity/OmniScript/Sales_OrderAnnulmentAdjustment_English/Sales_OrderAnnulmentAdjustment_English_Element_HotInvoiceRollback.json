@@ -1,0 +1,131 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "OrderAnnulmentAdjustment",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sales/OrderAnnulmentAdjustment/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 18,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "disOnTplt": false,
+        "documentNames": [
+            "CABHBBAJAa088abbf78af430992e1b954e738bf5b",
+            "CABIABAJA38d501d61e584ad89de0f86a459c4c6e"
+        ],
+        "extraPayload": {
+        },
+        "failureAbortLabel": "Abort",
+        "failureAbortMessage": "Are you sure?",
+        "failureNextLabel": "Continue",
+        "inProgressMessage": "In Progress",
+        "label": "HotInvoiceRollback",
+        "message": {
+        },
+        "postMessage": "Done",
+        "postTransformBundle": "",
+        "preTransformBundle": "",
+        "redirectNextLabel": "Next",
+        "redirectNextWidth": 3,
+        "redirectPageName": "",
+        "redirectPreviousLabel": "Previous",
+        "redirectPreviousWidth": 3,
+        "redirectTemplateUrl": "vlcAcknowledge.html",
+        "remoteClass": "taSalesAnnulmentHandler",
+        "remoteMethod": "HotInvoiceRollback",
+        "remoteOptions": {
+            "OrderId": "%OrderId%",
+            "postTransformBundle": "",
+            "preTransformBundle": ""
+        },
+        "remoteTimeout": 30000,
+        "responseJSONNode": "HotInvoiceRollback_Response",
+        "responseJSONPath": "",
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "show": {
+            "group": {
+                "operator": "OR",
+                "rules": [
+                    {
+                        "group": {
+                            "operator": "AND",
+                            "rules": [
+                                {
+                                    "condition": "=",
+                                    "data": null,
+                                    "field": "BillingOrder:LegalInvoiceNumber"
+                                },
+                                {
+                                    "condition": "<>",
+                                    "data": "Físico",
+                                    "field": "BillingOrder:StoreLocation:Channel"
+                                },
+                                {
+                                    "condition": "<>",
+                                    "data": null,
+                                    "field": "BillingOrder:PreInvoiceNumber"
+                                },
+                                {
+                                    "condition": "<>",
+                                    "data": null,
+                                    "field": "CardsPaymentsCharged:data|1:CardNumber"
+                                },
+                                {
+                                    "condition": "<>",
+                                    "data": "error",
+                                    "field": "PaymentRollback_Response:IPResult:mensaje"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "group": {
+                            "operator": "AND",
+                            "rules": [
+                                {
+                                    "condition": "=",
+                                    "data": null,
+                                    "field": "BillingOrder:LegalInvoiceNumber"
+                                },
+                                {
+                                    "condition": "<>",
+                                    "data": "Físico",
+                                    "field": "BillingOrder:StoreLocation:Channel"
+                                },
+                                {
+                                    "condition": "<>",
+                                    "data": null,
+                                    "field": "BillingOrder:PreInvoiceNumber"
+                                },
+                                {
+                                    "condition": "=",
+                                    "data": null,
+                                    "field": "CardsPaymentsCharged:data|1:CardNumber"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "svgIcon": "",
+        "svgSprite": "",
+        "validationRequired": "None",
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Remote Action",
+    "Name": "HotInvoiceRollback",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/OrderAnnulmentAdjustment/English/HotInvoiceRollback"
+}

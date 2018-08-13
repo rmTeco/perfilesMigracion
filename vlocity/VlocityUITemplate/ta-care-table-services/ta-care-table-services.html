@@ -1,0 +1,203 @@
+<div class="via-slds slds-m-around--small ng-scope" ng-controller="tableCtrl as amc" ng-init="amc.init()">
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;">
+        <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+            <p><b class="title">{{data.title}}</b></p>
+        </div>
+
+        <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large">
+            <div class="slds-p-bottom--small">   
+                <table  class="slds-table slds-table--bordered slds-table--resizable-cols slds-table--fixed-layout via-slds-table-pinned-header">
+                    <thead>
+                        <tr class="slds-text-heading--label">
+                            <th class="slds-p-bottom--small"
+                                ng-repeat="field in data.fields"
+                                scope="col" 
+                                ng-class="{'slds-is-sorted' : sortingOrder == field.name, 'slds-is-sorted--desc' : reverse, 'slds-is-sorted--asc': !reverse}"> 
+                                <a class="slds-truncate slds-th__action" 
+                                   ng-click="sortBy(field)"
+                                   href="javascript:void(0)">
+                                    {{field.label}}
+                                    <div class="slds-icon_container">
+                                        <slds-svg-icon sprite="'utility'"
+                                                       size="'x-small'" 
+                                                       icon="'arrowdown'" 
+                                                       extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+                                        </slds-svg-icon>
+                                    </div>
+                                    <!-- <div class="slds-icon_container">
+                                        <slds-svg-icon sprite="'utility'" size="'x-small'" icon="'arrowdown'" extra-classes="'slds-icon-text-default sortable_indicator'"></slds-svg-icon>
+                                    </div> -->
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                        <tr ng-repeat="record in records | orderBy:sortingOrder:reverse">
+                            <td ng-repeat="field in data.fields">
+                                <div ng-if="field.label == 'Monto'">
+                                    <b>$ {{record | getter: field | picker: field.type | number:2}}</b>
+                                </div>
+                                <div ng-if="field.label == 'Estado'">
+                                    <!-- {{record.Status}} -->
+                                    <div ng-if="record.Status == 'Active'"
+                                        class="active">
+                                        <slds-svg-icon
+                                            sprite="'utility'"
+                                            icon="'success'"
+                                            size="'x-small'"
+                                            class="activeIcon"
+                                            extra-classes="active">
+                                        </slds-svg-icon> Activo
+                                    </div>
+                                    <div ng-if="record.Status == 'Suspend'"
+                                        class="active">
+                                        <slds-svg-icon
+                                            sprite="'utility'"
+                                            icon="'clear'"
+                                            size="'x-small'"
+                                            class="inactiveIcon"
+                                            style="color: #d9186b; fill: #d9186b;">
+                                        </slds-svg-icon> <span style="color: #d9186b; fill: #d9186b;"> Suspendido </span>
+                                    </div>
+                                    <div ng-if="{{record | getter: field | picker: field.type}} == 'Inactive'"
+                                        class="active">
+                                        <slds-svg-icon
+                                            sprite="'utility'"
+                                            icon="'clear'"
+                                            size="'x-small'"
+                                            class="inactiveIcon">
+                                        </slds-svg-icon> Inactivo
+                                    </div>
+                                    <div ng-if="{{record | getter: field | picker: field.type}} == 'In Activation'"
+                                        class="active">
+                                        <slds-svg-icon
+                                            sprite="'utility'"
+                                            icon="'threedots'"
+                                            size="'x-small'"
+                                            class="inActivationIcon">
+                                        </slds-svg-icon> En activación
+                                    </div>
+                                    <div ng-if="{{record | getter: field | picker: field.type}} == 'Limited'"
+                                        class="active">
+                                        <slds-svg-icon
+                                            sprite="'utility'"
+                                            icon="'warning'"
+                                            size="'x-small'"
+                                            class="limitedIcon">
+                                        </slds-svg-icon> Limitado
+                                    </div>
+                                </div>
+                                
+                                <div ng-if="field.label != 'Monto' && field.label != 'Estado'">
+                                    {{record | getter: field | picker: field.type}}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- RESPONSIVE -->
+                <ul class="slds-accordion"
+                    ng-if="data.title == 'Productos Activos'">
+                    <div class="column-header">
+                        <p class="status-title">FECHA DE ACTIVACIÒN</p>
+                        <p class="name-title">NOMBRE</p>
+                    </div>
+                  <li class="slds-accordion__list-item" 
+                      ng-repeat="record in records | orderBy:sortingOrder:reverse">
+                    <section class="slds-accordion__section slds-is-open">
+                      <div class="slds-accordion__summary" ng-class="{'expanded-content':showAccordionDetail}">
+                        <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                          <button aria-controls="accordion-details-01" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action slds-size_1-of-1" ng-click="showAccordionDetail = !showAccordionDetail">
+                            <svg class="slds-accordion__summary-action-icon slds-button__icon slds-button__icon_left" aria-hidden="false" ng-class="{'content-expanded': showAccordionDetail}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="switch" width="100%" height="100%"><path d="M22 8.2l-9.5 9.6c-.3.2-.7.2-1 0L2 8.2c-.2-.3-.2-.7 0-1l1-1c.3-.3.8-.3 1.1 0l7.4 7.5c.3.3.7.3 1 0l7.4-7.5c.3-.3.8-.3 1.1 0l1 1c.2.3.2.7 0 1z"></path></svg>
+                            </svg>
+                            <span class="slds-truncate" title="Accordion summary" >
+                                <span class="item-date">{{record.fechaAltaSuscripcion | date:"dd/MM/yyyy - H:mm"}}</span>
+                                <span class="item-name">{{record.DatosServicioSuscrip.nombreServicio}}</span>
+                            </span>
+                          </button>
+                        </h3>
+                      </div>
+                      <div aria-hidden="false" class="slds-accordion__content" ng-class="{'slds-hide': !showAccordionDetail}" id="accordion-details-01">
+                        <ul class="item-details">
+                            <li>
+                                <p>Monto<span>$ {{record.DatosServicioSuscrip.cargoUso}}</span></p>
+                            </li>
+                        </ul>
+                      </div>
+                    </section>
+                  </li>
+                </ul>
+
+                <ul class="slds-accordion"
+                    ng-if="data.title == 'Servicios Incluidos'">
+                    <div class="column-header">
+                        <p class="name-title">NOMBRE</p>
+                        <p class="status-title">ESTADO</p>
+                    </div>
+                  <li class="slds-accordion__list-item" 
+                      ng-repeat="record in records | orderBy:sortingOrder:reverse">
+                    <section class="slds-accordion__section slds-is-open">
+                      <div class="slds-accordion__summary" ng-class="{'expanded-content':showAccordionDetail}">
+                        <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                          <button aria-controls="accordion-details-01" aria-expanded="false" class="slds-button slds-button_reset slds-accordion__summary-action slds-size_1-of-1" ng-click="showAccordionDetail = !showAccordionDetail">
+                            <svg class="slds-accordion__summary-action-icon slds-button__icon slds-button__icon_left" aria-hidden="false" ng-class="{'content-expanded': showAccordionDetail}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="switch" width="100%" height="100%"><path d="M22 8.2l-9.5 9.6c-.3.2-.7.2-1 0L2 8.2c-.2-.3-.2-.7 0-1l1-1c.3-.3.8-.3 1.1 0l7.4 7.5c.3.3.7.3 1 0l7.4-7.5c.3-.3.8-.3 1.1 0l1 1c.2.3.2.7 0 1z"></path></svg>
+                            </svg>
+                            <span class="slds-truncate" title="Accordion summary">
+                                <span class="item-name" style="width: 50%;">{{record.AssetName}}</span>
+                                <!-- <span class="item-date">{{record.Status}}</span>  -->                               
+                                <div ng-if="record.Status == 'Active' || record.Status == 'Activo'"> 
+                                    <span class="item-status">Activo</span>
+                                </div>
+                                <div ng-if="record.Status == 'Suspended'">
+                                     <span class="item-status">Suspendido</span>
+                                </div>
+                                <div ng-if="record.Status == 'Inactive'">
+                                     <span class="item-status">Inactivo</span>
+                                </div>
+                                <div ng-if="record.Status == 'In Activation'">
+                                    <span class="item-status">En activación</span>
+                                </div>
+                                <div ng-if="record.Status == 'Limited'">
+                                    <span class="item-status">Limitado</span>
+                                </div>
+                                <div ng-if="record.Status == 'Purchased'">
+                                    <span class="item-status">Comprado</span>
+                                </div>
+                                <div ng-if="record.Status == 'Installed'">
+                                    <span class="item-status">Instalado</span>
+                                </div>
+                                <div ng-if="record.Status == 'Deleted'">
+                                    <span class="item-status">Eliminado</span>
+                                </div>
+                            </span>
+                          </button>
+                        </h3>
+                      </div>
+                      <div aria-hidden="false" class="slds-accordion__content" ng-class="{'slds-hide': !showAccordionDetail}" id="accordion-details-01">
+                        <ul class="item-details">
+                            <li>
+                                <p>Fecha de Estado<span>{{record.ActivationDate | date:"dd/MM/yyyy - H:mm"}}</span></p>
+                            </li>
+                        </ul>
+                      </div>
+                    </section>
+                  </li>
+                </ul>
+                <!-- / RESPONSIVE -->
+            </div>
+        </div>
+
+        <div ng-hide="amc.profile" 
+             class="slds-align--absolute-center slds-p-top--large" 
+             ng-repeat="action in data.actions">
+            <button ng-click="performAction(action)" 
+                class="slds-button slds-button--brand">
+                    Ver detalle
+            </button>
+        </div>
+
+    </div>
+</div>

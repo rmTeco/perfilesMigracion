@@ -1,0 +1,12 @@
+<select 
+    class="select"
+    ng-model="bpTree.response.SelectedMotive"
+    ng-options="motive.Name for motive in bpTree.response.Service.Motives">
+</select>
+
+<select 
+    class="select"
+    name="symptom" 
+    ng-model="bpTree.response.SelectedSymptom"
+    ng-options="symptom.Name for symptom in bpTree.response.SelectedMotive.Symptoms">
+</select>

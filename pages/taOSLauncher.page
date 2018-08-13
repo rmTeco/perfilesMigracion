@@ -1,0 +1,19 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="taOrderController">
+    {!valor}
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="TaOSLauncherModule">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="{!$CurrentPage.parameters.osType}"
+            strOmniScriptSubType="{!$CurrentPage.parameters.osSubType}"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('TaOSLauncherModule', modules);
+        </script>
+        <link rel="stylesheet" href="/resource/ta_slds_os/slds_os.min.css"/>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

@@ -1,0 +1,37 @@
+<apex:page StandardController="Account" extensions="vlocity_cmt.BillingDashboardController">
+	<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__telcoVlocityCSS, 'AccountBillingDashboard.css')}"/>
+    <apex:form > 
+    	<apex:outputText value="{!account.Type}" rendered="false"/>
+    	<table width="100%">
+    		<tr>
+		    	<apex:outputPanel layout="none" rendered="{!accountType =='Billing' || accountType =='Billing Aggregator' || accountType =='Consumer' || accountType =='Business'}">
+			        <td width="30%" style="vertical-align: top;">
+			            <analytics:reportChart size="small" developerName="{!nsPrefix}BillingByMonth" filter="{column:'Account.Id',operator:'equals',value:'{!sobjectId}'}"/>
+			        
+			        </td>
+			       	<td width="30%" style="vertical-align: top;">
+			            <analytics:reportChart size="small" developerName="{!nsPrefix}BillingByType" filter="[{column:'{!nsPrefix}StatementLineItem__c.{!nsPrefix}StatementDate__c',operator:'greaterOrEqual',value:'{!LastMonthStart}'},
+			                                                                        {column:'{!nsPrefix}StatementLineItem__c.{!nsPrefix}StatementDate__c',operator:'lessOrEqual',value:'{!LastMonthEnd}'},
+			                                                                        {column:'Account.Id',operator:'equals',value:'{!sobjectId}'}]"/>
+			        </td>
+			        <td width="30%" style="vertical-align: top;">
+			            <analytics:reportChart size="small" developerName="{!nsPrefix}UsageByType" filter="{column:'Account.Id',operator:'equals',value:'{!sobjectId}'}"/>
+			        </td>
+				</apex:outputPanel>	
+    		</tr>
+        	<tr>
+				<apex:outputPanel layout="none" rendered="{!accountType =='Service Aggregator' || accountType =='Service' || accountType =='Consumer' || accountType =='Business'}">
+			        <td width="30%" style="vertical-align: top;">
+			            <analytics:reportChart size="small" developerName="{!nsPrefix}UsageByBasePackage" filter="{column:'Account.Id',operator:'equals',value:'{!sobjectId}'}"/>
+			        </td>
+			        <td width="30%" style="vertical-align: top;">
+			            <analytics:reportChart size="small" developerName="{!nsPrefix}UsageByPremiumPackage" filter="{column:'Account.Id',operator:'equals',value:'{!sobjectId}'}"/>
+			        </td>
+			        <td width="30%" style="vertical-align: top;">
+			            <analytics:reportChart size="small" developerName="{!nsPrefix}UsageByPromotionalPackage" filter="{column:'Account.Id',operator:'equals',value:'{!sobjectId}'}"/>
+			        </td>
+				</apex:outputPanel>
+			</tr>
+		</table>
+    </apex:form>
+</apex:page>

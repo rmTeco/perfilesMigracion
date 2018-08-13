@@ -1,0 +1,97 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "02i6C0000002g7IQAQ"
+            },
+            {
+                "name": "params.AssetId",
+                "val": "02i6C0000002g7IQAQ"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "bundle": "ta-care-getIncludedServices",
+            "inputMap": {
+                "Id": "{{params.AssetId}}"
+            }
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "AssetId": "['ParentAssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleMyServicesDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['AssetName']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Nombre",
+                    "name": "['AssetName']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['ActivationDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de estado",
+                    "name": "['ActivationDate']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Servicios Incluidos",
+            "sObjectType": null,
+            "templateUrl": "ta-care-table-services"
+        }
+    ],
+    "title": "Servicios Incluidos"
+}

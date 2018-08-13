@@ -1,0 +1,99 @@
+<apex:page controller="SCP_Certa_GC.MosaicController" sidebar="false" tabStyle="Strategic_Client_Plan__tab" >
+	<c:SCPMenu ></c:SCPMenu>
+		
+	<style>
+		.COXItem {
+		   display: none;   
+		}	
+	</style>
+	
+	<script>
+		$j = jQuery.noConflict();
+		
+		function chartPage() {
+			$j('#chartPage').click();
+			window.open("{!$Page.accountOrganizationChart}?id={!IF(objectAPIName == 'Opportunity',opportunity.account,objectId)}", '_new');
+		}
+	</script>
+	
+   	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+    	<div class="panel panel-default">
+			<apex:form >
+	    		<div class="panel-heading">
+	    			<h3 class="panel-title">
+	    				<span style="float:left;">
+	    					{!$Label.scp_certa_gc__rdm_role}
+	    				</span>
+
+	    				<span style="float:left;">
+	    					<c:showVideo />
+	    				</span>
+	    			</h3>
+	    			<div class="row paddingRight">	
+	    				<div class="btn-group pull-right" role="group" aria-label="...">    					
+							<div class="btn-group pull-right" role="group" aria-label="...">	    					
+		           				<apex:actionFunction action="{!$Page.accountRDMChartAttitude}?id={!objectId}" name="viewMosaic"/>
+		           				<apex:actionFunction action="{!$Page.accountOrganizationChart}?id={!IF(objectAPIName == 'Opportunity',opportunity.account,objectId)}" name="viewOrg"/>
+		           				<apex:actionFunction action="{!$Page.accountRDMWindow}?id={!objectId}" name="modifyRDM"/>		           				
+		           				<!-- <a id="chartPage" target="_new" href="{!$Page.accountOrganizationChart}?id={!IF(objectAPIName == 'Opportunity',opportunity.account,objectId)}"></a> -->
+		           				
+		           				<button type="button" class="btn btn-default btn-sm" onclick="viewMosaic()">
+			   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.View_Mosaic_order_by_Attitude}
+			                    </button>		                     
+			                    <button type="button" class="btn btn-default btn-sm" onclick="chartPage()">
+			   						<span class="glyphicon glyphicon-user icon-btn-left"></span>&nbsp;{!$Label.view_org_chart}
+			                    </button>		                     
+		           				<button type="button" class="btn btn-default btn-sm" onclick="modifyRDM()">
+			   						<span class="glyphicon glyphicon-edit icon-btn-left"></span>&nbsp;{!$Label.Modify_RDM}
+			                    </button>
+	   	           				<button type="button" class="btn btn-default btn-sm" onclick="saveImage()">
+			   						<span class="glyphicon glyphicon-download icon-btn-left"></span>&nbsp;{!$Label.save_image}
+			                    </button>		                    
+		    				</div>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="panel-body">
+	    			<apex:outputText styleClass="row paddingRight" rendered="{!objectAPIName == 'Opportunity'}">
+	    				<div class="btn-group pull-right" role="group" aria-label="...">	    					
+	           				<apex:outputLink value="{!$Page.SCP_Certa_GC__DCMEvaluateCriteria}?id={!opportunity.id}">
+	                         	<button type="button" class="btn btn-default btn-sm">
+			   						<span class="glyphicon glyphicon-comment icon-btn-left"></span>&nbsp;{!$Label.gotoCriteria}
+			                    </button>
+	                        </apex:outputLink>
+   	           				<apex:outputLink value="{!$Page.SCP_Certa_GC__OpportunitySnapshot}?id={!opportunity.id}">
+	                         	<button type="button" class="btn btn-default btn-sm">
+			   						<span class="glyphicon glyphicon-camera icon-btn-left"></span>&nbsp;{!$Label.gotoSnapshot}
+			                    </button>
+	                         </apex:outputLink>		                    
+	    				</div>
+	    				<h2 style="margin-top: 0px;">{!$Label.scp_certa_gc__opportunity}: <span style="font-size: 16px;"><apex:outputLink value="/{!opportunity.id}">{!opportunity.Name}</apex:outputLink></span></h2>
+	    			</apex:outputText>
+	    			<c:accountRDMChartComponent />	
+	    		</div>
+	    		<div class="panel-footer">
+	    			<div class="row paddingRight">	
+	    				<div class="btn-group pull-right" role="group" aria-label="...">    					
+							<div class="btn-group pull-right" role="group" aria-label="...">	    					
+		           				<button type="button" class="btn btn-default btn-sm" onclick="viewMosaic()">
+			   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.View_Mosaic_order_by_Attitude}
+			                    </button>			                     
+			                    <button type="button" class="btn btn-default btn-sm" onclick="chartPage()">
+			   						<span class="glyphicon glyphicon-user icon-btn-left"></span>&nbsp;{!$Label.view_org_chart}
+			                    </button>		                     
+		           				<button type="button" class="btn btn-default btn-sm" onclick="modifyRDM()">
+			   						<span class="glyphicon glyphicon-edit icon-btn-left"></span>&nbsp;{!$Label.Modify_RDM}
+			                    </button>
+	   	           				<button type="button" class="btn btn-default btn-sm" onclick="saveImage()">
+			   						<span class="glyphicon glyphicon-download icon-btn-left"></span>&nbsp;{!$Label.save_image}
+			                    </button>		                    
+		    				</div>
+	    				</div>
+	    			</div>
+	    		</div>
+			</apex:form>
+	    	<c:FastTask page="{!$Label.scp_certa_gc__rdm_role}" account="{!accountId}" opp="{!opportunity.id}"></c:FastTask>
+			<chatter:feed entityId="{!accountId}" />
+    	</div>
+    </apex:outputpanel>
+</apex:page>

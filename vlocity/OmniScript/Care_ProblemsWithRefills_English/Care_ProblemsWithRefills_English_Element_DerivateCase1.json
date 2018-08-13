@@ -1,0 +1,41 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-care-ProblemsWithRefills",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Care/ProblemsWithRefills/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 39,
+    "%vlocity_namespace%__PropertySet__c": {
+        "Language": "Spanish",
+        "Sub Type": "DerivateCase",
+        "Type": "Care",
+        "disOnTplt": false,
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "true",
+                        "field": "ContinueProcess"
+                    },
+                    {
+                        "condition": "=",
+                        "data": "true",
+                        "field": "ShouldDerivateCase"
+                    }
+                ]
+            }
+        }
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__SearchKey__c": "Care|DerivateCase|Spanish",
+    "%vlocity_namespace%__Type__c": "OmniScript",
+    "Name": "DerivateCase1",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Care/ProblemsWithRefills/English/DerivateCase1"
+}

@@ -1,0 +1,30 @@
+@import "variables";
+@import "community-variables";
+
+.vlocity {
+    .community {
+        .info {
+            height: 100%;
+            display:block;
+            
+            .icon{
+                cursor: pointer;
+                height: 26px;
+                line-height: 26px;
+                &:before {
+                    font-size: 20px;
+                    color: $light-blue;
+                }
+            }
+            iframe {
+                height: 100vh;
+                width: 100%;
+                border: none;
+            }
+        }
+        
+        .right-pos {
+            display: block;
+        }
+    }
+}

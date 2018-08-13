@@ -1,0 +1,48 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "AccountIntegrationId": "['Account']['AccountIntegrationId']",
+                            "id": "['Account']['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleCardsBillingInformationConsumer",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "name": "Active",
+            "placeholders": [
+            ],
+            "sObjectType": "Account",
+            "templateUrl": "billingInformation-card"
+        }
+    ],
+    "title": "Facturacion"
+}

@@ -1,0 +1,9 @@
+<div  class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large"> 
+   <p align="center">
+    <FONT SIZE=7>Recarga Realizada con Exito!</font>
+  </p>
+	<p align="center"> <font SIZE=4> 
+	    Monto Recarga es por {{bpTree.response.bodyS143.infoRecarga.listPagoEfectivo[0].montoRecarga  | currency}}, el  Balance Anterior era de {{bpTree.response.listInfoCambioBalance.infoCambioBalance[0].saldoBalanceAnterior.saldoBalanceAnterior  | currency }}, Su Balance Actual es de {{bpTree.response.listInfoCambioBalance.infoCambioBalance[0].saldoBalance  | currency }}
+	    </font>
+	</p>
+</div>

@@ -1,0 +1,52 @@
+.vlocity {
+    .cpq-categories-container {
+        width: 100%;
+        background: none;
+        .cpq-main-categories-container {
+            overflow: auto;
+            height: 100%;
+            .categoryButtonWrapper {
+                margin-bottom: 8px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+            .categoryButton {
+                border-radius: 3px;
+                box-shadow: 0 -1px 8px 0 rgba(#000, 0.1);
+                
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                
+                height: 110px;
+                background: #fff;
+                padding: 5px 10px;
+                
+                color: #00b4c5;
+                text-decoration: none;
+                text-transform: uppercase;
+                
+                &:hover,&.cpq-category-item-selected {
+                    background: #00b4c5;
+                    color: #fff;
+                }
+                
+                &.allFilter {
+                    height: 56px;
+                }
+                
+                .categoryIcon {
+                    width: 35px;
+                    height: 35px;
+                    margin-bottom: 10px;
+                }
+                
+                .categoryLabel {
+                    font-size: 10px;
+                }
+            }
+        }
+    }
+}

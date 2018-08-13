@@ -1,0 +1,373 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 1,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-techCare-MassiveIncident-CreateCase",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/TechCare/Massive Event - Create Case/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 3,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/TechCare/Massive Event - Create Case/English",
+        "Name": "InputValues",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/Massive Event - Create Case/English/InputValues",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "InputValues",
+    "%vlocity_namespace%__ParentElementType__c": "Step",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "accessibleInFutureSteps": false,
+        "conditionType": "Hide if False",
+        "controlWidth": 6,
+        "controllingField": {
+            "element": "SelectType",
+            "source": "Case.Type",
+            "type": "SObject"
+        },
+        "help": false,
+        "helpText": "",
+        "hide": false,
+        "inputWidth": 12,
+        "label": "SubTipo",
+        "optionSource": {
+            "source": "Case.SubType__c",
+            "type": "SObject"
+        },
+        "options": [
+            {
+                "name": "Siebel",
+                "value": "Siebel"
+            },
+            {
+                "imgId": null,
+                "name": "Negocio Net",
+                "value": "Negocio Net"
+            },
+            {
+                "imgId": null,
+                "name": "Negocio 2000",
+                "value": "Negocio 2000"
+            },
+            {
+                "imgId": null,
+                "name": "Web de gestión móvil",
+                "value": "Web de gestión móvil"
+            },
+            {
+                "imgId": null,
+                "name": "NPS",
+                "value": "NPS"
+            },
+            {
+                "imgId": null,
+                "name": "Click",
+                "value": "Click"
+            },
+            {
+                "imgId": null,
+                "name": "Paginas externas",
+                "value": "Paginas externas"
+            },
+            {
+                "imgId": null,
+                "name": "SNAP",
+                "value": "SNAP"
+            },
+            {
+                "imgId": null,
+                "name": "Sender",
+                "value": "Sender"
+            },
+            {
+                "imgId": null,
+                "name": "Enviador",
+                "value": "Enviador"
+            },
+            {
+                "imgId": null,
+                "name": "High Tech",
+                "value": "High Tech"
+            },
+            {
+                "imgId": null,
+                "name": "Club Personal",
+                "value": "Club Personal"
+            },
+            {
+                "imgId": null,
+                "name": "Red",
+                "value": "Red"
+            },
+            {
+                "imgId": null,
+                "name": "Comandos/ Portabilidad",
+                "value": "Comandos/ Portabilidad"
+            },
+            {
+                "imgId": null,
+                "name": "Inconsistencias",
+                "value": "Inconsistencias"
+            },
+            {
+                "imgId": null,
+                "name": "Conciliador",
+                "value": "Conciliador"
+            },
+            {
+                "imgId": null,
+                "name": "Portal Móvil",
+                "value": "Portal Móvil"
+            },
+            {
+                "imgId": null,
+                "name": "Web",
+                "value": "Web"
+            },
+            {
+                "imgId": null,
+                "name": "Facturacion/ Tasacion",
+                "value": "Facturacion/ Tasacion"
+            },
+            {
+                "imgId": null,
+                "name": "Rehabilitaciones",
+                "value": "Rehabilitaciones"
+            },
+            {
+                "imgId": null,
+                "name": "Informe de Pago",
+                "value": "Informe de Pago"
+            },
+            {
+                "imgId": null,
+                "name": "Recargas",
+                "value": "Recargas"
+            },
+            {
+                "imgId": null,
+                "name": "Promociones",
+                "value": "Promociones"
+            },
+            {
+                "imgId": null,
+                "name": "Packs",
+                "value": "Packs"
+            },
+            {
+                "imgId": null,
+                "name": "Números Amigos",
+                "value": "Números Amigos"
+            },
+            {
+                "imgId": null,
+                "name": "*111/ *Black",
+                "value": "*111/ *Black"
+            },
+            {
+                "imgId": null,
+                "name": "*151",
+                "value": "*151"
+            },
+            {
+                "imgId": null,
+                "name": "*150",
+                "value": "*150"
+            },
+            {
+                "imgId": null,
+                "name": "USSD",
+                "value": "USSD"
+            },
+            {
+                "imgId": null,
+                "name": "*152",
+                "value": "*152"
+            },
+            {
+                "imgId": null,
+                "name": "Otros",
+                "value": "Otros"
+            },
+            {
+                "imgId": null,
+                "name": "Suscripciones",
+                "value": "Suscripciones"
+            },
+            {
+                "imgId": null,
+                "name": "Sistemas Web/VAS/País/Autogestión",
+                "value": "Sistemas Web/VAS/País/Autogestión"
+            },
+            {
+                "imgId": null,
+                "name": "Sistemas Web/VAS",
+                "value": "Sistemas Web/VAS"
+            },
+            {
+                "imgId": null,
+                "name": "Sistemas VAS",
+                "value": "Sistemas VAS"
+            },
+            {
+                "imgId": null,
+                "name": "Sistemas WEB",
+                "value": "Sistemas WEB"
+            },
+            {
+                "imgId": null,
+                "name": "Inconvenientes Prepago",
+                "value": "Inconvenientes Prepago"
+            },
+            {
+                "imgId": null,
+                "name": "Tarea de Mantenimiento",
+                "value": "Tarea de Mantenimiento"
+            },
+            {
+                "imgId": null,
+                "name": "Novedad Informativa",
+                "value": "Novedad Informativa"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya  CMS Supervisor",
+                "value": "Avaya  CMS Supervisor"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya APC - Internet Monitor",
+                "value": "Avaya APC - Internet Monitor"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya APC - Monitos Online",
+                "value": "Avaya APC - Monitos Online"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya APC - Monitor Reportes",
+                "value": "Avaya APC - Monitor Reportes"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya APC (Agente)",
+                "value": "Avaya APC (Agente)"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya Barra AIC",
+                "value": "Avaya Barra AIC"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya Barra AIC / ONE X",
+                "value": "Avaya Barra AIC / ONE X"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya IC Manager",
+                "value": "Avaya IC Manager"
+            },
+            {
+                "imgId": null,
+                "name": "Avaya IN - Caída Total",
+                "value": "Avaya ONE X"
+            },
+            {
+                "imgId": null,
+                "name": "Banner de Productividad",
+                "value": "Banner de Productividad"
+            },
+            {
+                "imgId": null,
+                "name": "Herramientas de Gestión/ Atencion",
+                "value": "Herramientas de Gestión/ Atencion"
+            },
+            {
+                "imgId": null,
+                "name": "Inconveniente con las llamadas",
+                "value": "Inconveniente con las llamadas"
+            },
+            {
+                "imgId": null,
+                "name": "Inconvenientes con correo",
+                "value": "Inconvenientes con correo"
+            },
+            {
+                "imgId": null,
+                "name": "Página de Niveles",
+                "value": "Página de Niveles"
+            },
+            {
+                "imgId": null,
+                "name": "Social Media - WebLogueo",
+                "value": "Social Media - WebLogueo"
+            },
+            {
+                "imgId": null,
+                "name": "Trans Routing",
+                "value": "Trans Routing"
+            },
+            {
+                "imgId": null,
+                "name": "TUID",
+                "value": "TUID"
+            },
+            {
+                "imgId": null,
+                "name": "Grabador NICE",
+                "value": "Grabador NICE"
+            },
+            {
+                "imgId": null,
+                "name": "Epiron (Redes Sociales)",
+                "value": "Epiron (Redes Sociales)"
+            },
+            {
+                "imgId": null,
+                "name": "Sur",
+                "value": "Sur"
+            },
+            {
+                "imgId": null,
+                "name": "Gestion PMP",
+                "value": "Gestion PMP"
+            },
+            {
+                "imgId": null,
+                "name": "Cris",
+                "value": "Cris"
+            },
+            {
+                "imgId": null,
+                "name": "Segat",
+                "value": "Segat"
+            },
+            {
+                "imgId": null,
+                "name": "*112",
+                "value": "*112"
+            },
+            {
+                "imgId": null,
+                "name": "MAF",
+                "value": "MAF"
+            }
+        ],
+        "readOnly": false,
+        "repeat": false,
+        "repeatClone": false,
+        "required": true,
+        "show": null,
+        "showInputWidth": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Select",
+    "Name": "SelectSubType",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/Massive Event - Create Case/English/SelectSubType"
+}

@@ -1,0 +1,32 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="BillingGroupCloseCaseController" >
+  
+  <html xmlns:ng="http://angularjs.org" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:includeScript value="/support/console/34.0/integration.js"/>
+            <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script> -->
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+
+            <apex:slds />
+        </head>
+  
+      <div style="text-align: center">
+          <div class="slds-text-heading--large" style="margin: auto">
+              El proceso se canceló.
+          </div>
+      </div>
+
+          <script type="text/javascript">
+              Visualforce.remoting.Manager.invokeAction(
+                 "BillingGroupCloseCaseController.closeCase",
+                 "{!$CurrentPage.parameters.caseNumber}",
+                      function(result, event) {
+                          $scope.$apply(function(){
+                              console.info('resultado: ',result);
+                          });
+                      },
+                 {escape: false} // No escaping, please
+              );
+          </script>
+    </html>
+</apex:page>

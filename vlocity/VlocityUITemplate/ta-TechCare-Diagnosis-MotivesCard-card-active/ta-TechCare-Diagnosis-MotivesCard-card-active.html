@@ -1,0 +1,33 @@
+<section class="console-card active" data-card="card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" hotkey-layout-card>
+    <div class="card-top" ng-click="performFlyout('card-'+cardIndex)">
+        <div>
+            <h2 tooltip-placement="bottom" tooltip="{{obj.Name}}">
+                {{obj.Label}}
+            </h2>
+        </div>
+        <span class="account-number">{{obj.Name}}</span>
+        
+        <span class="expires">
+            <i ng-if="expiresSoon(card.expires, 30)" tooltip="Last modified" class="icon icon-v-warning-cirlce"></i>
+            Last modified {{obj.LastModifiedDate | date:'MM/dd/yy'}}</span>
+    </div>
+    <div class="card-info">
+        <ul class="actions">
+            <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+                <a href="#" ng-click="performAction(action)" hotkey-card-action>
+                    <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+                    <span ng-if="action.imageRef">
+                        <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+                    </span>
+                    <span>{{action.displayName}}</span>
+                </a>
+            </li>
+        </ul>
+        <span class="slds-section__title">Síntomas</span>
+        <ul>
+            <li class="slds-list--dotted" ng-repeat="syn in obj.Symptoms">
+                {{syn.Label}}
+            </li>
+        </ul>
+    </div>
+</section>

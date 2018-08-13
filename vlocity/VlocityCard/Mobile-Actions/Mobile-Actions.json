@@ -1,0 +1,55 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankCardState": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'non-existent'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "id": "CRM_newEvent",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "CRM_newNote",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "CRM_newOpportunity",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "CRM_newReferral",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "CRM_newCase",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "CRM_newTask",
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'non-existent'",
+            "name": "Action Card State",
+            "sObjectType": "Account",
+            "templateUrl": "mobile-action-grid-card-slds"
+        }
+    ],
+    "title": "Actions"
+}

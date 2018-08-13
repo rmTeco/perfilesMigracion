@@ -1,0 +1,930 @@
+<apex:page standardStylesheets="false" controller="vlocity_cmt.RuleWorkbenchController" showHeader="true" sidebar="false" applyBodyTag="false" applyHtmlTag="true">
+	<html xmlns:ng="http://angularjs.org" ng-app="RuleWorkbenchApp" class="ng-cloak" style="height:100%" > 
+		<head>
+
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"/>
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__Jquery,  '/ui/jquery-ui-1.9.1.custom.min.js')}"/> 
+			<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ANGULAR_SORTABLE)}"/> 
+			<apex:includeScript value="/soap/ajax/31.0/connection.js" />
+			<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+			<apex:includeScript value="{!$Resource.vlocity_cmt__ngtable}"/>
+			<apex:stylesheet value="{!$Resource.vlocity_cmt__ngtablecss}" />		   	
+			<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__RULEWBCSS)}"/>
+
+		   	<script>
+		   		sforce.connection.sessionId = '{!$Api.Session_ID}'; 
+		   		jQuery.noConflict(); 
+		   		var vnsPrefix ="{!localnsp}" ;
+		   		var vclassType = vnsPrefix+".DefaultAdminUtilitiesImplementation";
+		   		function getInitParameters(callback ){  
+
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.getInitParameters}', 
+                                   	callback,
+                                    {buffer: false, escape: false}); 
+                }
+
+				function popRules (srch,callback){
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.getRules}', srch,
+                                   	callback,
+                                    {buffer: false, escape: false});
+				}
+				function simulate(ruleId,argjson,callback){
+
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.simulate}', 
+                                     ruleId,
+                                     argjson,
+                                   	callback,
+                                    {buffer: false, escape: false});
+				}
+
+                function getRuleInfo(ruleId, callback){ 
+                	var parameters = {};
+                	parameters['methodName'] =  'getRuleInfo';
+                	parameters['ruleId'] =  ruleId;
+                				
+                    var remoteOptions ={};
+                    remoteOptions['apexType'] =   vclassType  ; // invoke class type API
+                	remoteOptions['parameters'] =  JSON.stringify(parameters);
+                    
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.invokeMethod}',
+                                    remoteOptions, 
+                                   	callback,
+                                    {buffer: false, escape: false}); 
+                }
+                
+                function getRuleFilters(rule, searchString, callback){ 
+                	delete rule[vnsPrefix + 'RuleFilters__r'];
+                	delete rule[vnsPrefix + 'RuleActions__r'];
+                	var parameters = {};
+                	parameters['methodName'] =  'getRuleFilters';
+                	parameters['searchString'] =  searchString;
+                	parameters['rule'] = JSON.stringify(rule);
+                		
+                    var remoteOptions ={};
+                    remoteOptions['apexType'] =  vclassType;
+                	remoteOptions['parameters'] =  JSON.stringify(parameters);
+                    
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.invokeMethod}',
+                                    remoteOptions, 
+                                   	callback,
+                                    {buffer: false, escape: false}); 
+                }
+
+                function listRuleFilters(callback){              	
+                	var parameters = {};
+                	parameters['methodName'] =  'listRuleFilters';
+                		
+                    var remoteOptions ={};
+                    remoteOptions['apexType'] =  vclassType;
+                	remoteOptions['parameters'] =  JSON.stringify(parameters);
+                    
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.invokeMethod}',
+                                    remoteOptions, 
+                                   	callback,
+                                    {buffer: false, escape: false}); 
+                }                
+
+                function getRuleActions(rule, searchString, callback){ 
+                	delete rule[vnsPrefix + 'RuleFilters__r'];
+                	delete rule[vnsPrefix + 'RuleActions__r'];
+                	var parameters = {};
+                	parameters['methodName'] =  'getRuleActions';
+                	parameters['searchString'] =  searchString;
+                	parameters['rule'] = JSON.stringify(rule);
+                		
+                    var remoteOptions ={};
+                    remoteOptions['apexType'] =  vclassType;
+                	remoteOptions['parameters'] =  JSON.stringify(parameters);
+                    
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.invokeMethod}',
+                                    remoteOptions, 
+                                   	callback,
+                                    {buffer: false, escape: false}); 
+                }
+
+
+                function listRuleActions(rule, callback){ 
+                	delete rule[vnsPrefix + 'RuleFilters__r'];
+                	delete rule[vnsPrefix + 'RuleActions__r'];                   	
+                	var parameters = {};
+                	parameters['methodName'] =  'listRuleActions';
+                	parameters['rule'] = JSON.stringify(rule);                	
+                		
+                    var remoteOptions ={};
+                    remoteOptions['apexType'] =  vclassType;
+                	remoteOptions['parameters'] =  JSON.stringify(parameters);
+                    
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.invokeMethod}',
+                                    remoteOptions, 
+                                   	callback,
+                                    {buffer: false, escape: false}); 
+                }                  
+                
+ 
+                
+                function getRuleTypes(callback){ 
+                	var parameters = {};
+                	parameters['methodName'] =  'getRuleTypes';
+                				
+                    var remoteOptions ={};
+                    remoteOptions['apexType'] =  vclassType;
+                	remoteOptions['parameters'] =  JSON.stringify(parameters);
+                    
+					Visualforce.remoting.Manager.invokeAction( 
+                                    '{!$RemoteAction.RuleWorkbenchController.invokeMethod}',
+                                    remoteOptions, 
+                                   	callback,
+                                    {buffer: false, escape: false}); 
+                }
+                
+	
+		   		var RuleWorkbenchApp = angular.module('RuleWorkbenchApp', ['mgcrea.ngStrap','ngTable','ui.sortable']);
+		   		 
+		   		
+				RuleWorkbenchApp.factory('RuleWorkbenchService',function($q,$rootScope){  
+		        	var factory = {};
+                    factory.getRuleInfo = function(ruleId) {
+						var deferred = $q.defer();
+						getRuleInfo(ruleId, function(result){  
+						    $rootScope.$apply(function(){ 
+						        var sresult =[];
+						        if ( result){
+						            sresult = angular.fromJson(result); 
+						        }
+						        deferred.resolve(sresult);  
+						
+						    });  
+						});  
+						return deferred.promise;  
+                    };
+                 
+                    
+                    factory.getRuleFilters = function(rule, searchString) {
+						var deferred = $q.defer();
+						getRuleFilters(rule, searchString, function(result){  
+						    $rootScope.$apply(function(){ 
+						        var sresult =[];
+						        if ( result){
+						            sresult = angular.fromJson(result); 
+						        }
+						        deferred.resolve(sresult);  
+						
+						    });  
+						});  
+						return deferred.promise;  
+                    };
+
+                    factory.listRuleFilters = function(){
+                    	var deferred = $q.defer();
+
+                    	listRuleFilters(function(result){
+						    $rootScope.$apply(function(){ 
+						        var sresult =[];
+						        if ( result){
+						            sresult = angular.fromJson(result); 
+						        }
+						        deferred.resolve(sresult);  
+						
+						    });                     		
+                    	})
+                    	return deferred.promise;  
+                    }
+                    
+                    factory.getRuleActions = function(rule, searchString) {
+						var deferred = $q.defer();
+						getRuleActions(rule, searchString, function(result){  
+						    $rootScope.$apply(function(){ 
+						        var sresult =[];
+						        if ( result){
+						            sresult = angular.fromJson(result); 
+						        }
+						        deferred.resolve(sresult);  
+						
+						    });  
+						});  
+						return deferred.promise;  
+                    };
+
+ 					factory.simulate = function(ruleId, argjson) {
+						var deferred = $q.defer();
+						simulate(ruleId, argjson, function(result ,event){  
+ 						    $rootScope.$apply(function(){ 
+						        var sresult =[];
+						        console.log("event .." + event.message);
+						        if ( result){
+						            sresult = angular.fromJson(result); 
+						        } 
+						        if ( sresult.logresults )
+						        		sresult.logresults = sresult.logresults + "\n"+event.message; 
+						        else  
+						        	sresult.logresults = event.message; 
+						        deferred.resolve(sresult);  
+						
+						    });  
+						});  
+						return deferred.promise;  
+                    };
+
+ 
+                    factory.listRuleActions = function(rule){
+                    	var deferred = $q.defer();
+                    	listRuleActions(rule, function(result){
+						    $rootScope.$apply(function(){ 
+						        var sresult =[];
+						        if ( result){
+						            sresult = angular.fromJson(result); 
+						        }
+						        deferred.resolve(sresult);  
+						
+						    });                     		
+                    	})
+                    	return deferred.promise;  
+                    }                    
+                    
+                    
+                    factory.getInitParameters =  function(){
+                    	var deferred = $q.defer();
+						getInitParameters(function(result){  
+					            $rootScope.$apply(function(){ 
+					                var sresult =[];
+					                if ( result){
+					                    sresult = angular.fromJson(result); 
+					                }
+					                deferred.resolve(sresult);  
+					
+					            });  
+					        }) ;
+					    return deferred.promise;  
+					}; 
+                    factory.popRules  = function(stext){
+                    	var deferred = $q.defer();
+					        popRules(stext,function(result){  
+					            $rootScope.$apply(function(){ 
+					                var sresult =[];
+					                if ( result){
+					                    sresult = angular.fromJson(result); 
+					                }
+					                deferred.resolve(sresult);  
+					
+					            });  
+					        });  
+					        return deferred.promise;  
+                    }
+					factory.getRuleTypes = function() {
+							var deferred = $q.defer();
+					        getRuleTypes(function(result){  
+					            $rootScope.$apply(function(){ 
+					                var sresult =[];
+					                if ( result){
+					                    sresult = angular.fromJson(result); 
+					                }
+					                deferred.resolve(sresult);  
+					
+					            });  
+					        });  
+					        return deferred.promise;  
+					};
+                    
+                    return factory;
+		        });
+		        
+				RuleWorkbenchApp.controller('RuleWorkbenchAppController', ["$scope", "$q", "$window", "$timeout","RuleWorkbenchService", "$filter", "ngTableParams", function ($scope, $q, $window, $timeout, RuleWorkbenchService, $filter, ngTableParams) { 					
+					$scope.selectRule=function(id){
+						$scope.dclear();
+						$scope.ruleId = id;
+					}
+					$scope.getRuleInfo = function(){
+						return RuleWorkbenchService.getRuleInfo($scope.ruleId).then(function(result){
+							 
+							$scope.rule = result.rule;
+							$scope.ruleFiltersList = result.ruleFiltersList;
+
+							$scope.rule[$scope.nsPrefix + 'IsActive__c'] = $scope.rule[$scope.nsPrefix + 'IsActive__c'] + "";
+
+							//response from getRuleInfo return list of "RuleFilter" objects not "EntityFilter" so set ID correctly here.
+							angular.forEach($scope.ruleFiltersList, function(value, key){
+								value.Name = value[$scope.nsPrefix + 'EntityFilterId__r'].Name;
+								value.Id = value[$scope.nsPrefix + 'EntityFilterId__c'];
+							});
+
+							$scope.ruleActionsList = result.ruleActionsList;
+
+							//response from getRuleInfo return list of "RuleAction" objects not "CalculationProcedur" nor "ProductRelationship" so set ID correctly here.
+							if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Pricing'){
+								angular.forEach($scope.ruleActionsList, function(value, key){
+									if (value[$scope.nsPrefix + 'CalculationProcedureId__r']) {
+										value.Name = value[$scope.nsPrefix + 'CalculationProcedureId__r'].Name;
+										value.Id = value[$scope.nsPrefix + 'CalculationProcedureId__c'];
+										value.droppableListClass = "vlc-droppable-area";
+										// if(value.EntityFilterId__c){
+										// 	value.droppableListClass = "";
+										// }else{
+										// 	value.droppableListClass = "vlc-droppable-area";
+										// }
+									}
+								});								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Configuration'){
+								angular.forEach($scope.ruleActionsList, function(value, key){
+									if (value[$scope.nsPrefix + 'ProductRelationshipId__r']) {
+										value.Name = value[$scope.nsPrefix + 'ProductRelationshipId__r'].Name;
+										value.Id = value[$scope.nsPrefix + 'ProductRelationshipId__c'];
+										value.droppableListClass = "vlc-droppable-area";
+										// if(value.EntityFilterId__c){
+										// 	value.droppableListClass = "";
+										// }else{
+										// 	value.droppableListClass = "vlc-droppable-area";
+										// }										
+									}
+								});								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Eligibility' ||
+								$scope.rule[$scope.nsPrefix + 'Type__c'] === 'Availability'){
+
+								angular.forEach($scope.ruleActionsList, function(value, key){
+									if (value[$scope.nsPrefix + 'OfferingProcedureId__r']) {
+										value.Name = value[$scope.nsPrefix + 'OfferingProcedureId__r'].Name;
+										value.Id = value[$scope.nsPrefix + 'OfferingProcedureId__c'];
+										value.droppableListClass = "vlc-droppable-area";
+										// if(value.EntityFilterId__c){
+										// 	value.droppableListClass = "";
+										// }else{
+										// 	value.droppableListClass = "vlc-droppable-area";
+										// }
+									}
+								});								
+							}								
+						})
+					}
+					$scope.popRules = function(search){
+						RuleWorkbenchService.popRules('').then(function(result){ 
+							$scope.ruleList = []
+							angular.forEach( result, function(value, key){  
+								$scope.ruleList.push(value);
+							});
+							if ($scope.ruleList.length >0 )
+								$scope.ruleId = $scope.ruleList[0].Id;
+						});
+ 						 
+ 					}
+					
+			 
+					$scope.getRuleFilters = function(searchString){
+						return RuleWorkbenchService.getRuleFilters($scope.rule, searchString).then(function(result){
+							$scope.filtersList = result.filtersList;
+							for(j=0; j <  $scope.filtersList.length; j++){
+								$scope.filtersList[j].nsPrefix = $scope.nsPrefix;
+									
+							}
+							return $scope.filtersList;
+						})
+					
+					}
+
+					$scope.listRuleFilters = function(){
+						return RuleWorkbenchService.listRuleFilters().then(function(result){
+							$scope.filtersList = result.filtersList;
+							for(j=0; j <  $scope.filtersList.length; j++){
+								$scope.filtersList[j].nsPrefix = $scope.nsPrefix;
+									
+							}
+							return $scope.filtersList;
+						})
+		
+					}
+					$scope.formatItem  =  function ( item){
+						if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Pricing'){ 
+								return  {"Name": item.PricebookEntry.Product2.Name ,"field1":item[$scope.nsPrefix+"OneTimeTotal__c"],"field2": item[$scope.nsPrefix+"RecurringTotal__c"]}; // ITEM SOBJECT  NRC & MRC 
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Configuration'){ 
+								return  {"Name": item.PricebookEntry.Product2.Name ,"field1":item[$scope.nsPrefix+"OneTimeTotal__c"],"field2": item[$scope.nsPrefix+"RecurringTotal__c"]};  //  ITEM SOBJECT, description ,NRC,MRC
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Eligibility' ||
+								$scope.rule[$scope.nsPrefix + 'Type__c'] === 'Availability'){ 							
+								return {"Name": item.itemSObject.Name ,"field1": item.itemSObject.UnitPrice,"field2": ""};  // // PB   name ,description
+								
+							} else {
+								return {"Name": item.Name ,"field1": '',"field2": ''}; 
+							 
+							}
+					}
+					$scope.headerItem  =  function (){
+						if ( !$scope.rule ) return {"Name": "","field1": '',"field2": ''}; 
+						if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Pricing'){ 
+								return  {"Name": "Name","field1":"NRC","field2": "MRC"}; // ITEM SOBJECT  NRC & MRC 
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Configuration'){ 
+								return  {"Name": "Name","field1":"NRC","field2": "MRC"}; // ITEM SOBJECT  NRC & MRC 
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Eligibility' ||
+								$scope.rule[$scope.nsPrefix + 'Type__c'] === 'Availability'){ 							
+								return  {"Name": "Name","field1":"Unit Price","field2": ""}; // ITEM SOBJECT  NRC & MRC 
+								
+							} else {
+								return {"Name": "Name","field1": '',"field2": ''}; 
+							 
+							}
+					}					
+					$scope.listRuleActions = function(){
+						return RuleWorkbenchService.listRuleActions($scope.rule).then(function(result){
+							$scope.pricingProceduresList = result.pricingProceduresList || [] ;
+							$scope.productRelationshipsList = result.productRelationshipsList || [];
+							$scope.offeringProceduresList = result.offeringProceduresList || [];
+
+							if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Pricing'){
+								for(j=0; j <  $scope.pricingProceduresList.length; j++){
+									$scope.pricingProceduresList[j].nsPrefix = $scope.nsPrefix;
+										
+								}
+								
+								return $scope.pricingProceduresList;
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Configuration'){
+								for(j=0; j <  $scope.productRelationshipsList.length; j++){
+									$scope.productRelationshipsList[j].nsPrefix = $scope.nsPrefix;
+										
+								}
+								
+								return $scope.productRelationshipsList;
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Eligibility' ||
+								$scope.rule[$scope.nsPrefix + 'Type__c'] === 'Availability'){
+								for(j=0; j <  $scope.offeringProceduresList.length; j++){
+									$scope.offeringProceduresList[j].nsPrefix = $scope.nsPrefix;	
+								}
+								
+								return $scope.offeringProceduresList;
+								
+							} else {
+								return [];
+							 
+							}
+						});
+					}										
+ 					$scope.getRuleActions = function(searchString){
+						return RuleWorkbenchService.getRuleActions($scope.rule, searchString).then(function(result){
+						
+							$scope.pricingProceduresList = result.pricingProceduresList;
+							$scope.productRelationshipsList = result.productRelationshipsList;
+							$scope.offeringProceduresList = result.offeringProceduresList;
+
+							if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Pricing'){
+								for(j=0; j <  $scope.pricingProceduresList.length; j++){
+									$scope.pricingProceduresList[j].nsPrefix = $scope.nsPrefix;
+										
+								}
+								
+								return $scope.pricingProceduresList;
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Configuration'){
+								for(j=0; j <  $scope.productRelationshipsList.length; j++){
+									$scope.productRelationshipsList[j].nsPrefix = $scope.nsPrefix;
+										
+								}
+								
+								return $scope.productRelationshipsList;
+								
+							} else if($scope.rule[$scope.nsPrefix + 'Type__c'] === 'Eligibility' ||
+								$scope.rule[$scope.nsPrefix + 'Type__c'] === 'Availability'){
+								for(j=0; j <  $scope.productRelationshipsList.length; j++){
+									$scope.offeringProceduresList[j].nsPrefix = $scope.nsPrefix;
+										
+								}
+								
+								return $scope.offeringProceduresList;
+								
+							} else {
+								return [];
+							 
+							}
+							
+							
+						})
+					
+					}
+					
+			 
+					
+					$scope.initialize = function(searchString){
+						$scope.variableJson = '{ '+ '\n' + '    "HeaderId" : "<HEADER ID>"   ' + '\n'+'}';
+						$scope.nsPrefix = vnsPrefix;
+						$scope.ruleList =[];
+						$scope.sobjectTypes = [];
+						$scope.ruleId =  ''; // SET FROM ANGULAL SETRULE ID 
+						$scope.rule = {};
+						$scope.processing= false;
+						//rule related filter lists
+						$scope.ruleFiltersList = [];
+						//rule related action lists.
+						$scope.ruleActionsList = [];
+						//all the rule types
+						$scope.ruleTypes = []; 
+						// corresponding to entityFilterList backend code.
+						$scope.filtersList = [];
+						// all of the filters list
+						$scope.allFiltersList = undefined;
+						// all of the actions list
+						$scope.allActionsList = undefined;
+						$scope.pricingProceduresList = [];
+						$scope.productRelationshipsList = [];
+						$scope.offeringProceduresList = [];
+						$scope.ruleToggled = true;
+						$scope.logresults = "";
+						RuleWorkbenchService.getInitParameters().then(function(result){
+							console.log(result);
+							 });
+						$scope.popRules('');
+
+						if($scope.ruleId !== ''){ 
+							$scope.getRuleInfo() ; 
+						} 
+						$scope.preitems = [];   
+						$scope.postitems = [];   
+						//start with readonly for editing page. Edit for new page.
+						$scope.isReadOnly = true;
+						$scope.filterAction = false;		 
+					}
+					
+					$scope.initialize();
+
+					$scope.sortableOptions1 = {
+						'containment': '#vlc-filter-container',
+						'disabled' : true
+					};
+					$scope.sortableOptions2 = {
+						'containment': '#vlc-actions-container',
+						'disabled' : true
+					};
+ 
+ 					//search both table for now.
+				  	$scope.$watch("ruleId", function () { 
+				  		$scope.getRuleInfo($scope.ruleId);
+				  	});
+
+					//search both table for now.
+				  	$scope.$watch("searchText", function () {
+				  		// if ($scope.filterAction) {
+				  		// 	$scope.actionTableParams.reload();
+				  		// }else{
+				  		// 	$scope.tableParams.reload();
+
+				  		// }
+				  		if ($scope.actionTableParams) {
+				  			$scope.actionTableParams.reload();
+				  		}
+				  		
+				  		if ($scope.tableParams) {
+							$scope.tableParams.reload();
+				  		};
+				  	});
+
+				   
+ 					$scope.ruleEdit = function(){  
+								if($scope.ruleId !== '')window.top.location.href = '/apex/RuleManager?id=' + $scope.ruleId;  
+					}
+					
+					$scope.redirect = function(Id){
+						if (Id === undefined) {
+							var ruleId =  null;;
+							if(ruleId !== ''){
+								window.top.location.href = '/' + ruleId; 
+							}
+						}
+						else {
+							$window.open('/'+Id,'_blank');
+						}
+					}
+					$scope.simulate = function(){
+						// validate the arguments for headerId, any 
+						// invoke simulate action
+						$scope.logresults ="";
+						$scope.processing = true;
+
+						RuleWorkbenchService.simulate( 
+							$scope.ruleId,
+							$scope.variableJson).then(function(result ){ 
+								 	if (result.PreItems) {$scope.preitems  =  result.PreItems;}
+								 	if (result.PostItems) {$scope.postitems  =  result.PostItems;}
+								 	$scope.logresults = result.logresults ;
+								 	$scope.processing= false;
+								 	  
+							});
+
+					}
+					$scope.dclear = function(){
+						// validate the arguments for headerId, any 
+						// invoke simulate action
+						$scope.processing = true; 
+						$scope.logresults ="";
+						$scope.preitems  =  [];
+						$scope.postitems  =  [];
+						$scope.processing= false; 
+
+					}
+					$scope.selectedAction = {};
+
+				   	$scope.tableParams = new ngTableParams({
+				        page: 1,            // show first page
+				        count: 10,          // count per page
+				        sorting: {
+				            name: 'asc'     // initial sorting
+				        }
+				    }, {
+				        total: 0, // length of data
+				        getData: function($defer, params) {
+				        	if ($scope.allFiltersList !== undefined) {
+									var data = $scope.allFiltersList;
+
+									var filteredData = $filter('filter')(data, $scope.searchText);
+						            var orderedData = params.sorting() ?
+						                                $filter('orderBy')(filteredData, params.orderBy()) :
+						                                filteredData;	
+
+						            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+
+				        	}else{
+								RuleWorkbenchService.listRuleFilters().then(function(result){
+
+									$scope.allFiltersList = result.filtersList;
+									// params.total($scope.filtersList.count);
+									var data = $scope.allFiltersList;
+
+									var filteredData = $filter('filter')(data, $scope.searchText);
+						            var orderedData = params.sorting() ?
+						                                $filter('orderBy')(filteredData, params.orderBy()) :
+						                                filteredData;	
+
+						            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+
+								});
+				        	}
+				        }
+				    });
+					
+					$scope.loadActionTable = function(){
+
+					   	$scope.actionTableParams = new ngTableParams({
+					        page: 1,            // show first page
+					        count: 10,          // count per page
+					        sorting: {
+					            name: 'asc'     // initial sorting
+					        }
+					    }, {
+					        total: 0, // length of data
+					        getData: function($defer, params) {
+					        	var data;
+			        			if ($scope.allActionsList !== undefined) {
+			        				data = $scope.allActionsList;
+			        				// angular.copy($scope.allActionsList,data);
+								}
+
+					        	if (data) {
+										var filteredData = $filter('filter')(data, $scope.searchText);
+							            var orderedData = params.sorting() ?
+							                                $filter('orderBy')(filteredData, params.orderBy()) :
+							                                filteredData;	
+
+							            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+
+					        	}else{
+					        		$scope.listRuleActions($scope.rule).then(function(){
+					        			var data;
+					        			if ($scope.productRelationshipsList.length > 0) {
+					        				data = $scope.productRelationshipsList;
+					        			}else if($scope.pricingProceduresList.length > 0){
+					        				data = $scope.pricingProceduresList;
+					        			}else if($scope.offeringProceduresList.length > 0){
+					        				data = $scope.offeringProceduresList;
+					        			}
+
+					        			$scope.allActionsList = data;
+					        			// angular.copy(data, $scope.allActionsList);
+										// var data = $scope.allActionsList;
+
+										var filteredData = $filter('filter')(data, $scope.searchText);
+							            var orderedData = params.sorting() ?
+							                                $filter('orderBy')(filteredData, params.orderBy()) :
+							                                filteredData;
+							            if (orderedData === undefined ) {
+							            	orderedData = [];
+							            };	
+							            	$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+					        		});
+					        	}				        		
+					        }
+					    }); 
+
+					}; 
+
+				}]);
+
+				
+		   		
+			</script> 
+			
+		</head>
+		<body class='ng-cloak' ng-controller="RuleWorkbenchAppController">
+
+ 			<div class="vlocity"> 
+ 			      <apex:sectionHeader subtitle="{{$root.layout.Name}}"
+                            id="sectionHeader"
+                            title="Rule Workbench"/>
+				<div class="row">
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+						<table class="table table-sm">
+						<tbody> 
+							<tr ng-repeat="item in ruleList track by $index"  ng-click="selectRule(item.Id)"   data-action-id="{{item.Id}}" class="vlc-filter-li {{item.Id == ruleId ? 'vlc-selected' : ''}}" >
+												<td  >	 
+														 <b>{{item.Name}}</b> 
+												</td>
+												<td  >	 
+														{{item[nsPrefix + 'Type__c']}} 
+												</td>
+						   </tr>
+
+						   </tbody>
+						 </table>
+
+					</div>
+					<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+					<div class="row  ">
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">  
+								<div class="lead"   >{{rule.Name}}<a href="#" ng-click="ruleEdit()">
+									<i class="icon icon-v-edit" ></i>
+								</a></div> 
+								<div class= "vlc-small-desc" ng-hide="false"> 
+								<span class="uc">Rule Type:</span>  {{rule[nsPrefix + 'Type__c']}} <br/>
+							    <span class="uc" >Applies To:</span>  {{rule[nsPrefix + 'ObjectName__c']}} <br/>
+							    <span class="uc" >Description:</span> {{rule[nsPrefix + 'Description__c']}}
+							    </div>
+					 
+
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6   pull-right"> 
+							<button type="button"   class="btn btn-primary" ng-click="simulate()"><i class="icon icon-v-play"  ></i>Simulate</button> 
+							<button type="button"   class="btn btn-default" ng-click="dclear()">Clear</button> 
+						</div>
+					</div>
+					<div class="row">
+					 
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> 
+										<div class="form-group">
+										    <label class="vlc-title-header">Rule Context</label>
+										    <textarea ng-model="variableJson" class="form-control vlc-text-area" rows = "3" id="variableJson" /> 					 
+		 							</div>
+								</div>
+					</div>
+
+					<!-- END OF HEADER SECTION -->
+					<div class="row vlc-filters-and-actions" ng-hide="true" >
+						<div class="vlc-filters-and-actions-text" ng-click="ruleToggled=!ruleToggled">
+							{!$Label.FiltersAndActions} <span ng-class="{'icon-v-down-arrow': !ruleToggled, 'icon-v-right-arrow': ruleToggled }"></span>
+						</div>
+						<!-- Drag and Drop Section -->
+						<div ng-hide='ruleToggled'>	
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 vlc-bucket-col">
+								<div class="vlc-filter-drop vlc-col-equa" id="vlc-filter-container"> 
+									<!-- Filter Section -->
+									<div class="vlc-prompt">
+										<span class="vlc-find-this">{!$Label.FindThisGroup}</span><br/>
+										<span class="vlc-choose-filter"></span>
+										<ul ui-sortable="sortableOptions1" ng-model="ruleFiltersList" class="ng-cloak">
+											<li ng-repeat="item in ruleFiltersList track by $index" class="vlc-filter-li">
+												<div class="vlc-index">{{$index + 1}}</div>
+												<div class="vlc-filter-el" bs-tooltip="item.Name">	
+													<i class="icon-v-grip" ng-hide="isReadOnly"></i>
+													<div class="vlc-filter-el-name">{{ item.Name | limitTo:20 }}{{item.Name.length > 20 ? '...' : ''}}</div>
+												</div>
+												<div class="vlc-filter-el-cap">
+													<i class="icon-v-view blue" ng-click="redirect(item.Id)"></i>
+													<i class="icon-v-trash-line" ng-hide="isReadOnly" ng-click="removeFilterToRule(item)"></i>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 vlc-bucket-col right">
+								<div class="vlc-filter-drop vlc-col-equa" id="vlc-actions-container">
+									<div class="vlc-prompt">
+										<!-- Rule Section -->
+										<span class="vlc-find-this">{!$Label.AndApplyTheseActions}</span><br/>
+										<span class="vlc-choose-filter"></span>
+											<ul ui-sortable="sortableOptions2" ng-model="ruleActionsList" class="ng-cloak">
+												<li ng-repeat="item in ruleActionsList track by $index" class="vlc-filter-li" ng-class="item.droppableListClass" data-action-id="{{item.Id}}">
+													<div class="vlc-index">{{$index + 1}}</div>
+													<div class="vlc-filter-el" bs-tooltip="item.Name">	
+														<i class="icon-v-grip" ng-hide="isReadOnly"></i>
+														<div class="vlc-filter-el-name">{{ item.Name | limitTo:20 }}{{item.Name.length > 20 ? '...' : ''}}</div>
+													</div>
+													<div class="vlc-filter-el-cap">
+														<i class="icon-v-view blue" ng-click="redirect(item.Id)"></i>
+														<i class="icon-v-trash-line" ng-hide="isReadOnly" ng-click="removeActionToRule(item)"></i>
+													</div>
+
+													<ul class="vlc-sublist" ng-show="item[nsPrefix + 'EntityFilterId__c']">
+														<li class="vlc-filter-li">
+														    <div class="vlc-filter-el-verticalline"></div>
+															<div class="vlc-filter-el-sub" bs-tooltip="item[nsPrefix + 'EntityFilterId__r'].Name">	
+																<div class="vlc-filter-el-name">{{ item[nsPrefix + 'EntityFilterId__r'].Name | limitTo:22}}{{item[nsPrefix + 'EntityFilterId__r'].Name.length > 22 ? '...' : ''}}</div>
+															</div>
+															<div class="vlc-filter-el-cap">
+																<i class="icon-v-view blue" ng-click="redirect(item[nsPrefix + 'EntityFilterId__c'])"></i>
+																<i class="icon-v-trash-line" ng-hide="isReadOnly" ng-click="removeFilterFromAction(item)"></i>
+															</div>
+														</li>
+													</ul>
+												</li>
+											</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+ 
+						<div  >	
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 vlc-bucket-col">
+							<label class="vlc-title-header">Rule Input</label> 
+								<div class="vlc-filter-drop vlc-col-equa" id="vlc-filter-container"> 
+								 <div class="mask" ng-if="processing"> <div class="center-block spinner"></div> </div> 
+									<table class="table table-sm">									   
+										  <tbody>
+						<th ng-show="{{preitems.length>0}}">
+						<td>#</td>
+						  	<td> {{headerItem().Name}}</td>
+						  	<td> {{headerItem().field1}}</td>
+						  	<td> {{headerItem().field2}}</td>
+						  </th>
+										    <tr ng-repeat="i in preitems track by $index" class="vlc-filter-li"    data-action-id="{{item.Id}}">
+										    					<td>{{$index}}</td>
+																<td>	 
+																		 <b>{{formatItem(i).Name}}</b> 
+																</td>
+																<td>	 
+																		 {{formatItem(i).field1}} 
+																</td>
+																<td >	 
+																		  {{formatItem(i).field2}} 
+																</td>
+										   </tr>
+										   </tbody>
+								 	</table> 								 
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 vlc-bucket-col right">
+								<label class="vlc-title-header">Rule Output</label> 
+								<div class="vlc-filter-drop vlc-col-equa" id="vlc-actions-container">
+								<div class="mask" ng-if="processing"> <div class="center-block spinner"></div> </div> 
+										<table class="table table-sm">									   
+											  <tbody>
+											  						 
+						  <th ng-show="{{postitems.length>0}}">
+						  <td>#</td>
+						  	<td> {{headerItem().Name}}</td>
+						  	<td> {{headerItem().field1}}</td>
+						  	<td> {{headerItem().field2}}</td>
+						  </th>
+										    <tr ng-repeat="i in postitems track by $index" class="vlc-filter-li {{i.isQualified
+ == false ? 'vlc-notqual' : ''}} "    data-action-id="{{item.Id}}">
+										    					<td>{{$index}}</td>
+																<td>	 
+																		 <b>{{formatItem(i).Name}}</b> 
+																</td>
+																<td>	 
+																		  {{formatItem(i).field1}} 
+																</td>
+																<td >	 
+																		 {{formatItem(i).field2}} 
+																</td>
+											   </tr>
+											   </tbody>
+									 	</table> 	 
+								</div>
+							</div>
+						</div>
+					</div>	
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  >
+								<label class="vlc-title-header">Log</label> 
+						</div>
+						<div  >	
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 vlc-bucket-col">
+								<div class="vlc-filter-drop vlc-col-equa" id="vlc-filter-container"> 
+ 								<div class="mask" ng-if="processing"> <div class="center-block spinner"></div> </div> 
+									 <div class="vlc-log-area">{{logresults}} </div>
+								</div>
+							</div>
+						</div>
+					</div>										
+				</div> </div>				
+				</div>	 
+		</body>
+	</html>
+</apex:page>

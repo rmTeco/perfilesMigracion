@@ -1,0 +1,83 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+	<div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="taTaxConditionChanges">
+		<vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+			strOmniScriptSubType="Tax Condition Changes"
+			strOmniScriptLang="English"
+			previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+			verticalMode="{!$CurrentPage.parameters.verticalMode}"
+			strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+			scriptLayout="lightning"/>
+		<script type="text/javascript">
+			var modules = ['vlocity-business-process'];
+			var myModule = angular.module('taTaxConditionChanges', modules);
+
+
+			myModule
+				.controller('MainModuleCtrl', MainModuleCtrl);
+
+				MainModuleCtrl.$inject = ['$scope'];
+
+				function MainModuleCtrl($scope) {
+					var mmc = this;					
+
+					// mmc.testval = $scope.bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions;
+					// console.info("repeat Block: ", $scope.bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions);
+					scope.$watch('bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions', function(newValue, oldValue) {
+							console.info("newValue", newValue, " - oldValue", oldValue);
+							mmc.testval;
+							mmc.jurisdiccionValidation = true;
+							var i;
+							var j;
+							var newArray = [];
+							console.info("newValue Length: ", newValue.length);
+
+							if(newValue.length >= 2 && newValue.length !== undefined) {
+								console.info("mayor a 2");
+								
+								// for (i = 0; i < newValue.length; i++) {
+								// 	console.info("newValue[i].IIBBExemptionJurisdiction: ", newValue[i]);
+									
+
+								// 	// for (j = 0; j < newValue.length; j++) {
+								// 	// 	console.info("newValue[i]: ", newValue[i].IIBBExemptionJurisdiction, "newValue[j]: ", newValue[j].IIBBExemptionJurisdiction);
+								// 	// 	if(newValue[i].IIBBExemptionJurisdiction == newValue[j].IIBBExemptionJurisdiction && i !== j) {
+								// 	// 		mmc.jurisdiccionValidation = false;
+								// 	// 	}						
+								// 	// }	
+								// }
+								mmc.testval = JSON.parse(newValue);
+							}
+							
+						}
+					);
+
+				}  
+		</script>
+<style>
+	.taxConditionChanges{
+		font-size: .9rem;
+		font-weight: 500;
+		color: #00396b;
+	}
+
+	.line {
+		width: 939.1px;
+		height: 2px;
+		border: solid 2px #21acaf;
+	}
+
+	.vlc-slds-line_break .slds-form-element__control {
+		border: solid 1px #21acaf;
+	}
+
+	#Step_1_Tax_Condition_Validations .vlc-slds-button--tertiary:nth-child(2) {
+		display: none;
+	}
+
+	#Step_1_Tax_Condition_Validations_nextBtn {
+		display: none;
+	}
+</style>
+	</div>
+	<vlocity_cmt:VFActionFunction /> 
+</apex:page>

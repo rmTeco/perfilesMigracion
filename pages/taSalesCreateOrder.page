@@ -1,0 +1,242 @@
+<!--<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="NewOrderConfiguration">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Sales"
+            strOmniScriptSubType="NewOrderConf"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('NewOrderConfiguration', modules);
+        </script>
+
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>!-->
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="taSalesCreateOrderController">
+    <html xmlns:ng="http://angularjs.org" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:slds />
+            <apex:includeScript value="/support/console/40.0/integration.js"/>
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+        </head>
+        <body ng-app="createOrder" ng-controller="createOrderController as coc">
+            
+            <script type="text/javascript">
+                (function(){
+                    'use strict';
+                    angular.module('createOrder',[]);
+                    angular
+                        .module('createOrder')
+                        .controller('createOrderController', createOrderController);
+
+                    createOrderController.$inject = ['$scope', '$window'];
+
+                    function createOrderController($scope, $window) {
+                        var coc= this;
+                        coc.idOrder= "";
+                        coc.activeMessageBlacklist = false;
+                        coc.close = close;
+                        
+                        //init();
+                        checkAccountStatusAndRedirect();
+
+                        function init () {
+                            var accountId = "{!$CurrentPage.parameters.accountId}";
+                            var contactId = "{!$CurrentPage.parameters.contactId}";
+                            var newBilling = "{!$CurrentPage.parameters.newBilling}";
+                            var operationCode = "{!$CurrentPage.parameters.operationCode}";
+                            var orderId = "{!$CurrentPage.parameters.orderId}"; //Joshua - PFTA-6973
+                            var cloneOrder = "{!$CurrentPage.parameters.CloneOrder}";
+                            
+                            var method = '';
+                            var methodParam = '';
+                            
+                            //Joshua - PFTA-6973 - INICIO
+                            if (orderId) {
+                                if (cloneOrder) {
+                                    Visualforce.remoting.Manager.invokeAction('taSalesCreateOrderController.CloneOrder', orderId,
+                                        function(result, event) {
+                                            console.info('result: ', result);
+                                            //var idAsset = "{!$CurrentPage.parameters.assetId}";
+                                            //var defaultCategory = "{!$CurrentPage.parameters.defaultCategory}"; 
+                                            var urlToRedirect = '';
+                                            
+                                            coc.idOrder = result.IdOrder;
+                                            
+                                            $scope.$apply();
+                                            
+                                            urlToRedirect = '/apex/taSalesCartContainer?id=' + coc.idOrder + '&operationCode=' + operationCode + '&contactId=' + result.contactId + '&accountId=' + result.accountId;
+                                            /*
+                                            if (newBilling) {
+                                                urlToRedirect += '&billingAccountId=' + result.billingAccountId;
+                                            }
+
+                                            if (idAsset) {
+                                                urlToRedirect += '&assetId=' + idAsset;
+                                            }
+                                            /*
+                                            if (defaultCategory) {
+                                                urlToRedirect += '&defaultCategory=' + defaultCategory;
+                                            }
+                                            */
+        
+                                            $window.location.href = urlToRedirect;
+                                            
+                                            //console.info('ccc.showCart: ', ccc.showCart);
+                                        },
+                                        {escape: false} // No escaping, please
+                                    );
+                                }
+                                else {
+                                    var redirectExist;
+                                    
+                                    Visualforce.remoting.Manager.invokeAction("taSalesCreateOrderController.getExistingOSInstance", orderId,
+                                        function(result, event) {
+                                            $scope.$apply();
+                                        
+                                            if(result == null){
+                                                redirectExist = "/apex/taSalesCartContainer?id=" + orderId +
+                                                                "&operationCode=" + operationCode +
+                                                                "&contactId=" + contactId +
+                                                                "&accountId=" + accountId;
+                                                                
+                                                if(newBilling)
+                                                    redirectExist += "&billingAccountId=" + newBilling;
+                                            } else{
+                                                redirectExist = result.substring(0, result.length-1) + "&IdOrder=" + orderId;
+                                            }
+                                            
+                                            $window.location.href = redirectExist;
+                                        },
+                                        {escape: false} // No escaping, please
+                                    );
+                                }
+                            } else{
+                            //Joshua - PFTA-6973 - FIN
+                                console.info('account: ' , accountId, ' - newBilling: ', newBilling );
+                                if (accountId) {
+                                    if (newBilling) {
+                                        method = "taSalesCreateOrderController.CreateOrderAndBillingAccount";
+                                        methodParam = accountId;
+                                    }
+                                    else {
+                                        method = "taSalesCreateOrderController.CreateOrder";
+                                        methodParam = accountId;
+                                    }
+                                }
+                                else {
+                                    method = "taSalesCreateOrderController.CreateOrderAndAccount";
+                                    methodParam = contactId;
+                                }
+    
+                                //Visualforce.remoting.Manager.invokeAction(method, methodParam,
+                                Visualforce.remoting.Manager.invokeAction(method, methodParam, operationCode, //Joshua - PFTA-6973
+                                    function(result, event) {
+                                        console.info('result: ', result);
+                                        var idAsset = "{!$CurrentPage.parameters.assetId}";
+                                        var defaultCategory = "{!$CurrentPage.parameters.defaultCategory}"; 
+                                        var urlToRedirect = '';
+                                        
+                                        coc.idOrder = result.IdOrder;
+                                        
+                                        $scope.$apply();
+                                        
+                                        urlToRedirect = '/apex/taSalesCartContainer?id=' + coc.idOrder + '&operationCode=' + operationCode + '&contactId=' + contactId + '&accountId=' + result.accountId;
+    
+                                        if (newBilling) {
+                                            urlToRedirect += '&billingAccountId=' + result.billingAccountId;
+                                        }
+    
+                                        if (idAsset) {
+                                            urlToRedirect += '&assetId=' + idAsset;
+                                        }
+                                        
+                                        if (defaultCategory) {
+                                            urlToRedirect += '&defaultCategory=' + defaultCategory;
+                                        }
+    
+                                        $window.location.href = urlToRedirect;
+                                        
+                                        //console.info('ccc.showCart: ', ccc.showCart);
+                                    },
+                                    {escape: false} // No escaping, please
+                                );
+                            }
+                        }
+
+                        function checkAccountStatusAndRedirect() {
+                            console.info("INTO checkClient");
+                            var accountId = "{!$CurrentPage.parameters.accountId}";
+                            var contactId = "{!$CurrentPage.parameters.contactId}";
+                            console.info("PRINT ACCOUNT ID");
+                            console.info(accountId);
+                            console.info("PRINT CONTACT ID");
+                            console.info(contactId);
+
+                            Visualforce.remoting.Manager.invokeAction(
+                                "taSalesCreateOrderController.CheckAccountStatus", accountId, contactId,
+                                        function(result, event) {
+                                                console.info('MOSTRAR RESULT');
+                                                console.info(result);
+                                        
+                                            if (result === 'true') {
+                                                coc.activeMessageBlacklist = true;
+                                            }
+                                            else {
+                                                coc.activeMessageBlacklist = false;
+                                                init();
+                                            }
+                                            
+                                            $scope.$apply();
+                                        },
+                                {escape: false} // No escaping, please
+                            );
+                        }
+
+                        var closeSubtab = function closeSubtab(result) {
+                            var tabId = result.id;
+                            sforce.console.closeTab(tabId);
+                        };
+
+                        function close(){
+                            coc.activeMessageBlacklist = false;
+                            sforce.console.getEnclosingTabId(closeSubtab);
+                        }
+                        
+                    }
+
+                 })();
+            </script>
+
+            <!-- promt error expire time -->
+            <div role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open slds-modal--prompt ng-cloak" 
+                ng-show="coc.activeMessageBlacklist">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close">
+                        <svg class="slds-button__icon slds-button__icon--large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium" id="prompt-heading-id">No es posible crear una nueva venta</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                    <p>El DNI seleccionado figura en lista de fraude.</p>
+                    </div>
+                    <div class="slds-modal__footer slds-theme--default">
+                    <button class="slds-button slds-button--neutral"
+                        ng-click="coc.close();">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open ng-cloak"
+                ng-show="coc.activeMessageBlacklist"></div>          
+            
+        </body>
+    </html>
+</apex:page>

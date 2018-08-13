@@ -1,0 +1,68 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-care-SuspensionsAndReconnections",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Care/SuspensionsAndReconnections/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 59,
+    "%vlocity_namespace%__PropertySet__c": {
+        "controlWidth": 12,
+        "disOnTplt": false,
+        "elementErrorMap": {
+            "MyDevices": "Debe seleccionar al menos un equipo."
+        },
+        "label": "SetErrors6",
+        "message": {
+        },
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "group": {
+                            "operator": "OR",
+                            "rules": [
+                                {
+                                    "condition": "=",
+                                    "data": "LineaEquipo",
+                                    "field": "Radio2-SuspensionOptions"
+                                },
+                                {
+                                    "condition": "=",
+                                    "data": "Equipo",
+                                    "field": "Radio2-SuspensionOptions"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "condition": "=",
+                        "data": "Reconexion",
+                        "field": "Radio1-SuspensionOrReconnection"
+                    },
+                    {
+                        "condition": "=",
+                        "data": "true",
+                        "field": "deviceSelected"
+                    }
+                ]
+            }
+        },
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "validationRequired": "None",
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Set Errors",
+    "Name": "SetErrorsNotSelectedDevice",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Care/SuspensionsAndReconnections/English/SetErrorsNotSelectedDevice"
+}

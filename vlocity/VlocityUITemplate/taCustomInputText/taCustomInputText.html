@@ -1,0 +1,148 @@
+<div
+    class="slds-col--padded slds-size--1-of-1"
+    ng-controller="CustomInputTextController as citc"
+    ng-init="citc.init();">
+    <ng-form name='loopform'
+             class='slds-form-element vlc-flex'
+             ng-repeat='control in child.eleArray'>
+
+        <div vlc-slds-include="vlcLabelController.html"></div>
+
+
+		<div class="slds-form-element__control">
+
+			<div 
+				ng-if="!citc.documentType" 
+				class="vlc-control-wrapper" 
+				help="{{control.propSetMap.help}}">
+				<input 
+					id='{{control.name}}'
+					type='text'
+					name='loopname'
+					ng-disabled='control.ro'
+					ng-required='control.req'
+					ng-model='control.response'
+					ng-blur='aggregate(this, control.index, control.indexInParent, true, -1)'
+					ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': control.propSetMap.debounceValue, 'focusout': 0, 'blur': 0 } }"
+					class='slds-input'
+					ui-mask='{{control.propSetMap.mask}}'
+					ng-maxlength='{{control.propSetMap.maxLength}}'
+					vlc-slds-ng-pattern='{{control.propSetMap.pattern}}'
+					ng-minlength='{{control.propSetMap.minLength}}'
+					vlc-slds-min-max-len="response"
+					vlc-slds-val-checker="response"/>
+
+                <label for="{{control.name}}" class='slds-form-element__label'>{{control.propSetMap.label}}
+                    <span class='vlc-asterix icon-v-asterix'
+                          ng-if='control.req'>
+                    </span>
+                </label>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" help="{{control.propSetMap.help}}"> i </a>
+
+			</div>
+
+			<div 
+				ng-if="citc.documentType=='DNI' || citc.documentType=='LEN' || citc.documentType=='LCV'"
+				class="vlc-control-wrapper" 
+				help="{{control.propSetMap.help}}">
+				<input 
+					id='{{control.name}}'
+					type='text'
+					name='loopname'
+					ng-disabled='control.ro'
+					ng-required='control.req'
+					ng-model='control.response'
+					ng-blur='aggregate(this, control.index, control.indexInParent, true, -1)'
+					ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': control.propSetMap.debounceValue, 'focusout': 0, 'blur': 0 } }"
+					class='slds-input'
+					ui-mask='{{control.propSetMap.mask}}'
+					ng-maxlength='8'
+					vlc-slds-ng-pattern='[1-9][0-9]{6,7}'
+					ng-minlength='7'
+					vlc-slds-min-max-len="response"
+					vlc-slds-val-checker="response"/>
+
+                <label for="{{control.name}}" class='slds-form-element__label'>{{control.propSetMap.label}}
+                    <span class='vlc-asterix icon-v-asterix'
+                          ng-if='control.req'>
+                    </span>
+                </label>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" help="{{control.propSetMap.help}}"> i </a>
+
+			</div>
+
+			<div 
+				ng-if="citc.documentType=='CUIT'"
+				class="vlc-control-wrapper" 
+				help="{{control.propSetMap.help}}">
+				<input 
+					id='{{control.name}}'
+					type='text'
+					name='loopname'
+					ng-disabled='control.ro'
+					ng-required='control.req'
+					ng-model='control.response'
+					ng-blur='aggregate(this, control.index, control.indexInParent, true, -1)'
+					ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': control.propSetMap.debounceValue, 'focusout': 0, 'blur': 0 } }"
+					class='slds-input'
+					ui-mask='99-99999999-9'
+					ng-maxlength='11'
+					vlc-slds-ng-pattern='[1-9][0-9]|\-[0-9]{8}|/-[0-9]'
+					ng-minlength='11'
+					vlc-slds-min-max-len="response"
+					vlc-slds-val-checker="response"/>
+
+                <label for="{{control.name}}" class='slds-form-element__label'>{{control.propSetMap.label}}
+                    <span class='vlc-asterix icon-v-asterix'
+                          ng-if='control.req'>
+                    </span>
+                </label>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" help="{{control.propSetMap.help}}"> i </a>
+
+			</div>
+
+			<div 
+				ng-if="citc.documentType=='PAS'"
+				class="vlc-control-wrapper" 
+				help="{{control.propSetMap.help}}">
+				<input 
+					id='{{control.name}}'
+					type='text'
+					name='loopname'
+					ng-disabled='control.ro'
+					ng-required='control.req'
+					ng-model='control.response'
+					ng-blur='aggregate(this, control.index, control.indexInParent, true, -1)'
+					ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': control.propSetMap.debounceValue, 'focusout': 0, 'blur': 0 } }"
+					class='slds-input'
+					ui-mask='{{control.propSetMap.mask}}'
+					ng-maxlength='{{control.propSetMap.maxLength}}'
+					vlc-slds-ng-pattern='[1-9a-zA-Z][0-9a-zA-Z]+'
+					ng-minlength='{{control.propSetMap.minLength}}'
+					vlc-slds-min-max-len="response"
+					vlc-slds-val-checker="response"/>
+
+                <label for="{{control.name}}" class='slds-form-element__label'>{{control.propSetMap.label}}
+                    <span class='vlc-asterix icon-v-asterix'
+                          ng-if='control.req'>
+                    </span>
+                </label>
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" help="{{control.propSetMap.help}}"> i </a>
+
+			</div>
+
+            <!-- this is the error block -->
+            <div ng-include="errHTMLId"></div>
+
+        </div>
+
+    </ng-form>
+</div>

@@ -1,0 +1,114 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.AssetId",
+                "val": "02i6C0000002g7IQAQ"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "body": "[{\n    \"ProductName\": \"Billing Cycle Changes\",\n    \"AccountName\": \"Ana Aguirre BA\",\n    \"Name\": \"Billing Cycle Changes\",\n    \"LineNumber\": \"0002\",\n    \"Status\": \"Active\"\n}]",
+            "bundle": "getAssetDetailByAsset",
+            "inputMap": {
+                "Id": "{{params.AssetId}}"
+            },
+            "resultVar": "['Asset'][0]"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "displayName": "Servicios",
+                        "hasExtraParams": false,
+                        "id": "Servicios",
+                        "isCustomAction": true,
+                        "openUrlIn": "_self",
+                        "type": "Custom",
+                        "url": "/clientes/s/"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['AccountName']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "AccountName",
+                    "name": "['AccountName']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LineNumber']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "LineNumber",
+                    "name": "['LineNumber']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['ProductName']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "ProductName",
+                    "name": "['ProductName']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Status",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "placeholderExpand": false,
+            "placeholders": [
+            ],
+            "templateUrl": "ta-community-asset-detail"
+        }
+    ],
+    "title": "Detalle"
+}

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Store the user assigned by work team in TA, this object is used to handle the security.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>ActiveValidation__c</fullName>
+        <caseSensitive>true</caseSensitive>
+        <description>Field used to ensure that the a user has a single membership in active process.
+This field is filled by Work Flow rule, if the membership is inactive takes the Salesforce ID of the record and if the membership is active takes the Salesforce ID of the user member of the team concatenated with TRUE.</description>
+        <externalId>false</externalId>
+        <label>Active validation</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Is_Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Used to indicate if the assignation is active or not.</description>
+        <externalId>false</externalId>
+        <label>Is Active?</label>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Legajo__c</fullName>
+        <externalId>false</externalId>
+        <formula>User_member__r.FederationIdentifier</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Legajo</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MemberUsername__c</fullName>
+        <description>Pfta-9344: field used to display the username of the user in the view to disable team members . Security</description>
+        <externalId>false</externalId>
+        <formula>User_member__r.Username</formula>
+        <label>Member Username</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MemberUserprofile__c</fullName>
+        <description>Takes the name of the profile assigned to the user.</description>
+        <externalId>false</externalId>
+        <formula>User_member__r.Profile.Name</formula>
+        <label>Member Userprofile</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MemberUserrole__c</fullName>
+        <description>Used to display the user role assigned to the user in salesforce.</description>
+        <externalId>false</externalId>
+        <formula>User_member__r.UserRole.Name</formula>
+        <label>Member user role</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UserRoleAPIName__c</fullName>
+        <description>It is used to store the API name of the Salesfor Role assigned to the user based in the roles available for the work team in Work team permissions.</description>
+        <externalId>true</externalId>
+        <label>User Role API Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>User_member__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>This field is used to relate a user with the work team that it belongs to. Used in the security design done for TA.</description>
+        <externalId>false</externalId>
+        <label>User member</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Team_Members</relationshipName>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Work_Team__c</fullName>
+        <description>This field is used to store the assignation of a team member (user) with a work team that it belongs to.</description>
+        <externalId>false</externalId>
+        <label>Work Team</label>
+        <referenceTo>WorkTeam__c</referenceTo>
+        <relationshipLabel>Work Team Members</relationshipLabel>
+        <relationshipName>Team_Members1</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>true</reparentableMasterDetail>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <label>Work Team Member</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>User_member__c</columns>
+        <columns>Work_Team__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>User_member__c</columns>
+        <columns>NAME</columns>
+        <columns>Is_Active__c</columns>
+        <columns>Work_Team__c</columns>
+        <columns>Legajo__c</columns>
+        <columns>UserRoleAPIName__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>es</language>
+    </listViews>
+    <nameField>
+        <displayFormat>T-{00000000}</displayFormat>
+        <label>Team Member Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Work Team Members</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Legajo__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>MemberUsername__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>MemberUserprofile__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>MemberUserrole__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Legajo__c</searchFilterFields>
+        <searchFilterFields>MemberUsername__c</searchFilterFields>
+        <searchFilterFields>Work_Team__c</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>ValidateIfUserIsActive</fullName>
+        <active>true</active>
+        <errorConditionFormula>NOT( User_member__r.IsActive ) &amp;&amp;  Is_Active__c</errorConditionFormula>
+        <errorMessage>You can not activate a membership to an inactive user.</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

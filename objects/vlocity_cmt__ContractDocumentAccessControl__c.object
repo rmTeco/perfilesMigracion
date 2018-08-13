@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>A custom setting that specifies whether a user or profile can review, edit or have full access to an online contract document. This is a hierarchy type custom setting.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>vlocity_cmt__EditDocument__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates whether a user or profile can edit (redline) the contract document</description>
+        <externalId>false</externalId>
+        <label>Edit Document</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__FullDocumentAccess__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates whether a user or profile has full access to the contract document - i.e. ability to edit as well as accept/reject redlines created by other users</description>
+        <externalId>false</externalId>
+        <label>Full Document Access</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__NoAccess__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>No Access</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ReviewDocument__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Indicates whether a user or profile can read and review the contract document</description>
+        <externalId>false</externalId>
+        <label>Review Document</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>Contract Document Access Control</label>
+    <visibility>Public</visibility>
+</CustomObject>

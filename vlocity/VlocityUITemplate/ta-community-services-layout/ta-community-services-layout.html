@@ -1,0 +1,19 @@
+<div class="via-slds slds-p-bottom--xx-large ta-community-services">
+    <p class="title"> Servicios</p>
+    <div class="slds-m-top--small slds-m-bottom--small" style="height:1px; width:100%; background-color:#A4A4A4;"></div>
+    <div class="cards-container slds-grid slds-wrap slds-size--1-of-1" style="margin-left: -11px;">
+        <vloc-card ng-repeat="card in cards" 
+                    ctrl="{{ctrl}}" 
+                    ng-model="card" 
+                    data="card" 
+                    records="records" 
+                    index="{{$index}}" 
+                    session-id="{{sessionId}}"
+                    class = "slds-p-around--small
+                    slds-size--1-of-1
+                    slds-medium-size--1-of-3
+                    slds-large-size--1-of-3
+                    community-services">
+        </vloc-card>
+    </div>
+</div>

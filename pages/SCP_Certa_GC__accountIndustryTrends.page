@@ -1,0 +1,562 @@
+<apex:page sidebar="false" controller="SCP_Certa_GC.accountIndustryTrendsNew" tabStyle="Strategic_Client_Plan__tab">
+	
+	<c:SCPMenu ></c:SCPMenu>
+	
+	
+	<style>
+		.label-link a {O
+			color: white;
+		}
+		    
+	    .inlineEditUndo {
+	    	display: none;
+	    }
+	    
+	    .inlineEditLockOn:hover {
+		    background: rgba(0, 0, 0, 0) url("/img/func_icons/util/lock12.gif") no-repeat scroll right 2px;
+		}
+		.inlineEditWriteOn {
+		    background: rgba(0, 0, 0, 0) url("/img/func_icons/util/pencil12.gif") no-repeat scroll right 2px;		    
+		}
+        
+		.pbSubheader h3 {
+			display: inline;
+			margin-left: 5px;
+			font-weight: bold;
+		}
+		
+        .pbSubheader.brandTertiaryBgr.first.tertiaryPalette {
+        	background-color: transparent;
+            border-width: 2px 0 0;
+            border-style: solid;
+            color: #27282e;
+            padding: 4px 3px;
+        }
+        
+        .hideListButton.hideShowSection {
+        	background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 -11px no-repeat;
+            padding-top: 13px;
+            margin-top: -8px;
+        }
+        
+        .hideShowSection.showListButton {
+        	background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 0 no-repeat;
+            padding-top: 13px;
+            margin-top: -8px;
+        }
+        
+		.separator {
+			width: 100%;
+			margin-top: 50px;
+		}
+
+        #icons-table {
+            width:100%;
+        }
+
+        #icons-table td {
+            text-align: center;            
+            max-width: 90px;
+            vertical-align: top;
+            padding-top: 5px;
+            border: 0px solid #539fc6;
+        }
+
+        #icons-table td.selected {
+            border: 2px solid #539fc6;
+        }    
+
+        .icon-sectors {
+            width: 90px;
+            cursor: pointer;
+        }
+
+        .hiddenTable {
+            display: none;
+        }
+
+        .solutionTable th {
+            vertical-align: top ! important;
+            white-space: normal ! important;
+        }
+		
+	</style>
+	<script  type="text/javascript">
+		$j = jQuery.noConflict();
+		
+		$j(document).ready(function() {
+			var i = 1;
+				$j(".linkSpan").each(function( index ) {
+				var link = $j("a",$j(this));				
+				link.html("Opp" + i);
+				i++;				  
+			});
+			$j(".linkSpan").css("visibility","visible"); 
+            
+	        $j(".showMore").click(function(){
+            	var gparent = $j(this).parent().parent();
+            	$j(".lessSpan", gparent).fadeOut(function(){
+            		$j(".moreSpan", gparent).fadeIn();
+            	});            	 
+            });
+            $j(".showLess").click(function(){
+            	var gparent = $j(this).parent().parent();
+            	$j(".moreSpan", gparent).fadeOut(function(){
+            		$j(".lessSpan", gparent).fadeIn();
+            	});            	 
+            });
+            
+            $j(".hideShowSection").click(function(){
+	    		var grparent = $j(this).parent().parent();
+	    		
+	    		if ($j(this).hasClass("hideListButton")) {
+	    			$j(".pbSubsection", grparent).css("display","none");
+	    			$j(this).removeClass("hideListButton");
+	    			$j(this).addClass("showListButton");
+	    		} else {
+	    			$j(".pbSubsection", grparent).css("display","block");
+	    			$j(this).removeClass("showListButton");
+	    			$j(this).addClass("hideListButton");
+	    		}
+	    	});
+            
+            $j(".icon-sectors").click(function(){
+                
+                var parent = $j(this).parent();
+                var table = $j("."+parent.attr("id"));
+                if (table.css("display") == "block") {
+                    table.fadeOut();
+                    parent.removeClass('selected');
+                } else {
+                    table.fadeIn();
+                    parent.addClass('selected');
+                }
+            });    
+            
+
+            /* 
+             $j(".hideShowSection").each(function() {
+                 var grparent = $j(this).parent().parent();
+                 
+                 $j(".pbSubsection", grparent).css("display","none");
+                 $j(this).removeClass("hideListButton");
+                 $j(this).addClass("showListButton");
+             });
+            */
+		});
+	</script>
+	
+	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<span style="float:left; margin-right: 5px;">
+						{!$Label.scp_certa_gc__trend}
+					</span>
+
+					<span style="float:left;">
+    					<a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/FEEndykRL_s"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+    				</span>
+                </h2>
+				<div class="row paddingRight">
+					<div class="btn-group pull-right" role="group" aria-label="...">	  
+                        <!--
+                        <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                            <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                        </button>
+						-->
+						
+                        <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+							<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+						</button>
+
+					</div>
+				</div>
+                <span style="font-size: 11pt; font-weight: bold;">
+                    {!$Label.Segmento_vertical}: {!account.Segmento_Vertical__c}
+                </span>
+			</div>    		
+			<div class="panel-body">
+                <table id="icons-table">
+                    <tr>
+                        <td id="hidden-Con">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/world-stat-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__contexto_general}</h2>
+                        </td>
+                        <td id="hidden-Mét">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/statistics-market-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__metricas_analisis_mercado}</h2>
+                        </td>
+                        <td id="hidden-Pla">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/market-flow-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__principales_players}</h2>
+                        </td>
+                        <td id="hidden-Cad">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/settings-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__cadena_valor_procesos}</h2>
+                        </td>
+                        <td id="hidden-Ten">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/dollar-stat-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__tendencias}</h2>
+                        </td>
+                       
+                        <td id="hidden-Cas">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/certificate-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__casos_exito_sectorial}</h2>
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/>
+                <br/><br/>
+                <apex:repeat value="{!trendsWrapperList}" var="trendWrapper">					
+                    <div class="hiddenTable hidden-{!trendWrapper.typeClass}" >
+                        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+                            <img src="/s.gif" class="hideListButton hideShowSection" />
+                            <h3>{!trendWrapper.type}</h3>
+                        </div>
+                        <div class="pbSubsection">
+                            <apex:outputText rendered="{!trendWrapper.Trends.size > 0}">
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="width:50px;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__numero_de_la_oportunidad}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width:230px;max-width:230px;">
+                                                <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Industry_Trend__c.fields.SCP_Certa_GC__Title__c.Label}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="width:100%;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__description}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <apex:outputPanel rendered="{!trendWrapper.type == 'Oportunidad Sectorial'}">
+                                            <th style="min-width: 200px;">
+                                                <apex:outputText value="Necesidad"/>
+                                            </th>
+                                            </apex:outputPanel>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width: 80px;max-width: 80px;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__source}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th>
+                                                <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                        </tr>
+                                    </thead>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <tbody>
+                                        <apex:repeat value="{!trendWrapper.Trends}" var="subitem">                            
+                                            <tr>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    {!subitem.Name}
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}  "/>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    
+                                                    <span class="lessSpan">
+                                                        <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Trend__c) > 300}" value="{!Left(subitem.SCP_Certa_GC__Trend__c,300)}"/>
+                                                        <apex:outputField rendered="{!LEN(subitem.SCP_Certa_GC__Trend__c) <= 300}" value="{!subitem.SCP_Certa_GC__Trend__c}"/>
+                                                        <apex:outputText rendered="{!LEN(subitem.SCP_Certa_GC__Trend__c) > 300}">
+                                                            ...
+                                                            <button class="btn btn-default btn-xs showMore" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="float:right;display:none;">								
+                                                        <apex:outputField value="{!subitem.SCP_Certa_GC__Trend__c}"/>												
+                                                        <button class="btn btn-default btn-xs showLess" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <apex:outputPanel rendered="{!trendWrapper.type == 'Oportunidad Sectorial'}">
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputText value="{!Left(subitem.RelatedTo__r.SCP_Certa_GC__Title__c,100)}"/>
+                                                        <apex:outputText rendered="{!LEN(subitem.RelatedTo__r.SCP_Certa_GC__Title__c) > 100}">
+                                                            ...
+                                                        </apex:outputText>
+                                                        <apex:outputText >                                                    
+                                                            <button class="btn btn-default btn-xs showMore" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputField value="{!subitem.RelatedTo__r.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        <apex:outputField value="{!subitem.RelatedTo__r.SCP_Certa_GC__Trend__c}"/>
+                                                        <button class="btn btn-default btn-xs showLess" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>     
+
+                                                </td>
+                                                </apex:outputPanel>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <apex:outputText value="{!subitem.Region__r.Name}" />
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td style="text-align: center;">
+                                                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                        <apex:param value="{!subitem.LastModifiedDate}" /> 
+                                                    </apex:outputText>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!IF(OR(trendWrapper.Trends == null, trendWrapper.Trends.size == 0) , true , false)}">
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <tr>
+                                        <td>
+                                            <apex:outputText value="{!trendWrapper.type}{!$Label.scp_certa_gc__no_hay_datos_cargados}" />
+                                        </td>
+                                    </tr>
+                                </table>	                        
+                        </apex:outputText>
+                        </div>
+                    </div>
+                </apex:repeat>
+                <!-- ------------------------------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------------------------------- -->
+                <apex:form >
+                    <apex:actionFunction action="{!exportToExcel}" name="exportToExcel"/>
+                    <div class="hiddenTable hidden-{!Left(SolutionsLabel,3)}">
+                        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+                            <img src="/s.gif" class="hideListButton hideShowSection" />
+                            <h3>{!SolutionsLabel}</h3>
+                        </div>
+                        <div class="pbSubsection">
+                            <apex:outputText rendered="{!Solutions.size > 0}">
+                                <table class="table table-striped table-bordered table-condensed solutionTable">
+                                    <thead>
+                                        <tr>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="width:50px;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__numero_de_la_oportunidad}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width:230px;max-width:230px;">
+                                                <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Industry_Trend__c.fields.SCP_Certa_GC__Title__c.Label}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="width:100%;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__description}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width: 200px;">
+                                                <apex:outputText value="Necesidad"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width: 200px;">
+                                                <apex:outputText value="Oportunidad Sectorial"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width: 80px;max-width: 80px;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__source}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th>
+                                                <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width:130px;max-width:130px;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__linked_opportunities}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                            <th style="min-width:130px;max-width:130px;">
+                                                <apex:outputText value="{!$Label.scp_certa_gc__actual_state}"/>
+                                            </th>
+                                            <!-- ------------------------------------------------------------------------------ -->
+                                        </tr>
+                                    </thead>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <tbody>
+                                        <apex:repeat value="{!Solutions}" var="Solution">                            
+                                            <tr>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    {!Solution.Trend.Name}
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <apex:outputField value="{!Solution.Trend.SCP_Certa_GC__Title__c}  "/>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputText rendered="{!LEN(Solution.Trend.SCP_Certa_GC__Trend__c) > 300}" value="{!Left(Solution.Trend.SCP_Certa_GC__Trend__c,300)}"/>
+                                                        <apex:outputField rendered="{!LEN(Solution.Trend.SCP_Certa_GC__Trend__c) <= 300}" value="{!Solution.Trend.SCP_Certa_GC__Trend__c}"/>
+                                                        <apex:outputText rendered="{!LEN(Solution.Trend.SCP_Certa_GC__Trend__c) > 300}">                                                        
+                                                            ...
+                                                            <button type="button" class="btn btn-default btn-xs showMore" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="float:right;display:none;">								
+                                                        <apex:outputField value="{!Solution.Trend.SCP_Certa_GC__Trend__c}"/>												
+                                                        <button type="button" class="btn btn-default btn-xs showLess" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputText value="{!Left(Solution.Trend.RelatedTo__r.RelatedTo__r.SCP_Certa_GC__Title__c,100)}"/>
+                                                        <apex:outputText rendered="{!LEN(Solution.Trend.RelatedTo__r.RelatedTo__r.SCP_Certa_GC__Title__c) > 100}">
+                                                            ...
+                                                        </apex:outputText>
+                                                        <apex:outputText >                                                    
+                                                            <button type="button" class="btn btn-default btn-xs showMore" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputField value="{!Solution.Trend.RelatedTo__r.RelatedTo__r.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        <apex:outputField value="{!Solution.Trend.RelatedTo__r.RelatedTo__r.SCP_Certa_GC__Trend__c}"/>
+                                                        <button type="button" class="btn btn-default btn-xs showLess" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>     
+
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <span class="lessSpan">
+                                                        <apex:outputText value="{!Left(Solution.Trend.RelatedTo__r.SCP_Certa_GC__Title__c,100)}"/>
+                                                        <apex:outputText rendered="{!LEN(Solution.Trend.RelatedTo__r.SCP_Certa_GC__Title__c) > 100}">
+                                                            ...
+                                                        </apex:outputText>
+                                                        <apex:outputText >                                                    
+                                                            <button type="button" class="btn btn-default btn-xs showMore" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="display:none;">                               
+                                                        <apex:outputField value="{!Solution.Trend.RelatedTo__r.SCP_Certa_GC__Title__c}"/><br/><br/>
+                                                        <apex:outputField value="{!Solution.Trend.RelatedTo__r.SCP_Certa_GC__Trend__c}"/>
+                                                        <button type="button" class="btn btn-default btn-xs showLess" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>     
+
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <apex:outputText value="{!Solution.Trend.Region__r.Name}" />
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td style="text-align: center;">
+                                                    <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                        <apex:param value="{!Solution.Trend.LastModifiedDate}" /> 
+                                                    </apex:outputText>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td> 
+                                                    <apex:repeat value="{!Solution.Trend.Opportunities__R}" var="Opps">                      							
+                                                        <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">			                   								
+                                                            <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>			                   										                   										
+                                                            <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                <div class="Custom50Block topRight">
+                                                                    <div class="bPageBlock secondaryPalette">
+                                                                        <div class="pbHeader">
+                                                                            <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                    <td class="pbButton">
+                                                                                        <a href="/{!Opps.Opportunity__c}">
+                                                                                            <button type="button" class="btn btn-default btn-xs">
+                                                                                                {!$Label.view}
+                                                                                            </button>		                     
+                                                                                        </a>
+                                                                                    </td>			                                                                
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbBody">
+                                                                            <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                <tr>
+                                                                                    <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                    <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                </tr>
+                                                                                </tbody></table>
+                                                                        </div>
+                                                                        <div class="pbFooter secondaryPalette">
+                                                                            <div class="bg"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </apex:repeat>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                                <td>
+                                                    <apex:outputField value="{!Solution.Status.SCP_Certa_GC__Current_state__c}" style="background-color:green" >
+                                                        <apex:inlineEditSupport rendered="{!canEdit}" event="ondblclick" />
+                                                    </apex:outputField>
+                                                </td>
+                                                <!-- ------------------------------------------------------------------------------ -->
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </apex:outputText>
+                            <apex:outputText rendered="{!Solutions.size == 0}">
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <tr>
+                                        <td>
+                                            <apex:outputText value="{!$Label.scp_certa_gc__no_industry_trends}" />
+                                        </td>
+                                    </tr>
+                                </table>	                        
+                            </apex:outputText>
+                        </div>
+                    </div>
+                    <apex:outputPanel rendered="{!canEdit}">
+                        <apex:actionFunction action="{!save}" name="SaveChanges" status="renderMeStatus"/>
+                    </apex:outputPanel>
+                </apex:form>
+                <!-- ------------------------------------------------------------------------------------- -->
+                <!-- ------------------------------------------------------------------------------------- -->
+			</div>
+			<div class="panel-footer">
+				<div class="row paddingRight">
+					<div class="btn-group pull-right" role="group" aria-label="...">
+                        <!--
+                        <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                            <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                        </button>
+						-->
+						<button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+							<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+						</button>
+					</div>
+				</div>
+			</div>
+			<c:FastTask page="{!$Label.scp_certa_gc__trend}" account="{!account.id}"></c:FastTask>
+			<chatter:feed entityId="{!Account.id}" />
+		</div>
+	</apex:outputpanel>
+</apex:page>

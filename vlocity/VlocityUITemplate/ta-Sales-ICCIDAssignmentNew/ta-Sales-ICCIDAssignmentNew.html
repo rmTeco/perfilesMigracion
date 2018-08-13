@@ -1,0 +1,52 @@
+<div
+    ng-if="bpTree.response.Order.serialList"
+    ng-controller="ICCIDAssignmentController as iac"
+    class='slds-col--padded slds-size--1-of-1'>
+    
+    <table
+        class="slds-table slds-table--bordered slds-table--cell-buffer vlc-slds-table"
+        ng-class="[compareWindowWidth(1024,'vlc-slds-table--stacked'),compareWindowWidth(375,'vertical')]"
+        ng-init=digestOnResize()>
+        <thead>
+            <tr
+            class="slds-text-heading--label"
+            ng-if="bpTree.response.Order.serialList.length > 0">
+                <th scope="col">
+                    <div class="slds-truncate">NMU</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">ICCID</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Validación</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+            ng-repeat="serial in bpTree.response.Order.serialList"
+            ng-class="{'vlc-selectableitem-selected' : p.vlcSelected}" ng-if="serial.validacionSerial != null  ">
+                <td data-label='NMU'>
+                    <div class="slds-truncate">{{serial.productCode}}</div>
+                </td>
+                <td data-label='ICCID'>
+                    <div class="slds-truncate">
+                        <input
+                            ng-if="bpTree.response.BillingOrder.StoreLocation.ChannelType == 'Agentes' || (bpTree.response.BillingOrder.PickUpStoreLocation != null && bpTree.response.BillingOrder.TrackingStatus__c == 'Preparar pedido')"
+                            type="text" 
+                            ng-model="serial.serial"
+                            ng-change="iac.ICCIDChange(bpTree.response.Order, serial);"/>
+                        <span ng-if="!(bpTree.response.BillingOrder.StoreLocation.ChannelType == 'Agentes' || (bpTree.response.BillingOrder.PickUpStoreLocation != null && bpTree.response.BillingOrder.TrackingStatus__c == 'Preparar pedido'))">{{serial.serial}}</span>
+                    </div>
+                </td>
+                <td data-label='Validacion'>
+                    <div
+                        class="textWrapped"
+                        ng-class="{'slds-text-color--error' : serial.validacionSerial != 'El ICCID fue asignado'}">
+                        {{serial.validacionSerial}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,56 @@
+@import "variables";
+@import "community-variables";
+
+.vlocity {
+    .community-flyout-grid-items-card {
+        float:left;
+        width:280px;
+        max-width:400px;
+        padding:10px;
+        .item-name {
+            padding:10px 0px;
+            font-weight:bold;
+            text-transform:uppercase;
+        }
+        ul{
+            list-style-type: none;
+            padding-left: 0px;
+            li {
+                span {
+                    font-size:12px;
+                    color:#9999a7;
+                }
+                label{
+                    padding-right:20px;
+                    width:120px;
+                    text-transform:uppercase;
+                    font-weight:bold;
+                }
+            }
+            
+        }
+        .actions {
+            text-transform:uppercase;
+            padding-top:10px;
+            a {
+                font-size:12px;
+            }
+            .separator {
+                color:#d4d4d4;
+                padding:0px 5px;
+            }
+        }
+    }
+    @media only screen and (max-width : 725px) {
+        .community-flyout-grid-items-card {
+            float: none;
+            width: auto;
+        }
+    }
+    
+    @media only screen and (min-width : 1020px) {
+        .community-flyout-grid-items-card {
+            width: calc(100% / 2 - 20px);
+        }
+    }
+}

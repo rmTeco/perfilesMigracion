@@ -1,0 +1,426 @@
+<apex:page sidebar="false" controller="SCP_Certa_GC.OpportunityEvaluations" tabStyle="Strategic_Client_Plan__tab">
+
+	<c:SCPMenu ></c:SCPMenu>
+    
+	<style>
+	    
+	    .conteinerDiv {
+			border-bottom:1px solid #edeff0;
+			padding-bottom: 20px;
+		}
+		
+		.AddEvaluation{
+		    /*display:none;*/
+		
+		}
+		
+		.bootstrap-sf1 .modal-xlg {
+		  width: 950px;
+		}
+
+    </style>
+	
+	<script  type="text/javascript">
+
+	    function ajaxshow(){
+	        $j(".errorMsg").css("display","none");
+	        $j(".ajaxloader").show();
+	    }    
+	    
+	    function ajaxstop(){
+	        $j(".ajaxloader").hide();
+	        if ($j(".errorMsg", $j("#myModal")).css("display") == 'block') {
+	    		$j('#myModal').modal('show');    	
+	        }
+	    }
+	
+	    function showInput(){
+	        /*
+	        if(addeval==1)
+	            $j(".AddEvaluation").show();
+	        else
+	            $j(".AddEvaluation").hide();
+	        */
+	    }
+
+	    var addeval = 1;
+	    $j = jq213;
+	    $j(document).ready(function() {
+	        
+	    });
+	    
+	    function popAlert() {
+	    	var r = confirm('{!$Label.popupGeneralMosaic}');
+			if (r == true) {
+			    copyRDM();
+			} 
+	    }
+	    
+	    function showModal() {
+	    	addeval=1;
+	    	$j('#myModal').modal('show');
+	    }
+	</script>
+	
+	
+	   	<apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1" id="EvaluatedContactsPageBlock">
+			<div class="panel panel-default">			
+		   		<div Class="panel-heading">
+	    			<h3 class="panel-title">
+	    				<span style="float:left;">
+	    					{!IF(objectAPIName == 'Opportunity',$Label.scp_certa_gc__rdm,$Label.scp_certa_gc__rdmgeneral)}
+	    				</span>
+
+	    				<span style="float:left;">
+	    					<c:showVideo />
+	    				</span>
+	    			</h3>
+	    			<div class="row paddingRight" style="margin-top: 20px;">
+		    			<div class="btn-group pull-right">
+		    				<apex:form >   					
+					            <apex:actionFunction action="{!$Page.accountOpportunityList}?id={!account.id}" name="back"/>
+					            <apex:actionFunction action="{!copyRDM}" name="copyRDM" rerender="EvaluatedContactsPageBlock" status="renderMeStatus" oncomplete="location.reload()"/>
+					            <apex:actionFunction action="{!$Page.accountRDMChart}?id={!objectId}" name="viewMosaic"/>
+					            <apex:actionFunction action="{!$Page.accountRDMChartAttitude}?id={!objectId}" name="viewMosaicAttitude"/>
+				            </apex:form>
+				            
+				            <apex:outputText rendered="{!objectAPIName == 'Opportunity'}">
+			                    <button type="button" class="btn btn-default btn-sm" onclick="popAlert()">
+			   						<span class="glyphicon glyphicon-log-in icon-btn-left"></span>&nbsp;{!$Label.CopyRDM}
+			                    </button>
+			                    <button type="button" class="btn btn-default btn-sm" onclick="back()">
+			   						<span class="glyphicon glyphicon-list icon-btn-left"></span>&nbsp;{!$Label.Back_to_Opportunitiy_List}
+			                    </button>	
+		                    </apex:outputText>
+				            <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+		   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+		                    </button>		                    
+				            <button type="button" class="btn btn-default btn-sm" onclick="viewMosaic()">
+		   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.View_Mosaic}
+		                    </button>
+		                    <button type="button" class="btn btn-default btn-sm" onclick="viewMosaicAttitude()">
+		   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.View_Mosaic_order_by_Attitude}
+		                    </button>			            
+	    				</div>
+    				</div>
+	    		</div>
+				
+				<div class="panel-body">
+					<apex:outputText rendered="{!objectAPIName == 'Opportunity'}">
+						<div class="btn-group pull-right" role="group" aria-label="...">	    					
+	           				<apex:outputLink value="{!$Page.SCP_Certa_GC__DCMEvaluateCriteria}?id={!opportunity.id}">
+	                         	<button type="button" class="btn btn-default btn-sm">
+			   						<span class="glyphicon glyphicon-comment icon-btn-left"></span>&nbsp;{!$Label.gotoCriteria}
+			                    </button>
+	                        </apex:outputLink>
+   	           				<apex:outputLink value="{!$Page.SCP_Certa_GC__OpportunitySnapshot}?id={!opportunity.id}">
+	                         	<button type="button" class="btn btn-default btn-sm">
+			   						<span class="glyphicon glyphicon-camera icon-btn-left"></span>&nbsp;{!$Label.gotoSnapshot}
+			                    </button>
+	                         </apex:outputLink>		                    
+	    				</div>
+						<h2 style="margin-top: 0px;">{!$Label.scp_certa_gc__opportunity}: <span style="font-size: 16px;"><apex:outputLink value="/{!opportunity.id}">{!opportunity.Name}</apex:outputLink></span></h2>
+					</apex:outputText>
+						
+					<apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="showInput(); ajaxstop();"/>
+		            <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+		                <img src="{!$Resource.SCP_Certa_GC__AjaxLoader}"/><br/>Loading...
+		            </div>	            
+		            
+		            <!-- Contactos Para Evaluar -->
+			    	<apex:form >
+				    	<div class="row conteinerDiv">			    	
+					    	<h2 style="margin-left: 15px;">Contactos a Evaluar:</h2>	
+					    	<!-- Contactos de la Cuenta -->
+					    	<div class="col-md-4 col-md-offset-1">
+					    		<h4>{!$Label.Contacts_from_account}:<br/><apex:outputLink value="/{!account.id}">{!account.name}</apex:outputLink></h4>			    		
+					    		<table class="table">
+					    			<thead>
+					    				<tr>
+						    				<th>
+						    					<apex:outputText value="{!$Label.scp_certa_gc__contact_name}"/>
+						    				</th>
+						    				<th>
+						    				</th>
+					    				</tr>
+					    			</thead>
+					    			<tbody>
+					    				<apex:repeat value="{!notevaluated}" var="item">
+					    					<tr>
+					    						<td>
+                                                    <apex:outputLink value="/{!item.id}">{!item.name}</apex:outputLink>
+                                                    <p>
+                                                        {!item.title}    
+                                                    </p>
+					    						</td>
+					    						<td>
+					    							<apex:commandButton styleClass="btn btn-default btn-xs" action="{!popContactEvaluation}" reRender="EvaluatedContacts, AddEvaluation" value="{!$Label.scp_certa_gc__evaluate}" oncomplete="showModal();" status="renderMeStatus">
+								                        <apex:param name="contact" value="{!item.id}" assignTo="{!contactIdToEvaluate}"/>
+								                    </apex:commandButton>								                    
+					    						</td>
+					    					</tr>
+					    				</apex:repeat>
+					    			</tbody>
+					    		</table>
+					    	</div>
+					    	
+					    	<!-- Contactos de la Cuenta Padre -->
+					    	<div class="col-md-4 col-md-offset-2">
+					    		<h4>{!$Label.Contacts_from_parent_account}:<br/><apex:outputLink value="/{!account.parentId}">{!account.parent.name}</apex:outputLink></h4>				    		
+					    		<table class="table">
+					    			<thead>
+					    				<tr>
+						    				<th>
+						    					<apex:outputText value="{!$Label.scp_certa_gc__contact_name}"/>
+						    				</th>
+						    				<th>
+						    				</th>
+					    				</tr>
+					    			</thead>
+					    			<tbody>
+					    				<apex:repeat value="{!contatsFromParents}" var="item">
+					    					<tr>
+					    						<td>
+					    							<apex:outputLink value="/{!item.id}">{!item.name} ({!item.account.name})</apex:outputLink>
+					    						</td>
+					    						<td>
+					    							<apex:commandButton styleClass="btn btn-default btn-xs" action="{!popContactEvaluation}" reRender="EvaluatedContacts, AddEvaluation" value="{!$Label.scp_certa_gc__evaluate}" oncomplete="showModal();" status="renderMeStatus">
+								                        <apex:param name="contact" value="{!item.id}" assignTo="{!contactIdToEvaluate}"/>
+								                    </apex:commandButton>
+					    						</td>
+					    					</tr>
+					    				</apex:repeat>
+					    			</tbody>
+					    		</table>
+					    	</div>
+			    		</div>
+			    	</apex:form>
+		            
+		            <!-- Contactos Evaluados -->
+		            <apex:form >
+			            <apex:actionFunction action="{!SaveChanges}" name="SaveChanges" rerender="EvaluatedContactsPageBlock" status="renderMeStatus"/>
+			            <div class="conteinerDiv" style="border-bottom:0px;">
+			            	<h2>{!$Label.scp_certa_gc__already}</h2>
+				            <table class="table table-striped table-bordered table-condensed">
+				            	<thead>
+						            <tr>                  
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__contact_name}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__account_name}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__focus}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__attitude}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__authority}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__influence}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__our_relationship}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__competition_relationship}" />				                	
+						                </th>
+						                <th>
+						                	<apex:outputText value="{!$Label.scp_certa_gc__generation}" />				                	
+						                </th>
+						                <!--th>
+						                	<apex:outputText value="{!$Label.buying_cycle}" />				                	
+						                </th-->
+						                <th>				                	
+						                </th>
+									</tr>
+								</thead>
+								<tbody>
+									<apex:repeat value="{!evaluated}" var="item">
+										<tr>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Contact__c}"/>
+											</td>
+											<td>
+												{!item.Contact__r.Account.name}
+											</td>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Focus__c}">
+								                    <apex:inlineEditSupport event="ondblclick"/>
+								                </apex:outputField>
+											</td>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Attitudes__c}">
+								                    <apex:inlineEditSupport event="ondblclick"/>
+								                </apex:outputField>
+											</td>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Authority__c}">
+								                    <apex:inlineEditSupport event="ondblclick"/>
+								                </apex:outputField>
+											</td>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Influence__c}">
+								                    <apex:inlineEditSupport event="ondblclick"/>
+								                </apex:outputField>
+											</td>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Our_Relationship__c}">
+								                    <apex:inlineEditSupport event="ondblclick"/>
+								                </apex:outputField>
+											</td>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Competing_Company_Relationship__c}">
+								                    <apex:inlineEditSupport event="ondblclick"/>
+								                </apex:outputField>
+											</td>
+											<td>
+												<apex:outputField value="{!item.SCP_Certa_GC__Generation__c}">
+								                    <apex:inlineEditSupport event="ondblclick"/>
+								                </apex:outputField>
+											</td>
+											<!--td>
+												<apex:outputField value="{!item.Buying_Cycle__c}">
+								                    <apex:inlineEditSupport event="ondblclick" rendered="{!canEdit}"/>
+								                </apex:outputField>
+											</td-->
+											<td>
+												<apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__del_buttom}"   reRender="EvaluatedContactsPageBlock" status="renderMeStatus" action="{!DeleteEvaluation}">
+								                    <apex:param assignTo="{!delid}" name="delid" value="{!item.id}"/>
+								                </apex:commandButton>	
+											</td>
+										</tr>
+									</apex:repeat>
+								</tbody>
+				            </table>
+				    	</div>
+			    	</apex:form>
+			    	
+			    	<!-- Evaluación de Contacto -->
+				    <apex:form id="AddEvaluation">
+				    	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-xlg" style="z-index:9999;">
+						    	<div class="modal-content">
+						      		<div class="modal-header">
+						        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						        		<h4 class="modal-title" id="myModalLabel">Evaluacion del Contacto</h4>
+						      		</div>
+						      		<div class="modal-body">
+								    	<div class="conteinerDiv AddEvaluation">
+								    		<table class="table table-striped table-bordered table-condensed">
+							    				<tr>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__contact_name}"/>
+							    					</th>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__account_name}"/>
+							    					</th>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__focus}"/>
+							    					</th>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__attitude}"/>
+							    					</th>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__authority}"/>
+							    					</th>
+							    				</tr>
+							    				<tr>
+							    					<td>
+							    						<apex:outputText >{!contactToEvaluate.name}</apex:outputText>
+							    					</td>
+							    					<td>
+							    						<apex:outputText >{!contactToEvaluate.Account.name}</apex:outputText>
+							    					</td>
+							    					<td>
+							    						<apex:inputField value="{!newEval.SCP_Certa_GC__Focus__c}" required="true"/>
+							    					</td>
+							    					<td>
+							    						<apex:inputField value="{!newEval.SCP_Certa_GC__Attitudes__c}" required="true"/>
+							    					</td>
+							    					<td>
+							    						<apex:inputField value="{!newEval.SCP_Certa_GC__Authority__c}" required="true" />
+							    					</td>
+							    				</tr>
+							    				<tr>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__influence}"/>
+							    					</th>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__our_relationship}"/>
+							    					</th>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__competition_relationship}"/>
+							    					</th>
+							    					<th>
+							    						<apex:outputText value="{!$Label.scp_certa_gc__generation}"/>
+							    					</th>
+                                                    <!--
+							    					<th>
+							    						<apex:outputText value="{!$Label.buying_cycle}"/>
+							    					</th>
+													-->
+							    				</tr>
+							    				<tr>
+							    					<td>
+							    						<apex:inputField value="{!newEval.SCP_Certa_GC__Influence__c}" required="true"/>
+							    					</td>
+							    					<td>
+							    						<apex:inputField value="{!newEval.SCP_Certa_GC__Our_Relationship__c}" required="true" />
+							    					</td>
+							    					<td>
+							    						<apex:inputField value="{!newEval.SCP_Certa_GC__Competing_Company_Relationship__c}" required="true" />
+							    					</td>
+							    					<td>
+							    						<apex:inputField value="{!newEval.SCP_Certa_GC__Generation__c}" required="true" />
+							    					</td>
+							    					<!--
+                                                    <td>
+							    						<apex:inputField value="{!newEval.Buying_Cycle__c}" required="true" />
+							    					</td>
+													-->
+							    				</tr>	
+								    		</table>		    		
+								    	</div>
+								    </div>
+						      		<div class="modal-footer">
+						        		<button type="button" class="btn btn-default" data-dismiss="modal" style="  margin-right: 10px;">{!$Label.close}</button>
+						        		<apex:commandButton styleClass="btn btn-primary" reRender="EvaluatedContactsPageBlock" action="{!InsertEvaluation}" value="{!$Label.scp_certa_gc__add_buttom}" style="margin-left:0px;" onclick="addeval=1;" status="renderMeStatus" />
+						      		</div>
+						    	</div>
+						  	</div>					  	
+						</div>
+					</apex:form>
+				</div>
+				<div Class="panel-footer">
+	    			<div class="row paddingRight">
+		    			<div class="btn-group pull-right">
+				            <apex:outputText rendered="{!objectAPIName == 'Opportunity'}">
+			                    <button type="button" class="btn btn-default btn-sm" onclick="popAlert()">
+			   						<span class="glyphicon glyphicon-log-in icon-btn-left"></span>&nbsp;{!$Label.CopyRDM}
+			                    </button>
+			                    <button type="button" class="btn btn-default btn-sm" onclick="back()">
+			   						<span class="glyphicon glyphicon-list icon-btn-left"></span>&nbsp;{!$Label.Back_to_Opportunitiy_List}
+			                    </button>
+		                    </apex:outputText>
+				            <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+		   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+		                    </button>		                    
+				            <button type="button" class="btn btn-default btn-sm" onclick="viewMosaic()">
+		   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.View_Mosaic}
+		                    </button>
+		                    <button type="button" class="btn btn-default btn-sm" onclick="viewMosaicAttitude()">
+		   						<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.View_Mosaic_order_by_Attitude}
+		                    </button>			            
+	    				</div>
+    				</div>
+	    		</div>
+				
+				<c:FastTask page="{!IF(objectAPIName == 'Opportunity',$Label.scp_certa_gc__rdm,$Label.scp_certa_gc__rdmgeneral)}" account="{!account.id}" opp="{!opportunity.id}"></c:FastTask>
+				<chatter:feed entityId="{!account.Id}"/>					
+			</div>
+		</apex:outputPanel>
+</apex:page>

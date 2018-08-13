@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>A contract type is used to group contracts so that they exhibit similar characteristics - e.g. the lifecycle states, the people who access, the templates and clauses used, etc.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__IsDefault__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If this contract type is default - i.e. always exists for every contract management installation.</description>
+        <externalId>false</externalId>
+        <label>Is Default</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RecordTypeDeveloperNames__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Record Types on the contract object that belong to this contract type</description>
+        <externalId>false</externalId>
+        <label>Record Type Names</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Contract</fullName>
+                    <default>false</default>
+                    <label>Contract</label>
+                </value>
+                <value>
+                    <fullName>ReadOnlyContract</fullName>
+                    <default>false</default>
+                    <label>ReadOnlyContract</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <label>Contract Type</label>
+    <listViews>
+        <fullName>vlocity_cmt__All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Contract Type Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Contract Types</pluralLabel>
+    <searchLayouts>
+        <listViewButtons>vlocity_cmt__Publish</listViewButtons>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>vlocity_cmt__DeepCopy</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Clone</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/32.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/32.0/apex.js&quot;)}
+
+var namespace_prefix = &apos;&apos;;
+var gettingnamespace = sforce.connection.query(&quot;SELECT NamespacePrefix FROM ApexClass where Name = &apos;ApplicationUtilities&apos; LIMIT 1&quot;);
+var getname = gettingnamespace.getArray(&quot;records&quot;);
+if(getname.length &gt; 0 &amp;&amp; getname[0].NamespacePrefix)
+{
+namespace_prefix = getname[0].NamespacePrefix + &apos;.&apos;;
+}
+
+var result = sforce.apex.execute(namespace_prefix+&quot;ContractServiceResource&quot;,&quot;deepCopyContractType&quot;, {toCopy: &quot;{!vlocity_cmt__ContractType__c.Id}&quot;});
+console.log(result);
+window.location.href = &apos;/&apos; + result + &apos;/e?retURL=%2F&apos; + result;</url>
+    </webLinks>
+    <webLinks>
+        <fullName>vlocity_cmt__Export</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Export</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>var dataPackType = &apos;ContractType&apos;;
+var objectId = &apos;{!vlocity_cmt__ContractType__c.Id}&apos;;
+var suggestedName = &apos;{!vlocity_cmt__ContractType__c.Name}&apos;;
+
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+
+var namespace_prefix = &apos;&apos;; 
+var result = sforce.connection.describeGlobal(); 
+var TOKEN_OBJ = &quot;VlocityDataPack__c&quot;; 
+var sobjects = result.getArray(&quot;sobjects&quot;); 
+for (var i=0; i&lt;sobjects.length; i++) { 
+var sobjName = sobjects[i].name; 
+
+var str = sobjName.split(&quot;__&quot;); 
+
+//if there are 3 values there is a namespace 
+if (str.length == 3) {
+var sobj = str[1].valueOf() +&apos;__c&apos;; 
+if (sobj == TOKEN_OBJ) { 
+namespace_prefix = str[0].valueOf(); 
+}
+}
+} 
+
+if (namespace_prefix != &quot;&quot;) { 
+namespace_prefix += &apos;__&apos;; 
+}
+
+window.location = &apos;apex/&apos;+namespace_prefix+&apos;DataPacksHome?exportDataPackType=&apos;+dataPackType+&apos;&amp;exportData=&apos;+objectId+&apos;&amp;exportSuggestedName=&apos;+suggestedName;</url>
+    </webLinks>
+    <webLinks>
+        <fullName>vlocity_cmt__Publish</fullName>
+        <availability>online</availability>
+        <displayType>massActionButton</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Publish</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <requireRowSelection>false</requireRowSelection>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/32.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/32.0/apex.js&quot;)}
+
+var namespace_prefix = &apos;&apos;;
+var gettingnamespace = sforce.connection.query(&quot;SELECT NamespacePrefix FROM ApexClass where Name = &apos;ApplicationUtilities&apos; LIMIT 1&quot;);
+var getname = gettingnamespace.getArray(&quot;records&quot;);
+if(getname.length &gt; 0 &amp;&amp; getname[0].NamespacePrefix)
+{
+namespace_prefix = getname[0].NamespacePrefix + &apos;.&apos;;
+}
+
+var result = sforce.apex.execute(namespace_prefix+&quot;ContractServiceResource&quot;,&quot;publishToCache&quot;,{});
+alert(&apos;Types are published to cache&apos;);</url>
+    </webLinks>
+</CustomObject>

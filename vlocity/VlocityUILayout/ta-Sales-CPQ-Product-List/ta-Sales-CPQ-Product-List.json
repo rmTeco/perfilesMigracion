@@ -1,0 +1,53 @@
+{
+    "Cards": [
+        "taCPQProductItem"
+    ],
+    "bypassSave": true,
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "8016C0000000X4c"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "body": "{}",
+            "endpoint": "/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/products?hierarchy=2&pagesize=10&fields=IsActive,Id,Name,UnitPrice,ProductCode,%vlocity_namespace%__RecurringPrice__c",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "category": "{{$root.defaultCatalogId}}",
+                "fields": "IsActive,Id,Name,UnitPrice,ProductCode,%vlocity_namespace%__RecurringPrice__c,product2.description,Product2.Tipo_de_Bien_de_Uso__c,Product2.Marca__c,Product2.%vlocity_namespace%__HelpText__c,Product2.PrefaRequired__c,Product2.%vlocity_namespace%__CategoryData__c,Product2.Family,Product2.TA_Custom_Description__c",
+                "hierarchy": "0",
+                "pagesize": "10"
+            },
+            "methodType": "GET",
+            "optionsMap": {
+            },
+            "remoteClass": "taCpqAppHandler",
+            "remoteMethod": "getCartsProducts",
+            "remoteNSPrefix": null,
+            "resultVar": "records"
+        }
+    },
+    "sessionVars": [
+        {
+            "name": "totalSize",
+            "val": "payload.totalSize"
+        },
+        {
+            "name": "nextProducts",
+            "val": "payload.actions.nextproducts"
+        }
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-CPQ-Product-List"
+        }
+    },
+    "workspace": [
+        "taCPQProductItem/Personal/1502570576409"
+    ]
+}

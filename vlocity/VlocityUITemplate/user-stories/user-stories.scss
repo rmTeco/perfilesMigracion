@@ -1,0 +1,144 @@
+$light-blue: #05a6df;
+.vlocity {
+    .account-story {
+    
+    .spacer {
+        background-color: rgb(255,255,255);
+        height: 40px;
+        box-sizing: border-box;
+        text-transform: uppercase;
+        text-align: left;
+        font-size: 12px;
+        color: rgb(0,0,0);
+        box-sizing: border-box;
+        padding: 9px;
+        width: inherit;
+        border-top: 2px solid rgba(230,230,236,1);     
+        border-bottom: 2px solid rgba(230,230,236,1); 
+        cursor: pointer;
+    }
+    .spacer:hover {
+        color: #05a6df;
+    }
+    .spacer i::before {
+        color: rgb(19, 151, 219);
+        font-size: 14px;
+    }
+    
+    #story-time {
+        background-color: white;
+    }
+    .story-type {
+        font-size: 12px;
+        margin-left: 5px;
+    }
+    .story-numberOfDays {
+        font-size: 12px;
+        margin-left: 5px;
+        margin-top: 10px;
+        padding-left: 0;
+    }
+    .story-numberOfDays label {
+        display: inline;
+    }
+    .story {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        
+        /*position: relative;
+        height: 65px;*/
+        position: static;
+        height: auto;
+        
+        width: 100%;
+        padding: 10px 0;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f2f2f2;
+        }
+        
+        &.open-oppty {
+            background-color: rgba(0, 164, 83, 0.2);
+        }
+        
+        &.open-case {
+            background-color: rgba(235, 33, 46, 0.2);
+        }
+    }
+    #story-time .story .line {
+        height: 40px;
+        width: 1px;
+        background-color: #ccc;
+        color: rgb(0,0,0);
+    }
+    #story-time .story:last-child .line {
+        height: 0;
+        width: 0px;
+    }
+    .icon-segment {
+        float:left;
+        position: relative; /* added */
+        .story-icon {
+            font-size: 24px;
+            line-height: 24px;
+            color: $light-blue;
+            width: 30px;
+        
+            &:before {
+                font-weight: 100;
+                line-height: 24px;
+            }
+        }
+    }
+    .icon-segment img {
+        position: absolute;
+        left: 9px;
+        top: 11px;
+        height: 22px;
+    }
+    .icon-segment i::before  {
+        color: rgb(19, 151, 219);
+    }
+    .icon-segment .line {
+        position: absolute;
+        left: 20px;
+        top: 35px;
+        z-index: 1;
+    }
+    #story-time .story .story-info {
+        
+        /*position:absolute;
+        left: 40px;*/
+        position: relative;
+        margin-left: 40px;
+        
+        width: 80%;
+        div + div:not(.story-date) {
+            font-size: 11px;
+        }
+        &>div:first-of-type strong, .story-date {
+            font-size: 11px;
+        }
+        div {
+            text-transform: capitalize;
+        }
+        .story-type {
+            text-transform: uppercase;
+            padding-bottom:5px;
+        }
+        .story-date {
+            position:absolute;
+            right: 0px;
+            top: 0px;
+        }
+        
+        // For Home Page Narrow component width
+        @media (max-width: 300px) {
+            .story-date {
+                position:static;
+            }
+        }
+    }
+    }
+}

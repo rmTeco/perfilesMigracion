@@ -1,0 +1,16 @@
+<design:component label="Vlocity Action Toolbar">
+    
+	<design:attribute name="recordId" label="Record Id" 
+                      default=""/>
+    <design:attribute name="style" label="Style" datasource="horizontal, vertical" 
+                      default="horizontal" description="Defined the toolbar orientation"/>
+    <design:attribute name="objType" label="Object Type" 
+                      default="Home" description="Defined applicable object type ex. Account"/>
+    <design:attribute name="displayOn" label="Display On" 
+                      default="Web Client" description="Enter a comma separated list"/>
+    <design:attribute name="linkType" label="Link Type" 
+                      default="" description="Enter a comma separated list ex. omniScript,LightningCommunity"/>
+    <design:attribute name="customCommunityPage" label="Custom Community Page" 
+                      description="Provide the name of the community page you have defined to display OmniScripts" default=""/>
+
+</design:component>

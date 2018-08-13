@@ -1,0 +1,22 @@
+{
+    "Cards": [
+        "mobile-ret-account-header"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016A000003aB7a"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT %vlocity_namespace%__AccountId__c,%vlocity_namespace%__BalanceDue__c,%vlocity_namespace%__CurrentBalance__c,%vlocity_namespace%__DueDate__c FROM %vlocity_namespace%__Statement__c WHERE %vlocity_namespace%__AccountId__c = '{{params.id}}' ORDER BY %vlocity_namespace%__StatementDate__c DESC NULLS FIRST LIMIT 1"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-base-header"
+        }
+    }
+}

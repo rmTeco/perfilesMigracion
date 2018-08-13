@@ -1,0 +1,40 @@
+<div
+	ng-controller="containerTableSubscriptionsController as CTSCtrl"
+	class="slds-grid">
+	<div class="slds-p-horizontal--x-small slds-p-bottom--large"
+		ng-repeat="action in data.actions"
+		ng-if="action.Name != 'techCare-Blacklist-Remove-Subscription'">		
+		<button 
+			ng-if="CTSCtrl.subscriptions.length > 0"
+			ng-click="performAction(action)" 
+			class="slds-button slds-button--brand">				
+				{{action.%vlocity_namespace%__DisplayLabel__c}}				
+		</button>
+		<button 
+			ng-if="CTSCtrl.subscriptions.length == 0"
+			ng-click="performAction(action)" 
+			class="slds-button slds-button--brand" disabled>				
+				{{action.%vlocity_namespace%__DisplayLabel__c}}				
+		</button>
+	</div>
+	<div class="slds-col--bump-left">
+		<div class="slds-p-horizontal--x-small">
+		   	<strong>BlackList: </strong>
+			<span ng-if="records.respuesta === 'no bloqueado'">Sin registrar</span>
+			<span ng-if="records.respuesta === 'bloqueado'">Registrado</span>
+			<span ng-if="records.mensaje !== 'null'">
+			<font color="red">{{records.mensaje}}</font></span>
+		</div>
+		
+		<div
+			ng-if="records.respuesta === 'bloqueado'"
+			class="slds-p-horizontal--x-small slds-text-align--right"
+			ng-repeat="action in data.actions | filter: {Name:'techCare-Blacklist-Remove-Subscription'}">
+			<button 
+				ng-click="performAction(action)" 
+				class="slds-button">				
+					{{action.%vlocity_namespace%__DisplayLabel__c}}					
+			</button>
+		</div>
+	</div>
+</div>

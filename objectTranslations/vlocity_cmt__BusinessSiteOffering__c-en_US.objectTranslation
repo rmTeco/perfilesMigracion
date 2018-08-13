@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Derivation technical center address --></label>
+        <name>DerivationTechnicalCenterAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- Derivation technical center province --></label>
+        <name>DerivationTechnicalCenterProvince__c</name>
+    </fields>
+    <fields>
+        <label><!-- Derivation technical center --></label>
+        <lookupFilter>
+            <errorMessage><!-- El Taller no existe o no coincide con los criterios de filtro. --></errorMessage>
+        </lookupFilter>
+        <name>DerivationTechnicalCenter__c</name>
+        <relationshipLabel><!-- Store Offerings (Derivation technical center) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Order --></label>
+        <name>Order__c</name>
+        <picklistValues>
+            <masterLabel>0</masterLabel>
+            <translation><!-- 0 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>1</masterLabel>
+            <translation><!-- 1 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>2</masterLabel>
+            <translation><!-- 2 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>3</masterLabel>
+            <translation><!-- 3 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Store Location --></label>
+        <name>vlocity_cmt__BusinessSiteId__c</name>
+        <relationshipLabel><!-- Store Offerings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>vlocity_cmt__ProductId__c</name>
+        <relationshipLabel><!-- Store Offerings --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Name --></label>
+        <name>vlocity_cmt__ProductName__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Used to handle the derivation technical centers in tech care. --></description>
+        <label><!-- Derivation technical center --></label>
+        <name>Derivation_technical_center</name>
+    </recordTypes>
+</CustomObjectTranslation>

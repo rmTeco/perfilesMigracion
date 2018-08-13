@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>SCP_Certa_GC__Account__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Cuenta</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Business Landscapes</relationshipLabel>
+        <relationshipName>Business_Landscapes</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__AnnualSpend__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Gastos Anuales</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Category_Service__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Categoria de los servicios</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>IoT</fullName>
+                    <default>false</default>
+                    <label>IoT</label>
+                </value>
+                <value>
+                    <fullName>Seguridad</fullName>
+                    <default>false</default>
+                    <label>Seguridad</label>
+                </value>
+                <value>
+                    <fullName>Comunicaciones unificadas y servicios de colaboración</fullName>
+                    <default>false</default>
+                    <label>Comunicaciones unificadas y servicios de colaboración</label>
+                </value>
+                <value>
+                    <fullName>Cloud</fullName>
+                    <default>false</default>
+                    <label>Cloud</label>
+                </value>
+                <value>
+                    <fullName>Big Data</fullName>
+                    <default>false</default>
+                    <label>Big Data</label>
+                </value>
+                <value>
+                    <fullName>Otros servicios</fullName>
+                    <default>false</default>
+                    <label>Otros servicios</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Compra_a_nivel__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Compra a nivel</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Local</fullName>
+                    <default>false</default>
+                    <label>Local</label>
+                </value>
+                <value>
+                    <fullName>Regional</fullName>
+                    <default>false</default>
+                    <label>Regional</label>
+                </value>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__ContractEndDate__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Fecha de fin de contrato</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Country__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Pais</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__CurrentProvider__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Proveedor Actual</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Decision_maker__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Decision maker</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Business Landscapes</relationshipLabel>
+        <relationshipName>Business_Landscapes</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Level__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Nivel</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Green</fullName>
+                    <default>false</default>
+                    <label>Green</label>
+                </value>
+                <value>
+                    <fullName>Yellow</fullName>
+                    <default>false</default>
+                    <label>Yellow</label>
+                </value>
+                <value>
+                    <fullName>Red</fullName>
+                    <default>false</default>
+                    <label>Red</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__NumberOfChannels__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Numero de Canales</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__OtherInformation__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Otra Información</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Service__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Servicios</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>SCP_Certa_GC__Category_Service__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Gestión de Servicios Móviles</fullName>
+                    <default>false</default>
+                    <label>Gestión de Servicios Móviles</label>
+                </value>
+                <value>
+                    <fullName>Unificación de Comunicaciones y Servicios de Colaboración</fullName>
+                    <default>false</default>
+                    <label>Unificación de Comunicaciones y Servicios de Colaboración</label>
+                </value>
+                <value>
+                    <fullName>Almacenamiento</fullName>
+                    <default>false</default>
+                    <label>Almacenamiento</label>
+                </value>
+                <value>
+                    <fullName>laaS &amp; PaaS</fullName>
+                    <default>false</default>
+                    <label>laaS &amp; PaaS</label>
+                </value>
+                <value>
+                    <fullName>Gestión de Servicios Cloud</fullName>
+                    <default>false</default>
+                    <label>Gestión de Servicios Cloud</label>
+                </value>
+                <value>
+                    <fullName>SaaS</fullName>
+                    <default>false</default>
+                    <label>SaaS</label>
+                </value>
+                <value>
+                    <fullName>Enterprise Mobile IT</fullName>
+                    <default>false</default>
+                    <label>Enterprise Mobile IT</label>
+                </value>
+                <value>
+                    <fullName>Seguridad cibernética</fullName>
+                    <default>false</default>
+                    <label>Seguridad cibernética</label>
+                </value>
+                <value>
+                    <fullName>Seguridad Mgmt</fullName>
+                    <default>false</default>
+                    <label>Seguridad Mgmt</label>
+                </value>
+                <value>
+                    <fullName>Seguridad en Comunicaciones</fullName>
+                    <default>false</default>
+                    <label>Seguridad en Comunicaciones</label>
+                </value>
+                <value>
+                    <fullName>Seguridad Cloud</fullName>
+                    <default>false</default>
+                    <label>Seguridad Cloud</label>
+                </value>
+                <value>
+                    <fullName>Identidad &amp; Privacidad</fullName>
+                    <default>false</default>
+                    <label>Identidad &amp; Privacidad</label>
+                </value>
+                <value>
+                    <fullName>Conectividad IoT</fullName>
+                    <default>false</default>
+                    <label>Conectividad IoT</label>
+                </value>
+                <value>
+                    <fullName>Smart Mobility</fullName>
+                    <default>false</default>
+                    <label>Smart Mobility</label>
+                </value>
+                <value>
+                    <fullName>Smart Cities</fullName>
+                    <default>false</default>
+                    <label>Smart Cities</label>
+                </value>
+                <value>
+                    <fullName>Smart Retail</fullName>
+                    <default>false</default>
+                    <label>Smart Retail</label>
+                </value>
+                <value>
+                    <fullName>Nuevo Negocio IoT</fullName>
+                    <default>false</default>
+                    <label>Nuevo Negocio IoT</label>
+                </value>
+                <value>
+                    <fullName>Smart Steps</fullName>
+                    <default>false</default>
+                    <label>Smart Steps</label>
+                </value>
+                <value>
+                    <fullName>Smart Digits</fullName>
+                    <default>false</default>
+                    <label>Smart Digits</label>
+                </value>
+                <value>
+                    <fullName>Servicios de Red</fullName>
+                    <default>false</default>
+                    <label>Servicios de Red</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>IoT</controllingFieldValue>
+                <valueName>Conectividad IoT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IoT</controllingFieldValue>
+                <valueName>Smart Mobility</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IoT</controllingFieldValue>
+                <valueName>Smart Cities</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IoT</controllingFieldValue>
+                <valueName>Smart Retail</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IoT</controllingFieldValue>
+                <valueName>Nuevo Negocio IoT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Seguridad</controllingFieldValue>
+                <controllingFieldValue>Cloud</controllingFieldValue>
+                <valueName>Almacenamiento</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Seguridad</controllingFieldValue>
+                <valueName>Seguridad Mgmt</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Seguridad</controllingFieldValue>
+                <valueName>Seguridad en Comunicaciones</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Seguridad</controllingFieldValue>
+                <valueName>Seguridad Cloud</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Seguridad</controllingFieldValue>
+                <valueName>Identidad &amp; Privacidad</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Comunicaciones unificadas y servicios de colaboración</controllingFieldValue>
+                <valueName>Gestión de Servicios Móviles</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Comunicaciones unificadas y servicios de colaboración</controllingFieldValue>
+                <valueName>Unificación de Comunicaciones y Servicios de Colaboración</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Comunicaciones unificadas y servicios de colaboración</controllingFieldValue>
+                <valueName>Servicios de Red</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cloud</controllingFieldValue>
+                <valueName>laaS &amp; PaaS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cloud</controllingFieldValue>
+                <valueName>Gestión de Servicios Cloud</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cloud</controllingFieldValue>
+                <valueName>SaaS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cloud</controllingFieldValue>
+                <valueName>Enterprise Mobile IT</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Big Data</controllingFieldValue>
+                <valueName>Smart Steps</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Big Data</controllingFieldValue>
+                <valueName>Smart Digits</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Sub_Category_Service__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>No se usa</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>M2M</fullName>
+                    <default>false</default>
+                    <label>M2M</label>
+                </value>
+                <value>
+                    <fullName>Soluciones de conectividad</fullName>
+                    <default>false</default>
+                    <label>Soluciones de conectividad</label>
+                </value>
+                <value>
+                    <fullName>Gestión de servicios</fullName>
+                    <default>false</default>
+                    <label>Gestión de servicios</label>
+                </value>
+                <value>
+                    <fullName>Servicios WAN</fullName>
+                    <default>false</default>
+                    <label>Servicios WAN</label>
+                </value>
+                <value>
+                    <fullName>Servicio de Internet</fullName>
+                    <default>false</default>
+                    <label>Servicio de Internet</label>
+                </value>
+                <value>
+                    <fullName>Soluciones de Productividad</fullName>
+                    <default>false</default>
+                    <label>Soluciones de Productividad</label>
+                </value>
+                <value>
+                    <fullName>Consultas y soluciones de integración</fullName>
+                    <default>false</default>
+                    <label>Consultas y soluciones de integración</label>
+                </value>
+                <value>
+                    <fullName>Servicios unificados de comunicación</fullName>
+                    <default>false</default>
+                    <label>Servicios unificados de comunicación</label>
+                </value>
+                <value>
+                    <fullName>Servicios de conferencias</fullName>
+                    <default>false</default>
+                    <label>Servicios de conferencias</label>
+                </value>
+                <value>
+                    <fullName>Seguridad</fullName>
+                    <default>false</default>
+                    <label>Seguridad</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <gender>Masculine</gender>
+    <label>Business Landscape</label>
+    <nameField>
+        <label>Nombre de Business Landscape</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Business Landscapes</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,84 @@
+<div class="slds-col--padded slds-size--1-of-1">
+
+    <ng-form name='loopform'
+        class='slds-form-element vlc-flex vlc-slds-multiSelect-control'
+        id="{{::control.name + $index}}"
+        ng-required="control.propSetMap.required"
+        ng-repeat='control in child.eleArray'>
+
+        <div class="slds-form-element__control ta-care-detailed-multi-select">
+
+            <label for="{{::control.name + $index}}" class="slds-form-element__label vlc-slds-inline-control__label ng-binding">
+
+                <!-- tooltip template -->
+                <a vlc-slds-tool-tip="test" nubbin="left" help="{{control.propSetMap.help}}"> i </a>
+
+                <!--<div vlc-slds-include="vlcLabelController.html"></div>-->
+                
+                {{::control.propSetMap.customLabel}}
+
+                <span class='vlc-asterix icon-v-asterix'
+                        ng-show='control.propSetMap.required'>
+                </span>
+
+            </label>
+            
+            <div class="ng-scope">
+
+                <ul horizontalmode="false" class="slds-form-element ng-scope">
+                    <li class="slds-form-element__control"
+                        ng-repeat='option in control.vlcSI[control.itemsKey]'>
+                    
+                        <label class='slds-checkbox'>
+                
+                            <input id='{{control.Name + $index}}'
+                                ng-disabled='control.propSetMap.customOptions.header.enableRecordField && !option[control.propSetMap.customOptions.header.enableRecordField]'
+                                ng-required="control.propSetMap.required && !control.response"
+                                type='checkbox'
+                                ng-init='onSelectItem(control, option, $index, this)'
+                                ng-model='option.vlcSelected'
+                                ng-value="option"
+                                ng-change='onSelectItem(control, option, $index, this)'/>
+                
+                            <span class="slds-checkbox--faux" ng-if='control.propSetMap.horizontalMode!=="image"'></span>
+                            <span class="slds-form-element__label" ng-if='control.propSetMap.horizontalMode!=="image"'>{{::control.propSetMap.customOptions.header.text | format:control.propSetMap.customOptions.header.params:option}}</span>
+
+                            <ul class="slds-tree" 
+                                role="tree"
+                                aria-labelledby="treeheading">
+                                
+                                <li ng-repeat="item in control.propSetMap.customOptions.fields"
+                                    id="tree0-node1"
+                                    role="treeitem"
+                                    aria-level="1">
+
+                                    <div class="slds-tree__item slds-m-left--medium ta-care-slds-tree__item">
+                                        
+                                        <label tabindex="-1"
+                                            role="presentation"
+                                            class="slds-truncate vlc-slds-inline-control__label"
+                                            title="">
+                                            
+                                            {{::item.text | format:item.params:option}}
+                                        
+                                        </label>
+
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                
+                        </label>
+                    
+                    </li>
+
+                </ul>
+            
+            </div>
+            
+        </div>
+
+    </ng-form>
+
+</div>

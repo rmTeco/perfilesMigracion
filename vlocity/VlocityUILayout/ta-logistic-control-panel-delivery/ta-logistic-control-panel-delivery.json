@@ -1,0 +1,35 @@
+{
+    "Cards": [
+        "Orders-Delivery"
+    ],
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "bundle": "",
+            "ctxId": "",
+            "inputMap": {
+                "orderStatus": "Pendiente de Entrega"
+            },
+            "optionsMap": {
+                "vlcClass": "OrdersUtilMethods"
+            },
+            "query": "SELECT CreatedDate,Delivery_Method__c,Id,OrderNumber,Status\nFROM Order\nWHERE Status = 'Pendiente de Entrega'",
+            "remoteClass": "OrdersUtilMethods",
+            "remoteMethod": "getOrdersWithContactInfo",
+            "remoteNSPrefix": null,
+            "resultVar": "ordersResult"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-list-card-canvas"
+        }
+    },
+    "workspace": [
+        "Orders-Delivery/Personal - DESA01/null/1521741779792"
+    ]
+}

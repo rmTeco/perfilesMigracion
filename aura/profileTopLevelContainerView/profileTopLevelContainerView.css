@@ -1,0 +1,44 @@
+.THIS group:before, .THIS.group:after {
+    content: '';
+    display: table;
+}
+.THIS group:after {
+    clear: both;
+}
+.THIS.contentContainer {
+    width: 100%; /*320px;*/
+    /*border: 1px black solid;*/
+    border: none;
+    overflow: hidden;
+}
+.THIS .slider {
+    width: 200%; /*960px;*/
+    display: table;
+    position: relative;
+    transform: translate3d(0, 0, 0);
+    transition: transform .5s ease-in-out;
+}
+.THIS .slider.slide-to-profiler-view {
+    transform: translate3d(0, 0, 0);
+}
+.THIS .slider.slide-to-profiler-edit {
+    transform: translate3d(-50%, 0, 0);
+}
+.THIS .slider.slide-to-profiler-edit[dir=rtl] {
+    transform: translate3d(50%, 0, 0);
+}
+
+.THIS .slds-section-title--divider {
+    color: #54698d;
+    background: #f4f6f9;
+}
+.THIS .content {
+    width: 50%; /*320px;*/
+    display: table-cell;
+    white-space: normal;
+    background-repeat: no-repeat;
+    position: relative;
+}
+.THIS {
+    background: #FFF;
+}

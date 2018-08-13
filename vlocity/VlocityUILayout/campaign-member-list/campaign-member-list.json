@@ -1,0 +1,32 @@
+{
+    "Cards": [
+        "campaign-member"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "701o0000000S1AH"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/campaigns/{{params.id}}/members?pageSize=10&sortFields=LastName",
+            "inputMap": {
+                "campaignId": "{{params.id}}",
+                "pageSize": "10",
+                "sortFields": "LastName"
+            },
+            "methodType": "GET",
+            "query": "",
+            "remoteClass": "CampaignListHandler",
+            "remoteMethod": "getMemberListByCampaign",
+            "remoteNSPrefix": "%vlocity_namespace%"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "campaign-column"
+        }
+    }
+}

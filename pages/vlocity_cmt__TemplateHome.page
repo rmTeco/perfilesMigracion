@@ -1,0 +1,110 @@
+<apex:page showHeader="true" sidebar="false"
+            standardStylesheets="false"
+            docType="html-5.0" applyBodyTag="false"
+            standardController="vlocity_cmt__VlocityUITemplate__c"
+            extensions="vlocity_cmt.TemplateController,vlocity_cmt.DRDataPackRunnerController"
+            recordSetVar="templates"
+            tabStyle="VlocityUITemplateDesigner__tab">
+  <head>
+      <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/ng-table/dist/ng-table.js')}"/>
+      <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ngInfiniteScroll, '/build/ng-infinite-scroll.min.js')}"/>
+      <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"/>
+      <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__Sass, 'sass.js')}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__SldsAngular}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__DRVComp}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__TemplateUtilities}"/>
+      <apex:includeScript value="{!$Resource.vlocity_cmt__TemplateHome}"/>
+  </head>
+  <style>
+    body {
+      margin: 0;
+    }
+  </style>
+  <body xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <div ng-app="templatehome" class="via-slds ng-cloak {!$User.UIThemeDisplayed}" ng-controller="templatehome">
+      <slds-home
+                page-title="'Templates'"
+                new-url="'{!newUrl}'"
+                user-first-name="'{!$User.FirstName}'"
+                user-last-name="'{!$User.LastName}'"
+                s-object-type="'{!$ObjectType.VlocityUITemplate__c.Name}'"
+                row-actions="rowActions"
+                default-columns="defaultColumns"
+                id-prefix="template-home"
+                additional-table-buttons="additionalTableButtons"
+                additional-header-buttons="additionalHeaderButtons">
+      </slds-home>
+    </div>
+    <c:VFActionFunction />
+    <script>
+      window.templatesNewUrl = "{!newUrl}";
+    </script>
+    <script type="text/javascript">
+
+        var ns = "{!nsPrefix}",
+            nsPrefix = '{!nsPrefix}',
+            remoteActions = {
+              getTemplates: "{!$RemoteAction.TemplateController.getTemplates}",
+              getTemplateTypes: "{!$RemoteAction.TemplateController.getTemplateTypes}",
+              getTemplate: "{!$RemoteAction.TemplateController.getTemplate}",
+              deleteTemplate: "{!$RemoteAction.TemplateController.deleteTemplate}",
+              getBaseTemplates: {
+                action: "{!$RemoteAction.TemplateController.getBaseTemplates}",
+                escape: false
+              },
+              getTemplatesAllFields: {
+                action: "{!$RemoteAction.TemplateController.getTemplatesAllFields}",
+                escape: false
+              },
+              saveTemplate: {
+                action: "{!$RemoteAction.TemplateController.saveTemplate}",
+                escape: false
+              },
+              getSassMixins: {
+                  action: '{!$RemoteAction.TemplateController.getSassMixins}',
+                  escape: false
+              },
+              isInsidePckg: {
+                  action: '{!$RemoteAction.TemplateController.isInsidePckg}',
+                  escape: false
+              }
+            },
+            i18n = {
+              "SldsObjectHomeHeaderInfo": "{!$Label.vlocity_cmt__sldsobjecthomeheaderinfo}",
+              "RefreshData": "{!$Label.vlocity_cmt__refreshdata}",
+              "Export": "{!$Label.vlocity_cmt__export}",
+              "New": "{!$Label.vlocity_cmt__new}",
+              "FilterList": "{!$Label.vlocity_cmt__filterlist}",
+              "Import": "{!$Label.vlocity_cmt__import}",
+              "AdditionalActions": "{!$Label.vlocity_cmt__additionalactions}",
+              "Delete": "{!$Label.vlocity_cmt__delete}",
+              "Preview": "{!$Label.vlocity_cmt__preview}",
+              "LastModified": "{!$Label.vlocity_cmt__lastmodified}",
+              "Name": "{!$Label.vlocity_cmt__name}",
+              "ModifiedOnBy": "{!$Label.vlocity_cmt__modifiedonby}",
+              "DeleteTemplate": "{!$Label.vlocity_cmt__deletetemplate}",
+              "InstallDataPack": "{!$Label.vlocity_cmt__installdatapack}",
+              "DeleteTemplateConfirmation": "{!$Label.vlocity_cmt__deletetemplateconfirmation}",
+              "Filters":"{!$Label.vlocity_cmt__filters}",
+              "HideFilter":"{!$Label.vlocity_cmt__hidefilter}",
+              "Cancel":"{!$Label.vlocity_cmt__cancel}",
+              "Save":"{!$Label.vlocity_cmt__save}",
+              "ShowMe":"{!$Label.vlocity_cmt__showme}",
+              "MatchingAllOfTheseFilters":"{!$Label.vlocity_cmt__matchingallofthesefilters}",
+              "Remove":"{!$Label.vlocity_cmt__remove}",
+              "NewFilter":"{!$Label.vlocity_cmt__newfilter}",
+              "AddFilter":"{!$Label.vlocity_cmt__addfilter}",
+              "RemoveAll":"{!$Label.vlocity_cmt__removeall}",
+              "Field":"{!$Label.vlocity_cmt__field}",
+              "Operator":"{!$Label.vlocity_cmt__operator}",
+              "Value":"{!$Label.vlocity_cmt__value}",
+              "Done":"{!$Label.vlocity_cmt__done}",
+              "AllType":"{!$Label.vlocity_cmt__alltype}",
+              "MyType":"{!$Label.vlocity_cmt__mytype}"
+            };
+      </script>
+
+  </body>
+
+</apex:page>

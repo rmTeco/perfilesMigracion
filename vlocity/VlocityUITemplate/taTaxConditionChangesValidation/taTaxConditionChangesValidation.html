@@ -1,0 +1,36 @@
+<div ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBExemptions.length > 2"> max 2</div> 
+<div ng-controller="MainModuleCtrl as mmc">
+	test variable: {{mmc.testval |json}}
+	Jurisdiccion validation: {{mmc.jurisdiccionValidation}}
+</div>
+<!-- <div>
+    <div>Tipo de cambio: {{bpTree.response.Step_2_Select_Tax_Condition_To_Modify.TaxConditionBlock.TaxConditionChange}}</div>
+    <div>Número de CUIT:</div>
+    <section id="Accounts">
+        <div>Cuenta(s) de facturación:</div>
+    </section>
+     <section id="IVATaxCondition">
+        <div>Condición impositiva - IVA</div>
+        <div>{{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.NewIVAConditionBlock.IVACondition}}</div>
+        <div>Desde {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.NewIVAConditionBlock.IVAExemptionDateFrom}} hasta {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.NewIVAConditionBlock.IVAExemptionDateTo}}</div>
+        <div>Exención: {{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.NewIVAConditionBlock.IVAPercentage}} %</div>
+    </section>
+    <section id="IIBBTaxCondition">
+        <div>Condiciones Impositivas - Ingresos Brutos:</div>
+        <div>{{bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.IIBBCondition}}</div>
+		<div
+		  	ng-if="bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.IIBBExemptions.length > 0" 
+		 	ng-repeat="IIBBExemption in bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.IIBBExemptions">
+            <div>Jurisdicción: {{IIBBExemption.IIBBExemptionJurisdiction}}</div>
+            <div>Desde {{IIBBExemption.IIBBExemptionDateFrom}} hasta {{IIBBExemption.IIBBExemptionDateTo}}</div>
+            <div>Exención: {{IIBBExemption.IIBBExemptionPercentage}} %</div>
+		</div>  		
+		<div
+		  	ng-init="item = bpTree.response.Step_6_Select_New_Tax_Condition_DNI_To_CUIT.IIBBTaxCondition.IIBBExemptions"
+			ng-if="item.length == undefined">
+             <div>Jurisdicción: {{item.IIBBExemptionJurisdiction}}</div>
+            <div>Desde {{item.IIBBExemptionDateFrom}} hasta {{item.IIBBExemptionDateTo}}</div>
+			<div>Exención: {{item.IIBBExemptionPercentage}} %</div>		
+        </div>  
+    </section> 
+</div> -->

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>SCP_Certa_GC__Industry__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Industry</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Region__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <referenceTo>SCP_Certa_GC__Region__c</referenceTo>
+        <relationshipLabel>Industry Trends</relationshipLabel>
+        <relationshipName>IndustryTrends</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__RelatedTo__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Relacionado con</label>
+        <referenceTo>SCP_Certa_GC__Industry_Trend__c</referenceTo>
+        <relationshipLabel>Industry Trends</relationshipLabel>
+        <relationshipName>Industry_Trends</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Sector__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Public</fullName>
+                    <default>false</default>
+                    <label>Public</label>
+                </value>
+                <value>
+                    <fullName>Private</fullName>
+                    <default>false</default>
+                    <label>Private</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Sub_Sector__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sub Sector</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Industria y Comercio</fullName>
+                    <default>false</default>
+                    <label>Industria y Comercio</label>
+                </value>
+                <value>
+                    <fullName>Financiero</fullName>
+                    <default>false</default>
+                    <label>Financiero</label>
+                </value>
+                <value>
+                    <fullName>Administración pública</fullName>
+                    <default>false</default>
+                    <label>Administración pública</label>
+                </value>
+                <value>
+                    <fullName>Salud, Educación y Seguridad</fullName>
+                    <default>false</default>
+                    <label>Salud, Educación y Seguridad</label>
+                </value>
+                <value>
+                    <fullName>Servicios y Tecnología</fullName>
+                    <default>false</default>
+                    <label>Servicios y Tecnología</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Test__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Test</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>Html</type>
+        <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Title__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Título</label>
+        <length>100</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Trend__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Trend</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tipo</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Contexto General</fullName>
+                    <default>false</default>
+                    <label>Contexto General</label>
+                </value>
+                <value>
+                    <fullName>Métricas y Análisis del Mercado</fullName>
+                    <default>false</default>
+                    <label>Métricas y Análisis del Mercado</label>
+                </value>
+                <value>
+                    <fullName>Principales Players</fullName>
+                    <default>false</default>
+                    <label>Principales Players</label>
+                </value>
+                <value>
+                    <fullName>Cadena de Valor y Procesos</fullName>
+                    <default>false</default>
+                    <label>Cadena de Valor y Procesos</label>
+                </value>
+                <value>
+                    <fullName>Tendencias</fullName>
+                    <default>false</default>
+                    <label>Tendencias</label>
+                </value>
+                <value>
+                    <fullName>Casos de éxito Sectorial</fullName>
+                    <default>false</default>
+                    <label>Casos de éxito Sectorial</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__URL_Attachment__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>URL Attachment</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <label>Industry Trend</label>
+    <listViews>
+        <fullName>SCP_Certa_GC__All</fullName>
+        <columns>NAME</columns>
+        <columns>SCP_Certa_GC__Industry__c</columns>
+        <columns>SCP_Certa_GC__Region__c</columns>
+        <columns>SCP_Certa_GC__Sector__c</columns>
+        <columns>SCP_Certa_GC__Sub_Sector__c</columns>
+        <columns>SCP_Certa_GC__Trend__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>SCP_Certa_GC__All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>Todos</label>
+    </listViews>
+    <nameField>
+        <displayFormat>{0000}</displayFormat>
+        <label>IndsutryTrend</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Industry Trends</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

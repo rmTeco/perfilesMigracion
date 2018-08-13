@@ -1,0 +1,196 @@
+@import "variables";
+@import "community-variables";
+
+.vlocity {
+    .community {
+        /* Account details styles */
+        .account-card {
+            background-color: $white;
+            padding:15px;
+            margin-bottom:20px;
+            border:1px solid #dedede;
+            .card-top {
+                padding-left:10px;
+                h1 {
+                    margin:0;
+                    color:#4a4a4a;
+                }
+                .account-number {
+                    font-size:12px;
+                    color:#4a4a4a;
+                }
+                .rightActions {
+                    float:right;
+                    color:$font-gray;
+                    cursor:pointer;
+                    i {
+                        color: #05A6DF;
+                    }
+                    .actions {
+                        margin-right:-15px;
+                        i {
+                            font-size:30px;
+                        }
+                    }
+                }
+                .showHideParent {
+                    display:inline-block;
+                    &.hideMore {
+                        .hideButton {
+                            display:inline-block;
+                        }
+                        .showButton {
+                            display:none;
+                        }
+                    }
+                    .hideButton {
+                        display:none;
+                    }
+                    
+                }
+            }
+            .showMore {
+                transition: max-height 0.3s ease-in-out;
+                max-height:0;
+                overflow: hidden;
+                &.show {
+                    max-height:600px;
+                    overflow-y:scroll;
+                }
+                ul {
+                    overflow:auto;
+                    padding:10px 0px;
+                    margin-bottom:10px;
+                    background-color: #f5f6f7;
+                    li {
+                        list-style-type: none;
+                        label {
+                            color:$font-gray;
+                            width:150px;
+                            text-transform: uppercase;
+                        }
+                        .asset-image {
+                            margin:5px 0px;
+                            img {
+                                width:100px;
+                                height:50px;
+                            }
+                        }
+                    }
+                }
+            }
+            .card-info {
+                padding-top:10px;
+                transition: all 0.3s ease-in-out;
+                ul {
+                    &.details {
+                        overflow:auto;
+                        clear:both;
+                        padding:0;
+                        transition: max-height 0.3s ease-in-out;
+                        max-height:600px;
+                        overflow-y:scroll;
+                        li {
+                            list-style-type: none;
+                            float:left;
+                            margin-bottom:20px;
+                            &.detail {
+                                .detail-label {
+                                    text-transform: uppercase;
+                                    color:$font-gray;
+                                    display:block;
+                                    margin:0;
+                                }
+                            }
+                        }
+                    }
+                    @media (max-width: $tablet-width) {
+                        &.details {
+                            border-top:1px solid #dcdce4;
+                            padding-top:10px;
+                        }
+                    }
+                    
+                }
+                .actions-wrapper {
+                    ul {
+                        &.actions {
+                            overflow:hidden;
+                            margin:0;
+                            padding:0;
+                            border-top:1px solid #dcdce4;
+                            li {
+                                list-style-type: none;
+                                float:left;
+                                margin:10px 5px 0px;
+                                padding-right:15px;
+                                border-right:1px solid $separator-gray;
+                                &.last {
+                                    border-right:none;
+                                }
+                                i {
+                                    font-size:20px;
+                                }
+                                .title {
+                                    color:$font-gray;
+                                    line-height: 20px;
+                                    vertical-align: top;
+                                }
+                            }
+                        }
+                    }
+                }
+                @media (max-width: $tablet-width) {
+                    .actions-wrapper {
+                        position: fixed;
+                        bottom: 0px;
+                        right: 0px;
+                        left: 0px;
+                        background-color: transparent;
+                        border-top: none;
+                        transition: all 0.3s ease-in-out;
+                        .page-cover-layer {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            height: 100%;
+                            width: 100%;
+                            z-index: 5;
+                            background-color: rgba(0,0,0,0.5);
+                        }
+                        .actions-container {
+                            position:relative;
+                            z-index:10;
+                            .actions-cancel {
+                                margin-top:10px;
+                                padding:12px;
+                                text-align:center; 
+                                color:#05A6DF;
+                                background-color:$white;
+                            }
+                            ul {
+                                background-color:$white;
+                                &.actions {
+                                    li {
+                                        display: block;
+                                        float: none;
+                                        border-right: none;
+                                        border-bottom: 1px solid $separator-gray;
+                                        margin: 0px 10px;
+                                        a {
+                                            padding: 12px 5px;
+                                            display:block;
+                                            .title {
+                                                color: #4a4a4a;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+<div class="cpq-product-item-details ta-product-details-container" ng-controller="InternetMoreDetailsController as imdc" ng-init="imdc.init()">
+    <section class="slds-m-bottom--xx-large ta-header">
+		<h3 class="slds-text-heading--large slds-text-align--center ta-header-title"><strong>{{::obj.Name.value}}</strong></h3>
+		<h4 class="slds-text-heading--large slds-text-align--center ta-header-price">
+		    <div class="taPrice taPriceStrikeOut">{{::obj['StandardRecurring']['value'] | currency:"$":0}}</div>
+            <div class="taPrice">{{::obj | resolveCustomField:'RecurringPrice__c':'value'}}</div>
+	    </h4>
+		<div class="ta-header-copy slds-text-align--center">
+		    <p ng-if="obj.Product2.TA_Custom_Description__c" class="taProductDescription">{{obj.Product2.TA_Custom_Description__c}}</p>
+            <span>{{obj.Product2.Description}}</span>    
+		</div>
+		
+	</section>
+	<section class="slds-m-bottom--xx-large">
+		<ul class="slds-grid slds-wrap slds-text-align--center">
+			<li class="slds-col slds-size--1-of-3">
+				<div class="slds-m-bottom--large">
+					<slds-button-svg-icon 
+						sprite="'utility'" 
+						size="'large'" 
+						icon="'wifi'"
+						extra-classes="'ta-large-icon'">
+					</slds-button-svg-icon>
+				</div>
+				<div class="ta-product-details-labels">
+					<p><strong>Modem Wifi</strong></p>
+					<span class="slds-wrap">Bonificado</span>
+				</div>
+			</li>
+			<li class="slds-col slds-size--1-of-3">
+				<div class="slds-m-bottom--large">
+					<slds-button-svg-icon 
+						sprite="'utility'" 
+						size="'large'" 
+						icon="'checkin'"
+					    extra-classes="'ta-large-icon'">
+					</slds-button-svg-icon>
+				</div>
+				<div class="ta-product-details-labels">
+					<p><strong>Envío</strong></p>
+					<span class="slds-wrap">Bonificado</span>
+				</div>
+			</li>
+			<li class="slds-col slds-size--1-of-3">
+				<div class="slds-m-bottom--large">
+					<slds-button-svg-icon 
+						sprite="'utility'" 
+						size="'large'" 
+						icon="'custom_apps'"
+					    extra-classes="'ta-large-icon'">
+					</slds-button-svg-icon>
+				</div>
+				<div class="ta-product-details-labels">
+					<p><strong>Instalación</strong></p>
+					<span class="slds-wrap">Autoinstalable</span>
+				</div>
+			</li>
+		</ul>
+	</section>
+	<section>
+	    <div class="slds-grid slds-grid--align-center taSpeedData">
+            <div class="slds-p-horizontal--x-small">
+                <slds-button-svg-icon 
+					sprite="'utility'" 
+					size="'small'" 
+					icon="'arrowdown'">
+				</slds-button-svg-icon>
+                <span>Bajada: <strong>{{imdc.details["Download Speed"]}}</strong></span>
+            </div>
+            <div class="slds-p-horizontal--x-small">
+                <slds-button-svg-icon 
+					sprite="'utility'" 
+					size="'small'" 
+					icon="'arrowup'">
+				</slds-button-svg-icon>
+                <span>Subida: <strong>{{imdc.details["Upload speed"]}}</strong></span>
+            </div>
+        </div>
+	</section>
+</div>

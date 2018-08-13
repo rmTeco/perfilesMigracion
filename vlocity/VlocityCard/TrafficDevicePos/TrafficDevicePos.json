@@ -1,0 +1,57 @@
+{
+    "dataSource": {
+        "type": "Custom",
+        "value": {
+            "body": "{\n    \"Device\": \"Apple iPhone 6s\",\n    \"IMEI\": \"123456789012346\"\n}"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Device']",
+                    "editing": true,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Equipo",
+                    "name": "['Device']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['IMEI']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "IMEI",
+                    "name": "['IMEI']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "placeholderExpand": true,
+            "placeholders": [
+            ],
+            "sObjectType": null,
+            "templateUrl": "ta-care-pospaid-flyout-device-item"
+        }
+    ]
+}

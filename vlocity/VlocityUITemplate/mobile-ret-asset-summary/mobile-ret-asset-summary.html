@@ -1,0 +1,25 @@
+<article class="asset-summary slds-card slds-card_narrow" data-card="card-{{cardIndex}}" hotkey-layout-card>
+    <div class="card-info slds-card__body">
+        <div class="slds-media">
+            <div class="slds-media__figure asset-image">
+                <img ng-src="{{$root.instanceUrl + obj['%vlocity_namespace%__Product_Image__c']}}" />
+            </div>
+            <div class="slds-media__body">
+                <div class="account-data" >
+                <div class="asset-name">{{obj.Name}}</div>
+                <div>{{obj.Account.Name}}</div>
+                <div>{{obj.Status}}</div>
+                </div> 
+                
+                <div class="other-field" ng-repeat="field in data.fields">
+                <span class="field-label">{{field.label}}:</span>
+                <span class="field-value">{{obj | getter: field | picker: field.type}}</span>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <footer class="slds-card__footer">
+        <a class="more-details-link" ng-data-url="/app/univ/RETAssetDetail/{{obj.Id}}/">
+            More Details
+            </a></footer>
+</article>

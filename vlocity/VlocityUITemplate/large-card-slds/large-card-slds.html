@@ -1,0 +1,58 @@
+<div class="slds-card via-slds-large-card_active " ng-controller="largeCardController">
+
+    <div class="via-slds-card__header slds-card__header slds-grid slds-grid_vertical-align-center slds-p-around_small" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="slds-media slds-media_center slds-has-flexi-truncate">
+            <div class="slds-media__figure via-placeholder-image">
+                <img ng-if="placeholder.Image.value && isString(placeholder.Image)" src="{{placeholder.Image.value}}">
+                <div ng-if="placeholder.Image.value && !isString(placeholder.Image)" class="slds-icon slds-icon_medium  slds-icon-{{sprite}}-{{icon}}">
+                    <slds-svg-icon ng-init="getIconSet(placeholder.Image.value)" sprite="sprite" icon="icon" size="'medium'"></slds-svg-icon>
+                </div>
+                <img ng-if="!placeholder.Image.value && placeholder.ImageId.value" src="/servlet/servlet.FileDownload?file={{placeholder.ImageId.value | picker:placeholder.ImageId.type}}">
+                <img ng-if="!placeholder.Image.value && !placeholder.ImageId.value" src="{{placeholder.DefaultImage.value | picker:placeholder.DefaultImage.type}}">
+                <vloc-card-icon ng-if="!placeholder.Image.value && !placeholder.ImageId.value && !placeholder.DefaultImage.value" data="data"
+                    obj="obj" size="'medium'"></vloc-card-icon>
+            </div>
+            <div class="slds-media__body slds-truncate">
+                <a href="javascript:void(0);" class="slds-text-link_reset" tooltip-placement="bottom" tooltip="{{data.title}}">
+                    <span class="slds-text-heading_small">{{placeholder.Title.label}} {{placeholder.Title.value| picker:placeholder.Title.type}}</span>
+                </a>
+                <br />
+            </div>
+        </div>
+    </div>
+    <div class="slds-grid slds-wrap slds-grid_vertical-stretch slds-m-around_x-small slds-p-around_small">
+        <div class="slds-size_1-of-3 slds-p-top_x-small slds-p-right_small slds-border_right">
+            <h2 class="slds-p-bottom_x-small">{{placeholder.LeftTitle.label}} {{placeholder.LeftTitle.value| picker:placeholder.LeftTitle.type}}</h2>
+            <ul ng-click="performFlyout(obj.Id, uniqueLayoutId + '-card-'+cardIndex)">
+                <li class="slds-p-bottom_small via-field" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+                    <p class="slds-truncate slds-text-heading_x-small via-slds-title_bold">{{field.label}}</p>
+                    <div class="slds-tile__detail via-slds-text-color_light">
+                        <p class="slds-truncate" ng-if="!obj[field.relationshipName]">{{obj | getter: field | picker: field.type}} </p>
+                        <p class="slds-truncate" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}} </p>
+                    </div>
+                    <div class="track-view" ng-click="trackField(field,entityName, field.label)">
+                        <vloc-card-icon icon="'preview'" sprite="'utility'" size="'small'" extra-classes="'big via-action-icon slds-icon-text-default'">
+                        </vloc-card-icon>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="slds-size_1-of-3 slds-p-around_x-small slds-p-horizontal_small slds-border_right">
+            <h2 class="slds-border_bottom">{{placeholder.CenterTitle.label}} {{placeholder.CenterTitle.value| picker:placeholder.CenterTitle.type}}</h2>
+            <ul class="via-slds-action">
+                <li class="slds-p-vertical_small via-action-link" ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)"
+                    ng-click="performAction(action)">
+                    <a href="javascript:void(0);" class="slds-truncate slds-text-link_reset slds-theme_default">
+                        <vloc-card-icon data="action" obj="obj" size="'small'" extra-classes="'big via-action-icon slds-icon-text-default'"></vloc-card-icon>{{action.displayName}}
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+        <div class="slds-size_1-of-3 slds-p-top_x-small slds-p-horizontal_small slds-scrollable" ng-if="data.flyout.layout">
+            <h2 class="slds-p-bottom_x-small">{{placeholder.RightTitle.label}} {{placeholder.RightTitle.value| picker:placeholder.RightTitle.type}}</h2>
+            <vloc-layout layout-name="{{data.flyout.layout}}"></vloc-layout>
+        </div>
+    </div>
+
+</div>

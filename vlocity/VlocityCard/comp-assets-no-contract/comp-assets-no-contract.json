@@ -1,0 +1,35 @@
+{
+    "dataSource": {
+        "type": "Custom",
+        "value": {
+            "body": "{\"doNotRemove\": \"\"}"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "flyout": {
+                "layout": "comp-assets-no-contract-layout"
+            },
+            "name": "No Contract Assets",
+            "templateUrl": "comp-assets-load"
+        }
+    ],
+    "title": "No Contract Assets"
+}

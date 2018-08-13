@@ -1,0 +1,239 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['RecordType']['Name']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Billing"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "AddressBook",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Id']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Id",
+                    "name": "['Id']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['RecordType']['Name']",
+                    "group": "Custom Properties",
+                    "label": "RecordType Name",
+                    "name": "['RecordType']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LastModifiedDate']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "LastModifiedDate",
+                    "name": "['LastModifiedDate']",
+                    "type": "date"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['RecordType']['Name'] == 'Billing'",
+            "name": "Billing",
+            "sObjectType": "Contact",
+            "templateUrl": "card-table-row"
+        },
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['RecordType']['Name']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Service"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "AddressBook",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Card Action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "Create Assets",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "View Record",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Id']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Id",
+                    "name": "['Id']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['RecordType']['Name']",
+                    "group": "Custom Properties",
+                    "label": "RecordType Name",
+                    "name": "['RecordType']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LastModifiedDate']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "LastModifiedDate",
+                    "name": "['LastModifiedDate']",
+                    "type": "date"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['RecordType']['Name'] == 'Service'",
+            "name": "Service",
+            "sObjectType": "Account",
+            "templateUrl": "card-table-row"
+        },
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "View Record",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Id']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Id",
+                    "name": "['Id']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LastModifiedDate']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "LastModifiedDate",
+                    "name": "['LastModifiedDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['RecordType']['Name']",
+                    "group": "Custom Properties",
+                    "label": "RecordType Name",
+                    "name": "['RecordType']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Other",
+            "sObjectType": "Account",
+            "templateUrl": "card-table-row"
+        }
+    ],
+    "title": "Row"
+}

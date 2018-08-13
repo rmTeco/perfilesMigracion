@@ -1,0 +1,51 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "001o000000SLNueAAH"
+            }
+        ],
+        "type": "ApexRest",
+        "value": {
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v1/acuity/localoptions?contextId={{params.id}}&pageSize=3",
+            "methodType": "GET"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "label": "Name",
+                    "name": "['resource']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "label": "Description",
+                    "name": "['resource']['%vlocity_namespace%__Description__c']",
+                    "type": "string"
+                }
+            ],
+            "name": "Offer",
+            "sObjectType": null,
+            "templateUrl": "acuity-sidebar-offer-card"
+        }
+    ],
+    "title": "Acuity Sidebar Offer Card"
+}

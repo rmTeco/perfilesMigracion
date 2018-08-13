@@ -1,0 +1,81 @@
+<!-- <pre>-->
+<!--	{{control.propSetMap.selectMode |json}}-->
+<!--	{{control.propSetMap.result |json}}-->
+<!--</pre>-->
+<!-- <pre>-->
+<!--    1: {{bpTree.response[control.propSetMap.selectableItemConfig.inputList] |json}}-->
+<!--</pre>-->
+
+
+<div 
+	ng-if="bpTree.response[control.propSetMap.selectableItemConfig.inputList]"
+	ng-controller="TASelectableListBPController as SLCtrl"
+	class='slds-col--padded slds-size--2-of-3'>
+	<table class="slds-table slds-table--bordered slds-table_fixed-layout">
+		<thead>
+			<tr class="slds-text-heading--label">
+				<th scope="col">
+				<th ng-repeat="t in control.propSetMap.selectableItemConfig.theader" scope="col">
+					<div class="slds-truncate">{{t.label}}</div>
+				</th>                
+			</tr>
+		</thead>
+		<tbody ng-init="bpTree.response[control.propSetMap.selectableItemConfig.outputList] = SLCtrl.updateList()">				
+			<tr 
+				ng-repeat="p in bpTree.response[control.propSetMap.selectableItemConfig.inputList] | orderBy : control.propSetMap.selectableItemConfig.orderBy" 
+				ng-class="{ 'vlc-selectableitem-selected' : p.outputList }">
+				<td class="slds-cell-shrink">
+					<label ng-if="control.propSetMap.selectMode == 'Single'" class="slds-checkbox">
+						<input 
+							type="checkbox" 
+							ng-model='p[control.propSetMap.selectableItemConfig.preSelected]' 
+							ng-click="bpTree.response[control.propSetMap.selectableItemConfig.outputList] = SLCtrl.updateList()"/>
+						<span class="slds-checkbox--faux"></span>
+						<span class="slds-assistive-text">Select</span>
+					</label>
+					<!-- <label ng-if="control.propSetMap.selectMode == 'Single'" class="slds-checkbox">
+						<input 
+							type="checkbox" 
+							ng-model='p[control.propSetMap.selectableItemConfig.preSelected]' 
+							ng-click="bpTree.response[control.propSetMap.selectableItemConfig.outputList] = SLCtrl.updateList()"/>
+						<span class="slds-checkbox--faux"></span>
+						<span class="slds-assistive-text">Select</span>
+					</label> -->
+					<!-- <label ng-if="control.propSetMap.selectMode == 'Single'" class="slds-radio">
+						<input 
+							type="radio" 
+							ng-model="bpTree.response[control.propSetMap.selectableItemConfig.outputList]"
+							ng-value="p"/>							
+						<span class="slds-radio--faux"></span>
+						<span class="slds-assistive-text">Select</span>
+					</label> -->
+				</td>
+				<td ng-repeat="td in control.propSetMap.selectableItemConfig.theader">						
+					
+					<!-- Default Field -->				
+					<div 
+						ng-if="td.type == undefined"
+						class="slds-truncate">
+						{{p[td.field]}}
+					</div>
+					
+					<div ng-if="td.type == 'currency'" class="slds-truncate">${{p[td.field]}}</div>
+					<div ng-if="td.type == 'date'" class="slds-truncate">{{p[td.field] | date: "dd/MM/yyyy"}}</div>
+    				<div ng-if="td.type == 'check'" class="slds-truncate">
+    					<div ng-if="p[td.field]">
+                            <div class="ta-techCare-check">
+                                <slds-svg-icon
+    								sprite="'utility'"
+    								icon="'check'"
+    								size="'small'"
+    								no-hint="true"
+    								extra-classes="'slds-button slds-button--icon'">
+    					    	</slds-svg-icon>
+                            </div>
+                        </div>
+                    </div>
+				</td>                
+			</tr>
+		</tbody>
+	</table>		
+</div>

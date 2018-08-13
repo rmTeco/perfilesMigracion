@@ -1,0 +1,70 @@
+.addedValueServices {
+    &-container {
+        padding: 15px;
+        // .cards-container {
+        //     overflow-x: auto;
+        // }
+    }
+    &-row {
+        &:nth-child(4n), 
+        &:nth-child(4n-1) {
+            background: #eee;
+        }
+        &.list {
+            &:nth-child(even) {
+                background: #eee;
+            }
+            &:nth-child(odd) {
+                background: none;
+            }
+        }
+        &.serviceGroup {
+            visibility: collapse;
+            line-height: 0;
+            position: absolute;
+            &.activeGroup {
+                visibility: visible;
+                line-height: normal;
+                position: relative;
+            }   
+        }
+        &.activeRow {
+            .addedValueServices-arrowWrapper {
+                transform: rotate(90deg);
+                width: 1rem;
+            }
+        }
+    }
+    .via-slds .slds-table--bordered & td {
+        border: none;
+    }
+    &-card-td {
+        .activeCopy {
+            color: #00b4c5;
+        }
+        .inActivationCopy {
+            color: #999;
+        }
+        .limitedCopy {
+            color: #d9ad07;
+        }
+        .activeIcon {
+            fill: #00b4c5;
+        }
+        .inactiveIcon {
+            fill: #d9186b;
+        }
+        .inActivationIcon {
+            fill: #999;
+        }
+        .limitedIcon {
+            fill: #d9ad07;
+        }
+        .activeIcon,
+        .inactiveIcon,
+        .inActivationIcon,
+        .limitedIcon {
+            margin: 5px;
+        }
+    }
+}

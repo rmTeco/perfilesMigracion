@@ -1,0 +1,127 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-card-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+@include cardMixin($namespace);
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-product-cart-item-child {
+            .#{$namespace}-item-base-product {
+
+                .#{$namespace}-item-base-product-name {
+                    .#{$namespace}-item-child-product-name-wrapper {
+                        .#{$namespace}-item-no-children {
+                            padding-left: 21px !important;
+                        }
+                    }
+                }
+                .#{$namespace}-item-base-product-actions .button-spinner {
+                    position: relative;
+                    top: 15px
+                }
+                .#{$namespace}-item-base-product-name .slds-button__icon {
+                    transform: rotate(0deg);
+                    transform-origin: 45%;
+                }
+            }
+            .#{$namespace}-item-product-group {
+                color: $cpq-cart-item-product-group-label-color;
+                font-weight: $cpq-cart-item-product-group-font-weight;
+                text-transform: uppercase;
+                padding: 4px 0;
+            }
+            .#{$namespace}-item-product-messages {
+                padding-left: 21px;
+            }
+            .#{$namespace}-item-base-product-cfg-attr .slds-section {
+                margin: 0;
+                &.slds-is-open .#{$namespace}-component-content {
+                    display: block;
+                }
+
+                .slds-section__content {
+                    padding-top: 0;
+                }
+            }
+        }
+
+        //Generate padding for product name label in tree
+        @include productChildLevelStyling();
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .#{$namespace}-product-cart-item-child {
+            .#{$namespace}-item-product-messages {
+                padding-left: 0;
+                padding-right: 2px; 
+            }
+            .#{$namespace}-item-base-product-cfg-attr {
+                .slds-section__title {
+                    button.slds-button {
+                        .slds-button__icon {
+                            &.#{$namespace}-fix-slds-close-switch {
+                                transform: rotate(90deg) !important;
+                            }
+                        }
+                    }
+                }
+            }
+            .#{$namespace}-item-base-product {
+                .#{$namespace}-item-base-product-name {
+                     padding: 0 0 0 6px;
+                    .#{$namespace}-product-name {
+                        padding-left: 0;
+                    }
+                    .#{$namespace}-item-has-children {
+                        .slds-button__icon {
+                            float: right; 
+                            margin: 0.3rem 0 0 0.5rem;
+
+                            &.#{$namespace}-fix-slds-close-switch {
+                                transform: rotate(90deg) !important;
+                            }
+                        }
+                    }
+                   .#{$namespace}-item-child-product-name-wrapper {
+                        .#{$namespace}-item-no-children {
+                            padding-left: 0;
+                            padding-right: 21px;
+                        }
+                    }
+
+                }
+
+                .#{$namespace}-item-base-product-currency {
+                    .slds-popover.cpq-price-actions-popover {
+                        left: auto;
+                        right: -0.5rem;
+                    }
+                }
+            }
+        }
+
+        @include productChildLevelStyling('right');
+    }
+}
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .#{$namespace}-product-cart-item-child {
+            .#{$namespace}-item-base-product {
+                &.#{$namespace}-item-selected {
+                    &:after {
+                        left: -$cpq-padding-large-horizontal;
+                        right: auto;
+                    }
+                }
+            }
+        }
+    }
+}

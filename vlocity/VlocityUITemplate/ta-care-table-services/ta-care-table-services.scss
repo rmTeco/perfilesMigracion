@@ -1,0 +1,478 @@
+/*** VARIABLES ***/
+@import "variables";
+
+/*** MIXINS ***/
+//@import "mixin";
+
+@import url('/resource/ta_slds/slds.min.css');
+
+/*@font-face {
+    font-family: 'Platform';
+    src: url('../resource/communityfonts/Platform-Light.otf');
+}*/
+
+@font-face {
+    font-family: 'Platform';
+    src: url('/clientes/sfsites/c/resource/testfont');
+}
+
+.vlocity {
+    
+    .active {
+      color: #00b4c5; }
+        
+    .inActivation {
+      color: #999; }
+    
+    .limited {
+      color: #d9ad07; }
+      
+    .suspended { 
+      color: #d9186b;
+      fill: #d9186b; }
+    
+    .activeIcon {
+      fill: #00b4c5; }
+    
+    .inactiveIcon {
+      fill: #d9186b; }
+    
+    .inActivationIcon {
+      fill: #999; }
+    
+    .limitedIcon {
+      fill: #d9ad07; }
+    
+    .activeIcon,
+    .inactiveIcon,
+    .inActivationIcon,
+    .limitedIcon {
+      margin: 5px; }
+    
+    .slds-icon-text-default {
+        fill: #333 !important;
+    }
+    
+    .sortable_indicator {
+        display: inline-block;
+        fill: #C7C7C7 !important;
+        margin-left: 4px;
+        width: 13px;
+    }
+    
+    .slds-is-sorted .sortable_indicator {
+        display: none !important;
+    }
+    
+  /*  .hq-console-negotiations {*/
+        span.slds-truncate {
+            font-family: "Salesforce Sans",Arial,sans-serif;
+            color: #000000;
+            display: flex;
+            /*white-space: pre-wrap;*/
+        }
+        
+        h3 {
+            overflow: hidden;
+        }
+
+        b.title {
+            font-family: Platform;
+        }
+        
+        .slds-accordion > li:nth-child(even) {
+            background: #eeeeee;
+        }
+        
+        .item-details {
+            background: white;
+            
+            p {
+                border: 1px solid #eeeeee;
+                border-bottom: none;
+                padding: 10px;
+                
+                span {
+                    float: right;
+                }
+            }
+        }
+        
+        .via-slds .slds-table td {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        
+        .item-details .last {
+            border-bottom: 1px solid #eeeeee;
+        }
+    
+        .unfix-control .slds-datepicker {
+            width: auto;
+        }
+        
+        .slds-datepicker__month tbody tr td a {
+            display: none;
+        }
+        
+        .container-table-canvas .slds-grid .slds-form-element__control {
+            display: inline-block;
+        }
+        
+         .np-requirement-table-row {
+            td {
+                font-size: medium;
+            }
+        }
+        
+        .row-action {
+            text-align: right;
+        }
+        
+        .custom-border--bottom {
+            border-bottom: 1px solid #d8dde6;
+        }
+        
+        .via-slds .slds-picklist .slds-dropdown.resize-dropdowns {
+            width: 100%;
+        }
+        
+        .via-slds .slds-picklist__input.unfix-control {
+            width: auto;
+        }
+        
+        .slds-is-sorted .slds-is-sortable__icon {
+             fill: #333;
+        }
+    
+        .slds-is-sortable__icon {
+            fill: #C7C7C7;
+            display: inline-block;
+        }
+        
+        .custom-border--bottom {
+            border-bottom: 1px solid #d8dde6;
+        }
+        
+        .via-slds .slds-picklist .slds-dropdown.resize-dropdowns {
+            width: 100%;
+        }
+        
+        .via-slds .slds-picklist__input.unfix-control {
+            width: auto;
+        }
+        
+        .lineNumber {
+            font-family: Platform;
+            background: #FFF !important;
+            font-size: 42px;
+        }
+        
+        .HelveticaNeue {
+             font-family: HelveticaNeue, "Helvetica Neue", Arial, sans-serif !important;
+        }
+        
+        .asset_type {
+            font-family: HelveticaNeue, "Helvetica Neue", Arial, sans-serif;
+            font-size: 20px;
+        }
+        
+        .negotationsfilter {
+            border-radius: 5px;
+            background-color: rgba(238, 238, 238, 0.3);
+            border: solid 1px #eeeeee;
+            width: 100%;
+        }
+        
+        .filterNegotiations {
+            background-color: #00b7d7;
+            border: solid 1px #00b4c5;
+        }
+        
+        .filterNegotiations:focus, .filterNegotiations:hover {
+            background-color: #00b7d7;
+            border: solid 1px #00b4c5;
+        }
+        
+        .via-slds .slds-truncate {
+            color: #00b7d7;
+            
+        }
+        
+        .via-slds .slds-truncate:hover {
+            text-decoration: none;
+        }
+        
+        .slds-button--neutral, .slds-button--neutral:hover {
+            color: #00b7d7;
+        }
+        
+        p.more-details {
+            color: grey;
+            padding: 0 0 0 25px;
+        }
+        
+        .slds-accordion__content {
+            font-family: "Salesforce Sans",Arial,sans-serif;
+        }
+        
+        .slds-m-around--medium {
+            width: -webkit-fill-available;
+        }
+        
+        .slds-accordion {
+            display: none;
+        }
+        
+        .via-slds .slds-is-open .slds-accordion__summary-action-icon {
+            position: absolute;
+            /*right: 0;
+            top: 7px;*/
+            right: 10px;
+            top: 3px;
+            transform: rotate(0deg);
+        }
+        
+        .via-slds .slds-accordion__summary-action {
+            display: inline-block;
+        }
+        
+        .via-slds .slds-is-open .slds-accordion__summary {
+            margin-bottom: 0;
+        }
+        
+        .via-slds .slds-is-open .expanded-content {
+            margin-bottom: .75em;
+        }
+        
+        .via-slds .slds-is-open .content-expanded {
+            transform: rotate(180deg);
+        }
+        
+        .via-slds .slds-size--1-of-2, .via-slds .slds-size_1-of-2 {
+            max-width: 100%;
+        }
+        
+        #divExterno, .slds-picklist, .slds-text-heading--small, .via-slds .slds-size--1-of-2, .via-slds .slds-size_1-of-2 {
+            width: 100%;
+        }
+        
+        .vlocity .via-slds .slds-m-around--medium, .vlocity .via-slds .slds-m-around_medium {
+            overflow: hidden;
+        }
+        
+        .item-date {
+            width: 50%;
+        }
+        
+        .item-number {
+            width: 51%;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .item-name {
+            color: black;
+            display: block;
+            width: 40%;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .column-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: space-between;
+            padding: 0 11px;
+            color: grey;
+            
+            .name-title {
+                width: 50%;
+            }
+            
+            .status-title {
+                width: 50%;
+            }
+        }
+
+        .slds-button, .via-slds .slds-button {
+            border-radius: 0;
+        }
+        
+        .via-slds .slds-input {
+            background-color: white;
+            border-color: #dedbda;
+        }
+        
+        .via-slds .slds-input[readonly] {
+            background-color: white;
+            border-color: #dedbda;
+        }
+        
+        .via-slds .slds-button--reset, .via-slds .slds-button_reset {
+	        font-size: 0.75rem;
+        }
+        
+   /*     @media (max-width: 695px) {
+
+            .via-slds.slds-m-around--small.ng-scope {
+                margin: 0px !important;
+                margin-top: 12px !important;
+            }
+
+            .slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium {
+                padding-left: 5px;
+                padding-right: 5px;
+                margin: 0px;
+                margin-bottom: 0px;
+            }*/
+
+            /*.via-slds .slds-m-around--small, .via-slds .slds-m-around_small {
+                 margin: 0px; 
+            }*/
+
+/*            .title {
+                padding: 13px;
+            }
+            .slds-accordion {
+                display: block;
+            }
+            
+            .slds-table {
+                display: none;
+            }
+            
+            .slds-grid .page-options {
+                display: flex;
+                -webkit-flex-flow: row wrap;
+                justify-content: space-around;
+                flex-direction: column-reverse;
+                float: left;
+                margin: 0 16px;
+                overflow: hidden;
+                
+                .pages {
+                    margin: 0 0 10px 0;
+                }
+            }
+            
+            .negotationsfilter {
+                display: flex;
+                -webkit-flex-flow: row wrap;
+                justify-content: space-around;
+                flex-direction: column;
+            }
+
+            .title-line, .asset_type  {
+                padding-left: 16px;
+            }
+    
+        }*/
+        
+        @media (max-width: 412px) {
+            
+            .pages {
+                margin: 0 0 10px 0;
+                
+                button span {
+                    display: none;
+                }
+            }
+
+            .via-slds.slds-m-around--small.ng-scope {
+                margin: 0px !important;
+                margin-top: 12px !important;
+            }
+
+            .slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium {
+                /*display: block;*/
+                padding-left: 5px;
+                padding-right: 5px;
+                margin: 0px;
+                margin-bottom: 0px;
+            }
+
+            /*.via-slds .slds-m-around--small, .via-slds .slds-m-around_small {
+                 margin: 0px; 
+            }*/
+
+            .title {
+                padding: 13px;
+            }
+            .slds-accordion {
+                display: block;
+            }
+            
+            .slds-table {
+                display: none;
+            }
+            
+            .slds-grid .page-options {
+                display: flex;
+                -webkit-flex-flow: row wrap;
+                justify-content: space-around;
+                flex-direction: column-reverse;
+                float: left;
+                margin: 0 16px;
+                overflow: hidden;
+                
+                .pages {
+                    margin: 0 0 10px 0;
+                }
+            }
+            
+            .negotationsfilter {
+                display: flex;
+                -webkit-flex-flow: row wrap;
+                justify-content: space-around;
+                flex-direction: column;
+            }
+
+            .title-line, .asset_type  {
+                padding-left: 16px;
+            }
+        }
+        
+        @media (max-width: 380px) {
+            .slds-grid .page-options {
+                margin: 0;
+            }
+        }
+        
+        
+        /* -- Responsive -- */
+        @media (max-width: 360px) {
+    
+            .via-slds .slds-m-around--medium, .via-slds .slds-m-around_medium {
+                margin: 5px 3px;
+            }
+            
+            .slds-accordion {
+                display: block;
+            }
+            
+            .slds-table {
+                display: none;
+            }
+    
+            .siteforceContentArea .comm-layout-column:not(:empty) {
+                /* padding-top: .75rem; */
+                /* padding-bottom: .75rem; */
+                padding: 5px;
+            }
+            
+            .item-date {
+                display: block;
+                width: 50%;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            
+            .slds-grid .page-options {
+                margin: 0;
+                overflow: hidden;
+            }
+            
+        }
+}

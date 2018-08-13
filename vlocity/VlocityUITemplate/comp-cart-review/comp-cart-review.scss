@@ -1,0 +1,31 @@
+/*** ASSETS THEME VARIABLES ***/
+@import "comp-assets-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .comp-cart-review {
+            position: absolute;
+            top: 0;
+            right: $cpq-padding-large-horizontal/2;
+            bottom: 0;
+            left: $cpq-padding-large-horizontal/2;
+            height: calc(100% - 80px);
+        }
+        .comp-cart-review-items {
+            background-color: $cpq-product-cart-items-bg-color;
+            overflow-y: auto;
+        }
+
+        // 64rem
+        @media screen and (max-width: $bp-large) {
+            .comp-cart-review {
+                left: 0;
+                right: 0;
+            }
+        }
+    }
+}

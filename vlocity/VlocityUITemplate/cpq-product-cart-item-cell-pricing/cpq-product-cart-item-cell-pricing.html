@@ -1,0 +1,140 @@
+<div class="cpq-product-cart-item-cell-pricing">
+  
+  <!-- Tabs -->
+  <div class="slds-size_1-of-1 slds-text-align_center slds-m-bottom_small">
+      <div class="slds-m-bottom_small">{{::importedScope.customLabels.CPQAdjustmentTitleText}}</div>
+      <div ng-init="tabSelected = 'AdjustmentValue'" class="slds-tabs_default slds-text-align_center">        
+          <ul class="slds-tabs_default__nav cpq-product-cart-item-cell-pricing-tabs slds-size_2-of-3 slds-m-bottom_small" role="tablist">
+              <li ng-click="tabSelected = importedScope.selectTab('AdjustmentValue')" ng-class="{'slds-active' : tabSelected === 'AdjustmentValue'}" class="slds-tabs_default__item slds-radio slds-size_1-of-2" title="AdjustmentValue" role="presentation">
+                  <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="tabSelected === 'AdjustmentValue'" aria-controls="tab-default-1" id="adjustment-tab-1__item">
+                    {{::importedScope.customLabels.CPQAdjustmentValue}}
+                  </a>
+              </li> 
+
+              <li class="slds-tabs_default__item slds-radio slds-size_1-of-2" title="AdjustmentCode" role="presentation" ng-class="{'slds-active' : tabSelected === 'AdjustmentCode'}" ng-click="tabSelected = importedScope.selectTab('AdjustmentCode')" >
+                  <a class="slds-tabs_default__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="tabSelected === 'AdjustmentCode'" aria-controls="tab-default-2" id="adjustment-tab-2__item">
+                    {{::importedScope.customLabels.CPQAdjustmentCode}}
+                  </a>
+              </li>
+          </ul>
+      </div>
+  </div>
+  <!-- End Tabs -->
+
+  <!-- Adjustment Value -->
+  <div ng-show="tabSelected === 'AdjustmentValue'">
+    <div class="slds-form slds-form_stacked">
+
+      <!-- Apply Adjustment Block -->
+      <div  class="slds-size_1-of-2 slds-text-align_center slds-p-around_large cpq-pricing-block-center">
+        <div class="slds-form-element__control slds-text-align_center slds-p-bottom_small">
+
+          <div class="slds-form-element" >
+            <div class="slds-form-element__control">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open cpq-pricing-picklist">
+                  <button cpq-dropdown-handler="dropdownAdjustmentOpen = false" id="cpq-custom-adjustment-view-button" class="slds-button slds-button_neutral slds-picklist__label cpq-pricing-picklist__label slds-p-right_small" aria-haspopup="true" ng-click="dropdownAdjustmentOpen = !dropdownAdjustmentOpen">
+                      <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top_x-small slds-float_right'"></slds-button-svg-icon>
+                       {{records.adjustment.selected.name}}
+                  </button>
+                  <div class="slds-dropdown slds-dropdown_left cpq-pricing-picklist-dropdown" ng-if="dropdownAdjustmentOpen">
+                      <ul class="slds-dropdown__list slds-dropdown_length-5" role="menu">
+                          <li class="slds-dropdown__item" role="presentation" ng-repeat="type in records.adjustment.types"
+                              ng-click="records.adjustment.selected = type">
+                              <a href="javascript:void(0);" ng-show="records.adjustment.selected.name !== type.name" role="menuitemcheckbox" tabindex="0">
+                                  <span class="slds-truncate">{{type.name}}</span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+                </div>
+            </div>
+          </div>
+
+            <div class="slds-form-element slds-m-top_small">
+              <div class="slds-form-element__control">
+                <input type="number" id="adjustment-input-01" class="slds-input" ng-model="records.adjustment.value"/>
+              </div>
+            </div>
+  
+        </div>
+      </div>
+      <!-- End Apply Adjustment Block -->
+
+      <!-- Adjustment Plan and Policy Block -->
+      <div ng-if="attrs.isRecurring">
+        <div class="cpq-cell-pricing-modal__border slds-m-top_large slds-m-bottom_large"></div>
+        <div class="slds-m-bottom_large slds-text-align_center">
+          {{::importedScope.customLabels.CPQAdjustmentPolicyText}}
+        </div>
+        <div class="slds-size_2-of-3 slds-text-align_center cpq-pricing-block-center">          
+          <div class="slds-form-element slds-m-bottom_small">
+            <div class="slds-form-element__control slds-grid slds-text-align_left">
+              <div class="slds-size_1-of-2 slds-text-body_regular">
+                {{::importedScope.customLabels.CPQAdjustmentDuration}}
+              </div>
+              <div class="slds-size_1-of-2 slds-m-left_large">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                  <button cpq-dropdown-handler="dropdownDurationOpen = false" id="cpq-custom-duration-view-button" class="slds-button slds-button_neutral slds-picklist__label slds-p-right_small" ng-class="{'cpq-pricing-mandatory-input': (!records.timePlan.selected.label && records.timePolicy.selected.label)}" aria-haspopup="true" ng-click="dropdownDurationOpen = !dropdownDurationOpen">
+                      <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top_x-small slds-float_right'"></slds-button-svg-icon>
+                      {{records.timePlan.selected.label}}
+                  </button>
+                  <div class="slds-dropdown slds-dropdown_left" ng-if="dropdownDurationOpen">
+                      <ul class="slds-dropdown__list slds-dropdown_length-5" role="menu">
+                          <li class="slds-dropdown__item" role="presentation" ng-repeat="type in records.timePlan.types"
+                              ng-click="records.timePlan.selected = type">
+                              <a href="javascript:void(0);" ng-show="records.timePlan.selected.label !== type.label" role="menuitemcheckbox" tabindex="0">
+                                  <span class="slds-truncate">{{type.label}}</span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="slds-form-element">   
+            <div class="slds-form-element__control slds-grid slds-text-align_left">
+              <div class="slds-size_1-of-2">{{::importedScope.customLabels.CPQAdjustmentPolicy}}</div>
+              <div class="slds-size_1-of-2 slds-m-left_large">
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                  <button cpq-dropdown-handler="dropdownPolicyOpen = false" id="cpq-custom-policy-view-button" class="slds-button slds-button_neutral slds-picklist__label slds-p-right_small" ng-class="{'cpq-pricing-mandatory-input': (records.timePlan.selected.label && !records.timePolicy.selected.label)}" aria-haspopup="true" ng-click="dropdownPolicyOpen = !dropdownPolicyOpen">
+                    <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top_x-small slds-float_right'"></slds-button-svg-icon>
+                    {{records.timePolicy.selected.label}}
+                  </button>
+                  <div class="slds-dropdown slds-dropdown_left cpq-pricing-picklist-dropdown" ng-if="dropdownPolicyOpen">
+                      <ul class="slds-dropdown__list slds-dropdown_length-5" role="menu">
+                          <li class="slds-dropdown__item" role="presentation" ng-repeat="type in records.timePolicy.types"
+                              ng-click="records.timePolicy.selected = type">
+                              <a href="javascript:void(0);" ng-show="records.timePolicy.selected.label !== type.label" role="menuitemcheckbox" tabindex="0">
+                                  <span class="slds-truncate">{{type.label}}</span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>  
+      <!-- End Adjustment Duration and Policy Block -->
+
+    </div>  
+  </div>
+  <!-- End Adjustment Value -->
+
+  <!-- Adjustment Code -->
+  <div ng-show="tabSelected === 'AdjustmentCode'">
+    <div class="slds-form-element__control slds-size_1-of-2 slds-text-align_center slds-p-around_large cpq-pricing-block-center">
+      <input class="slds-lookup__search-input slds-input" type="search" placeholder="{{'CPQAdjustmentInputPlaceholder' | customLabel}}" role="combobox" aria-activedescendent="" aria-expanded="true" aria-autocomplete="list" ng-model="records.adjustmentCodes.selected" slds-options="promo  as promo.fields.label for promo in records.adjustmentCodes.list" slds-typeahead />
+      <!-- <div>
+        <small class="cpq-success-msg" ng-show="false">It's 15% off</small>
+        <small class="cpq-error-msg" ng-hide="true">Sorry, your code has expired</small>
+      </div> -->
+    </div>
+  </div>
+  <!-- End Adjustment Code -->
+
+</div>

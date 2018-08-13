@@ -1,0 +1,197 @@
+<div  class="slds-tree__container"  role="application">
+   <!--<div ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Stop'"> 
+        <h1> Recordá que el stop debit tiene una duración de 30 días.</h1>
+        <h1> Después de este plazo tu débito automático se reanudará.</h1>
+    </div>-->
+    <ul class="slds-tree" 
+        role="tree" 
+        aria-labelledby="treeheading" 
+        aria-activedescendant="tree0-node1">
+        <li id="tree0-node1" 
+            role="treeitem" 
+            aria-level="1" 
+            aria-expanded="{{expanded}}"
+            ng-repeat="ba in bpTree.response.BillingAccounts " 
+            ng-switch="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction"
+            ng-if=" ba.AutoPaymentMethodIdFormula != false"
+            >
+            
+            <!-- Delete -->
+            <div class="slds-tree__item"  ng-switch-when="Delete">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control">
+                        <span class="slds-checkbox">
+                            <input type="checkbox" name="options"  id="id-{{$index}}" ng-model="ba.isSelected">
+                            <label class="slds-checkbox__label" for="id-{{$index}}"> 
+                                <span class="slds-checkbox--faux"></span>
+                                <a id="tree0-node1__label" class="slds-form-element__label slds-truncate" href="javascript:void(0);" tabindex="-1" role="presentation" title="Tree Branch"><b>{{ba.Name}}</b></a>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- End Delete -->
+            <!-- Modifiy -->
+            <div class="slds-form-element" ng-switch-when="Update">
+                    <div class="slds-form-element__control">
+                        <span class="slds-radio">
+                            <input type="radio" name="options"  id="id--{{$index}}" 
+                                        ng-model="bpTree.response.BillingAccountToResponse"
+                                        value="{{ba.Id}}"
+                                        ng-click
+                                /> 
+                            <label class="slds-radio__label" for="id--{{$index}}"> 
+                                <span class="slds-radio--faux"></span>
+                                <a id="tree0-node1__label" class="slds-form-element__label slds-truncate" href="javascript:void(0);" tabindex="-1" role="presentation" title="Tree Branch">{{ba.Name}}</a>
+                            </label>
+                        </span>
+                    </div>
+            </div>
+            
+            <!-- End Modifiy -->
+            <!-- Stop Debit -->
+            <div class="slds-form-element" ng-switch-when="Stop">
+                    <div class="slds-form-element__control">
+                        <span class="slds-radio">
+                            <input type="radio" name="options"  id="id--{{$index}}" 
+                                        ng-model="bpTree.response.BillingAccountToResponse"
+                                        value="{{ba.Id}}"
+                                        ng-click
+                                /> 
+                            <label class="slds-radio__label" for="id--{{$index}}"> 
+                                <span class="slds-radio--faux"></span>
+                                <a id="tree0-node1__label" class="slds-form-element__label slds-truncate" href="javascript:void(0);" tabindex="-1" role="presentation" title="Tree Branch">{{ba.Name}}</a>
+                            </label>
+                        </span>
+                    </div>
+            </div>
+            
+            <!-- End Stop Debit -->
+            <ul class="marginLeft" ng-if="ba.BillingStreet || ba.BillingCity"> 
+                <div class="slds-form-element__label slds-truncate "> 
+                    {{ba.BillingStreet}}, ({{ba.BillingCity}}) 
+                 </div>
+            </ul>
+            <ul class="marginLeft" ng-if="!ba.BillingStreet || !ba.BillingCity"> 
+                <div class="slds-form-element__label slds-truncate "> 
+                    No tiene configurada la dirección de facturación. 
+                </div> 
+            </ul>
+            <ul class="marginLeft" ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Delete'"> 
+                <div class="slds-form-element__label slds-truncate "> 
+                   <!--<div ng-if="ba.Alias">Estado: Adherida - Alias: {{ba.Alias}}</div>
+                   <div ng-if="ba.Cbu">Estado: Adherida - CBU: {{ba.Cbu}}</div>
+                   <div ng-if="ba.CardType && ba.CardNumber">Estado: Adherida - {{ba.CardType}} {{ba.CardNumber}}</div>-->
+                   <div >Estado: Adherida - {{ba.PaymentMethod.Concatenate}}</div>
+                </div> 
+            </ul>
+            <ul class="marginLeft" ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Delete'"> 
+                <div class="slds-form-element__label slds-truncate "> 
+                   Cuenta con promociones asociadas al débito automático.
+                </div> 
+            </ul>
+            <ul class="slds-tree" 
+                role="tree" 
+                aria-labelledby="treeheading" 
+                aria-activedescendant="tree0-node1">
+                <li id="tree0-node1" 
+                    role="treeitem" 
+                    aria-level="1" 
+                    aria-expanded="{{expanded}}">
+                    <div class="slds-tree__item" ng-click="expanded = !expanded">
+                        <button 
+                            class="slds-button slds-button--icon slds-m-right--x-small" 
+                            aria-controls="tree0-node1" 
+                            title="Toggle"
+                            ng-if="ba.Assets && ba.Assets.length == undefined" style="margin-bottom: 12px;">
+                            <slds-button-svg-icon 
+                                size="'small'" 
+                                sprite="'utility'" 
+                                icon="'chevronright'">
+                            </slds-button-svg-icon>
+                        </button>
+                        <button 
+                            class="slds-button slds-button--icon slds-m-right--x-small" 
+                            aria-controls="tree0-node1" 
+                            title="Toggle"
+                             ng-if="ba.Assets.length > 0" style="margin-bottom: 12px;">
+                            <slds-button-svg-icon 
+                                size="'small'" 
+                                sprite="'utility'" 
+                                icon="'chevronright'">
+                            </slds-button-svg-icon>
+                        </button>
+                        <button 
+                            class="slds-button slds-button--icon slds-m-right--x-small" 
+                            aria-controls="tree0-node1" 
+                            title="Toggle"
+                            ng-if="!ba.Assets" style="margin-bottom: 12px;">
+                            <slds-button-svg-icon 
+                                size="'small'" 
+                                sprite="'utility'" 
+                                icon="'error'">
+                            </slds-button-svg-icon>
+                        </button>
+                        <div class="slds-form-element ">
+                            <div class="slds-form-element__control">
+                                <span>
+                                    <a id="tree0-node1__label" class="slds-form-element__label slds-truncate minmarginLeft" href="javascript:void(0);"  role="presentation" title="Tree Branch">Ver servicios contratados</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                     <ul ng-class="{'slds-is-expanded' : expanded, 'slds-is-collapsed': !expanded}"
+                        role="group" 
+                        aria-labelledby="<tree0-node1_></tree0-node1_>_label"
+                        ng-if="ba.Assets.length > 0"
+                        >
+                        <li class="slds-m-left--medium"
+                            id="tree0-node1-0" 
+                            role="treeitem" 
+                            aria-level="2"
+                            ng-repeat="serv in ba.Assets "> 
+                            
+                            <div class="slds-tree__item">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <span >
+                                            <label  for="id-{{$parent.$index}}-{{$index}}">
+                                                <span class="slds-form-element__label"> - {{serv.Name}}</span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <ul ng-class="{'slds-is-expanded' : expanded, 'slds-is-collapsed': !expanded}"
+                        role="group" 
+                        aria-labelledby="<tree0-node1_></tree0-node1_>_label"
+                        ng-if="ba.Assets && ba.Assets.length == undefined"
+                        >
+                        <li class="slds-m-left--medium"
+                            id="tree0-node1-0" 
+                            role="treeitem" 
+                            aria-level="2"
+                            > 
+                            
+                            <div class="slds-tree__item">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control">
+                                        <span >
+                                            <label  for="id-{{$parent.$index}}-1">
+                                                <span class="slds-form-element__label"> - {{ba.Assets.Name}}</span>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<br><br><br>

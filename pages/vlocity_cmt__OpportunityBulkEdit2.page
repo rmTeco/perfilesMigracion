@@ -1,0 +1,3 @@
+<apex:page standardStylesheets="false"  showHeader="false" sidebar="false" applyHtmlTag="false">
+<c:BulkEditComponent2 contextId="{!$CurrentPage.parameters.Id}" objectToQuery="OpportunityLineitem" foreignKeyName="OpportunityId"  backUrl="/apex/OpportunityManager?id={!$CurrentPage.parameters.Id}" postEditProcessor="Pricing"/>  
+</apex:page>

@@ -1,0 +1,12 @@
+<div ng-controller="MobileHistoryCtrl as mhc"
+     class="via-slds">
+    {{$scope.params}}
+    <div ng-repeat="card in cards | filter:mhc.mobileFilter">
+        <vloc-card ng-model="card" 
+                   data="card" 
+                   records="records" 
+                   index="{{$index}}" 
+                   session-id="{{sessionId}}">
+        </vloc-card>
+    </div>
+</div>

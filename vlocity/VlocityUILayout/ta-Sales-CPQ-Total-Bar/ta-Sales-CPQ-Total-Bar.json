@@ -1,0 +1,35 @@
+{
+    "Cards": [
+        "taCPQTotalBarCard"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "8016C0000000LHl"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records[0].details.records[0]",
+            "apexRestResultVar": "records[0].details.records[0]",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/cpq/carts/{{params.id}}?validate=true&price=true",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "price": "true",
+                "validate": "true"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getCarts",
+            "remoteNSPrefix": "%vlocity_namespace%"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-CPQ-Total-Bar"
+        }
+    }
+}

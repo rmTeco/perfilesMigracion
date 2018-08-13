@@ -1,0 +1,42 @@
+<tr class="slds-hint-parent">
+             
+    <td 
+        ng-repeat="field in data.fields | limitTo:(data.actions.length  > 0 ? 11 : 12)"
+        ng-switch="field.name" 
+        role="gridcell">
+       <!-- ng-if="field.label != null">-->
+        <div  class="slds-truncate">
+            <div ng-switch-when="['Fol']" >
+                <input 
+                    type="checkbox" 
+                    name="options" 
+                    id="checkbox-123"
+                    ng-checked="(obj | getter: field | picker: field.type)" 
+                    ng-disabled="true"/>
+            </div>
+            
+            <div ng-switch-when="['AccountName']" 
+                 class="slds-truncate">
+                     <a href="javascript:void(0);">
+                         {{obj | getter: field | picker: field.type}}
+                     </a>
+            </div>
+        
+            <div  ngClass="slds-truncate" 
+                  ng-switch-default>
+                    {{obj | getter: field | picker: field.type}}
+            </div>
+        </div>
+    </td>
+    <td class="slds-cell-shrink" 
+        ng-if="data.actions.length > 0" 
+        data-label="Actions" 
+        style="overflow: visible">
+        <slds-dropdown content="data.actions" 
+                        ng-if="data.actions.length > 0" 
+                        icon-attribute="vlocityIcon" 
+                        label-attribute="displayName" 
+                        action-function="performAction(item)">
+        </slds-dropdown>
+    </td>
+</tr>

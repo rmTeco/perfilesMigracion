@@ -1,0 +1,308 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "icon": "custom31",
+    "sprite": "custom",
+    "states": [
+        {
+            "actionCtxId": "['InteractionPolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Role']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Policyholder"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SampleInteractionPolicy-ViewDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SampleInteractionPolicy-LaunchOS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy #",
+                    "name": "['Name']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Type",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Billing Method",
+                    "name": "['%vlocity_namespace%__BillingMethod__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Effective Term",
+                    "name": "['%vlocity_namespace%__EffectiveTerm__c']",
+                    "track": true,
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Annual Premium",
+                    "name": "['%vlocity_namespace%__AnnualPremium__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "track": true,
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Role'] == 'Policyholder'",
+            "flyout": {
+                "layout": "Sample-Interaction-Flyout-Grid-NoActions-slds"
+            },
+            "name": "Policyholder",
+            "sObjectType": "%vlocity_namespace%__CustomerInteractionTopic__c",
+            "templateUrl": "card-active-slds-VlocityTrack"
+        },
+        {
+            "actionCtxId": "['InteractionPolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Role']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Beneficiary"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SampleInteractionAccount-ViewDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SampleInteractionPolicy-LaunchOS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy #",
+                    "name": "['Name']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Type",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Billing Method",
+                    "name": "['%vlocity_namespace%__BillingMethod__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Effective Term",
+                    "name": "['%vlocity_namespace%__EffectiveTerm__c']",
+                    "track": true,
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Annual Premium",
+                    "name": "[%vlocity_namespace%__AnnualPremium__c]",
+                    "track": true,
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "track": true,
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Role'] == 'Beneficiary'",
+            "flyout": {
+                "layout": "Sample-Interaction-Flyout-Grid-NoActions-slds"
+            },
+            "name": "Beneficiary",
+            "sObjectType": "%vlocity_namespace%__CustomerInteractionTopic__c",
+            "templateUrl": "card-active-slds-VlocityTrack"
+        },
+        {
+            "actionCtxId": "['InteractionPolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Role']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Producer"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SampleInteractionAccount-ViewDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "SampleInteractionPolicy-LaunchOS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy #",
+                    "name": "['Name']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Type",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Billing Method",
+                    "name": "['%vlocity_namespace%__BillingMethod__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Effective Term",
+                    "name": "['%vlocity_namespace%__EffectiveTerm__c']",
+                    "track": true,
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Annual Premium",
+                    "name": "[%vlocity_namespace%__AnnualPremium__c]",
+                    "track": true,
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "track": true,
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Role'] == 'Producer'",
+            "flyout": {
+                "layout": "Sample-Interaction-Flyout-Grid-NoActions-slds"
+            },
+            "name": "Agent",
+            "sObjectType": "%vlocity_namespace%__CustomerInteractionTopic__c",
+            "templateUrl": "card-active-slds-VlocityTrack"
+        }
+    ],
+    "title": "Policies"
+}

@@ -1,0 +1,40 @@
+<div class="slds-tile cpq-promotion-item" ng-if="obj.category.toLowerCase() === importedScope.getCategorySelected().toLowerCase()">
+    <div class="slds-media cpq-promotion-item-container">
+        <div class="slds-media__body" >
+            <div class="slds-grid slds-wrap">
+                <div class="slds-col slds-small-size_10-of-12 slds-medium-size_10-of-12 slds-large-size_10-of-12">
+                    <p class="slds-tile__title slds-truncate cpq-promotion-name">{{::obj.Name}}</p>
+                </div>
+            </div>
+            <div class="slds-tile__detail">
+                <div class="slds-grid">
+                    <div class="slds-col slds-small-size_8-of-12 slds-medium-size_7-of-12 slds-large-size_8-of-12 slds-text-align_left cpq-promotion-info">
+                        <div>
+                            <span class="cpq-promotion-label">{{::importedScope.customLabels.CPQPromoCode | uppercase}}: </span>
+                            <span class="slds-text-body_small"> {{::obj[$root.nsPrefix+'Code__c']}}</span>
+                        </div>
+                        <div>{{::obj.Description__c}}</div>
+                        <div class="cpq-item-promotion-messages">
+                            <ul ng-if="obj.messages.length > 0">
+                                <li ng-repeat="msg in obj.messages" class="slds-p-vertical_xx-small">
+                                    <span class="cpq-error-msg" ng-if="msg.severity === 'ERROR'">
+                                        {{msg.message}}
+                                    </span>
+                                    <span class="cpq-warning-msg" ng-if="msg.severity !== 'ERROR'">
+                                        {{msg.message}}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-small-size_4-of-12 slds-medium-size_5-of-12 slds-large-size_4-of-12 slds-text-align_right cpq-promotion-actions">
+                        <button class="slds-button slds-button_neutral cpq-add-button" ng-click="importedScope.addToCart(obj, true)" ng-disabled="!obj.actions || !obj.actions.addtocart || obj.category.toLowerCase() !== 'qualified'">
+                            {{::importedScope.customLabels.CPQAddToCart}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

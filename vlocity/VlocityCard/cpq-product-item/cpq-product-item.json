@@ -1,0 +1,38 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "flyout": {
+                "layout": "cpq-product-item-more"
+            },
+            "name": "active",
+            "sObjectType": null,
+            "templateUrl": "cpq-product-item"
+        }
+    ],
+    "title": "ProductItem"
+}

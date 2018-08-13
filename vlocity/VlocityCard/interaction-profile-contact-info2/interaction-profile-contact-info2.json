@@ -1,0 +1,45 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['RecordType.DeveloperName']": "Contact"
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Type",
+                    "name": "['Type']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Address",
+                    "name": "['%vlocity_namespace%__CalculatedAddress__c']",
+                    "type": "string"
+                }
+            ],
+            "name": "Contact",
+            "templateUrl": "left-account-info-slds"
+        }
+    ],
+    "title": "Profile"
+}

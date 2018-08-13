@@ -1,0 +1,7 @@
+<design:component label="Vlocity OmniScript">
+    <design:attribute name="type" label="Type" datasource="apex://vlocity_cmt.OmniTypeDynamicPicklist" />
+    <design:attribute name="subtype" label="SubType" datasource="apex://vlocity_cmt.OmniSubTypeDynamicPicklist" />
+    <design:attribute name="language" label="Language" datasource="apex://vlocity_cmt.OmniLanguageDynamicPicklist" />
+    <design:attribute name="height" default="" label="Max Height (px)" description="By default the component will grow dynamically as the Layout, Card and Templates are loaded. Use this to restrict the height and make the component scrollable when the content overflows. Must be in pixels (px)."/>
+    <design:attribute name="customVFPage" label="Custom Visualforce Page" description="The name of the Visualforce page to use to render the Layout. A default will be used if one is not provided" datasource="apex://vlocity_cmt.VisualForcePageDynamicPicklist" />
+</design:component>

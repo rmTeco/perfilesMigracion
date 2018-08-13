@@ -1,0 +1,56 @@
+<td class="slds-truncate slds-p-vertical--medium card-table-row-icon" 
+    ng-if="data" 
+    data-label="{{field.label}}"
+    ng-repeat="field in $root.selectedState.fields | limitTo: 8">
+    <div ng-if="$first" class="chevronClosed">
+        <slds-svg-icon  sprite="'utility'" 
+                        class="slds-input__icon--left"
+                        icon="'chevronright'"
+                        size="'x-small'" 
+                        style="fill:#181818"
+                        extra-classes="'slds-input__icon'">
+        </slds-svg-icon>
+    </div>
+    <div ng-if="$first" class="chevronOpen openTopFix ng-hide" >
+        <slds-svg-icon  sprite="'utility'" 
+                        icon="'chevrondown'"
+                        size="'x-small'" 
+                        style="fill:#181818"
+                        extra-classes="'slds-input__icon'">
+        </slds-svg-icon>
+    </div>
+    
+    
+    <div class="slds-text-align--right" 
+         ng-if="field.label == 'Modo'">
+        <div ng-if="(obj | getter: field | picker: field.type) == 'Entrante'">
+            <slds-svg-icon  sprite="'utility'" 
+                            icon="'arrowup'"
+                            size="'x-small'"
+                            style="fill:#2E9AFE"
+                            extra-classes="'slds-input__icon'">
+            </slds-svg-icon>
+        </div>
+        <div ng-if="(obj | getter: field | picker: field.type) == 'Saliente'">
+            <slds-svg-icon  sprite="'utility'" 
+                            icon="'arrowdown'"
+                            style="fill:#FB0202"
+                            size="'x-small'" 
+                            extra-classes="'slds-input__icon'">
+            </slds-svg-icon>
+        </div>
+    </div>
+    
+    <div ng-if="field.label == 'Fecha inicio'">
+        <div class="slds-p-left--x-large" ng-if="(obj | getter: field | picker: field.type) != 'null'">
+            {{obj | getter: field | picker: field.type}}
+        </div>
+    </div>
+    
+    <div ng-if="field.label != 'Modo' && field.label != 'Fecha inicio'">
+        <div ng-if="(obj | getter: field | picker: field.type) != 'null'">
+            {{obj | getter: field | picker: field.type}}
+        </div>
+    </div>
+    
+</td>

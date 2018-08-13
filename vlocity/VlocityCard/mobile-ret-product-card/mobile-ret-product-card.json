@@ -1,0 +1,42 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "RET_Placeholder",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "flyout": {
+                "layout": "mobile-ret-product-detail"
+            },
+            "name": "Phone",
+            "sObjectType": "Account",
+            "templateUrl": "mobile-ret-product-item"
+        }
+    ],
+    "title": "mobile-ret-product-card"
+}

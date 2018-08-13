@@ -1,0 +1,29 @@
+<div class="console-account-info" ng-init="showInfo = true">
+    <div class="slds-p-right--x-small spacer">
+        <div class="slds-text-heading--x-small" ng-click="showInfo = !showInfo">
+            {{::$root.vlocity.getCustomLabel('Segmentación', 'Segmentación')}} 
+            <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+            <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+        </div>
+    </div>
+    <div class="acct-info" ng-show="showInfo">
+        <table>
+            <tr>
+                <td>
+                    <div class="client-data-label">Segmento:</div>
+                    <div class="client-data-detail">{{obj.Account.SegmentLevel1__c}} - {{obj.Account.SegmentLevel2__c}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="client-data-label">Atributos:</div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="client-data-detail">{{obj.Attributes}}</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

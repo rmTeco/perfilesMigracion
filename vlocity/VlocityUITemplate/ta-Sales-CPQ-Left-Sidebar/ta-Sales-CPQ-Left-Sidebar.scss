@@ -1,0 +1,88 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    .cpq-sidebar-container {
+        position: absolute;
+        top: 0;
+        right: $cpq-padding-large-horizontal/2;
+        bottom: 0;
+        left: $cpq-padding-large-horizontal/2;
+    }
+    
+    .cpq-searchbox {
+        vertical-align: middle;
+        margin-bottom: $cpq-padding-large-vertical;
+        
+        input {
+           background-color: $cpq-product-container-bg-color;
+           border-radius: 5px;
+           border: 1px solid $cpq-product-container-bg-color;
+           box-shadow: 8px rgba(0, 0, 0, 0.1);
+        }
+        .taChangeDeliveryMethod .label{
+            font-size: 14px;
+	        vertical-align: middle;
+	    }
+    }
+    
+    .cpq-tabs-container { 
+        padding-bottom: 20px;
+    }
+    
+    .cpq-filter-container {
+        background-color: $cpq-product-container-bg-color;
+        border-radius: 5px 5px 0 0;
+        //margin-bottom: $cpq-product-item-padding;
+        section {
+            padding: $cpq-padding-base-vertical 0px;
+            margin: 0px $cpq-padding-large-horizontal;
+        }
+        
+        a {
+            text-decoration: none;
+            color: $mid-black;
+            
+            &:hover {
+                color:$dark-blue;
+            }
+        }
+        
+        &:after {
+            content: "";
+            background: linear-gradient(to right, #3bb9c2, #009a97 13%, #97a96b 24%, #ebbb1d 37%, #f28cb9 53%, #e30f72 71%, #91268f 86%, #024da1);
+            
+            display: block;
+            height: 1px;
+        }
+    }
+    
+    .cpq-items-container {
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+        background-color: $cpq-product-container-bg-color;
+        border-radius: 0 0 5px 5px;
+         
+        .cpq-no-products-msg {
+            padding: $cpq-padding-large-vertical;
+        }
+    }
+    
+    hr {
+        margin: 1em 0;
+    }
+
+    // 64rem
+    @media screen and (max-width: $bp-large) {
+        .cpq-sidebar-container {
+            top: $cpq-padding-large-vertical*1.2;
+            right: $cpq-padding-large-horizontal*0.75;
+            bottom: $cpq-padding-large-vertical*1.2;
+            left: $cpq-padding-large-horizontal*0.75;
+        }
+    }
+}

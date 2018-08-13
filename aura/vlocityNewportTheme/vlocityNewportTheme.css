@@ -1,0 +1,909 @@
+/* Styles for header */
+
+.THIS .vlocityHeader {
+    width: 100%;
+    padding: 6px 0px;
+    background-color: inherit;
+    border-bottom: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    min-height: 70px;
+}
+
+.THIS .vlocityHeader .vlocityHeaderContent {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: inherit;
+    margin: inherit;
+}
+
+.THIS .siteforceNapiliBody .cBrandingProfile {
+    margin-left: 40px;
+    max-width: 140px;
+    padding: 10px 0px;
+}
+
+.THIS .siteforceNapiliBody .cBrandingLogo {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.THIS .vlocitySubNavBar {
+    width: 100%;
+    padding: 0px 0 10px 0;
+    background-color: inherit;
+    border-bottom: none;
+}
+
+
+/* Override existing navigation bar styles */
+
+.THIS .vlocityNavBar {
+    flex: 1;
+    font-family: "Salesforce Sans", Arial, sans-serif;
+}
+
+.THIS .forceCommunityNavigationMenu {
+    background: none;
+    border-top: none;
+}
+
+.THIS .forceCommunityNavigationMenu .navigationMenu {
+    margin: 0;
+    max-width: inherit;
+    padding: 10px 10px;
+    min-height: 60px;
+}
+
+.THIS .forceCommunityNavigationMenu .menuItem {
+    padding: 0 18px;
+}
+
+.THIS .forceCommunityNavigationMenu .menuItemLink,
+.THIS .forceCommunityNavigationMenu .menuItemLink.triggerLink {
+    color: #16325C;
+    font-weight: 500;
+    padding: 7px 5px;
+    font-family: "Salesforce Sans", Arial, sans-serif;
+    font-size: 16px;
+}
+
+.THIS .forceCommunityNavigationMenu .menuItemLink.homeButton {
+    opacity: 1;
+}
+
+.THIS .forceCommunityNavigationMenu .menuItemLink.homeButton:hover {
+    opacity: 1;
+    background-color: inherit;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.THIS .forceCommunityNavigationMenu .menuItemLink {
+    transition: 0.4s all;
+    border-bottom: 6px solid transparent;
+}
+
+.THIS .forceCommunityNavigationMenu .menuItemLink:hover,
+.THIS .forceCommunityNavigationMenu .menuItemLink:focus,
+.THIS .forceCommunityNavigationMenu .menuItemLink.triggerLink:hover,
+.THIS .forceCommunityNavigationMenu .menuItemLink.triggerLink:focus,
+.THIS .forceCommunityNavigationMenu .menuItem.current .menuItemLink,
+.THIS .forceCommunityNavigationMenu .menuItem.current .menuItemLink.triggerLink {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #2972CB;
+    border-color: #2972CB;
+    text-decoration: none;
+}
+
+
+.THIS .slds-icon-waffle [class*=slds-r] {
+    background-color: #2972cb;
+}
+
+.THIS ul.navigationMenu li:first-child svg.slds-button__icon {    
+    width: 20px;
+    height: 20px;
+    fill: #2972cb;
+}
+
+.THIS ul.navigationMenu li:first-child .appLauncher  {
+    padding-bottom: 8px;
+}
+
+.THIS ul.navigationMenu li:first-child button.menuItemLink  {
+    padding-top: 0px;
+}
+
+.THIS ul.navigationMenu li:first-child .homeButton.menuItemLink:focus {
+    color: transparent;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.THIS ul.navigationMenu li:first-child .homeButton:hover {
+    opacity:0.9
+}
+
+
+/* Override existing user profile styles */
+
+.THIS .selfServiceProfileMenuTrigger {
+    padding: 0;
+}
+
+.THIS .selfServiceProfileMenuTrigger a {
+    color: #66381E;
+    box-shadow: none;
+}
+
+.THIS .selfServiceProfileMenu .popupTargetContainer {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.THIS .forceCommunityNavigationMenu .subMenuItem a,
+.THIS .selfServiceProfileMenu,
+.THIS .selfServiceProfileMenu .uiMenuItem,
+.THIS .vlocitySearch {
+    font-family: "Salesforce Sans", Arial, sans-serif !important;
+}
+
+.THIS .selfServiceProfileMenuTrigger .profileName {
+    /*text-shadow: 1px 1px 3px rgba(0,0,0,0.15);*/
+    font-size: 16px;
+    white-space: nowrap;
+    width: 110px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    text-align: left;
+}
+
+.THIS .subMenu ul.scrollable li:first-child {
+    display: block;
+}
+
+.THIS .selfServiceProfileMenuTrigger .profileName,
+.THIS .selfServiceProfileMenuTrigger .triggerDownArrow,
+.THIS .selfServiceProfileMenu .menuList li>a {
+    color: #000;
+}
+
+.THIS .selfServiceProfileMenu .menuList {
+    margin-top: 18px;
+    min-width: 220px;
+}
+
+.THIS .selfServiceProfileMenu .selfServiceProfileMenuTrigger .trigger-link:focus {
+    box-shadow: none;
+}
+
+.THIS .selfServiceProfileMenu .selfServiceProfileMenuTrigger .trigger-link {
+    padding: 0px 0px;
+}
+
+.THIS .selfServiceProfileMenu .selfServiceProfileMenuTrigger .triggerDownArrow {
+    display: none;
+}
+
+.THIS .selfServiceProfileMenu .menuList li>a {
+    padding: 13px 18px;
+    font-weight: 300;
+    font-size: 16px;
+    transition: 0.2s all;
+    outline: none;
+}
+
+.THIS .selfServiceProfileMenuTrigger .profileName,
+.THIS .selfServiceProfileMenu .menuList li>a:hover,
+.THIS .selfServiceProfileMenu .menuList li>a:focus {
+    font-weight: normal;
+    max-width: 100%;
+    max-width: 100%;
+    text-shadow: none;
+    text-transform: none;
+    color: #2972CB;
+}
+
+
+/* Styles for background video shown on Home page */
+
+.THIS .vlocityBackground {
+    display: none;
+}
+
+.THIS .vlocityBackground {
+    display: block;
+}
+
+.THIS .vlocityBackground {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: -100;
+}
+
+.THIS .vlocityBackgroundVideo {
+    width: 100%;
+}
+
+.THIS .vlocityBackgroundImage {
+    height: 100%;
+    width: 100%;
+}
+
+
+/* Styles for updating the featured content/topics on Home page */
+
+
+/* Override existing omnibox/search styles for Home Page */
+
+.THIS .vlocitySearchInner {
+    display: none;
+    flex: 1;
+}
+
+.THIS .forceCommunityOmniBox {
+    height: inherit;
+}
+
+.THIS .forceCommunityOmniBox .no-assigned-image .default-bg-overlay {
+    background: none;
+    height: 0;
+}
+
+.THIS .forceCommunityOmniBox .search-wrapper {
+    padding: 0px;
+}
+
+.THIS .forceCommunityOmniBox.selfServiceSearchWrapper .search-button.uiButton {
+    background-color: inherit;
+}
+
+.THIS .forceCommunityOmniBox .search-button .label {
+    display: none;
+}
+
+.THIS .forceCommunityOmniBox .search-button .search-icon {
+    color: #000;
+    font-size: 14px;
+    position: absolute;
+    top: 10px;
+    right: 13px;
+}
+
+.THIS .forceCommunityOmniBox .search-field::-webkit-input-placeholder {
+    color: #000;
+}
+
+.THIS .forceCommunityOmniBox .uiAutocompleteList {
+    max-height: 30vh;
+    overflow: scroll;
+    padding-bottom: 0px;
+    background: white;
+}
+
+.THIS .forceCommunityOmniBox .search-input-group,
+.THIS .forceCommunityOmniBox .search-field {
+    width: 100%;
+}
+
+.THIS .forceCommunityOmniBox .search-field {
+    background-color: hsla(0, 0%, 100%, .5);
+    border-radius: 4px;
+    border-color: rgba(255, 255, 255, 0.5);
+    height: 60px;
+    width: 100%;
+    color: #7d7f7d;
+    padding-right: 15px;
+    font-size: 1rem;
+}
+
+.THIS .vlocitySearch .search-field::-webkit-input-placeholder {
+    color: gray;
+}
+
+.THIS .forceCommunityOmniBox .search-field:focus {
+    box-shadow: 0 0 3px #666869;
+    border-radius: 4px;
+}
+
+.THIS .forceCommunityDeflectionOption a.suggestion:hover,
+.THIS .forceCommunityDeflectionOption a.suggestion:focus {
+    background-color: rgb(248, 251, 254);
+}
+
+.THIS .forceCommunityDeflectionOption a.suggestion {
+    padding: 4px 14px 4px 14px;
+}
+
+.THIS .forceCommunityOmniBox.selfServiceSearchWrapper .search-button.uiButton {
+    background-color: inherit;
+}
+
+.THIS .forceCommunityOmniBox .search-button .label {
+    display: none;
+}
+
+.THIS .forceCommunityOmniBox .search-button .search-icon {
+    float: right;
+    padding-right: 18px;
+    padding-top: 14px;
+    color: #7d7f7d;
+    font-size: 17px;
+}
+
+.THIS .forceCommunityOmniBox .search-field::-webkit-input-placeholder {
+    color: #66381E;
+}
+
+.THIS .forceCommunityOmniBox .uiAutocompleteList {
+    max-height: 30vh;
+    overflow: scroll;
+}
+
+
+/* Styles for updating search and logo on Home page */
+
+.THIS .vlocitySearchInner {
+    width: 100%;
+    min-width: 100px; 
+    text-align: center;
+    margin: 0 auto;
+    flex: inherit;
+    display: block;
+}
+
+.THIS .vlocityCompanyLogo {
+    display: inline;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 15px 35px;
+    /*background-image: token(colorBackgroundButtonBrand);*/
+}
+
+.THIS .vlocityCompanyLogo.hidden {
+    visibility: hidden;
+}
+
+
+/* Override styles for navigation bar on Home page */
+
+.THIS .vlocityNavBar {
+    padding-right: 205px;
+    margin-top: 0px;
+    min-width: 100%;
+    min-height: 44px;
+}
+
+.THIS .vlocityCompanyHeader {
+    position: absolute;
+    top: 15px;
+    left: 130px;
+}
+
+
+/* Override styles for user profile menu on Home page */
+
+.THIS .vlocityProfileMenu {
+    right: 35px;
+    position: absolute;
+    padding: 16px 0px;
+}
+
+.THIS .vlocityProfileMenu .profileIcon {
+    display: none;
+}
+
+.THIS .selfServiceSearchWrapper.big-search-container {
+    position: absolute;
+    width: 40%;
+    top: 10px;
+    right: 150px;
+}
+
+
+/* Override styles for additional design properties  */
+
+.THIS .vlocityBackground.vlocityBackgroundImage {
+    top: 0;
+}
+
+.THIS .vlocityBackgroundImage {
+    height: 100%;
+    width: 100%;
+}
+
+
+/*
+.THIS .vlocityContent {
+    padding: 0px 30px;
+}
+*/
+
+.THIS .vlocityContent {
+    padding: 0px 30px;
+}
+
+.THIS .forceCommunityOmniBox .search-field {
+    height: 50px;
+    display: none;
+}
+
+.THIS .forceCommunityNavigationMenu .toggleNav:hover {
+    color: #2972CB;
+}
+
+.THIS .vlocitySearch:hover .forceCommunityOmniBox .search-field {
+    display: block;
+    background: none;
+    color: #16325c;
+}
+
+.THIS .vlocitySearch .forceCommunityOmniBox .search-field:focus,
+.THIS .vlocitySearch .forceCommunityOmniBox .search-field:active {
+    box-shadow: none;
+}
+
+.THIS .vlocitySearch {
+    right: 146px;
+    position: absolute;
+    padding: 14px 4px;
+    border-radius: 100px;
+    width: 34px;
+    z-index: 1;
+    transition: 0.3s width;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.THIS .vlocitySearch .search-container {
+    display: none;
+    opacity: 0;
+    transition: 1s all;
+}
+
+.THIS .forceCommunityOmniBox .continue-post-wrapper {
+    background-color: #eaeaea;
+    padding: 6px 14px;
+    border-top: 1px solid #f4f4f4;
+    border-bottom: 4px solid #2972cb;
+}
+
+.THIS .forceCommunityOmniBox .continue-post-action a {
+    font-weight: normal;
+}
+
+.THIS .vlocitySearch:hover .search-container {
+    display: inherit;
+    opacity: 1;
+}
+
+.THIS .forceCommunityOmniBox .has-input .search-container {
+    box-shadow: none;
+}
+
+.THIS .forceCommunityOmniBox.show-result .result-container {
+    box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.22);
+}
+
+.THIS .vlocitySearch .search-icon {
+    border-right: 1px solid rgba(128, 128, 128, 0.22);
+    border-radius: 0px;
+    padding: 2px 5px;
+}
+
+.THIS .vlocitySearch .search-icon svg {
+    fill: #2972cb;
+}
+
+.THIS .vlocitySearch:hover {
+    width: 50%;
+    border: 1px dashed rgba(0, 112, 210, 0.45);
+    max-width: 350px;
+}
+
+.THIS .selfServiceSearchWrapper.big-search-container {
+    position: absolute;
+    width: 100%;
+    top: 2px;
+    padding-left: 30px;
+    right: 0;
+}
+
+.THIS .vlocitySearch .search-input-group button {
+    display: none !important;
+}
+
+.THIS .uiMenuList--default.uiMenuList {
+    left: -220px;
+    margin-top: -20px;
+    max-width: 220px;
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+}
+
+/*overriding max width */
+
+.THIS .vlocityNavBar .forceCommunityNavigationMenuItemTriggerLink .triggerLabel {
+    max-width: none;
+}
+
+.THIS .vlocityNavBar .forceCommunityNavigationMenu .menuItemLink, .THIS .vlocityNavBar .forceCommunityNavigationMenu .menuItemLink.triggerLink {
+    max-width: none;
+}
+
+/* Notification */
+.THIS .vlocityNotification {
+    right: 180px;
+    position: absolute;
+    padding: 16px 4px;
+    border-radius: 100px;
+    width: 34px;
+    z-index: 1;
+    -webkit-transition: .3s width;
+    transition: .3s width;
+    cursor: pointer;
+}
+
+.THIS .vlocityNotification button.forceHeaderButton {
+    color: #2972cb;
+}
+
+.THIS .vlocityNotification button.forceHeaderButton:hover {
+    color: #15325b;
+}
+
+/* winter 18 support */
+.THIS .cBrandingLogo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    max-width: 100%;
+    max-height: 52px;
+    display: block;
+    outline: 0;
+    width: 80%;
+    height: 45px;
+}
+
+.THIS .siteforceNapiliBody .cBrandingProfile {
+    width: 25%;
+    float: left;
+    text-align: center;
+}
+
+.THIS .forceCommunityGlobalNavigation {
+    margin: 0;
+    max-width: inherit;
+    padding: 2px 10px;
+    background: white;
+    color: #16325c;
+    min-height: 60px;
+}
+
+.THIS .comm-navigation__list li a {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #16325c;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 7px 5px;
+    font-family: "Salesforce Sans",Arial,sans-serif;
+    font-size: 16px;
+    -webkit-transition: .4s all;
+    transition: .4s all;
+    border-bottom: 6px solid transparent;
+}
+
+.THIS .comm-navigation__list li a.slds-is-active {
+    color: #2972cb;
+    border-color: #2972cb;
+    text-decoration: none;
+}
+
+
+.THIS .comm-navigation__list li {
+    padding: 0px 10px;
+}
+
+.THIS .comm-navigation__list li a:hover {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    color: #2972cb;
+    border-color: #2972cb;
+    text-decoration: none;
+}
+
+.THIS .comm-navigation__list li button {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #16325c;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 7px 5px;
+    font-family: "Salesforce Sans",Arial,sans-serif;
+    font-size: 16px;
+    -webkit-transition: .4s all;
+    transition: .4s all;
+    border-bottom: 6px solid transparent;
+}
+
+.THIS .comm-navigation__list li button.slds-is-active {
+    color: #2972cb;
+    border-color: #2972cb;
+    text-decoration: none;
+}
+.THIS .forceCommunityGlobalNavigation .slds-list_vertical {
+    background-color: White;
+}
+
+.THIS .forceCommunityGlobalNavigation .slds-button.slds-button--icon-bare {
+    color: #2972cb;
+    position: absolute;
+    left: 0;
+    top: 0px;
+    margin-top: 24px;
+    margin-left: 14px;
+}
+
+.THIS .forceCommunityGlobalNavigation .slds-button.slds-button--icon-bare svg{
+    width:20px;
+}
+
+.THIS .comm-navigation__list li button:hover {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    color: #2972cb;
+    border-color: #2972cb;
+    text-decoration: none;
+}
+
+.THIS .comm-navigation__list li ul li.slds-list__item {
+    
+    background: white;
+    padding: 0;
+}
+
+.THIS .comm-navigation__list li ul li.slds-list__item a {
+    font-weight: normal;
+    font-family: "Salesforce Sans",Arial,sans-serif;
+    font-size: 16px;
+    padding: 8px 28px 8px 14px;
+    color:#16325c;
+}
+
+.THIS .comm-navigation__list li ul li.slds-list__item:hover{
+    background: rgb(234, 234, 234);
+}
+
+.THIS .comm-navigation__list li ul li.slds-list__item:hover a{
+    border-color: transparent;
+    color: #2972cb;
+}
+
+.THIS .comm-navigation__list .slds-icon_container.slds-icon-utility-home {
+    box-shadow: 0px 6px 0px 10px white;
+}
+
+.THIS .comm-navigation__list .slds-icon_container.slds-icon-utility-home svg {
+    width: 20px;
+    height: 25px;
+}
+
+.THIS button:active,
+.THIS button:focus,
+.THIS button.active, .THIS a:focus {
+   outline: 0;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+ }
+
+.THIS .selfServiceUserProfileMenu .popupTargetContainer {
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.THIS .selfServiceUserProfileMenu,
+.THIS .selfServiceUserProfileMenu .uiMenuItem,
+.THIS .vlocitySearch {
+    font-family: "Salesforce Sans", Arial, sans-serif !important;
+}
+
+.THIS .selfServiceUserProfileMenu .menuList li>a {
+    color: #000;
+}
+
+.THIS .selfServiceUserProfileMenu .menuList {
+    margin-top: 18px;
+    min-width: 220px;
+}
+
+.THIS .selfServiceUserProfileMenu .selfServiceProfileMenuTrigger .trigger-link:focus {
+    box-shadow: none;
+}
+
+.THIS .selfServiceUserProfileMenu .selfServiceProfileMenuTrigger .trigger-link {
+    padding: 0px 0px;
+}
+
+.THIS .selfServiceUserProfileMenu .selfServiceProfileMenuTrigger .triggerDownArrow {
+    display: none;
+}
+
+.THIS .selfServiceUserProfileMenu .menuList li>a {
+    padding: 13px 18px;
+    font-weight: normal;
+    font-size: 16px;
+    transition: 0.2s all;
+    outline: none;
+}
+
+.THIS .selfServiceUserProfileMenu .menuList li>a:hover,
+.THIS .selfServiceUserProfileMenu .menuList li>a:focus {
+    font-weight: normal;
+    max-width: 100%;
+    max-width: 100%;
+    text-shadow: none;
+    text-transform: none;
+    color: #2972CB;
+}
+
+.THIS .forceCommunitySearchBox.big-search-container {
+    position: relative;
+    width: 85%;
+    margin-top: -32px;
+    margin-left: 29px;
+        margin-bottom: -8px;
+}
+
+.THIS .forceCommunitySearchBox .search-field {
+    height: 42px;
+    padding-right: 15px;
+}
+
+.THIS .forceCommunitySearchBox .search-field:focus {
+   outline: 0;
+   -webkit-box-shadow: none;
+   box-shadow: none;
+}
+
+/* Partner Community Global Search Overwride  */
+
+.THIS .vlocitySearchInner .forceSearchInputDesktop .contentWrapper.focused {
+    border: none;
+    box-shadow: none;
+}
+
+.THIS .vlocitySearchInner .forceSearchInputDesktop .contentWrapper {
+    border : none;
+}
+
+.THIS .vlocitySearchInner .forceSearchInputDesktop .contentWrapper .forceIcon {
+    display:none;
+}
+
+.THIS .vlocitySearchInner .forceSearchInputDesktop .inputWrapper {
+    padding-left: 0px;
+}
+
+.THIS .vlocitySearchInner .forceSearchInputDesktop{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    padding: 5px 14px 5px 34px;
+}
+
+.THIS .vlocitySearch .forceSearchInputDesktop {
+    display: none;
+    opacity: 0;
+    transition: 1s all;
+}
+
+.THIS .vlocitySearch:hover .forceSearchInputDesktop {
+    display: inherit;
+    opacity: 1;
+}
+
+.THIS .ui-widget {
+    margin: 0px;
+}
+
+@media only screen and (min-width: 48em) {
+    .THIS .siteforceNapiliBody .cBrandingProfile {
+        width: 15%;
+        float: left;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .THIS .forceCommunityNavigationMenu .toggleNav {
+        color: #2972CB;
+        position: absolute;
+        left: 0;
+        margin-left: 40px;
+    }
+    /*.THIS .vlocityNavBar {
+        right: 40px;
+        margin-top: 10px;
+        position: absolute;
+        padding-left: 0px;
+        padding-right: 0px;
+        background-color: #007ac2;
+        min-width: inherit;
+    }*/
+    .THIS .vlocityCompanyHeader {
+        display: none;
+    }
+    .THIS .vlocityHeader {
+        /*margin-bottom: 20px;*/
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .THIS .siteforceNapiliBody .cBrandingProfile {
+        margin-left: 40px;
+    }
+    .THIS .vlocityNavBar {
+        padding-right: 0px;
+    }
+    .THIS .selfServiceProfileMenu .menuList, .THIS .selfServiceUserProfileMenu .menuList {
+        margin-top: 0px;
+    }
+    .THIS .vlocityContent {
+        padding: 0px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .THIS .vlocitySearch {
+        right: 80px;
+    }
+    .THIS .vlocityNotification {
+        right: 118px;
+    }
+    .THIS .vlocityProfileMenu {
+        right: 10px;
+    }
+    .THIS .selfServiceProfileMenuTrigger .profileName {
+        width: 70px;
+    }
+    .THIS .forceHeaderButtonDeprecated.mobile[data-icon]:before {
+        color: #2972cb;
+    }
+    .THIS .forceCommunityNavigationMenu .toggleNav {
+        margin: .25rem;
+    }
+    .THIS .forceCommunityNavigationMenu .forceHeaderButtonDeprecated.mobile {
+        margin: .25rem;
+    }
+    .THIS .siteforceNapiliBody .cBrandingProfile {
+        margin-left: 45px;
+        min-width: 100px;
+    }
+}
+
+@media only screen and (max-width: 47.9375em) {
+    /*.THIS .forceCommunityNavigationMenu .navigationMenu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 80%;
+        margin: 0;
+        overflow: auto;
+        box-shadow: 1px 0 0 0 #d4d4d4;
+        z-index: 100;
+    }*/
+    .THIS .forceCommunityOmniBox.selfServiceSearchWrapper.focused .search-container {
+        border: none;
+    }
+    .THIS .forceCommunityOmniBox.focused .zero-state-panel {
+        display: none;
+    }
+}

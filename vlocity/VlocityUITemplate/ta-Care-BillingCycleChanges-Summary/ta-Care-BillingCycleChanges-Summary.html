@@ -1,0 +1,60 @@
+<div class=" slds-size--1-of-2">
+    <div class="slds-tile slds-media">
+      <div class="slds-media__figure">
+        <!--<svg class="slds-icon slds-icon-standard-groups" aria-hidden="true">
+          <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#groups"></use>
+        </svg>-->
+        <slds-svg-icon
+						sprite="'utility'"
+						icon="'dislike'"
+						size="'medium'"
+						no-hint="true"
+						extra-classes="''">
+		</slds-svg-icon>
+      </div>
+      <div class="slds-media__body">
+        <h3 class="slds-truncate">Inicio de facturación actual:</h3>
+        <br>
+        <div class="slds-tile__detail slds-text-body--small" ng-repeat="ba in bpTree.response.BillingAccounts" ng-if="ba.isSelected == true">
+          <dl class="slds-list--horizontal slds-wrap">
+            <dt class="slds-item--label slds-text-color--weak slds-truncate" title="First Label"><b>Cuenta:</b></dt>
+            <dd class="slds-item--detail slds-truncate"><b>{{ba.Name}}</b></dd>
+            <div class="slds-size--2-of-2">
+              <div class="slds-text-align--left slds-m-around--x-small" ng-if="ba.BillingStreet && ba.BillingCity">
+                  {{ba.BillingStreet}}, ({{ba.BillingCity}}) 
+              </div>
+              <div class="slds-text-align--left slds-m-around--x-small" ng-if="!ba.BillingStreet || !ba.BillingCity">
+                  No tiene configurada la dirección de facturación. 
+              </div>
+              <div class="slds-text-align--left slds-m-around--x-small" ng-if="ba.BillingDay">
+                  Ciclo Actual: Día {{ba.BillingDay}}  
+              </div>
+              <div class="slds-text-align--left slds-m-around--x-small" ng-if="!ba.BillingDay">
+                  No tiene configurado día de facturación. 
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class=" slds-size--1-of-2">
+    
+    <div class="slds-tile slds-media">
+      <div class="slds-media__figure">
+        <!--<svg class="slds-icon slds-icon-standard-groups" aria-hidden="true">
+          <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#groups"></use>
+        </svg>-->
+        <slds-svg-icon
+						sprite="'utility'"
+						icon="'like'"
+						size="'medium'"
+						no-hint="true"
+						extra-classes="''">
+		</slds-svg-icon>
+      </div>
+      <div class="slds-media__body">
+        <h3 class="slds-truncate">Nuevo inicio de facturación:</h3>
+        <h2><b>Día {{bpTree.response.NewBillingCycle.BillingCycleSelect}}</b></h2>
+      </div>
+    </div>
+</div>

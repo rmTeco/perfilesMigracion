@@ -1,0 +1,318 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" controller="vlocity_cmt.ObjectDocumentCreationController" >  
+   <html xmlns:ng="http://angularjs.org" ng-app="contractVersionPdfApp" lang="en">
+            <apex:includeScript value="{!$Resource.vlocity_cmt__JQUERYJS}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>           
+            <apex:includeScript value="{!$Resource.vlocity_cmt__AngularJS}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__ANGULARBOOT}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__docxtemplater}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__JSZip}"/> 
+            <apex:includeScript value="{!$Resource.vlocity_cmt__FileSaver}"/>      
+         
+       <script type="text/javascript">
+            function savePdf(objId, parentId, docName, callback)
+            {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ObjectDocumentCreationController.savePdf}', objId, parentId, docName, callback,
+                                {buffer: false, escape: false}); 
+            }
+
+            function attachDocx(objId, docName, doc, callback)
+            {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ObjectDocumentCreationController.saveDocx}', objId, docName, doc, callback, {buffer: false, escape: false});
+            }  
+
+           
+            
+            function downloadPdf(objId, docName, callback)
+            {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ObjectDocumentCreationController.downloadPdf}', objId, docName, callback,
+                                {buffer: false, escape: false}); 
+            }
+
+            function downloadDocxTemplate(templateId, callback) {
+
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ObjectDocumentCreationController.getDocTemplateResource}', templateId, callback,
+                                {buffer: false, escape: false});
+            }
+
+            function downloadDocx(objDocId, headerString, documentName, callback) {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.ObjectDocumentCreationController.getObjVersionDocument}', objDocId, headerString, documentName, callback,
+                                {buffer: false, escape: false});
+            }
+
+            function generateDocx(result, type) {
+                var zip = new JSZip(result.templateEncoded, {base64: true});
+                var contractData = result.contractData;
+                var imageCount = result.imageData.numImages;
+                for (var i = 0; i < imageCount; i++) {
+                    if (typeof result.imageData['imageData'+i] !== 'undefined' && result.imageData['imageData'+i] !== null) {
+                        zip.file('word/media/imageData'+i+'.png', result.imageData['imageData'+i], {base64:true});
+                    }    
+                }
+                if (typeof result.contractData['DocxRels'] !== 'undefined' && result.contractData['DocxRels'] !== null) {
+                    zip.remove('word/_rels/document.xml.rels');
+                    zip.file('word/_rels/document.xml.rels', result.contractData['DocxRels'], {});
+                }    
+                var doc = new Docxgen(zip);
+                doc.setData(contractData);                            
+                doc.render(); 
+
+                var out;
+                if (type === 'blob') {
+                    out = doc.getZip().generate({type:"blob"});    
+                }
+                else {
+                    out = doc.getZip().generate({type:"base64"});
+                }
+                
+                return out;
+            }
+             
+            function b64toBlob(b64Data, contentType, sliceSize)
+            {
+                contentType = contentType || '';
+                sliceSize = sliceSize || 512;
+
+                var byteCharacters = atob(b64Data);
+                var byteArrays = [];
+
+                for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                    var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                    var byteNumbers = new Array(slice.length);
+                    for (var i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    var byteArray = new Uint8Array(byteNumbers);
+
+                    byteArrays.push(byteArray);
+                }
+
+                var blob = new Blob(byteArrays, {type: contentType});
+                return blob;
+            }
+
+            function getTemplateZip(result) {
+                var zip = new JSZip(result.template, {base64: true});
+                return zip;
+            }
+
+            function getRelsFile(zip) {
+                var file = zip.file('word/_rels/document.xml.rels');
+                if (file != null) {
+                    return file.asText();
+                }
+                return '';
+            }
+
+            function generateDocx(result, type, zip) {
+                var i, doc, out;
+                var contractData = result.contractData;
+                var imageCount = result.imageData.numImages;
+                for (i = 0; i < imageCount; i++) {
+                    if (typeof result.imageData['imageData' + i] !== 'undefined' && result.imageData['imageData' + i] !== null) {
+                        zip.file('word/media/imageData' + i + '.png', result.imageData['imageData' + i], {base64: true});
+                    }
+                }
+                if (result.contractData.numberingXML !== null && result.contractData.numberingXML !== '') {
+                    zip.remove('word/numbering.xml');
+                    zip.file('word/numbering.xml',result.contractData.numberingXML,{});
+                }
+                if (typeof result.contractData.DocxRels !== 'undefined' && result.contractData.DocxRels !== null) {
+                    zip.remove('word/_rels/document.xml.rels');
+                    zip.file('word/_rels/document.xml.rels', result.contractData.DocxRels, {});
+                }
+                doc = new Docxgen(zip);
+                doc.setData(contractData);
+                doc.render();
+
+                if (type === 'blob') {
+                    out = doc.getZip().generate({type: 'blob'});
+                } else {
+                    out = doc.getZip().generate({type: 'base64'});
+                }
+                return out;
+            }
+
+            var contractVersionPdfApp = angular.module("contractVersionPdfApp", []);
+            
+            contractVersionPdfApp.factory('contractVersionPdfService', function($q, $rootScope)
+            {
+                var factory = {};
+                factory.savePdf = function(objId, parentId, docName)
+                {
+                    var deferred = $q.defer();
+                    savePdf(objId, parentId, docName, function(result){
+                        $rootScope.$apply(function() {
+                            deferred.resolve(result);
+                        });
+                    });
+                    return deferred.promise;
+                };
+                
+                factory.downloadPdf = function(objId, docName)
+                {
+                    var deferred = $q.defer();
+                    downloadPdf(objId, docName, function(result){
+                        $rootScope.$apply(function() {                           
+                            deferred.resolve(result);
+                        });
+                    });
+                    return deferred.promise;
+                };
+
+                factory.downloadDocxTemplate = function(templateId)
+                {
+                    var deferred = $q.defer();
+                    downloadDocxTemplate(templateId, function(result){
+                        $rootScope.$apply(function() {                           
+                            deferred.resolve(result);
+                        });
+                    });
+                    return deferred.promise;
+                };
+
+                factory.downloadDocx = function (objDocId, headerString, documentName) {
+                     var deferred = $q.defer();
+                    downloadDocx(objDocId, headerString, documentName, function(result){
+                        $rootScope.$apply(function() {                           
+                            deferred.resolve(result);
+                        });
+                    });
+                    return deferred.promise;
+                }
+
+                factory.attachDocx = function(objId, docName, data) {
+                    var deferred = $q.defer();
+                    attachDocx(objId, docName, data, function(result) {
+                        $rootScope.$apply(function() {                           
+                            deferred.resolve(result);
+                        });
+                    });
+                    return deferred.promise;
+                };
+                
+                return factory;
+            });
+            
+            contractVersionPdfApp.controller('contractVersionPdfController', function($scope, contractVersionPdfService)
+            {
+                $scope.parentId = '{!parentId}';
+                $scope.contextId = '{!JSENCODE(contextId)}';
+                $scope.templateId = '{!templateId}';
+                $scope.nameSpaceprefix='{!nameSpacePrefix}';
+                $scope.isSforce = (typeof sforce != 'undefined' && typeof sforce.one != 'undefined')?(true):(false);               
+                $scope.docName = '{!JSENCODE(documentName)}';
+                $scope.attachmentId;
+                $scope.attachPdf = function()
+                {
+                      contractVersionPdfService.savePdf($scope.contextId, $scope.parentId,$scope.docName).then(function(result, event){    
+                         $scope.attachmentId = result;
+                         //debugger;
+                         console.log('attachmentId is '+$scope.attachmentId);
+                         window.parent.postMessage({"docGenAttachmentId":$scope.attachmentId},'*');
+                      });
+                };
+                
+                $scope.goBack = function()
+                {
+                    window.history.back();
+                }               
+                  
+                $scope.navigateBack = function()
+                 {
+                    //navigate back to page that issue send
+                        if(!$scope.isSforce)
+                        {
+                            window.top.location.href = '{!$Site.BaseRequestUrl}/'+$scope.parentId;
+                            return false;
+                        }
+                        else ($scope.isSforce)
+                        {
+                            sforce.one.navigateToURL('{!$Site.BaseRequestUrl}/'+$scope.parentId);
+                        }
+                       
+                  }; 
+                  
+                 
+                 $scope.downloadPdf  = function()
+                 {
+                      contractVersionPdfService.downloadPdf($scope.parentId, $scope.docName).then(function(result, event){                                                    
+                            var data = result;                            
+                            //alert(data);
+                            var blob = b64toBlob(data, 'application/pdf');
+                            saveAs(blob,$scope.docName + '.pdf');
+                      });
+                 };
+                  
+                  
+                 $scope.saveDocx = function()
+                 {
+                    window.top.location.href = '{!$Site.BaseRequestUrl}/apex/'+$scope.nameSpaceprefix+'ContractVersionDocxGen?Id='+$scope.parentId;
+                 };  
+
+                $scope.attachDocx = function()
+                {
+                    contractVersionPdfService.downloadDocxTemplate($scope.templateId).then(function(result, event){
+                        var zip = getTemplateZip(result);
+                        var headerString = getRelsFile(zip);
+                        if (result.errorString !== undefined) {
+                            alert (result.errorString);   
+                        }
+                        else {
+                            contractVersionPdfService.downloadDocx($scope.parentId, headerString, $scope.docName).then(function(docXresult) {
+                                contractVersionPdfService.attachDocx($scope.contextId, $scope.docName, generateDocx(docXresult, 'base64',zip)).then(function(attachmentId, event) {
+                                    //console.log(attachmentId);
+                                    $scope.attachmentId = attachmentId;
+                                    debugger;
+                                    console.log('attachmentId is '+$scope.attachmentId);
+                                    window.parent.postMessage({"docGenAttachmentId":$scope.attachmentId},'*');
+                                });
+                            });
+                        }                        
+                    });
+                };  
+
+                $scope.downloadDocx = function()
+                {
+                    contractVersionPdfService.downloadDocxTemplate($scope.templateId).then(function(result, event){
+                        var zip = getTemplateZip(result);
+                        var headerString = getRelsFile(zip);
+                        if (result.errorString !== undefined) {
+                            alert (result.errorString);   
+                        }else {
+                            contractVersionPdfService.downloadDocx($scope.parentId, headerString, $scope.docName).then(function(docXresult) {
+                                saveAs(generateDocx(docXresult, 'blob', zip), $scope.docName + '.docx');
+                            });                               
+                        }
+                    });
+                };            
+                
+            });
+            
+        
+        </script>
+        
+ 
+
+   <body>
+     <div class="vlocity" ng-controller="contractVersionPdfController">
+       <div>
+           <button type="button" class="btn btn-default" ng-click="attachPdf()">Attach PDF</button> 
+           <button type="button" class="btn btn-default" ng-click="downloadPdf()">Download PDF</button> 
+           <button type="button" class="btn btn-default" ng-click="attachDocx()">Attach Word</button>
+           <button type="button" class="btn btn-default" ng-click="downloadDocx()">Download Word</button>
+           <button type="button" class="btn btn-default" ng-click="goBack()">Cancel</button>  
+       </div>
+       
+       <iframe height="600" scrolling="true" name="ContractPdf" src="{!pdfPageReference}" width="100%" id="theIframe"></iframe>
+  </div> 
+  </body>
+  </html>
+     
+</apex:page>

@@ -1,0 +1,139 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-product-item-details {
+            .#{$namespace}-product-item-details-gallery {
+                margin-top: $cpq-padding-large-vertical*2;
+                ul {
+                    height: 140px;
+                    overflow-x: auto;
+                    white-space: nowrap;
+                    padding: $cpq-padding-large-vertical 0px;
+                    li {
+                        width: 120px;
+                        height: 100px;
+                        padding: $cpq-padding-small-horizontal;
+                        margin-right: $cpq-padding-small-horizontal;
+                        display: inline-block;
+                        border: 1px solid $middle-light-gray;
+                        vertical-align: middle;
+                        text-align: center;
+                        &:hover{
+                            img {
+                                transform: scale(1.5,1.5);
+                                transition: .3s transform;
+                            }
+                        }
+                        img{
+                            max-width: 100%;
+                            height: auto;
+                            transform: translateZ(0);
+                        }
+                    }
+                }
+            }
+            .#{$namespace}-product-item-details-features {
+                margin-top: $cpq-padding-large-vertical*2;
+            }
+            .#{$namespace}-product-item-details-form {
+                max-width: 400px;
+            }
+            .#{$namespace}-product-item-details-addon {
+                position: relative; //needed for selected border
+                .#{$namespace}-product-item-title {
+                    font-weight: $cpq-headings-font-weight;
+                }
+                .#{$namespace}-product-item-details-addon-details {
+                    ul {
+                        text-align: center;
+                        li {
+                            display: inline-block;
+                            margin: 0 $cpq-padding-large-horizontal/2;
+                            vertical-align: top;
+                            .#{$namespace}-product-item-attr-value {
+                                font-weight: $cpq-headings-font-weight;
+                                color: $cpq-product-cart-items-attr-value-color;
+                            }
+                            .#{$namespace}-product-item-attr-label {
+                                font-size: $cpq-cart-item-attr-label-font-size;
+                                text-transform: uppercase;
+                            }
+                        }
+                    }
+                }
+            }
+            .#{$namespace}-product-details-qty-input {
+                padding: 0 3px;
+                margin-top: $cpq-padding-large-vertical/5;
+                text-align: center;
+                width: 50px; //width can fit 3 digits
+                height: 25px;
+                min-height: calc(25px + 2px); //override slds input styles
+            }
+            .slds-tree_container {
+                max-width: 100%; //overwrite Salesforce tree max width 400px
+            }
+            .slds-grid {
+                width: 100%;
+            }
+
+            /*table styles*/
+            .#{$namespace}-product-item-table {
+                display: flex;
+                flex-flow: column nowrap;
+                box-pack: justify;
+                justify-content: space-between;
+            }
+            .#{$namespace}-product-item-table-header {
+              font-weight: bold;
+            }
+            .#{$namespace}-product-item-table-row {
+              display: flex;
+              flex-flow: row nowrap;
+              flex: 1 1 auto;
+            }
+            .#{$namespace}-product-item-table-row-item {
+              display: flex;
+              flex-flow: row nowrap;
+              flex: 1 0 auto;
+              word-wrap: break-word;
+              overflow-wrap: break-word;
+                .#{$namespace}-price-label {
+                  font-size: $cpq-cart-item-attr-label-font-size;
+                }
+                .#{$namespace}-loyalty-points {
+                    color: $cpq-loyalty-points-color;
+                }
+            }
+            .#{$namespace}-product-item-flex-icon {
+                flex: 0 0 25px;
+            }
+            .#{$namespace}-product-item-flex-product {
+              flex: 1 1 300px;
+            }
+            .#{$namespace}-product-item-flex-childProduct {
+              flex: 1 1 255px;
+            }
+            .#{$namespace}-product-item-flex-grandChildProduct {
+              flex: 1 1 230px;
+            }
+            .#{$namespace}-product-item-flex-recur {
+                flex: 1 0 150px;
+                justify-content: flex-end;
+            }
+            .#{$namespace}-product-item-flex-onetime {
+                flex: 1 0 150px;
+                justify-content: flex-end;
+            }
+        }
+    }
+}

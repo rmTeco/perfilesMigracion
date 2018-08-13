@@ -1,0 +1,21 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0015000001AubTV"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name, Description, Phone, PhotoUrl, Type, BillingAddress, ShippingAddress, Website, %vlocity_namespace%__CustomerValue__c FROM Account WHERE Id = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "mobile-highlight-card"
+        }
+    }
+}

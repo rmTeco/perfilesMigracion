@@ -1,0 +1,85 @@
+@media (max-width: 479px) and (min-width: 0px) {
+    .via-slds .via-slds-card--highlight-totals.slds-x-small-show-only {
+        display:block !important
+    }
+    .via-slds .via-slds-card--highlight-totals.slds-small-show {
+        display: none !important;
+    }
+}
+
+.via-slds .via-slds-card--highlight-totals {
+    
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-radius: 1px;
+
+    .via-slds-card--highlight-totals__title {
+        color: #0070d2;
+    }
+
+
+    .via-slds-card--highlight-carousel-wrap {
+        min-height: 5em;
+        position: relative;
+    }
+    /**********/
+    /* Slider */
+    /**********/
+    
+    .via-slds-card--highlight-carousel-inner {
+        height: 4em;
+        position: relative;
+        width: 100%;
+    }
+    
+    .via-slds-card--highlight-carousel-inner-buttons {
+        position: relative;
+        height: 1em;
+        width: 100%;
+    }
+    
+    /* Slides */
+    
+    .via-slds-card--highlight-carousel-inner li, 
+    .via-slds-card--highlight-carousel-inner-buttons li {
+        list-style: none;
+        position: absolute;
+        width: 100%;
+    }
+    .via-slds-card--highlight-carousel-inner-buttons input {
+        display: none;
+    }
+    
+    /* Navigation */
+    
+    .via-slds-card--highlight-carousel-inner-buttons label {
+        background-color: #EEF1F6;
+        bottom: 0;
+        border-radius: 100%;
+        cursor: pointer;
+        display: block;
+        height: 8px;
+        margin: 0 auto;
+        position: absolute;
+        transition: .25s;
+        width: 8px;
+        z-index: 10;
+        left: 50%;
+    }
+
+    .via-slds-card--highlight-carousel-inner-buttons input:checked + label {
+        background-color: #d8dde6;
+    }
+    
+    .via-slds-card--highlight-carousel-inner .slds-grid{
+        vertical-align: top;
+
+    }
+    
+    .via-slds-card--highlight-carousel-inner h3 {
+        font-size: 18px;
+        font-weight: 400;
+        color: #414141;
+    }
+
+}

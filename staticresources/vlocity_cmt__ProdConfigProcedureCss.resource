@@ -1,0 +1,1 @@
+.via-slds .slds-page-header .slds-media .slds-media__figure .slds-icon{fill:#008ab3}.via-slds input[type=text].ng-invalid,.via-slds select.ng-invalid{background-color:#fff;border-color:#c23934;box-shadow:inset 0 0 0 1px #c23934;background-clip:padding-box}.cursor-icon[disabled]{cursor:not-allowed}.cursor-icon{cursor:pointer}

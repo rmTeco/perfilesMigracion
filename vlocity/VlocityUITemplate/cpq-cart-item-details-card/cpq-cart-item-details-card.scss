@@ -1,0 +1,71 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+
+/*** STYLES ***/
+.vlocity {
+    .cpq-cart-items-details-card {
+        .error-msg {
+            color: $error;
+        }
+        
+        .Table {
+            display: flex;
+            flex-flow: column nowrap;
+            box-pack: justify;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .Table-row {
+          display: flex;
+          flex-flow: row nowrap;
+          flex: 1 1 auto;
+        }
+
+        .Table-row-item {
+          display: flex;
+          flex-flow: row nowrap;
+          flex: 1 0 auto;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+        }
+
+        .u-Flex-icon {
+            flex: 0 0 40px;
+        }
+
+        .u-Flex-product {
+          flex: 0 0 270px;
+        }
+
+        .u-Flex-childProduct {
+            flex: 0 0 205px;
+        }
+        .u-Flex-grandchildProduct {
+            flex: 0 0 181px;
+        }
+        .u-Flex-qty {
+            flex: 1 0 90px;
+            justify-content: flex-start;
+        }
+        .u-Flex-recur {
+            flex: 1 0 90px;
+            justify-content: flex-start;
+        }
+        .u-Flex-onetime {
+            //   flex-grow: 3;
+            flex: 1 0 90px;
+            justify-content: flex-start;
+            margin-right: 10px;
+        }
+        .u-Flex-discount {
+            flex: 1 0 90px;
+            justify-content: flex-start;
+        }
+        .u-Flex-operation {
+            flex: 1 0 120px;
+            justify-content: flex-end;
+        }
+    }
+}

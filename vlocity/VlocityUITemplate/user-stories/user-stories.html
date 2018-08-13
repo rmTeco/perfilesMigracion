@@ -1,0 +1,28 @@
+<div class="account-story">
+    <div id="story-time">
+      <div class="story-type">
+            <label>{{::$root.vlocity.getCustomLabel('Type', 'Type')}}:</label>
+            <select ng-model="importedScope.selectedStoryType"
+                    ng-options="storyType for storyType in importedScope.uniqueStoryTypeList | orderBy:storyType"
+                    ng-change="importedScope.change()">
+                <option value="">{{::$root.vlocity.getCustomLabel('All', 'All')}}</option>
+            </select>
+      </div>
+      <div class="story-numberOfDays col-md-2">
+            <label>{{::$root.vlocity.getCustomLabel('NumberOfDays', 'Number of Days')}}:</label>
+            <input ng-model="importedScope.numberOfDays" type="text" maxlength="7" size="7" ng-change="importedScope.change()"/>
+      </div>
+      <div class="story col-md-12" ng-repeat="story in importedScope.stories track by $index">
+        <div class="icon-segment">
+          <img src="{{story.imageRef}}">
+          <div class="line"></div>
+        </div>
+        <div class="story-info">
+          <div class="story-type"><strong>{{story.objType}}</strong></div>
+          <div>{{story.title}}</div>
+          <div>{{::$root.vlocity.getCustomLabel('Account', 'Account')}}: {{story.parentName}}</div>
+          <div class="story-date">{{story.formatedLastActivityDate}}</div>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+<apex:page sidebar="true" controller="attributesLandingController">
+	<apex:form >
+	   <apex:pageBlock id="theBlock" title="{!$Label.AttributesLanding}">
+		   <apex:pageBlockSection >
+		        <apex:selectList label="{!$Label.Object}" value="{!record}" multiselect="false" size="1" required="true">
+		            <apex:selectOptions value="{!objectsList}"/>
+		            <apex:actionSupport event="onchange" rerender="theBlock" action="{!refillPage}"/>
+		        </apex:selectList>
+	        </apex:pageBlockSection>
+	    	<br/>
+	    	<!-- Weighing BLOCK-->
+	    	<apex:pageBlockSection columns="2" title="{!$Label.AttributesWeighing}">
+		    	<apex:pageBlockTable value="{!weighingList}" var="a">
+	      			<apex:column value="{!a.Attribute__c}" width="300px"/>
+	      			<apex:column headerValue="{!$Label.Weighing}" width="300px">
+	        			<apex:OutputField value="{!a.Weighing__c}"/>
+	      			</apex:column>
+	   			</apex:pageBlockTable>
+	   			<apex:commandButton value="Editar" action="{!weighingEdit}"/>
+			</apex:pageBlockSection>
+		    
+	    	<!-- Rules BLOCK-->
+	    	<apex:pageBlockSection columns="2" title="{!$Label.AttributesRules}">
+		    	<apex:pageBlockTable value="{!rulesList}" var="b">
+		    		<apex:column >
+		    			<a href="javascript:if (window.confirm('Are you sure?')) DeleteRule('{!b.Id}');">Del</a>
+	      			</apex:column>
+	      			<apex:column value="{!b.Attribute1__c}" headerValue="{!$Label.Attribute}" width="300px"/>
+	      			<apex:column value="{!b.Attribute2__c}" headerValue="{!$Label.Attribute}" width="300px"/>
+	   			</apex:pageBlockTable>
+	   			<apex:commandButton value="Nueva Regla" action="{!newRule}"/>
+			</apex:pageBlockSection>
+			<apex:actionFunction action="{!DeleteRule}" name="DeleteRule" reRender="theBlock" >
+   				<apex:param name="ruleid" value="" assignTo="{!SelectedRuleId}"/>
+			</apex:actionFunction>
+		</apex:pageBlock> 
+    	<!-- Profiles BLOCK-->
+	    <apex:pageBlock title="{!$Label.AttributesByProfile}" id="theBlock2"> 
+	    	<apex:pageBlockSection columns="2">
+		    	<apex:pageBlockTable value="{!profilesList}" var="c">
+		    		<apex:column >
+		    			<a href="javascript:if (window.confirm('Are you sure?')) DeleteProfile('{!c.Id}');">Del</a>
+	      			</apex:column>
+	      			<apex:column >
+		    			<a href="javascript:EditProfile('{!c.Id}');">Edit</a>
+	      			</apex:column>
+	      			<apex:column value="{!c.SetupOwnerId}" headerValue="{!$Label.Profile}" width="300px"/>
+	      			<apex:column value="{!c.AccountAttributes__c}" width="300px"/>
+	      			<apex:column value="{!c.ContactAttributes__c}" width="300px"/>
+	   			</apex:pageBlockTable>
+	   			<apex:commandButton value="Nuevo Perfil" action="{!newProfile}"/>
+			</apex:pageBlockSection>
+			<apex:actionFunction action="{!EditProfile}" name="EditProfile" rerender="theBlock2">
+   				<apex:param name="profileid" value="" assignTo="{!SelectedProfileId}"/>
+			</apex:actionFunction>
+			<apex:actionFunction action="{!DeleteProfile}" name="DeleteProfile" rerender="theBlock2" >
+   				<apex:param name="profileid" value="" assignTo="{!SelectedProfileId}"/>
+			</apex:actionFunction>
+
+	   </apex:pageBlock>
+   </apex:form>
+</apex:page>

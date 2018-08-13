@@ -1,0 +1,37 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "InitiateAnnulmentProcess",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sales/InitiateAnnulmentProcess/Procedure",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 7,
+    "%vlocity_namespace%__PropertySet__c": {
+        "disOnTplt": false,
+        "elementValueMap": {
+            "Channel": "=IF(%ValidateAnnulmentChannel:availableChannel% == true, true, false)",
+            "ExceptionPermission": "=IF(%ValidateAnnulmentTerm:ExceptionPermission% == true, true, false)",
+            "IdentityValidationRequired": "%CheckIdentityValidationRequired:validationRequired%",
+            "StoreLocationValidation": "=IF(%ValidateAnnulmentStoreLocation:StoreLocationValidation% == true, true, false)",
+            "Term": "=IF(%ValidateAnnulmentTerm:validTime% == true, true, false)",
+            "cancelCaseValidation": "=IF(%ValidateDeliveredOM:flagDeliveredOM% == true, true, false)",
+            "existTangible": "=IF(%ValidateAnnulmentChannel:existTangible% == true, true, false)",
+            "orderCEG": "=IF(%ValidateOrderCEG:orderCEG% == true, true, false)"
+        },
+        "failOnStepError": true,
+        "failureConditionalFormula": "",
+        "label": "SetValues1",
+        "responseJSONNode": "",
+        "responseJSONPath": "",
+        "sendJSONNode": "",
+        "sendJSONPath": ""
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Set Values",
+    "Name": "AnnulmentValidations",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/InitiateAnnulmentProcess/Procedure/AnnulmentValidations"
+}

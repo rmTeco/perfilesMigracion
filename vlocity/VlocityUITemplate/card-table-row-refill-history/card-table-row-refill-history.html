@@ -1,0 +1,24 @@
+<td class="slds-truncate slds-p-vertical--medium" 
+    ng-if="data" 
+    data-label="{{field.label}}"
+    ng-repeat="field in data.fields | limitTo: 6" 
+    ng-show="key != 'attributes'">
+    <div ng-if="$first" class="chevronClosed">
+        <slds-svg-icon  sprite="'utility'" 
+                        class="slds-input__icon--left"
+                        icon="'chevronright'"
+                        size="'x-small'" 
+                        style="fill:#181818"
+                        extra-classes="'slds-input__icon'">
+        </slds-svg-icon>
+    </div>
+    <div ng-if="$first" class="chevronOpen openTopFix ng-hide">
+        <slds-svg-icon  sprite="'utility'" 
+                        icon="'chevrondown'"
+                        size="'x-small'" 
+                        style="fill:#181818"
+                        extra-classes="'slds-input__icon'">
+        </slds-svg-icon>
+    </div>
+    {{obj | getter: field | picker: field.type}}
+</td>

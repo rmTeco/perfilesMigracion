@@ -1,0 +1,65 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.Id",
+                "val": "0016C0000095jLJ"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "body": "{\n\"hkj\":\"ghgj\"\n}",
+            "query": "SELECT Id FROM Account WHERE Id = '{{params.Id}}'",
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankCardState": true,
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "accountId": "['Id']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Create Order",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "card-open"
+        }
+    ],
+    "title": "Nueva Venta",
+    "zone": "middle"
+}

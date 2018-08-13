@@ -1,0 +1,36 @@
+.techCare-PriceListSelection {
+    &-wrapper {
+        width: 100%
+    }
+    
+    &.slds-table &-tbody {
+        td, th {
+            white-space: initial;
+        }
+        
+    }
+    &-tbody {
+        &-image{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 9px;
+            
+            path {
+                fill: #00b9d4;
+            }
+        }
+        &-checkbox {
+            width: 60px;
+        }
+        tr.active {
+            background: #f1f6f8;
+        }
+    }
+}
+
+.ta-techCare-check{
+    .slds-button{
+        fill: #0a767f;
+    }
+}

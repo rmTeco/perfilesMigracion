@@ -1,0 +1,14 @@
+<div class="comp-cart-review-base-grid">
+    <div class="cart-review-container slds-grid slds-grid_frame slds-grid_vertical">
+        <div class="slds-col slds-grid slds-wrap slds-small-nowrap slds-p-top_small">
+
+            <div class="slds-is-relative slds-col slds-grid slds-size_1-of-1 slds-small-size_2-of-3 slds-medium-size_4-of-6 slds-large-size_8-of-12" ng-class="{'slds-small-size_3-of-3 slds-medium-size_6-of-6 slds-large-size_12-of-12': !importedScope.isConfigAttrsPanelEnabled}">
+                <vloc-layout layout-name="comp-cart-review" ctrl="AssetsMainController" pricing-mode="{{attrs.pricingMode}}" promotion-mode="{{attrs.promotionMode}}" cart-id="{{attrs.cartId}}" show-config-panel="{{importedScope.isConfigAttrsPanelEnabled}}"></vloc-layout>
+            </div>
+            
+            <div class="slds-is-relative slds-col slds-grid slds-size_1-of-1 slds-small-size_1-of-3 slds-medium-size_2-of-6 slds-large-size_4-of-12 review-info-container-wrapper" ng-class="{'review-product-container-visible': importedScope.isConfigAttrsPanelEnabled}">
+                <vloc-layout layout-name="comp-assets-info-panel" ctrl="AssetsInfoPanelController"></vloc-layout>
+            </div>
+        </div>
+    </div>
+</div>

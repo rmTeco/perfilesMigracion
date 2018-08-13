@@ -1,0 +1,281 @@
+<apex:page standardController="Order" extensions="vlocity_cmt.OrderPdfControllerUnmanaged" applyHtmlTag="false" showHeader="false" renderas="pdf">
+
+<head> 
+  <style type="text/CSS">
+      body{
+          font-family:Arial,Helvetica, sans-serif;    
+      }
+ 
+      .center {
+          text-align:center;
+      } 
+      .alignRight {
+      	text-align: right;
+      }
+      .alignLeft {
+      	text-align: left;
+      }
+      .headFont100{
+      	  font-size: 100%    	  
+      }
+
+	  table {
+	  	width: 100%
+	  }
+      .table-bordered {
+         /*  border: 1px dotted #000; */
+          border-collapse : collapse;
+      }
+
+      thead>tr>th {
+           vertical-align: bottom;
+           border: 1px solid #000;
+           border-spacing: 0;
+           border-collapse: collapse;
+           background : #00a7e1;
+           color:black;
+           font-size: 70%;
+       }
+
+       td {
+           vertical-align: bottom;
+           font-size: 70%; /* This one works */
+           width: 25%
+       } 
+       .LineItemTable td{
+       		border: 1px solid #5b5c5a;
+       		font-size: 70%;
+      	}
+      	.copyright{
+      		font-family: Arial,Helvetica, sans-serif;
+      		font-size: 12px;
+      		font-style: italic;
+      		text-align: center;
+      	}
+/*      	.smallBold{
+			Font-Family: Arial,Helvetica, sans-serif;
+			font-weight:bold;
+			Font-Size: 16 px;
+			Color: #231f20;
+			Font-Style: normal;
+			Text-Align: left;
+			Line-Height: 12 px;
+			Letter-Spacing: 0.04 em;
+			Opacity: 1;
+			Effect: none;
+		}
+*/
+/*		.smallRegular{
+			Font-Family: Arial,Helvetica, sans-serif;
+			Font-Size: 16 px;
+			Color: #231f20;
+			Font-Style: normal;
+			Text-Align: left;
+			Line-Height: 25 px;
+			Letter-Spacing: 0.04 em;
+			Opacity: 1;
+			Effect: none;
+		}
+*/
+/*		div{
+			Background: #808080;
+			Opacity: 1;
+			Effect: none;
+		} */
+
+		.totalAmounts{
+			Font-Family: Arial,Helvetica, sans-serif;
+			Font-Size: 16 px;
+			Color: #000000;
+			Font-Style: normal;
+			Text-Align: right;
+			Line-Height: 25 px;
+			Letter-Spacing: 0.04 em;
+			Opacity: 1;
+			Effect: none;
+		}
+
+/*		.orderFor{
+			Font-Family: Arial,Helvetica, sans-serif;
+			font-weight: bold;
+			Font-Size: 24 px;
+			Color: #000000;
+			Font-Style: normal;
+			Text-Align: right;
+			Line-Height: 12 px;
+			Letter-Spacing: 0.01 em;
+			Opacity: 1;
+			Effect: none;
+		}
+*/
+		.totalsHeaders{
+			Font-Family: Arial,Helvetica, sans-serif;
+			Font-Size: 16 px;
+			font-weight: bold;
+			Color: #000000;
+			Font-Style: normal;
+			Text-Align: left;
+			Line-Height: 25 px;
+			Letter-Spacing: 0.01 em;
+			Opacity: 1;
+			Effect: none;
+		}
+     
+
+   </style>
+</head>  
+<body>
+
+<table>
+ 	<!--  <tr>
+	   <td><br/><br/></td> <!-- blank row -->
+ 
+	<tr>
+	    <td>    	
+	    	<!--  <apex:image url="{!documentLogoUrl}" title="logo" /> -->
+	   		<apex:image url="{!$Resource.vlocity_cmt__CompanyLogo}" />
+	    </td>
+	    <td>&nbsp;</td>
+	   	<td colspan="2" class="alignRight headFont100">
+	    	<strong>{!$Label.OrderFor} {!order.Account.Name}</strong><br/>
+	    </td>
+	    <td></td>
+	</tr>
+	
+ 	<tr>
+	   <td><br/><br/></td> <!-- blank row -->
+	</tr>
+
+	<tr class="totalsHeaders">    
+		<td>{!$Label.CompanyAddress}: </td>
+	    <td>{!$Label.OrderNumber}: </td>		
+	    <td>{!$Label.PreparedBy}: </td>	
+		<td></td>    
+    </tr>	
+    <tr>  
+   		<td></td> 
+ 		<td> {!order.OrderNumber} </td>  		
+	    <td> {!order.LastModifiedBy.FirstName} {!order.LastModifiedBy.LastName} </td>   
+		<td></td>
+    </tr>	 
+    <tr>   		    
+	    <td>{!$Organization.Name}</td>
+		<td></td> 	    
+		<td></td> 
+		<td></td>				
+	</tr>
+	<tr>
+	    <td> {!$Organization.Street} </td>	    
+	    <td class="totalsHeaders"> {!$Label.OrderDate}: </td>
+	    <td class="totalsHeaders"> {!$Label.Email}: </td>
+		<td></td>	    	
+    </tr>
+    <tr>    
+	    <td> {!$Organization.City}, {!$Organization.State} {!$Organization.PostalCode}</td>   
+	    <td><apex:outputField value="{!order.CreatedDate}" styleClass="totalAmounts"/> </td>
+	    <td> {!order.LastModifiedBy.Email} </td>
+	    <td></td>
+    </tr>
+ 	<tr>
+	   <td><br/><br/></td> <!-- blank row -->
+	</tr>
+
+ 	<tr>
+	   <td colspan="2" class="headFont100">
+	      <strong> {!$Label.Account}: {!order.Account.Name} </strong><br/><br/>
+	   </td>
+	   <td class="headFont100" colspan="2">
+			<strong> {!$Label.OrderTotals}</strong>
+		</td>
+		<td></td>
+	</tr>
+	<tr>
+	   <td><br/><br/></td> <!-- blank row -->
+	</tr>
+	<tr>
+       	<td class="totalsHeaders"> {!$Label.BillToName}: </td>
+  	   	<td class="totalsHeaders"> {!$Label.ShipToName}: </td>   
+  	   	<td class="totalsHeaders"> {!$Label.TotalOneTime}: </td> 	
+  	   	<td class="alignRight"> <apex:outputField value="{!order.vlocity_cmt__OneTimeTotal__c}" /></td>	    
+		<td></td>
+    </tr>
+    <tr>   
+	   	<td> {!order.BillToContact.FirstName} {!order.BillToContact.LastName} </td>
+	   	<td> {!order.ShipToContact.FirstName} {!order.ShipToContact.LastName} </td>
+	    <td class="totalsHeaders"> {!$Label.TotalRecurring}: </td>
+	    <td class="alignRight"> <apex:outputField value="{!order.vlocity_cmt__RecurringTotal__c}" /></td>  		
+   </tr>
+   <tr>
+   		<td> {!order.BillingStreet} </td>
+   		<td> {!order.ShippingStreet} </td>
+  		<td class="totalsHeaders"> {!$Label.vlocity_cmt__contractmonths}: </td>
+	    <td class="alignRight"> <apex:outputField value="{!order.vlocity_cmt__NumberOfContractedMonths__c}" /> </td> 
+  	</tr>
+  	<tr>
+  		<td> {!order.BillingCity}, {!order.BillingState} {!order.BillingPostalCode} </td>
+  		<td> {!order.ShippingCity}, {!order.ShippingState} {!order.ShippingPostalCode} </td>
+ 	    <td class="totalsHeaders"> {!$Label.vlocity_cmt__ordertotal}: </td>
+	    <td class="alignRight"> <apex:outputField value="{!order.vlocity_cmt__OrderTotal__c}" /></td>
+ 	</tr>
+	 
+	<tr><td>&nbsp;</td></tr>
+   
+</table>
+
+
+<p><b>{!$Label.LineItems}</b></p>
+
+	 <apex:dataTable value="{!lineItems}" var="line" id="theTable" styleClass="LineItemTable">
+	                      
+		<apex:column >
+		    <apex:facet name="header">{!$Label.vlocity_cmt__product}</apex:facet>
+		    <apex:outputText value="{!line.indentSpace}" escape="false"/>
+			<apex:outputField value="{!line.li.PricebookEntry.Product2.Name}"/>
+		</apex:column>
+		<apex:column >
+		    <apex:facet name="header">{!$Label.vlocity_cmt__productcode}</apex:facet>
+		    <!--  <apex:outputText value="&nbsp;&nbsp;" escape="false"/> 
+		        spaces to show hierarchically -->
+			<apex:outputField value="{!line.li.PricebookEntry.Product2.ProductCode}"/>
+		</apex:column>
+		<apex:column styleClass="alignRight" >
+		    <apex:facet name="header">{!$Label.vlocity_cmt__quantity}</apex:facet>
+			<apex:outputField value="{!line.li.Quantity}"/>
+		</apex:column>
+		
+		<apex:column styleClass="alignRight">
+		    <apex:facet name="header">{!$Label.vlocity_cmt__onetime}</apex:facet>
+			<apex:outputField value="{!line.li.UnitPrice}"/>
+		</apex:column>
+		<apex:column styleClass="alignRight">
+		    <apex:facet name="header">{!$Label.vlocity_cmt__onetimediscounted}</apex:facet>
+			<apex:outputField value="{!line.li.vlocity_cmt__OneTimeDiscountPrice__c}"/>
+		</apex:column>
+		<apex:column styleClass="alignRight">
+		    <apex:facet name="header">{!$Label.vlocity_cmt__onetimeexttotal}</apex:facet>
+			<apex:outputField value="{!line.li.vlocity_cmt__OneTimeTotal__c}"/>
+		</apex:column>
+		
+		<apex:column styleClass="alignRight">
+		    <apex:facet name="header">{!$Label.vlocity_cmt__recurring}</apex:facet>
+			<apex:outputField value="{!line.li.vlocity_cmt__RecurringCharge__c}"/>
+		</apex:column>
+		<apex:column styleClass="alignRight">
+		    <apex:facet name="header">{!$Label.vlocity_cmt__recurringdiscounted}</apex:facet>
+			<apex:outputField value="{!line.li.vlocity_cmt__RecurringDiscountPrice__c}"/>
+		</apex:column>		
+		<apex:column styleClass="alignRight">
+		    <apex:facet name="header">{!$Label.vlocity_cmt__recurringexttotal}</apex:facet>
+			<apex:outputField value="{!line.li.vlocity_cmt__RecurringTotal__c}"/>
+		</apex:column>
+
+	</apex:dataTable>	
+
+<br/>
+<hr/>
+
+
+<p>&nbsp;</p>
+<p class="copyright"> Copyright {!$Organization.Name}.</p>
+</body>
+</apex:page>

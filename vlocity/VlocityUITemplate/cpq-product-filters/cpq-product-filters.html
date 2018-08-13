@@ -1,0 +1,27 @@
+<div class="cpq-product-filters slds-grid slds-grid_vertical">
+    <!--<pre> {{records | json}}</pre>-->
+    <!-- scroll class is added for ionic scroll-->
+    <div class="slds-col scroll">
+        <div>
+            <button type="button" class="slds-button" ng-click="importedScope.resetFilter(records)">
+                {{::importedScope.customLabels.CPQReset}}
+            </button>
+            <button type="button" class="slds-button slds-button_neutral" ng-disabled='importedScope.isFormInvalid' 
+                    ng-click="importedScope.submitFilter(records)">
+                {{::importedScope.customLabels.CPQApply}}
+            </button>
+        </div>
+        <!-- form -->
+        <div ng-if="records.length > 0">
+            <vlocity-dynamic-form class="slds-form_stacked" 
+                ng-model="records"
+                map-object="{{importedScope.filterMapObject()}}"
+                form-on-change="importedScope.checkFormValidation(e, formValidation);">
+            </vlocity-dynamic-form>
+        </div>
+        
+        <div class="slds-text-align_center slds-m-vertical_medium" ng-hide="records.length > 0">
+            {{::importedScope.customLabels.CPQFiltersNotAvailable}}
+        </div>
+    </div>
+</div>

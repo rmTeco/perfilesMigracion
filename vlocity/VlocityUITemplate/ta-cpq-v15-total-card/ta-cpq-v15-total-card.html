@@ -1,0 +1,17 @@
+<div class="slds-grid slds-nowrap cpq-total-card">
+  <div class="slds-col slds-shrink slds-text-align--center" ng-repeat="field in data.fields">
+     <div class="slds-text-body--small">{{field.label}}</div>
+        <div class="slds-text-heading--medium">
+            {{obj | getter: field | picker: field.type}}
+        </div>  
+  </div>
+  <div class="slds-col slds-align-middle cart-action slds-no-flex">
+        <button class="slds-button slds-m-left--large slds-button--brand"  
+          ng-repeat="action in data.actions | limitTo:1"
+          ng-click="performAction(action, importedScope.checkoutActionConfig)"
+          ng-disabled="!records.actions || !records.actions.checkout || importedScope.hasError">
+          <span ng-show="records.actions && records.actions.checkout">{{action.displayName}}</span>
+          <span ng-show="!records.actions || !records.actions.checkout">{{::importedScope.customLabels.CPQTotalIncomplete}}</span>
+        </button>
+  </div>
+</div>

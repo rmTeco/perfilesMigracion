@@ -1,0 +1,79 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "[\n    {\n        \"ServiceType\": \"Internet\",\n        \"Available\": \"3 GB\",\n        \"DueDate\": \"20/12/2017\"\n    },\n    {\n        \"ServiceType\": \"Voz\",\n        \"Available\": \"100 Minutos\",\n        \"DueDate\": \"10/12/2017\"\n    },\n    {\n        \"ServiceType\": \"SMS\",\n        \"Available\": \"200 SMS\",\n        \"DueDate\": \"15/12/2017\"\n    }\n]",
+            "resultVar": ""
+        }
+    },
+    "filter": {
+        "['ServiceType']": "SMS"
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "ConsoleBuySMS",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['ServiceType']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "",
+                    "name": "['ServiceType']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['AvailableFirstUnit']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Mensajes",
+                    "name": "['AvailableFirstUnit']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['DueDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Vencimiento",
+                    "name": "['DueDate']",
+                    "type": "string"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "ta-care-prepaid-flyout-grid-items"
+        }
+    ],
+    "title": ""
+}

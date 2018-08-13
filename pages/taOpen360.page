@@ -1,0 +1,19 @@
+<apex:page sidebar="false" showHeader="false" standardController="Account">
+    
+        <apex:includeScript value="/support/console/41.0/integration.js"/>
+        
+        <script type="text/javascript">
+            
+            var accId = '{!$CurrentPage.parameters.accId}';
+
+            window.onload = function() {
+                sforce.console.getEnclosingTabId(redirectToClientNewAccount);
+            };
+            var redirectToClientNewAccount = function redirectToClientNewAccount(result) {
+                sforce.console.openPrimaryTab(null, '/' + accId, true);
+                sforce.console.closeTab(result.id);
+            };
+
+        </script>
+
+</apex:page>

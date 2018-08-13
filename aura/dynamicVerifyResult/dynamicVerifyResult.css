@@ -1,0 +1,90 @@
+.THIS {
+}
+
+.THIS .section-item-label {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.THIS .section-item-value {
+    display: block;
+    color: token(vpValueTxtColor);
+    font-size: 0.875rem;
+}
+
+.THIS.field-data {
+    float: left;
+}
+
+.THIS.verification-buttons {
+    float: right;
+    margin-top: 0.125rem;
+}
+
+.THIS .via-approve {
+    border-radius: 0;
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.THIS.verification-buttons button span.verification-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: block;
+    position: relative;
+    background-color:token(checkBtnIconColor);
+    transition: background-color 250ms ease-in-out;
+}
+
+.THIS.verification-buttons button {
+    float: left;
+    border: 1px solid;
+    border-color: token(checkBtnBdrColor);
+    padding: 0.5rem 0.55rem 0.5rem 0.6rem;
+    margin: 0;
+    display: block;
+    background-color: token(checkBtnBgColor);
+    transition: background-color 250ms ease-in-out;
+}
+
+.THIS.verification-buttons button.via-reject {
+    border-radius: 0;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border-left: none;
+}
+
+.THIS span.verification-icon svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 0.25rem;
+    fill: token(checkBtnIconInnerColor);
+    position: absolute;
+    top: 0.24rem;
+    left: 0.24rem;
+}
+
+.THIS button.via-approve.active span.verification-icon {
+    background-color: token(checkBtnApprovedBgColor);
+}
+
+.THIS button.via-approve.active span.verification-icon svg {
+    fill: token(checkBtnApprovedIconColor);
+}
+
+.THIS button.via-reject.active span.verification-icon {
+    background-color:token(checkBtnRejectBgColor);
+}
+
+.THIS button.via-reject.active span.verification-icon svg {
+    fill:token(checkBtnRejectIconColor);
+}
+
+.THIS.verification-buttons button:hover {
+    background-color: token(checkBtnHoverBgColor);
+    border-color: token(checkBtnHoverBdrColor);
+}
+
+.THIS .section-item-label .slds-required.verified {
+    color: #4BC076;
+}

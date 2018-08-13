@@ -1,0 +1,21 @@
+<div class="via-slds-card--flyout-grid-items slds-m-around--small">
+    <div class="slds-m-bottom--small slds-m-top--small slds-text-align--center">
+      <a href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="{{obj | getter: data.fields[0] | picker: data.fields[0].type}}">{{obj | getter: data.fields[0] | picker: data.fields[0].type}}&nbsp;</a>
+      <div class="slds-text-align--center slds-m-top--small">
+          <vloc-card-icon data="data" obj="obj" size="'medium'" ng-if="!obj.PhotoUrl"></vloc-card-icon>
+          <img ng-src="{{obj.PhotoUrl}}" ng-if="obj.PhotoUrl" lass="slds-avatar--small" alt="{{obj.Name ? obj.Name : data.title}}" />
+      </div>
+    </div>
+    <div class="slds-grid slds-grid--vertical slds-p-bottom--large">
+        <div class="slds-list--horizontal slds-m-bottom--medium slds-wrap via-slds-card--flyout-grid-items__definition" ng-repeat="field in data.fields.slice(1) " ng-show="key != 'attributes'">
+          <div class="slds-item--label slds-text-body--small slds-truncate" title="First Label">{{field.label}}&nbsp;</div>
+          <div class="slds-item--detail slds-text-color--default slds-truncate" ng-if="!obj[field.relationshipName]">{{obj | getter: field | picker:field.type}}&nbsp;</div>
+            <div class="slds-item--detail slds-text-color--default slds-truncate" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}&nbsp;</div>
+        </div>
+    </div>
+      <ul class="slds-list--horizontal slds-grid--align-center slds-has-inline-block-links--space slds-m-bottom--x-small">
+        <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)"><a href="javascript:void(0);" ng-click="performAction(action)" hotkey-card-action>
+                {{action.displayName}}</a></li>
+      </ul>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="slds-picklist--draggable slds-grid slds-align--absolute-center slds-m-top--x-small">
+              <div class="slds-form-element">
+                <span class="slds-form-element__label" aria-label="select-1">Add Campaign Members</span>
+                <i class="icon icon-v-filter" ng-click="filter"/>
+                <div class="slds-picklist picklist--multi">
+                  <ul class="slds-picklist__options slds-picklist__options--multi">
+                    <li draggable="true" id="po-8-0" class="slds-picklist__item" aria-selected="false" tabindex="0" role="option">
+                        {{obj}}
+                      <span class="slds-truncate">Option One</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="slds-grid slds-grid--vertical">
+                <button class="slds-button slds-button--icon-container">
+                    <i class="icon icon-v-left-caret"/>
+                  <span class="slds-assistive-text">Arrow left</span>
+                </button>
+                <button class="slds-button slds-button--icon-container">
+                    <i class="icon icon-v-right-caret"/>
+                  <span class="slds-assistive-text">Arrow right</span>
+                </button>
+              </div>
+              <div class="slds-form-element">
+                <span class="slds-form-element__label" aria-label="select-1">Current Campaign Members</span>
+                <div class="slds-picklist picklist--multi">
+                  <ul class="slds-picklist__options slds-picklist__options--multi"></ul>
+                </div>
+              </div>
+              <div class="slds-grid slds-grid--vertical">
+                <button class="slds-button slds-button--icon-container">
+                    <i class="icon icon-v-up-caret"/>
+                  <span class="slds-assistive-text">Arrow up</span>
+                </button>
+                <button class="slds-button slds-button--icon-container">
+                    <i class="icon-v-down-caret"/>
+                  <span class="slds-assistive-text">Arrow down</span>
+                </button>
+              </div>
+            </div>

@@ -1,0 +1,195 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 2,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "TechCare - DataService",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/TechCare/DataService_Diagnosis/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 16,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/TechCare/DataService_Diagnosis/English",
+        "Name": "DataServiceCaseConfirmationBlock",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/DataService_Diagnosis/English/DataServiceCaseConfirmationBlock",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "DataServiceCaseConfirmationBlock",
+    "%vlocity_namespace%__ParentElementType__c": "Block",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "Type__c": {
+            "0": "<",
+            "1": "p",
+            "10": ":",
+            "11": " ",
+            "12": "T",
+            "13": "e",
+            "14": "x",
+            "15": "t",
+            "16": " ",
+            "17": "B",
+            "18": "l",
+            "19": "o",
+            "2": ">",
+            "20": "c",
+            "21": "k",
+            "22": "<",
+            "23": "/",
+            "24": "p",
+            "25": ">",
+            "3": "P",
+            "4": "a",
+            "5": "l",
+            "6": "e",
+            "7": "t",
+            "8": "t",
+            "9": "e",
+            "label": "Text Block",
+            "type": "typeahead-excluded-input"
+        },
+        "accessibleInFutureSteps": false,
+        "allowSaveForLater": true,
+        "autoFocus": false,
+        "autoSaveOnStepNext": false,
+        "cancelRedirectPageName": "OmniScriptCancelled",
+        "cancelRedirectTemplateUrl": "vlcCancelled.html",
+        "cancelSource": "%ContextId%",
+        "cancelType": "SObject",
+        "consoleTabLabel": "New",
+        "controlWidth": 12,
+        "dataJSON": false,
+        "documentNames": [
+            "CABIAIABA53ea5976d8404470b836520267410096"
+        ],
+        "elementTypeToHTMLTemplateMapping": {
+        },
+        "enableKnowledge": false,
+        "itemsKey": "recSet",
+        "knowledgeArticleTypeQueryFieldsMap": {
+        },
+        "label": null,
+        "maxCompareSize": 4,
+        "message": {
+        },
+        "modalConfigurationSetting": {
+            "modalController": "ModalProductCtrl",
+            "modalHTMLTemplateId": "vlcProductConfig.html",
+            "modalSize": "lg"
+        },
+        "modalController": "ModalInstanceCtrl",
+        "modalHTMLTemplateId": "vlcModalContent.html",
+        "persistentComponent": [
+            {
+                "id": "vlcCart",
+                "itemsKey": "cartItems",
+                "label": "",
+                "modalConfigurationSetting": {
+                    "modalController": "ModalProductCtrl",
+                    "modalHTMLTemplateId": "vlcProductConfig.html",
+                    "modalSize": "lg"
+                },
+                "postTransformBundle": "",
+                "preTransformBundle": "",
+                "remoteClass": "",
+                "remoteMethod": "",
+                "remoteOptions": {
+                    "postTransformBundle": "",
+                    "preTransformBundle": ""
+                },
+                "remoteTimeout": 30000,
+                "render": false,
+                "responseJSONNode": "",
+                "responseJSONPath": "",
+                "sendJSONNode": "",
+                "sendJSONPath": ""
+            },
+            {
+                "id": "vlcKnowledge",
+                "itemsKey": "knowledgeItems",
+                "label": "",
+                "modalConfigurationSetting": {
+                    "modalController": "",
+                    "modalHTMLTemplateId": "",
+                    "modalSize": "lg"
+                },
+                "postTransformBundle": "",
+                "preTransformBundle": "",
+                "remoteClass": "",
+                "remoteMethod": "",
+                "remoteOptions": {
+                    "postTransformBundle": "",
+                    "preTransformBundle": ""
+                },
+                "remoteTimeout": 30000,
+                "render": false
+            }
+        ],
+        "remoteOptions": {
+            "postTransformBundle": "",
+            "preTransformBundle": ""
+        },
+        "remoteTimeout": 30000,
+        "saveContentEncoded": false,
+        "saveForLaterRedirectPageName": "sflRedirect",
+        "saveForLaterRedirectTemplateUrl": "vlcSaveForLaterAcknowledge.html",
+        "saveObjectId": "%ContextId%",
+        "saveURLPatterns": {
+        },
+        "seedDataJSON": {
+        },
+        "selectMode": "Single",
+        "show": {
+            "group": {
+                "operator": "OR",
+                "rules": [
+                    {
+                        "group": {
+                            "operator": "AND",
+                            "rules": [
+                                {
+                                    "condition": "=",
+                                    "data": "Verde",
+                                    "field": "CoverageResult"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "group": {
+                            "operator": "OR",
+                            "rules": [
+                                {
+                                    "condition": "=",
+                                    "data": "FALSE",
+                                    "field": "UpdatedPhone"
+                                },
+                                {
+                                    "condition": "=",
+                                    "data": "Derivada",
+                                    "field": "Case:Status"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        "showInputWidth": false,
+        "ssm": false,
+        "text": "<h1 style=\"text-align: center;\"><span style=\"color: #000000;\">El caso se deriv&oacute;.</span></h1>\n<p style=\"text-align: center;\"><span style=\"color: #000000;\">Se estar&aacute; trabajando en el caso dentro de las 72hs.</span></p>\n<p style=\"text-align: center;\"><span style=\"color: #000000;\">El n&uacute;mero de gesti&oacute;n es&nbsp;<strong>%caseNumber%</strong>.</span></p>",
+        "timeTracking": true,
+        "trackingCustomData": {
+        },
+        "visualforcePagesAvailableInPreview": {
+        },
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Text Block",
+    "Name": "CoverageOkNetMessage",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/TechCare/DataService_Diagnosis/English/CoverageOkNetMessage"
+}

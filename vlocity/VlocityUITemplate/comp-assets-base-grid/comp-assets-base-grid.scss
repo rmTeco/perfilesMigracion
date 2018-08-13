@@ -1,0 +1,84 @@
+/*** ASSETS THEME VARIABLES ***/
+@import "comp-assets-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $assets-namespace is defined in cpq-base-variables */
+$namespace: $assets-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .comp-#{$namespace}-base-grid {
+            background-color: $cpq-page-bg-color;
+
+            .#{$namespace}-container {
+                .#{$namespace}-info-container-wrapper {
+                    transition: margin-right 250ms ease-in;
+                    margin-right: -59%;
+
+                    &.#{$namespace}-product-container-visible {
+                        margin-right: 0;
+                    }
+                }
+
+                // 64rem
+                @media screen and (max-width: $bp-large) {
+                    .comp-#{$namespace}-base-grid {
+                        input {
+                            -webkit-appearance: none;
+                        }
+                    }
+
+                    .#{$namespace}-info-container-wrapper {
+                        transition-property: right;
+                        position: fixed;
+                        z-index: 999;
+                        margin-right: 0;
+                        right: -33.33%;
+                        top: 0;
+                        height: 100%;
+                        overflow-y: auto;
+                        background-color: #fff;
+                        
+                        // TODO: Remove ng-include targeting;
+                        ng-include {
+                            display: block;
+                        }
+
+                        &.#{$namespace}-product-container-visible {
+                            margin-right: 0;
+                            right: 0;
+                            box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+                        }
+                    }
+                }
+
+                // 48rem
+                @media screen and (max-width: $bp-medium) {
+
+                }
+
+                // 30rem
+                @media screen and (max-width: $bp-small) {
+
+                }
+            }
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .#{$namespace}-container {
+            .#{$namespace}-info-container-wrapper {
+                margin-right: 0;
+                &.#{$namespace}-product-container-visible {
+                    left: 0;
+                    right: auto;
+                }
+            }
+        }
+    }
+}

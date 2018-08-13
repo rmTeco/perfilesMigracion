@@ -1,0 +1,37 @@
+<!--<div>-->
+<!--    <pre>-->
+<!--        Domicilios Recientes:-->
+        
+<!--        {{control.vlcSI[control.itemsKey] | json}}-->
+<!--    </pre>-->
+<!--</div>-->
+
+
+<ul class="slds-has-dividers--around-space taRecentShippingAddressList" ng-controller="RecentShippingAddressController as rsac" ng-if="bpTree.response.recentShippingAddress && bpTree.response.ShippingAddressData.Address">
+    <!--<li 
+        class="taAddressContainer slds-p-horizontal--x-small"
+        ng-repeat="address in control.vlcSI[control.itemsKey]">-->
+    <li 
+        class="taAddressContainer slds-p-horizontal--x-small"
+        ng-repeat="address in bpTree.response.recentShippingAddress">
+        
+        <div class="slds-item" ng-click="rsac.selectedAddress(address)" ng-class="{active: rsac.activeAddress == address && bpTree.response.ShippingAddressData.isRecentAddressSelected}">
+            <div class="slds-tile slds-tile--board">
+                <h3 class="slds-truncate">
+                    <a href="javascript:void(0);" >{{address.ShippingStreetNumber}} {{address.ShippingStreet}}</a>
+                </h3>
+                <div class="slds-tile__detail slds-text-body--small">
+                    <p class="slds-text-heading--small">{{address.ShippingState}} ({{address.ShippingPostalCode}})</p>
+                    <div ng-if="address.ShippingStreet1 && address.ShippingStreet2">
+                        <p class="slds-truncate"><strong>Entre:</strong></p>
+                        <p class="slds-truncate">{{address.ShippingStreet1}} - {{address.ShippingStreet2}}</p>
+                    </div>
+                    <div ng-if="address.ShippingAditionalInformation">
+                        <p class="slds-truncate"><strong>Información adicional:</strong></p>
+                        <p class="slds-truncate">{{address.ShippingAditionalInformation}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

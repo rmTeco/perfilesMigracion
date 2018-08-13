@@ -1,0 +1,70 @@
+<apex:page controller="vlocity_cmt.CacheViewerController" sidebar="false">
+
+  <apex:form >
+ 
+  <apex:pageBlock title="CPQ Cache Partition Viewer " mode="edit">
+
+  <table width="100%" border="0">
+  <tr>  
+    <td width="30%" valign="top">
+
+      <apex:pageBlock title="Search Key" mode="edit" id="criteria">
+
+ 
+      <table cellpadding="2" cellspacing="2">
+		  <tr>
+	        <td style="font-weight:bold;">Partitions<br/>
+		 		<apex:selectRadio value="{!mPartition}"  id="mpar"> 
+		            <apex:selectOptions value="{!cacheTypes}"/> 
+		        </apex:selectRadio>
+	        </td>
+	      </tr>      
+	      <tr>
+	        <td style="font-weight:bold;">Key<br/>
+	        	<apex:inputText id="cKeyInput" value="{!mKey}"/>
+	        </td>
+	      </tr>
+
+	      </table>
+	      <apex:commandButton action="{!runSearch}" reRender="results" id="srch" value="Search" />  
+      </apex:pageBlock>
+      <apex:pageMessages />
+
+    </td>
+    <td valign="top">
+
+    <apex:pageBlock mode="edit" id="results">
+
+        <apex:pageBlockTable value="{!cacheEntries}" var="kv">
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Key" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="ckey" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputLabel value="{!kv.cKey}"/>
+            </apex:column>
+
+            <apex:column >
+                <apex:facet name="header">
+                    <apex:commandLink value="Value" action="{!toggleSort}" rerender="results">
+                        <apex:param name="sortField" value="lastName" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputText value="{!kv.cValue}"/>
+            </apex:column>
+ 
+
+        </apex:pageBlockTable>
+
+    </apex:pageBlock>
+
+    </td>
+  </tr>
+  </table>
+
+</apex:pageBlock>
+  </apex:form>
+
+</apex:page>

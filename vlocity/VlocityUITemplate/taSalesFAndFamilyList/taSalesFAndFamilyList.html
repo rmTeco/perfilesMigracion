@@ -1,0 +1,175 @@
+<section 
+    ng-if="bpTree.response.ShowFriendsNumberStep"
+    class="ta-friendsAndFamilyList slds-p-horizontal--xx-small"
+    ng-controller="FAndFController as fafc">
+    <p class="slds-text-title slds-m-bottom--large">Agregá los números amigos para cada línea</p>
+
+    <div
+        class="slds-m-bottom--x-large" 
+        ng-repeat="numerosAmigos in bpTree.response.numerosAmigosXPlan">
+        <h1 class="ta-divider slds-has-divider--bottom slds-text-heading--medium slds-m-bottom--medium slds-p-bottom--x-small">Línea {{numerosAmigos.linea}}</h1>
+        <div class="slds-grid slds-grid--pull-padded">
+            <div class="slds-col--padded slds-size--1-of-2">
+                <h3 class="slds-text-title slds-m-bottom--medium">Números amigos VOZ</h3>
+                <ul>
+                    <li ng-repeat="numeroAmigoVoz in numerosAmigos.numerosAmigoVoz">
+                        <ng-form 
+                            name='loopform'
+                            class='slds-form-element vlc-flex vlc-slds-tel'
+                            ng-repeat='control in child.eleArray'>
+
+                            <div vlc-slds-include="vlcLabelController.html"></div>
+
+                            <div class="slds-form-element__control">
+
+                                <div 
+                                    class="vlc-control-wrapper" 
+                                    help="{{::control.propSetMap.help}}"
+                                    ng-init="
+                                        spinnerNameVoz = 'showSpinnerVoz_' + $parent.$parent.$index + '_' + $parent.$index; 
+                                        showErrorMsgVoz = 'showErrorMsgVoz' + $parent.$parent.$index + '_' + $parent.$index;"
+                                    >
+                                    
+                                    <div
+                                        ng-if="fafc[spinnerNameVoz]" 
+                                        class="slds-spinner_container">
+                                        <div role="status" class="slds-spinner slds-spinner--x-small">
+                                            <span class="slds-assistive-text">Loading</span>
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    <!-- ng-disabled='control.ro' -->
+                                    
+                                    <input id='{{numerosAmigos.linea_numeroAmigoVoz.id}}'
+                                            type='tel'
+                                            ng-class="{'ta-invalidField':fafc[showErrorMsgVoz]}"
+                                            ng-change="fafc.validateTelecomNumber(numeroAmigoVoz.lineNumber, spinnerNameVoz, showErrorMsgVoz, numeroAmigoVoz, $parent.$index, $parent.$parent.$index, 'VOZ')"
+                                            ng-disabled='fafc.disabled'
+                                            ng-required='control.req'
+                                            name="loopname"
+                                            ng-init='init(this, control)'
+                                            ng-model='numeroAmigoVoz.lineNumber'
+                                            ng-blur='aggregate(this, control.index, control.indexInParent, true, -1)'
+                                            ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': control.propSetMap.debounceValue, 'focusout': 0, 'blur': 0 } }"
+                                            class='slds-input form-control'
+                                            ui-mask='9999999999'
+                                            ng-minlength='{{::control.propSetMap.minLength}}'
+                                            ng-maxlength='{{::control.propSetMap.maxLength}}'
+                                            vlc-slds-ng-pattern='{{::control.propSetMap.pattern}}'
+                                            vlc-slds-val-checker="response"
+                                            vlc-slds-attr="placeholder" />
+
+
+                                            <!-- mask *** ui-mask='9999999999' 10 digitos *** -->
+                                    <label
+                                        ng-init="test()"
+                                        for="{{numerosAmigos.linea_numeroAmigoVoz.id}}" 
+                                        class='slds-form-element__label'>NUMERO AMIGO DE VOZ #{{$index + 1}}
+                                        <span 
+                                            class='vlc-asterix icon-v-asterix'
+                                            ng-if='control.req'></span>
+                                    </label>
+
+                                    
+                                    <!--a vlc-slds-tool-tip="test" help="{{control.propSetMap.help}}"> i </a-->
+
+
+                                </div>
+
+                                
+                                <div class="vlc-slds-error-block">
+
+                                    <div class='error' ng-show='fafc[showErrorMsgVoz]'>
+                                        <small class='description'>La linea no pertenece a Telecom, verifica el número.</small>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-form>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="slds-col--padded slds-size--1-of-2">
+                <h3 class="slds-text-title slds-m-bottom--medium">Números amigos SMS</h3>
+                <ul>
+                    <li ng-repeat="numeroAmigoSms in numerosAmigos.numerosAmigoSms">
+                        <ng-form 
+                            name='loopform'
+                            class='slds-form-element vlc-flex vlc-slds-tel'
+                            ng-repeat='control in child.eleArray'>
+                    
+                            <div vlc-slds-include="vlcLabelController.html"></div>
+                    
+                            <div class="slds-form-element__control">
+                    
+                                <div 
+                                    class="vlc-control-wrapper" 
+                                    help="{{::control.propSetMap.help}}"
+                                    ng-init="
+                                        spinnerNameSms = 'showSpinnerSms_' + $parent.$parent.$index + '_' + $parent.$index;
+                                        showErrorMsgSms = 'showErrorMsgSms' + $parent.$parent.$index + '_' + $parent.$index;"
+                                    >
+                                    
+                                    <div
+                                        ng-if="fafc[spinnerNameSms]" 
+                                        class="slds-spinner_container">
+                                        <div role="status" class="slds-spinner slds-spinner--x-small">
+                                            <span class="slds-assistive-text">Loading</span>
+                                            <div class="slds-spinner__dot-a"></div>
+                                            <div class="slds-spinner__dot-b"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <input id='{{numerosAmigos.linea_numeroAmigoSms.id}}'
+                                            type='tel'
+                                            ng-class="{'ta-invalidField':fafc[showErrorMsgSms]}"
+                                            ng-change="fafc.validateTelecomNumber(numeroAmigoSms.lineNumber, spinnerNameSms, showErrorMsgSms, numeroAmigoSms, $parent.$index, $parent.$parent.$index, 'SMS')"
+                                            ng-disabled='fafc.disabled'
+                                            ng-required='control.req'
+                                            name="loopname"
+                                            ng-init='init(this, control)'
+                                            ng-model='numeroAmigoSms.lineNumber'
+                                            ng-blur='aggregate(this, control.index, control.indexInParent, true, -1)'
+                                            ng-model-options="{ updateOn: 'default focusout blur', debounce: { 'default': control.propSetMap.debounceValue, 'focusout': 0, 'blur': 0 } }"
+                                            class='slds-input form-control'
+                                            ui-mask='9999999999'
+                                            ng-minlength='{{::control.propSetMap.minLength}}'
+                                            ng-maxlength='{{::control.propSetMap.maxLength}}'
+                                            vlc-slds-ng-pattern='{{::control.propSetMap.pattern}}'
+                                            vlc-slds-val-checker="response"
+                                            vlc-slds-attr="placeholder" />
+                                            
+                                            <!-- mask *** ui-mask='9999999999' 10 digitos *** -->
+                                    <label 
+                                        for="{{numerosAmigos.linea_numeroAmigoSms.id}}" 
+                                        class='slds-form-element__label'>NUMERO AMIGO DE SMS #{{$index + 1}}
+                                        <span 
+                                            class='vlc-asterix icon-v-asterix'
+                                            ng-if='control.req'>
+                                        </span>
+                                    </label>
+                    
+                                    <!-- tooltip template -->
+                                    <!--a vlc-slds-tool-tip="test" help="{{control.propSetMap.help}}"> i </a-->
+                    
+                    
+                                </div>
+                    
+                                <!-- <div ng-include="::errHTMLId"></div> -->
+                                <div class="vlc-slds-error-block">
+                                    <div class='error' ng-show='fafc[showErrorMsgSms]'>
+                                        <small class='description'>La linea no pertenece a Telecom, verifica el número.</small>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                    
+                        </ng-form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

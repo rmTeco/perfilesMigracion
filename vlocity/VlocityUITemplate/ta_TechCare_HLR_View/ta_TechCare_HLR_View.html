@@ -1,0 +1,706 @@
+<div class="slds-form-element vlc-flex vlc-slds-text-block vlc-slds-rte HLR"
+	ng-if="bpTree.response.IFS132_Response"
+	ng-controller="hlrController as HLRCtrl">
+
+	<div class="slds-form-element__control">
+		<div class="slds-box techCare-hlr">
+			<div class="HLR-container">					
+				<h2><strong class="seccionHLR">{{HLRCtrl.Response.portabilidad}}</strong></h2>
+				
+				<!--Seccion Estado-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">1 - Estados </strong></h2></div>
+				</div>
+
+				<div class="HLR-info-body">
+					<div ng-repeat="activo in HLRCtrl.Response.estados.activos"> 
+						<div class="slds-grid HLR-info-header">
+							<div class="slds-align-middle slds-m-right--x-small">
+								<a 
+									ng-href 
+									ng-click="toogleOpenRow($event, this);">		
+									<slds-svg-icon  sprite="'utility'" 
+										icon="'chevronright'" 
+										size="'x-small'" 
+										no-hint="true"
+										extra-classes="'slds-icon-text-default'">
+									</slds-svg-icon>
+								</a>
+							</div>
+							<div><strong class="active">{{activo.Name}}</strong></div>
+						</div>
+						<div class="HLR-info-body childInfo">
+							<div class="slds-border--bottom" ng-repeat="category in activo.Content"> 
+								{{category.ideal}}
+							</div>
+						</div>						
+					</div>				
+					
+					<div class="slds-grid HLR-info-header">
+						<div class="slds-align-middle slds-m-right--x-small">
+							<a 
+								ng-href 
+								ng-click="toogleOpenRow($event, this);">		
+								<slds-svg-icon  sprite="'utility'" 
+									icon="'chevronright'" 
+									size="'x-small'" 
+									no-hint="true"
+									extra-classes="'slds-icon-text-default'">
+								</slds-svg-icon>
+							</a>
+						</div>
+						<div><strong class="inactive">Inactivos</strong></div>
+					</div>
+
+					<div class="HLR-info-body childInfo">
+
+						<div ng-repeat="inactivo in HLRCtrl.Response.estados.inactivos"> 
+							<div class="slds-grid HLR-info-header">
+								<div class="slds-align-middle slds-m-right--x-small">
+									<a 
+										ng-href 
+										ng-click="toogleOpenRow($event, this);">		
+										<slds-svg-icon  sprite="'utility'" 
+											icon="'chevronright'" 
+											size="'x-small'" 
+											no-hint="true"
+											extra-classes="'slds-icon-text-default'">
+										</slds-svg-icon>
+									</a>
+								</div>
+								<div><strong class="inactive">{{inactivo.Name}}</strong></div>
+							</div>	
+							<div class="HLR-info-body childInfo">
+								<div class="slds-grid slds-border--bottom" ng-repeat="category in inactivo.Content"> 							
+									<div class="slds-col slds-size--1-of-2" data-toggle="tooltip" data-placement="right" title="{{category.actual}}">{{category.ideal}}</div>
+									<div class="slds-col slds-size--1-of-2">{{category.actual}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>		    
+					
+				<!--Seccion Servicios-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">2 - {{HLRCtrl.Response.servicios.card}} </strong></h2></div>
+				</div>
+				<div class="HLR-info-body">
+					<div ng-repeat="activo in HLRCtrl.Response.servicios.activos">
+						<div class="slds-grid HLR-info-header">
+							<div class="slds-align-middle slds-m-right--x-small">
+								<a 
+									ng-href 
+									ng-click="toogleOpenRow($event, this);">		
+									<slds-svg-icon  sprite="'utility'" 
+										icon="'chevronright'" 
+										size="'x-small'" 
+										no-hint="true"
+										extra-classes="'slds-icon-text-default'">
+									</slds-svg-icon>
+								</a>
+							</div>
+							<div><strong class="active">{{activo.Name}}</strong></div>
+						</div>
+						<div class="HLR-info-body childInfo">
+							<div class="slds-border--bottom" ng-repeat="category in activo.Content"> 
+								{{category.ideal}}
+							</div>
+						</div>
+					</div>					
+
+					<div class="slds-grid HLR-info-header">
+						<div class="slds-align-middle slds-m-right--x-small">
+							<a 
+								ng-href 
+								ng-click="toogleOpenRow($event, this);">		
+								<slds-svg-icon  sprite="'utility'" 
+									icon="'chevronright'" 
+									size="'x-small'" 
+									no-hint="true"
+									extra-classes="'slds-icon-text-default'">
+								</slds-svg-icon>
+							</a>
+						</div>
+						<div><strong class="inactive">Inactivos</strong></div>
+					</div>
+
+					<div class="HLR-info-body childInfo">
+
+						<div ng-repeat="inactivo in HLRCtrl.Response.servicios.inactivos">
+							<div class="slds-grid HLR-info-header">
+								<div class="slds-align-middle slds-m-right--x-small">
+									<a 
+										ng-href 
+										ng-click="toogleOpenRow($event, this);">		
+										<slds-svg-icon  sprite="'utility'" 
+											icon="'chevronright'" 
+											size="'x-small'" 
+											no-hint="true"
+											extra-classes="'slds-icon-text-default'">
+										</slds-svg-icon>
+									</a>
+								</div>
+								<div><strong class="inactive">{{inactivo.Name}}</strong></div>
+							</div>
+							<div class="HLR-info-body childInfo">
+								<div class="slds-grid slds-border--bottom" ng-repeat="category in inactivo.Content"> 								
+									<div class="slds-col slds-size--1-of-2">{{category.ideal}}</div>
+									<div class="slds-col slds-size--1-of-2">{{category.actual}}</div>
+								</div>
+							</div>													
+						</div>
+					</div>
+				</div>
+
+				<!--Seccion Restricciones-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">3 - {{HLRCtrl.Response.restricciones.card}} </strong></h2></div>
+				</div>
+				
+				<div class="HLR-info-body">
+					<div ng-if="HLRCtrl.Response.restricciones.activos.length == 0 ">La linea no posee restricciones activas</div>
+					<div ng-repeat="activo in HLRCtrl.Response.restricciones.activos">
+						<div class="slds-grid HLR-info-header">
+							<div class="slds-align-middle slds-m-right--x-small">
+								<a 
+									ng-href 
+									ng-click="toogleOpenRow($event, this);">		
+									<slds-svg-icon  sprite="'utility'" 
+										icon="'chevronright'" 
+										size="'x-small'" 
+										no-hint="true"
+										extra-classes="'slds-icon-text-default'">
+									</slds-svg-icon>
+								</a>
+							</div>
+							<div><strong class="active">{{activo.Name}}</strong></div>
+						</div>	
+						<div class="HLR-info-body childInfo">
+							<div class="slds-border--bottom" ng-repeat="category in activo.Content"> 
+								{{category.ideal}}
+							</div>
+						</div>	
+					</div>			
+
+					<div class="slds-grid HLR-info-header">
+						<div class="slds-align-middle slds-m-right--x-small">
+							<a 
+								ng-href 
+								ng-click="toogleOpenRow($event, this);">		
+								<slds-svg-icon  sprite="'utility'" 
+									icon="'chevronright'" 
+									size="'x-small'" 
+									no-hint="true"
+									extra-classes="'slds-icon-text-default'">
+								</slds-svg-icon>
+							</a>
+						</div>
+						<div><strong class="inactive">Inactivos</strong></div>
+					</div>
+
+					<div class="HLR-info-body childInfo">
+
+						<div ng-repeat="inactivo in HLRCtrl.Response.restricciones.inactivos">
+							<div class="slds-grid HLR-info-header">
+								<div class="slds-align-middle slds-m-right--x-small">
+									<a 
+										ng-href 
+										ng-click="toogleOpenRow($event, this);">		
+										<slds-svg-icon  sprite="'utility'" 
+											icon="'chevronright'" 
+											size="'x-small'" 
+											no-hint="true"
+											extra-classes="'slds-icon-text-default'">
+										</slds-svg-icon>
+									</a>
+								</div>
+								<div><strong class="inactive">{{inactivo.Name}}</strong></div>
+							</div>						
+							<div class="HLR-info-body childInfo">
+								<div class="slds-grid slds-border--bottom" ng-repeat="category in inactivo.Content"> 					    
+									<div class="slds-col slds-size--1-of-2">{{category.ideal}}</div>
+									<div class="slds-col slds-size--1-of-2">{{category.actual}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--Seccion Locacion-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">4 - Locacion {{HLRCtrl.Response.locacion.card}} </strong></h2></div>
+				</div>
+				
+				<div class="HLR-info-body">
+					<div class="slds-border--bottom" ng-repeat="(key,value) in HLRCtrl.Response.locacion.pre"> 
+						<strong>{{key}} :</strong> {{value}}
+					</div>
+
+					<div class="slds-grid HLR-info-header">
+						<div class="slds-align-middle slds-m-right--x-small">
+							<a 
+								ng-href 
+								ng-click="toogleOpenRow($event, this);">		
+								<slds-svg-icon  sprite="'utility'" 
+									icon="'chevronright'" 
+									size="'x-small'" 
+									no-hint="true"
+									extra-classes="'slds-icon-text-default'">
+								</slds-svg-icon>
+							</a>
+						</div>
+						<div><strong class="active">Stats</strong></div>
+					</div>
+
+					<div class="HLR-info-body childInfo">
+
+						<div class="slds-border--bottom" ng-repeat="(key,value) in HLRCtrl.Response.locacion.mtMobileSubscriberStat"> 
+							<strong>{{key}} :</strong> {{value}}
+						</div>
+					</div>
+
+					
+
+
+				</div>
+
+				<!--Seccion Region / ALM
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">5 - Region / ALM</strong></h2></div>
+				</div>
+				
+				<div class="HLR-info-body">
+					{{HLRCtrl.Response.regionALM}}
+				</div>-->
+								
+				<!--Seccion VoiceMail-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">5 - {{HLRCtrl.Response.voiceMail.card}} </strong></h2></div>
+				</div>
+
+				<div class="HLR-info-body">
+					<div class="slds-border--bottom" ng-repeat="(key,value) in HLRCtrl.Response.voiceMail"> 
+						<div ng-if="key != 'card'"> 
+							<strong>{{key}} :</strong> {{value}}
+						</div>
+					</div>
+				</div>					
+				
+				<!--Seccion Informacion BDU-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">6 - {{HLRCtrl.Response.informacionBDU.hlr}} </strong></h2></div>
+				</div>
+				
+				<div class="HLR-info-body">
+					<div class="slds-grid HLR-info-header">
+						<div class="slds-align-middle slds-m-right--x-small">
+							<a 
+								ng-href 
+								ng-click="toogleOpenRow($event, this);">		
+								<slds-svg-icon  sprite="'utility'" 
+									icon="'chevronright'" 
+									size="'x-small'" 
+									no-hint="true"
+									extra-classes="'slds-icon-text-default'">
+								</slds-svg-icon>
+							</a>
+						</div>
+						<div><h2><strong class="seccionHLR">Resumen </strong></h2></div>
+					</div>					
+					<div class="HLR-info-body childInfo">
+						<div class="slds-m-bottom--small">
+							<div class="slds-grid slds-border--bottom" ng-repeat="element in HLRCtrl.Response.informacionBDU.hlrSubscriberData.resumen" ng-if="element.nivel4 == undefined"> 
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+									{{element.cdesc}}
+								</div>
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+									{{element.clave}}
+								</div>
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+									{{element.valor}}
+								</div>
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small {{element.sever == 'VERDE'? 'active' : element.sever == 'ROJO'? 'inactive' : element.sever == 'AZUL' ? 'neutral' : ''}}"> 
+									{{element.vdesc}}
+								</div>
+							</div>					
+						</div>
+						
+						<div 
+							class="slds-m-bottom--small" 
+							ng-repeat="element in HLRCtrl.Response.informacionBDU.hlrSubscriberData.resumen" 
+							ng-if="element.nivel4 !== undefined"> 
+							<div> 
+								<strong class="seccionHLR">{{element.clave}}</strong >
+							</div>
+							
+							<div class="slds-grid slds-border--bottom" ng-repeat="subElement in element.nivel4" > 
+								<div 
+									class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small" 
+									title="{{subElement.cdesc}}"> 
+									{{subElement.cdesc}}
+								</div>
+								<div 
+									class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small" 
+									title="{{subElement.clave}}"> 
+									{{subElement.clave}}
+								</div>
+								<div 
+									class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small" 
+									title="{{subElement.valor}}"> 
+									{{subElement.valor}}
+								</div>
+								<div 
+									class=" slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small {{subElement.sever == 'VERDE'? 'active' : subElement.sever == 'ROJO'? 'inactive' : subElement.sever == 'AZUL' ? 'neutral' : ''}}"
+									title="{{subElement.vdesc}}">
+									{{subElement.vdesc}}
+								</div>
+							</div>						
+						</div>
+					</div>
+
+					<div class="slds-grid HLR-info-header">
+						<div class="slds-align-middle slds-m-right--x-small">
+							<a 
+								ng-href 
+								ng-click="toogleOpenRow($event, this);">		
+								<slds-svg-icon  sprite="'utility'" 
+									icon="'chevronright'" 
+									size="'x-small'" 
+									no-hint="true"
+									extra-classes="'slds-icon-text-default'">
+								</slds-svg-icon>
+							</a>
+						</div>
+						<div><h2><strong class="seccionHLR">Detalle </strong></h2></div>
+					</div>
+					<div class="HLR-info-body childInfo">
+						<div class="slds-m-bottom--small" ng-repeat="element in HLRCtrl.Response.informacionBDU.hlrSubscriberData.detalle"> 
+
+							<div> 
+								<strong class="seccionHLR">{{element.clave}}</strong >
+							</div>
+							
+							<div class="slds-grid slds-border--bottom" ng-repeat="subElement in element.nivel3" > 
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+									{{subElement.cdesc}}
+								</div>
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+									{{subElement.clave}}
+								</div>
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+									{{subElement.valor}}
+								</div>
+								<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small {{subElement.sever == 'VERDE'? 'active' : subElement.sever == 'ROJO'? 'inactive' : subElement.sever == 'AZUL' ? 'neutral' : ''}}" > 
+									{{subElement.vdesc}}
+								</div>
+							</div>
+						
+						</div>
+					</div>
+				</div>
+
+				<!--SMS encolados-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">7 - SMS Encolados </strong></h2></div>
+				</div>				
+				<div class="HLR-info-body">
+					<div ng-repeat="(key,value) in HLRCtrl.Response.smsEncolado.smsEncolado"> 
+						<h2><strong class="seccionHLR">{{key}} </strong></h2>
+						
+						<div class="slds-grid slds-border--bottom" ng-repeat="subElement in value" > 
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{subElement.cdesc}}
+							</div>
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{subElement.clave}}
+							</div>
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{subElement.valor}}
+							</div>
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small {{subElement.sever == 'VERDE'? 'active' : subElement.sever == 'ROJO'? 'inactive' : subElement.sever == 'AZUL' ? 'neutral' : ''}}">
+								{{subElement.vdesc}}
+							</div>
+						</div>		    
+					</div>
+				</div>
+
+				<!--Autentificacion-
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">8 - Autentificacion </strong></h2></div>
+				</div>
+				<div class="HLR-info-body">
+					{{HLRCtrl.Response.autenticacion}}
+					<strong ng-if="HLRCtrl.Response.autenticacion =='' " class="inactive">No hay información disponible para esta sección </strong>
+				</div>
+				-->
+				<!--Autentificacion 3G
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">9 - Autentificacion 3G </strong></h2></div>
+				</div>
+				<div class="HLR-info-body">
+					{{HLRCtrl.Response.autenticacion3G}}
+					<strong ng-if="HLRCtrl.Response.autenticacion3G =='' " class="inactive">No hay información disponible para esta sección </strong>
+				</div>
+				-->
+				<!--Camel-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">8 - Camel</strong></h2></div>
+				</div>
+				<div class="HLR-info-body">
+					<div ng-repeat="subCamel in HLRCtrl.Response.camel" > 
+						<div class="slds-grid HLR-info-header">
+							<div class="slds-align-middle slds-m-right--x-small">
+								<a 
+									ng-href 
+									ng-click="toogleOpenRow($event, this);">		
+									<slds-svg-icon  sprite="'utility'" 
+										icon="'chevronright'" 
+										size="'x-small'" 
+										no-hint="true"
+										extra-classes="'slds-icon-text-default'">
+									</slds-svg-icon>
+								</a>
+							</div>
+							<div><h2><strong class="seccionHLR">{{subCamel.clave}} </strong></h2></div>
+						</div>
+						<div class="HLR-info-body childInfo">
+							<div ng-repeat="sCamel in subCamel.nivel3" > 
+								<h2><strong class="seccionHLR">{{sCamel.clave}} </strong></h2>
+									
+								<div class="slds-grid slds-border--bottom" ng-repeat="element in sCamel.nivel4" > 
+									<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+										{{element.cdesc}}
+									</div>
+									<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+										{{element.clave}}
+									</div>
+									<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+										{{element.valor}}
+									</div>
+									<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small {{element.sever == 'VERDE'? 'active' : element.sever == 'ROJO'? 'inactive' : element.sever == 'AZUL' ? 'neutral' : ''}}">
+										{{element.vdesc}}
+									</div>
+								</div>    		    
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--hssSubscriberData-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">9 - Categorías 4G </strong></h2></div>
+				</div>
+				
+				<div class="HLR-info-body">
+					<div class="slds-grid slds-border--bottom" ng-repeat="element in HLRCtrl.Response.hssSubscriberData" > 
+						<div class="slds-col slds-size--1-of-3  slds-hyphenate slds-p-horizontal--x-small"> 
+							{{element.cdesc}}
+						</div>
+						<div class="slds-col slds-size--1-of-3  slds-hyphenate slds-p-horizontal--x-small"> 
+							{{element.valor}}
+						</div>
+						<div class="slds-col slds-size--1-of-3  slds-hyphenate slds-p-horizontal--x-small {{element.sever == 'VERDE'? 'active' : element.sever == 'ROJO'? 'inactive' : element.sever == 'AZUL' ? 'neutral' : ''}}" >
+							{{element.vdesc}}
+						</div>
+					</div>
+				</div>				
+				
+				
+				<!--HSS Subscriber Categorias-->
+				<div class="slds-grid HLR-info-header">
+					<div class="slds-align-middle slds-m-right--x-small">
+						<a 
+							ng-href 
+							ng-click="toogleOpenRow($event, this);">		
+							<slds-svg-icon  sprite="'utility'" 
+								icon="'chevronright'" 
+								size="'x-small'" 
+								no-hint="true"
+								extra-classes="'slds-icon-text-default'">
+							</slds-svg-icon>
+						</a>
+					</div>
+					<div><h2><strong class="seccionHLR">10 - APN del servicio 4G </strong></h2></div>
+				</div>								
+				
+				<div class="HLR-info-body">
+					<div class="slds-m-bottom--small">
+						<div class="slds-grid slds-border--bottom" ng-repeat="element in HLRCtrl.Response.hssSubscriberCategorias" ng-if="element.nivel4 == undefined"> 
+							<div class="slds-col slds-size--1-of-2 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{element.cdesc}}
+							</div>
+							<div class="slds-col slds-size--1-of-2 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{element.valor}}
+							</div>
+						</div>
+					</div>					
+					
+					<div class="slds-m-bottom--small" ng-repeat="element in HLRCtrl.Response.hssSubscriberCategorias" ng-if="element.nivel4 !== undefined"> 
+						<div> 
+							<strong class="seccionHLR">{{element.clave}}</strong >
+						</div>
+						
+						<div class="slds-grid slds-border--bottom" ng-repeat="subElement in element.nivel4" > 
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{subElement.cdesc}}
+							</div>
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{subElement.clave}}
+							</div>
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small"> 
+								{{subElement.valor}}
+							</div>
+							<div class="slds-col slds-size--1-of-4 slds-hyphenate slds-p-horizontal--x-small {{subElement.sever == 'VERDE'? 'active' : subElement.sever == 'ROJO'? 'inactive' : subElement.sever == 'AZUL' ? 'neutral' : ''}}"> 
+								{{subElement.server}}{{subElement.vdesc}}
+							</div>
+						</div>					
+					</div>
+				</div>			
+			</div>
+		</div>
+	</div>
+</div>

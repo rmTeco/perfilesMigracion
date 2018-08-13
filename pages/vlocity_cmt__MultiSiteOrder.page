@@ -1,0 +1,1159 @@
+<apex:page StandardController="Order" extensions="vlocity_cmt.MultiSiteOrder" standardStylesheets="false">
+<html xmlns:ng="http://angularjs.org" ng-app="multiSiteApp" class="ng-cloak">
+    <head>
+        <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"/>
+        <apex:includeScript value="/support/console/31.0/integration.js"/>
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__AngularRoute)}"/>
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ANGULARBOOT)}"/>
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ANGULARBOOTSTRAPTPLS)}"/>
+   
+        <style>
+            .vlocityModal{
+                position:absolute;
+                top:5%;
+                left:40%;
+                z-index:9999;
+                outline-width:0px;
+            }
+            .vlocity-error {
+                display:block;
+                color:red;
+            }
+            .miniCart
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .headerSection
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .headerSection:after
+            {
+                content: " ";
+                display: table;
+                clear: both;
+            }
+            .lineItemSection
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .attributeSection
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .col1
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .col2
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .col3
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .col4
+            {
+                float:left;
+                margin-left:20px;
+            }
+            .col5
+            {
+                float:left;
+                margin-left:20px;
+            }
+
+            #hierButton {
+                width:30px;
+            }
+
+            .pad {
+                display: block;
+                height: 22px;
+            }
+
+            .row {
+                padding-bottom: 10px;
+            }
+
+
+            th {
+                border-right: 1px solid #ccc;
+            }
+
+            th:last-of-type {
+                border-right: 1px solid #ccc;
+            }
+
+            #childOrder {
+                margin-top: 10px;
+            }
+
+            #childOrder iframe {
+                border: none;
+                height: 800px;
+                width: 100%;
+            }
+
+            .vlocity .nav-tabs {
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 5px;
+            }
+
+            .col-md-*:last-of-type {
+                padding-right: 0px;
+            }
+
+            .cfg-attr-modal .attribute {
+                margin-bottom: 25px;
+            }
+
+            .cfg-attr-modal .attribute .attr-name {
+                padding-bottom: 4px;
+                font-weight: bold;
+            }
+            .vlocity table.attr-items tr th, .vlocity table.attr-items tbody tr td {
+                padding: 4px 8px;
+            }
+            .vlocity table.attr-items tr.new-value {
+                background-color: #ffffff;
+                cursor: default;
+            }
+            .vlocity table.attr-items tr.new-value:hover {
+                background-color: #ffffff;
+            }
+            .vlocity table.attr-items tr.new-value td:first-child {
+                font-weight: bold;
+                text-align: right;
+            }
+            .vlocity .form-group {
+                margin-bottom: 0;
+            }
+            .vlocity .alert-msg {
+                position: fixed;
+                top: 40px;
+                left: 10%;
+                width: 80%;
+                z-index: 9999;
+            }
+            .vlocity .alert {
+                padding: 15px;
+            }
+            .vlocity .alert .close {
+                color: inherit;
+            }
+            .vlocity .alert-success {
+                background-color: #dff0d8;
+                border: 2px solid #d6e9c6;
+                color: #3c763d;
+            }
+            .vlocity .alert-danger {
+                background-color: #f2dede;
+                border: 2px solid #ebccd1;
+                color: #a94442;
+            }
+        </style>
+        <script>
+        /**
+ * Checklist-model
+ * AngularJS directive for list of checkboxes
+ * https://github.com/vitalets/checklist-model
+ * License: MIT http://opensource.org/licenses/MIT
+ */
+
+angular.module('checklist-model', [])
+.directive('checklistModel', ['$parse', '$compile', function($parse, $compile) {
+  // contains
+  function contains(arr, item, comparator) {
+    if (angular.isArray(arr)) {
+      for (var i = arr.length; i--;) {
+        if (comparator(arr[i], item)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  // add
+  function add(arr, item, comparator) {
+    arr = angular.isArray(arr) ? arr : [];
+      if(!contains(arr, item, comparator)) {
+          arr.push(item);
+      }
+    return arr;
+  }  
+
+  // remove
+  function remove(arr, item, comparator) {
+    if (angular.isArray(arr)) {
+      for (var i = arr.length; i--;) {
+        if (comparator(arr[i], item)) {
+          arr.splice(i, 1);
+          break;
+        }
+      }
+    }
+    return arr;
+  }
+
+  // http://stackoverflow.com/a/19228302/1458162
+  function postLinkFn(scope, elem, attrs) {
+     // exclude recursion, but still keep the model
+    var checklistModel = attrs.checklistModel;
+    attrs.$set("checklistModel", null);
+    // compile with `ng-model` pointing to `checked`
+    $compile(elem)(scope);
+    attrs.$set("checklistModel", checklistModel);
+
+    // getter / setter for original model
+    var getter = $parse(checklistModel);
+    var setter = getter.assign;
+    var checklistChange = $parse(attrs.checklistChange);
+
+    // value added to list
+    var value = attrs.checklistValue ? $parse(attrs.checklistValue)(scope.$parent) : attrs.value;
+
+
+    var comparator = angular.equals;
+
+    if (attrs.hasOwnProperty('checklistComparator')){
+      if (attrs.checklistComparator[0] == '.') {
+        var comparatorExpression = attrs.checklistComparator.substring(1);
+        comparator = function (a, b) {
+          return a[comparatorExpression] === b[comparatorExpression];
+        }
+        
+      } else {
+        comparator = $parse(attrs.checklistComparator)(scope.$parent);
+      }
+    }
+
+    // watch UI checked change
+    scope.$watch(attrs.ngModel, function(newValue, oldValue) {
+      if (newValue === oldValue) { 
+        return;
+      } 
+      var current = getter(scope.$parent);
+      if (angular.isFunction(setter)) {
+        if (newValue === true) {
+          setter(scope.$parent, add(current, value, comparator));
+        } else {
+          setter(scope.$parent, remove(current, value, comparator));
+        }
+      }
+
+      if (checklistChange) {
+        checklistChange(scope);
+      }
+    });
+    
+    // declare one function to be used for both $watch functions
+    function setChecked(newArr, oldArr) {
+        scope[attrs.ngModel] = contains(newArr, value, comparator);
+    }
+
+    // watch original model change
+    // use the faster $watchCollection method if its available
+    if (angular.isFunction(scope.$parent.$watchCollection)) {
+        scope.$parent.$watchCollection(checklistModel, setChecked);
+    } else {
+        scope.$parent.$watch(checklistModel, setChecked, true);
+    }
+  }
+
+  return {
+    restrict: 'A',
+    priority: 1000,
+    terminal: true,
+    scope: true,
+    compile: function(tElement, tAttrs) {
+      if ((tElement[0].tagName !== 'INPUT' || tAttrs.type !== 'checkbox')
+          && (tElement[0].tagName !== 'MD-CHECKBOX')
+          && (!tAttrs.btnCheckbox)) {
+        throw 'checklist-model should be applied to `input[type="checkbox"]` or `md-checkbox`.';
+      }
+
+      if (!tAttrs.checklistValue && !tAttrs.value) {
+        throw 'You should provide `value` or `checklist-value`.';
+      }
+
+      // by default ngModel is 'checked', so we set it if not specified
+      if (!tAttrs.ngModel) {
+        // local scope var storing individual checkbox model
+        tAttrs.$set("ngModel", "checked");
+      }
+
+      return postLinkFn;
+    }
+  };
+}]);
+        
+        
+        </script>
+        <script>
+            var nsp = '{!namespacePrefix}';
+            console.log('nsp:'+nsp);
+            var currencySymbol = '{!currencyLocaleSymbol}';
+            var multiSiteApp = angular.module("multiSiteApp", ['ui.bootstrap','checklist-model','ngRoute','mgcrea.ngStrap.datepicker','mgcrea.ngStrap.timepicker']);
+            var lastClonedId = 0;
+            multiSiteApp.factory('multiSiteService',function($q,$rootScope,$modal){
+                var factory = {};
+                factory.openAlertWindow = function (size, message) {
+                    var modalInstance = $modal.open({
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: size,
+                    windowClass:'vlocity vlocityModal',
+                    resolve: {
+                                message: function () {
+                                return message;
+                                }
+                             }
+                    });
+                };
+                factory.callSFRemote = function(args) {
+                    var deferred = $q.defer();
+                    var argFunc = function(result){
+                                        $rootScope.$apply(function(){
+                                            var sresult =[];
+                                            console.log("result of " + args[0] + " is ",result);
+                                            if ( result){
+                                                sresult = angular.fromJson(result);
+                                            }
+                                            else {
+                                                factory.openAlertWindow('sm',args[0]);
+                                                console.log('remoting error D:');
+                                            }
+                                            deferred.resolve(sresult);
+
+                                        });
+                                    };
+                    var lastArg = {escape: false};
+                    args.push(argFunc);
+                    args.push(lastArg);
+                    var fn = Visualforce.remoting.Manager.invokeAction;
+                    //fn.apply(args);
+                    Visualforce.remoting.Manager.invokeAction.apply(Visualforce.remoting.Manager,args);
+                    return deferred.promise;
+
+                }
+
+
+
+                return factory;
+            });
+
+            multiSiteApp.controller('multiSiteController', function ($scope,$location,$window,multiSiteService,$modal,$filter,$timeout) {
+                $scope.nsp = nsp;
+                $scope.currencySymbol = currencySymbol;
+                $scope.allChk = {};
+                $scope.allChk.selected = false;
+                 $scope.myPopover = {
+            
+                    isOpen: [],
+                    openId: "",
+            
+                    templateUrl: 'myPopoverTemplate.html',
+            
+                    open: function open(id) {
+                      $scope.myPopover.openId = id;
+                      $scope.myPopover.isOpen[id] = true;
+                      $scope.myPopover.data = 'Hello!';
+                    },
+            
+                    close: function close(id) {
+                      $scope.myPopover.isOpen[id] = false;
+                    }
+                  };
+
+                 $scope.openAlertWindow = function (size, message) {
+                    var modalInstance = $modal.open({
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: size,
+                    windowClass:'vlocity vlocityModal',
+                    resolve: {
+                                message: function () {
+                                return message;
+                                }
+                             }
+                    });
+                };
+                  
+                $scope.selectedSites = { items: []};
+                $scope.setSortOrder = function (sortOrder) {
+                    $scope.sortOrder = sortOrder;
+                };
+                
+                $scope.cloneOrders = function() {
+                    var newSiteIds = [];
+                    angular.forEach($scope.selectedSites.items, function(item) {
+                        newSiteIds.push({id: item.Id,name: item.Name});
+
+                    });
+
+                    var sendArray = ["{!$RemoteAction.MultiSiteOrder.cloneOrders}",$scope.orderId,$scope.myPopover.openId,JSON.stringify(newSiteIds)];
+                    multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                            if (result!==null) {
+                                $scope.childOrders = [];
+                                angular.forEach(result, function(item) {
+                                    $scope.childOrders.push(item);
+                                });
+                            }
+                            else {
+                                $scope.openAlertWindow('sm',sendArray[0]);
+                            }
+                        $scope.loading = false;
+                    });
+                    $scope.getAllLineItems();
+                }
+
+                $scope.cloneSites = function() {
+                    angular.forEach($scope.selectedSites.items, function(item) {
+                        var sendArray = ["{!$RemoteAction.MultiSiteOrder.cloneOrder}",$scope.orderId,item.Name,item.Id,$scope.myPopover.openId];
+                        multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                                if (result!==null) {
+                                    $scope.childOrders = [];
+                                    angular.forEach(result, function(item) {
+                                        $scope.childOrders.push(item);
+                                    });
+                                }
+                                else {
+                                    $scope.openAlertWindow('sm',sendArray[0]);
+                                }
+                            $scope.loading = false;
+                        });
+                 
+                    });
+                    $scope.getAllLineItems();
+                }
+
+                $scope.getOrder = function() {
+                    var sendArray  = ["{!$RemoteAction.MultiSiteOrder.getOrder}",$scope.orderId];
+
+                    multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                        $scope.order = result;
+                        $scope.loading = false;
+                    });
+
+                };
+
+                $scope.getChildOrders = function() {
+                    var sendArray = ["{!$RemoteAction.MultiSiteOrder.getChildOrders}",$scope.orderId];
+                    multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                            if (result!=null) {
+                                $scope.childOrders = [];
+                                angular.forEach(result, function(item) {
+                                    $scope.childOrders.push(item);
+                                });
+                            }
+                            else {
+                                $scope.openAlertWindow('sm',sendArray[0]);
+                            }
+                        $scope.loading = false;
+                    });
+                };
+                $scope.getAllLineItems = function() {
+                    var sendArray = ["{!$RemoteAction.MultiSiteOrder.getAllLineItems}",$scope.orderId];
+                    multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                            console.log("getAllLineItems: ", result);
+                            if (result!=null) {
+                                $scope.lineItems = [];
+                                angular.forEach(result, function(item) {
+                                    $scope.lineItems.push(item);
+                                });
+                            }
+                            else {
+                                $scope.openAlertWindow('sm',sendArray[0]);
+                            }
+                        $scope.loading = false;
+                    });
+                };
+
+                $scope.getServiceAccounts = function() {
+                    var sendArray = ["{!$RemoteAction.MultiSiteOrder.getServiceAccounts}",$scope.orderId];
+                    multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                            if (result!=null) {
+                                $scope.serviceAccounts = [];
+                                angular.forEach(result, function(item) {
+                                    $scope.serviceAccounts.push(item);
+                                });
+                            }
+                            else {
+                                $scope.openAlertWindow('sm',sendArray[0]);
+                            }
+                        $scope.loading = false;
+                    });
+                };
+
+                $scope.addChildOrder = function(name,accountId) {
+                    var sendArray = ["{!$RemoteAction.MultiSiteOrder.addChildOrder}",$scope.orderId,name,$scope.serviceAccount.Id];
+                    multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                            if (result!=null) {
+                                $scope.childOrders = [];
+                                angular.forEach(result, function(item) {
+                                    $scope.childOrders.push(item);
+                                });
+                            }
+                            else {
+                                $scope.openAlertWindow('sm',sendArray[0]);
+                            }
+                        $scope.loading = false;
+                    });
+                    $scope.getAllLineItems();
+                    $scope.getOrder();
+                };
+
+                $scope.cloneOrder = function(name,accountId,childSiteId) {
+                    var sendArray = ["{!$RemoteAction.MultiSiteOrder.cloneOrder}",$scope.orderId,name,$scope.serviceAccount.Id,$scope.childSiteOrders.Id];
+                    multiSiteService.callSFRemote(sendArray).then( function(result,event){
+                            if (result!=null) {
+                                $scope.childOrders = [];
+                                angular.forEach(result, function(item) {
+                                    $scope.childOrders.push(item);
+                                });
+                            }
+                            else {
+                                $scope.openAlertWindow('sm',sendArray[0]);
+                            }
+                        $scope.loading = false;
+                    });
+                    $scope.getAllLineItems();
+                    $scope.getOrder();
+                };
+
+                $scope.setActive = function(Id) {
+                    $scope.showAllItems = (Id === 'allItems');
+                    if ($scope.showAllItems) {
+                        $scope.getAllLineItems();
+                    }
+                    $scope.setFrame(Id);
+                    angular.forEach($scope.childOrders, function(item) {
+                        item.Active = (item.Id === Id);
+                    });
+                };
+
+                $scope.filterFields = [
+                  {name:'ShippingCity', label:'City'},
+                  {name:'PostalCode', label:'Postal Code'},
+                  {name:'Account.Site', label: 'Site'}
+                ];
+
+                $scope.setFrame = function(Id) {
+                    if (Id === 'allItems') {
+                        $('#childOrder').html('');
+                    } else {
+                        // TODO: This needs to have the URL set dynamically
+                        var iframeSrc = "/apex/AdvProductSearchPage?id=" + Id;
+                        $('#childOrder').html('<iframe src="' + iframeSrc + '"></iframe>');
+                    }
+                };
+
+                $scope.initialize = function() {
+                    $scope.loading = true;
+                    $scope.orderId = "{!$CurrentPage.Parameters.id}";
+                    $scope.showAllItems = true;
+                    $scope.cfgLineItems = {};
+                    $scope.attrMap = {};
+                    $scope.alert = {};
+                    $scope.showAlert = false;
+
+                    $scope.getOrder();
+                    $scope.getChildOrders();
+                    $scope.getAllLineItems();
+                    $scope.getServiceAccounts();
+                };
+
+                $scope.initialize();
+
+                $scope.toggleLineItem = function(lineItem) {
+                    if (lineItem.selected) {
+                        $scope.cfgLineItems[lineItem.Id] = lineItem;
+                    } else {
+                        delete $scope.cfgLineItems[lineItem.Id];
+                    }
+                    //CMT-174
+                    $scope.allChk.selected = $scope.lineItems.every(function(itm){ return itm.selected;})
+                    validateOrder();
+                };
+                
+                //CMT-174
+                $scope.toggleAllLineItems = function(){
+                	var toggleStatus = $scope.allChk.selected;
+     				angular.forEach($scope.lineItems, function(itm){ itm.selected = toggleStatus; $scope.toggleLineItem(itm);});
+                }
+                
+                //OM-976
+                $scope.checkOrdersValidity = true;
+                validateOrder = function(){
+                    for(itemId in $scope.cfgLineItems){
+                        if( $scope.cfgLineItems[itemId].Order && $scope.cfgLineItems[itemId].Order.Status && $scope.cfgLineItems[itemId].Order.Status === 'Activated'){
+                            $scope.checkOrdersValidity = true;
+                            return;
+                        }
+                    }
+                    $scope.checkOrdersValidity = false;
+                };
+                $scope.configureAttributes = function() {
+                    $scope.attrMap = {}; // attribute map
+                    var attrCount = 0;
+                    for (var key in $scope.cfgLineItems) {
+                        var lineItem = $scope.cfgLineItems[key];
+                        if (lineItem[nsp+'JSONAttribute__c']) {
+                            // item has JSON Attribute
+                            attrCount++;
+                            if (!lineItem.isAttrParsed) {
+                                // item`s JSON Attribute has not been deserialized
+                                lineItem[nsp+'JSONAttribute__c'] = JSON.parse(lineItem[nsp+'JSONAttribute__c']);
+                                lineItem.isAttrParsed = true;
+                            }
+                            for (var cat in lineItem[nsp+'JSONAttribute__c']) {
+                                var attrs = lineItem[nsp+'JSONAttribute__c'][cat];
+                                // parse the attributes
+                                $scope.parseAttributes(attrs, lineItem.Id);
+                            }
+                        }
+                    }
+                    $scope.hasConfigurableAttributes = (attrCount > 0);
+                    console.log('attrMap: ', $scope.attrMap);
+                    $scope.showCfgAttrModal();
+                };
+
+                $scope.showCfgAttrModal = function() {
+                    var modalInstance = $modal.open({
+                        templateUrl: 'cfgAttrModal.html',
+                        controller: ModalCfgAttrCtrl,
+                        resolve: {
+                            items: function() {
+                                return [$scope.attrMap, $scope.cfgLineItems, $scope.hasConfigurableAttributes];
+                            }
+                        }
+                    });
+                    modalInstance.result.then(function(updatedLineItems) {
+                        $scope.saveAttributeChanges(updatedLineItems);
+                    }, function () {});
+                };
+
+                /* parse the attributes */
+                $scope.parseAttributes = function(attrs, lineItemId) {
+                    angular.forEach(attrs, function(attr) {
+                        attr.Name = attr['attributedisplayname__c'];
+                        attr.Code = attr['attributeuniquecode__c'];
+                        attr.Filterable = attr['attributefilterable__c'];
+                        attr.SegmentValue = '';
+
+                        if (attr.attributeRunTimeInfo && attr.attributeRunTimeInfo.dataType) {
+                            if (attr.attributeRunTimeInfo.dataType === 'Text') {
+                                // TEXT
+                                if (attr.attributeRunTimeInfo.value === undefined) {
+                                    attr.attributeRunTimeInfo.value = attr.attributeRunTimeInfo.default;
+                                }
+                                attr.SegmentValue = attr.attributeRunTimeInfo.value;
+                            }
+                            if (attr.attributeRunTimeInfo.dataType === 'Number' || attr.attributeRunTimeInfo.dataType === 'Currency' || attr.attributeRunTimeInfo.dataType === 'Percent') {
+                                // NUMBER, CURRENCY, PERCENT
+                                if ((typeof attr.attributeRunTimeInfo.default) === 'string') {
+                                    // convert default to number, if string
+                                    attr.attributeRunTimeInfo.default = parseFloat(attr.attributeRunTimeInfo.default);
+                                }
+
+                                if (attr.attributeRunTimeInfo.value === undefined) {
+                                    attr.attributeRunTimeInfo.value = attr.attributeRunTimeInfo.default;
+                                } else {
+                                    if ((typeof attr.attributeRunTimeInfo.value) === 'string') {
+                                        // convert value to number, if string
+                                        attr.attributeRunTimeInfo.value = parseFloat(attr.attributeRunTimeInfo.value);
+                                    }
+                                }
+
+                                attr.SegmentValue = (attr.attributeRunTimeInfo.value || "") + "";
+                            }
+                            if (attr.attributeRunTimeInfo.dataType === 'Date' || attr.attributeRunTimeInfo.dataType === 'Datetime') {
+                                // DATE, DATETIME
+                                if (attr.attributeRunTimeInfo.value === undefined) {
+                                    attr.attributeRunTimeInfo.value = attr.attributeRunTimeInfo.default;
+                                }
+                                var dateFormat = (attr.attributeRunTimeInfo.dataType === 'Date' ? 'shortDate' : 'short');
+                                attr.SegmentValue = $filter('date')(attr.attributeRunTimeInfo.value, dateFormat);
+                            }
+                            if (attr.attributeRunTimeInfo.dataType === 'Checkbox') {
+                                // CHECKBOX
+                                if (attr.attributeRunTimeInfo.value === undefined) {
+                                    attr.attributeRunTimeInfo.value = attr.attributeRunTimeInfo.default;
+                                }
+                                attr.SegmentValue = (attr.attributeRunTimeInfo.value ? 'Yes' : 'No');
+                            }
+                            if (attr.attributeRunTimeInfo.dataType === 'Picklist') {
+                                // PICKLIST - RADIO BUTTON & DROPDOWN
+                                var selectedId;
+                                if (attr.attributeRunTimeInfo.selectedItem === undefined) {
+                                    if (attr.attributeRunTimeInfo.default !== undefined && attr.attributeRunTimeInfo.default.length > 0)
+                                        selectedId = attr.attributeRunTimeInfo.default[0].id;
+                                } else {
+                                    selectedId = attr.attributeRunTimeInfo.selectedItem.id;
+                                }
+                                angular.forEach(attr.attributeRunTimeInfo.values, function(value) {
+                                    if (value.id === selectedId) {
+                                        attr.attributeRunTimeInfo.selectedItem = value;
+                                        attr.SegmentValue = value.displayText;
+                                    }
+                                });
+                            }
+                            if (attr.attributeRunTimeInfo.dataType === 'Multi Picklist') {
+                                // MULTI PICKLIST
+                                var tempSegmentList = [];
+                                if (attr.attributeRunTimeInfo.uiDisplayType === 'Checkbox') {
+                                    // CHECKBOX
+                                    angular.forEach(attr.attributeRunTimeInfo.values, function(value) {
+                                        if (value.checked === undefined) {
+                                            var found = attr.attributeRunTimeInfo.default.some(function (el) {
+                                                return el.id === value.id;
+                                            });
+                                            value.checked = found;
+                                            if (value.checked)
+                                                tempSegmentList.push(value.displayText);
+                                        } else {
+                                            if (value.checked)
+                                                tempSegmentList.push(value.displayText);
+                                        }
+                                    });
+                                }
+                                if (attr.attributeRunTimeInfo.uiDisplayType === 'Dropdown') {
+                                    // DROPDOWN
+                                    if (attr.attributeRunTimeInfo.selectedItems === undefined) {
+                                        attr.attributeRunTimeInfo.selectedItems = [];
+                                        angular.forEach(attr.attributeRunTimeInfo.values, function(value) {
+                                            for (var i = 0; i < attr.attributeRunTimeInfo.default.length; i++) {
+                                                if (value.id === attr.attributeRunTimeInfo.default[i].id) {
+                                                    attr.attributeRunTimeInfo.selectedItems.push(value);
+                                                    break;
+                                                }
+                                            }
+                                        });
+                                    }
+                                    angular.forEach(attr.attributeRunTimeInfo.selectedItems, function(value) {
+                                        tempSegmentList.push(value.displayText);
+                                    });
+                                }
+                                attr.SegmentValue = tempSegmentList.join(',');
+                            }
+                        }
+
+                        delete attr.$$AttributeDefinitionEnd$$;
+                        attr.$$AttributeDefinitionEnd$$ = null;
+
+                        if ($scope.attrMap[attr['attributeuniquecode__c']]) {
+                            // attribute found in map
+                            var itemList = $scope.attrMap[attr['attributeuniquecode__c']].lineItems;
+                            itemList.push({"lineItemId": lineItemId, "attribute": attr});
+                            $scope.attrMap[attr['attributeuniquecode__c']].lineItems = itemList;
+                        } else {
+                            // attribute not found in map
+                            var itemList = [];
+                            itemList.push({"lineItemId": lineItemId, "attribute": attr});
+                            $scope.attrMap[attr['attributeuniquecode__c']] = {"attrName": attr['attributedisplayname__c'], "attrType": attr.attributeRunTimeInfo.dataType, "lineItems": itemList};
+                        }
+                    });
+                };
+
+                $scope.saveAttributeChanges = function(updatedLineItems) {
+                    var sendArray = ["{!$RemoteAction.MultiSiteOrder.saveAttributeChanges}", updatedLineItems];
+                    multiSiteService.callSFRemote(sendArray).then(function(result,event) {
+                        if (result!=null) {
+                            if (result) {
+                                $scope.alert = { type: 'success', msg: 'The attributes were updated successfuly.', timeout: 3000 };
+
+                                $scope.getAllLineItems(); // refresh the line items
+                            }
+                            else
+                                $scope.alert = { type: 'danger', msg: 'There was an error while saving the attributes. Please try again later.', timeout: 4000 };
+
+                            $scope.showAlert = true;
+                            $timeout($scope.closeAlert, $scope.alert.timeout);
+                        }
+                        else {
+                            $scope.openAlertWindow('sm',sendArray[0]);
+                        }
+                        $scope.loading = false;
+                    });
+                };
+
+                $scope.closeAlert = function() {
+                    $scope.showAlert = false;
+                    $scope.alert = {};
+                };
+            });
+
+            var ModalCfgAttrCtrl = function ($scope, $modalInstance, items) {
+                $scope.attrMap = items[0];
+                $scope.cfgLineItems = items[1];
+                $scope.hasConfigurableAttributes = items[2];
+                $scope.currencySymbol = currencySymbol;
+                $scope.lineItemToUpdate = {};
+
+                $scope.save = function() {
+                    console.log('updated attrMap: ', $scope.attrMap);
+                    for (var key in $scope.attrMap) {
+                        var attrObj = $scope.attrMap[key];
+                        $scope.updateAttribute(key, attrObj.lineItems, attrObj.newValue);
+                    }
+                    var tmp = [];
+                    for (var key in $scope.lineItemToUpdate) {
+                        var attributeStr = JSON.stringify($scope.cfgLineItems[key][nsp+"JSONAttribute__c"]);
+                        var item = {'Id': key};
+                        item[nsp+'JSONAttribute__c'] = attributeStr;
+                        tmp.push(item);
+                    }
+                    var updatedLineItems = JSON.stringify(tmp);
+                    $modalInstance.close(updatedLineItems);
+                };
+
+                $scope.updateAttribute = function(attrCode, lineItemIds, newValue) {
+                    angular.forEach(lineItemIds, function(item) {
+                        var lineItem = $scope.cfgLineItems[item.lineItemId];
+                        var cats = lineItem[nsp+'JSONAttribute__c'];
+                        for (var catCode in cats) {
+                            var attrs = cats[catCode];
+                            angular.forEach(attrs, function(attr) {
+                                if (attr['attributeuniquecode__c'] === attrCode) {
+                                    $scope.lineItemToUpdate[item.lineItemId] = true;
+
+                                    if (attr.attributeRunTimeInfo && attr.attributeRunTimeInfo.dataType) {
+                                        if (attr.attributeRunTimeInfo.dataType === 'Text' || attr.attributeRunTimeInfo.dataType === 'Number' || attr.attributeRunTimeInfo.dataType === 'Currency' || attr.attributeRunTimeInfo.dataType === 'Percent' || attr.attributeRunTimeInfo.dataType === 'Date' || attr.attributeRunTimeInfo.dataType === 'Datetime') {
+                                            // TEXT, NUMBER, CURRENCY, PERCENT, DATE, DATETIME
+                                            attr.attributeRunTimeInfo.value = newValue;
+                                        }
+                                        if (attr.attributeRunTimeInfo.dataType === 'Checkbox') {
+                                            // CHECKBOX
+                                            newValue = (newValue || false);
+                                            attr.attributeRunTimeInfo.value = newValue;
+                                        }
+                                        if (attr.attributeRunTimeInfo.dataType === 'Picklist') {
+                                            // PICKLIST - RADIO BUTTON & DROPDOWN
+                                            if (newValue) {
+                                                delete newValue.$$hashKey;
+                                            }
+                                            attr.attributeRunTimeInfo.selectedItem = newValue;
+                                        }
+                                        if (attr.attributeRunTimeInfo.dataType === 'Multi Picklist') {
+                                            // MULTI PICKLIST
+                                            if (attr.attributeRunTimeInfo.uiDisplayType === 'Checkbox') {
+                                                // CHECKBOX
+                                                angular.forEach(newValue, function(item) {
+                                                    delete item.$$hashKey;
+                                                });
+                                                attr.attributeRunTimeInfo.values = newValue;
+                                            }
+                                            if (attr.attributeRunTimeInfo.uiDisplayType === 'Dropdown') {
+                                                // DROPDOWN
+                                                angular.forEach(newValue, function(item) {
+                                                    delete item.$$hashKey;
+                                                });
+                                                attr.attributeRunTimeInfo.selectedItems = newValue;
+                                            }
+                                        }
+                                    }
+
+                                    delete attr.$$AttributeDefinitionEnd$$;
+                                    attr.$$AttributeDefinitionEnd$$ = null;
+                                }
+                            });
+                        }
+                    });
+                };
+
+                $scope.cancel = function() {
+                    $modalInstance.dismiss('cancel');
+                };
+            };
+        </script>
+
+    </head>
+    <body ng-controller="multiSiteController">
+        <div class="vlocity">
+            <h2 class="page-header">{!$Label.MultiSiteOrder}</h2>
+            <div style="padding-bottom:10px;">
+                <h2 style="display:inline;">{!$Label.MasterOrder}: {{order.MasterOrderName__c}}</h2>
+                <!-- TODO: This needs to have the URL set dynamically -->
+                <a href="https://na24.salesforce.com/{{order.Id}}">Edit</a>
+            </div>
+
+            <div class="newSiteData input-group row col-md-9">
+                <div class="col-md-6">
+                    <label for="siteName">{!$Label.SiteName}</label>
+                    <input id="siteName" ng-model="siteName" name="Site Name" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label for="serviceAccountSelect">{!$Label.ServiceAccounts}</label>
+                    <select id="serviceAccountSelect" ng-model="serviceAccount" ng-options="item.Name for item in serviceAccounts track by item.Id" class="form-control">
+                    </select>
+                </div>
+                <div class="col-md-3" style="padding-right: 0px;">
+                    <span class="pad"></span>
+                    <button class="btn btn-primary btn-block" ng-click="addChildOrder(siteName,serviceAccount.selected.value)">{!$Label.AddNewSite}</button>
+                </div>
+                <div ng-hide="true" class="col-md-3">
+                    <span class="pad"></span>
+                    <select ng-model="childSiteOrders" ng-options="item.Name for item in childOrders track by item.Id" class="form-control">
+                    </select>
+                </div>
+                <div ng-hide="true" class="col-md-3" style="padding-right: 0px;">
+                    <span class="pad"></span>
+                    <button class="btn btn-primary btn-block" ng-click="cloneOrder(siteName,serviceAccount.selected.value,childSiteOrders.selected.value)">{!$Label.CloneSiteOrder}</button>
+                </div>
+            </div>
+
+            <div class="sites row">
+
+                <div class="col-md-9">
+                    <div class="panel panel-default ">
+                    <div class="panel-heading">{!$Label.CurrentLocations}</div>
+                    <table class="table">
+                        <thead>
+                            <th ng-click="setSortOrder('Name')" style="width:30%">{!$Label.Name}</th>
+                            <th>{!$Label.CMTOrderId}</th>
+                            <th ng-click="setSortOrder('Account.Site')">{!$Label.AccountSite}</th>
+                            <th ng-click="setSortOrder('Account.ShippingCity')">{!$Label.City}</th>
+                            <th ng-click="setSortOrder('Account.ShippingPostalCode')">{!$Label.PostalCode}</th>
+                            <th ng-click="setSortOrder('ValidationStatus__c')">{!$Label.ValidationStatus}</th>
+                        </thead>
+                        <tbody>
+                            <tr  ng-repeat="o in childOrders | orderBy: sortOrder">
+                                <td> <span ng-click="setActive(o.Id)">{{o.Name}}</span>
+                                     <span style="float:right" >
+                                        <button uib-popover-template="'myPopoverTemplate.html'" 
+                                                popover-placement="right" 
+                                                popover-title="Select Sites to clone to" 
+                                                type="button" 
+                                                popover-is-open="myPopover.isOpen[o.Id]" 
+                                                ng-click="myPopover.open(o.Id)" 
+                                                class="btn btn-default">{!$Label.CMTClone}</button>  
+                                     </span>                                
+                                </td>
+                                <td><a ng-href="/{{o.Id}}">{{o.Id}}</a></td>
+                                <td>{{o.Account.Site}}</td>
+                                <td>{{o.Account.ShippingCity}}</td>
+                                <td>{{o.Account.ShippingPostalCode}}</td>
+                                <td>{{o.ValidationStatus__c}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/ng-template" id="myPopoverTemplate.html">
+             <div id="CloneList">
+                <div>{{dynamicPopover.content}}</div>
+                <div style="overflow:scroll-y">
+                    <ul ng-repeat="item in serviceAccounts ">
+                        <div><input type="checkbox" data-checklist-model="selectedSites.items" data-checklist-value="item"> {{item.Name}}
+                        </div>
+                    </ul>
+                </div>
+                <button type="button" id="close" class="btn-default" ng-click="cloneOrders();myPopover.close(myPopover.openId)">{!$Label.CMTClone}</button>
+                <button type="button" id="close" class="btn-default" ng-click="myPopover.close(myPopover.openId)">{!$Label.CMTCancel}</button>
+            </div>
+            </script>
+
+            <div class="siteTabs">
+                <ul class="nav nav-tabs">
+                    <li role="presentation" ng-class="{'active':showAllItems}"><a ng-click="setActive('allItems')">{!$Label.AllLineItems}</a></li>
+                    <li ng-repeat="i in childOrders" role="presentation" ng-class="{'active':i.Active}">
+                        <a ng-click="setActive(i.Id)">{{i.Name}}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div id="childOrder"></div>
+
+            <div ng-if="showAllItems">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left panel-title">{!$Label.AllLineItems}</div>
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-default" ng-click="configureAttributes()" ng-disabled="checkOrdersValidity">{!$Label.ConfigureAttributes}</button>
+                        </div>
+                    </div>
+                    <table class="table all-line-items">
+                        <thead>
+                            <th style="width: 48px;">
+							    <input ng-model="allChk.selected" type="checkbox" ng-change="toggleAllLineItems()"/>							    
+                            </th>
+                            <th>{!$Label.Site}</th>
+                            <th>{!$Label.Product}</th>
+                            <th>{!$Label.Quantity}</th>
+                            <th>{!$Label.MRC} ({{currencySymbol}})</th>
+                            <th>{!$Label.NRC} ({{currencySymbol}})</th>
+                            <th>{!$Label.ServiceAccount}</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="li in lineItems" ng-class="{'active': li.selected}">
+                                <td><input type="checkbox" ng-model="li.selected" ng-change="toggleLineItem(li)" /></td>
+                                <td>{{li.Order.Name}}</td>
+                                <td>{{li.PricebookEntry.Name}}</td>
+                                <td>{{li.Quantity}}</td>
+                                <td>{{li[nsp+"RecurringTotal__c"]}}</td>
+                                <td>{{li[nsp+"OneTimeTotal__c"]}}</td>
+                                <td>{{li[nsp+"ServiceAccountId__r"].Name}}</td>
+                           </tr>
+                        </tbody>
+                    </table>
+            </div>
+
+            <div ng-if="showAlert" class="alert-msg">
+                <div id="inner-message" class="alert alert-{{alert.type}}">
+                    <button type="button" class="close" data-dismiss="alert" ng-click="closeAlert()">&times;</button>
+                    {{alert.msg}}
+                </div>
+            </div>
+        </div>
+
+        <script type="text/ng-template" id="cfgAttrModal.html">
+            <div class="vlocity cfg-attr-modal">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">{!$Label.Close}</span></button>
+                    <h4 class="modal-title">{!$Label.ConfigureAttributes}</h4>
+                </div>
+                <div class="modal-body">
+                    <p ng-if="!hasConfigurableAttributes">{!$Label.CPQNoAttributesToConfigure}</p>
+                    <div class="attribute" ng-repeat="(attrCode, attrInfo) in attrMap">
+                        <div class="attr-name">{{attrInfo.attrName}}</div>
+                        <div>
+                            <table class="table table-bordered attr-items">
+                                <tr>
+                                    <th class="site">{!$Label.Site}</th>
+                                    <th class="prod">{!$Label.Product}</th>
+                                    <th class="value">{!$Label.Value}</th>
+                                </tr>
+                                <tr ng-repeat="lineItem in attrInfo.lineItems" ng-init="item = cfgLineItems[lineItem.lineItemId]">
+                                    <td class="site">{{item.Order.Name}}</td>
+                                    <td class="prod">{{item.PricebookEntry.Name}}</td>
+                                    <td class="value">{{lineItem.attribute.SegmentValue}}</td>
+                                </tr>
+                                <tr class="new-value">
+                                    <td>{!$Label.CMTNewValue}</td>
+                                    <td colspan="2" ng-init="attr = attrInfo.lineItems[0].attribute">
+                                        <div ng-switch="attr.attributeRunTimeInfo.dataType">
+                                            <div ng-switch-when="Text" class="form-group">
+                                                <input  type="text" class="form-control attr-text"
+                                                        placeholder="{{attr['formatmask__c']}}"
+                                                        ng-model="attrInfo.newValue"
+                                                        aria-label="{{attr['attributedisplayname__c']}}" />
+                                                <attribute-query attribute="attr" query="executeQueryableMethod" ng-if="attr['isquerydriven__c']"></attribute-query>
+                                            </div>
+                                            <div ng-switch-when="Number" class="form-group">
+                                                <input  type="number" class="form-control attr-text"
+                                                            placeholder="{{attr['formatmask__c']}}"
+                                                            ng-model="attrInfo.newValue"
+                                                            aria-label="{{attr['attributedisplayname__c']}}" />
+                                                <attribute-query attribute="attr" query="executeQueryableMethod" ng-if="attr['isquerydriven__c']"></attribute-query>
+                                            </div>
+                                            <div ng-switch-when="Currency" class="form-group">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">{{currencySymbol}}</div>
+                                                    <input  type="number" class="form-control attr-currency"
+                                                            placeholder="{{attr['formatmask__c']}}"
+                                                            ng-model="attrInfo.newValue"
+                                                            aria-label="{{attr['attributedisplayname__c']}}" />
+                                                </div>
+                                                <attribute-query attribute="attr" query="executeQueryableMethod" ng-if="attr['isquerydriven__c']"></attribute-query>
+                                            </div>
+                                            <div ng-switch-when="Percent" class="form-group">
+                                                <div class="input-group">
+                                                    <input  type="number" class="form-control attr-percent"
+                                                            placeholder="{{attr['formatmask__c']}}"
+                                                            ng-model="attrInfo.newValue"
+                                                            aria-label="{{attr['attributedisplayname__c']}}" />
+                                                    <div class="input-group-addon">%</div>
+                                                </div>
+                                                <attribute-query attribute="attr" query="executeQueryableMethod" ng-if="attr['isquerydriven__c']"></attribute-query>
+                                            </div>
+                                            <div ng-switch-when="Checkbox" class="form-group">
+                                                <label>
+                                                    <input type="checkbox" ng-model="attrInfo.newValue" />
+                                                </label>
+                                            </div>
+                                            <div ng-switch-when="Picklist">
+                                                <div ng-if="attr.attributeRunTimeInfo.uiDisplayType === 'Radiobutton'" ng-init="attrInfo.newValue = attr.attributeRunTimeInfo.selectedItem" class="form-group">
+                                                    <div ng-repeat="val in attr.attributeRunTimeInfo.values" class="attr-radio">
+                                                        <label>
+                                                            <input  type="radio"
+                                                                    name="radio_{{prod.productId}}_{{attr['attributeid__c']}}"
+                                                                    ng-model="$parent.attrInfo.newValue"
+                                                                    ng-value="val"
+                                                                    aria-label="{{attr['attributedisplayname__c']}}" />
+                                                            &nbsp;&nbsp;{{val.displayText}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="attr.attributeRunTimeInfo.uiDisplayType === 'Dropdown'" ng-init="attrInfo.newValue = attr.attributeRunTimeInfo.selectedItem" class="form-group">
+                                                    <select class="form-control attr-select"
+                                                            ng-model="attrInfo.newValue"
+                                                            ng-options="value.displayText for value in attr.attributeRunTimeInfo.values"></select>
+                                                </div>
+                                            </div>
+                                            <div ng-switch-when="Multi Picklist">
+                                                <div ng-if="attr.attributeRunTimeInfo.uiDisplayType === 'Checkbox'" ng-init="attrInfo.newValue = attr.attributeRunTimeInfo.values" class="form-group">
+                                                    <div ng-repeat="value in attrInfo.newValue" class="attr-radio">
+                                                        <label>
+                                                            <input  type="checkbox"
+                                                                    ng-model="value.checked"
+                                                                    aria-label="{{attr['attributedisplayname__c']}}" />
+                                                            &nbsp;&nbsp;{{value.displayText}}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div ng-if="attr.attributeRunTimeInfo.uiDisplayType === 'Dropdown'" ng-init="attrInfo.newValue = attr.attributeRunTimeInfo.selectedItems" class="form-group">
+                                                    <select multiple="multiple"
+                                                            class="form-control attr-select"
+                                                            ng-model="attrInfo.newValue"
+                                                            ng-options="value.displayText for value in attr.attributeRunTimeInfo.values"></select>
+                                                </div>
+                                            </div>
+                                            <div ng-switch-when="Date" class="form-group">
+                                                <input  type="text" class="form-control attr-date"
+                                                                placeholder="{{attr['formatmask__c']}}"
+                                                                ng-model="attrInfo.newValue"
+                                                                bs-datepicker="true"
+                                                                data-autoclose="true"
+                                                                data-icon-left="glyphicon icon-v-left-caret"
+                                                                data-icon-right="glyphicon icon-v-right-caret">
+                                            </div>
+                                            <div ng-switch-when="Datetime" class="form-group">
+                                                <input  type="text" class="form-control attr-date"
+                                                        placeholder="{{attr['formatmask__c']}}"
+                                                        ng-model="attrInfo.newValue"
+                                                        bs-datepicker="true"
+                                                        data-autoclose="true">&nbsp;
+                                                <input  type="text" class="form-control attr-date"
+                                                        ng-model="attrInfo.newValue"
+                                                        bs-timepicker="true"
+                                                        data-autoclose="true">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="save()" ng-if="hasConfigurableAttributes">Save</button>
+                    <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </div>
+        </script>
+    </body>
+</html>
+</apex:page>

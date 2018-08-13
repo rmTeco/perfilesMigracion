@@ -1,0 +1,67 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="taBillingGroupChanges">
+        <body>
+            <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+                strOmniScriptSubType="Billing Group Changes"
+                strOmniScriptLang="English"
+                previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+                verticalMode="{!$CurrentPage.parameters.verticalMode}"
+                strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+                scriptLayout="lightning"/>
+
+        </body>
+
+
+
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('taBillingGroupChanges', modules);
+            
+            myModule
+                .controller('BillingAccountsController', BillingAccountsController);
+
+                BillingAccountsController.$inject = ['$scope'];
+                
+                function BillingAccountsController($scope) {
+                    var bac = this;
+                    var resultCloseCase;
+
+                    bac.checkAll = checkAll;
+                    bac.verifyChecker = verifyChecker;
+
+                    function checkAll(ba)
+                    {
+                        baIsSelected = ba.isSelected;
+
+                        if(angular.isArray(ba.Assets)){
+                            angular.forEach(ba.Assets, function(lines){
+                                lines.isSelected = baIsSelected;
+                            });
+                        } else{
+                            ba.Assets.isSelected = ba.isSelected;
+                        }
+                    }                                  
+        
+                    function verifyChecker(ba)
+                    {
+                        var count = 0;
+                        var checkeds = 0;
+
+                        if(angular.isArray(ba.Assets)){
+                            angular.forEach(ba.Assets, function(lines){
+                                count++;
+                                if(lines.isSelected) checkeds++;
+                            });
+
+                            ba.isSelected = (count == checkeds);
+                        } else{
+                            ba.isSelected = ba.Assets.isSelected;
+                        }
+                    }
+                }
+            
+        </script>
+
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

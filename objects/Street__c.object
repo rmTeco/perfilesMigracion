@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Streets of Callejero Service</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>CALLEMU__c</fullName>
+        <description>CALLE ID from CV Callejero</description>
+        <externalId>false</externalId>
+        <label>CALLEMU</label>
+        <length>25</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IsActive__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Flag if a Street Record is Active or not</description>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Location__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Location</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Localidad</inlineHelpText>
+        <label>Location</label>
+        <referenceTo>Location__c</referenceTo>
+        <relationshipLabel>Streets</relationshipLabel>
+        <relationshipName>Streets</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Parent_Street__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Parent Street for Range record types</description>
+        <externalId>false</externalId>
+        <label>Parent Street</label>
+        <referenceTo>Street__c</referenceTo>
+        <relationshipLabel>Streets</relationshipLabel>
+        <relationshipName>Streets</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>PostalCode__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Postal Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Codigo Postal</inlineHelpText>
+        <label>Postal Code</label>
+        <referenceTo>PostalCode__c</referenceTo>
+        <relationshipLabel>Streets</relationshipLabel>
+        <relationshipName>Streets</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Postal_Code__c</fullName>
+        <description>Argentina CPA Postal Code</description>
+        <externalId>false</externalId>
+        <label>Postal Code</label>
+        <length>8</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RangeFrom__c</fullName>
+        <description>Street Range From</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Rango de Calle Desde</inlineHelpText>
+        <label>Range From</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RangeTo__c</fullName>
+        <description>Street Range To</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Rango Calle Hasta</inlineHelpText>
+        <label>Range To</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Range_From__c</fullName>
+        <description>Starting Address Number for the Range</description>
+        <externalId>false</externalId>
+        <label>Range From</label>
+        <precision>6</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Range_To__c</fullName>
+        <description>Address Number Range End</description>
+        <externalId>false</externalId>
+        <label>Range To</label>
+        <precision>6</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>StreetCode__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Callejero Street Reference / External ID / Código de Refencia de la Calle en Callejero</description>
+        <externalId>true</externalId>
+        <label>StreetCode</label>
+        <length>12</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>Type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Tipo</inlineHelpText>
+        <label>Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Street</fullName>
+                    <default>false</default>
+                    <label>Street</label>
+                </value>
+                <value>
+                    <fullName>Range</fullName>
+                    <default>false</default>
+                    <label>Range</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>ZONAID__c</fullName>
+        <description>Zone ID from CV Callejero where the Street or Range is located</description>
+        <externalId>false</externalId>
+        <label>ZONAID</label>
+        <length>5</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Street</label>
+    <nameField>
+        <label>Street Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Streets</pluralLabel>
+    <recordTypes>
+        <fullName>Range</fullName>
+        <active>true</active>
+        <description>Range Record sub-type</description>
+        <label>Range</label>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Range</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Street</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Street</fullName>
+        <active>true</active>
+        <description>Street Record Type</description>
+        <label>Street</label>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Range</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Street</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Work Team Member</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Work Team Members</value>
+    </caseValues>
+    <fields>
+        <label><!-- Active validation --></label>
+        <name>ActiveValidation__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Active? --></label>
+        <name>Is_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Legajo --></label>
+        <name>Legajo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Member Username --></label>
+        <name>MemberUsername__c</name>
+    </fields>
+    <fields>
+        <label><!-- Member Userprofile --></label>
+        <name>MemberUserprofile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Member user role --></label>
+        <name>MemberUserrole__c</name>
+    </fields>
+    <fields>
+        <label><!-- User Role API Name --></label>
+        <name>UserRoleAPIName__c</name>
+    </fields>
+    <fields>
+        <label><!-- User member --></label>
+        <name>User_member__c</name>
+        <relationshipLabel><!-- Work Team Members --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Work Team --></label>
+        <name>Work_Team__c</name>
+        <relationshipLabel><!-- Work Team Members --></relationshipLabel>
+    </fields>
+    <gender>Neuter</gender>
+    <validationRules>
+        <errorMessage><!-- You can not activate a membership to an inactive user. --></errorMessage>
+        <name>ValidateIfUserIsActive</name>
+    </validationRules>
+</CustomObjectTranslation>

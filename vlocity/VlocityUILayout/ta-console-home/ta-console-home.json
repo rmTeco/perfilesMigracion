@@ -1,0 +1,30 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.UserId",
+                "val": "0056C000000gQeCQAU"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+            },
+            "optionsMap": {
+                "userId": "{{$root.UserId}}",
+                "vlcClass": "ta_sales_UserUtils"
+            },
+            "remoteClass": "ta_sales_UserUtils",
+            "remoteMethod": "getUserChannel",
+            "remoteNSPrefix": null,
+            "resultVar": "UserChannel"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-console-home-container"
+        }
+    }
+}

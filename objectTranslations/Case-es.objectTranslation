@@ -1,0 +1,3086 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- StoryFieldSet --></label>
+        <name>StoryFieldSet</name>
+    </fieldSets>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Cierre</value>
+        </caseValues>
+        <gender>Masculine</gender>
+        <name>case_closure</name>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Creación</value>
+        </caseValues>
+        <gender>Feminine</gender>
+        <name>case_created_date</name>
+    </fields>
+    <fields>
+        <caseValues>
+            <plural>false</plural>
+            <value>Propietario</value>
+        </caseValues>
+        <gender>Masculine</gender>
+        <name>case_owner_alias</name>
+    </fields>
+    <fields>
+        <label><!-- AdjustmentRootCause --></label>
+        <name>AdjustmentRootCause__c</name>
+        <picklistValues>
+            <masterLabel>Facturacion</masterLabel>
+            <translation><!-- Facturacion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation><!-- Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No aplica</masterLabel>
+            <translation><!-- No aplica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasacion</masterLabel>
+            <translation><!-- Tasacion --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- AffectedCasesAmount --></label>
+        <name>AffectedCasesAmount__c</name>
+    </fields>
+    <fields>
+        <label>Cliente Afectado</label>
+        <name>AffectedCustomer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Monto Reintegro --></label>
+        <name>Amount_Refunds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Approver Case --></label>
+        <name>Approver__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Area --></label>
+        <name>Area__c</name>
+        <picklistValues>
+            <masterLabel>AACE</masterLabel>
+            <translation><!-- AACE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ACON</masterLabel>
+            <translation><!-- ACON --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>APOR</masterLabel>
+            <translation><!-- APOR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>AREC</masterLabel>
+            <translation><!-- AREC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ASOL</masterLabel>
+            <translation><!-- ASOL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Diagnóstico</masterLabel>
+            <translation><!-- Diagnóstico --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Modificación</masterLabel>
+            <translation><!-- Modificación --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Attribute Assignment --></label>
+        <name>Attibute_Assigment_Id__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cuota Disponible --></label>
+        <name>Available_Quota__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cambio de Placa --></label>
+        <name>Board_Change__c</name>
+    </fields>
+    <fields>
+        <label><!-- CBU - Alias --></label>
+        <name>CBU_Alias_Refunds__c</name>
+    </fields>
+    <fields>
+        <label><!-- Campaign --></label>
+        <name>Campaign__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Cantidad Ajuste --></label>
+        <name>CantidadAjuste__c</name>
+    </fields>
+    <fields>
+        <label><!-- Cantidad tiempo caso --></label>
+        <name>Cantidad_tiempo_caso__c</name>
+    </fields>
+    <fields>
+        <label><!-- CaseNumberStatus --></label>
+        <name>CaseNumberStatus__c</name>
+    </fields>
+    <fields>
+        <label>Categoría</label>
+        <name>Category__c</name>
+        <picklistValues>
+            <masterLabel>Felicitaciones</masterLabel>
+            <translation><!-- Felicitaciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quejas</masterLabel>
+            <translation><!-- Quejas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sugerencias</masterLabel>
+            <translation><!-- Sugerencias --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Canal de cierre</label>
+        <name>Closing_Channel__c</name>
+        <picklistValues>
+            <masterLabel>App</masterLabel>
+            <translation><!-- App --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Chat</masterLabel>
+            <translation><!-- Chat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IVR</masterLabel>
+            <translation><!-- IVR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Personalizado</masterLabel>
+            <translation><!-- Personalizado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Redes Sociales</masterLabel>
+            <translation><!-- Redes Sociales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMS</masterLabel>
+            <translation><!-- SMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sat Push</masterLabel>
+            <translation><!-- Sat Push --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telefónico</masterLabel>
+            <translation><!-- Telefónico --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USSD</masterLabel>
+            <translation><!-- USSD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Motivo de Contacto</label>
+        <name>ContactMotive__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Contact Channel --></label>
+        <name>Contact_Channel__c</name>
+        <picklistValues>
+            <masterLabel>Mail</masterLabel>
+            <translation><!-- Mail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMS</masterLabel>
+            <translation><!-- SMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telefono/celular</masterLabel>
+            <translation><!-- Telefono/celular --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Created By Me --></label>
+        <name>CreatedByMe__c</name>
+    </fields>
+    <fields>
+        <label>Equipo del Creador</label>
+        <name>Creator_Team__c</name>
+    </fields>
+    <fields>
+        <label><!-- Saldo Actual --></label>
+        <name>Current_Balance__c</name>
+    </fields>
+    <fields>
+        <label>Reparación Diferida</label>
+        <name>DeferredRepair__c</name>
+    </fields>
+    <fields>
+        <label><!-- Configuracion de Equipo enviada --></label>
+        <name>DeviceConfigSent__c</name>
+    </fields>
+    <fields>
+        <label>Fecha de Vto</label>
+        <name>Due_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Changed --></label>
+        <name>Email_Changed__c</name>
+    </fields>
+    <fields>
+        <label><!-- Email Sended --></label>
+        <name>Email_Sended__c</name>
+    </fields>
+    <fields>
+        <label>Fecha estimada de cierre</label>
+        <name>Estimated_resolution_date__c</name>
+    </fields>
+    <fields>
+        <help><!-- External Id for a masive incident. --></help>
+        <label><!-- External Case Id --></label>
+        <name>ExternalCaseId__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Case Type --></label>
+        <name>ExternalCaseType__c</name>
+    </fields>
+    <fields>
+        <label><!-- FechaDesde --></label>
+        <name>FechaDesde__c</name>
+    </fields>
+    <fields>
+        <label><!-- FechaHasta --></label>
+        <name>FechaHasta__c</name>
+    </fields>
+    <fields>
+        <label><!-- Geolocation of Address --></label>
+        <name>Geolocation_Address__c</name>
+    </fields>
+    <fields>
+        <label>Impacto</label>
+        <name>Impact__c</name>
+        <picklistValues>
+            <masterLabel>Alto</masterLabel>
+            <translation><!-- Alto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bajo</masterLabel>
+            <translation><!-- Bajo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medio</masterLabel>
+            <translation><!-- Medio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin Impacto</masterLabel>
+            <translation><!-- Sin Impacto --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Tipo Dispositivo Afectado --></label>
+        <name>IncidentDevice__c</name>
+    </fields>
+    <fields>
+        <label>Incidente</label>
+        <name>Incident__c</name>
+        <picklistValues>
+            <masterLabel>*Chip</masterLabel>
+            <translation><!-- *Chip --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*Clave</masterLabel>
+            <translation><!-- *Clave --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*Plan</masterLabel>
+            <translation><!-- *Plan --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*club</masterLabel>
+            <translation><!-- *club --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Abre aplicación y cierra automáticamente</masterLabel>
+            <translation><!-- Abre aplicación y cierra automáticamente --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Acreditacion Duplicada de packs</masterLabel>
+            <translation><!-- Acreditacion Duplicada de packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Andreani</masterLabel>
+            <translation><!-- Andreani --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aplicación Especifica</masterLabel>
+            <translation><!-- Aplicación Especifica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aumento de Precios</masterLabel>
+            <translation><!-- Aumento de Precios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Autogestión</masterLabel>
+            <translation><!-- Autogestión --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Backend - Lentitud </masterLabel>
+            <translation><!-- Backend - Lentitud  --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Backend - Sin acceso</masterLabel>
+            <translation><!-- Backend - Sin acceso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Backend - errores en consultas/ gestiones</masterLabel>
+            <translation><!-- Backend - errores en consultas/ gestiones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bajo porcentaje de grabaciones</masterLabel>
+            <translation><!-- Bajo porcentaje de grabaciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Beneficios exclusivos</masterLabel>
+            <translation><!-- Beneficios exclusivos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Buzón de voz</masterLabel>
+            <translation><!-- Buzón de voz --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Campañas</masterLabel>
+            <translation><!-- Campañas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Canjes</masterLabel>
+            <translation><!-- Canjes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Categorías</masterLabel>
+            <translation><!-- Categorías --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caída de Barra AIC, ONEX y CMS</masterLabel>
+            <translation><!-- Caída de Barra AIC, ONEX y CMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cliente quiere clave en el contestador</masterLabel>
+            <translation><!-- Cliente quiere clave en el contestador --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Club Personal</masterLabel>
+            <translation><!-- Club Personal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cobro duplicado de packs</masterLabel>
+            <translation><!-- Cobro duplicado de packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contenidos</masterLabel>
+            <translation><!-- Contenidos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Datos 2G</masterLabel>
+            <translation><!-- Datos 2G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Datos 3G</masterLabel>
+            <translation><!-- Datos 3G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Datos 4G</masterLabel>
+            <translation><!-- Datos 4G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delivery</masterLabel>
+            <translation><!-- Delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demora en el impacto de Informa Pago</masterLabel>
+            <translation><!-- Demora en el impacto de Informa Pago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demora en el impacto de las rehabilidaciones</masterLabel>
+            <translation><!-- Demora en el impacto de las rehabilidaciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demora en el impacto de recargas Virtuales (Ex Recargas Rol)</masterLabel>
+            <translation><!-- Demora en el impacto de recargas Virtuales (Ex Recargas Rol) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demora en el impacto de todas las recargas</masterLabel>
+            <translation><!-- Demora en el impacto de todas las recargas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demora en la distribucion de Factura</masterLabel>
+            <translation><!-- Demora en la distribucion de Factura --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras de Logueo</masterLabel>
+            <translation><!-- Demoras de Logueo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en el impacto de Portabilidad</masterLabel>
+            <translation><!-- Demoras en el impacto de Portabilidad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en el impacto de comandos en el sistema de Gestion</masterLabel>
+            <translation><!-- Demoras en el impacto de comandos en el sistema de Gestion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en el impacto en la red (no se visualizan en HLR)</masterLabel>
+            <translation><!-- Demoras en el impacto en la red (no se visualizan en HLR) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en la acreditacion mensual</masterLabel>
+            <translation><!-- Demoras en la acreditacion mensual --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en la asignación</masterLabel>
+            <translation><!-- Demoras en la asignación --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en la rehabilidacion por Limite de Consumo</masterLabel>
+            <translation><!-- Demoras en la rehabilidacion por Limite de Consumo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en las conciliaciones</masterLabel>
+            <translation><!-- Demoras en las conciliaciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Desconexión/Caída</masterLabel>
+            <translation><!-- Desconexión/Caída --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Epiron - Sin reportes</masterLabel>
+            <translation><!-- Epiron - Sin reportes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error Notificación de mensaje de voz en pantalla</masterLabel>
+            <translation><!-- Error Notificación de mensaje de voz en pantalla --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error en informacion del audio/ opcion</masterLabel>
+            <translation><!-- Error en informacion del audio/ opcion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Error en informacion publicada</masterLabel>
+            <translation><!-- Error en informacion publicada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Errores en consultas y/o gestiones</masterLabel>
+            <translation><!-- Errores en consultas y/o gestiones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Errores en el cobro del cargo por Baja</masterLabel>
+            <translation><!-- Errores en el cobro del cargo por Baja --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Faltante de agentes</masterLabel>
+            <translation><!-- Faltante de agentes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Faltante de datos</masterLabel>
+            <translation><!-- Faltante de datos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freezado de Agentes en Available</masterLabel>
+            <translation><!-- Freezado de Agentes en Available --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frontend - Lentitud </masterLabel>
+            <translation><!-- Frontend - Lentitud  --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frontend - Sin acceso</masterLabel>
+            <translation><!-- Frontend - Sin acceso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Frontend - errores en consultas/ gestiones</masterLabel>
+            <translation><!-- Frontend - errores en consultas/ gestiones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grabaciones sin audio</masterLabel>
+            <translation><!-- Grabaciones sin audio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grabaciones sin audio y pantalla</masterLabel>
+            <translation><!-- Grabaciones sin audio y pantalla --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grabaciones sin pantalla</masterLabel>
+            <translation><!-- Grabaciones sin pantalla --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>HLR/ Web de Gestión Móvil</masterLabel>
+            <translation><!-- HLR/ Web de Gestión Móvil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imposibilidad de Logueo</masterLabel>
+            <translation><!-- Imposibilidad de Logueo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imposibilidad de reproducir grabaciones</masterLabel>
+            <translation><!-- Imposibilidad de reproducir grabaciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imposibilidad de responder casos de Facebook y/o Twitter</masterLabel>
+            <translation><!-- Imposibilidad de responder casos de Facebook y/o Twitter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imposibilidad de transferencias</masterLabel>
+            <translation><!-- Imposibilidad de transferencias --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Imposibilidad para activar Packs</masterLabel>
+            <translation><!-- Imposibilidad para activar Packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incon.  alta de Nros. Amigos</masterLabel>
+            <translation><!-- Incon.  alta de Nros. Amigos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconsistencias con solicitudes</masterLabel>
+            <translation><!-- Inconsistencias con solicitudes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv Recarga con TC</masterLabel>
+            <translation><!-- Inconv Recarga con TC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv Recarga delivery</masterLabel>
+            <translation><!-- Inconv Recarga delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv alta Nro. Amigos</masterLabel>
+            <translation><!-- Inconv alta Nro. Amigos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv con Recarga SOS</masterLabel>
+            <translation><!-- Inconv con Recarga SOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv con derivación a representante</masterLabel>
+            <translation><!-- Inconv con derivación a representante --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv datos de Nr. Amigos</masterLabel>
+            <translation><!-- Inconv datos de Nr. Amigos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv quema de pin saldo</masterLabel>
+            <translation><!-- Inconv quema de pin saldo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv quema de pin sms</masterLabel>
+            <translation><!-- Inconv quema de pin sms --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconv. Compra de Packs</masterLabel>
+            <translation><!-- Inconv. Compra de Packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconveniente con Informa Pago</masterLabel>
+            <translation><!-- Inconveniente con Informa Pago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconveniente no detallado</masterLabel>
+            <translation><!-- Inconveniente no detallado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconveniente para alta DA</masterLabel>
+            <translation><!-- Inconveniente para alta DA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconveniente para alta de FOL</masterLabel>
+            <translation><!-- Inconveniente para alta de FOL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes Reportes Historicos</masterLabel>
+            <translation><!-- Inconvenientes Reportes Historicos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes Reportes Online</masterLabel>
+            <translation><!-- Inconvenientes Reportes Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes Varios</masterLabel>
+            <translation><!-- Inconvenientes Varios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con ABM</masterLabel>
+            <translation><!-- Inconvenientes con ABM --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con activacion del beneficio</masterLabel>
+            <translation><!-- Inconvenientes con activacion del beneficio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con aplicación especifica</masterLabel>
+            <translation><!-- Inconvenientes con aplicación especifica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con el alta</masterLabel>
+            <translation><!-- Inconvenientes con el alta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con envio de informacion</masterLabel>
+            <translation><!-- Inconvenientes con envio de informacion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con informa Pago</masterLabel>
+            <translation><!-- Inconvenientes con informa Pago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con la acreditacion de Packs</masterLabel>
+            <translation><!-- Inconvenientes con la acreditacion de Packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con la clave</masterLabel>
+            <translation><!-- Inconvenientes con la clave --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con la desactivación</masterLabel>
+            <translation><!-- Inconvenientes con la desactivación --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con la facturacion</masterLabel>
+            <translation><!-- Inconvenientes con la facturacion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con la tasacion de Unidades</masterLabel>
+            <translation><!-- Inconvenientes con la tasacion de Unidades --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con llamadas salientes</masterLabel>
+            <translation><!-- Inconvenientes con llamadas salientes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con pagina web especifica</masterLabel>
+            <translation><!-- Inconvenientes con pagina web especifica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con transferencia de llamadas</masterLabel>
+            <translation><!-- Inconvenientes con transferencia de llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes en general con el servicio MMS</masterLabel>
+            <translation><!-- Inconvenientes en general con el servicio MMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes en la acreditacion de packs</masterLabel>
+            <translation><!-- Inconvenientes en la acreditacion de packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes en la activación</masterLabel>
+            <translation><!-- Inconvenientes en la activación --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes en la tasacion</masterLabel>
+            <translation><!-- Inconvenientes en la tasacion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes navegacion en general</masterLabel>
+            <translation><!-- Inconvenientes navegacion en general --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para activar packs</masterLabel>
+            <translation><!-- Inconvenientes para activar packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para cancelar desde BackOffice Web (Infotainment)</masterLabel>
+            <translation><!-- Inconvenientes para cancelar desde BackOffice Web (Infotainment) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para cancelar desde Web del proveedor</masterLabel>
+            <translation><!-- Inconvenientes para cancelar desde Web del proveedor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para gestionar</masterLabel>
+            <translation><!-- Inconvenientes para gestionar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para realizar ABM de numeros amigos</masterLabel>
+            <translation><!-- Inconvenientes para realizar ABM de numeros amigos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para realizar Pagos</masterLabel>
+            <translation><!-- Inconvenientes para realizar Pagos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para realizar recargas</masterLabel>
+            <translation><!-- Inconvenientes para realizar recargas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes para ver las Factura</masterLabel>
+            <translation><!-- Inconvenientes para ver las Factura --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incov con derivación a representante</masterLabel>
+            <translation><!-- Incov con derivación a representante --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Incremento de inconsistencias (entre Siebel, ASP, HLR)</masterLabel>
+            <translation><!-- Incremento de inconsistencias (entre Siebel, ASP, HLR) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Informa Sistema Fuera de Servicio</masterLabel>
+            <translation><!-- Informa Sistema Fuera de Servicio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Informacion erronea</masterLabel>
+            <translation><!-- Informacion erronea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Información Incompleta</masterLabel>
+            <translation><!-- Información Incompleta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Información Incorrecta</masterLabel>
+            <translation><!-- Información Incorrecta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>La característica No existe</masterLabel>
+            <translation><!-- La característica No existe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>La llamada se cae</masterLabel>
+            <translation><!-- La llamada se cae --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>La línea está muda</masterLabel>
+            <translation><!-- La línea está muda --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lanzamientos</masterLabel>
+            <translation><!-- Lanzamientos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lentitud</masterLabel>
+            <translation><!-- Lentitud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Lentitud de Todas las herramientas (Citrix, Siebel, Avaya, etc)</masterLabel>
+            <translation><!-- Lentitud de Todas las herramientas (Citrix, Siebel, Avaya, etc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Llamada falló</masterLabel>
+            <translation><!-- Llamada falló --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Llamadas con audio defectuoso/caídas</masterLabel>
+            <translation><!-- Llamadas con audio defectuoso/caídas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Llamadas encoladas con agentes disponibles</masterLabel>
+            <translation><!-- Llamadas encoladas con agentes disponibles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MMS Emisión Cliente informa que no puede enviar Archivo</masterLabel>
+            <translation><!-- MMS Emisión Cliente informa que no puede enviar Archivo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MMS Emisión Cliente informa que no puede enviar Audio</masterLabel>
+            <translation><!-- MMS Emisión Cliente informa que no puede enviar Audio --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MMS Emisión Cliente informa que no puede enviar Imagen</masterLabel>
+            <translation><!-- MMS Emisión Cliente informa que no puede enviar Imagen --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mi Cuenta: Lentitud</masterLabel>
+            <translation><!-- Mi Cuenta: Lentitud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mi cuenta: Sin Acceso</masterLabel>
+            <translation><!-- Mi cuenta: Sin Acceso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Modem Lentitud</masterLabel>
+            <translation><!-- Modem Lentitud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Modem No Navega</masterLabel>
+            <translation><!-- Modem No Navega --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Modulo caído</masterLabel>
+            <translation><!-- Modulo caído --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Navega lento</masterLabel>
+            <translation><!-- Navega lento --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Navegacion en General</masterLabel>
+            <translation><!-- Navegacion en General --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No Interactúa</masterLabel>
+            <translation><!-- No Interactúa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No emite</masterLabel>
+            <translation><!-- No emite --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No emite a ningun número</masterLabel>
+            <translation><!-- No emite a ningun número --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No emite y No recibe</masterLabel>
+            <translation><!-- No emite y No recibe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No envía configuración</masterLabel>
+            <translation><!-- No envía configuración --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No funciona Conferencia Tripartita</masterLabel>
+            <translation><!-- No funciona Conferencia Tripartita --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No funciona Identificación de llamadas</masterLabel>
+            <translation><!-- No funciona Identificación de llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No funciona Llamada tripartita</masterLabel>
+            <translation><!-- No funciona Llamada tripartita --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No funciona llamada en espera</masterLabel>
+            <translation><!-- No funciona llamada en espera --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No funciona transferencia de llamadas</masterLabel>
+            <translation><!-- No funciona transferencia de llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No informa Pin y Puk</masterLabel>
+            <translation><!-- No informa Pin y Puk --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puede configurar</masterLabel>
+            <translation><!-- No puede configurar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puede enviar llamadas</masterLabel>
+            <translation><!-- No puede enviar llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puede enviar ni recibir llamadas</masterLabel>
+            <translation><!-- No puede enviar ni recibir llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puede recibir llamadas</masterLabel>
+            <translation><!-- No puede recibir llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo configurar mis cuentas</masterLabel>
+            <translation><!-- No puedo configurar mis cuentas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo enviar o recibir Mensajes</masterLabel>
+            <translation><!-- No puedo enviar o recibir Mensajes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo llamar a un número en particular</masterLabel>
+            <translation><!-- No puedo llamar a un número en particular --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo llamar desde otro país</masterLabel>
+            <translation><!-- No puedo llamar desde otro país --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo navegar</masterLabel>
+            <translation><!-- No puedo navegar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo realizar llamadas</masterLabel>
+            <translation><!-- No puedo realizar llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo realizar ni recibir llamadas</masterLabel>
+            <translation><!-- No puedo realizar ni recibir llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo recibir llamadas</masterLabel>
+            <translation><!-- No puedo recibir llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No recibe</masterLabel>
+            <translation><!-- No recibe --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No recibe de ningun número</masterLabel>
+            <translation><!-- No recibe de ningun número --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No recibe de un número particular</masterLabel>
+            <translation><!-- No recibe de un número particular --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No recibo llamadas</masterLabel>
+            <translation><!-- No recibo llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No toma cambios</masterLabel>
+            <translation><!-- No toma cambios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No valida contraseña</masterLabel>
+            <translation><!-- No valida contraseña --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Oficinas comerciales</masterLabel>
+            <translation><!-- Oficinas comerciales --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Otros</masterLabel>
+            <translation><!-- Otros --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pagina Web Especifica</masterLabel>
+            <translation><!-- Pagina Web Especifica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prepago</masterLabel>
+            <translation><!-- Prepago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problemas con canjes</masterLabel>
+            <translation><!-- Problemas con canjes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Problemas de acceso</masterLabel>
+            <translation><!-- Problemas de acceso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Puntos</masterLabel>
+            <translation><!-- Puntos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recarga Virtual (Ex recarga Online)</masterLabel>
+            <translation><!-- Recarga Virtual (Ex recarga Online) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recarga Virtual (Oficina Comercial)</masterLabel>
+            <translation><!-- Recarga Virtual (Oficina Comercial) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Restricciones por falta de saldo (en HLR)</masterLabel>
+            <translation><!-- Restricciones por falta de saldo (en HLR) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMS Emisión a algún destino en particular</masterLabel>
+            <translation><!-- SMS Emisión a algún destino en particular --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMS a fijo</masterLabel>
+            <translation><!-- SMS a fijo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SOS</masterLabel>
+            <translation><!-- SOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SVA</masterLabel>
+            <translation><!-- SVA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Seprit</masterLabel>
+            <translation><!-- Seprit --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Siebel</masterLabel>
+            <translation><!-- Siebel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Siebel/Ipago</masterLabel>
+            <translation><!-- Siebel/Ipago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin Acceso</masterLabel>
+            <translation><!-- Sin Acceso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin Acceso a Todas las herramientas (Citrix, Siebel, Avaya, etc)</masterLabel>
+            <translation><!-- Sin Acceso a Todas las herramientas (Citrix, Siebel, Avaya, etc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin Datos</masterLabel>
+            <translation><!-- Sin Datos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso</masterLabel>
+            <translation><!-- Sin ingreso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso de correo ni posibilidad de enviar</masterLabel>
+            <translation><!-- Sin ingreso de correo ni posibilidad de enviar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso de trafico de CHAT</masterLabel>
+            <translation><!-- Sin ingreso de trafico de CHAT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso de trafico de Casilla de Mail</masterLabel>
+            <translation><!-- Sin ingreso de trafico de Casilla de Mail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso de trafico de Facebook</masterLabel>
+            <translation><!-- Sin ingreso de trafico de Facebook --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso de trafico de Twitter</masterLabel>
+            <translation><!-- Sin ingreso de trafico de Twitter --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso de trafico de llamadas</masterLabel>
+            <translation><!-- Sin ingreso de trafico de llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin ingreso de trafico en ninguna canal de contacto.</masterLabel>
+            <translation><!-- Sin ingreso de trafico en ninguna canal de contacto. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin posibilidad de gestionar contacto de CHAT</masterLabel>
+            <translation><!-- Sin posibilidad de gestionar contacto de CHAT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sin posibilidad de ingresar lineas a conciliar</masterLabel>
+            <translation><!-- Sin posibilidad de ingresar lineas a conciliar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sistemas VAS</masterLabel>
+            <translation><!-- Sistemas VAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sistemas Web/ VAS</masterLabel>
+            <translation><!-- Sistemas Web/ VAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sitio Caído/ No carga información</masterLabel>
+            <translation><!-- Sitio Caído/ No carga información --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sitio caído</masterLabel>
+            <translation><!-- Sitio caído --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tarjeta Personal</masterLabel>
+            <translation><!-- Tarjeta Personal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tarjeta de Credito</masterLabel>
+            <translation><!-- Tarjeta de Credito --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tasación de consumos con Beneficio Activo</masterLabel>
+            <translation><!-- Tasación de consumos con Beneficio Activo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tienda: Lentitud</masterLabel>
+            <translation><!-- Tienda: Lentitud --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tienda: Otros</masterLabel>
+            <translation><!-- Tienda: Otros --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tienda: Sin Acceso</masterLabel>
+            <translation><!-- Tienda: Sin Acceso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tono ocupado</masterLabel>
+            <translation><!-- Tono ocupado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Varios</masterLabel>
+            <translation><!-- Varios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz 2/3G</masterLabel>
+            <translation><!-- Voz 2/3G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz 2G</masterLabel>
+            <translation><!-- Voz 2G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz 3G</masterLabel>
+            <translation><!-- Voz 3G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz y Datos 2/3/4G</masterLabel>
+            <translation><!-- Voz y Datos 2/3/4G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz y Datos 2/3G</masterLabel>
+            <translation><!-- Voz y Datos 2/3G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz y Datos 2G</masterLabel>
+            <translation><!-- Voz y Datos 2G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz y Datos 3G</masterLabel>
+            <translation><!-- Voz y Datos 3G --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>W32 Epiron - Sin acceso</masterLabel>
+            <translation><!-- W32 Epiron - Sin acceso --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>inconvenientes con la baja</masterLabel>
+            <translation><!-- inconvenientes con la baja --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>¿Cómo ingreso mi clave?</masterLabel>
+            <translation><!-- ¿Cómo ingreso mi clave? --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Initiator team --></label>
+        <name>Initiator_team__c</name>
+        <relationshipLabel><!-- Cases Initiated --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- LineNumber --></label>
+        <name>LineNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- LoteNumber --></label>
+        <name>LoteNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- MSISDN --></label>
+        <name>MSISDN__c</name>
+    </fields>
+    <fields>
+        <label><!-- MarcaExcepcion --></label>
+        <name>MarcaExcepcion__c</name>
+    </fields>
+    <fields>
+        <label><!-- Modified Date --></label>
+        <name>Modified_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Motivo --></label>
+        <name>Motivo__c</name>
+    </fields>
+    <fields>
+        <label>Terminal Muleto</label>
+        <name>MuleTerminal__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fuera de Cobertura --></label>
+        <name>No_Coverage__c</name>
+    </fields>
+    <fields>
+        <label>Tipo de Operación</label>
+        <name>Operation_Type__c</name>
+        <picklistValues>
+            <masterLabel>Certificados</masterLabel>
+            <translation><!-- Certificados --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Configuración</masterLabel>
+            <translation><!-- Configuración --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consulta</masterLabel>
+            <translation><!-- Consulta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demos</masterLabel>
+            <translation><!-- Demos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Express</masterLabel>
+            <translation><!-- Express --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ley Def. Cons.</masterLabel>
+            <translation><!-- Ley Def. Cons. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Presupuesto</masterLabel>
+            <translation><!-- Presupuesto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reparación</masterLabel>
+            <translation><!-- Reparación --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Orden --></label>
+        <name>Order__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Owned By Me --></label>
+        <name>OwnedByMe__c</name>
+    </fields>
+    <fields>
+        <label>Team</label>
+        <name>Owner_Team__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Payment Adjustment --></label>
+        <name>Payment_Transaction__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- medio con el cual se realizó el pago --></help>
+        <label><!-- Medio Pago --></label>
+        <name>Payment_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- PinNumber --></label>
+        <name>PinNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Doc No --></label>
+        <name>Port_Doc_No__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Doc Type --></label>
+        <name>Port_Doc_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Donor Cod --></label>
+        <name>Port_Donor_Cod__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port FVC --></label>
+        <name>Port_FVC__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Line Qty --></label>
+        <name>Port_Line_Qty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Market --></label>
+        <name>Port_Market__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Movement Sub Type --></label>
+        <name>Port_Movement_Sub_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Movement Type --></label>
+        <name>Port_Movement_Type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port NRN --></label>
+        <name>Port_NRN__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Network Type --></label>
+        <name>Port_Network_Type__c</name>
+        <picklistValues>
+            <masterLabel>Banda Ancha</masterLabel>
+            <translation><!-- Banda Ancha --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fija</masterLabel>
+            <translation><!-- Fija --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Movil</masterLabel>
+            <translation><!-- Movil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Television</masterLabel>
+            <translation><!-- Television --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Port Receiver Cod --></label>
+        <name>Port_Receiver_Cod__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Rejection Cod --></label>
+        <name>Port_Rejection_Cod__c</name>
+    </fields>
+    <fields>
+        <label><!-- Port Rejection Reason --></label>
+        <name>Port_Rejection_Reason__c</name>
+        <picklistValues>
+            <masterLabel>A01</masterLabel>
+            <translation><!-- A01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A02</masterLabel>
+            <translation><!-- A02 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A03</masterLabel>
+            <translation><!-- A03 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A04</masterLabel>
+            <translation><!-- A04 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A05</masterLabel>
+            <translation><!-- A05 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A06</masterLabel>
+            <translation><!-- A06 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>A07</masterLabel>
+            <translation><!-- A07 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M00</masterLabel>
+            <translation><!-- M00 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M01</masterLabel>
+            <translation><!-- M01 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M02</masterLabel>
+            <translation><!-- M02 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M05</masterLabel>
+            <translation><!-- M05 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M06</masterLabel>
+            <translation><!-- M06 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M07</masterLabel>
+            <translation><!-- M07 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M08</masterLabel>
+            <translation><!-- M08 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M09</masterLabel>
+            <translation><!-- M09 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M10</masterLabel>
+            <translation><!-- M10 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M11</masterLabel>
+            <translation><!-- M11 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M12</masterLabel>
+            <translation><!-- M12 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M13</masterLabel>
+            <translation><!-- M13 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M14</masterLabel>
+            <translation><!-- M14 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M15</masterLabel>
+            <translation><!-- M15 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M16</masterLabel>
+            <translation><!-- M16 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M17</masterLabel>
+            <translation><!-- M17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M18</masterLabel>
+            <translation><!-- M18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M19</masterLabel>
+            <translation><!-- M19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M20</masterLabel>
+            <translation><!-- M20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M21</masterLabel>
+            <translation><!-- M21 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M22</masterLabel>
+            <translation><!-- M22 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M23</masterLabel>
+            <translation><!-- M23 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M24</masterLabel>
+            <translation><!-- M24 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M26</masterLabel>
+            <translation><!-- M26 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M27</masterLabel>
+            <translation><!-- M27 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M28</masterLabel>
+            <translation><!-- M28 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M29</masterLabel>
+            <translation><!-- M29 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M30</masterLabel>
+            <translation><!-- M30 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M31</masterLabel>
+            <translation><!-- M31 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M34</masterLabel>
+            <translation><!-- M34 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M39</masterLabel>
+            <translation><!-- M39 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M40</masterLabel>
+            <translation><!-- M40 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M41</masterLabel>
+            <translation><!-- M41 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M42</masterLabel>
+            <translation><!-- M42 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M43</masterLabel>
+            <translation><!-- M43 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M44</masterLabel>
+            <translation><!-- M44 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M45</masterLabel>
+            <translation><!-- M45 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M46</masterLabel>
+            <translation><!-- M46 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M47</masterLabel>
+            <translation><!-- M47 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M48</masterLabel>
+            <translation><!-- M48 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M49</masterLabel>
+            <translation><!-- M49 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M50</masterLabel>
+            <translation><!-- M50 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M51</masterLabel>
+            <translation><!-- M51 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M52</masterLabel>
+            <translation><!-- M52 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M55</masterLabel>
+            <translation><!-- M55 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M56</masterLabel>
+            <translation><!-- M56 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M57</masterLabel>
+            <translation><!-- M57 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>M58</masterLabel>
+            <translation><!-- M58 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Procedimiento</label>
+        <name>Procedure__c</name>
+    </fields>
+    <fields>
+        <label><!-- Proteccion (%) --></label>
+        <name>Protection_Percent__c</name>
+    </fields>
+    <fields>
+        <label><!-- Proteccion --></label>
+        <name>Protection__c</name>
+        <relationshipLabel><!-- Cases (Proteccion) --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Medio por el cual se recibe el reintegro --></help>
+        <label><!-- Medio Reintegro --></label>
+        <name>Refund_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Motivo Reintegro --></label>
+        <name>Refunds_reason__c</name>
+        <picklistValues>
+            <masterLabel>Débito por error de sistema</masterLabel>
+            <translation><!-- Débito por error de sistema --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Equipo mal facturado</masterLabel>
+            <translation><!-- Equipo mal facturado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mala gestión / anulación de ventas</masterLabel>
+            <translation><!-- Mala gestión / anulación de ventas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Otros</masterLabel>
+            <translation><!-- Otros --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pago duplicado</masterLabel>
+            <translation><!-- Pago duplicado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recategorización impositiva</masterLabel>
+            <translation><!-- Recategorización impositiva --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reclamos de facturación favorables</masterLabel>
+            <translation><!-- Reclamos de facturación favorables --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Saldo a favor en cuenta por Migración a Prepago</masterLabel>
+            <translation><!-- Saldo a favor en cuenta por Migración a Prepago --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- RelatedTechQuoteStatus --></label>
+        <name>RelatedTechQuoteStatus__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rellamado --></label>
+        <name>Rellamado__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fin de garantía de reparación --></label>
+        <name>RepairWarrantyEndDate__c</name>
+    </fields>
+    <fields>
+        <help><!-- Se utilizó la garantía de reparación --></help>
+        <label><!-- Garantía de Reparación --></label>
+        <name>RepairWarranty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Reparación cubierta por garantía --></label>
+        <name>Repaired_With_Warranty__c</name>
+    </fields>
+    <fields>
+        <label>Reparaciones</label>
+        <name>Repairs__c</name>
+    </fields>
+    <fields>
+        <label><!-- Rellamados --></label>
+        <name>RepeatedCalls__c</name>
+    </fields>
+    <fields>
+        <label>Comentario de cierre</label>
+        <name>Resolution_Comment__c</name>
+    </fields>
+    <fields>
+        <label><!-- Service Owner --></label>
+        <name>ServiceOwner__c</name>
+    </fields>
+    <fields>
+        <label><!-- Servicio Tecnico Imei --></label>
+        <name>Servicio_Tecnico_Imei__c</name>
+    </fields>
+    <fields>
+        <label><!-- Servicio Tecnico Marca --></label>
+        <name>Servicio_Tecnico_Marca__c</name>
+    </fields>
+    <fields>
+        <label><!-- Servicio Tecnico Modelo --></label>
+        <name>Servicio_Tecnico_Modelo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Severity --></label>
+        <name>Severity__c</name>
+        <picklistValues>
+            <masterLabel>Alto</masterLabel>
+            <translation><!-- Alto --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Bajo</masterLabel>
+            <translation><!-- Bajo --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Speech</label>
+        <name>Speech__c</name>
+    </fields>
+    <fields>
+        <label>Fecha de inicio</label>
+        <name>Start_Date__c</name>
+    </fields>
+    <fields>
+        <label>Subtipo</label>
+        <name>SubType__c</name>
+        <picklistValues>
+            <masterLabel>*111</masterLabel>
+            <translation><!-- *111 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (ABM Números Amigos)</masterLabel>
+            <translation><!-- *111# (ABM Números Amigos) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (Consulta Promociones y Beneficios)</masterLabel>
+            <translation><!-- *111# (Consulta Promociones y Beneficios) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (Consulta Puntos Club)</masterLabel>
+            <translation><!-- *111# (Consulta Puntos Club) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (Consulta de Recargas)</masterLabel>
+            <translation><!-- *111# (Consulta de Recargas) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (Consulta de Saldo)</masterLabel>
+            <translation><!-- *111# (Consulta de Saldo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (Consulta, Activación de Packs)</masterLabel>
+            <translation><!-- *111# (Consulta, Activación de Packs) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (Detalle de Consumo)</masterLabel>
+            <translation><!-- *111# (Detalle de Consumo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111# (Recargas Tarjeta personal, Tarjeta de Crédito)</masterLabel>
+            <translation><!-- *111# (Recargas Tarjeta personal, Tarjeta de Crédito) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*111/ *Black</masterLabel>
+            <translation><!-- *111/ *Black --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*112</masterLabel>
+            <translation><!-- *112 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*112 (accede al 112 fija)</masterLabel>
+            <translation><!-- *112 (accede al 112 fija) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*114 (accede al 114 fija)</masterLabel>
+            <translation><!-- *114 (accede al 114 fija) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*120 (cambio de numeración)</masterLabel>
+            <translation><!-- *120 (cambio de numeración) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*150</masterLabel>
+            <translation><!-- *150 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*150 (saldo)</masterLabel>
+            <translation><!-- *150 (saldo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*150# (saldo)</masterLabel>
+            <translation><!-- *150# (saldo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*151</masterLabel>
+            <translation><!-- *151 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*151 (recargas)</masterLabel>
+            <translation><!-- *151 (recargas) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*152</masterLabel>
+            <translation><!-- *152 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*152 (packs, nros amigos)</masterLabel>
+            <translation><!-- *152 (packs, nros amigos) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*156# (roaming)</masterLabel>
+            <translation><!-- *156# (roaming) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*211 (Tienda Personal)</masterLabel>
+            <translation><!-- *211 (Tienda Personal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*211 (Ventas)</masterLabel>
+            <translation><!-- *211 (Ventas) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*222 (ACA)</masterLabel>
+            <translation><!-- *222 (ACA) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*234# Nominatividad</masterLabel>
+            <translation><!-- *234# Nominatividad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*237 (Aerolíneas Argentinas)</masterLabel>
+            <translation><!-- *237 (Aerolíneas Argentinas) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*242643 (Banco Piano)</masterLabel>
+            <translation><!-- *242643 (Banco Piano) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*2447 (Chip)</masterLabel>
+            <translation><!-- *2447 (Chip) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*2463</masterLabel>
+            <translation><!-- *2463 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*2484 (Citi)</masterLabel>
+            <translation><!-- *2484 (Citi) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*25225 (Black)</masterLabel>
+            <translation><!-- *25225 (Black) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*25283 (Clave)</masterLabel>
+            <translation><!-- *25283 (Clave) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*272 (Buquebus)</masterLabel>
+            <translation><!-- *272 (Buquebus) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*27638 (Arnet)</masterLabel>
+            <translation><!-- *27638 (Arnet) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*288/*788 (788 asistencia en ruta)</masterLabel>
+            <translation><!-- *288/*788 (788 asistencia en ruta) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*333 (recarga delivery)</masterLabel>
+            <translation><!-- *333 (recarga delivery) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*347</masterLabel>
+            <translation><!-- *347 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*380</masterLabel>
+            <translation><!-- *380 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*531 (Tienda Planes)</masterLabel>
+            <translation><!-- *531 (Tienda Planes) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*533 (Pauta On Line)</masterLabel>
+            <translation><!-- *533 (Pauta On Line) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*534 (E-Mail Marketing)</masterLabel>
+            <translation><!-- *534 (E-Mail Marketing) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*538 (Combo Único)</masterLabel>
+            <translation><!-- *538 (Combo Único) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*539 (Home Personal)</masterLabel>
+            <translation><!-- *539 (Home Personal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*554 (Facebook Personal)</masterLabel>
+            <translation><!-- *554 (Facebook Personal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*555 (contestador)</masterLabel>
+            <translation><!-- *555 (contestador) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*567 (SMS + Push)</masterLabel>
+            <translation><!-- *567 (SMS + Push) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*724# (IPago)</masterLabel>
+            <translation><!-- *724# (IPago) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*746 (Banco Río, super línea)</masterLabel>
+            <translation><!-- *746 (Banco Río, super línea) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*7526 (PLAN)</masterLabel>
+            <translation><!-- *7526 (PLAN) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*762 (ROAMERS)</masterLabel>
+            <translation><!-- *762 (ROAMERS) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*767 (SOS)</masterLabel>
+            <translation><!-- *767 (SOS) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*77666 (Promo)</masterLabel>
+            <translation><!-- *77666 (Promo) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*8472/*847</masterLabel>
+            <translation><!-- *8472/*847 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*878 (Saldo Virtual)</masterLabel>
+            <translation><!-- *878 (Saldo Virtual) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*88988 (SAEC)</masterLabel>
+            <translation><!-- *88988 (SAEC) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*910</masterLabel>
+            <translation><!-- *910 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*99999 (PBP)</masterLabel>
+            <translation><!-- *99999 (PBP) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>*CLUB (*2582)</masterLabel>
+            <translation><!-- *CLUB (*2582) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0531 (Tienda Planes)</masterLabel>
+            <translation><!-- 0800-444-0531 (Tienda Planes) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0533 (Pautas Online)</masterLabel>
+            <translation><!-- 0800-444-0533 (Pautas Online) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0534 (E-Mail Marketing)</masterLabel>
+            <translation><!-- 0800-444-0534 (E-Mail Marketing) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0536 (Pauta Online)</masterLabel>
+            <translation><!-- 0800-444-0536 (Pauta Online) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0537 (E-Mail Marketing)</masterLabel>
+            <translation><!-- 0800-444-0537 (E-Mail Marketing) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0538 (SMS Push Arnet)</masterLabel>
+            <translation><!-- 0800-444-0538 (SMS Push Arnet) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0539 (Home Personal)</masterLabel>
+            <translation><!-- 0800-444-0539 (Home Personal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0554 (Facebook Personal)</masterLabel>
+            <translation><!-- 0800-444-0554 (Facebook Personal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0561 (Facebook Arnet)</masterLabel>
+            <translation><!-- 0800-444-0561 (Facebook Arnet) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0567 (SMS Push Personal)</masterLabel>
+            <translation><!-- 0800-444-0567 (SMS Push Personal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0800 (0800 Clientes)</masterLabel>
+            <translation><!-- 0800-444-0800 (0800 Clientes) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-0800 (Atención Clientes Personal)</masterLabel>
+            <translation><!-- 0800-444-0800 (Atención Clientes Personal) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-4100 (Asistencia Tienda Online)</masterLabel>
+            <translation><!-- 0800-444-4100 (Asistencia Tienda Online) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-4434 (BAM)</masterLabel>
+            <translation><!-- 0800-444-4434 (BAM) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-4929 (Adultos Mayores)</masterLabel>
+            <translation><!-- 0800-444-4929 (Adultos Mayores) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-5412 (Instalación Fija)</masterLabel>
+            <translation><!-- 0800-444-5412 (Instalación Fija) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-6673 (Nordelta)</masterLabel>
+            <translation><!-- 0800-444-6673 (Nordelta) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-444-7963 (Pymes Móvil)</masterLabel>
+            <translation><!-- 0800-444-7963 (Pymes Móvil) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-555-0018 (Ventas desde la Web)</masterLabel>
+            <translation><!-- 0800-555-0018 (Ventas desde la Web) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-555-0035 (GPON)</masterLabel>
+            <translation><!-- 0800-555-0035 (GPON) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-555-0112 (Tarjetas de Telecom)</masterLabel>
+            <translation><!-- 0800-555-0112 (Tarjetas de Telecom) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-555-2010 (Personal Black)</masterLabel>
+            <translation><!-- 0800-555-2010 (Personal Black) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-555-4532 (Medios Digitales)</masterLabel>
+            <translation><!-- 0800-555-4532 (Medios Digitales) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-555-4632 (Portabilidad)</masterLabel>
+            <translation><!-- 0800-555-4632 (Portabilidad) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-555-9999 (Cliente Arnet)</masterLabel>
+            <translation><!-- 0800-555-9999 (Cliente Arnet) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-777-7246 (Pago con TC)</masterLabel>
+            <translation><!-- 0800-777-7246 (Pago con TC) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-7770328 (Fax Server)</masterLabel>
+            <translation><!-- 0800-7770328 (Fax Server) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-0112 (Cliente 112)</masterLabel>
+            <translation><!-- 0800-888-0112 (Cliente 112) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-0114 (Atención Técnica Fija)</masterLabel>
+            <translation><!-- 0800-888-0114 (Atención Técnica Fija) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-0800 (Executive)</masterLabel>
+            <translation><!-- 0800-888-0800 (Executive) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-1010 (Convergente)</masterLabel>
+            <translation><!-- 0800-888-1010 (Convergente) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-4422 (Atención Pymes)</masterLabel>
+            <translation><!-- 0800-888-4422 (Atención Pymes) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-4422 (CUIT)</masterLabel>
+            <translation><!-- 0800-888-4422 (CUIT) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-6673 (Nordelta)</masterLabel>
+            <translation><!-- 0800-888-6673 (Nordelta) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-7382 (Activaciones)</masterLabel>
+            <translation><!-- 0800-888-7382 (Activaciones) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-7382 (Repro)</masterLabel>
+            <translation><!-- 0800-888-7382 (Repro) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>0800-888-8872 (Medios Impresos)</masterLabel>
+            <translation><!-- 0800-888-8872 (Medios Impresos) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>100</masterLabel>
+            <translation><!-- 100 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>101</masterLabel>
+            <translation><!-- 101 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>102</masterLabel>
+            <translation><!-- 102 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>103</masterLabel>
+            <translation><!-- 103 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>106</masterLabel>
+            <translation><!-- 106 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>107</masterLabel>
+            <translation><!-- 107 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>131</masterLabel>
+            <translation><!-- 131 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>136</masterLabel>
+            <translation><!-- 136 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>911</masterLabel>
+            <translation><!-- 911 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Alta</masterLabel>
+            <translation><!-- Alta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Apps, Musica y +</masterLabel>
+            <translation><!-- Apps, Musica y + --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya  CMS Supervisor</masterLabel>
+            <translation><!-- Avaya  CMS Supervisor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya APC (Agente)</masterLabel>
+            <translation><!-- Avaya APC (Agente) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya APC - Internet Monitor</masterLabel>
+            <translation><!-- Avaya APC - Internet Monitor --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya APC - Monitor Reportes</masterLabel>
+            <translation><!-- Avaya APC - Monitor Reportes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya APC - Monitos Online</masterLabel>
+            <translation><!-- Avaya APC - Monitos Online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya Barra AIC</masterLabel>
+            <translation><!-- Avaya Barra AIC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya Barra AIC / ONE X</masterLabel>
+            <translation><!-- Avaya Barra AIC / ONE X --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya IC Manager</masterLabel>
+            <translation><!-- Avaya IC Manager --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya IN - Caída Total</masterLabel>
+            <translation><!-- Avaya IN - Caída Total --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Avaya ONE X</masterLabel>
+            <translation><!-- Avaya ONE X --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Baja</masterLabel>
+            <translation><!-- Baja --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Banner de Productividad</masterLabel>
+            <translation><!-- Banner de Productividad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Barrings Configurables por el Usuario</masterLabel>
+            <translation><!-- Barrings Configurables por el Usuario --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Blackberry</masterLabel>
+            <translation><!-- Blackberry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Caller Id</masterLabel>
+            <translation><!-- Caller Id --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Centros de Atención</masterLabel>
+            <translation><!-- Centros de Atención --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Click</masterLabel>
+            <translation><!-- Click --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Club Personal</masterLabel>
+            <translation><!-- Club Personal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Club Personal (WEB)</masterLabel>
+            <translation><!-- Club Personal (WEB) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Comandos/ Portabilidad</masterLabel>
+            <translation><!-- Comandos/ Portabilidad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Compra Packs</masterLabel>
+            <translation><!-- Compra Packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conciliador</masterLabel>
+            <translation><!-- Conciliador --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conferencia Tripartita</masterLabel>
+            <translation><!-- Conferencia Tripartita --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Conferencia entre 3</masterLabel>
+            <translation><!-- Conferencia entre 3 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contacto (CHAT)</masterLabel>
+            <translation><!-- Contacto (CHAT) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contestador Personal</masterLabel>
+            <translation><!-- Contestador Personal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contestador de Llamadas</masterLabel>
+            <translation><!-- Contestador de Llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contestador de Llamadas con Clave</masterLabel>
+            <translation><!-- Contestador de Llamadas con Clave --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cris</masterLabel>
+            <translation><!-- Cris --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DDI con Roaming Internacional</masterLabel>
+            <translation><!-- DDI con Roaming Internacional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DDI con Roaming Internacional a ARG y en destino</masterLabel>
+            <translation><!-- DDI con Roaming Internacional a ARG y en destino --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>DDI sin Roaming Internacional</masterLabel>
+            <translation><!-- DDI sin Roaming Internacional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Datos</masterLabel>
+            <translation><!-- Datos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Datos full (2G-3G-4G)</masterLabel>
+            <translation><!-- Datos full (2G-3G-4G) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domicilio de facturación</masterLabel>
+            <translation><!-- Domicilio de facturación --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Email</masterLabel>
+            <translation><!-- Email --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Enviador</masterLabel>
+            <translation><!-- Enviador --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Epiron (Redes Sociales)</masterLabel>
+            <translation><!-- Epiron (Redes Sociales) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Estado de la cuenta</masterLabel>
+            <translation><!-- Estado de la cuenta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Facturacion/ Tasacion</masterLabel>
+            <translation><!-- Facturacion/ Tasacion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Gestion PMP</masterLabel>
+            <translation><!-- Gestion PMP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Grabador NICE</masterLabel>
+            <translation><!-- Grabador NICE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Herramientas de Gestión/ Atencion</masterLabel>
+            <translation><!-- Herramientas de Gestión/ Atencion --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>High Tech</masterLabel>
+            <translation><!-- High Tech --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IMS VoLTE</masterLabel>
+            <translation><!-- IMS VoLTE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>IMS VoWIFI</masterLabel>
+            <translation><!-- IMS VoWIFI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Identificación de Llamadas</masterLabel>
+            <translation><!-- Identificación de Llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconsistencias</masterLabel>
+            <translation><!-- Inconsistencias --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconveniente con las llamadas</masterLabel>
+            <translation><!-- Inconveniente con las llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes Prepago</masterLabel>
+            <translation><!-- Inconvenientes Prepago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Inconvenientes con correo</masterLabel>
+            <translation><!-- Inconvenientes con correo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Información de factura</masterLabel>
+            <translation><!-- Información de factura --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Información de la línea</masterLabel>
+            <translation><!-- Información de la línea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Informe de Pago</masterLabel>
+            <translation><!-- Informe de Pago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internacional</masterLabel>
+            <translation><!-- Internacional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internet</masterLabel>
+            <translation><!-- Internet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Internet Móvil</masterLabel>
+            <translation><!-- Internet Móvil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Llamada Tripartita</masterLabel>
+            <translation><!-- Llamada Tripartita --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Llamada en espera</masterLabel>
+            <translation><!-- Llamada en espera --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MAF</masterLabel>
+            <translation><!-- MAF --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>MMS</masterLabel>
+            <translation><!-- MMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mi Facturación</masterLabel>
+            <translation><!-- Mi Facturación --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mi Línea</masterLabel>
+            <translation><!-- Mi Línea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mi cuenta</masterLabel>
+            <translation><!-- Mi cuenta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mis Consumos</masterLabel>
+            <translation><!-- Mis Consumos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NPS</masterLabel>
+            <translation><!-- NPS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Navega lento</masterLabel>
+            <translation><!-- Navega lento --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Negocio 2000</masterLabel>
+            <translation><!-- Negocio 2000 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Negocio Net</masterLabel>
+            <translation><!-- Negocio Net --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No puedo navegar</masterLabel>
+            <translation><!-- No puedo navegar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Novedad Informativa</masterLabel>
+            <translation><!-- Novedad Informativa --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Números Amigos</masterLabel>
+            <translation><!-- Números Amigos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Otros</masterLabel>
+            <translation><!-- Otros --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Otros Servicios</masterLabel>
+            <translation><!-- Otros Servicios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Packs</masterLabel>
+            <translation><!-- Packs --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Paginas externas</masterLabel>
+            <translation><!-- Paginas externas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Personal Black</masterLabel>
+            <translation><!-- Personal Black --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planes</masterLabel>
+            <translation><!-- Planes --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Portal Móvil</masterLabel>
+            <translation><!-- Portal Móvil --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Prepaid</masterLabel>
+            <translation><!-- Prepaid --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Promociones</masterLabel>
+            <translation><!-- Promociones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Página de Niveles</masterLabel>
+            <translation><!-- Página de Niveles --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Quien llamo</masterLabel>
+            <translation><!-- Quien llamo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recarga online</masterLabel>
+            <translation><!-- Recarga online --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recargas</masterLabel>
+            <translation><!-- Recargas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reconexión siniestro</masterLabel>
+            <translation><!-- Reconexión siniestro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Red</masterLabel>
+            <translation><!-- Red --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Rehabilitaciones</masterLabel>
+            <translation><!-- Rehabilitaciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Ring Back Tones</masterLabel>
+            <translation><!-- Ring Back Tones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMS Entrante</masterLabel>
+            <translation><!-- SMS Entrante --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMS Saliente</masterLabel>
+            <translation><!-- SMS Saliente --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SNAP</masterLabel>
+            <translation><!-- SNAP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Segat</masterLabel>
+            <translation><!-- Segat --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sender</masterLabel>
+            <translation><!-- Sender --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Servicio no detallado (Generico)</masterLabel>
+            <translation><!-- Servicio no detallado (Generico) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Servicios</masterLabel>
+            <translation><!-- Servicios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Siebel</masterLabel>
+            <translation><!-- Siebel --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sistemas VAS</masterLabel>
+            <translation><!-- Sistemas VAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sistemas WEB</masterLabel>
+            <translation><!-- Sistemas WEB --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sistemas Web/VAS</masterLabel>
+            <translation><!-- Sistemas Web/VAS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sistemas Web/VAS/País/Autogestión</masterLabel>
+            <translation><!-- Sistemas Web/VAS/País/Autogestión --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Social Media - WebLogueo</masterLabel>
+            <translation><!-- Social Media - WebLogueo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sur</masterLabel>
+            <translation><!-- Sur --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Suscripciones</masterLabel>
+            <translation><!-- Suscripciones --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Suspensión siniestro</masterLabel>
+            <translation><!-- Suspensión siniestro --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>TUID</masterLabel>
+            <translation><!-- TUID --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tarea de Mantenimiento</masterLabel>
+            <translation><!-- Tarea de Mantenimiento --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tarjeta de crédito</masterLabel>
+            <translation><!-- Tarjeta de crédito --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tarjeta prepaga</masterLabel>
+            <translation><!-- Tarjeta prepaga --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Telefonia basica / aire</masterLabel>
+            <translation><!-- Telefonia basica / aire --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tienda On Line</masterLabel>
+            <translation><!-- Tienda On Line --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Trans Routing</masterLabel>
+            <translation><!-- Trans Routing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Transferencia de Llamadas</masterLabel>
+            <translation><!-- Transferencia de Llamadas --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>USSD</masterLabel>
+            <translation><!-- USSD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voice Mail</masterLabel>
+            <translation><!-- Voice Mail --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voice Mail con Clave</masterLabel>
+            <translation><!-- Voice Mail con Clave --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz y Datos</masterLabel>
+            <translation><!-- Voz y Datos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web</masterLabel>
+            <translation><!-- Web --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Web de gestión móvil</masterLabel>
+            <translation><!-- Web de gestión móvil --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subarea --></label>
+        <name>Subarea__c</name>
+        <picklistValues>
+            <masterLabel>APSI</masterLabel>
+            <translation><!-- APSI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Actualización de Datos del Cliente</masterLabel>
+            <translation><!-- Actualización de Datos del Cliente --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consulta técnica</masterLabel>
+            <translation><!-- Consulta técnica --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>NULL</masterLabel>
+            <translation><!-- NULL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PDAT</masterLabel>
+            <translation><!-- PDAT --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PENV</masterLabel>
+            <translation><!-- PENV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PEPR</masterLabel>
+            <translation><!-- PEPR --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PESI</masterLabel>
+            <translation><!-- PESI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PPROV</masterLabel>
+            <translation><!-- PPROV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RESI</masterLabel>
+            <translation><!-- RESI --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>RIMP</masterLabel>
+            <translation><!-- RIMP --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reseteo de Clave</masterLabel>
+            <translation><!-- Reseteo de Clave --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SENV</masterLabel>
+            <translation><!-- SENV --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Subcategoria --></label>
+        <name>Subcategory__c</name>
+        <picklistValues>
+            <masterLabel>Atención Ejecutivos</masterLabel>
+            <translation><!-- Atención Ejecutivos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Calidad en la Atención</masterLabel>
+            <translation><!-- Calidad en la Atención --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contacto Web</masterLabel>
+            <translation><!-- Contacto Web --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Demoras en la Atención</masterLabel>
+            <translation><!-- Demoras en la Atención --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Información Brindada</masterLabel>
+            <translation><!-- Información Brindada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Medios Pago</masterLabel>
+            <translation><!-- Medios Pago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Política de Precios</masterLabel>
+            <translation><!-- Política de Precios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Política de contratación</masterLabel>
+            <translation><!-- Política de contratación --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Productos/Servicios</masterLabel>
+            <translation><!-- Productos/Servicios --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Publicidad</masterLabel>
+            <translation><!-- Publicidad --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Resolución</masterLabel>
+            <translation><!-- Resolución --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Servicio Técnico</masterLabel>
+            <translation><!-- Servicio Técnico --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label>Síntoma de STT</label>
+        <name>TS_Symptom__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Tipo Ajuste --></label>
+        <name>TipoAjuste__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tipo Concepto --></label>
+        <name>TipoConcepto__c</name>
+        <picklistValues>
+            <masterLabel>CARGOS AUN NO FACTURADOS</masterLabel>
+            <translation><!-- CARGOS AUN NO FACTURADOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CREDITO POSPAGO</masterLabel>
+            <translation><!-- CREDITO POSPAGO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CREDITO PREPAGO</masterLabel>
+            <translation><!-- CREDITO PREPAGO --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>FACTURA EMITIDA</masterLabel>
+            <translation><!-- FACTURA EMITIDA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>PUNTOS CLUB</masterLabel>
+            <translation><!-- PUNTOS CLUB --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Tipo Item --></label>
+        <name>TipoItem__c</name>
+        <picklistValues>
+            <masterLabel>Abono roaming / proteccion personal / Servicio BB / Otros SVA</masterLabel>
+            <translation><!-- Abono roaming / proteccion personal / Servicio BB / Otros SVA --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Abono/proporcional</masterLabel>
+            <translation><!-- Abono/proporcional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cambio de condicion impositiva</masterLabel>
+            <translation><!-- Cambio de condicion impositiva --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo de reconexión</masterLabel>
+            <translation><!-- Cargo de reconexión --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargo por penalidad baja anticipada / cambio de plan / mercado</masterLabel>
+            <translation><!-- Cargo por penalidad baja anticipada / cambio de plan / mercado --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cliente no reconoce linea</masterLabel>
+            <translation><!-- Cliente no reconoce linea --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consumos de datos</masterLabel>
+            <translation><!-- Consumos de datos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Consumos de internet</masterLabel>
+            <translation><!-- Consumos de internet --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Contestador personal</masterLabel>
+            <translation><!-- Contestador personal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cuota de equipo</masterLabel>
+            <translation><!-- Cuota de equipo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cuotas de convenio de pago</masterLabel>
+            <translation><!-- Cuotas de convenio de pago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Descuento Recarga SOS</masterLabel>
+            <translation><!-- Descuento Recarga SOS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Fuera del area local</masterLabel>
+            <translation><!-- Fuera del area local --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Larga distancia internacional</masterLabel>
+            <translation><!-- Larga distancia internacional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Larga distancia nacional</masterLabel>
+            <translation><!-- Larga distancia nacional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Minutos/SMS</masterLabel>
+            <translation><!-- Minutos/SMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No se pudo determinar motivo descuento</masterLabel>
+            <translation><!-- No se pudo determinar motivo descuento --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Numero Amigo/Grupo Fliar</masterLabel>
+            <translation><!-- Numero Amigo/Grupo Fliar --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Numeros amigos</masterLabel>
+            <translation><!-- Numeros amigos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pack</masterLabel>
+            <translation><!-- Pack --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recarga delivery</masterLabel>
+            <translation><!-- Recarga delivery --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Recarga inicial</masterLabel>
+            <translation><!-- Recarga inicial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Renovacion cuota datos</masterLabel>
+            <translation><!-- Renovacion cuota datos --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roaming fronterizo</masterLabel>
+            <translation><!-- Roaming fronterizo --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Roaming internacional</masterLabel>
+            <translation><!-- Roaming internacional --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Solicitudes administrativas (cbio tit, numero, transf de credito, etc)</masterLabel>
+            <translation><!-- Solicitudes administrativas (cbio tit, numero, transf de credito, etc) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Stop Personal</masterLabel>
+            <translation><!-- Stop Personal --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Suscripciones / Contenidos / Trivias</masterLabel>
+            <translation><!-- Suscripciones / Contenidos / Trivias --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>WIN/Pooling/Interflota</masterLabel>
+            <translation><!-- WIN/Pooling/Interflota --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- TipoOperacionAjuste --></label>
+        <name>TipoOperacionAjuste__c</name>
+    </fields>
+    <fields>
+        <label><!-- TipoSeleccion --></label>
+        <name>TipoSeleccion__c</name>
+        <picklistValues>
+            <masterLabel>Cuenta</masterLabel>
+            <translation><!-- Cuenta --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Servicio</masterLabel>
+            <translation><!-- Servicio --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- TipoCargo --></label>
+        <name>Tipo__c</name>
+        <picklistValues>
+            <masterLabel>Cargos fijos facturados</masterLabel>
+            <translation><!-- Cargos fijos facturados --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargos fijos no facturados</masterLabel>
+            <translation><!-- Cargos fijos no facturados --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargos variables facturados</masterLabel>
+            <translation><!-- Cargos variables facturados --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Cargos variables no facturados</masterLabel>
+            <translation><!-- Cargos variables no facturados --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No aplica Pospago</masterLabel>
+            <translation><!-- No aplica Pospago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No aplica Prepago</masterLabel>
+            <translation><!-- No aplica Prepago --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Otros cargos facturados</masterLabel>
+            <translation><!-- Otros cargos facturados --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Otros cargos no facturados</masterLabel>
+            <translation><!-- Otros cargos no facturados --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tipo de comprobante</masterLabel>
+            <translation><!-- Tipo de comprobante --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Type of asset --></label>
+        <name>Type_of_asset__c</name>
+    </fields>
+    <fields>
+        <label><!-- Unidad Ajuste --></label>
+        <name>UnidadAjuste__c</name>
+        <picklistValues>
+            <masterLabel>Credito</masterLabel>
+            <translation><!-- Credito --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Datos(Mb)</masterLabel>
+            <translation><!-- Datos(Mb) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SMS</masterLabel>
+            <translation><!-- SMS --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Voz</masterLabel>
+            <translation><!-- Voz --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- VoucherNumber --></label>
+        <name>VoucherNumber__c</name>
+    </fields>
+    <fields>
+        <label>Taller de Reparación</label>
+        <name>WorkShop__c</name>
+    </fields>
+    <fields>
+        <help><!-- Monto de pago con tarjeta de crédito --></help>
+        <label><!-- Monto pago TDC --></label>
+        <name>amount_tdc__c</name>
+    </fields>
+    <fields>
+        <label><!-- Banco --></label>
+        <name>bank_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Repaired Equipment --></label>
+        <name>equipment_repaired__c</name>
+    </fields>
+    <fields>
+        <label><!-- Es un Reclamo --></label>
+        <name>is_a_claim__c</name>
+    </fields>
+    <fields>
+        <label><!-- Fecha de Pago --></label>
+        <name>payment_refunds_date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Numero TDC --></label>
+        <name>tdc_number__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tipo TDC --></label>
+        <name>tdc_type__c</name>
+    </fields>
+    <fields>
+        <label><!-- Amount --></label>
+        <name>vlocity_cmt__Amount__c</name>
+    </fields>
+    <fields>
+        <label><!-- DisputeId --></label>
+        <name>vlocity_cmt__DisputeId__c</name>
+    </fields>
+    <fields>
+        <label><!-- Dispute ID --></label>
+        <name>vlocity_cmt__Dispute_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Follow Up To --></label>
+        <name>vlocity_cmt__FollowUpTo__c</name>
+    </fields>
+    <fields>
+        <label><!-- Indicator Image Name --></label>
+        <name>vlocity_cmt__IndicatorImageName__c</name>
+    </fields>
+    <fields>
+        <label><!-- Premises --></label>
+        <name>vlocity_cmt__PremisesId__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Priority Image Name --></label>
+        <name>vlocity_cmt__PriorityImageName__c</name>
+    </fields>
+    <fields>
+        <label>Servicio</label>
+        <name>vlocity_cmt__ServiceId__c</name>
+        <relationshipLabel><!-- Cases --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Statement --></label>
+        <name>vlocity_cmt__StatementId__c</name>
+        <relationshipLabel><!-- Disputes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Statement Line Item --></label>
+        <name>vlocity_cmt__StatementLineItemId__c</name>
+        <relationshipLabel><!-- Disputes --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Status Image Name --></label>
+        <name>vlocity_cmt__StatusImageName__c</name>
+    </fields>
+    <recordTypes>
+        <description><!-- Billing complaint. --></description>
+        <label><!-- Billing --></label>
+        <name>Billing</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Diagnosis Ticket --></description>
+        <label><!-- Diagnosis --></label>
+        <name>Diagnosis</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Massive Incident --></description>
+        <label><!-- Incidente Masivo --></label>
+        <name>Incidente_Masivo</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Eventos conocidos / Noticias --></description>
+        <label><!-- KnownEvents --></label>
+        <name>Known_Events</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Mobile Phone Case --></description>
+        <label><!-- MobilePhoneCase --></label>
+        <name>MobilePhoneCase</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Technical Service - Muleto --></description>
+        <label><!-- Muleto --></label>
+        <name>Muleto</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Type for portability cases identification --></description>
+        <label><!-- Portability --></label>
+        <name>Portability</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record type used to report the complaints, petitions or requests  related with the customer care processes. --></description>
+        <label><!-- Postsales --></label>
+        <name>Postsales</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record type used to report the complaints, petitions or requests  related with the sales processes. --></description>
+        <label><!-- Sales --></label>
+        <name>Sales</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- There is something wrong with the service provided or a product associated with that service. --></description>
+        <label><!-- Service --></label>
+        <name>Service</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Recordtype asociado a los casos de Suspensiones &amp; Rehabilitaciones --></description>
+        <label><!-- Suspension and Reconnection --></label>
+        <name>Suspension_and_Reconnection</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Technical Service Ticket --></description>
+        <label><!-- Technical Service --></label>
+        <name>Technical_Service</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- Continuar_Ajuste --></label>
+        <name>Continuar_Ajuste</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Continuar_Caso --></label>
+        <name>Continuar_Caso</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Continuar_Reintegro --></label>
+        <name>Continuar_Reintegro</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- EntryCertificationExport --></label>
+        <name>EntryCertificationExport</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Estado_Orden_OM --></label>
+        <name>Estado_Orden_OM</name>
+    </webLinks>
+</CustomObjectTranslation>

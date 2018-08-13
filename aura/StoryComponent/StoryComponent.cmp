@@ -1,0 +1,6 @@
+<!--c:sub-->
+<aura:component extends="vlocity_cmt:vlocityBaseComponent" access="GLOBAL" implements="force:hasRecordId">
+    <aura:set attribute="src" value="{!'/apex/' + v.nsPrefix + v.recordType + 'Stories?id=' + v.recordId + v.baseURL + 'detail/'}"/>
+    <aura:set attribute="Id" value="StoryCard"/>
+    <aura:set attribute="applicableTypes" value="['Account', 'Contact', 'Household']"/>
+</aura:component>

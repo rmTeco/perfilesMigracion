@@ -1,0 +1,92 @@
+<div class="cpq-product-cart-item-cell-payment-choice slds-p-small">
+  
+  <div class="slds-form slds-form_compound">
+
+    <fieldset class="slds-form-element">
+       <div class="slds-form-element__group">
+        <div class="slds-form-element__row">
+          <div class="slds-form-element slds-text-align_left slds-size_2-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static">{{::importedScope.customLabels.CPQSwitchPaymentNotice}}</span>
+            </div>
+          </div>
+          <div class="slds-form-element slds-text-align_left slds-p-top_none slds-size_2-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static slds-text-heading_small"><strong>{{parent.Product2.Name}}<strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="slds-form-element__row">
+          <div class="slds-form-element slds-text-align_left slds-size_2-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static"></span>
+            </div>
+          </div>
+          <div class="slds-form-element slds-text-align_left slds-p-top_none slds-size_2-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static">{{loaded.label}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="slds-form-element">
+       <div class="slds-form-element__group">
+        <div class="slds-form-element__row">
+          <div class="slds-form-element slds-text-align_left slds-size_2-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-radio">
+                <input type="radio" id="radioCurrency" name="options" ng-checked="parent[$root.nsPrefix + 'CurrencyPaymentMode__c'].value === 'Currency'" ng-click="importedScope.switchPaymentMode(importedScope.parent, 'Currency')" />
+                <label class="slds-radio__label" for="radioCurrency">
+                    <span class="slds-radio_faux"></span>
+                    <span class="slds-form-element__label">{{::importedScope.customLabels.CPQCurrency}}</span>
+                </label>
+              </span>
+            </div>
+          </div>
+          <div class="slds-form-element slds-text-align_left slds-p-top_none slds-size_1-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static">{{loaded.currencyValue | currency}}</span>
+            </div>
+          </div>
+          <div class="slds-form-element slds-text-align_left slds-p-top_none slds-size_1-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static">{{loaded.currencyCode}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset class="slds-form-element">
+       <div class="slds-form-element__group">
+        <div class="slds-form-element__row">
+          <div class="slds-form-element slds-text-align_left slds-size_2-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-radio">
+                <input type="radio" id="radioPoints" name="options" ng-checked="parent[$root.nsPrefix + 'CurrencyPaymentMode__c'].value === 'Loyalty'" ng-click="importedScope.switchPaymentMode(importedScope.parent, 'Loyalty')" />
+                <label class="slds-radio__label" for="radioPoints">
+                    <span class="slds-radio_faux"></span>
+                    <span class="slds-form-element__label">{{::importedScope.customLabels.CPQLoyalty}}</span>
+                </label>
+              </span>
+            </div>
+          </div>
+          <div class="slds-form-element slds-text-align_left slds-p-top_none slds-size_1-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static">{{loaded.loyaltyValue}}</span>
+            </div>
+          </div>
+          <div class="slds-form-element slds-text-align_left slds-p-top_none slds-size_1-of-4">
+            <div class="slds-form-element__control">
+              <span class="slds-form-element__static">{{loaded.loyaltyCode}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+  </div>
+
+</div>

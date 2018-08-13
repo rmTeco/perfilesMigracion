@@ -1,0 +1,99 @@
+.diagnosisStatus {
+    width: 100%;
+    color: #2a4668;
+    font-size: 13px;
+    .via-slds &.slds-card {
+        padding: 8px;
+        background: #fff;
+        @media only screen and (min-width: 768px) {
+            margin-top: 5px;
+            margin-left: 5px;
+            &:first-child {
+                margin-left: 0;
+            }    
+        }
+    }
+    &-grid {
+        width: 100%;
+        &.vlc-slds-small--size-column {
+            @media only screen and (max-width: 768px) {
+                flex-direction: column;
+            }    
+        }
+    }
+    &-card{
+        &-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 9px;
+            
+            path {
+                fill: #00b9d4;
+            }
+        }
+        &-io {
+            .ioWrapper {
+                position: relative;
+                padding: 5px 0px;
+                border-bottom: 1px solid #f2f2f2;
+                &-deactivated {
+                    color: #a4a4a4;
+                    .ioWrapper-label {
+                        color: #a4a4a4;
+                    }
+                }
+                &-label {
+                    color: #00b9d4;
+                }
+                &-Rojo,
+				&-Amarillo,
+				&-Gris {
+                    &:hover {
+                        .ioWrapper-toolTip {
+                            display: block;
+                        }
+                    }
+                }
+                &-toolTip {
+                    display: none;
+                    position: absolute;
+                    top: 30px;
+                    right: -41px;
+                    width: auto;
+                    min-width: 190px;
+                    &:before,
+                    &:after {
+                        left: 75%;
+                    }
+                    .slds-popover__body {
+                        hyphens: initial;
+                    }
+                }
+                .iconStatus {
+                    display: inline-block;
+                    position: relative;
+                    height: 12px;
+                    width: 12px;
+                    
+                    border-radius: 50%;
+                    &.type-Gris { //3
+                        background: #d8dde5;   
+                    }
+                    &.type-Amarillo { //2
+                        background: #ffb56b;   
+                    }
+                    &.type-Verde { //4
+                        background: #008554;   
+                    }
+                    &.type-Rojo { //1 
+                        background: #cd3136;   
+                    }
+                }
+            }
+            &:last-child .ioWrapper {
+                border-bottom: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+<!-- ng-controller="control.propSetMap.templateConfig.controller as mmc"  -->
+
+<pre>
+	{{control |json}}
+
+	//
+	
+	{{control.propSetMap.templateConfig.type}}
+</pre>
+
+<div	
+	class="techCare-PriceListSelection-wrapper">
+	<table 
+		ng-if="control.vlcSI.recSet"
+		ng-init="mmc.items = control.vlcSI.recSet"
+		class="slds-table slds-table--bordered slds-table--cell-buffer techCare-PriceListSelection">
+		<thead>
+			<tr class="slds-text-title--caps">
+				<th scope="col">	
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="Name">Nombre</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="Description">Descripción</div>
+				</th>
+				<th scope="col">
+					<div class="slds-truncate" title="Price">Precio</div>
+				</th>
+			</tr>
+		</thead>
+		<tbody class="techCare-PriceListSelection-tbody">    
+			<tr 
+				ng-repeat="item in mmc.items"
+				class="slds-hint-parent"
+				ng-class="{'active': item.active}">
+				<td role="gridcell" class="slds-text-align--right techCare-PriceListSelection-tbody-checkbox">
+					<span class="slds-checkbox" ng-if="control.propSetMap.templateConfig.type == 'checkbox'">
+						<input 
+							type="checkbox" 
+							name="options" 
+							id="item-{{$index}}" 
+							ng-model="item.active" 
+							ng-click="bpTree.response.Case.Repairs = mmc.addProduct(mmc.items)"/>
+						<label class="slds-checkbox__label" for="item-{{$index}}">
+							<span class="slds-checkbox--faux"></span>
+							<span class="slds-form-element__label slds-assistive-text">Select item 2</span>
+						</label>
+					</span>
+					<span class="slds-radio" ng-if="control.propSetMap.templateConfig.type == 'radio'">
+						+
+					</span>
+				</td>   		
+
+				<th scope="row" data-label="Name" role="gridcell">
+					<div title="Name">{{item.Name}}</div>
+				</th>
+				<td data-label="Description" role="gridcell">
+					<div title="Description">{{item.Description}}</div>
+				</td>
+				<td data-label="Price" role="gridcell">
+					<div title="Price">${{item.Price}}</div>
+				</td>    
+			</tr>    
+		</tbody>
+	</table>
+</div>

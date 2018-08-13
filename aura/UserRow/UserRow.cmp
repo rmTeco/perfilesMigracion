@@ -1,0 +1,33 @@
+<aura:component extends="et4ae5:DataTableRowPlus">
+
+    <!-- Scripts -->
+    <ltng:require styles="/resource/et4ae5__SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- Attributes -->
+    <aura:attribute name="userenabled" type="Boolean" required="true" />
+    <aura:attribute name="adminenabled" type="Boolean" required="true" />
+
+    <!-- Component Body -->
+    <td class="slds-truncate">
+        {!v.record.Name}
+    </td>
+    <td class="slds-truncate">
+        <label class="slds-checkbox">
+            <ui:inputCheckbox aura:id="usercheckbox" value="{!v.userenabled}" click="{!c.userEnabledChange}" />
+            <span class="slds-checkbox--faux"></span>
+        </label>
+    </td>
+    <td class="slds-truncate">
+        <label class="slds-checkbox">
+            <ui:inputCheckbox aura:id="admincheckbox" value="{!v.adminenabled}" click="{!c.adminEnabledChange}" />
+            <span class="slds-checkbox--faux"></span>
+        </label>
+    </td>
+    <td class="slds-truncate">
+        {!v.record.Username}
+    </td>
+    
+</aura:component>

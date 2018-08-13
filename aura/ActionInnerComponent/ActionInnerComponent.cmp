@@ -1,0 +1,13 @@
+<aura:component >      
+    	<!-- Attribute definition(s) -->
+        <aura:attribute name="itemObj" type="Object"/>
+    	<aura:registerEvent name="actionClick" type="vlocity_cmt:actionClickEvent"/>
+    	<!-- init -->
+    	<!-- <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> -->
+        <ui:button class="action-btn" aura:id="button" label="" press="{!c.navigateTo}">
+            <div class="image-wrapper" ng-show="{!v.itemObj.imageRef}">
+              <i class="{!icon + v.itemObj.vlocityIcon}"></i><span class="helper"></span> 
+      		</div> 
+           <span class="action-label">{!v.itemObj.displayName}</span>
+    	</ui:button> 
+</aura:component>

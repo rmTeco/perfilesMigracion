@@ -1,0 +1,27 @@
+@import "variables";
+@import "community-variables";
+
+.vlocity {
+    .community {
+        .community-body {
+            //padding
+        }
+        
+        /* Side bar styles */
+        .sidebar-wrapper {
+            padding-right:5px;
+        }
+
+        @media (min-width: $desktop-width) {
+            .community-body {
+                padding:0px 30px 30px;
+            }
+        }
+        
+        @media (max-width: $tablet-width) {
+            .sidebar-wrapper {
+                padding:0px;
+            }
+        }
+    }
+}

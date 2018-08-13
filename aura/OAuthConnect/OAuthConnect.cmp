@@ -1,0 +1,47 @@
+<aura:component controller="et4ae5.LightningOAuthConnect" >
+
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- External Attributes -->
+    <aura:attribute name="json" type="json" />
+
+    <!-- Attributes -->
+    <aura:attribute name="showAdvanced" type="boolean" default="false" access="private" />
+    <aura:attribute name="environments" type="String[]" access="private" />
+    <aura:attribute name="qaenvironments" type="String[]" access="private" />
+    <aura:attribute name="advancedLinkLabel" type="String" access="private" />
+    <aura:attribute name="qamode" type="boolean" access="private" default="false" />
+    
+    <div class="well">
+        <form>
+            <legend id="login_title" style="font-weight: normal;color: #54698d;">
+                {!v.json.title}
+            </legend>
+            <aura:if isTrue="{!v.json.advanced_settings_flag}">
+                <div class="form-group" >
+                    <ui:outputurl aura:id="advanced_link" value="#" click="{!c.advancedClicked}" />
+                </div>
+                <div class="form-group hide" aura:id="advanced_div">                    
+                    <label>
+                        {!v.json.environment_label}
+                    </label>
+                    <br />
+                    <ui:inputselect aura:id="environments_dropdown">                                                                        
+                        <aura:iteration items="{!v.environments}" var="environment">
+                            <ui:inputselectoption text="{!environment}" label="{!environment}" />                             
+                        </aura:iteration>
+                        <aura:if isTrue="{!v.qamode}">
+                        	<aura:iteration items="{!v.qaenvironments}" var="qaenvironment">
+                            	<ui:inputselectoption text="{!qaenvironment}" label="{!qaenvironment}" />                             
+                        	</aura:iteration>
+                        </aura:if> 
+                    </ui:inputselect>                    
+                </div>
+            </aura:if>
+            <div class="form-group">
+                <ui:button aura:id="connect_button" press="{!c.connectClicked}" label="{!v.json.button_label}" class="button-component" />
+            </div>
+        </form>
+    </div>
+</aura:component>

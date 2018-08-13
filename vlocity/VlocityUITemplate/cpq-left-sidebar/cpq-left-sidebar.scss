@@ -1,0 +1,76 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-left-sidebar {
+            position: absolute;
+            top: 0;
+            right: $cpq-padding-large-horizontal/2;
+            bottom: 0;
+            left: $cpq-padding-large-horizontal/2;
+
+            .#{$namespace}-searchbox {
+                vertical-align: middle;
+                margin-bottom: $cpq-padding-large-vertical;
+                
+                input {
+                   background-color: $cpq-product-container-bg-color;
+                   border-radius: 0px;
+                   border: 1px solid $cpq-product-container-bg-color;;
+                }
+            }
+            .#{$namespace}-tabs-container { 
+                padding-bottom: 10px;
+            }
+            .#{$namespace}-filter-container {
+                background-color: $cpq-product-container-bg-color;
+                margin-bottom: $cpq-product-item-padding;
+                section {
+                    padding: $cpq-padding-base-vertical 0px;
+                    margin: 0px $cpq-padding-large-horizontal;
+                }
+                
+                a {
+                    text-decoration: none;
+                    color: $mid-black;
+                    
+                    &:hover {
+                        color:$dark-blue;
+                    }
+                }
+            }
+            .#{$namespace}-items-container {
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+                background-color: $cpq-product-container-bg-color;
+
+                //HYB-2028
+                display:flex;
+
+                *[tabview],
+                ng-include[hotkeys-layout-navigation]{
+                    flex:1;
+                    display:flex;
+                }
+            }
+        }
+
+        // 64rem
+        @media screen and (max-width: $bp-large) {
+            .#{$namespace}-left-sidebar {
+                top: $cpq-padding-large-vertical*1.2;
+                right: $cpq-padding-large-horizontal*0.5;
+                bottom: $cpq-padding-large-vertical*1.2;
+                left: $cpq-padding-large-horizontal*0.5;
+            }
+        }
+    }
+}

@@ -1,0 +1,86 @@
+<div class='slds-col--padded slds-size--1-of-1' ng-controller="ICCIDRevalidationController as iccidrc">
+    <table
+        class="slds-table slds-table--bordered slds-table--cell-buffer vlc-slds-table"
+        ng-class="[compareWindowWidth(1024,'vlc-slds-table--stacked'), compareWindowWidth(375,'vertical')]">
+        <thead>
+            <tr
+                class="slds-text-heading--label"
+                ng-if="$first">
+                <th scope="col">
+                    <div class="slds-truncate">NMU</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Línea</div>
+                </th>
+                <th scope="col" width="250px">
+                    <div class="slds-truncate">ICCID</div>
+                </th>
+                <th scope="col" ng-if="!bpTree.response.esAnulacion">
+                    <div class="slds-truncate">Ubicación/Colmena</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Reingreso de serial</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate">Validación</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr
+                ng-if="item.%vlocity_namespace%__SerialNumber__c && (!bpTree.response.esAnulacion || item.Product2.%vlocity_namespace%__Type__c != 'Simcard')"
+                ng-repeat="item in bpTree.response.SerialOrderItems"
+                ng-class="{'vlc-selectableitem-selected' : p.vlcSelected}">
+                <td data-label='NMU'>
+                    <div class="slds-truncate">{{item.Product2.NMU__c}}</div>
+                </td>
+                <td data-label='Número de Línea'>
+                    <div class="slds-truncate">{{item.LineNumber}}</div>
+                </td>
+                <td data-label='ICCID'>
+                    <div class="slds-truncate">{{item.%vlocity_namespace%__SerialNumber__c}}</div>
+                </td>
+                <td data-label='Ubicación' ng-if="!bpTree.response.esAnulacion">
+                    <div class="slds-truncate">???</div>
+                </td>
+                <td data-label='Reingreso'>
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <input type="text"
+                                   required=""
+                                   name="serial"
+                                   class="slds-input"
+                                   ng-model="SerialVal"
+                                   ng-pattern="item.%vlocity_namespace%__SerialNumber__c">
+                        </div>
+                        <div class="vlc-slds-error-block" ng-show="loopform.serial.$dirty && SerialVal != item.%vlocity_namespace%__SerialNumber__c">
+                            <div class="error" style="">
+                                <small class="description">Los seriales no coinciden</small>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <slds-svg-icon sprite="'utility'"
+                                   icon="'error'"
+                                   size="'medium'"
+                                   no-hint="true"
+                                   extra-class="'slds-icon-text-default'"
+                                   style="fill: red"
+                                   ng-if="loopform.serial.$dirty && SerialVal != item.%vlocity_namespace%__SerialNumber__c">
+                        
+                    </slds-svg-icon>
+                    
+                    <slds-svg-icon sprite="'utility'"
+                                   icon="'check'"
+                                   size="'medium'"
+                                   no-hint="true"
+                                   extra-class="'slds-icon-text-default'"
+                                   style="fill: green"
+                                   ng-if="SerialVal == item.%vlocity_namespace%__SerialNumber__c">
+                    </slds-svg-icon>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

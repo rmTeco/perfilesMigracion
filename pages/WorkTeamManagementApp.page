@@ -1,0 +1,25 @@
+<apex:page standardStylesheets="false" applyBodyTag="false">
+    <apex:includeLightning />
+    <style>
+        html, body {
+        margin: 0;
+        padding: 0;
+        }
+        #lightningComponent {width: 100%;}
+    </style>
+    <div id="content">
+        <div id="lightningComponent" />
+    </div>
+    <script>
+        $Lightning.use("c:WorkTeamManagementApp", function() {
+            $Lightning.createComponent("c:WorkTeamManagement",
+                                       {},
+                                       "lightningComponent",
+                                       function(cmp) {
+                                           
+                                       }
+                                      );
+        });
+        </script>
+
+</apex:page>

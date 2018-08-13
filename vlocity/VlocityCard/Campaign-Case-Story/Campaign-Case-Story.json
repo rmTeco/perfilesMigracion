@@ -1,0 +1,47 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objType']": "Case"
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['subtitle']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Case Type",
+                    "name": "['highlight']",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Policy Expiration",
+            "sObjectType": "Case",
+            "templateUrl": "campaign-member-story-card"
+        }
+    ],
+    "title": "Case"
+}

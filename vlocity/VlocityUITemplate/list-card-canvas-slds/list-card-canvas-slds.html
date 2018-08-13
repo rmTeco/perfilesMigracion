@@ -1,0 +1,27 @@
+<div class="via-slds">
+    <div class="slds-card slds-m-bottom--small">
+        <div class="slds-card__header slds-grid slds-grid--vertical-align-center">
+            <div class="slds-media slds-media--center slds-has-flexi-truncate">
+              <div class="slds-media__figure">
+                  <vloc-card-icon data="data" obj="obj" size="'medium'"></vloc-card-icon>
+              </div>
+              <div class="slds-media__body slds-truncate">
+                <a href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="{{layoutName}}">
+                  <span class="slds-text-heading--small">{{layoutName}}</span>
+                </a>
+              </div>
+            </div>
+        </div>
+        <div class="slds-card__body cards-container">
+            <table class="slds-table slds-table--bordered slds-no-row-hover slds-table--cell-buffer slds-max-medium-table--stacked-horizontal">
+              <thead>
+                <tr class="slds-text-heading--label">
+                  <th ng-repeat="field in cards[0].states[0].fields" scope="col"><div class="slds-truncate">{{field.label}}</div></th>
+                  <th class="slds-cell-shrink"></th>                </tr>
+              </thead>
+              <tbody vloc-card ng-repeat="card in cards |orderBy:order" trl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" use-existing-element-type>
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click slds-is-open slds-col--padded slds-size--6-of-12" ng-controller="EmailCtrl as ec">
+    <ng-form class='slds-form-element vlc-flex'
+        ng-repeat='control in child.eleArray'>
+        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+            <!--ng-class="{'has-error' : !bpTree.response.Contact.isEmailValidated, 'has-succes' : bpTree.response.Contact.isEmailValidated}"-->
+            <div class="vlc-control-wrapper" help="false">
+                <input type="text"
+                       ng-disabled="bpTree.response.Contact.EmailCheck"
+                       class="slds-input form-control"
+                       ng-model="bpTree.response.Contact.Email"
+                       ng-class="{'ng-dirty':bpTree.response.Contact.Email}"
+                >
+                <!--ng-required="!bpTree.response.Contact.EmailCheck"-->
+                       <!--ng-keyup="ec.getSplitedEmailInput($event, bpTree.response.Contact.Email, bpTree.response.Contact)"-->
+                <label for="Email" class="slds-form-element__label ng-binding">E-mail
+                    <!--span class="vlc-asterix icon-v-asterix ng-scope"></span-->
+                </label>
+            </div>
+            <svg aria-hidden="true" class="slds-icon slds-icon--small slds-button__icon slds-button__icon--large" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" sprite="'utility'" icon="'email'" size="'small'" extra-classes="'slds-button__icon slds-button__icon--large'" viewBox="0 0 52 52">
+                <g fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="m24.9 30.1c0.6 0.6 1.5 0.6 2.1 0l22.6-21c0.4-0.8 0.3-2.1-1.3-2.1l-44.7 0.1c-1.2 0-2.2 1.1-1.3 2.1l22.6 20.9z m25.1-12.8c0-1-1.2-1.6-2-0.9l-17.7 16.3c-1.2 1.1-2.7 1.7-4.3 1.7s-3.1-0.6-4.3-1.6l-17.6-16.4c-0.8-0.7-2-0.2-2 0.9-0.1-0.3-0.1 22.7-0.1 22.7 0 2.2 1.8 4 4 4h40c2.2 0 4-1.8 4-4v-22.7z"></path>
+                </g>
+            </svg>
+            <div ng-include="::errHTMLId" class="ng-scope">
+                <div class="vlc-slds-error-block ng-scope">
+                    <div class="error ng-hide" ng-show="control.srvErr">
+                        <small class="description ng-binding"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+       <div class="slds-dropdown slds-dropdown--left slds-dropdown--length-5 suggestion" 
+            role="listbox"
+            ng-show="bpTree.response.Contact.Email == ec.inputValue && ec.inputValue && !bpTree.response.Contact.isEmailValidated">
+            <ul ng-repeat="emailDomain in  bpTree.response.Emails | emailTypeahead: ec.inputValue track by $index"
+                class="slds-dropdown__list"
+                role="group" 
+                aria-label="Recently Viewed"
+                ng-click="ec.selectedEmail(bpTree.response.Contact, emailDomain.mail)">
+                <li class="slds-is-selected" 
+                role="presentation">
+                    <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option">
+                        <span class="slds-truncate">
+                            <span class="slds-assistive-text"></span>
+                            {{ec.emailSplited}}{{emailDomain.mail}}
+                        </span>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </ng-form>
+</div>

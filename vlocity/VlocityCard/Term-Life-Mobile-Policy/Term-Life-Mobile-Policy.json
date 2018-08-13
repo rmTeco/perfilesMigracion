@@ -1,0 +1,159 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['%vlocity_namespace%__PolicyType__c']": "Term Life"
+    },
+    "states": [
+        {
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Active"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Annual Premium",
+                    "name": "['%vlocity_namespace%__AnnualPremium__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Face Value",
+                    "name": "['%vlocity_namespace%__FaceAmount__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Opportunity Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['%vlocity_namespace%__PolicyStatus__c'] == 'Active'",
+            "name": "default",
+            "templateUrl": "mobile-policy-card"
+        },
+        {
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Expired"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Annual Premium",
+                    "name": "['%vlocity_namespace%__AnnualPremium__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Face Value",
+                    "name": "['%vlocity_namespace%__FaceAmount__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Opportunity Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['%vlocity_namespace%__PolicyStatus__c'] == 'Expired'",
+            "name": "shade",
+            "templateUrl": "mobile-policy-card"
+        }
+    ],
+    "title": "Term Life"
+}

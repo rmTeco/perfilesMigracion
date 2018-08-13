@@ -1,0 +1,22 @@
+<div class="via-slds product-grid"> 
+    <div class="slds-grid slds-m-around_small slds-wrap slds-grid_pull-padded">
+        <div class="slds-col slds-col_padded slds-size_1-of-2 slds-medium-size_1-of-2 slds-large-size_4-of-12 slds-form-element">
+            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                <slds-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-input__icon'"></slds-svg-icon>
+                <input ng-model="$parent.searchTerm" class="slds-input" type="text" placeholder="Search cards" />
+            </div>
+        </div>
+            <div class="slds-col slds-col_bump-left slds-button slds-col_padded" ng-repeat="action in cards[0].actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:3)">
+            <button class="slds-button slds-button_neutral slds-float_right"  ng-click="performAction(action, null, '')">
+                {{action.displayName}}
+            </button>
+        </div>
+        
+    </div>
+    
+
+    <div class="slds-grid slds-m-around_small slds-wrap slds-grid_pull-padded cards-container">
+        <div vloc-card ng-repeat="card in cards |orderBy:order|filter: searchFunc(card, $parent.searchTerm)" ctrl="CPQProductItemController" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"
+            class="slds-p-around_small slds-size_1-of-3" use-existing-element-type></div>
+    </div>
+</div>

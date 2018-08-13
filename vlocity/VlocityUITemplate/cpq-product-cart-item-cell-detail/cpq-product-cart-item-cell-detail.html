@@ -1,0 +1,72 @@
+<div class="cpq-product-cart-item-cell-detail">
+  <table class="slds-table slds-table_cell-buffer cpq-details-table">
+      <!--TO DO: API FOR "SHOW MORE"
+      <button class="slds-button slds-p-horizontal_xx-small slds-float_right slds-m-right_small" ng-click="show_more !== true ? show_more = true : show_more = false" > show
+            <span ng-if="show_more !== true">more</span><span ng-if="show_more === true">less</span>
+            <span class="slds-assistive-text">Details</span>
+      </button> -->
+    <tbody>
+      <tr ng-repeat="record in importedScope.records" class="cpq-detail-row">
+        <th scope="row" class="cpq-detail-row">
+          <div class="cpq-cell-header">{{record.Description}}</div>
+        </th>
+        <td data-label="discount" class="slds-text-align_right cpq-detail-row">
+          <div class="slds-truncate">
+            
+            <span ng-if="record.AdjustmentType === 'Discount'">-</span>
+            <span ng-if="record.AdjustmentType === 'Markup'">+</span>
+            
+            <span ng-if="record.AdjustmentMethod === 'Absolute'">
+              {{record.AdjustmentValue | positive | currency}}
+            </span>
+            <span ng-if="record.AdjustmentMethod === 'Percent'">
+              {{record.AdjustmentValue | positive }} %
+            </span>
+            <span ng-if="!record.AdjustmentValue">
+              <span ng-if="record.AdjustmentMethod === 'Percent'">
+                {{record.EndValue}} %
+              </span>
+              <span ng-if="record.AdjustmentMethod === null">
+                {{record.EndValue | currency}}
+              </span>
+            </span> 
+
+            <div ng-if="!attrs.readOnly">
+              <button ng-click="importedScope.deleteAppliedAdjustment(record,$index,importedScope.loaded)" ng-show="record.actions.deleteAdjustment && !record.deleting" class="slds-button slds-p-horizontal_xx-small cpq-delete-button-position">
+                  <slds-button-svg-icon sprite="'utility'" icon="'close'"></slds-button-svg-icon>
+                  <span class="slds-assistive-text">{{::importedScope.customLabels.CPQDelete}}</span>
+              </button>
+              <div ng-show="record.actions.deleteAdjustment && record.deleting" class="cpq-delete-spinner-position">
+                <div class="slds-spinner_brand slds-spinner slds-spinner_x-small button-spinner" aria-hidden="false" role="alert">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+              </div>
+            </div>  
+              
+          </div>
+        </td>
+        <td data-label="Agent Name" ng-if="show_more">
+          <div class="slds-truncate" title="Agent Name">{{record.Agent}}</div>
+        </td>
+        <td data-label="Date" ng-if="show_more">
+          <div class="slds-truncate" title="Date">{{record.Date}}</div>
+        </td>
+      </tr>
+      <tr class="cpq-detail-row" ng-class="{'cpq-total-border': importedScope.records.length > 0}">
+        <th scope="row" data-label="total" class="cpq-cell-header">
+          <div class="slds-truncate">{{importedScope.loaded.title}}</div>
+        </th>
+        <td class="slds-text-align_right">
+          <div class="slds-truncate">{{importedScope.loaded.value | currency}}</div>
+        </td>
+       <td data-label="Agent Name" ng-if="show_more" class="cpq-detail-show-more">
+          <div class="slds-truncate">{{importedScope.cellAgent}}</div>
+        </td>
+        <td data-label="Date" ng-if="show_more" class="cpq-detail-show-more">
+          <div class="slds-truncate">{{importedScope.cellDate}}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,48 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objType']": "Task"
+    },
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Priority",
+                    "name": "['subtitle']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['highlight']",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Policy Expiration",
+            "sObjectType": "Task",
+            "templateUrl": "campaign-member-story-card"
+        }
+    ],
+    "title": "Task"
+}

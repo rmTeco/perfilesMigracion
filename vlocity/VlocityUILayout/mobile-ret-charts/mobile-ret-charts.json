@@ -1,0 +1,26 @@
+{
+    "Cards": [
+        "mobile-ret-bar-chart",
+        "mobile-ret-hbar-chart",
+        "mobile-ret-type-pie-chart",
+        "mobile-ret-data-chart"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "02i6A000000U1cY"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT %vlocity_namespace%__AccountId__c,%vlocity_namespace%__ServiceType__c,%vlocity_namespace%__StatementDate__c,%vlocity_namespace%__StatementId__c,%vlocity_namespace%__Subtype__c,%vlocity_namespace%__Type__c, %vlocity_namespace%__Amount__c  FROM %vlocity_namespace%__StatementLineItem__c  WHERE %vlocity_namespace%__AssetId__c = '{{params.id}}'",
+            "timeout": null
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "mobile-ret-card-canvas"
+        }
+    }
+}

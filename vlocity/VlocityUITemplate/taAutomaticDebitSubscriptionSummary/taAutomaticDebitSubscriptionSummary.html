@@ -1,0 +1,124 @@
+<!-- <div>{{bpTree.response | json}}</div> -->
+
+        <div class="ta-AutomaticDebit-summary" ng-controller="AutomaticDebitCtrl as Ctrl">
+        <div    class="slds-section__title slds-m-top--small ta-AutomaticDebit-summary__title"
+                ng-switch="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction"
+                style="font-weight: bold;">
+                <div ng-switch-when="Adhesion">Vas a adherir estas cuentas:</div>
+                <div ng-switch-when="Update">Vas a modificar esta cuenta:</div>
+                <div ng-switch-when="Stop">Vas a hacer un stop debit en esta cuenta:</div>
+                <div ng-switch-when="Delete">Estás por desvincular estas cuentas del débito automático:</div>
+        </div>
+        
+        <div    ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Update' ||
+                       bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Stop'"
+                ng-repeat="ba in bpTree.response.BillingAccounts | filter: { Id: bpTree.response.BillingAccountToResponse}">
+            <div style="font-weight: bold;">Cuenta: {{ba.Name}}</div>
+            <div ng-init="Ctrl.autoPaymentMethod = ba.AutoPaymentMethodId__c">{{ba.BillingStreet}} ({{ba.BillingCity}})</div>
+        </div>
+         <div   ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Adhesion' ||
+                       bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Delete'"
+                ng-repeat="ba in bpTree.response.BillingAccounts | filter: { isSelected: true}">
+            <div style="font-weight: bold;">Cuenta: {{ba.Name}}</div>
+            <div>{{ba.BillingStreet}} ({{ba.BillingCity}})</div>
+        </div>
+        
+        <div    class="slds-section__title slds-m-top--small"
+                ng-switch="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction">
+                <div style="font-weight: bold;" ng-switch-when="Adhesion">Se te debitará de la siguiente forma:</div>
+                <div style="font-weight: bold;" ng-switch-when="Update">Antes se debitaba de:</div>
+                <div style="font-weight: bold;" ng-switch-when="Stop">El medio de pago asociado es:</div>
+                <div ng-switch-when="Delete">Una vez la baja sea efectiva, deberá pasar un mes para que dejes de recibir cargos automáticamente. Ademas, se perderán los beneficios promocionales asociados a débito automático.
+                </div>
+        </div>
+        <!-- Adhesion -->
+        <div   ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Adhesion'"
+               ng-repeat="pa in bpTree.response.PaymentMethod.PaymentMethods | filter: { Selected: true}">
+            <div ng-if="pa.MethodType__c == 'Credit Card'">
+                <div>{{pa.MethodTypeDetailFormula}}</div>
+                <div>Fecha de vencimiento: {{pa.CreditCard.ExpirationMonth__c}}/{{pa.CreditCard.ExpirationYear__c}}</div>
+            </div>
+            <div ng-if="pa.MethodType__c == 'Bank Account'"
+                 ng-repeat="pa in bpTree.response.PaymentMethod.PaymentMethods | filter: { Selected: true}">
+                <div>Cuenta Bancaria</div>
+                <div>{{pa.BankAccount.BankName__c}}</div>
+                <div>{{pa.MethodTypeDetailFormula}}</div>
+            </div>
+        </div>
+        <!--Stop-->
+        <div    ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Update' ||
+                       bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Stop'"
+                ng-repeat="ba in bpTree.response.BillingAccounts | filter: { Id: bpTree.response.BillingAccountToResponse}">
+            {{ba.PaymentMethod.Concatenat}}
+                <div ng-if="ba.PaymentMethod.MethodType == 'Credit Card'">
+                    <div>{{ba.PaymentMethod.Concatenate}}</div>
+                    <div>Fecha de vencimiento: {{ba.PaymentMethod.ExpirationMonth}}/{{ba.PaymentMethod.ExpirationYear}}</div>
+                </div>
+                <div ng-if="ba.PaymentMethod.MethodType == 'Bank Account'">
+                    <div>Cuenta Bancaria</div>
+                    <div>{{ba.PaymentMethod.BankName}}</div>
+                    <div>{{ba.PaymentMethod.Concatenate}}</div>
+                </div>
+        </div>
+
+        <!--<div    ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Update'"
+                ng-repeat="pa in bpTree.response.PaymentMethod.PaymentMethods | filter: { pa.PaymentId: Ctrl.autoPaymentMethod}">
+            <div ng-if="pa.MethodType__c == 'Credit Card'">
+                <div>{{pa.MethodTypeDetailFormula}}</div>
+                <div>
+                    Fecha de vencimiento: {{pa.CreditCard.ExpirationMonth__c}}/{{pa.CreditCard.ExpirationYear__c}
+                </div>
+            </div>
+            <div ng-if="pa.MethodType__c == 'Bank Account'">
+                <div>Cuenta Bancaria</div>
+                <div>Banco {{pa.BankAccount.BankName__c}}</div>
+                <div>{{pa.MethodTypeDetailFormula}}</div>
+            </div>
+        </div>
+        
+        <div    ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Update'"
+                ng-repeat="pa in bpTree.response.PaymentMethod.PaymentMethods | filter: { pa.PaymentId: Ctrl.autoPaymentMethod}">
+            <div ng-if="pa.MethodType__c == 'Credit Card'">
+                <div>{{pa.MethodTypeDetailFormula}}</div>
+                <div>
+                    Fecha de vencimiento: {{pa.CreditCard.ExpirationMonth__c}}/{{pa.CreditCard.ExpirationYear__c}
+                </div>
+            </div>
+            <div ng-if="pa.MethodType__c == 'Bank Account'">
+                <div>Cuenta Bancaria</div>
+                <div>Banco {{pa.BankAccount.BankName__c}}</div>
+                <div>{{pa.MethodTypeDetailFormula}}</div>
+            </div>
+        </div>
+        -->
+         
+        
+        <div    class="slds-section__title slds-m-top--small"
+                style="font-weight: bold;"
+                ng-switch="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction">
+                <div ng-switch-when="Adhesion">Cúando se hará efectivo el cambio:</div>
+                <div ng-switch-when="Update">Ahora se te debitará en:</div>
+                <div ng-switch-when="Stop">Cúando se hará efectivo el cambio:</div>
+        </div>
+        <!-- Modificacion -->
+        <div   ng-if="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction == 'Update'"
+               ng-repeat="pa in bpTree.response.PaymentMethod.PaymentMethods | filter: { Selected: true}">
+            <div ng-if="pa.MethodType__c == 'Credit Card'"> 
+                <div style="font-weight: bold;">{{pa.MethodTypeDetailFormula}}</div>
+                <div>Fecha de vencimiento: {{pa.CreditCard.ExpirationMonth__c}}/{{pa.CreditCard.ExpirationYear__c}}</div>
+            </div>
+            <div ng-if="pa.MethodType__c == 'Bank Account'">
+                <div>Cuenta Bancaria</div>
+                <div style="font-weight: bold;">{{pa.BankAccount.BankName__c}}</div>
+                <div style="font-weight: bold;">{{pa.MethodTypeDetailFormula}}</div>
+            </div>
+        </div>
+        
+        <div    class="slds-section__title slds-m-top--small"
+                ng-switch="bpTree.response.AutomaticDebitAction.SelectedAutomaticDebitAction">
+                <div ng-switch-when="Adhesion">Si la factura del período en curso no ha sido emitida, será debitada automáticamente. En caso contrario, la adhesión se efectuará a partir de la próxima factura.
+                </div>
+                <div ng-switch-when="Stop">Si la factura del período en curso no ha sido emitida, el stop debit será efectivo en este periodo. Si tu última factura ya fue emitida, el stop debit se efectuará en la próxima factura.
+                </div>
+        </div>
+    </div>

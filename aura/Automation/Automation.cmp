@@ -1,0 +1,78 @@
+<aura:component controller="et4ae5.LightningAutomationControl">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />  
+    <aura:attribute name="sidebysideJSON" type="JSON" />
+    <aura:attribute name="json_step" type="JSON" />
+    <aura:attribute name="enableFinish" type="Boolean" default="false" access="private" />
+    <aura:attribute name="showModal" type="Boolean" default="false" access="private" />
+    <aura:attribute name="showResult" type="Boolean" default="false" access="private" />
+    <aura:attribute name="resultError" type="Boolean" default="false" access="private" />
+    <aura:attribute name="configurationStateLoaded" type="Boolean" default="false" access="private" />
+    <aura:attribute name="configurationStateResponse" type="Object" access="private" />  
+    <aura:attribute name="okLabel" type="String" access="private" />
+    <aura:attribute name="serverResponse" type="String" access="private" />
+    <aura:attribute name="htmlResults" type="String" access="private" />
+    <div class="uxds container">
+        <div class="uxds row">
+            <div class="uxds col-sm-12">
+                <h3>
+                    {!$Label.et4ae5.mCCSetup}
+                </h3> 
+            </div>
+        </div>        
+    </div>
+    <div class="uxds container">
+        <hr></hr>
+        <div class="uxds row" style="min-width: 783px; max-width: 983px;">
+            <div class="uxds col-xs-12" >
+                <et4ae5:SidebySide json="{!v.sidebysideJSON}" />   
+                <br/>
+            </div>
+        </div>
+        <div class="uxds row" >
+            <div class="uxds col-xs-12" >
+                <p>
+                    <aura:unescapedHtml value="{!$Label.et4ae5.msg0190}" />              
+                </p>        
+            </div>
+        </div>    
+        <div class="uxds row" >
+            <div class="uxds col-xs-6" >
+                <label id="checkbox_area">
+                    <ui:inputCheckbox aura:id="check_finish" value="{!v.enableFinish}" />
+                    &nbsp;{!$Label.et4ae5.iAgree}
+                </label>
+            </div>
+            <div class="uxds col-xs-6" >    
+                <div class="pull-right">
+                    <ui:button aura:id="finish_button" press="{!c.finishSetup}" label="{!$Label.et4ae5.configInt}" disabled="{!v.enableFinish == false}" class="button-component" />
+                </div>
+            </div>
+        </div>    
+        <div> 
+            <div class="modal2 hide" aura:id="basicModal">
+                <div class="modal-dialog2">
+                    <div class="modal-content2">
+                        <div class="modal-header2">
+                            <h4 class="modal-title2" id="myModalLabel">{!$Label.et4ae5.configSumm}</h4>
+                        </div>
+                        <div class="modal-body2">
+                            <div>
+                            	<aura:unescapedHtml value="{!v.htmlResults}" />
+                            </div>
+                            <div id="spin_area">
+                                <ui:spinner aura:id="buffer"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer2">
+                            <div class="server_response">
+                                <aura:text value="{!v.serverResponse}" />
+                            </div>
+                            <ui:button aura:id="ok_done_btn" class="btn btn-default hide button-component" press="{!c.clickOK}" label="{!v.okLabel}"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <et4ae5:message_modal step_json="{!v.json_step}"/>  
+</aura:component>

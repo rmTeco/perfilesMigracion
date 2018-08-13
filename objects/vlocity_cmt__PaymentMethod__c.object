@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Payment Method stores credit card or other payment processing information for an account.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>BankEntityName__c</fullName>
+        <externalId>false</externalId>
+        <label>BankEntityName</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ExternalBankEntities</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>CardHolderDocumentNumber__c</fullName>
+        <description>Card Holder Document Number</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Card Holder Document Number</inlineHelpText>
+        <label>Card Holder Document Number</label>
+        <length>12</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CardHolderDocumentType__c</fullName>
+        <description>Card Holder Document Type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Card Holder Document Type</inlineHelpText>
+        <label>Card Holder Document Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>DocumentTypes</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Cbu__c</fullName>
+        <externalId>false</externalId>
+        <label>Cbu</label>
+        <length>22</length>
+        <maskChar>X</maskChar>
+        <maskType>creditCard</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>Concatenate__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( ISPICKVAL(vlocity_cmt__MethodType__c, &quot;Bank Account&quot;) ,IF(alias__c!=null,&quot;ALIAS &quot; &amp; alias__c, &quot;CBU XXXXXXXXXXXXXXXXXX&quot;&amp;vlocity_cmt__Last4Numbers__c ) ,TEXT(vlocity_cmt__CardType__c) &amp; &quot; XXXX-XXXX-XXXX-&quot;&amp;vlocity_cmt__Last4Numbers__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>ConcatCardLast4</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Security__c</fullName>
+        <description>security code de la entidad bancaria</description>
+        <externalId>false</externalId>
+        <label>SecurityCode</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>alias__c</fullName>
+        <description>Campo para indicar el alias para una cuenta bancaria</description>
+        <externalId>false</externalId>
+        <label>Alias</label>
+        <length>55</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__AccountId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Payment Methods</relationshipLabel>
+        <relationshipName>Payments</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__BankAccountNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Bank Account Number</label>
+        <length>31</length>
+        <maskChar>X</maskChar>
+        <maskType>lastFour</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__BankAccountType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Bank Account Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Checking</fullName>
+                    <default>false</default>
+                    <label>Checking</label>
+                </value>
+                <value>
+                    <fullName>Savings</fullName>
+                    <default>false</default>
+                    <label>Savings</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CardHolderName__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Card Holder Name</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CardNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Card Number</label>
+        <length>16</length>
+        <maskChar>X</maskChar>
+        <maskType>creditCard</maskType>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>EncryptedText</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CardType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Card Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Master Card</fullName>
+                    <default>false</default>
+                    <label>Master Card</label>
+                </value>
+                <value>
+                    <fullName>DISCOVER</fullName>
+                    <default>false</default>
+                    <label>DISCOVER</label>
+                </value>
+                <value>
+                    <fullName>UCB</fullName>
+                    <default>false</default>
+                    <label>UCB</label>
+                </value>
+                <value>
+                    <fullName>MASTERCARD</fullName>
+                    <default>false</default>
+                    <label>MASTERCARD</label>
+                </value>
+                <value>
+                    <fullName>VISA</fullName>
+                    <default>false</default>
+                    <label>VISA</label>
+                </value>
+                <value>
+                    <fullName>CABAL</fullName>
+                    <default>false</default>
+                    <label>CABAL</label>
+                </value>
+                <value>
+                    <fullName>CREDENCIAL</fullName>
+                    <default>false</default>
+                    <label>CREDENCIAL</label>
+                </value>
+                <value>
+                    <fullName>AMERICAN EXPRESS</fullName>
+                    <default>false</default>
+                    <label>AMERICAN EXPRESS</label>
+                </value>
+                <value>
+                    <fullName>DINERS</fullName>
+                    <default>false</default>
+                    <label>DINERS</label>
+                </value>
+                <value>
+                    <fullName>NARANJA</fullName>
+                    <default>false</default>
+                    <label>NARANJA</label>
+                </value>
+                <value>
+                    <fullName>KADICARD</fullName>
+                    <default>false</default>
+                    <label>KADICARD</label>
+                </value>
+                <value>
+                    <fullName>TARJETA AZUL</fullName>
+                    <default>false</default>
+                    <label>TARJETA AZUL</label>
+                </value>
+                <value>
+                    <fullName>TARJETA ARGENTA</fullName>
+                    <default>false</default>
+                    <label>TARJETA ARGENTA</label>
+                </value>
+                <value>
+                    <fullName>NEVADA</fullName>
+                    <default>false</default>
+                    <label>NEVADA</label>
+                </value>
+                <value>
+                    <fullName>VISA PROVENCRED</fullName>
+                    <default>false</default>
+                    <label>VISA PROVENCRED</label>
+                </value>
+                <value>
+                    <fullName>CARTA AUTOMATICA</fullName>
+                    <default>false</default>
+                    <label>CARTA AUTOMATICA</label>
+                </value>
+                <value>
+                    <fullName>TARJETA GRUPAR</fullName>
+                    <default>false</default>
+                    <label>TARJETA GRUPAR</label>
+                </value>
+                <value>
+                    <fullName>CREDIMAS</fullName>
+                    <default>false</default>
+                    <label>CREDIMAS</label>
+                </value>
+                <value>
+                    <fullName>TARJETA NATIVA</fullName>
+                    <default>false</default>
+                    <label>TARJETA NATIVA</label>
+                </value>
+                <value>
+                    <fullName>MIRA</fullName>
+                    <default>false</default>
+                    <label>MIRA</label>
+                </value>
+                <value>
+                    <fullName>TARJETA SHOPPING</fullName>
+                    <default>false</default>
+                    <label>TARJETA SHOPPING</label>
+                </value>
+                <value>
+                    <fullName>SIDECREER</fullName>
+                    <default>false</default>
+                    <label>SIDECREER</label>
+                </value>
+                <value>
+                    <fullName>NARANJA-VISA</fullName>
+                    <default>false</default>
+                    <label>NARANJA-VISA</label>
+                </value>
+                <value>
+                    <fullName>COOPEPLUS</fullName>
+                    <default>false</default>
+                    <label>COOPEPLUS</label>
+                </value>
+                <value>
+                    <fullName>DATA 2000</fullName>
+                    <default>false</default>
+                    <label>DATA 2000</label>
+                </value>
+                <value>
+                    <fullName>TARJETA CREDICASH</fullName>
+                    <default>false</default>
+                    <label>TARJETA CREDICASH</label>
+                </value>
+                <value>
+                    <fullName>TARJETA SOL</fullName>
+                    <default>false</default>
+                    <label>TARJETA SOL</label>
+                </value>
+                <value>
+                    <fullName>TARJETA TITANIO</fullName>
+                    <default>false</default>
+                    <label>TARJETA TITANIO</label>
+                </value>
+                <value>
+                    <fullName>TARJETA CMR</fullName>
+                    <default>false</default>
+                    <label>TARJETA CMR</label>
+                </value>
+                <value>
+                    <fullName>TARJETA MAS</fullName>
+                    <default>false</default>
+                    <label>TARJETA MAS</label>
+                </value>
+                <value>
+                    <fullName>TARJETA CONFIABLE</fullName>
+                    <default>false</default>
+                    <label>TARJETA CONFIABLE</label>
+                </value>
+                <value>
+                    <fullName>TARJETA CORDOBESA</fullName>
+                    <default>false</default>
+                    <label>TARJETA CORDOBESA</label>
+                </value>
+                <value>
+                    <fullName>TARJETA SU CREDITO</fullName>
+                    <default>false</default>
+                    <label>TARJETA SU CREDITO</label>
+                </value>
+                <value>
+                    <fullName>TARJETA UNICA</fullName>
+                    <default>false</default>
+                    <label>TARJETA UNICA</label>
+                </value>
+                <value>
+                    <fullName>MAESTRO</fullName>
+                    <default>false</default>
+                    <label>MAESTRO</label>
+                </value>
+                <value>
+                    <fullName>ELECTRON</fullName>
+                    <default>false</default>
+                    <label>ELECTRON</label>
+                </value>
+                <value>
+                    <fullName>TARJETA CONSUMAX</fullName>
+                    <default>false</default>
+                    <label>TARJETA CONSUMAX</label>
+                </value>
+                <value>
+                    <fullName>CENTROCARD</fullName>
+                    <default>false</default>
+                    <label>CENTROCARD</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ExpirationMonth__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Expiration Month</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>01</fullName>
+                    <default>false</default>
+                    <label>01</label>
+                </value>
+                <value>
+                    <fullName>02</fullName>
+                    <default>false</default>
+                    <label>02</label>
+                </value>
+                <value>
+                    <fullName>03</fullName>
+                    <default>false</default>
+                    <label>03</label>
+                </value>
+                <value>
+                    <fullName>04</fullName>
+                    <default>false</default>
+                    <label>04</label>
+                </value>
+                <value>
+                    <fullName>05</fullName>
+                    <default>false</default>
+                    <label>05</label>
+                </value>
+                <value>
+                    <fullName>06</fullName>
+                    <default>false</default>
+                    <label>06</label>
+                </value>
+                <value>
+                    <fullName>07</fullName>
+                    <default>false</default>
+                    <label>07</label>
+                </value>
+                <value>
+                    <fullName>08</fullName>
+                    <default>false</default>
+                    <label>08</label>
+                </value>
+                <value>
+                    <fullName>09</fullName>
+                    <default>false</default>
+                    <label>09</label>
+                </value>
+                <value>
+                    <fullName>10</fullName>
+                    <default>false</default>
+                    <label>10</label>
+                </value>
+                <value>
+                    <fullName>11</fullName>
+                    <default>false</default>
+                    <label>11</label>
+                </value>
+                <value>
+                    <fullName>12</fullName>
+                    <default>false</default>
+                    <label>12</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ExpirationYear__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Expiration Year</label>
+        <length>4</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsActive__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsPrimary__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Primary</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Last4Numbers__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Last4Numbers</label>
+        <length>20</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__MethodType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Method Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1001</fullName>
+                    <default>true</default>
+                    <label>Efectivo</label>
+                </value>
+                <value>
+                    <fullName>1201</fullName>
+                    <default>false</default>
+                    <label>Debito a Proxima Factura</label>
+                </value>
+                <value>
+                    <fullName>2001</fullName>
+                    <default>false</default>
+                    <label>Tarjeta de Credito</label>
+                </value>
+                <value>
+                    <fullName>Transferencia Bancaria</fullName>
+                    <default>false</default>
+                    <label>Transferencia Bancaria</label>
+                </value>
+                <value>
+                    <fullName>4002</fullName>
+                    <default>false</default>
+                    <label>Tarjeta de Debito</label>
+                </value>
+                <value>
+                    <fullName>9998</fullName>
+                    <default>false</default>
+                    <label>Descuento de Saldo</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RoutingTransitNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Routing Transit Number</label>
+        <length>16</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Payment Method</label>
+    <listViews>
+        <fullName>vlocity_cmt__All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__AccountId__c</columns>
+        <columns>vlocity_cmt__MethodType__c</columns>
+        <columns>vlocity_cmt__CardNumber__c</columns>
+        <columns>vlocity_cmt__CardType__c</columns>
+        <columns>Cbu__c</columns>
+        <columns>alias__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>PM-{0000}</displayFormat>
+        <label>Payment Method Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Payment Methods</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>vlocity_cmt__CardType__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__CardNumber__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>vlocity_cmt__EnforceActivePaymentMethodInAutoPay</fullName>
+        <active>true</active>
+        <errorConditionFormula>Id = vlocity_cmt__AccountId__r.vlocity_cmt__AutoPaymentMethodId__c &amp;&amp; ! vlocity_cmt__IsActive__c &amp;&amp; Id != null</errorConditionFormula>
+        <errorDisplayField>vlocity_cmt__IsActive__c</errorDisplayField>
+        <errorMessage>This payment method is used in auto pay and it can&apos;t be inactivated.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>vlocity_cmt__ExpirationYearIsValid</fullName>
+        <active>false</active>
+        <description>Check that ExpirationYear is a valid year and in the future</description>
+        <errorConditionFormula>AND( (ISPICKVAL(vlocity_cmt__MethodType__c,&apos;Credit Card&apos;)),(OR(!ISNUMBER(vlocity_cmt__ExpirationYear__c), VALUE(vlocity_cmt__ExpirationYear__c)&lt; YEAR( TODAY() ))))</errorConditionFormula>
+        <errorDisplayField>vlocity_cmt__ExpirationYear__c</errorDisplayField>
+        <errorMessage>Expiration Year is not valid</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,50 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000008eeAo"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "bundle": "GetContactInfoByAccountId",
+            "ctxId": "params.id",
+            "inputMap": {
+                "ContextId": "{{params.id}}"
+            },
+            "optionsMap": {
+                "vlcClass": "AccountAttributesAssignments"
+            },
+            "remoteClass": "AccountAttributesAssignments",
+            "remoteMethod": "getAccountAttributes",
+            "remoteNSPrefix": null
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "name": "Active",
+            "templateUrl": "ta-Marketing-left-account-segment"
+        }
+    ],
+    "title": "Segmentación"
+}

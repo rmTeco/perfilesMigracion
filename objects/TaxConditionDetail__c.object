@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Account Tax Condition Detail</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>false</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>false</enableSharing>
+    <enableStreamingApi>false</enableStreamingApi>
+    <fields>
+        <fullName>Alarm_Level__c</fullName>
+        <description>Alarm Level</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Alarm Level</inlineHelpText>
+        <label>Alarm Level</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Category__c</fullName>
+        <description>Category</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Category</inlineHelpText>
+        <label>Category</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Type__c</controllingField>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>IIBB_NIS</fullName>
+                    <default>false</default>
+                    <label>IBB No informó situación</label>
+                </value>
+                <value>
+                    <fullName>IIBB_ENA</fullName>
+                    <default>false</default>
+                    <label>IIBB Exento / No Alcanzado</label>
+                </value>
+                <value>
+                    <fullName>IIBB_IL</fullName>
+                    <default>false</default>
+                    <label>IIBB Inscripto Local</label>
+                </value>
+                <value>
+                    <fullName>IIBB_ICM</fullName>
+                    <default>false</default>
+                    <label>Inscripto en Convenio Multilateral</label>
+                </value>
+                <value>
+                    <fullName>IVA_CF</fullName>
+                    <default>false</default>
+                    <label>IVA Consumidor Final</label>
+                </value>
+                <value>
+                    <fullName>IVA_ENA</fullName>
+                    <default>false</default>
+                    <label>IVA Exento / No Alcanzado</label>
+                </value>
+                <value>
+                    <fullName>IVA_LEY23905</fullName>
+                    <default>false</default>
+                    <label>IVA Exento Art. 22 Ley 23.905</label>
+                </value>
+                <value>
+                    <fullName>IVA_LEY20646</fullName>
+                    <default>false</default>
+                    <label>IVA Exento Ley 20.646 6/2/74</label>
+                </value>
+                <value>
+                    <fullName>IVA_RG3290</fullName>
+                    <default>false</default>
+                    <label>IVA Exento RG 3290 3349/91</label>
+                </value>
+                <value>
+                    <fullName>IVA_M</fullName>
+                    <default>false</default>
+                    <label>IVA Monotributista</label>
+                </value>
+                <value>
+                    <fullName>IVA_RI</fullName>
+                    <default>false</default>
+                    <label>IVA Responsable Inscripto</label>
+                </value>
+                <value>
+                    <fullName>IVA_SNC</fullName>
+                    <default>false</default>
+                    <label>IVA Sujeto No Categorizado</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>IIBB</controllingFieldValue>
+                <valueName>IIBB_NIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IIBB</controllingFieldValue>
+                <valueName>IIBB_ENA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IIBB</controllingFieldValue>
+                <valueName>IIBB_IL</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IIBB</controllingFieldValue>
+                <valueName>IIBB_ICM</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_CF</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_ENA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_LEY23905</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_LEY20646</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_RG3290</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_M</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_RI</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_SNC</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>DateFrom__c</fullName>
+        <description>Date From</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date From</inlineHelpText>
+        <label>Date From</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>DateTo__c</fullName>
+        <description>Date To</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Date To</inlineHelpText>
+        <label>Date To</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Jurisdiction__c</fullName>
+        <description>Jurisdiction</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Jurisdiction</inlineHelpText>
+        <label>Jurisdiction</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Bs. As</fullName>
+                    <default>false</default>
+                    <label>Bs. As</label>
+                </value>
+                <value>
+                    <fullName>CABA</fullName>
+                    <default>false</default>
+                    <label>CABA</label>
+                </value>
+                <value>
+                    <fullName>Catamarca</fullName>
+                    <default>false</default>
+                    <label>Catamarca</label>
+                </value>
+                <value>
+                    <fullName>Chaco</fullName>
+                    <default>false</default>
+                    <label>Chaco</label>
+                </value>
+                <value>
+                    <fullName>Chubut</fullName>
+                    <default>false</default>
+                    <label>Chubut</label>
+                </value>
+                <value>
+                    <fullName>Córdoba</fullName>
+                    <default>false</default>
+                    <label>Córdoba</label>
+                </value>
+                <value>
+                    <fullName>Corrientes</fullName>
+                    <default>false</default>
+                    <label>Corrientes</label>
+                </value>
+                <value>
+                    <fullName>Entre Ríos</fullName>
+                    <default>false</default>
+                    <label>Entre Ríos</label>
+                </value>
+                <value>
+                    <fullName>Formosa</fullName>
+                    <default>false</default>
+                    <label>Formosa</label>
+                </value>
+                <value>
+                    <fullName>Jujuy</fullName>
+                    <default>false</default>
+                    <label>Jujuy</label>
+                </value>
+                <value>
+                    <fullName>La Pampa</fullName>
+                    <default>false</default>
+                    <label>La Pampa</label>
+                </value>
+                <value>
+                    <fullName>La Rioja</fullName>
+                    <default>false</default>
+                    <label>La Rioja</label>
+                </value>
+                <value>
+                    <fullName>Mendoza</fullName>
+                    <default>false</default>
+                    <label>Mendoza</label>
+                </value>
+                <value>
+                    <fullName>Misiones</fullName>
+                    <default>false</default>
+                    <label>Misiones</label>
+                </value>
+                <value>
+                    <fullName>Neuquén</fullName>
+                    <default>false</default>
+                    <label>Neuquén</label>
+                </value>
+                <value>
+                    <fullName>Rio Negro</fullName>
+                    <default>false</default>
+                    <label>Rio Negro</label>
+                </value>
+                <value>
+                    <fullName>Salta</fullName>
+                    <default>false</default>
+                    <label>Salta</label>
+                </value>
+                <value>
+                    <fullName>San Juan</fullName>
+                    <default>false</default>
+                    <label>San Juan</label>
+                </value>
+                <value>
+                    <fullName>San Luis</fullName>
+                    <default>false</default>
+                    <label>San Luis</label>
+                </value>
+                <value>
+                    <fullName>Santa Cruz</fullName>
+                    <default>false</default>
+                    <label>Santa Cruz</label>
+                </value>
+                <value>
+                    <fullName>Santa Fe</fullName>
+                    <default>false</default>
+                    <label>Santa Fe</label>
+                </value>
+                <value>
+                    <fullName>Sgo. Del Estero</fullName>
+                    <default>false</default>
+                    <label>Sgo. Del Estero</label>
+                </value>
+                <value>
+                    <fullName>Tierra del Fuego</fullName>
+                    <default>false</default>
+                    <label>Tierra del Fuego</label>
+                </value>
+                <value>
+                    <fullName>Tucumán</fullName>
+                    <default>false</default>
+                    <label>Tucumán</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Percentage__c</fullName>
+        <description>Percentage</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Percentage</inlineHelpText>
+        <label>Percentage</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TaxCondition__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Account Tax Condition</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Account Tax Condition</inlineHelpText>
+        <label>TaxCondition</label>
+        <referenceTo>TaxCondition__c</referenceTo>
+        <relationshipLabel>TaxConditionDetails</relationshipLabel>
+        <relationshipName>TaxConditionDetails</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tax_Condition_Status__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(TaxCondition__r.Status__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tax Condition Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <description>Type</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Type</inlineHelpText>
+        <label>Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Ex IIBB</fullName>
+                    <default>false</default>
+                    <label>Ex IIBB</label>
+                </value>
+                <value>
+                    <fullName>Ex IVA</fullName>
+                    <default>false</default>
+                    <label>Ex IVA</label>
+                </value>
+                <value>
+                    <fullName>IIBB</fullName>
+                    <default>false</default>
+                    <label>IIBB</label>
+                </value>
+                <value>
+                    <fullName>IVA</fullName>
+                    <default>false</default>
+                    <label>IVA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>TaxConditionDetail</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>TD-{000000}</displayFormat>
+        <label>TaxConditionDetail</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>TaxConditionDetails</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

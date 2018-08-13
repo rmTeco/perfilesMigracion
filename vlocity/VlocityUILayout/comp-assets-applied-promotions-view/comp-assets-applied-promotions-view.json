@@ -1,0 +1,31 @@
+{
+    "Cards": [
+        "comp-assets-applied-promotions-card"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "attrs.accountId",
+                "val": "0013600000QqLUZ"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/accounts/{{attrs.accountId}}/promotions",
+            "inputMap": {
+                "accountId": "{{attrs.accountId}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getAppliedPromotionsByAccount",
+            "remoteNSPrefix": "%vlocity_namespace%"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "comp-assets-applied-promotions-view"
+        }
+    }
+}

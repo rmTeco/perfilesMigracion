@@ -1,0 +1,187 @@
+{
+    "filter": {
+        "['%vlocity_namespace%__PolicyType__c']": "Medical"
+    },
+    "icon": "custom94",
+    "sprite": "custom",
+    "states": [
+        {
+            "actionCtxId": "['InteractionPolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "id": "Int_Policy_View",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Change Coverage",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Policy-Pay Premium",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Policy-Get ID Card",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Policy-File a Claim",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Int_Policy_PayPremium",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Int_Policy_FileClaim",
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy #",
+                    "name": "['Name']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Carrier",
+                    "name": "['Carrier__c']",
+                    "track": false,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Expiration Date",
+                    "name": "['%vlocity_namespace%__ExpirationDate__c']",
+                    "track": true,
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Billing Method",
+                    "name": "['%vlocity_namespace%__BillingMethod__c']",
+                    "track": true,
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Annual Premium",
+                    "name": "['%vlocity_namespace%__AnnualPremium__c']",
+                    "track": true,
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Beneficiary Role",
+            "sObjectType": "%vlocity_namespace%__CustomerInteractionTopic__c",
+            "templateUrl": "card-active-slds-clone"
+        },
+        {
+            "actionCtxId": "['PolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Role']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Agency"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Type",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Role",
+                    "name": "['Role']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Number",
+                    "name": "['Name']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Role'] == 'Agency'",
+            "name": "Agency Role",
+            "sObjectType": "%vlocity_namespace%__Policy__c",
+            "templateUrl": "card-active-slds"
+        },
+        {
+            "blankCardState": true,
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'non-existent'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'non-existent'",
+            "name": "Add Medical",
+            "sObjectType": "Account",
+            "templateUrl": "card-open-slds"
+        }
+    ],
+    "title": "Medical"
+}

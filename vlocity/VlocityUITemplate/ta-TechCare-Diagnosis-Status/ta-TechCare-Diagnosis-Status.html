@@ -1,0 +1,50 @@
+<div	
+	class="slds-grid slds-grid--pull-padded vlc-slds-small--size-column diagnosisStatus-grid">	
+    <div 
+		class="slds-card slds-size--1-of-1 slds-medium-size--1-of-3 diagnosisStatus"		
+		ng-repeat="p in bpTree.response.titles">						
+		<div
+			class="diagnosisStatus-header">
+			{{p.label}}	   
+		</div>
+		<div>
+			<div class="slds-col--padded slds-size--3-of-3 diagnosisStatus-card-image">
+				<slds-svg-icon
+					sprite="'utility'"
+					icon="p.icon"
+					size="'large'"
+					no-hint="true">
+				</slds-svg-icon>
+			</div>
+		</div>
+		<div class="slds-card__body via-slds-card__body slds-align_absolute-center slds-theme--default diagnosisStatus-card">						
+			<div class="slds-size--3-of-3">
+				<div 
+					ng-repeat="item in bpTree.response.serviceStatusFan.ios"
+					ng-if="p.label == item.category"
+					class="diagnosisStatus-card-io">
+					<div						
+						class="slds-grid slds-wrap ioWrapper ioWrapper-{{item.color}}"
+						ng-class="{'ioWrapper-deactivated': item.color == 'na'}">
+						<span class="slds-col--padded slds-size--2-of-3 ioWrapper-label">
+							{{item.label}}
+						</span> 
+						<span class="slds-align--absolute-center slds-col--padded slds-size--1-of-3 slds-text-align--center">    				            
+							<div 
+								class="iconStatus type-{{item.color}}">
+								<div 
+									ng-if="item.toolTipDescription != 'NA'"
+									class="slds-popover slds-popover--tooltip slds-nubbin--top-left ioWrapper-toolTip" 
+									role="tooltip">
+									<div class="slds-popover__body ng-binding">
+										{{item.toolTipDescription}}
+									</div>
+								</div>
+							</div>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

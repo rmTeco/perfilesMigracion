@@ -1,0 +1,54 @@
+{
+    "Cards": [
+        "comp-assets-product-item"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "parent.Id.value",
+                "val": "8001I000000Y36y"
+            },
+            {
+                "name": "attrs.effectiveDate",
+                "val": "2017-06-21T00:12:51.473Z"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/contracts/{{parent.Id.value}}/assets?effectiveAssetsDateFilter={{attrs.effectiveDate}}&priceDetailsFields=%vlocity_namespace%__OneTimeCharge__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__OneTimeCalculatedPrice__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__RecurringCalculatedPrice__c,%vlocity_namespace%__RecurringTotal__c,%vlocity_namespace%__OneTimeLoyaltyPrice__c,%vlocity_namespace%__OneTimeLoyaltyTotal__c&pagesize=10",
+            "inputMap": {
+                "contractId": "{{parent.Id.value}}",
+                "effectiveAssetsDateFilter": "{{attrs.effectiveDate}}",
+                "pagesize": "10",
+                "priceDetailsFields": "%vlocity_namespace%__OneTimeCharge__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__OneTimeCalculatedPrice__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__RecurringCalculatedPrice__c,%vlocity_namespace%__RecurringTotal__c"
+            },
+            "methodType": "GET",
+            "optionsMap": {
+            },
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getAssetsByContract",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "sessionVars": [
+        {
+            "name": "totalSize",
+            "val": "payload.totalSize"
+        },
+        {
+            "name": "nextAssets",
+            "val": "payload.actions.nextproducts"
+        }
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "comp-assets-contract"
+        }
+    },
+    "workspace": [
+        "comp-assets-product-item/Vlocity/1/1500408956648"
+    ]
+}

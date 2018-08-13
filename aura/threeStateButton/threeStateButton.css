@@ -1,0 +1,89 @@
+.THIS.three-state-button ul {
+    margin: 0 auto;
+    padding: 0;
+    text-align: right;
+}
+.THIS.three-state-button li {
+    width: 60px;
+    height: 32px;
+    display: inline-block;
+    list-style: none;
+    margin-top: 0px;
+    position: relative;
+    border: 1px solid #d8dde6;
+    background: #FFF;
+    transition: color 0.5s, background 0.5s;
+}
+
+.THIS.three-state-button li:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-right: 0;
+}
+.THIS.three-state-button li:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left: 0;
+}
+
+.THIS li:first-child span,
+.THIS li:last-child span {
+    position: absolute;
+    color: #FFF;
+    background: #00386d;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: inline-block;
+    top: 4px;
+    left: 33%;
+    line-height: 20px;
+    text-align: center;
+    transition: color 0.5s, background 0.5s;
+}
+
+.THIS.toggle-off li:first-child,
+.THIS.toggle-on li:last-child,
+.THIS.toggle-neutral li:nth-child(2) {
+    background: #00386d;
+    color: #FFF !important;
+}
+
+.THIS.toggle-off li:first-child span,
+.THIS.toggle-on li:last-child span {
+    background: #FFF !important;
+    color: #00386d;
+}
+
+.THIS.toggle-on li:first-child, 
+.THIS.toggle-on li:nth-child(2),
+.THIS.toggle-off li:last-child,
+.THIS.toggle-off li:nth-child(2),
+.THIS.toggle-neutral li:first-child,
+.THIS.toggle-neutral li:last-child {
+    background: #FFF !important;
+}
+.THIS.toggle-on li:first-child span,
+.THIS.toggle-off li:last-child span,
+.THIS.toggle-neutral li:first-child span,
+.THIS.toggle-neutral li:last-child span {
+    color: #FFF !important;
+}
+
+.THIS.three-state-button[dir=rtl] li:first-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-left: 0;
+    border-right: 1px solid #d8dde6;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.THIS.three-state-button[dir=rtl] li:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-right: 0;
+    border-left: 1px solid #d8dde6;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}

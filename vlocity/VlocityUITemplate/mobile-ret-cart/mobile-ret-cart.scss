@@ -1,0 +1,43 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .cpq-module {
+            background-color: $cpq-page-bg-color;
+            /* Fixed the input to shadow issue on iPad*/
+            @media only screen and (min-device-width : 768px) and (max-device-width : 1024px)  {
+                input {
+                    -webkit-appearance: none;
+                }
+            }
+        }
+        .cpq-container {
+            padding: $cpq-padding-large-horizontal $cpq-padding-large-horizontal/2;
+            height: calc(100vh - 81px);
+        }
+        .show-hide-button {
+            margin-left: -10px;
+            width: 10px;
+            height: initial;
+            border-radius:0px;
+            border: none;
+            color: $black;
+            font-weight: 600;
+            font-size: 40px;
+        }
+        .show-hide-button:focus {
+             box-shadow: none;
+        }
+        .cursor-point-west {
+            cursor: w-resize;
+        }
+        .cursor-point-east {
+            cursor: e-resize;
+        }
+    }    
+}

@@ -1,0 +1,123 @@
+<apex:page controller="SCP_Certa_GC.AccountCustomReportController" sidebar="false" tabStyle="Strategic_Client_Plan__tab" showheader="false" contentType="application/msword#{!wordName}">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    </head>
+
+	<style>
+		p.h1 {
+			background-color: #d4ebf2;
+			font-size: 16px;
+			padding: 6px;
+			font-weight: bold;
+		}
+		
+		p.h2 {
+			font-weight: bold;
+		}
+		
+	</style>
+
+	<apex:pageBlock title="{!$Label.scp_certa_gc__custom_report} - {!account.Name} - {!Today()}" mode="edit">
+		
+		<!-- Industry Trends -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__industryTrend__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__trend}" /></p>
+			<div style="margin:10px;">				
+				<c:accountIndustryTrendsComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		
+		<!-- Client Context -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__clientContext__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__client_context}" /></p>
+			<div style="margin:10px;">				
+				<c:accountStrategicContextWindowComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		
+		<!-- KPI 
+		<apex:outputPanel rendered="{!customReport.kpi__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_telecom__kpi}" /></p>
+			<div style="margin:10px;">				
+				<c:accountKPIWindowComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		-->
+        
+		<!-- Competitors -->
+		<!-- 
+		<apex:outputPanel rendered="{!customReport.competitors__c}">
+			<p class="h1"><apex:outputText value="{!$Label.Overall_Relationship}" /></p>
+			<div style="margin:10px;">				
+				<c:accountOverallRelationshipWindowComp />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		 -->
+		<!-- Net Activity -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__netActivity__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__net_activity}" /></p>
+			<div style="margin:10px;">				
+				<c:accountHistoricalBusinessWindowComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		
+		<!-- influence Map/Org -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__influenceMap__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__influence_org}" /></p>
+			<div style="margin:10px;">				
+				<c:accountOrganizationChartWindowComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		<!-- Proven Value -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__provenValue__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__account_past_proven_value}" /></p>
+			<div style="margin:10px;">				
+				<c:accountPastProvenValueNewComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		
+		<!-- Value Drivers -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__valueDrivers__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__opportunities_value_proposition}" /></p>
+			<div style="margin:10px;">				
+				<c:accountIndustryTrendsWindowNewComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+		
+		<!-- Evaluate Criteria
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__growthStrategy__c}">
+			<p class="h1"><apex:outputText value="{!$Label.DCM}" /></p>
+			<div style="margin:10px;">				
+				<c:DCMEvaluateCriteriaExcelComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel> -->
+		
+		<!-- Growth Strategy -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__growthStrategy__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__gap_growth_strategy}" /></p>
+			<div style="margin:10px;">				
+				<c:AccountGrowthStrategyComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel> 
+		
+		<!-- Account Plan -->
+		<apex:outputPanel rendered="{!customReport.SCP_Certa_GC__actionPlan__c}">
+			<p class="h1"><apex:outputText value="{!$Label.scp_certa_gc__action_plan_builder}" /></p>
+			<div style="margin:10px;">				
+				<c:accountMasterPlanComponent />
+			</div>
+			<br/><br/>
+		</apex:outputPanel>
+	</apex:pageBlock>
+
+</apex:page>

@@ -1,0 +1,45 @@
+<div class="profile">
+    <div class="content">
+        <div class="welcome-note">{{data.title}}</div>
+        <h2>{{obj.Name}}</h2>
+        <div class="content-details hidden-xs">
+            <ul class="details" ng-show="data.fields.length == 0">
+                <li class="detail">
+                    <label class="detail-label">{{::$root.vlocity.getCustomLabel('Email', 'Email')}}</label>
+                    <div class="value">{{obj['Email']}}</div>
+                </li>
+                <li class="detail">
+                    <label class="detail-label">{{::$root.vlocity.getCustomLabel('Address', 'Address')}}</label>
+                    <div class="value">{{obj['Address']['street']}}</div>
+                    <div class="value">{{obj['Address']['city']}}, {{obj['Address']['state']}} {{obj['Address']['postalCode']}}</div>
+                </li>
+                <li class="detail">
+                    <label class="detail-label">{{::$root.vlocity.getCustomLabel('Phone', 'Phone')}}</label>
+                    <div class="value">{{obj['Phone']}}</div>
+                </li>
+            </ul>
+            <ul class="details" ng-show="data.fields">
+                <li class="detail" ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+                    <label class="detail-label">{{field.label}}</label>
+                    <div class="value" ng-if="!obj[field.relationshipName]">
+                        {{obj[field.name]}}
+                    </div>
+                    <div class="value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="actions">
+        <ul>
+            <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+                <a href="#" ng-click="performAction(action)">
+                    <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+                    <span ng-if="action.imageRef">
+                        <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+                    </span>
+                    <span class="action-title">{{action.displayName}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

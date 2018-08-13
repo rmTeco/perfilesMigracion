@@ -1,0 +1,31 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,forceCommunity:themeLayout,force:hasRecordId" access="global" description="Customer Theme Layout" >
+    <aura:attribute name="search" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="navBar" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="newHeader" type="Aura.Component[]" required="false"/>
+    <aura:attribute name="accountId" type="String" required="false" access="public" />
+    <!-- MENU BAR-->
+    <div class="ta-community-menuBarContainer">
+        <div class="slds-global-header__item ta-community-menuBar">
+            <div class="slds-grid slds-grid_vertical-align-center ta-community-menuBarNarrow">
+                <div class="slds-col slds-global-header__logo"></div>
+                <div class="slds-col_bump-left ta-community-menuBarUserProfile">{!v.profileMenu}</div>
+                <div class="slds-col_bump-left ta-community-menuBarNotifications"><forceCommunity:notifications /></div>
+            </div>
+        </div>
+        <div class="slds-grid">
+            <div class="slds-col slds-text-align_left">
+                <span>{!v.navBar}</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MAIN CONTAINER -->
+    <div class="ta-community-mainContainer">
+        {!v.body}
+    </div>
+    <!--div id="_injector_config"></div>
+        <div id="_injector_header"></div>
+        <div id="container"></div>
+        <div id="_injector_footer"></div-->
+</aura:component>

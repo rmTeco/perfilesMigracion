@@ -1,0 +1,20 @@
+<!-- <div>{{bpTree.response | json}}</div> -->
+
+<div class="ta-care-selectedAssets-containter slds-size--4-of-7"> 
+<div class="ta-care-ownership-changes-summary">
+    
+    <div class="slds-p-around--large" style="background: #FFF;width:100%;">
+        <div class="services slds-size--3-of-4">
+            <div class="service"
+            ng-repeat="selectedAsset in bpTree.response.AssetSelection.SelectAsset">
+                
+                <span class="line_number">{{selectedAsset.MSISDN}}</span><br/>
+                {{selectedAsset['Asset Name']}} <br/>
+                {{selectedAsset['Product Name']}}<br>
+                {{selectedAsset.BillingStreet}}
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>

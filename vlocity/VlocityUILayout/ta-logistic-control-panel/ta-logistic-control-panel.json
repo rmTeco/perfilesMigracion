@@ -1,0 +1,22 @@
+{
+    "Cards": [
+        "Orders"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.status",
+                "val": "Preparar Pedido"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT CreatedDate,Delivery_Method__c,Id,OrderNumber,Status\nFROM Order\nWHERE Status = '{{params.status}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-list-card-canvas"
+        }
+    }
+}

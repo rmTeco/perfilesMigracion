@@ -1,0 +1,35 @@
+{
+    "Cards": [
+        "PrepaidPlan"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.vlocity.userAccountId",
+                "val": "0016C000009KKac"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "bundle": "GetPrepaidPlanAssetsByAccountId",
+            "inputMap": {
+                "Id": "{{$root.vlocity.userAccountId}}"
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "Care_GetPrepaidPlanAssets",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "['PrepaidPlanAssets']"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-community-services-layout"
+        }
+    },
+    "workspace": [
+        "PrepaidPlan/Personal - DESA01/1509647716560"
+    ]
+}

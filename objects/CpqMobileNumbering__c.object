@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Configuration settings necessary for invoking integration services for Mobile Numbering in CPQ</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>MobileNumberDealer__c</fullName>
+        <defaultValue>&quot;NOR&quot;</defaultValue>
+        <description>Mobile number block. Used for invoke S121</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Canonical values for codTipoVenta</inlineHelpText>
+        <label>Mobile Number Dealer</label>
+        <length>5</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MobileNumberType__c</fullName>
+        <defaultValue>&quot;CPP&quot;</defaultValue>
+        <description>Mobile number type. Used for invoke S121</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Values: CPP, MPP, MPP MAPPER, CPP MAPPER, GSM CPP, GSM MPP, CPP GOLD, MPP GOLD, CPP GOLD GSM, MPP GOLD GSM</inlineHelpText>
+        <label>Mobile Number Type</label>
+        <length>12</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>CPQ Mobile Numbering</label>
+    <visibility>Public</visibility>
+</CustomObject>

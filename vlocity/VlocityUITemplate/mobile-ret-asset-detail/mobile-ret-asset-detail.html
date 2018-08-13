@@ -1,0 +1,36 @@
+<div class="asset-detail">
+    <div class="slds-card">
+        <div class="slds-media">
+            <div class="slds-media__figure asset-image">
+               <img ng-src="{{$root.instanceUrl + obj['%vlocity_namespace%__Product_Image__c']}}"/>
+            </div>
+            <div class="slds-media__body">
+                <div class="slds-grid">
+                    <div class="slds-col asset-info">
+                        <div class="asset-name">{{obj.Name}}</div>
+                        <div>{{obj.Status}}</div>
+                        <div>{{obj.Account.Name}} </div>
+                        <div>{{obj.SerialNumber}}</div>
+                    </div>
+                    <div class="slds-col asset-info">
+                        <div class="plan-field" ng-repeat="field in data.fields">
+                            <span class="field-label">{{field.label}}:</span>
+                            <span class="field-value">{{obj | getter: field | picker: field.type}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-grid slds-grid_pull-padded-medium action-wrapper">
+            <div class="slds-col slds-p-horizontal_small" ng-repeat="action in data.actions">
+                <button class="slds-button slds-button_neutral asset-action" ng-click="performAction(action, null, '')">
+                    {{action.displayName}}
+                </button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <vloc-layout layout-name="mobile-ret-charts">
+        </vloc-layout>
+    </div>
+</div>

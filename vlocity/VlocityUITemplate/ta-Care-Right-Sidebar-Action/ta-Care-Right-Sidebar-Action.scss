@@ -1,0 +1,85 @@
+.vlocity {
+    .sidebar-actions {
+        .spacer {
+background-color: #00B7D7;
+            height: 44px;
+            box-sizing: border-box;
+            text-align: left;
+            font-size: 14px;
+            color: white;
+            box-sizing: border-box;
+            padding: 9px;
+
+            border-top: 1px solid #d8dde6;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                color: white;
+            }
+            i::before {
+                color: white;
+                font-size: 14px;
+            }
+        }
+        .sidebar-actions-header {
+            cursor: pointer;
+        }
+        .acct-profile {
+            padding: 0 0 0 5px;
+            background-color: rgb(255,255,255);
+            overflow:auto;
+            ul {
+                padding: 5px 0 0 0;
+                clear: both;
+                h3 {
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+                li {
+                    list-style: none;
+                    display: inline;
+                    float: left;
+                    overflow: auto;
+                    background: white; /*#9191a0;*/ 
+                    color: #00B7D7; /*#fefefe;*/ 
+                    font-size: 12px;
+                    padding: 7px 15px;
+                    margin: 5px 10px 5px 5px;
+                }
+            }
+        }
+    }
+    .startActions-item {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        .slds-button--neutral {
+        	border: 1px solid #00B4C5;	
+        	border-radius: 3px;	
+        	background-color: #FFFFFF;
+            padding-left: 5px;
+            padding-right: 10px;
+        }
+    }
+    .ta-button-icon {
+        
+        color: #00B4C5;
+    }
+    .ta-button-font {
+        color: #00B4C5;	
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 11px;	
+        line-height: 12px;	
+        text-align: right;
+    }
+    .actionSearch {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .actions-content{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

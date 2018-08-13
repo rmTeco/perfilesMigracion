@@ -1,0 +1,240 @@
+<apex:page showHeader="true" sidebar="true" controller="vlocity_cmt.XOMOffPlatformAccessConfigController" standardStylesheets="false" docType="html-5.0" >
+	<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ng="http://angularjs.org" ng-app="changeKeysApp">
+        <head>
+          <base href="/"/>
+          <link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.slds, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+          <script type="text/javascript" src="{!URLFOR($Resource.JQUERYJS)}"></script>
+          <script type="text/javascript" src="/support/console/31.0/integration.js"></script>
+          <script type="text/javascript" src="{!URLFOR($Resource.vlocity_assets, '/javascripts/vlocity.js')}"></script>
+          <script type="text/javascript" src="{!URLFOR($Resource.SldsAngular)}"></script>
+          <script type="text/javascript" src="{!URLFOR($Resource.XomThorIntegration)}"></script>
+
+          <script>
+                
+            var app = angular.module('changeKeysApp', ["vlocity", "ngSanitize", 'thorIntegration']);
+            
+            var uiServicesUrl = '{!JSENCODE(HTMLENCODE(encryptUIServicesUrl))}';
+            
+            app.service('encryptionService', ['$http', function ($http) {
+                this.dek = function(payload) {
+                   return $http.post(uiServicesUrl + '/keymanager/v1/dek', {withCredentials: true});
+                };
+                this.dit = function(payload) {
+                   return $http.post(uiServicesUrl + '/keymanager/v1/dit', {withCredentials: true});
+                };
+                this.cmk = function(payload) {
+                   return $http.post(uiServicesUrl + '/keymanager/v1/cmk', {withCredentials: true});
+                };
+                this.monitorBatch = function(payload) {
+                   return $http.post(uiServicesUrl + '/ui/encryption/v1/update/status/{id}', payload, {withCredentials: true}); //TBD url {id}
+                };
+                this.isReady = function(){
+                   return $http.get(uiServicesUrl + '/keymanager/v1/dek/latest', {withCredentials: true});
+                };
+            }]);
+            
+            app.controller ('changeKeysController', function ($scope, $timeout, $window, $interval, remoteActions, thorIntegrationService, encryptionService) {
+
+                $scope.currentKey = 'Data Encryption';
+                
+                $scope.isKeyGenComplete = false;
+                
+                $scope.enableCMK = true;
+                
+                $scope.enableDIT = true;
+
+                $scope.batchMonitor = null;
+                
+                $scope.showMsg = false;
+                
+                var localUrl = '{!$CurrentPage.parameters.localUrl}';
+                
+                $scope.disableBack = function() {
+            	    if (document.referrer.indexOf('salesforce')!=-1){
+            		    window.history.forward();
+            	    }
+                };
+                
+                $scope.initApp = function(){
+                    $scope.disableBack();
+                    thorIntegrationService.retryOperationInCaseAuthenticationError(
+                        function(){
+                            $scope.isSessionValid = true;
+                            return encryptionService.isReady().then(function success(response) {
+                               if(response.data.status === 'Ready' || response.data.status=='In Progress'){
+                                   $scope.isKeyGenComplete = false;
+                               }
+                               else{
+                                   $scope.isKeyGenComplete = true;
+                               }
+                            });//
+                        },uiServicesUrl, 3);
+                };
+                
+                $scope.batchInfo = {
+                    progress:0,
+                    startDateTime:'',
+                    estimatedTimeRemaining:'',
+                    expectedDatetime:''
+                };
+         
+                $scope.postKeyChange = function (response) {
+                    $scope.isSessionValid = true;
+                    var id;
+                    console.log('response:', response.data);
+                    if (response.status === 'Ready') {
+                        console.log('response Ready..');
+                        id = response.id;
+                        $scope.monitorBatch(id);
+                    } else {
+                        console.log('response not ready..'+response);
+                    }
+                }
+                
+                $scope.changeCustomerMasterKey = function(){
+                    //$scope.isKeyGenComplete = false;
+                    $scope.enableCMK = false;
+                    thorIntegrationService.retryOperationInCaseAuthenticationError(
+                        function(){
+                            $scope.isSessionValid = true;
+                            return encryptionService.cmk().then(function success(response) {
+                              //$scope.postKeyChange(response);
+                                $scope.enableCMK = true;
+                            });//
+                        },uiServicesUrl, 3);
+                };
+                
+                $scope.changeDataInTransitKey = function(){
+                    //$scope.isKeyGenComplete = false;
+                    $scope.enableDIT = false;
+                    thorIntegrationService.retryOperationInCaseAuthenticationError(
+                        function(){
+                            $scope.isSessionValid = true;
+                            return encryptionService.dit().then(function success(response) {
+                              //$scope.postKeyChange(response);
+                                $scope.enableDIT = true;
+                            });//
+                        },uiServicesUrl, 3);
+                };
+                
+                $scope.changeDataEncryptionKey = function(){
+                    $scope.isKeyGenComplete = false;
+                    thorIntegrationService.retryOperationInCaseAuthenticationError(
+                        function(){
+                            $scope.isSessionValid = true;
+                            return encryptionService.dek().then(function success(response) {
+                              $scope.postKeyChange(response);
+                            });//
+                        },uiServicesUrl, 3);
+                };
+                
+                $scope.resetBatchMonitor = function(){
+                    $scope.batchInfo = {
+                        progress:0,
+                        startDateTime:'',
+                        estimatedTimeRemaining:'',
+                        expectedDatetime:''
+                    };
+                    $scope.isKeyGenComplete = true;
+                    $scope.showMsg = true;
+                    $timeout(function(){
+                        $scope.showMsg = false;
+                    }, 3000);
+                };
+                
+                $scope.monitorBatch = function(id){
+                    $scope.id = id;
+                    $scope.batchMonitor = $interval(function(){
+                        if ($scope.batchInfo.progress >= 100){
+                            $scope.id = null;
+                    	    if (angular.isDefined($scope.batchMonitor)){
+                    	        $interval.cancel($scope.batchMonitor);
+                    	        $scope.resetBatchMonitor();
+                    	    }
+                        }
+                        else {
+                            return encryptionService.monitorBatch($scope.id).then(function success(response) {
+                              if (response.status === 'Ready'){
+                                  $scope.batchInfo = response;
+                                  if ($scope.batchInfo.progress>100){
+                                      $scope.batchInfo.progress = 100;
+                                      if (angular.isDefined($scope.batchMonitor)){
+                    	                  $interval.cancel($scope.batchMonitor);
+                    	                  $scope.resetBatchMonitor();
+                    	              }
+                                  }
+                              }
+                              else{
+                                  console.log('Bad response: monitor batch'+response);
+                              }
+                            });//
+                        }
+                    }, 3000);
+                };
+            });
+
+          </script>
+
+        </head>
+        <body class="ng-cloak" ng-controller="changeKeysController" ng-init="$scope.isSessionValid=false; initApp();">
+          <div class="via-slds">
+            <div ng-if="!isSessionValid" class=" via-slds slds-box slds-theme_shade">
+               <h3 class="slds-m-around--medium slds-text-heading_small slds-text-color_error">Invalid session. Please authenticate and retry</h3>
+            </div>
+            <div ng-include="'notification.html'" ng-if="showNotification"></div>
+            <div class="slds-panel">
+              <h2 class="slds-text-heading--large slds-m-around--large">Change Encryption Keys</h2>
+              <h4 class="slds-m-around--large slds-text-heading_small slds-text-color_error" id="msgDiv" ng-if="showMsg">Key generation complete</h4>
+              <div class="slds-grid slds-wrap">
+                <div class="slds-size_2-of-7"></div>
+                <div class="slds-size_4-of-7">
+                  <div class="slds-panel">
+                    <form class="slds-form--horizontal _slds-align--absolute-center slds-p-around--small">
+                      <div class="slds-form-element slds-p-bottom--small">
+                        <label class="slds-form-element__label" for="name">Change Customer Master Key</label>
+                        <div class="slds-form-element__control slds-p-left--large">
+                          <button ng-disabled="!enableCMK" type="button" class="slds-button slds-button--brand" ng-click="changeCustomerMasterKey()">Change</button>
+                        </div>
+                      </div>
+                      <div class="slds-form-element slds-p-bottom--small">
+                        <label class="slds-form-element__label" for="name">Change Data In Transit Key</label>
+                        <div class="slds-form-element__control slds-p-left--large">
+                          <button ng-disabled="!enableDIT" type="button" class="slds-button slds-button--brand" ng-click="changeDataInTransitKey()">Change</button>
+                        </div>
+                      </div>
+                      <div class="slds-form-element slds-p-bottom--small">
+                        <label class="slds-form-element__label" for="name">Change Data Encryption Key</label>
+                        <div class="slds-form-element__control slds-p-left--large">
+                          <button ng-disabled="!isKeyGenComplete" type="button" class="slds-button slds-button--brand" ng-click="changeDataEncryptionKey()">Change</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div> 
+                </div>
+              </div>
+            </div>
+            <div class="slds-panel slds-grid ">
+              <div class="slds-size_1-of-4"></div>
+              <div class="slds-panel__section slds-p-around--xx-large">
+                <h3 class="slds-text-heading--small slds-m-around--medium">{{currentKey}} Key Change Monitor</h3>
+                <div class="progress-bar">
+                    <div class="slds-progress-bar slds-progress-bar_large slds-progress-bar_circular" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{batchInfo.progress}}" role="progressbar">
+                      <span class="slds-progress-bar__value" style="width: {{batchInfo.progress}}%;">
+                        <span class="slds-assistive-text">Progress: {{batchInfo.progress}}%</span>
+                      </span>
+                    </div><br/>
+                    <div> Start Date/Time:{{batchInfo.startDateTime}}</div>
+                    <div> Expected Completion Date/Time: {{batchInfo.expectedDatetime}}</div>
+                </div>
+              </div>
+            </div>
+           </div>
+           
+          <script type="text/javascript">
+            j$ = jQuery.noConflict();
+          </script>
+
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,49 @@
+<aura:component implements="force:appHostable">
+    <aura:attribute name="showWorkTeamList"
+                    type="Boolean"
+                    default="true"/>
+    <aura:attribute name="showWorkTeamCreate"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamDetail"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="WorkTeamID"
+                    type="String"/>
+    <aura:attribute name="KeyName"
+                    type="String"
+                    default=""/>
+    <aura:attribute name="showWorkTeamMembers"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamRoles"
+                    type="Boolean"
+                    default="false"/>    
+    <aura:attribute name="showWorkTeamQueues"
+                    type="Boolean"
+                    default="false"/>                        
+    <aura:handler name="WorkTeamDetailEventFired" event="c:WorkTeamDetailEvent" action="{!c.handleWorkTeamDetailEventFired}"/>
+    <aura:handler name="WorkTeamNewEventFired" event="c:WorkTeamNewEvent" action="{!c.handleWorkTeamNewEventFired}"/>
+    <aura:handler name="WorkTeamMemberEventFired" event="c:WorkTeamMembersNewEvent" action="{!c.handleWorkTeamMemberEventFired}"/>
+    <aura:handler name="WorkTeamRoleEventFired" event="c:WorkTeamMembersNewEvent" action="{!c.handleWorkTeamRoleEventFired}"/>
+    <aura:handler name="WorkTeamQueueEventFired" event="c:WorkTeamMembersNewEvent" action="{!c.handleWorkTeamQueueEventFired}"/>
+    
+    <aura:if isTrue="{!v.showWorkTeamList}">
+        <c:WorkTeamList KeyName="{! v.KeyName }" />
+    </aura:if>
+    <aura:if isTrue="{!v.showWorkTeamDetail}">
+        <c:WorkTeamDetail WorkTeamID="{! v.WorkTeamID }" KeyName="{! v.KeyName }" showWorkTeamList="{! v.showWorkTeamList }" showWorkTeamDetail="{! v.showWorkTeamDetail }" showWorkTeamCreate="{! v.showWorkTeamCreate }" showWorkTeamMembers="{! v.showWorkTeamMembers }" showWorkTeamRoles="{! v.showWorkTeamRoles }" showWorkTeamQueues="{! v.showWorkTeamQueues }"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showWorkTeamCreate}">
+        <c:WorkTeamNew WorkTeamID="{! v.WorkTeamID }" showWorkTeamList="{! v.showWorkTeamList }" showWorkTeamDetail="{! v.showWorkTeamDetail }" showWorkTeamCreate="{! v.showWorkTeamCreate }" />
+    </aura:if>
+    <aura:if isTrue="{!v.showWorkTeamMembers}">
+        <c:WorTeamMemberFormNew WorkTeamID="{! v.WorkTeamID }" showWorkTeamList="{! v.showWorkTeamList }" showWorkTeamDetail="{! v.showWorkTeamDetail }" showWorkTeamCreate="{! v.showWorkTeamCreate }" showWorkTeamMembers="{! v.showWorkTeamMembers }" showWorkTeamRoles="{! v.showWorkTeamRoles }" showWorkTeamQueues="{! v.showWorkTeamQueues }"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showWorkTeamRoles}">
+        <c:WorkTeamRoleFormNew WorkTeamID="{! v.WorkTeamID }" showWorkTeamList="{! v.showWorkTeamList }" showWorkTeamDetail="{! v.showWorkTeamDetail }" showWorkTeamCreate="{! v.showWorkTeamCreate }" showWorkTeamMembers="{! v.showWorkTeamMembers }" showWorkTeamRoles="{! v.showWorkTeamRoles }" showWorkTeamQueues="{! v.showWorkTeamQueues }"/>
+    </aura:if>
+    <aura:if isTrue="{!v.showWorkTeamQueues}">
+        <c:WorkTeamQuoteFormNew WorkTeamID="{! v.WorkTeamID }" showWorkTeamList="{! v.showWorkTeamList }" showWorkTeamDetail="{! v.showWorkTeamDetail }" showWorkTeamCreate="{! v.showWorkTeamCreate }" showWorkTeamMembers="{! v.showWorkTeamMembers }" showWorkTeamRoles="{! v.showWorkTeamRoles }" showWorkTeamQueues="{! v.showWorkTeamQueues }"/>
+    </aura:if>         
+</aura:component>

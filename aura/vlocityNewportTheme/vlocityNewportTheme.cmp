@@ -1,0 +1,63 @@
+<aura:component implements="forceCommunity:themeLayout"  access="global">
+    
+    <!-- Pre-defined set of Napili regions to include; each must be defined as an Aura attribute -->
+    <aura:attribute name="navBar" type="Aura.Component[]"/>
+    <aura:attribute name="profileMenu" type="Aura.Component[]"/>
+    <aura:attribute name="search" type="Aura.Component[]"/>
+    <aura:attribute name="useImage" type="Boolean" default="false"  access="global"/>
+    <aura:attribute name="backgroundImage" type="String" default="" access="global"/>
+    <aura:attribute name="subNavbar" type="Aura.Component[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="communityName" type="String" default="" />
+    <aura:attribute name="templateHeaderTop" type="Aura.Component[]"/>
+    <aura:attribute name="templateHeaderBottom" type="Aura.Component[]"/>
+    <aura:attribute name="templateHeader" type="Aura.Component[]"/>    
+    <!-- Theme Layout Markup -->
+    <div class="vlocityThemeLayout">
+        <div class="vlocityContainer">
+            <div class="vlocityTemplateHeaderTop">
+                {!v.templateHeaderTop}
+            </div>
+            <div class="vlocityTemplateHeader">
+                {!v.templateHeader}
+            </div>
+            <div class="vlocityTemplateHeaderBottom">
+                {!v.templateHeaderBottom}
+            </div>
+            <div class="siteforceNapiliBody">
+                <div class="cBrandingProfile">
+                    <a href="{!v.communityName}" class="cBrandingLogo"></a>
+                </div>
+            </div>
+
+            <div class="vlocityHeader">
+                <div class="vlocityHeaderContent">
+                    <div class="vlocityNavBar">
+                        {!v.navBar} <!-- Designates where to insert the 'navBar' region content -->
+                    </div>
+                    <div class="vlocityNotification">
+                        <forceCommunity:notifications/>
+                    </div>
+                    <div class="vlocitySearch">
+                         <lightning:icon iconName="utility:search" class="search-icon" size="x-small" alternativeText="Search"/>
+                        <div class="vlocitySearchInner">
+                            {!v.search}
+                        </div>
+                    </div>
+                    
+                    <div class="vlocityProfileMenu">
+                        {!v.profileMenu} <!-- Designates where to insert the 'profileMenu' region content -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="vlocitySubNavBar">
+                {!v.subNavbar} 
+            </div>
+
+            <div class="vlocityContent">
+                {!v.body} <!-- Designates where to insert the inner page content -->
+            </div>
+        </div>
+    </div>
+</aura:component>

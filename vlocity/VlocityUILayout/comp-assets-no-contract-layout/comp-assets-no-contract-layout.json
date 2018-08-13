@@ -1,0 +1,60 @@
+{
+    "Cards": [
+        "comp-assets-product-item"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "attrs.accountId",
+                "val": "0014100000RyS5D"
+            },
+            {
+                "name": "attrs.assetIncludeType",
+                "val": "noContractAssets"
+            },
+            {
+                "name": "attrs.effectiveDate",
+                "val": "2017-06-21T00:12:51.473Z"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/accounts/{{attrs.accountId}}/assets?includes={{attrs.assetIncludeType}}&effectiveAssetsDateFilter={{attrs.effectiveDate}}&priceDetailsFields=%vlocity_namespace%__OneTimeCharge__c,%vlocity_namespace%__OneTimeCalculatedPrice__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__RecurringCalculatedPrice__c,%vlocity_namespace%__RecurringTotal__c,%vlocity_namespace%__OneTimeLoyaltyPrice__c,%vlocity_namespace%__OneTimeLoyaltyTotal__c&pagesize=10",
+            "inputMap": {
+                "accountId": "{{attrs.accountId}}",
+                "effectiveAssetsDateFilter": "{{attrs.effectiveDate}}",
+                "includes": "{{attrs.assetIncludeType}}",
+                "pagesize": "10",
+                "priceDetailsFields": "%vlocity_namespace%__OneTimeCharge__c,%vlocity_namespace%__OneTimeManualDiscount__c,%vlocity_namespace%__OneTimeCalculatedPrice__c,%vlocity_namespace%__OneTimeTotal__c,%vlocity_namespace%__RecurringCharge__c,%vlocity_namespace%__RecurringCalculatedPrice__c,%vlocity_namespace%__RecurringTotal__c"
+            },
+            "methodType": "GET",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.CpqAppHandler"
+            },
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getAssetsByAccount",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "records"
+        }
+    },
+    "sessionVars": [
+        {
+            "name": "totalSize",
+            "val": "payload.totalSize"
+        },
+        {
+            "name": "nextAssets",
+            "val": "payload.actions.nextproducts"
+        }
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "comp-assets-no-contract"
+        }
+    },
+    "workspace": [
+        "comp-assets-product-item/Vlocity/1500408956648"
+    ]
+}

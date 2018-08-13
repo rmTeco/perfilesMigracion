@@ -1,0 +1,40 @@
+.vlocity .flyout{
+    .flyout-content {
+        padding:10px;
+        .items {
+            overflow:auto;
+            padding-left:20px;
+        }
+        .flyout-actions {
+            .panel {
+                min-width: 300px;
+            }
+        }
+    }
+     @media only screen and (max-width : 725px) {
+        .flyout-content {
+            .flyout-actions {
+                padding-bottom:20px;
+            }
+            .items {
+                padding:10px 0px 0px;
+            }
+        }
+    }
+    
+    @media only screen and (min-width : 725px) {
+        .flyout-content {
+            display:table;
+            .flyout-actions {
+                display:table-cell;
+                vertical-align:top;
+                border-right: 2px solid #efefef;
+            }
+            .items {
+                display:table-cell;
+                width: 100%;
+                vertical-align:top;
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<table class="slds-table slds-table--bordered slds-table--cell-buffer">
+    <tbody>
+        <tr>
+            <td ng-repeat="field in data.fields" data-label="{{field.label}}">
+                <div ng-if="field.label == 'N° Ticket'" title="{{obj | getter: field.label}}">
+                    <a href="javascript:void(0);" ng-click="performAction(data.actions[0])">{{obj | getter: field}}</a>
+                </div>
+                <div ng-if="field.type == 'datetime'" title="{{obj | getter: field.label}}">
+                    {{obj | getter: field | date: "HH:mm dd/MM/y"}}
+                </div>
+                <div ng-if="field.label == 'Estado'" title="{{obj[field.name]}}">
+                    <p ng-if="(obj | getter: field) == 'New'">Nuevo</p>
+                    <p ng-if="(obj | getter: field) == 'Closed'">Cerrado</p>
+                    <p ng-if="(obj | getter: field) != 'New' && (obj | getter: field) != 'Closed'">
+                        {{obj | getter: field}}
+                    </p>
+                </div>
+                <div ng-if="field.label != 'N° Ticket' && field.type != 'datetime' && field.label != 'Estado'" title="{{obj | getter: field.label}}">
+                    {{obj | getter: field}}
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

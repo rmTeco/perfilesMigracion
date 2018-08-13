@@ -1,0 +1,45 @@
+<div class="cards-container">
+    <div>
+        <div 
+            vloc-card 
+            ng-if="card.zone == 'top'"
+            ng-repeat="card in cards |orderBy:order" 
+            ctrl="{{ctrl}}" 
+            ng-model="card" 
+            data="card" 
+            records="records" 
+            index="{{$index}}" 
+            session-id="{{sessionId}}">
+        </div>
+    </div>
+    <form class="form-inline">
+    <div class="form-group" style="width:100%;">
+        <!--<button class="btn btn-primary" style="margin-right:5px;" ng-click="setOrder('status')">-->
+        <!--   Sort-->
+        <!--</button>-->
+        <!--<label for="exampleInputName2" style="text-transform: initial;">{{::$root.vlocity.getCustomLabel('SearchCards', 'Search Cards')}}: </label>-->
+        <input type="text" class="form-control services-input-control" style="text-transform: initial; width:50%;" ng-model="searchTerm" placeholder="Buscar"/>
+        <!--{{::$root.vlocity.getCustomLabel('SearchCardsPlaceholder', 'search...')}}'
+        filter: {'Name' : searchTerm} |
+        -->
+        <button class="btn btn-primary" style="margin-right:5px;" onclick="window.location.reload()">
+           Refrescar
+           <span class="icon icon-v-refresh" style="color:white"></span>
+        </button>
+    </div>
+    </form>
+    <div>
+        <div 
+            vloc-card 
+            ng-if="card.zone == 'middle'"
+            ng-repeat="card in cards |orderBy:order| filter: searchFunc(card, searchTerm)"
+            ctrl="{{ctrl}}" 
+            ng-model="card" 
+            data="card" 
+            records="records" 
+            index="{{$index}}" 
+            session-id="{{sessionId}}">
+        </div>
+    </div>
+    <span id="flyout"></span>
+</div>

@@ -1,0 +1,111 @@
+<apex:page docType="html-5.0" showHeader="false" sidebar="false" controller="vlocity_cmt.CardCanvasController" standardStylesheets="false">
+<apex:includeLightning />
+<html dir="{!IF(isLanguageRTL, 'rtl', 'ltr')}">
+    <head>
+        <style type="text/css">
+            body {
+                margin: 0px !important;
+                padding: 0px !important;
+                background: transparent;
+            }
+        </style>
+        <script>
+            window.iFrameResizer = {
+                messageCallback: function(message) {
+                    try {
+                        if (window.vlocityUniversalCardPage && window.vlocityUniversalCardPage.handleExternalEvent) {
+                            window.vlocityUniversalCardPage.handleExternalEvent(message);
+                        }
+                    } catch (e) {};
+                }
+            };
+        </script>
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__iframeresizer, '/js/iframeResizer.contentWindow.min.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__angular_strap_bundle_1_6)}" />
+        <apex:includeScript value="{!$Resource.vlocity_cmt__CardFramework_Assets}" />
+        <apex:includeScript value="{!$Resource.vlocity_cmt__CardFramework}" />
+        <apex:includeScript value="{!$Resource.vlocity_cmt__SldsAngular}" />
+        <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}" />
+        <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"
+        />
+    </head>
+    <body>
+    <div class="vlocity via-slds" ng-app="universalApp" ng-controller="rootController">
+        <vloc-layout layout-name="{{layoutName}}" />
+    </div>
+    <script type="text/javascript">
+        var localeFileUrlPattern = "{!URLFOR($Resource.angular_i18n, '/angular-locale_{{locale}}.js')}";
+        var elements = location.hostname.split(".");
+        var instance = (elements.length == 3) ? elements[0] : elements[1];
+        // Are we on a Community page?
+        var baseURL = '{!$Site.BaseUrl}' || null;
+        var instanceURL =  baseURL || ('https://' + instance + '.salesforce.com');
+
+
+        var vlocCommunities = {
+            'localeFileUrlPattern': localeFileUrlPattern,
+            'sfInstanceUrl': instanceURL,
+            'currentInstanceUrlWithPath': '{!currentInstanceUrlWithPath}',
+            'nsPrefix': '{!nsPrefix}',
+            'nsPrefixDotNotation': '{!nsPrefixDotNotation}',
+            'accessToken': '{!$Api.Session_ID}',
+            'loggedUser': JSON.parse('{!loggedUser}'),
+            'staticResourceURL' : {
+                'communityHeader': '{!URLFOR($Resource.communityHeader)}',
+                'logo': '{!URLFOR($Resource.CommunityLogo)}',
+                'communityAds': '{!URLFOR($Resource.CommunityAds)}'
+            }
+        };
+
+        localStorage.setItem('nsPrefixDotNotation', "{!nsPrefixDotNotation}");
+        localStorage.setItem('nsPrefix', vlocCommunities.nsPrefix);
+        var _$provide = null;
+        angular
+            .module('universalApp', ['CardFramework', 'vlocity', 'forceng', 'cfp.hotkeys', 'tmh.dynamicLocale'])
+            .config(['tmhDynamicLocaleProvider',function(tmhDynamicLocaleProvider) {
+                var localeFileUrlPattern = vlocCommunities.localeFileUrlPattern;
+
+                /* Set the pattern that locale files follow */
+                tmhDynamicLocaleProvider.localeLocationPattern(localeFileUrlPattern);
+            }])
+            .run(["$rootScope", "force", "API_VERSION", 'userProfileService', 'tmhDynamicLocale', function ($rootScope, force, API_VERSION, userProfileService, tmhDynamicLocale) {
+
+                var proxy = '/services/proxy';
+                var proxyURL = baseURL ? (baseURL + proxy) : proxy;
+
+                force.init({
+                    accessToken: vlocCommunities.accessToken,
+                    apiVersion: API_VERSION,
+                    useProxy: false,
+                    instanceURL: vlocCommunities.sfInstanceUrl // use sf instance url to do api call instead of the community site url
+                });
+                $rootScope.forcetkClient = new forcetk.Client(null, null, null, !!('{!$Site.BaseUrl}' || false));
+                $rootScope.forcetkClient.setSessionToken(vlocCommunities.accessToken, API_VERSION, vlocCommunities.sfInstanceUrl);
+                $rootScope.forcetkClient.proxyUrl = proxyURL;
+
+
+                $rootScope.staticResourceURL = vlocCommunities.staticResourceURL;
+
+                localStorage.setItem('sfInstanceUrl', vlocCommunities.sfInstanceUrl);
+                localStorage.setItem('currentInstanceUrlWithPath', vlocCommunities.currentInstanceUrlWithPath);
+
+                $rootScope.loggedUser = vlocCommunities.loggedUser;
+                $rootScope.nsPrefix = vlocCommunities.nsPrefix;
+
+                userProfileService.getUserProfile().then(
+                    function(data) {
+                        //set the i18n file path based on the user's locale in sfdc
+                        tmhDynamicLocale.set(data.anlocale);
+                        moment.locale(data.anlocale);
+
+                    });
+            }])
+            .controller('rootController', ['$scope', 'pageService', function ($scope, pageService) {
+                $scope.layoutName = pageService.params.layout;
+                $scope.id = $scope.Id = pageService.params.id || pageService.params.Id;
+            }]);
+    </script>
+    </body>
+</html>
+</apex:page>

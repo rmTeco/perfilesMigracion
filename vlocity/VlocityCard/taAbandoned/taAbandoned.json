@@ -1,0 +1,83 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000008fDM6"
+            }
+        ],
+        "type": null,
+        "value": {
+            "body": "",
+            "bundle": "getAbandonedSessionsByAccountId",
+            "ctxId": "params.id",
+            "optionsMap": {
+            },
+            "query": "SELECT LastModifiedDate,\nName,\n%vlocity_namespace%__ResumeLink__c\nFROM %vlocity_namespace%__OmniScriptInstance__c WHERE %vlocity_namespace%__ObjectId__c LIKE '%{{params.id}}%'",
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "OmniScriptInstance",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LastModifiedDate']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "LastModifiedDate",
+                    "name": "['LastModifiedDate']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Actions",
+            "sObjectType": null,
+            "templateUrl": "ta-Care-Right-Sidebar-Abandoned"
+        }
+    ],
+    "title": "Gestiones Abandonadas"
+}

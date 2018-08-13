@@ -1,0 +1,5 @@
+<design:component label="Vlocity Cards Interaction Launcher"> 
+    <design:attribute name="customVFPage" label="Custom Visualforce Page" description="The name of the Visualforce page to use to render the Layout. Only set this if you wish to override the default Visualforce page used to render the cards." datasource="apex://vlocity_cmt.VisualForcePageDynamicPicklistForIL" />
+    <design:attribute name="disableCache" default="false" label="Disable Cache" description="Use this during development to prevent the Layout, Cards and Templates from being read from the offline cache."/>
+    <design:attribute name="maxHeight" label="Max Height (px)" description="By default the component will grow dynamically as the Layout, Card and Templates are loaded. Use this to restrict the height and make the component scrollable when the content overflows. Must be in pixels (px)." default=""/>
+</design:component>

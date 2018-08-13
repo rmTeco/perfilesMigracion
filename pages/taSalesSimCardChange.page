@@ -1,0 +1,43 @@
+<apex:page standardStylesheets="false" showHeader="true" sidebar="true" docType="html-5.0" controller="taOrderController">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="SimCardChange" ng-controller="GeneralController">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Sales"
+            strOmniScriptSubType="SimCardChange"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('SimCardChange', modules);
+
+            myModule
+                .controller('GeneralController', GeneralController);
+
+            GeneralController.$inject = ['$scope', '$window', '$location'];
+            function GeneralController($scope, $window, $location) {
+                var gc = this;
+                var contextId = "{!$CurrentPage.parameters.ContextId}";
+
+                if (!contextId) {
+                    var actionUrl = getParameterByName('actionUrl', $window.parent.location.href);
+                    if ($window.location.href.indexOf('ContextId') == -1) {
+                        $window.location.href += '&ContextId=' + getParameterByName('ContextId', actionUrl);
+                    }
+                }
+
+                function getParameterByName(name, url) {
+                    if (!url) url = window.location.href;
+                    name = name.replace(/[\[\]]/g, "\\$&");
+                    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                        results = regex.exec(url);
+                    if (!results) return null;
+                    if (!results[2]) return '';
+                    return decodeURIComponent(results[2].replace(/\+/g, " "));
+                }
+            }
+        </script>
+
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

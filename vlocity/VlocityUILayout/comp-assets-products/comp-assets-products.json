@@ -1,0 +1,32 @@
+{
+    "Cards": [
+        "comp-assets-contract",
+        "comp-assets-no-contract"
+    ],
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "type": null,
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "body": "",
+            "endpoint": "",
+            "inputMap": {
+                "accountId": "{{params.id}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getContracts",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": ""
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "comp-assets-products"
+        }
+    }
+}

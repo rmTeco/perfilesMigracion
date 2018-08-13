@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>SCP_Certa_GC__Categoria__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Categoria</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Vencimiento Contrato Activo con Nosotros</fullName>
+                    <default>false</default>
+                    <label>Vencimiento Contrato Activo con Nosotros</label>
+                </value>
+                <value>
+                    <fullName>Vencimiento Contrato Activo con la Competencia</fullName>
+                    <default>false</default>
+                    <label>Vencimiento Contrato Activo con la Competencia</label>
+                </value>
+                <value>
+                    <fullName>Publicación RFP Comunicaciones</fullName>
+                    <default>false</default>
+                    <label>Publicación RFP Comunicaciones</label>
+                </value>
+                <value>
+                    <fullName>Publicación RFP TI</fullName>
+                    <default>false</default>
+                    <label>Publicación RFP TI</label>
+                </value>
+                <value>
+                    <fullName>Evento Para Nuestros Clientes</fullName>
+                    <default>false</default>
+                    <label>Evento Para Nuestros Clientes</label>
+                </value>
+                <value>
+                    <fullName>Evento Relevante de la Industria</fullName>
+                    <default>false</default>
+                    <label>Evento Relevante de la Industria</label>
+                </value>
+                <value>
+                    <fullName>Otro</fullName>
+                    <default>false</default>
+                    <label>Otro</label>
+                </value>
+                <value>
+                    <fullName>Vencimiento Contrato del Servicio</fullName>
+                    <default>false</default>
+                    <label>Vencimiento Contrato del Servicio</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Contenedor_de_hito__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Contenedor de hito</label>
+        <referenceTo>SCP_Certa_GC__Contenedor_de_hito__c</referenceTo>
+        <relationshipLabel>Hitos relevantes</relationshipLabel>
+        <relationshipName>Hitos_relevantes</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Descripcion__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Descripcion</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Fecha__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Fecha</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <gender>Masculine</gender>
+    <label>Hito relevante</label>
+    <nameField>
+        <label>Nombre de Hitos relevantes</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Hitos relevantes</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

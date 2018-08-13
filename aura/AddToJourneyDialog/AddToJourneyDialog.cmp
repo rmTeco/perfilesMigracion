@@ -1,0 +1,120 @@
+<aura:component controller="et4ae5.LightningAddToJourneyComponent" >
+    <aura:attribute name="recordId" type="Id"  access="private"/>
+    <aura:attribute name="recordType" type="String"  access="private"/>    
+    <aura:attribute name="showSpinner" type="Boolean" default="true" access="private" />
+    <aura:attribute name="showError" type="Boolean" default="false" access="private" />
+    <aura:attribute name="emptyFieldErrorShown" type="Boolean" default="false" access="private" />
+    <aura:attribute name="emptyFieldErrorShownForEventDefnKey" type="String" access="private" />    
+    <aura:attribute name="errorLevel" type="String" access="private" />   
+    <aura:attribute name="errorMessage" type="String" access="private" />           
+    <aura:attribute name="errorSubMessage" type="String" access="private" />
+    <aura:attribute name="journeysLoaded" type="Boolean" default="false" access="private" />
+    <aura:attribute name="journeys" type="et4ae5.Journey[]" />
+    
+    <aura:registerEvent name="AddToJourneyDialogCloseEvent" type="et4ae5:AddToJourneyDialogClose" />    
+    
+    <aura:method name="initializeAddToJourneyDialog" action="{!c.initializeAddToJourneyDialog}">
+        <aura:attribute name="recordId" type="Id" />
+        <aura:attribute name="recordType" type="String" />
+    </aura:method>
+    
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>    
+    
+    <div aura:id="AddToJourneyDialog" class="slds-modal slds-modal--small slds-fade-in-hide" aria-hidden="false" role="dialog">
+        <div class="slds-modal__container">
+            <aura:if isTrue="{!v.journeysLoaded}">
+                <div class="slds-modal__header">
+                    <button onclick="{!c.hideAddToJourneyDialog}" class="slds-button slds-button--icon-inverse slds-modal__close">
+                        <et4ae5:svg xlinkHref="/resource/et4ae5__SLDS100/assets/icons/action-sprite/svg/symbols.svg#close" 
+                               class="slds-button__icon slds-button__icon--large"></et4ae5:svg> 
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading--medium">{!$Label.et4ae5.SelectAJourney}</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <div aura:id="AddToJourneyError" class="slds-notify_container slds-hide">
+                        <div aura:id="AddToJourneyErrorMessage" class="slds-notify slds-notify--toast" role="alert">
+                            <span class="slds-assistive-text">Error</span>                        
+                            <div class="slds-notify__content slds-grid">                            
+                                <div class="slds-col slds-align-middle">
+                                    <h2 class="slds-text-heading--small">{!v.errorMessage}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-notify slds-notify--toast" role="alert">
+                            <span class="slds-assistive-text">{!v.errorSubMessage}</span>
+                            <div class="slds-notify__content slds-grid">                            
+                                <div class="slds-col slds-align-middle">
+                                    <h2 class="slds-text-heading--small">{!v.errorSubMessage}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>                    
+                        <fieldset class="slds-form-element">
+                            <div class="slds-form-element">
+                                <div class="slds-form-element__control">
+                                    <ui:outputText value="{!$Label.et4ae5.Select_Journey_Message}" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br />
+                        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+                            <thead>
+                                <tr class="slds-text-heading--label">
+                                    <th class="slds-cell-shrink">                                    
+                                    </th>
+                                    <th scope="col">
+                                        <span class="slds-truncate" title="{!$Label.et4ae5.Journey_Name}">{!$Label.et4ae5.Journey_Name}</span>
+                                    </th>
+                                    <th scope="col">
+                                        <span class="slds-truncate" title="{!$Label.et4ae5.Journey_Description}">{!$Label.et4ae5.Journey_Description}</span>
+                                    </th>
+                                    <th scope="col">
+                                        <span class="slds-truncate" title="{!$Label.et4ae5.Business_Unit}">{!$Label.et4ae5.Business_Unit}</span>
+                                    </th>                                    
+                                    <th class="slds-cell-shrink"></th>
+                                </tr>
+                            </thead>
+                            <tbody>                            
+                                <aura:iteration items="{!v.journeys}" var="journey" indexVar="rowindex">
+                                    <tr class="slds-hint-parent">
+                                        <td class="slds-cell-shrink" data-label="Select Row">
+                                            <label class="slds-radio">
+                                                <ui:inputRadio aura:id="selectJourney" name="selectJourney" change="{!c.onRadioChange}"/>
+                                                <span class="slds-radio--faux"></span>
+                                                <span class="slds-assistive-text">Select Row</span>
+                                            </label>                                        
+                                        </td>
+                                        <th class="slds-truncate" scope="row" data-label="{!journey.interactionName}" title="{!journey.interactionName}">{!journey.interactionName}</th>
+                                        <td class="slds-truncate" data-label="{!journey.interactionDescription}" title="{!journey.interactionDescription}">{!journey.interactionDescription}</td>
+                                        <td class="slds-truncate" data-label="{!journey.businessUnitName}" title="{!journey.businessUnitName}">{!journey.businessUnitName}</td>                                    
+                                        <th class="slds-cell-shrink"></th>
+                                    </tr>           
+                                </aura:iteration>                            
+                            </tbody>
+                        </table>
+                    </div>                
+                </div>
+                <div class="slds-modal__footer">
+                    <button onclick="{!c.hideAddToJourneyDialog}" class="slds-button slds-button--neutral">
+                        {!$Label.et4ae5.cancel}</button>
+                    <button onclick="{!c.addToJourney}" class="slds-button slds-button--neutral slds-button--brand">
+                        {!$Label.et4ae5.add}</button>
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.showSpinner}">
+                <center>                    
+                    <div aura:id="spinner" class="slds-spinner_container slds-open">
+                        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </center>
+            </aura:if>    
+        </div>
+    </div>  
+    <div aura:id="AddToJourneyDialogBackdrop" class="slds-backdrop slds-backdrop--hide"></div>
+</aura:component>

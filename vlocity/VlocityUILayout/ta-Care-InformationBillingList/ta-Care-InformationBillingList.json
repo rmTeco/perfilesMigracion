@@ -1,0 +1,25 @@
+{
+    "Cards": [
+        "BillingInformation"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C000008fDM6"
+            }
+        ],
+        "type": "DataRaptor",
+        "value": {
+            "body": "[\n\n\t\t{\n\t\t\t\"service\": \"Servicio de Internet\",\n\t\t\t\"accountName\": \"Sandra Ramos\",\n\t\t\t\"fol\": true\n\t\t},\n\t\t{\n\t\t\t\"service\": \"Servicio Movil\",\n\t\t\t\"accountName\": \"Sandra Ramos\",\n\t\t\t\"fol\": false\n\t\t}\n\t\n]",
+            "bundle": "GetServicesByAccountId",
+            "ctxId": "params.id",
+            "resultVar": "[0]"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Care-ListFOL"
+        }
+    }
+}

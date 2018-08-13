@@ -1,0 +1,136 @@
+<link rel="stylesheet" href="/resource/ta_slds_os/slds_os.min.css"/>
+<script type="text/ng-template" id="vlcStep.html">
+ <div class="slds-grid vlc-slds-step--container" vlc-slds-window-scroll="test" ng-controller="GeneralController as gc">
+
+
+    <section id='{{::child.name}}'
+             ng-show='child.bAccordionActive && child.bAccordionOpen'
+             class="step-step slds-size--1-of-1">
+
+        <!-- banner template -->
+        <vlc-slds-banner></vlc-slds-banner>
+
+        <!-- article when embedded in omniscript -->
+        <vlc-slds-embedded-article></vlc-slds-embedded-article>
+
+        <form novalidate
+              role='form'
+              stepForm
+              name='{{::bpTree.sOmniScriptId}}-{{$index}}'
+              id='{{::bpTree.sOmniScriptId}}-{{$index}}'
+              vlc-slds-disable-auto-complete="testing"
+              class='slds-grid slds-wrap'>
+
+            <!-- child controls in the step new comment-->
+            <div class='slds-col--padded slds-size--1-of-1'>
+                <div  class="slds-grid slds-wrap slds-grid--pull-padded">
+                    <child class="slds-size--1-of-1 slds-medium--1-of-1 slds-large-size--{{child.eleArray[0].propSetMap.controlWidth}}-of-12"
+                           ng-repeat='child in ::children = child.children'
+                           ng-show='::!child.eleArray[0].propSetMap.hide'
+                           ng-if='child.eleArray[0].propSetMap.hide||(!child.eleArray[0].propSetMap.show || evaluateShow(child.eleArray[0], this))'>
+                    </child>
+                </div>
+            </div>
+
+            <div class='slds-col--padded slds-size--1-of-1 slds-m-top--medium slds-m-bottom--medium'>
+
+                <div class='slds-grid slds-wrap vlc-slds-button--footer'>
+
+                    <div class='vlc-slds--tertiary-container'>
+
+                        <div class='vlc-slds-button--tertiary'
+                             ng-if='child.bAccordionActive'
+                             confirmed-click='cancel()'
+                             ng-click='gc.cancelButton(bpTree.response.IdOrder, bpTree.response.Order)'
+                             ng-confirm-click='{{::child.propSetMap.cancelMessage}}'>
+                            {{::child.propSetMap.cancelLabel}}
+                        </div>
+
+                        <!-- test -->
+                        <div ng-show='!child.bHasNext'
+                             class='vlc-slds-button--tertiary'
+                             ng-if='bpTree.scriptState == "saveAndResume" && child.bAccordionActive'
+                             vlc-animation-slider="test"
+                 confirmed-click='completeScript(true)'
+                             ng-confirm-click='{{::child.propSetMap.completeMessage}}'>
+                            {{::child.propSetMap.completeLabel}}
+                        </div>
+
+
+                        <div class='vlc-slds-button--tertiary'
+                             ng-if='bpTree.propSetMap.allowSaveForLater && bpTree.scriptState !== "review" && child.bAccordionActive'
+                             confirmed-click='saveForLater(child)'
+                             ng-confirm-click='{{::child.propSetMap.saveMessage}}' >
+                            {{::child.propSetMap.saveLabel}}
+                        </div>
+
+                    </div>
+
+                    <div class='slds-size--1-of-1 slds-medium-size--6-of-12'>
+
+                        <div class='slds-grid slds-wrap slds-grid--pull-padded vlc-slds-small--size-column' style="justify-content:flex-end">
+			    
+			    <!-- OMNI:2008 -->
+			    <div ng-if='child.bHasPrevious'
+				 class='slds-size--1-of-1 slds-medium-size--{{::child.propSetMap.previousWidth}}-of-12 vlc-slds-remote-action--button'>
+
+				<div class="slds-form-element__control">
+
+				    <div class="vlc-control-wrapper">
+					
+					<div
+					    id="{{::child.name + '_prevBtn'}}"
+					    class="slds-box vlc-slds-box--neutral"
+					     ng-click='previous(this,child)'
+					     aria-hidden="true"
+					     vlc-animation-slider="test"
+					     reverse="true">
+
+					    <p>
+						{{::child.propSetMap.previousLabel}}
+					    </p>
+
+					</div>
+
+				    </div>
+
+				</div>
+
+			    </div>
+
+                            <div ng-if='child.bHasNext'
+				 class='slds-size--1-of-1 slds-medium-size--{{::child.propSetMap.nextWidth}}-of-12 vlc-slds-remote-action--button'>
+
+                                <div class="slds-form-element__control">
+
+                                    <div class="vlc-control-wrapper">
+
+                                        <div
+					    id="{{::child.name + '_nextBtn'}}"
+					    ng-click='nextRepeater(child.nextIndex, child.indexInParent)'
+                                            ng-disabled='checkValidity(this, child.index, child.indexInParent, "Step", null, true)'
+                                            vlc-animation-slider='test'
+                                            class='slds-box'>
+                                            <p>{{::child.propSetMap.nextLabel}}</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+    </section>
+</div>
+
+
+
+</script>

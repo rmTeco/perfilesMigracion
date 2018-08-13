@@ -1,0 +1,4 @@
+<div>
+    <vloc-layout layout-name="community-content-layout" layout-id="{{$root.layoutId}}" ng-init="$root.showContent = true" ng-show="$root.showContent"></vloc-layout>
+    <vloc-cmp name="frame" customtemplate="community-content-frame" loaded="true" ctrl="infoCtrl" ng-show="!$root.showContent"></vloc-cmp>
+</div>

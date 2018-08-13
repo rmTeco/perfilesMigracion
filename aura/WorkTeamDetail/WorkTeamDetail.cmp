@@ -1,0 +1,253 @@
+<aura:component controller="WorkTeamController">
+    <aura:handler name="init" action="{!c.getWorkTeam}" value="{!this}"/>
+	<aura:attribute name="WorkTeamID"
+                    type="String" />
+    <aura:attribute name="WorkTeam"
+                    type="WorkTeam__c"/>
+    <aura:attribute name="WorkTeamMembersWithRoleToInactivate"
+                    type="Team_Member__c"/>
+    <aura:attribute name="showWorkTeamList"
+                    type="Boolean"
+                    default="true"/>
+    <aura:attribute name="showWorkTeamCreate"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamDetail"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="KeyName"
+                    type="String"
+                    default=""/>
+    <aura:attribute name="showWorkTeamMembers"
+                    type="Boolean"
+                    default="false"/>
+    <aura:attribute name="showWorkTeamRoles"
+                    type="Boolean"
+                    default="false"/>    
+    <aura:attribute name="showWorkTeamQueues"
+                    type="Boolean"
+                    default="false"/>                      
+    <aura:registerEvent name="workTeamMembersEvent" type="c:WorkTeamMembersNewEvent"/>
+    <lightning:card >
+        <aura:set attribute="title">
+            <p><strong>Equipo:</strong></p>
+            {! v.WorkTeam.Name }
+        </aura:set>
+        <p><strong>Gerente: </strong> <span>{! v.WorkTeam.Manager__r.Name }</span></p>
+        <p><strong>Equipo supervisor: </strong> <span>{! v.WorkTeam.Parent_Team__r.Name }</span></p>
+        <br/>
+        <p><strong>Ubicación: </strong> <span>{! v.WorkTeam.Work_Place__r.Name }</span></p>
+        <br/>
+        <p><strong>Equipos hijos: </strong><br/><span>{! v.WorkTeam.AmountOfActiveChildTeams__c }</span></p>
+        <br/>
+        <p>
+            <strong>Activo: </strong>
+            <aura:if isTrue="{! v.WorkTeam.Is_Active__c == true}"><span>verdadero</span></aura:if>
+            <aura:if isTrue="{! v.WorkTeam.Is_Active__c == false}"><span>falso</span></aura:if>
+        </p>
+        <br/>
+        <p><strong>Código: </strong><br/><span>{! v.WorkTeam.Work_Team_Number__c }</span></p>
+    </lightning:card>
+    <div class="content-center"><lightning:button class="btn-brand" variant="brand" label="Volver" onclick="{! c.backToList }" /></div>
+    <lightning:card >
+        <aura:set attribute="title">
+            Miembros del Equipo de Trabajo
+        </aura:set>
+        <lightning:button class="btn-neutral" variant="Neutral" label="Nuevo miembro del equipo de trabajo" name="{! v.WorkTeamID }" onclick="{! c.getNewWorkTeamMembers }" />
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead class="slds-text-title_caps">
+                <tr scope="col">
+                	<th><div class="slds-truncate" title="">Serie</div></th>
+                    <th><div class="slds-truncate" title="">Nombre</div></th>
+                    <th><div class="slds-truncate" title="">Nombre de Usuario</div></th>
+                    <th><div class="slds-truncate" title="">Rol</div></th>
+                    <th><div class="slds-truncate" title="">Perfil</div></th>
+                    <th><div class="slds-truncate" title="">Legajo</div></th>
+                    <th><div class="slds-truncate" title="Actions">Inactivar</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:if isTrue="{!v.WorkTeam.TeamMembers.length > 0}">
+                    <aura:iteration items="{!v.WorkTeam.TeamMembers}" var="TeamMember" indexVar="index">
+                        <tr>
+                            <th scope="row" data-label="Serie">
+                                <div class="slds-truncate" title="{! TeamMember.Name }">{! TeamMember.Name }</div>
+                            </th>
+                            <th scope="row" data-label="Nombre">
+                                <div class="slds-truncate" title="{! TeamMember.User_member__r.Name }">{! TeamMember.User_member__r.Name }</div>
+                            </th>
+                            <th scope="row" data-label="Nombre de usuario">
+                                <div class="slds-truncate" title="{! TeamMember.MemberUsername__c }">{! TeamMember.MemberUsername__c }</div>
+                            </th>
+                            <th scope="row" data-label="Rol">
+                                <div class="slds-truncate" title="{! TeamMember.MemberUserrole__c }">{! TeamMember.MemberUserrole__c }</div>
+                            </th>
+                            <th scope="row" data-label="Perfil">
+                                <div class="slds-truncate" title="{! TeamMember.User_member__r.Profile.Name }">{! TeamMember.User_member__r.Profile.Name }</div>
+                            </th>
+                            <th scope="row" data-label="Legajo">
+                                <div class="slds-truncate" title="{! TeamMember.Legajo__c }">{! TeamMember.Legajo__c }</div>
+                            </th>
+                            <th scope="row" data-label="Acciones">
+                                <lightning:buttonMenu value="{! TeamMember.Id }" onselect="{! c.handleSelect }" alternativeText="Actions">
+                                    <aura:if isTrue="{! TeamMember.Is_Active__c }">
+                                        <lightning:menuItem value="{! TeamMember.Id }" label="Desactivar" />
+                                    </aura:if>
+                                    <aura:if isTrue="{! TeamMember.Is_Active__c == false }">
+                                        <lightning:menuItem value="{! TeamMember.Id }" label="Activar" />
+                                    </aura:if>
+                                </lightning:buttonMenu>
+                            </th>
+                        </tr>
+                    </aura:iteration>
+            	</aura:if>
+                <aura:if isTrue="{!v.WorkTeam.TeamMembers.length == 0}">
+                    <tr>
+                    	<th colspan="7"><div class="slds-truncate" title="">No existen registros para mostrar</div></th>
+                    </tr>
+                </aura:if>
+            </tbody>
+        </table>
+    </lightning:card>
+    <lightning:card >
+        <aura:set attribute="title">
+            Roles del Equipo de Trabajo
+        </aura:set>
+        <lightning:button class="btn-neutral" variant="Neutral" label="Nuevo rol del equipo de trabajo" name="{! v.WorkTeamID }" onclick="{! c.getNewWorkTeamRole }" />
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead class="slds-text-title_caps">
+                <tr scope="col">
+                	<th><div class="slds-truncate" title="">Nombre de Rol</div></th>
+                    <th><div class="slds-truncate" title="">Inactivar</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:if isTrue="{!v.WorkTeam.WorkTeamRoles.length > 0}">
+                    <aura:iteration items="{!v.WorkTeam.WorkTeamRoles}" var="WorkTeamRole" indexVar="index">
+                        <tr>
+                            <th scope="row" data-label="Rol">
+                                <div class="slds-truncate" title="{! WorkTeamRole.Role_API_Name__c }">{! WorkTeamRole.Role_API_Name__c }</div>
+                            </th>
+                            <th scope="row" data-label="Acciones">
+                                <lightning:buttonMenu value="{! WorkTeamRole.Id }" onselect="{! c.handleSelectRole }" alternativeText="Acciones">
+                                    <aura:if isTrue="{! WorkTeamRole.Is_Active__c }">
+                                        <lightning:menuItem value="{! WorkTeamRole.Id }" label="Desactivar" />
+                                    </aura:if>
+                                    <aura:if isTrue="{! WorkTeamRole.Is_Active__c == false }">
+                                        <lightning:menuItem value="{! WorkTeamRole.Id }" label="Activar" />
+                                    </aura:if>
+                                </lightning:buttonMenu>
+                            </th>
+                        </tr>
+                    </aura:iteration>
+            	</aura:if>
+                <aura:if isTrue="{!v.WorkTeam.WorkTeamRoles.length == 0}">
+                    <tr>
+                    	<th colspan="4"><div class="slds-truncate" title="">No existen registros para mostrar</div></th>
+                    </tr>
+                </aura:if>
+            </tbody>
+        </table>
+    </lightning:card>
+    <lightning:card >
+        <aura:set attribute="title">
+            Colas del Equipo de Trabajo
+        </aura:set>
+        <lightning:button class="btn-neutral" variant="Neutral" label="Nueva cola del equipo de trabajo" name="{! v.WorkTeamID }" onclick="{! c.getNewWorkTeamQueue }" />
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+            <thead class="slds-text-title_caps">
+                <tr scope="col">
+                	<th><div class="slds-truncate" title="">Nombra de Cola</div></th>
+                    <th><div class="slds-truncate" title="">Inactivar</div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:if isTrue="{!v.WorkTeam.WorkTeamQueues.length > 0}">
+                    <aura:iteration items="{!v.WorkTeam.WorkTeamQueues}" var="WorkTeamQueue" indexVar="index">
+                        <tr>
+                            <th scope="row" data-label="Nombra de Cola">
+                                <div class="slds-truncate" title="{! WorkTeamQueue.Role_API_Name__c }">{! WorkTeamQueue.Queue_API_Name__c }</div>
+                            </th>
+                            <th scope="row" data-label="Acciones">
+                                <lightning:buttonMenu value="{! WorkTeamQueue.Id }" onselect="{! c.handleSelectQueue }" alternativeText="Acciones">
+                                    <aura:if isTrue="{! WorkTeamQueue.Is_Active__c }">
+                                        <lightning:menuItem value="{! WorkTeamQueue.Id }" label="Desactivar" />
+                                    </aura:if>
+                                    <aura:if isTrue="{! WorkTeamQueue.Is_Active__c == false }">
+                                        <lightning:menuItem value="{! WorkTeamQueue.Id }" label="Activar" />
+                                    </aura:if>
+                                </lightning:buttonMenu>
+                            </th>
+                        </tr>
+                    </aura:iteration>
+            	</aura:if>
+                <aura:if isTrue="{!v.WorkTeam.WorkTeamQueues.length == 0}">
+                    <tr>
+                    	<th colspan="4"><div class="slds-truncate" title="">No existen registros para mostrar</div></th>
+                    </tr>
+                </aura:if>
+            </tbody>
+        </table>
+    </lightning:card>    
+    <div class="content-center"><lightning:button class="btn-brand" variant="brand" label="Volver" onclick="{! c.backToList }" /></div>
+    <div id="usersModal__c" class="users" style="display: none;">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <h2 id="headerUsersModal__c" class="slds-text-heading_medium slds-hyphenate">{! $Label.c.Work_Team_New_Title_User_Modal }</h2>
+              <p>{! $Label.c.Work_Team_Message_Warning_Inactivate_Role }</p>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                  <thead>
+                      <tr class="slds-text-title_caps">
+                          <th scope="col">
+                            <div class="slds-truncate" title="{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersUserName}">{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersUserName}</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersRole}">{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersRole}</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersProfile}">{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersProfile}</div>
+                          </th>
+                          <th scope="col">
+                            <div class="slds-truncate" title="{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersLegajo}">{!v.WorkTeamMembersWithRoleToInactivate.LabelTeamMembersLegajo}</div>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <aura:iteration items="{!v.WorkTeamMembersWithRoleToInactivate.WorkTeamMembersWithRoleToInactivate}" var="mngr" indexVar="index">
+                          <tr>
+                              <th scope="row" data-label="Name">
+                                <div class="slds-truncate" title="{! mngr.User_member__r.Name }">
+                                    <lightning:button variant="base" label="{! mngr.User_member__r.Name }"/>
+                                </div>
+                              </th>
+                              <th scope="row" data-label="Role">
+                                <div class="slds-truncate" title="{! mngr.User_member__r.UserRole.Name }">
+                                    <lightning:button variant="base" label="{! mngr.User_member__r.UserRole.Name }"/>
+                                </div>
+                              </th>
+                              <th scope="row" data-label="Profile">
+                                <div class="slds-truncate" title="{! mngr.User_member__r.Profile.Name }">
+                                    <lightning:button variant="base" label="{! mngr.User_member__r.Profile.Name }" />
+                                </div>
+                              </th>
+                              <th scope="row" data-label="Legajo">
+                                <div class="slds-truncate" title="{! mngr.Legajo__c }">
+                                    <lightning:button variant="base" label="{! mngr.Legajo__c }"/>
+                                </div>
+                              </th>
+                          </tr>
+                      </aura:iteration>
+                  </tbody>
+              </table>
+          </div>
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_brand" onclick="{! c.hiddenUsersModal }">{! $Label.c.Work_Team_Submit_Button }</button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</aura:component>

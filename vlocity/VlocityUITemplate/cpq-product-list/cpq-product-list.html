@@ -1,0 +1,56 @@
+<div class="cpq-product-list">
+    <!-- FILTERS -->
+    <div class="slds-col cpq-items-container scroll cpq-filter-container" ng-if="importedScope.$parent.$parent.filters.show">
+        <vloc-layout layout-name="cpq-product-filters" ctrl="CPQItemsController" parent=importedScope.$parent></vloc-layout>
+    </div>
+
+    <!-- CARDS -->
+    <div class="slds-grid cpq-products-grid cpq-products-list-vertical cpq-products-list-col-stretch"
+        ng-if="!importedScope.$parent.$parent.filters.show">
+        <div class="slds-spinner_container" ng-hide="isLoaded">
+            <div class="slds-spinner_brand slds-spinner slds-spinner_medium" aria-hidden="false" role="alert">
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+
+        <vloc-card ng-repeat="card in cards |filter: searchFunc(card)" 
+            ctrl="CPQProductItemController" 
+            ng-model="card" data="card" records="records" 
+            index="{{$index}}" session-id="{{sessionId}}" 
+            ng-if="isLoaded">
+        </vloc-card>
+
+        <div class="slds-text-align_center slds-m-vertical_medium cpq-no-products-msg" ng-show="!records && isLoaded">
+            {{::importedScope.customLabels.CPQProductsNotAvailable}}
+        </div>
+
+        <div class="cpq-next-product slds-col slds-text-align_center slds-m-vertical_medium"  ng-if="session.nextProducts">
+            <div class="slds-spinner_container" ng-show="loadingMore">
+                <div class="slds-spinner_brand slds-spinner slds-spinner_small" aria-hidden="false" role="alert">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+            <a ng-click="importedScope.nextPageProducts()" ng-hide="loadingMore || !isLoaded">
+              {{::importedScope.customLabels.CPQLoadMore}}
+            </a>
+        </div>
+    </div>
+    <!-- Adding several products at one is not supported for now
+    <div class="slds-col slds-no-flex">
+        <div class="slds-grid cpq-product-actions">
+            <button class="slds-col slds-button slds-button--brand"
+            ng-click="importedScope.addProducts()"
+            ng-disabled="importedScope.productsToAdd.length === 0">
+                Add to cart
+            </button>
+            <button class="slds-col slds-button slds-button--brand"
+            ng-click="importedScope.compare()"
+            ng-disabled="importedScope.productsToCompare.length < 2">
+                Compare
+            </button>
+        </div>
+    </div>
+    -->
+</div>

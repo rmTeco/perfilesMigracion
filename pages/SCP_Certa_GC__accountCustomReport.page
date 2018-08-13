@@ -1,0 +1,105 @@
+<apex:page controller="SCP_Certa_GC.AccountCustomReportController" sidebar="false" tabStyle="Strategic_Client_Plan__tab">
+
+	<c:SCPMenu ></c:SCPMenu>
+    	
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+	
+	<apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1" id="EvaluatedContactsPageBlock">
+		<apex:pageMessages id="errorMsg"/>
+		<div class="panel panel-default">			
+	   		<div Class="panel-heading">
+    			<h3 class="panel-title">
+    				<span style="float:left;">
+    					{!$Label.scp_certa_gc__custom_report}
+                    </span>
+                    
+                    <span style="float:left;">
+                        <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/GzsMQTI10as"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                    </span>	    				
+                </h3>
+    			<div class="row paddingRight" style="margin-top: 20px;">
+	    			<div class="btn-group pull-right">
+	    			 	<apex:outputText >
+	           				<button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+		   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+		                    </button>
+		                </apex:outputText>    
+           				<button type="button" class="btn btn-default btn-sm" onclick="ExportToWord()">
+	   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;Exportar a Word
+	                    </button>					                    
+    				</div>
+   				</div>
+    		</div>
+			<div class="panel-body">
+				<apex:form >
+					<apex:actionFunction action="{!ExportToWord}" name="ExportToWord"/>
+   					<apex:actionFunction action="{!save}" name="SaveChanges" rerender="pageContent,errorMsg" status="renderMeStatus"/>					
+					
+					<!-- Industry Trends -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__industryTrend__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__trend}" /></p>
+					<div style="margin:10px;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">				
+						<c:accountIndustryTrendsComponent />
+					</div>
+					<br/>
+					
+					<!-- Client Context -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__clientContext__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__client_context}" /></p>
+					<div style="margin:10px;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">				
+						<c:accountStrategicContextWindowComponent />
+					</div>
+					<br/>
+					
+					<!-- KPI -->
+                    <!--
+					<p class="h1"><apex:inputField value="{!customReport.kpi__c}"/>&nbsp;<apex:outputText value="{!$Label.KPI}" /></p>
+					<div style="margin:10px;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">				
+						<c:accountKPIWindowComponent />
+					</div>
+					<br/>-->
+					
+					<!-- Net Activity -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__netActivity__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__net_activity}" /></p>
+					<div style="margin:10px;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">				
+						<c:accountHistoricalBusinessWindowComponent />
+					</div>
+					<br/>
+					
+					<!-- influence Map/Org -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__influenceMap__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__influence_org}" /></p>
+					<div style="margin:10px;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">				
+						<c:accountOrganizationChartWindowComponent />
+					</div>
+					<br/>
+					
+					<!-- Proven Value -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__provenValue__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__account_past_proven_value}" /></p>
+					<div style="margin:10px;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">				
+						<c:accountPastProvenValueNewComponent />
+					</div>
+					<br/>
+					
+					<!-- Value Drivers -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__valueDrivers__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__opportunities_value_proposition}" /></p>
+					<div style="margin:10px;padding-bottom: 15px;">				
+						<c:accountIndustryTrendsWindowNewComponent />
+					</div>
+					<br/>
+				
+					<!-- Growth Strategy -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__growthStrategy__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__gap_growth_strategy}" /></p>
+					<div style="margin:10px;padding-bottom: 15px;">				
+						<c:AccountGrowthStrategyComponent />
+					</div>
+					<br/>
+					
+					<!-- Account Plan -->
+					<p class="h1"><apex:inputField value="{!customReport.SCP_Certa_GC__actionPlan__c}"/>&nbsp;<apex:outputText value="{!$Label.scp_certa_gc__action_plan_builder}" /></p>
+					<div style="margin:10px;padding-bottom: 15px;">				
+						<c:accountMasterPlanComponent />
+					</div>
+					<br/>
+				</apex:form>
+			</div>
+		</div>
+	</apex:outputPanel>
+</apex:page>

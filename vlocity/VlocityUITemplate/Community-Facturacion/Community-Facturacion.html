@@ -1,0 +1,126 @@
+<section class="console-card active" 
+data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" 
+ng-controller="ServicesCtrl as ctrl"
+hotkey-layout-card>
+    <div class="card-top" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="card-top-header">
+            <div class="header-left">
+               <span class="slds-text-body_regular account-number" tooltip-placement="bottom" tooltip="{{obj.Name}}">
+                  {{data.fields[0].label}}   {{obj | getter:data.fields[0] | picker:data.fields[0].type}}
+              </span>
+              
+          </div>
+       <!--   <div class="header-right">-->
+       <!--     <span class="slds-text-body_regular expired-title ">{{data.fields[2].label}}</span>-->
+       <!--     <span class="slds-text-heading_medium expired-date expired-pink"><!-- ng-class="{'expired-pink': (obj.Status != 'Active' || obj.BundleStatus != 'Active')}">{{obj.PurchaseDate | date:'dd/MM/yyyy'}}-->
+       <!--        {{obj | getter:data.fields[2] | picker:data.fields[2].type}}-->
+       <!--    </span>-->
+           
+       <!--</div>-->
+        </div>
+    </div>
+    <div class="card-info">
+        <!--<ul class="actions" ng-if="!obj.PurchaseFinancing">-->
+        <!--    <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:6)" >-->
+        <!--        <a href="#" ng-click="performAction(action)" hotkey-card-action>-->
+        <!--            <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>-->
+        <!--            <span ng-if="action.imageRef">-->
+        <!--                <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>-->
+        <!--            </span>-->
+        <!--            <span class="slds-text-body_regular">{{action.displayName}}</span>-->
+        <!--        </a>-->
+        <!--    </li>-->
+        <!--</ul>-->
+        <!--<ul class="actions" ng-if="obj.PurchaseFinancing">-->
+        <!--    <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:6)" >-->
+                
+        <!--        <a href="#" ng-click="performAction(action)" hotkey-card-action>-->
+        <!--            <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>-->
+        <!--            <span ng-if="action.imageRef">-->
+        <!--                <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>-->
+        <!--            </span>-->
+        <!--            <span class="slds-text-body_regular">{{action.displayName}}</span>-->
+        <!--        </a>-->
+        <!--    </li>-->
+        <!--</ul>-->
+        <ul class="details" ng-click="performFlyout(uniqueLayoutId + '-card-'+ cardIndex)">
+            <li class="detail">
+             
+                <span class="slds-text-body_regular detail-label">{{data.fields[1].label}}</span>
+                <span class="slds-text-body_regular value paddingTop">
+                    <!--{{obj[field.name]}}-->
+                    {{obj | getter:data.fields[1] | picker:data.fields[1].type}}
+                </span>
+                
+            </li>
+            <li class="detail" ng-repeat="field in data.fields.slice(2) " ng-show="key != 'attributes'">
+                <!--<span class="detail-label">{{obj | getter: field: 'label' | picker: field.type}}</span>-->
+                <span class="slds-text-body_regular value">{{obj[field.relationshipName]['Name']}}</span>
+                <span class="slds-text-body_regular detail-label">{{field.label}}</span>
+                <span class="slds-text-body_regular value paddingTop" ng-if="!obj[field.relationshipName]">
+                    <!--{{obj[field.name]}}-->
+                    {{obj | getter: field | picker: field.type}}
+                </span>
+                
+                <span class="slds-text-body_regular value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</span>
+                <span class="slds-text-body_regular value" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}</span>
+            </li>
+    <!--        <li class="detail" ng-if="obj.Assets">-->
+    <!--            <span class="slds-text-body_regular detail-label">Servicios:</span>-->
+    <!--            <ul ng-if="obj.Assets && obj.Assets.length !== undefined && obj.Assets.length > 0" ng-init="groupServices()">-->
+    <!--                <div ng-if="internet" class="billing-services-title slds-float--left"> -->
+    <!--                    <slds-svg-icon sprite="'utility'" icon="'wifi'" size="'x-small'" no-hint="true"-->
+    <!--                    extra-classes="'slds-icon-text-default'">-->
+    <!--                </slds-svg-icon>-->
+    <!--                <span class="billing-services-title">Internet</span>-->
+    <!--            </div>-->
+    <!--            <div ng-if="movil" class="billing-services-title slds-float--left">-->
+    <!--                <slds-svg-icon sprite="'utility'" icon="'phone_portrait'" size="'x-small'" no-hint="true"-->
+    <!--                extra-classes="'slds-icon-text-default'">-->
+    <!--            </slds-svg-icon>-->
+    <!--            <span class="billing-services-title">Movil</span>-->
+    <!--        </div>-->
+    <!--        <div ng-if="fijo" class="billing-services-title slds-float--left">-->
+    <!--            <slds-svg-icon sprite="'utility'" icon="'call'" size="'x-small'" no-hint="true"-->
+    <!--            extra-classes="'slds-icon-text-default'">-->
+    <!--        </slds-svg-icon>-->
+    <!--        <span class="billing-services-title">Fijo</span>-->
+    <!--    </div>-->
+    <!--    <div ng-if="otro" class="billing-services-title slds-float--left">-->
+    <!--        <slds-svg-icon sprite="'utility'" icon="'replace'" size="'x-small'" no-hint="true"-->
+    <!--        extra-classes="'slds-icon-text-default'">-->
+    <!--    </slds-svg-icon>-->
+    <!--    <span class="billing-services-title">Otros</span>-->
+    <!--</div>-->
+    </ul>
+    <!-- {{obj.Assets.Family}}-->
+    <!--<ul ng-if="obj.Assets && obj.Assets.length == undefined" ng-switch="obj.Assets.Family">-->
+    <!--    <div ng-switch-when="Internet" class="billing-services-title slds-float--left">-->
+    <!--        <slds-svg-icon sprite="'utility'" icon="'wifi'" size="'x-small'" no-hint="true"-->
+    <!--        extra-classes="'slds-icon-text-default'">-->
+    <!--    </slds-svg-icon>-->
+    <!--    <span class="billing-services-title">Internet</span>-->
+    <!--</div>-->
+    <!--<div ng-switch-when="Movil" class="billing-services-title slds-float--left">-->
+    <!--    <slds-svg-icon sprite="'utility'" icon="'phone_portrait'" size="'x-small'" no-hint="true"-->
+    <!--    extra-classes="'slds-icon-text-default'">-->
+    <!--</slds-svg-icon>-->
+    <!--<span class="billing-services-title">Movil</span>-->
+    <!--</div>-->
+    <!--<div ng-switch-when="Fixed" class="billing-services-title slds-float--left">-->
+    <!--    <slds-svg-icon sprite="'utility'" icon="'call'" size="'x-small'" no-hint="true"-->
+    <!--    extra-classes="'slds-icon-text-default'">-->
+    <!--</slds-svg-icon>-->
+    <!--<span class="billing-services-title">Fijo</span>-->
+    <!--</div>-->
+    <!--<div ng-switch-default class="billing-services-title slds-float--left">-->
+    <!--    <slds-svg-icon sprite="'utility'" icon="'replace'" size="'x-small'" no-hint="true"-->
+    <!--    extra-classes="'slds-icon-text-default'">-->
+    <!--</slds-svg-icon>-->
+    <!--<span class="billing-services-title">Otros</span>-->
+    <!--</div>-->
+    <!--</ul>-->
+    </li>
+    </ul>
+    </div>
+</section>

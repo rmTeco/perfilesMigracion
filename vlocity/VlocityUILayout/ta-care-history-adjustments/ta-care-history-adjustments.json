@@ -1,0 +1,38 @@
+{
+    "Cards": [
+        "History adjustments"
+    ],
+    "dataSource": {
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "body": {
+                    "cantidadItemsConsulta": 99999,
+                    "cantidadMaxConsulta": 99999,
+                    "cuenta": {
+                        "codigoAcceso": {
+                            "codSuscripcion": "params.LineNumber"
+                        }
+                    },
+                    "fechaDesde": "2016-11-07 16:30:33",
+                    "fechaHasta": "2017-11-07 16:30:34",
+                    "infoDetalle": {
+                    },
+                    "referenciaItemPaginado": 0
+                }
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "ta_care_queryAdjustmentsHelper",
+            "remoteMethod": "GetAdjustmentHistory",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']['listaDetalleAjuste']"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-history-adjustments"
+        }
+    }
+}

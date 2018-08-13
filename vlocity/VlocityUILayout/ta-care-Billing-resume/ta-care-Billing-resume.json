@@ -1,0 +1,103 @@
+{
+    "Cards": [
+        "ta-care-Billing-Resume-Comprobante",
+        "ta-care-Billing-Resume-Pago"
+    ],
+    "bypassSave": true,
+    "customPreviewPages": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.numeroServicio",
+                "val": "48797566"
+            },
+            {
+                "name": "params.direccionFactura",
+                "val": "Congreso, 409095"
+            },
+            {
+                "name": "params.AccountIntegrationId",
+                "val": "9900000194610001"
+            },
+            {
+                "name": "params.CreatedDateAcc",
+                "val": "2017-11-10T13:42:52.000Z"
+            },
+            {
+                "name": "params.startDateFilter",
+                "val": "2018-01-01"
+            },
+            {
+                "name": "params.endDateFilter",
+                "val": "2018-08-31"
+            },
+            {
+                "name": "params.Balance",
+                "val": "844"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "body": {
+                    "bodyS018": {
+                        "codigoCuentaAcceso": {
+                            "listaCuentas": {
+                                "cuenta": [
+                                    {
+                                        "idCuenta": "{{params.AccountIntegrationId}}"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "bodyS024": {
+                        "cantRegistrosMostrar": "0",
+                        "codAcceso": {
+                            "codAccesoCuenta": {
+                                "codCuenta": "{{params.AccountIntegrationId}}"
+                            }
+                        },
+                        "numRegistroInicial": "0",
+                        "numTotalRegistros": "0",
+                        "tipoConsulta": {
+                            "periodoTiempo": {
+                                "fechaDesde": "{{params.startDateFilter}}",
+                                "fechaHasta": "{{params.endDateFilter}}",
+                                "tipoConsulta": "2"
+                            }
+                        }
+                    },
+                    "bodyS059": {
+                        "accesoCuenta": {
+                            "codCuenta": "{{params.AccountIntegrationId}}"
+                        },
+                        "cantidadItemsConsulta": 10,
+                        "cantidadMaxConsulta": "10",
+                        "fechaDesde": "{{params.startDateFilter}}",
+                        "fechaHasta": "{{params.endDateFilter}}",
+                        "referenciaItemPaginado": 0
+                    }
+                }
+            },
+            "ipMethod": "IFS_S018",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "ta_care_AccountResumeIntegration",
+            "remoteMethod": "GetAccountResumeIntegration3",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-billing-resume-layout"
+        }
+    },
+    "workspace": [
+        "ta-care-Billing-Resume-Comprobante/Telecom/1/1520353563717",
+        "ta-care-Billing-Resume-Pago/Telecom/1/1520354951024"
+    ]
+}

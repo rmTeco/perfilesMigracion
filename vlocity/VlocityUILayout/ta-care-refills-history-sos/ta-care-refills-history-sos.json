@@ -1,0 +1,38 @@
+{
+    "Cards": [
+        "ta-care-refills-history-sos-card"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.SubscriptionId",
+                "val": "54726279-0157-44b9-94e8-484a8a440966"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "body": {
+                    "codigoAcceso": {
+                        "codSuscripcion": "{{params.SubscriptionId}}"
+                    }
+                }
+            },
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "IFS_S440",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "IPResult"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-refills-history-sos-layout"
+        }
+    },
+    "workspace": [
+        "ta-care-refills-history-sos-card/Telecom/1507060611237"
+    ]
+}

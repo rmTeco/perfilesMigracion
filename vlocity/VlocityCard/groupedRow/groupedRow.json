@@ -1,0 +1,350 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "[\n\t\t\t{\n\t\t\t\t\"Mandatory\": \"true\",\n\t\t\t\t\"Status\": \"Active\",\n\t\t\t\t\"%vlocity_namespace%__LineNumber__c\": \"0001.0010\",\n\t\t\t\t\"Tipo_de_Producto__c\": \"Servicio GSM\",\n\t\t\t\t\"InstallDate\": \"2017-10-14\",\n\t\t\t\t\"Name\": \"voz Entrante\",\n\t\t\t\t\"Id\": \"02i6C0000002WLcQAM\",\n\t\t\t\t\"SubType\": \"voz\"\t\t\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Mandatory\": \"true\",\n\t\t\t\t\"Status\": \"Active\",\n\t\t\t\t\"%vlocity_namespace%__LineNumber__c\": \"0001.0010\",\n\t\t\t\t\"Tipo_de_Producto__c\": \"Servicio GSM\",\n\t\t\t\t\"InstallDate\": \"2017-10-14\",\n\t\t\t\t\"Name\": \"voz Saliente\",\n\t\t\t\t\"Id\": \"02i6C0000002WLcQAM\",\n\t\t\t\t\"SubType\": \"voz\"\t\t\n\t\t\t}\n\t\t]",
+            "query": "Parent.records",
+            "resultVar": ""
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Status']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Active"
+                },
+                {
+                    "field": "['Mandatory']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "false"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.AccountId",
+                            "AssetId": "['Id']",
+                            "AssetName": "['Name']",
+                            "ParentAssetId": "params.AssetId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-SVA-Diagnosis",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "techCare-SVA-Deactivate",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Servicio",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['InstallDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['InstallDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Active' && $scope.obj['Mandatory'] == 'false'",
+            "name": "Active_NoMandatory",
+            "sObjectType": "Product2",
+            "templateUrl": "ta-addedValueServices-Card-Group"
+        },
+        {
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Status']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "In Activation"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Servicio",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['InstallDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['InstallDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'In Activation'",
+            "name": "In Activation",
+            "templateUrl": "ta-addedValueServices-Card-Group"
+        },
+        {
+            "actionCtxId": "",
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Status']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Inactive"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                        },
+                        "hasExtraParams": false,
+                        "id": "techCare-SVA-Activate",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Servicio",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['InstallDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['InstallDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Inactive'",
+            "name": "Inactive",
+            "sObjectType": "Account",
+            "templateUrl": "ta-addedValueServices-Card-Group"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Status']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Active"
+                },
+                {
+                    "field": "['Mandatory']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "true"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.AccountId",
+                            "AssetId": "['Id']",
+                            "AssetName": "['Name']",
+                            "ParentAssetId": "params.AssetId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-SVA-Diagnosis",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Servicio",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['InstallDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['InstallDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Active' && $scope.obj['Mandatory'] == 'true'",
+            "name": "Active_Mandatory",
+            "sObjectType": "Product2",
+            "templateUrl": "ta-addedValueServices-Card-Group"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": true,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Name']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Servicio",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['InstallDate']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "InstallDate",
+                    "name": "['InstallDate']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Group",
+            "sObjectType": "Product2",
+            "templateUrl": "ta-addedValueServices-Card-Group"
+        }
+    ],
+    "title": "Servicios de valor agregado"
+}

@@ -1,0 +1,41 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "801360000000mgJ"
+            },
+            {
+                "name": "params.lineItemId",
+                "val": "80236000001lNnk"
+            },
+            {
+                "name": "params.fieldName",
+                "val": "%vlocity_namespace%__BillingAccountId__c"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "",
+            "apexRestResultVar": "",
+            "endpoint": "/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/sites?id={{params.lineItemId}}&lookupField={{params.fieldName}}",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "id": "{{params.lineItemId}}",
+                "lookupField": "{{params.fieldName}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getAvailableSites",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "result"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "cpq-cart-item-lookup"
+        }
+    }
+}

@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Condicional de regla - Gestor de Puntos</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Operador__c</fullName>
+        <externalId>false</externalId>
+        <label>Operador</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Variable_a_comparar__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>=</fullName>
+                    <default>false</default>
+                    <label>=</label>
+                </value>
+                <value>
+                    <fullName>!=</fullName>
+                    <default>false</default>
+                    <label>!=</label>
+                </value>
+                <value>
+                    <fullName>&gt;</fullName>
+                    <default>false</default>
+                    <label>&gt;</label>
+                </value>
+                <value>
+                    <fullName>&lt;</fullName>
+                    <default>false</default>
+                    <label>&lt;</label>
+                </value>
+                <value>
+                    <fullName>&gt;=</fullName>
+                    <default>false</default>
+                    <label>&gt;=</label>
+                </value>
+                <value>
+                    <fullName>&lt;=</fullName>
+                    <default>false</default>
+                    <label>&lt;=</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Categoria De Socio</controllingFieldValue>
+                <controllingFieldValue>Tipo De Cliente</controllingFieldValue>
+                <controllingFieldValue>Tipo De Servicio</controllingFieldValue>
+                <controllingFieldValue>Tipo De Upselling</controllingFieldValue>
+                <controllingFieldValue>Equipo Categoria</controllingFieldValue>
+                <controllingFieldValue>Monto</controllingFieldValue>
+                <valueName>=</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Categoria De Socio</controllingFieldValue>
+                <controllingFieldValue>Tipo De Cliente</controllingFieldValue>
+                <controllingFieldValue>Tipo De Servicio</controllingFieldValue>
+                <controllingFieldValue>Tipo De Upselling</controllingFieldValue>
+                <controllingFieldValue>Equipo Categoria</controllingFieldValue>
+                <controllingFieldValue>Monto</controllingFieldValue>
+                <valueName>!=</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Monto</controllingFieldValue>
+                <valueName>&gt;</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Monto</controllingFieldValue>
+                <valueName>&lt;</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Regla__c</fullName>
+        <externalId>false</externalId>
+        <label>Regla</label>
+        <referenceTo>GP_Regla__c</referenceTo>
+        <relationshipLabel>Condicionales logicos</relationshipLabel>
+        <relationshipName>Condicionales_logicos</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>SeComparaContraElValorFijo__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>SeComparaContraElValorFijo</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Valor_Booleano__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Valor Booleano</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Valor_contra_el_que_se_compara__c</fullName>
+        <externalId>false</externalId>
+        <label>Valor contra el que se compara</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Variable_a_comparar__c</controllingField>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>TRIAL</fullName>
+                    <default>false</default>
+                    <label>TRIAL</label>
+                </value>
+                <value>
+                    <fullName>BLACK</fullName>
+                    <default>false</default>
+                    <label>BLACK</label>
+                </value>
+                <value>
+                    <fullName>CLASSIC</fullName>
+                    <default>false</default>
+                    <label>CLASSIC</label>
+                </value>
+                <value>
+                    <fullName>DNI</fullName>
+                    <default>false</default>
+                    <label>DNI</label>
+                </value>
+                <value>
+                    <fullName>SOHO</fullName>
+                    <default>false</default>
+                    <label>SOHO</label>
+                </value>
+                <value>
+                    <fullName>EMPRESAS</fullName>
+                    <default>false</default>
+                    <label>EMPRESAS</label>
+                </value>
+                <value>
+                    <fullName>GGCC</fullName>
+                    <default>false</default>
+                    <label>GGCC</label>
+                </value>
+                <value>
+                    <fullName>MOVIL-PREPAGO</fullName>
+                    <default>false</default>
+                    <label>MOVIL-PREPAGO</label>
+                </value>
+                <value>
+                    <fullName>MOVIL-ABONO</fullName>
+                    <default>false</default>
+                    <label>MOVIL-ABONO</label>
+                </value>
+                <value>
+                    <fullName>ARNET</fullName>
+                    <default>false</default>
+                    <label>ARNET</label>
+                </value>
+                <value>
+                    <fullName>TV</fullName>
+                    <default>false</default>
+                    <label>TV</label>
+                </value>
+                <value>
+                    <fullName>PREPAGO-A-ABONO FIJO</fullName>
+                    <default>false</default>
+                    <label>PREPAGO-A-ABONO FIJO</label>
+                </value>
+                <value>
+                    <fullName>ABONO FIJO-A-FACTURA</fullName>
+                    <default>false</default>
+                    <label>ABONO FIJO-A-FACTURA</label>
+                </value>
+                <value>
+                    <fullName>INTERNET-MAS-VELOCIDAD</fullName>
+                    <default>false</default>
+                    <label>INTERNET-MAS-VELOCIDAD</label>
+                </value>
+                <value>
+                    <fullName>CABLE-SUMAR FLOW</fullName>
+                    <default>false</default>
+                    <label>CABLE-SUMAR FLOW</label>
+                </value>
+                <value>
+                    <fullName>LOW</fullName>
+                    <default>false</default>
+                    <label>LOW</label>
+                </value>
+                <value>
+                    <fullName>MID</fullName>
+                    <default>false</default>
+                    <label>MID</label>
+                </value>
+                <value>
+                    <fullName>MID HIGH</fullName>
+                    <default>false</default>
+                    <label>MID HIGH</label>
+                </value>
+                <value>
+                    <fullName>PREMIUM</fullName>
+                    <default>false</default>
+                    <label>PREMIUM</label>
+                </value>
+                <value>
+                    <fullName>integer</fullName>
+                    <default>false</default>
+                    <label>integer</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>Categoria De Socio</controllingFieldValue>
+                <valueName>TRIAL</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Categoria De Socio</controllingFieldValue>
+                <valueName>BLACK</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Categoria De Socio</controllingFieldValue>
+                <valueName>CLASSIC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Cliente</controllingFieldValue>
+                <valueName>DNI</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Cliente</controllingFieldValue>
+                <valueName>SOHO</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Cliente</controllingFieldValue>
+                <valueName>EMPRESAS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Cliente</controllingFieldValue>
+                <valueName>GGCC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Servicio</controllingFieldValue>
+                <valueName>MOVIL-PREPAGO</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Servicio</controllingFieldValue>
+                <valueName>MOVIL-ABONO</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Servicio</controllingFieldValue>
+                <valueName>ARNET</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Servicio</controllingFieldValue>
+                <valueName>TV</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Upselling</controllingFieldValue>
+                <valueName>PREPAGO-A-ABONO FIJO</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Upselling</controllingFieldValue>
+                <valueName>ABONO FIJO-A-FACTURA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Upselling</controllingFieldValue>
+                <valueName>INTERNET-MAS-VELOCIDAD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Tipo De Upselling</controllingFieldValue>
+                <valueName>CABLE-SUMAR FLOW</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Equipo Categoria</controllingFieldValue>
+                <valueName>LOW</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Equipo Categoria</controllingFieldValue>
+                <valueName>MID</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Equipo Categoria</controllingFieldValue>
+                <valueName>MID HIGH</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Equipo Categoria</controllingFieldValue>
+                <valueName>PREMIUM</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Monto</controllingFieldValue>
+                <valueName>integer</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Valor_entero__c</fullName>
+        <externalId>false</externalId>
+        <label>Valor entero</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Variable_a_comparar__c</fullName>
+        <externalId>false</externalId>
+        <label>Variable a comparar</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Categoria De Socio</fullName>
+                    <default>false</default>
+                    <label>Categoria De Socio</label>
+                </value>
+                <value>
+                    <fullName>Tipo De Cliente</fullName>
+                    <default>false</default>
+                    <label>Tipo De Cliente</label>
+                </value>
+                <value>
+                    <fullName>Tipo De Servicio</fullName>
+                    <default>false</default>
+                    <label>Tipo De Servicio</label>
+                </value>
+                <value>
+                    <fullName>Tipo De Upselling</fullName>
+                    <default>false</default>
+                    <label>Tipo De Upselling</label>
+                </value>
+                <value>
+                    <fullName>Equipo Categoria</fullName>
+                    <default>false</default>
+                    <label>Equipo Categoria</label>
+                </value>
+                <value>
+                    <fullName>Monto</fullName>
+                    <default>false</default>
+                    <label>Monto</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Variable_contra_la_que_se_compara__c</fullName>
+        <description>Variable contra la que se compara</description>
+        <externalId>false</externalId>
+        <label>Variable contra la que se compara</label>
+        <length>50</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>GP Condicional logico</label>
+    <nameField>
+        <label>Condicional logico</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Condicionales logicos</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

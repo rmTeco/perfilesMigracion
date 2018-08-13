@@ -1,0 +1,57 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objAPIName']": "Task"
+    },
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Assigned To",
+                    "name": "['ownerValueMap']['Owner']",
+                    "relationshipId": "owner",
+                    "relationshipName": "ownerValueMap",
+                    "relationshipType": "User",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": null,
+                    "name": "['parentName']",
+                    "relationshipId": "parentId",
+                    "relationshipName": "ownerValueMap",
+                    "relationshipTypeField": "parentObjAPIName",
+                    "type": "string"
+                }
+            ],
+            "name": "Task",
+            "sObjectType": "Task",
+            "templateUrl": "ta-Care-story-card"
+        }
+    ],
+    "title": "Tasks"
+}

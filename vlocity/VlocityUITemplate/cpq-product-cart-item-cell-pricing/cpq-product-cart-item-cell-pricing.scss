@@ -1,0 +1,39 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+.vlocity {
+    &.via-slds {
+        .cpq-product-cart-item-cell-pricing {
+            .cpq-product-cart-item-cell-pricing-tabs {
+                display:inline-flex;
+            }
+
+            input::-webkit-input-placeholder {
+                color: $middle-dark-gray;
+            }
+            .cpq-error-msg {
+                color: $error;
+            }
+            .cpq-success-msg {
+                color: $success;
+            }
+            .cpq-cell-pricing-modal__border {
+                border-top: 2px solid #d8dde6;
+            }
+
+            /* Overwrite slds-picklist width */
+            .cpq-pricing-picklist {
+                width: 100%;
+                .cpq-pricing-picklist__label, .cpq-pricing-picklist-dropdown {
+                    width: 100%;
+                }
+            }
+            .cpq-pricing-mandatory-input {
+                border: 1px solid $error;
+            }
+            .cpq-pricing-block-center {
+                margin: auto;
+            }
+        }
+    }
+}

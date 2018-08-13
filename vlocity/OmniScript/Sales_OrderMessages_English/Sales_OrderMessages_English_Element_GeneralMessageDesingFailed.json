@@ -1,0 +1,49 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 1,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ShowSaleOrderMessages",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sales/OrderMessages/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 7,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/Sales/OrderMessages/English",
+        "Name": "SaleOrderMessages",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/OrderMessages/English/SaleOrderMessages",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "SaleOrderMessages",
+    "%vlocity_namespace%__ParentElementType__c": "Step",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "dataJSON": false,
+        "documentNames": [
+            "CABIABAJA38d501d61e584ad89de0f86a459c4c6e",
+            "CABIAFCIAd1efbf5b2174463d8e540ac369f4c9b3"
+        ],
+        "label": null,
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "true",
+                        "field": "showErrorFailed"
+                    }
+                ]
+            }
+        },
+        "text": "<p style=\"text-align: center;\"><img src=\"../servlet/servlet.ImageServer?id=0154C000000DlFvQAK&amp;&amp;docName=CABIAFCIAd1efbf5b2174463d8e540ac369f4c9b3&amp;&amp;oid=00D4C0000008cG7UAI\" alt=\"\" width=\"70\" height=\"70\" /></p>\n<p style=\"text-align: center; font-size: 32px; font-weight: 300; font-style: normal; font-stretch: normal; line-height: normal; letter-spacing: 0.1px; color: #333333;\">La orden no pudo ser realizada.</p>\n<h6 style=\"text-align: center; font-size: 18px; font-weight: 300; font-style: normal; font-stretch: normal; line-height: normal; letter-spacing: 0.1px; color: #333333;\">Por favor, intent&aacute; nuevamente o comunicate con el *152 para realizar la compra desde otro medio.</h6>"
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Text Block",
+    "Name": "GeneralMessageDesingFailed",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/OrderMessages/English/GeneralMessageDesingFailed"
+}

@@ -1,0 +1,20 @@
+<div 
+	class="slds-notify_container slds-is-static ta-alertMessage" 
+	ng-repeat="alert in records.errores">
+	<div class="slds-notify slds-notify--toast ta-alertMessage-wrapper" role="alert">
+		<div class="ta-alertMessage-content">
+			<div class="slds-grid slds-grid--vertical-align-center">
+				<div>	
+					<slds-svg-icon
+						sprite="'utility'"
+						icon="'warning'"
+						size="'small'"
+						no-hint="true"
+						extra-classes="'ta-icon-alert'">
+					</slds-svg-icon>
+				</div>
+				<div>{{alert.descripcionAlerta}}</div>
+			</div>
+		</div>		
+	</div>
+</div>

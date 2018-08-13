@@ -1,0 +1,84 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+        "['Family']": "Movil",
+        "['ProductType']": "Plan Prepago"
+    },
+    "states": [
+        {
+            "actionCtxId": "['AssetId']",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                        },
+                        "hasExtraParams": true,
+                        "id": "CommunityServices",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Family']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Family",
+                    "name": "['Family']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Account']['Name']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "AccountName",
+                    "name": "['Account']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Product']['Name']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "ProductName",
+                    "name": "['Product']['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['LineNumber']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "LineNumber",
+                    "name": "['LineNumber']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Active",
+            "sObjectType": "Asset",
+            "templateUrl": "ta-community-services-card"
+        }
+    ],
+    "title": "Asset"
+}

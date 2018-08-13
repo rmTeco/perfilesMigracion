@@ -1,0 +1,38 @@
+<aura:component access="GLOBAL" controller="vlocity_cmt.ProfileClientAttributeController" >
+    <aura:handler event="vlocity_cmt:profileNavigationEvent" action="{!c.handleNavigationEvent}"/>
+    <aura:registerEvent name="profileUpdated" type="vlocity_cmt:profileUpdatedEvent"/>
+    <aura:registerEvent name="attributeCategoryUpdated" type="vlocity_cmt:profileAttributeCategoryUpdatedEvent"/>
+    <aura:registerEvent name="applyAttributeSucceeded" type="vlocity_cmt:profileApplyAttributeSucceededEvent"/>    
+    <aura:attribute name="entityId" type="String"/>
+    <aura:attribute name="nsPrefix" type="String"/>
+    <aura:attribute name="attributeCategoryCode" type="String"/>
+    <aura:attribute name="attributeCategoryLocked" type="Boolean"/>
+    <aura:attribute name="attributeCategoryName" type="String"/>
+    <aura:attribute name="appliedAttributes" type="vlocity_cmt.SegmentElement"/>
+    <aura:attribute name="unappliedAttributes" type="vlocity_cmt.SegmentElement"/>
+    <aura:attribute name="unappliedAttributesForDisplay" type="vlocity_cmt.SegmentElement"/>
+    
+    <section class="profile-attribute-category-edit">
+        <h3 aura:id="editList" class="slds-section-title--divider slds-text-align--center">
+            <img class="back-button" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAABHNCSVQICAgIfAhkiAAAAGJ6VFh0UmF3IHByb2ZpbGUgdHlwZSBBUFAxAAB4nFXIsQ2AMAwAwd5TeIR3HBwyDkIBRUKAsn9BAQ1XnuztbKOveo9r60cTVVVVz5JrrmkBZl4GbhgJKF8t/ExEDQ8rHgYgD0i2FMl6UPBzAAAC+0lEQVRoge2azUtUURiHnzP3WhihELYoxhmComXSLgMX4kKyWrS4fqDQxnLRNin/gITatjDbtLAZu4sW9rmQFoG1M1xKglwdapEIiRSNc+dtMQXpzCW1c+6VPM9y3sP5vT/OPV/vGbBYLBaLxWKxWCz/B/nFTnLBByYKaRPdp0x0umtySx6iplDSQqr0nlzhlG6JvWM4HwxCOY+iDgBFGkrveLzYolNmbxjOBTdBxlFb8lE0odQDnVLJG54M7qDkbkR0FvfgRZ1ySmdnO8IXh3DpPshQRIu3OA2X8Y581Snr6uxs2/hygNLSI5T0RrR4weEDHpeOfNMtHf8IP/t0iPWiD3TVjIvK42au4qmiCfl457C/2sh68RVRZlFjuJkBU2YhzhH2Px8l/PEaOFs7EzVKT3bEdBrxGJ4opHE2pkGdrhkXNUxf9l4cqZg37C+fJAzfAM1VMaGMUkP0Zh8az+MXZg1PFs5QLk2jaKqKCRuQ6qcv4xvNYQvmDD8JzhPKSxQNNaLfQa7Qe+K1Mf0IzBjOL3aCegrUV8WENRx1ge7sjBHtv6B/W/p946ltdoWU25aUWdBteOuNZzPLuM45etJzWjV3iD7DUTceAGSe0G3Fa17QprdL9MzhXDCKklsR0Vmcg514x75o0fpH9IxwCtHSTwzoW6Vzwc3oe63ME9Z10J8uaNPbJXq3pXwwiMhY7XnMMo7TnvQ81r8P55Y8KE/UXKkr21JHkiv1vjt47LujpbkCQHd2hpTbhrBSI1qPqKnK5x8vZisePek5XOccsFwVU9RBOV85ncWH+RKP17xA6LaCzFfFFCmQ8copLR5sicco/moj4doU0BaRzhhO5gaeCk2lsO/KtMm8PGy7EH9ceyE+mbclTxVxMwOgxiJadLFefIW/2qhbOrm3pd9MBncQuR0R1X61TP71sCc7gqjhiOhZSj+e65RL3jBQKcKrawjlTb8LK4hc1ymV/Cf9J3/etIQCuO30pT8mnZZZDP+pxWKxWCwWi8Viip/xigEoU/ZH8gAAAABJRU5ErkJggg==" alt="Back button" onclick="{!c.handleBackButtonClicked}" />{!v.attributeCategoryName}&nbsp;
+        </h3>
+
+        <article class="applied-attribute-edit-list group">
+                <vlocity_cmt:profileAppliedAttributesEditList appliedAttributes="{!v.appliedAttributes}"
+                                                    unappliedAttributesToBeSearched="{!v.unappliedAttributes}"
+                                                    unapplyAttribute="{!c.unapplyAttribute}" />
+        </article>
+        <article class="unapplied-attribute-edit-list">
+                <h3 class="slds-text-heading--label slds-p-top--small slds-p-bottom--small slds-p-left--x-small slds-p-right--x-small">Available</h3>
+                <vlocity_cmt:profileUnappliedAttributesEditList unappliedAttributesOriginalList="{!v.unappliedAttributes}"
+                                                                    unappliedAttributesForDisplay="{!v.unappliedAttributesForDisplay}"
+                                                                    applyAttribute="{!c.applyAttribute}" />
+        </article>
+        <aura:if isTrue="{!v.attributeCategoryLocked != true}">
+            <article class="add-attribute-edit-panel">
+                    <vlocity_cmt:profileAddAttributeEditPanel addAttribute="{!c.addAttribute}"/>
+            </article>
+        </aura:if>
+    </section>
+    
+</aura:component>

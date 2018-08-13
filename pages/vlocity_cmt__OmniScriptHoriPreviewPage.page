@@ -1,0 +1,20 @@
+<apex:page standardStylesheets="false"
+            showHeader="false"
+            sidebar="false" standardController="vlocity_cmt__OmniScript__c" extensions="vlocity_cmt.VFPageControllerBase" docType="html-5.0" >
+    <apex:includeScript value="/soap/ajax/37.0/connection.js"/>
+    <div ng-app="OmniScriptPreview" class='vlocity'>
+        <a ng-if="!isPreviewEmbedded && (!isSforce || (isSforce && !sforce.one))" href="javascript:window.location.href = document.referrer"><i class="omni-preview icon icon-v-left-caret"></i>{!$Label.OmniGoback}</a>
+        <a ng-if="!isPreviewEmbedded && isSforce && sforce.one" href="javascript:sforce.one.navigateToURL('/{!currentRecord['Id']}')"><i class="omni-preview icon icon-v-left-caret"></i>{!$Label.NewBackTo}</a>
+        <hr ng-if="!isPreviewEmbedded" />
+        <c:BusinessProcessComponent strNamespacePrefixList="{!sNS}"
+                                    strOmniScriptId="{!vlocity_cmt__OmniScript__c.Id}"
+                                    previewMode="true"
+                                    verticalMode="false"
+                                    JSONTreeHTMLTemplateName="JSONApplicationReviewHTMLTemplate.html"/>
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('OmniScriptPreview', modules);
+        </script>
+    </div>
+    <c:VFActionFunction />
+</apex:page>

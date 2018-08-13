@@ -1,0 +1,4 @@
+Name,InterfaceId__c,IsDefault__c,IsActive__c
+DefaultGenerateGlobalKeyImplementation,GUIDGenerator,TRUE,TRUE
+DefaultCategoryGUIDQuery,CategoryGUIDBatchJobQuery,TRUE,TRUE
+DefaultAttributeGUIDQuery,AttributeGUIDBatchJobQuery,TRUE,TRUE

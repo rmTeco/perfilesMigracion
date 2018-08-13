@@ -1,0 +1,58 @@
+<!-- <div>{{bpTree.response | json}}</div> -->
+
+<div class="ta-care-ownership-changes-containter"> 
+<div class="ta-care-ownership-changes-summary">
+    
+    <div class="slds-p-around--large" style="background: #FFF;width:100%;">
+        <div class="confirmation">
+            
+            <!--<i class="icon icon-v-check-circle-line green confirmed"></i>-->
+           Al confirmar se realizará la siguiente gestión: <br><br>&nbsp;
+        </div>
+        
+        
+        <div class="services slds-size--1-of-2">
+            <div class="service">
+                 <span class="line_number" ng-if="bpTree.response.Step3.Contact.FirstName2">
+                     {{bpTree.response.Step3.Contact.FirstName}} {{bpTree.response.Step3.Contact.LastName}} <br/>
+                     {{bpTree.response.Step3.Contact.DocumentNumber}}
+                 </span>
+                 <span class="line_number" ng-if="bpTree.response.Step3.Account.Name">
+                     {{bpTree.response.Step3.Account.Name}} <br/>
+                     {{bpTree.response.Step3.Account.CUIT}}
+                 </span>
+                 <span class="line_number" ng-if="bpTree.response.Step3.Account.Name">
+                     {{bpTree.response.Step3.AssetsM[0].Name}}<br>
+                     {{bpTree.response.Step3.AssetsM[0].NumberLine}}
+                 </span>
+            </div>
+        </div>
+        
+        
+        <div class="slds-has-divider--top slds-m-bottom--xx-large"></div>
+        
+        
+        <div class="slds-grid slds-wrap slds-grid--pull-padded slds-m-bottom--x-large">
+            <!--div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--1-of-6 slds-large-size--1-of-12">
+                <div class="icon green usericon">
+                    <slds-svg-icon sprite="'utility'" 
+                       icon="'user'" 
+                       size="'large'" 
+                       no-hint="true"
+                       extra-classes="'slds-icon-text-green'">
+                    </slds-svg-icon>
+                </div>
+            </div-->
+            <div class="titular slds-p-horizontal--small slds-size--2-of-3 slds-medium-size--4-of-6 slds-large-size--11-of-12">
+                Tipo de gestión: {{bpTree.response.Step1SelectSuspensionOrReconnection.SelectSuspensionOrReconnection}}<br/>
+                <span ng-if="bpTree.response.Step4.SelectFraud">
+                    Tipo de suspensión: {{bpTree.response.Step4.SelectFraud}} - {{bpTree.response.Step4.SelectSubFraud}}<br/>
+                </span>
+                
+            </div>
+        </div>
+            
+        
+    </div>
+    </div>
+</div>

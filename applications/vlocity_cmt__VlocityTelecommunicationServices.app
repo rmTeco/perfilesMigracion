@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <defaultLandingTab>standard-home</defaultLandingTab>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>Vlocity Telecommunication Services</label>
+    <tabs>standard-Contact</tabs>
+    <tabs>standard-Opportunity</tabs>
+    <tabs>standard-Account</tabs>
+    <tabs>standard-Order</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>vlocity_cmt__DataRaptor</tabs>
+    <tabs>vlocity_cmt__Household__c</tabs>
+    <tabs>vlocity_cmt__Interface_DRGeneric__c</tabs>
+    <tabs>vlocity_cmt__PartyRelationshipType__c</tabs>
+    <tabs>vlocity_cmt__AccountBalance__c</tabs>
+    <tabs>vlocity_cmt__EntityFilter__c</tabs>
+    <tabs>vlocity_cmt__FieldMapper</tabs>
+    <tabs>vlocity_cmt__InterfaceImplementation__c</tabs>
+    <tabs>vlocity_cmt__PaymentAdjustment__c</tabs>
+    <tabs>vlocity_cmt__PaymentMethod__c</tabs>
+    <tabs>vlocity_cmt__ProductEligibility__c</tabs>
+    <tabs>vlocity_cmt__ProductRelationship__c</tabs>
+    <tabs>vlocity_cmt__Statement__c</tabs>
+    <tabs>vlocity_cmt__CMTAdmin</tabs>
+    <tabs>vlocity_cmt__Vlocity_Rule_Workbench</tabs>
+    <tabs>vlocity_cmt__OfferingProcedure__c</tabs>
+    <tabs>TS_Symptom__c</tabs>
+    <tabs>vlocity_cmt__VlocityTrackingEntry__c</tabs>
+    <tabs>Transaction_History__c</tabs>
+    <tabs>AttributesConfiguration</tabs>
+    <tabs>WorkTeam__c</tabs>
+    <tabs>vlocity_cmt__SyncDeltaObject__c</tabs>
+    <tabs>Team_Member__c</tabs>
+    <tabs>vlocity_cmt__InboundRESTInterface__c</tabs>
+    <tabs>Repro_Reporter</tabs>
+    <tabs>Permissions_by_Work_Team</tabs>
+</CustomApplication>

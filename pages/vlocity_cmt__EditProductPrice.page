@@ -1,0 +1,97 @@
+<apex:page standardController="Product2" extensions="vlocity_cmt.EditProductPriceController">
+	<apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"/>
+
+	<style>		
+		.pbeColumn {
+			width:150px;
+			margin-left: 10px;
+			margin-right:10px;
+		}
+		
+		.alignRight {
+			text-align:right;
+		}
+		
+		.alignRight input {
+			margin-right: 40px;
+		}
+
+		.margin-left {
+			margin-left: 25px;
+		}
+
+		th {
+			padding: 8px 10px 8px 0px ;
+		}
+
+	</style>
+	<script>
+		$(document).ready(function(){
+			$('.pbeTable tr').each(function (i, row) {
+	        	var $row = $(row),
+    	        	$usePriceChecked = ($row.find('input.usePriceCheckBox:checked'))
+				if ($usePriceChecked.length>0){
+					$usePriceChecked.each(function(j, checkbox){
+						var $priceInputField = ($(checkbox).closest('td').next('td').find('input'))[0];
+						$priceInputField.disabled=true;
+					});
+				}     
+
+        	});
+
+		});
+	
+		var useprice;
+		var priceinput;
+		function updateUseStandard(checkbox, price){
+			usePrice = checkbox;
+			priceinput = ($(checkbox).closest('td').next('td').find('input'))[0];
+			if(usePrice.checked){
+				priceinput.value=price;
+				priceinput.disabled = true;
+			}
+			else {
+				priceinput.disabled = false;
+			}
+		}
+	
+	</script>
+	<apex:sectionHeader title="{!$Label.vlocity_cmt__editproductprice}" rendered="true"/>
+
+    <apex:outputPanel layout="block" style="overflow:auto;" >
+		<apex:form >
+			<apex:pageBlock >
+				<apex:pageBlockButtons >
+                	<apex:commandLink value="{!$Label.vlocity_cmt__save}" action="{!saveProductPrices}" id="saveButton"  styleClass="btn" style="padding: 3px 10px; margin: 1px; text-decoration: none;" />
+                	<apex:commandLink value="{!$Label.vlocity_cmt__cancel}" action="{!cancel}" id="cancelButton"  styleClass="btn" style="padding: 3px 10px; margin: 1px; text-decoration: none;" />
+				</apex:pageBlockButtons>
+				<apex:DataTable value="{!productPriceEntries}" var="productPriceEntry" id="pbeTable" styleClass="pbeTable">
+					<apex:column headerValue="{!$Label.vlocity_cmt__product}" styleClass="pbeColumn">
+						<apex:outputText value="{!Product2.Name}"/>
+					</apex:column>
+					<apex:column headerValue="{!$Label.vlocity_cmt__pricebook}" styleClass="pbeColumn">
+						<apex:outputText value="{!productPriceEntry.pricebookEntry.Pricebook2.Name}"/>
+					</apex:column>
+					<apex:column headerValue="{!$Label.vlocity_cmt__usestandardprice}" styleClass="pbeColumn alignRight">
+						<apex:outputText value="{!productPriceEntry.standardPrice}"/>
+						<apex:inputCheckbox value="{!productPriceEntry.pricebookEntry.UseStandardPrice}" onclick="updateUseStandard(this, '{!productPriceEntry.standardPrice}')" styleClass="usePriceCheckBox">
+						</apex:inputCheckbox>
+					</apex:column>
+					<apex:column headerValue="{!$Label.vlocity_cmt__listprice}" styleClass="numericalColumn pbeColumn">
+						<apex:inputField value="{!productPriceEntry.pricebookEntry.UnitPrice}" id="listprice"/>
+					</apex:column>
+					<apex:column headerValue="{!$Label.vlocity_cmt__recurringprice}" styleClass="numericalColumn pbeColumn">
+						<apex:inputField value="{!productPriceEntry.pricebookEntry.vlocity_cmt__RecurringPrice__c}"/>
+					</apex:column>
+                    <apex:column headerValue="{!$Label.vlocity_cmt__recurringfrequency}" >
+	                    <apex:inputField value="{!productPriceEntry.pricebookEntry.vlocity_cmt__RecurringUOM__c}" >
+	                    </apex:inputField>
+					</apex:column>
+					<apex:column headerValue="{!$Label.vlocity_cmt__active}" styleClass="pbeColumn margin-left">
+						<apex:inputCheckbox value="{!productPriceEntry.pricebookEntry.IsActive}"/>
+					</apex:column>
+				</apex:DataTable>
+			</apex:pageBlock>
+		</apex:form>
+	</apex:outputPanel>
+</apex:page>

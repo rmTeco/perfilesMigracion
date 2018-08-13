@@ -1,0 +1,47 @@
+<apex:page StandardController="vlocity_cmt__PaymentMethod__c" showHeader="true" extensions="vlocity_cmt.PaymentMethodController">
+	<apex:form >
+	<apex:sectionHeader title="Payment Method Edit " subtitle="{!vlocity_cmt__PaymentMethod__c.Name}" rendered="{!vlocity_cmt__PaymentMethod__c.Id != null}"/>
+	<apex:sectionHeader title="Payment Method Edit " subtitle="{!$Label.vlocity_cmt__newpaymentmethod}" rendered="{!vlocity_cmt__PaymentMethod__c.Id == null}"/>
+
+	<!-- <apex:outputLink value="/{!MyObject.Id}">Back to List</apex:outputLink> -->
+
+		<apex:pageBlock title="{!$Label.vlocity_cmt__paymentinformation}" id="pb1">
+			<apex:pageBlockSection columns="1">
+				<apex:actionRegion >	
+					<apex:outputLabel value="{!$ObjectType.vlocity_cmt__PaymentMethod__c.fields.vlocity_cmt__MethodType__c.label}" for="if1"/>
+					<apex:inputField id="if1" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c}" label="Method Type" required="true">
+						<apex:actionSupport event="onchange" rerender="pb1"/>
+					</apex:inputField>
+				</apex:actionRegion>
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="xxxpbs1" columns="1" rendered="{!IF((vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Credit Card')||(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c=''),true,false)}">
+				<apex:inputField id="cardType" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardType__c}" required="{!IF((vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Credit Card')||(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c=''),true,false)}"/>
+				<apex:inputField id="cardHolder" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardHolderName__c}" required="{!IF((vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Credit Card')||(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c=''),true,false)}"/>
+				<apex:inputField id="cardNumber" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardNumber__c}" required="{!IF((vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Credit Card')||(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c=''),true,false)}"/>
+				<apex:inputField id="expMonth" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__ExpirationMonth__c}" required="{!IF((vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Credit Card')||(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c=''),true,false)}"/>
+				<apex:inputField id="expYear" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__ExpirationYear__c}" required="{!IF((vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Credit Card')||(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c=''),true,false)}"/>
+			</apex:pageBlockSection>
+	
+			<apex:pageBlockSection id="xxxpbs2" columns="1" rendered="{!IF(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Bank Account',true,false)}">
+				<apex:inputField id="BankAccountHolder" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__CardHolderName__c}" required="{!IF(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Bank Account',true,false)}"/>
+				<apex:inputField id="BankAccountType" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__BankAccountType__c}" required="{!IF(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Bank Account',true,false)}"/>
+				<apex:inputField id="RoutingTransitNumber" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__RoutingTransitNumber__c}" required="{!IF(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Bank Account',true,false)}"/>
+				<apex:inputField id="BankNumber" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__BankAccountNumber__c}" required="{!IF(vlocity_cmt__PaymentMethod__c.vlocity_cmt__MethodType__c ='Bank Account',true,false)}"/>
+			</apex:pageBlockSection>
+			
+			<apex:pageBlockSection columns="1">
+				<apex:inputField id="Account" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__AccountId__c}"/>
+				<apex:inputField id="isActive" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__IsActive__c}"/>
+				<apex:inputField id="isPrimary" value="{!vlocity_cmt__PaymentMethod__c.vlocity_cmt__IsPrimary__c}"/>
+			
+			</apex:pageBlockSection>
+			
+			<apex:pageblockbuttons >
+				<apex:commandbutton action="{!savePaymentMethod}" value="{!$Label.vlocity_cmt__save}"></apex:commandbutton>
+				<!-- If you wish to implement Save & New functionality you will have to write an apex Extension with your own Save & New Method -->
+				<apex:commandbutton action="{!cancel}" value="{!$Label.vlocity_cmt__cancel}"></apex:commandbutton>
+			</apex:pageblockbuttons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

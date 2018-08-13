@@ -1,0 +1,151 @@
+<div ng-controller="CustomerHistoryCtrl" ng-init="init()">
+	<!-- WEB -->
+
+	<div
+		class="lineNumber via-slds slds-m-around--small slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium">
+		<div
+			class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+			<p>
+				<b>Suspensiones y Reconexiones</b>
+			</p>
+		</div>
+
+	</div>
+
+	<div
+		class="slds-grid slds-wrap slds-card slds-m-bottom--small  slds-m-around--medium"
+		style="background: #FFF;">
+		<div
+			class="slds-grid slds-wrap slds-grid--pull-padded slds-m-around--medium slds-p-around--medium negotationsfilter">
+
+			<div
+				class="slds-p-horizontal--small slds-size--1-of-9 slds-medium-size--1-of-9 slds-large-size--1-of-9">
+				<div id="divExterno"
+					class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+					<label class="slds-text-heading--small HelveticaNeue">Procedimiento
+						<div
+							class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control HelveticaNeue">
+							<select ng-model="selectProcessTransaction" class="slds-input">
+								<option value="">Todos</option>
+								<option>Suspension</option>
+								<option>Rehabilitacion</option>
+							</select>
+						</div>
+					</label>
+				</div>
+			</div>
+
+			<div
+				class="slds-p-horizontal--small slds-size--1-of-9 slds-medium-size--1-of-9 slds-large-size--1-of-9" style="display:none;">
+				<div id="divExterno"
+					class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+					<label class="slds-text-heading--small HelveticaNeue">Motivo
+						<div
+							class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control HelveticaNeue">
+							<select ng-model="selectMotiveTransaction" class="slds-input">
+								<option value="">Todos</option>
+								<option value="Siniestro">Siniestro</option>
+								<!--<option>Fraude</option>-->
+								<option value="Fraude">Administrativa</option>
+								<option value="Port-out">Port-out</option>
+								<option value="Mora">Mora</option>
+								<option value="Línea suspendida por mora">Línea suspendida por mora</option>
+								<option value="Línea suspendida por Administrativo">Línea suspendida por causa Administrativa</option>
+								<option value="Línea suspendida voluntariamente">Línea suspendida voluntariamente</option>
+								<option value="Línea suspendida por siniestro">Línea suspendida por siniestro</option>
+								<option value="Línea suspendida por Dorma">Línea suspendida por Dorma</option>
+							</select>
+						</div>
+					</label>
+				</div>
+			</div>
+
+			<div
+				class="slds-p-horizontal--small slds-size--1-of-9 slds-medium-size--1-of-9 slds-large-size--1-of-9"  style="display:none;">
+				<div id="divExterno"
+					class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click">
+					<label class="slds-text-heading--small HelveticaNeue">Tipo
+						<div
+							class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input unfix-control HelveticaNeue">
+
+							<select ng-model="selectTypeTransaction" class="slds-input">
+								<option value="">Todos</option>
+								<option>Línea Fija</option>
+								<option>Línea Móvil</option>
+								<option>Internet</option>
+								<option>Servicio Valor</option>
+								<option>Plan Prepago</option>
+								<option>Plan Pospago</option>
+								<option>Plan Hibrido</option>
+								<option>Servicio GSM</option>
+								<option>Numeros Amigos</option>
+								<option>Pack</option>
+								<option>Reseteo de Cuota</option>
+								<option>Control Cuota Datos</option>
+								<option>Simcard</option>
+								<option>Recarga</option>
+								<option>Credito Adicional</option>
+								<option>Roaming</option>
+								<option>Dispositivo</option>
+								<option>Prestamo</option>
+							</select>
+						</div>
+					</label>
+				</div>
+			</div>
+
+			<div
+				class="slds-p-horizontal--small slds-size--1-of-9 slds-medium-size--1-of-9 slds-large-size--1-of-9">
+				<div ng-class="errorFound ? 'slds-visible' : 'slds-hidden'"
+					class="slds-size--2-of-9 slds-medium-size--2-of-9 slds-large-size--2-of-9 slds-m-top--small">
+					<div class="slds-text-align--left slds-text-color--error">{{errorMessage}}</div>
+				</div>
+				<div
+					class="slds-size--2-of-9 slds-medium-size--2-of-9 slds-large-size--2-of-9 slds-m-top--small">
+					<button ng-click="filtersAccepted()"
+						class="slds-button slds-button--brand filterNegotiations slds-p-horizontal--x-large slds-p-vertical--x-small">Consultar</button>
+				</div>
+			</div>
+		</div>
+
+		<vloc-card ng-repeat="card in cards" ng-model="card" data="card"
+			records="records" index="{{$index}}" session-id="{{sessionId}}">
+
+		</vloc-card>
+
+		<!--div
+			class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--x-large">
+			<div class="slds-m-around--medium">
+				<div class="slds-grid slds-p-top--small">
+					<div class="slds-grid slds-col">
+						<label class="slds-form-element__label">Filas por página</label>
+						<div class="slds-form-element__control">
+							<div class="slds-select_container">
+								<select class="slds-select"
+									ng-options="item for item in numberOfRowsOption"
+									ng-model="itemsPerPage" ng-click="groupToPages(records)">
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="slds-col"></div>
+					<div class="slds-col">
+						<div class="slds-form-element slds-button-group pull-right"
+							role="group">
+							<button class="slds-button slds-button--neutral" title="Previous"
+								ng-click="goToPage(previousPage);"
+								ng-disabled="currentPage == 0">« Anterior</button>
+							<button ng-repeat="n in currentRange"
+								class="slds-button slds-button--neutral" ng-click="goToPage(n);"
+								ng-disabled="n == currentPage">{{n + 1}}</button>
+							<button class="slds-button slds-button--neutral"
+								ng-click="goToPage(nextPage);"
+								ng-disabled="currentPage == pagedItems.length - 1">Siguiente
+								»</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div-->
+	</div>
+</div>

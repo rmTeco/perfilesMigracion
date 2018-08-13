@@ -1,0 +1,147 @@
+[
+    {
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "b0c543ec-c4eb-f98f-f877-c031b5213262",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Attribute\",\"source_attr_name\":\"ICCID\",\"source_attr_code\":\"FAN_ATT_000071\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"ICCID\",\"destination_attr_code\":\"XOM_ICCID\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"IMSI\",\"source_attr_code\":\"FAN_ATT_000072\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"IMSI\",\"destination_attr_code\":\"XOM_IMSI\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"KI\",\"source_attr_code\":\"FAN_ATT_000073\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"KI\",\"destination_attr_code\":\"XOM_KI\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"MSISDN\",\"source_attr_code\":\"MSISDN\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"MSISDN2\",\"destination_attr_code\":\"XOM_MSISDN\"},{\"transform_mappings\":[{\"source_value\":\"Cambio de plan\",\"destination_value\":\"Cambio de Plan\"}],\"source_type\":\"Field\",\"source_field_name\":\"%vlocity_namespace%__Action__c\",\"mapping_type\":\"list\",\"destination_attr_name\":\"Action\",\"destination_attr_code\":\"e1dd1916-f107-0526-b619-b9877ce70ade\"},{\"source_type\":\"Field\",\"source_field_name\":\"%vlocity_namespace%__ProductHierarchyPath__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Huawei Offer Id\",\"destination_attr_code\":\"XOM_HWOFF\"},{\"transform_mappings\":[{\"source_value\":\"Delivery\",\"destination_value\":\"true\"},{\"source_value\":\"Store pick-up\",\"destination_value\":\"false\"}],\"source_type\":\"Field\",\"source_field_name\":\"Order.Delivery_Method__c\",\"mapping_type\":\"list\",\"destination_attr_name\":\"Delivery required?\",\"destination_attr_code\":\"delivery_req\"},{\"source_type\":\"Field\",\"source_field_name\":\"Operation_Code__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Código de Operación\",\"destination_attr_code\":\"a161204a-d175-1af6-1197-2f20c1a69544\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"NMU Simcard\",\"source_attr_code\":\"FAN_ATT_000070\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"NMU\",\"destination_attr_code\":\"fcb1b209-090e-d19f-9ad7-38621aed348f\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 1,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "SimCard -> SimCard CFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/SimCard -> SimCard CFS/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "07da17ac-ef0b-5660-23b6-98e1734c0e1b",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/07da17ac-ef0b-5660-23b6-98e1734c0e1b",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "caa0d4de-9306-502d-c0e3-926162810b76",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Field\",\"source_field_name\":\"%vlocity_namespace%__BillingAccountId__r.CustomerIntegrationId__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Huawei Customer Id\",\"destination_attr_code\":\"XOM_HW_CUST\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"IMSI\",\"source_attr_code\":\"FAN_ATT_000072\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"IMSI\",\"destination_attr_code\":\"XOM_IMSI\"},{\"source_type\":\"Field\",\"source_field_name\":\"%vlocity_namespace%__AssetReferenceId__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Simcard AssetReferenceId\",\"destination_attr_code\":\"XOM_SC_ARID\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"Modo de Pago\",\"source_attr_code\":\"FAN_ATT_000045\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Modo de pago\",\"destination_attr_code\":\"XOM_PAY_MODE\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"ICCID\",\"source_attr_code\":\"FAN_ATT_000071\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"ICCID\",\"destination_attr_code\":\"XOM_ICCID\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"IMSI\",\"source_attr_code\":\"FAN_ATT_000072\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"IMSI\",\"destination_attr_code\":\"XOM_IMSI\"},{\"transform_mappings\":[{\"source_value\":\"Delivery\",\"destination_value\":\"true\"},{\"source_value\":\"Store pick-up\",\"destination_value\":\"false\"}],\"source_type\":\"Field\",\"source_field_name\":\"Order.Delivery_Method__c\",\"mapping_type\":\"list\",\"destination_attr_name\":\"Delivery required?\",\"destination_attr_code\":\"delivery_req\"},{\"source_type\":\"Field\",\"source_field_name\":\"Order.Gestion__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Gestion\",\"destination_attr_code\":\"XOM_GESTION\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 0,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "Simcard --> Huawei CBS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/Simcard --> Huawei CBS/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "b1add5de-dea3-6598-9d82-62b05a64c837",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Field\",\"source_field_name\":\"Order.Type\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"action\",\"destination_attr_code\":\"323_act\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"IMSI\",\"source_attr_code\":\"FAN_ATT_000072\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"IMSI\",\"destination_attr_code\":\"XOM_IMSI\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"KI\",\"source_attr_code\":\"FAN_ATT_000073\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"KI\",\"destination_attr_code\":\"XOM_KI\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"Modo de Pago\",\"source_attr_code\":\"FAN_ATT_000045\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"PAR_MERCADO\",\"destination_attr_code\":\"323_PME\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"ICCID\",\"source_attr_code\":\"FAN_ATT_000071\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"PAR_ORDER_TYPE\",\"destination_attr_code\":\"323_POT\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"ICCID\",\"source_attr_code\":\"FAN_ATT_000071\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"ICCID\",\"destination_attr_code\":\"XOM_ICCID\"},{\"value\":\"false\",\"mapping_type\":\"static\",\"destination_attr_name\":\"Repro\",\"destination_attr_code\":\"XOM_REPRO\"},{\"source_type\":\"Field\",\"source_field_name\":\"Order.Gestion__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Gestion\",\"destination_attr_code\":\"XOM_GESTION\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 1,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "Simcard -> Comptel RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/Simcard -> Comptel RFS/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "a4b8c36a-cbab-0061-1bdb-960e16c01c92",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/a4b8c36a-cbab-0061-1bdb-960e16c01c92",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "a19cdf69-edc6-d564-c729-678dc42d7167",
+        "%vlocity_namespace%__MappingsData__c": "[{\"source_type\":\"Attribute\",\"source_attr_name\":\"MSISDN\",\"source_attr_code\":\"MSISDN\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"MSISDN2\",\"destination_attr_code\":\"XOM_MSISDN\"},{\"value\":\"false\",\"mapping_type\":\"static\",\"destination_attr_name\":\"Repro\",\"destination_attr_code\":\"XOM_REPRO\"},{\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Gestion\",\"destination_attr_code\":\"XOM_GESTION\",\"source_field_name\":\"Order.Gestion__c\",\"source_type\":\"Field\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 1,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "Simcard -> Numeracion Movil RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/Simcard -> Numeracion Movil RFS/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    },
+    {
+        "%vlocity_namespace%__ConditionData__c": "{\"singleconditions\":[{\"right-side\":\"Suspension por siniestro\",\"right-side-type\":\"value\",\"op\":\"=\",\"left-side\":\"Order.Gestion__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"},{\"right-side\":\"Delivery\",\"right-side-type\":\"value\",\"op\":\"=\",\"left-side\":\"Order.Delivery_Method__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"},{\"conditionname\":\"Condition 1\",\"left-side-type\":\"field-OrderItem\",\"left-side-datatype\":\"picklist\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"op\":\"=\",\"right-side-type\":\"value\",\"right-side\":\"Suspend-Siniestro\"},{\"right-side\":\"Suspend-Robo\",\"right-side-type\":\"value\",\"op\":\"=\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"},{\"right-side\":\"Suspend-Hurto\",\"right-side-type\":\"value\",\"op\":\"=\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"},{\"right-side\":\"Suspend-Extravio\",\"right-side-type\":\"value\",\"op\":\"=\",\"left-side\":\"%vlocity_namespace%__SubAction__c\",\"left-side-datatype\":\"picklist\",\"left-side-type\":\"field-OrderItem\",\"conditionname\":\"Condition 1\"}],\"type\":\"OR\",\"name\":\"SimpleCondition\"}",
+        "%vlocity_namespace%__DestinationDefaultQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMaxQuantity__c": 1,
+        "%vlocity_namespace%__DestinationMinQuantity__c": 1,
+        "%vlocity_namespace%__DestinationProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "7c6f396e-7b33-88e0-c14e-012a98a9a244",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "Product2/7c6f396e-7b33-88e0-c14e-012a98a9a244",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__GlobalKey__c": "85bc6377-9200-d8dc-a769-1b5d7bc81bc2",
+        "%vlocity_namespace%__MappingsData__c": "[{\"transform_mappings\":[{\"source_value\":\"Delivery\",\"destination_value\":\"true\"}],\"source_type\":\"Field\",\"source_field_name\":\"Order.Delivery_Method__c\",\"mapping_type\":\"list\",\"destination_attr_name\":\"Delivery required?\",\"destination_attr_code\":\"XOM_DELIVERY_REQUIRED\"},{\"source_type\":\"Field\",\"source_field_name\":\"Codigo_Movimiento_Inventario__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Código de Operación\",\"destination_attr_code\":\"XOM_COD_OPER\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"ICCID\",\"source_attr_code\":\"FAN_ATT_000071\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Número de Serie\",\"destination_attr_code\":\"XOM_NUM_SER\"},{\"source_type\":\"Field\",\"source_field_name\":\"Deposit_Code__c\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Código Deposito Destino\",\"destination_attr_code\":\"c2552aca-38d5-fb13-eff3-8a2db3811c5e\"},{\"source_type\":\"Attribute\",\"source_attr_name\":\"NMU Simcard\",\"source_attr_code\":\"FAN_ATT_000070\",\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"NMU\",\"destination_attr_code\":\"XOM_NMU_CODE\"},{\"value\":\"STANDARD\",\"mapping_type\":\"static\",\"destination_attr_name\":\"Gestion\",\"destination_attr_code\":\"XOM_GESTION\"},{\"mapping_type\":\"ad-verbatim\",\"destination_attr_name\":\"Número de Serie\",\"destination_attr_code\":\"XOM_NUM_SER\",\"source_field_name\":\"%vlocity_namespace%__SerialNumber__c\",\"source_type\":\"Field\"}]",
+        "%vlocity_namespace%__Priority__c": "",
+        "%vlocity_namespace%__RequireReservation__c": false,
+        "%vlocity_namespace%__SourceDefaultQuantity__c": 1,
+        "%vlocity_namespace%__SourceMaxQuantity__c": "",
+        "%vlocity_namespace%__SourceMinQuantity__c": 0,
+        "%vlocity_namespace%__SourceProductId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/ba783945-517a-b1ce-6ae2-08537cae7768",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__XORGroup__c": "",
+        "Name": "Simcard -> Vmi.net Item RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__DecompositionRelationship__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__DecompositionRelationship__c/Simcard -> Vmi.net Item RFS/Product2/ba783945-517a-b1ce-6ae2-08537cae7768"
+    }
+]

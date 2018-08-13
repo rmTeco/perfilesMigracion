@@ -1,0 +1,242 @@
+@import 'campaign-variables';
+@import 'campaign-mixins';
+
+@media screen and (min-width: $bp-small) {
+    .campaign-member-log-actions {
+        transition: max-height .5s linear;
+        max-height: 2.7rem;
+        position: relative;
+        z-index: 5;
+
+        .member-log-actions-tabs {
+            .slds-tabs--scoped {
+                transition: max-height .5s linear;
+                max-height: 2.7rem;
+            }
+
+            .slds-tabs--scoped__nav {
+                position: relative;
+                border-radius: 0.25rem;
+                transition: all .5s linear;
+                background-color: lighten($cards-border-gray, 4%);
+
+                li.tabs-icon {
+                    width: 2.5rem;
+                    text-align: center;
+
+                    .slds-icon_container {
+                        line-height: 2.45rem;
+
+                        .slds-icon {
+                            fill: white;
+                            position: relative;
+                            top: -1px;
+                        }
+                    }
+                }
+
+                .slds-tabs--scoped__item {
+                    background-color: $cards-gray;
+                    margin-bottom: 0;
+
+                    .slds-icon_container {
+                        display: none;
+                    }
+
+                    .slds-tabs--scoped__link {
+                        transition: all .15s linear;
+                        border-left-color: $cards-border-gray;
+                        border-right-color: $cards-border-gray;
+                        // margin-bottom: -1px;
+                    }
+
+                    &:first-child {
+                        border-top-left-radius: 0.25rem;
+                        border-bottom-left-radius: 0.25rem;
+                    }
+
+                    &.slds-active {
+                        background-color: white;
+
+                        .slds-tabs--scoped__link {
+                            height: calc(100% + 1px);
+                            border-bottom: 1px solid white;
+                        }
+                    }
+                }
+            }
+            .slds-tabs--scoped__content {
+                position: relative;
+                transform: scaleY(0);
+                transform-origin: top;
+                transition: transform .4s linear;
+                transition-delay: .1s;
+                
+                &:before {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 1;
+                    content: '';
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    transition: opacity .5s linear;
+                    opacity: 1;
+                    visibility: visible;
+                    background-color: white;
+                }
+            }
+            .slds-form--stacked {
+                .slds-button--brand, .slds-button--neutral {
+                    min-width: 7rem;
+                }
+            }
+        }
+        &.via-toggle-tabs-collapsed {
+            max-height: 2.7rem;
+
+            .member-log-actions-tabs {
+                .slds-tabs--scoped {
+                    max-height: 2.7rem;
+                }
+
+                .slds-tabs--scoped__content {
+                    transform: scaleY(0);
+
+                    &:before {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+            }
+        }
+
+        &.via-toggle-tabs-expanded {
+            max-height: 35rem;
+
+            .member-log-actions-tabs {
+                .slds-tabs--scoped {
+                    max-height: 35rem;
+                }
+
+                .slds-tabs--scoped__nav {
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+
+                    .slds-tabs--scoped__item {
+                        margin-bottom: -1px;
+
+                        &:first-child {
+                            border-bottom-left-radius: 0;
+                        }
+                    }
+                }
+                .slds-tabs--scoped__content {
+                    transform: scaleY(1);
+
+                    &:before {
+                        opacity: 0;
+                        visibility: hidden;
+                    }
+                }
+            }
+        }
+
+        .slds-dropdown.slds-datepicker.timepicker {
+            .slds-button {
+                min-width: 2.5rem;
+
+                + .slds-button {
+                    margin-left: 0;
+                }
+            }
+            td {
+                .slds-day.slds-is-selected {
+                    background: $primary-medium;
+                    color: #fff;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: $bp-small) {
+    .campaign-member-log-actions {
+        .member-log-actions-tabs {
+            .slds-tabs--scoped__nav {
+                @include clearfix;
+                background-color: transparent;
+                border: none;
+                border-radius: 0;
+                display: block;
+                text-align: center;
+                width: 16.5rem;
+                margin: 0 auto;
+
+                .slds-tabs--scoped__item {
+                    float: left;
+                    text-transform: none;
+                    padding: 0.5rem;
+                    border: 1px solid $cards-border-gray;
+                    margin-right: 0.75rem;
+                    margin-bottom: 0.75rem;
+                    min-width: 5rem;
+                    min-height: 5rem;
+                    cursor: pointer;
+                    letter-spacing: 0;
+
+                    &:hover, &:focus {
+                        background-color: $cards-gray;
+                    }
+
+                    &:nth-child(3n+3) {
+                        margin-right: 0;
+                    }
+
+                    .slds-icon_container {
+                        width: 100%;
+
+                        .slds-icon {
+                            margin: 0 auto;
+                            display: block;
+                        }
+                    }
+
+                    .slds-tabs--scoped__link {
+                        padding: 0;
+                        border: none;
+                        height: auto;
+                        line-height: 1.2rem;
+
+                        &:hover, &:focus {
+                            border: none;
+                        }
+                    }
+                }
+            }
+
+            .slds-tabs--scoped__content {
+                border: none;
+                border-radius: 0;
+                transition: none;
+            }
+        }
+
+        &.via-toggle-tabs-collapsed {
+            .member-log-actions-tabs {
+                .slds-tabs--scoped__content {
+                    display: none;
+                }
+            }
+        }
+
+        &.via-toggle-tabs-expanded {
+            .member-log-actions-tabs {
+                .slds-tabs--scoped__nav {
+                    display: none;
+                }
+            }
+        }
+    }
+}

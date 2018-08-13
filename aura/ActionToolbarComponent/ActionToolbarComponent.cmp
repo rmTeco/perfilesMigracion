@@ -1,0 +1,60 @@
+<aura:component extensible="true" access="GLOBAL" controller="vlocity_cmt.ActionDisplayController">                   
+    <link href="{! '/resource/' +  v.nsPrefix + 'ActionComponentCss/'}" rel="stylesheet"/>
+    <link href="{! '/resource/' +  v.nsPrefix + 'vlocity_assets/css/vlocity.css'}" rel="stylesheet"/>
+    <ltng:require styles="{! '/resource/' +  v.nsPrefix + 'vlocity_assets/css/vlocity.css'}"/> 
+    <aura:attribute name="recordId" type="String" access='global'/>
+    <aura:attribute name="style" type="String" access='global'/>
+    <aura:attribute name="objType" type="String" access='global'/>
+    <aura:attribute name="displayOn" type="String" access='global'/>
+    <aura:attribute name="linkType" type="String" access='global'/>
+    <aura:attribute name="baseURL" type="String"/>
+    <aura:attribute name="customCommunityPage" type="String" access='global'/>
+    <aura:attribute name="nsPrefix" type="String"/>
+    <aura:attribute name="styleHtml" type="String" default="action-container action-horizontal"/>
+    <aura:attribute name="vlocActions" type="Object" access='global'/>
+  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <style> 
+        .forceIconDeprecated[data-icon]:before {
+            font-family: "forceIconFont" !important;
+            font-weight: normal !important;
+            font-variant: normal !important;
+            text-transform: none !important;
+        }
+        .selfServiceIcon[data-icon]:before {
+            font-family: 'MSSIcons' !important; 
+        }
+    	.vlocity .action-container.action-vertical{
+        	display: block;
+        }
+        .vlocity .action-container.action-horizontal{
+        	display: inline-table;
+        }
+        .action-btn{
+            background:none;
+    		outline:none;
+    		border:none;
+    		box-shadow:none;
+        }
+        .action-btn:active{
+            background:none;
+            outline:none;
+            border:none;
+            box-shadow:none;
+        }
+        .vlocity .action-container .action-item .image-wrapper {
+        	margin: 0;
+        }
+    </style>   
+    <div class="action vlocity">
+        <div id="action" class="vlocity-actions">
+            <div class="{!v.styleHtml}">  
+                <aura:iteration items="{!v.vlocActions}" var="action"> 
+                    <div class="action-item">    
+                        <vlocity_cmt:ActionInnerComponent itemObj="{!action}" actionClick="{!c.handleAction}"/>
+                    </div>
+                </aura:iteration>
+            </div>
+    	</div>
+    </div> 
+</aura:component>

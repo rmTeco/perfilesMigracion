@@ -1,0 +1,135 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    .cpq-product-item-details {
+        .cpq-product-item-details-gallery {
+            margin-top: $cpq-padding-large-vertical*2;
+            ul {
+                height: 140px;
+                overflow-x: auto;
+                white-space: nowrap;
+                padding: $cpq-padding-large-vertical 0px;
+                li {
+                    width: 120px;
+                    height: 100px;
+                    padding: $cpq-padding-small-horizontal;
+                    margin-right: $cpq-padding-small-horizontal;
+                    display: inline-block;
+                    border: 1px solid $middle-light-gray;
+                    vertical-align: middle;
+                    text-align: center;
+                    &:hover{
+                        img {
+                            transform: scale(1.5,1.5);
+                            transition: .3s transform;
+                        }
+                    }
+                    img{
+                        max-width: 100%;
+                        height: auto;
+                        transform: translateZ(0);
+                    }
+                }
+            }
+        }
+        .cpq-product-item-details-features {
+            margin-top: $cpq-padding-large-vertical*2;
+        }
+        .cpq-product-item-details-form {
+            max-width: 400px;
+        }
+        .cpq-product-item-details-addon {
+            position: relative; //needed for selected border
+            .cpq-product-item-title {
+                font-weight: $cpq-headings-font-weight;
+            }
+            .cpq-product-item-details-addon-details {
+                ul {
+                    text-align: center;
+                    li {
+                        display: inline-block;
+                        margin: 0 $cpq-padding-large-horizontal/2;
+                        vertical-align: top;
+                        .cpq-product-item-attr-value {
+                            font-weight: $cpq-headings-font-weight;
+                            color: $cpq-product-cart-items-attr-value-color;
+                        }
+                        .cpq-product-item-attr-label {
+                            font-size: $cpq-cart-item-attr-label-font-size;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+        }
+        .cpq-product-details-qty-input {
+            padding: 0 3px;
+            margin-top: $cpq-padding-large-vertical/5;
+            text-align: center;
+            width: 50px; //width can fit 3 digits
+            height: 25px;
+            min-height: calc(25px + 2px); //override slds input styles
+        }
+        .slds-tree_container {
+            max-width: 100%; //overwrite Salesforce tree max width 400px
+        }
+        .slds-grid {
+            width: 100%;
+        }
+        //@TODO Rename the classes and logic needs to be revisited
+        .Table {
+            display: flex;
+            flex-flow: column nowrap;
+            box-pack: justify;
+            justify-content: space-between;
+            // border: 1px solid #f2f2f2;
+            // font-size: 1rem;
+            // margin: 0.5rem;
+            // line-height: 1.5;
+        }
+        .Table-header {
+          font-weight: bold;
+        }
+        .Table-row {
+          display: flex;
+          flex-flow: row nowrap;
+          flex: 1 1 auto;
+        }
+
+        .Table-row-item {
+          display: flex;
+          flex-flow: row nowrap;
+          flex: 1 0 auto;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+        /*   padding: 10px; */
+        }
+
+        .u-Flex-icon {
+            flex: 0 0 25px;
+        }
+
+        .u-Flex-product {
+          flex: 1 1 300px;
+        }
+        .u-Flex-childProduct {
+          flex: 1 1 255px;
+        }
+        .u-Flex-grandChildProduct {
+          flex: 1 1 230px;
+        }
+        .u-Flex-recur {
+            flex: 1 0 150px;
+            justify-content: flex-end;
+        }
+        .u-Flex-onetime {
+            flex: 1 0 150px;
+            justify-content: flex-end;
+        }
+    }
+}

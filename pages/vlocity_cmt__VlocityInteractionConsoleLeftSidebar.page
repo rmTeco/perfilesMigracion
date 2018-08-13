@@ -1,0 +1,81 @@
+<apex:page docType="html-5.0" showHeader="false" sidebar="false" controller="vlocity_cmt.CardCanvasController" standardStylesheets="false">
+<html xmlns:ng="http://angularjs.org" lang="en" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" dir="{!IF(isLanguageRTL, 'rtl', 'ltr')}">
+<head>
+<style type="text/css">
+            body {
+                margin: 0px !important;
+                padding: 0px !important;
+                background: #FFF;
+            }
+</style>
+<apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+<apex:includeScript value="/support/console/34.0/integration.js"/>
+<apex:includeLightning />
+<apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"/>
+</head>
+<body>
+<div class="vlocity via-slds" ng-app="sidebarApp" ng-controller="accountCtrl">
+    <!-- Sidebar layout-->
+    <vloc-layout layout-name="{{layoutName}}" layout-id="{{layoutId}}"/>
+</div>
+
+<script src="{!URLFOR($Resource.vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script>
+<script src="{!URLFOR($Resource.angular_strap_bundle_1_6)}"></script>
+<script src="{!URLFOR($Resource.vlocity_assets, '/bower_components/forceng/forceng.js')}"></script>
+<script src="{!URLFOR($Resource.vlocity_assets, '/bower_components/ForceTK/forcetk.js')}"></script>
+<script src="{!$Resource.CardFramework}"></script>
+<script src="{!$Resource.SldsAngular}"></script>
+
+<script type="text/javascript">
+    //var sideBarModule = angular.module('sidebarApp',['CardFramework', 'vlocity']);
+    var sideBarModule = angular.module('sidebarApp',['CardFramework', 'vlocity', 'forceng', 'cfp.hotkeys']);
+
+    sideBarModule.config(['$localizableProvider', function($localizableProvider) {
+      'use strict';
+      $localizableProvider.setLocalizedMap(window.i18n);
+      $localizableProvider.setDebugMode(window.ns === '');
+    }]);
+
+    // this is used for remoteActions config inside CardFramework
+    // this is duplicated in both ConsoleSidebar.page and CardLayoutComponent.component to facilitate
+    // independent testing of the left handside vs right handside of the console
+    var nsPrefixDotNotation = "{!nsPrefixDotNotation}";
+    console.log('nsPrefixDotNotation fetched from CardCanvasController: ' + nsPrefixDotNotation);
+    localStorage.setItem('nsPrefixDotNotation', nsPrefixDotNotation);
+    console.log('nsPrefixDotNotation value stored in localStorage: ' + localStorage.getItem('nsPrefixDotNotation'));
+
+    sideBarModule.filter('phoneNumber', function() {
+        return function(phoneNumber) {
+          phoneNumber = phoneNumber || '';
+          //Removes all special charaters in phonenumber except numbers and +
+          phoneNumber = phoneNumber.replace(/[^\d\+]/g,"");
+          return phoneNumber;
+        };
+    });
+
+    sideBarModule.run(["$sce","$rootScope","force","timeStampInSeconds", function($sce, $rootScope, force, timeStampInSeconds){
+        console.log('inside run');
+
+        force.init({
+            accessToken: '{!$Api.Session_ID}',
+            useProxy: false
+        });
+
+        $rootScope.forcetkClient = new forcetk.Client();
+        $rootScope.forcetkClient.setSessionToken('{!$Api.Session_ID}');
+     }]);
+
+    sideBarModule.controller('accountCtrl', ['$scope', 'pageService', function($scope, pageService) {
+        //Used to load layout based on url params
+        //TBD: remove !layout
+        $scope.layoutName = pageService.params.layout ? pageService.params.layout: 'vlocity-interaction-console-sidebar-slds';
+        $scope.layoutId = pageService.params.layoutId;
+        console.log('pageService.params: ', pageService.params);
+        console.log('$scope.attrs: ', $scope.attrs);
+        //$scope.params.id = $scope.attrs.contextId;
+    }]);
+ 
+</script>
+</body>
+</html>
+</apex:page>

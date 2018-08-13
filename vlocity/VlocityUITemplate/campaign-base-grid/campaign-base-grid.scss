@@ -1,0 +1,118 @@
+/*** MIXINS ***/
+@import "campaign-variables";
+@import "campaign-mixins";
+
+.card-header {
+    display: none !important;
+}
+
+/*** STYLES ***/
+.campaign-base-grid {
+    background-color: white;
+    
+    .campaign-container {
+        height: 100%;
+        width: 100%;
+        transition: width 500ms ease-in;
+        
+        .slds-col {
+            overflow-y: auto;
+            height: 100%;
+        }
+        
+        .campaign-member-container {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .campaign-member-list-container {
+            border-right: 1px solid $cards-border-gray;
+            background-color: $cards-gray;
+        }
+        
+        .campaign-member-detail {
+            transition: all 500ms ease-in;
+            padding-right: 0;
+
+            .right-sidebar-overlay {
+                position: fixed;
+                z-index: 9999;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: $modal-overlay;
+                opacity: 0;
+                visibility: hidden;
+                transition: visibility 0s linear 0.5s, opacity 0.5s ease-in;
+            }
+            
+            &.toggle-right-collapsed {
+                padding-right: 3rem;
+            }
+            
+            &.toggle-right-expanded {
+                padding-right: 0;
+            }
+            
+            .campaign-member-container {
+                border-right: none;
+            }
+        }
+        
+        .campaign-details-right {
+            border-right: none;
+            transition: right 500ms ease-in;
+            right: 0;
+            
+            &.toggle-right-collapsed {
+                right: 3rem;
+            }
+            
+            &.toggle-right-expanded {
+                right: 0;
+            }
+        }
+
+        @media (min-width: $bp-small) and (max-width: $bp-large) {
+            .campaign-member-detail {
+                &.toggle-right-expanded {
+                    padding-right: 3rem;
+
+                    .right-sidebar-overlay {
+                        opacity: 0.8;
+                        visibility: visible;
+                        transition: visibility 0s linear 0s, opacity 0.5s ease-in;
+                    }
+                }
+                &.toggle-right-collapsed {
+                    .right-sidebar-overlay {
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: visibility 0s linear 0.5s, opacity 0.5s ease-in;
+                    }
+                }
+            }
+            .campaign-details-right {
+                position: absolute;
+                z-index: 9999;
+                width: 16rem;
+
+                &.toggle-right-collapsed {
+                    right: -13rem;
+                }
+            }
+        }
+
+        @media screen and (max-width: $bp-medium) {
+            .campaign-member-detail {
+                .campaign-member-container {
+                    padding-right: 1rem;
+                    padding-left: 1rem;
+                    padding-top: 0.6rem;
+                    padding-bottom: 1rem;
+                }
+            }
+        }
+    }
+}

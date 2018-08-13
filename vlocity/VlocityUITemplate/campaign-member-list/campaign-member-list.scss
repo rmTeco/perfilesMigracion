@@ -1,0 +1,401 @@
+/*** VARIABLES ***/
+@import "campaign-variables";
+/*** MIXINS ***/
+@import "campaign-mixins";
+
+
+.campaign-member-list {
+    @include columnHeader('campaign-member-list-header', relative);
+
+    .campaign-member-list-header {
+        @include rightSideIcons;
+    }
+
+    .search-campaign-members {
+        background-color: $cards-gray;
+        @include rightSideIcons;
+
+        .right-side-icons {
+            width: 2rem;
+
+            .slds-icon_container {
+                line-height: 3.5rem;
+            }
+        }
+    }
+
+    .filter-list-container {
+        background-color: #fff;
+        transition: max-height 350ms ease-in,
+                    visibility 0ms linear 350ms,
+                    border-top 0ms linear 350ms;
+        max-height: 0;
+        visibility: hidden;
+        overflow: hidden;
+        position: relative;
+        border-top: 1px solid $cards-gray;
+
+        .filter-list-items {
+            .slds-button {
+                line-height: 1.2rem;
+                min-height: 2rem;
+
+                &.filter-active {
+                    background-color: $cards-gray;
+                }
+            }
+        }
+
+        .filter-modal-footer {
+            border-radius: 0;
+            border-right: none;
+            border-left: none;
+            box-shadow: none;
+            background-color: #fff;
+        }
+
+        &.active {
+            max-height: 50rem;
+            visibility: visible;
+            transition: max-height 350ms ease-in,
+                        visibility 0ms linear 0ms,
+                        border-top 0ms linear 0ms;
+            border-top: 1px solid $cards-border-gray;
+        }
+    }
+
+    .member-list-pagination {
+        text-align: center;
+        background-color: #fff;
+
+        .slds-align-middle {
+            min-width: 25%;
+        }
+
+        .slds-button {
+            svg {
+                fill: $neutral-medium;
+                position: relative;
+                top: -1px;
+            }
+
+            &[disabled] {
+                svg {
+                    fill: $neutral-light;
+                }
+            }
+        }
+    }
+
+    .no-results{
+        color: white;
+    }
+
+    .list-container {
+        position: relative;
+
+        .campaign-list-member {
+            cursor: pointer;
+            background-color: #fff;
+            transition: background-color 100ms ease-in;
+            height: 3.875rem;
+            position: relative;
+
+            &:after {
+                content: "";
+                display: block;
+                transition: background-color 100ms ease-in;
+                position: absolute;
+                z-index: 1;
+                top: -1px;
+                left: 0;
+                height: calc(100% + 2px);
+                width: 0.3rem;
+                background-color: transparent;
+            }
+
+            section {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                padding-right: 0.75rem;
+                overflow-y: hidden;
+
+                .mobile-click {
+                    position: absolute;
+                    z-index: 10;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                }
+
+                .status-icon {
+                    font-size: 1.125rem;
+                    position: absolute;
+                    right: 1rem;
+                    top: 50%;
+                    transform: translateY(-54%);
+                    
+                    &.call-back {
+                        font-size: 1.6rem;
+                    }
+
+                    .slds-icon {
+                        &.status {
+                            fill: $cards-border-gray;
+                            width: 1em;
+                        }
+
+                        &.call-back {
+                            width: 1.2em;
+                            position: relative;
+                            left: .2em;
+
+                            &.time-sensitive {
+                            fill: $notify-warning
+                            }
+
+                            &.past-due{
+                                fill: #c23934;
+                            }
+                        }
+                    }
+                }
+
+                .list-member-info {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 75%;
+
+                    .target-call-date {
+                        display: inline-block;
+                        margin-left: 0.5rem;
+                        font-style: italic;
+                    }
+
+                    .slds-item {
+                        line-height: 1.2rem;
+
+                        a {
+                            color: $primary-dark;
+                        }
+                    }
+
+                    ul {
+                        .slds-item.member-meta-data {
+                            color: $neutral-dark;
+                        }
+                    }
+                }
+            }
+
+            &:hover, &:active, &:focus, &.active {
+                background-color: $header-gray;
+
+                &:after {
+                    background-color: $cards-border-gray;
+                }
+
+                section {
+                    .list-member-info {
+                        .slds-item {
+                            a {
+                                color: $primary-medium;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &.active {
+                &:after {
+                    background-color: $primary-medium;
+                }
+            }
+        }
+    }
+
+    .slds-text-body--small{
+        font-size: 10px;
+    }
+    
+    .slds-has-dividers--left>.slds-item:after {
+        margin-left: .3em;
+        margin-right: .3em;
+    }
+    
+    
+    .slds-has-dividers--left{
+        padding-top: 1px;
+    }
+
+    .member-list-pagination-top {
+        border-top: 1px solid $cards-border-gray;
+    }
+
+    &.filter-active {
+
+    }
+
+    @media screen and (min-width: $bp-small) and (max-width: $bp-medium) {
+        .filter-list-container {
+            .filter-list-items {
+                .slds-button-group {
+                    @include clearfix;
+                    display: block;
+                }
+
+                .slds-button {
+                    width: 50%;
+                    float: left;
+
+                    &:first-child {
+                        border-bottom-left-radius: 0;
+                    }
+
+                    &:nth-child(odd) {
+                        margin-left: 0;
+
+                        &:last-child {
+                            border-top-right-radius: 0;
+                            border-bottom-right-radius: 0;
+                            border-bottom-left-radius: 0.25rem;
+                        }
+
+                        &:nth-last-child(2) {
+                            border-bottom-left-radius: 0.25rem;
+                        }
+                    }
+
+                    &:nth-child(even) {
+                        &:last-child {
+                            border-top-right-radius: 0;
+                        }
+                    }
+
+                    &:nth-child(2) {
+                        border-top-right-radius: 0.25rem;
+                    }
+
+                    // All except first 2
+                    &:nth-child(n+3) {
+                        margin-top: -1px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: $bp-small) and (max-width: $bp-xmedium) {
+        .campaign-member-list-header {
+            .slds-text-heading--small {
+                span {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: $bp-small) {
+        .search-campaign-members {
+            padding-right: 3rem;
+
+            .slds-input {
+                line-height: 2rem;
+            }
+        }
+
+        .member-list-pagination {
+            display: block;
+            padding: 0.25rem 0;
+            background-color: $cards-gray;
+            width: 100%;
+            border-top: 1px solid $cards-border-gray;
+
+            &.member-list-pagination-bottom {
+                border-top: 0;
+                border-bottom: 1px solid $cards-border-gray;
+            }
+        }
+
+        .list-container {
+            overflow-y: auto;
+
+            .campaign-list-member {
+                section {
+                    .list-member-info {
+                        width: 80%;
+                        
+                        .member-meta-data {
+                            font-size: 0.7rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+li.vlc-list-card-row {
+    list-style: none;
+    //border-bottom: 1px solid $mid-gray;
+	display: block;
+	cursor: pointer;
+
+    section {
+        padding: 20px 0;
+        &:hover, &:active, &:focus, .selected {
+        	transform: translateZ(0);
+        	backface-visibility: hidden;
+        	-moz-osx-font-smoothing: grayscale;
+        	transition-duration: 0.4s;
+        	transition-property: background-color;
+        	//background: #0070d2;
+        
+            .vlc-list-card {
+        	    div, ul.actions>li>a>.icon {
+        		    color: white;
+        	    }
+            }
+        }
+
+    }
+}
+
+.vlc-list-card {
+	display: block;
+
+	div {
+		//color: $light-blue;
+		text-transform: uppercase;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		background: blue;
+		padding-left: 10px;
+		
+		.header{
+
+		}
+		.sub-data:first-child {
+            margin-left: 10px;
+		}
+		
+	}
+	
+	ul.actions {
+	    padding: 0;
+	    margin: 0 4px;
+	    list-style: none;
+	    float: right;
+	    > li {
+	        float: left;
+	        > a>.icon:before {
+	            font-size: 18px;
+	        }
+	    }
+	}
+}

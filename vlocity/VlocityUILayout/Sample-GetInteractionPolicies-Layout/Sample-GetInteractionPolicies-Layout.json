@@ -1,0 +1,32 @@
+{
+    "Cards": [
+        "Sample-GetInteractionPolicies-Card",
+        "Sample-GetInteractionPolicies-OpenPolicy-Card"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0014100000K0YuN"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "interactionId": "{{params.id}}"
+            },
+            "optionsMap": {
+                "vlcClass": "GetInteractionPolicies"
+            },
+            "remoteClass": "GetInteractionPolicies",
+            "remoteMethod": "getInteractionPolicies",
+            "remoteNSPrefix": null,
+            "resultVar": "records"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "card-canvas-3x-slds"
+        }
+    }
+}

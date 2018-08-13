@@ -1,0 +1,22 @@
+{
+    "Cards": [
+        "Contact"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "001o000000SLNul"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name FROM Contact WHERE AccountId = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "card-canvas"
+        }
+    }
+}

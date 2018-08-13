@@ -1,0 +1,49 @@
+<div class="via-slds">
+    <div class="via-slds-story-cards--canvas  slds-grid slds-grid--vertical slds-grid--vertical-stretch ">
+    <div class="slds-grid slds-p-around--small slds-wrap via-slds-story-cards--header slds-theme--shade" vloc-sticky-top>
+        <div class="slds-p-right--x-small via-slds-story-cards--header-title">
+          <div class="slds-text-heading--medium">{{parent.search.title}}</div>
+        </div>
+        <div class="slds-col--bump-left slds-p-left--x-small via-slds-story-cards--header-title" ng-if="cards.length > 0">
+            <div class="slds-dropdown-trigger slds-dropdown-trigger--click" ng-class="{'slds-is-open': parent.isFilterOpen}" aria-expanded="true">
+              <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true" ng-click="parent.isFilterOpen = !parent.isFilterOpen">
+                <slds-button-svg-icon size="'small'" sprite="'utility'" icon="'down'"></slds-button-svg-icon>
+                <span class="slds-assistive-text">Show More</span>
+              </button>
+              <div class="slds-dropdown slds-dropdown--right slds-dropdown--actions">
+                <ul class="dropdown__list" role="menu">
+                  <li class="slds-dropdown__item" ng-class="{'slds-is-selected': item.title === parent.search.title}" ng-repeat="item in ::parent.filters">
+                    <a role="menuitem"
+                        href="javascript:void(0)"
+                        ng-click="parent.isFilterOpen = !parent.isFilterOpen; parent.search = item">
+                      <p class="slds-truncate">
+                        <slds-svg-icon size="'x-small'" extra-classes="'slds-icon--selected slds-m-right--x-small'" sprite="'utility'" icon="'check'"></slds-svg-icon>
+                        {{item.title}}
+                      </p>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>    
+        </div>
+    </div>
+    <ul class="via-slds-story-cards--container slds-m-around--small slds-col">
+        <li vloc-card ng-repeat="card in cards | orderBy:parent.search.orderBy||
+    '+obj.LastActivityDate'" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"
+            use-existing-element-type></li>
+        <li class="via-slds-story-cards--no-results slds-align--absolute-center slds-text-align--center slds-p-top--large" ng-if="(isLoaded && (!parent || parent.isLoaded) && (!records || records.length == 0))">
+            <div>
+                <slds-svg-icon sprite="'utility'" icon="'info'"
+                                size="'large'"></slds-svg-icon>
+                <p class="slds-m-top--small slds-text-heading--medium">No Results Found</p>
+            </div>
+        </li>
+        <li class="via-slds-story-cards--loading slds-spinner_container" x-ng-if="!(isLoaded && (!parent || parent.isLoaded))">
+          <div class="slds-spinner--brand slds-spinner slds-spinner--small" aria-hidden="false" role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+          </div>
+        </li>
+    </ul>
+  </div> 
+</div>

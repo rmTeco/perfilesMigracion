@@ -1,0 +1,65 @@
+<apex:page standardController="Contact_Motive__c" extensions="ConfigurationExport" cache="true" contenttype="application/vnd.ms-excel#ConfiguraciónServiciosMotivosSíntomas.xls" showheader="false">
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+            <style>
+                .title {
+                    font: bold;
+                    font-size: larger;
+                }
+                .summaryHeader {
+                    text-align: center;
+                    font-size: larger;
+                    background-color: LightGrey;
+                }
+                .summaryBoolean {
+                    text-align: center;
+                }
+            </style>
+        </head>
+        <body>
+            <apex:outputText styleClass="title" value="Configuración activa de Servicios y Motivos"/>
+            <br/><br/>
+            <apex:dataTable value="{!configuration}" var="cfgrow" columnsWidth="25%,30%,30%,15%" border="1" headerClass="summaryHeader">
+                <apex:column >
+                    <apex:facet name="header">Servicio</apex:facet>
+                    <apex:outputText value="{!cfgrow.Id_Service__r.Name}"/>
+                </apex:column>
+                <apex:column >
+                    <apex:facet name="header">Motivo</apex:facet>
+                    <apex:outputText value="{!cfgrow.Name}"/>
+                </apex:column>
+                <apex:column styleClass="summaryBoolean">
+                    <apex:facet name="header">Asociable a Incidente</apex:facet>
+                    <apex:outputText value="{!cfgrow.Is_Associable_Text__c}"/>
+                </apex:column>
+            </apex:dataTable>
+            <br/>
+            <apex:outputText styleClass="title" value="Servicios configurables"/>
+            <br/><br/>
+            <apex:dataTable value="{!services}" var="srvrow" border="1" headerClass="summaryHeader">
+                <apex:column >
+                    <apex:facet name="header">Servicio</apex:facet>
+                    <apex:outputText value="{!srvrow.Name}"/>
+                </apex:column>
+                <apex:column styleClass="summaryBoolean">
+                    <apex:facet name="header">Activo</apex:facet>
+                    <apex:outputText value="{!srvrow.Is_Active_Text__c}"/>
+                </apex:column>
+            </apex:dataTable>
+            <br/>
+            <apex:outputText styleClass="title" value="Motivos configurables"/>
+            <br/><br/>
+            <apex:dataTable value="{!motives}" var="mtvrow" border="1" headerClass="summaryHeader">
+                <apex:column >
+                    <apex:facet name="header">Motivo</apex:facet>
+                    <apex:outputText value="{!mtvrow.Name}"/>
+                </apex:column>
+                <apex:column styleClass="summaryBoolean">
+                    <apex:facet name="header">Activo</apex:facet>
+                    <apex:outputText value="{!mtvrow.Is_Active_Text__c}"/>
+                </apex:column>
+            </apex:dataTable>
+        </body>
+    </html>
+</apex:page>

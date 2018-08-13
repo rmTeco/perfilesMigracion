@@ -1,0 +1,24 @@
+<pre>{{bpTree.response.serviceStatusFan.loadingMsg}}</pre>
+<div class="slds-col--padded slds-size--1-of-1 ng-scope">
+
+    <!-- ngRepeat: control in child.eleArray --><ng-form name="loopform" class="slds-form-element vlc-flex vlc-form-group vlc-slds-remote-action--button ng-pristine ng-valid ng-scope" ng-repeat="control in child.eleArray">
+
+        <div class="slds-form-element__control">
+
+            <div class="vlc-control-wrapper">
+
+                <div 
+                    id="RemoteActionInternet" class="slds-box" title="Ejecutar" 
+                    ng-click="buttonClick(this.bpTree.response, control, this); bpTree.response.serviceStatusFan.loadingMsg = true">
+                    <p class="ng-binding">Ejecutar</p>
+                </div>
+
+            </div>
+
+            <div class="vlc-sub-block"></div>
+
+        </div>
+
+    </ng-form><!-- end ngRepeat: control in child.eleArray -->
+
+</div>

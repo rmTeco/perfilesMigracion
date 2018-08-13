@@ -1,0 +1,116 @@
+{
+    "bpTree": {
+        "response": {
+            "Account": {
+                "Contact": {
+                    "DocumentType": "DNI",
+                    "FirstName": "Sandra",
+                    "Fraud": false,
+                    "Id": "0036C000007EWb2QAG",
+                    "LastName": "Solo Consumer"
+                },
+                "DocumentNumber": "23456789",
+                "DocumentType": "DNI",
+                "FOL": false,
+                "Fraud": false,
+                "Id": "0016C000008fYqUQAU",
+                "Name": "Sandra Solo Consumer"
+            },
+            "Contact": {
+                "Accounts": {
+                    "BillingAccounts": {
+                        "Id": "0016C000008fYqZQAU",
+                        "Name": "Sandra Solo Consumer Billing 1",
+                        "RecordType": {
+                            "Name": "Billing"
+                        },
+                        "Status": "Active"
+                    },
+                    "DocumentNumber": "23456789",
+                    "DocumentType": "DNI",
+                    "Id": "0016C000008fYqUQAU",
+                    "Name": "Sandra Solo Consumer",
+                    "RecordType": {
+                        "Name": "Consumer"
+                    },
+                    "Status": "Active"
+                },
+                "Id": "0036C000007EWb2QAG"
+            },
+            "ContextId": "0016C000008fYqU",
+            "DRId_Case": "5006C000003D6EMQA0",
+            "DocumentType": "DNI",
+            "Step_2_Select_Tax_Condition_To_Modify": {
+                "TaxConditionBlock": {
+                    "TaxConditionAll": null,
+                    "TaxConditionCUIT2XOnly": null,
+                    "TaxConditionCUIT3XOnly": null,
+                    "TaxConditionChange": "DNI",
+                    "TaxConditionDNIOnly": "DNI"
+                }
+            },
+            "Step_6_Select_New_Tax_Condition_DNI_To_CUIT": {
+                "IIBBTaxCondition": {
+                    "IIBBCondition": "IIBB_ICM",
+                    "IIBBDuplicatedJurisdiction": null,
+                    "IIBBExemptions": [
+                        {
+                            "IIBBExemptionDateFrom": "2017-07-28T03:00:00.000Z",
+                            "IIBBExemptionDateTo": null,
+                            "IIBBExemptionJurisdiction": null,
+                            "IIBBExemptionPercentage": null
+                        },
+                        {
+                            "IIBBExemptionDateFrom": "2017-07-28T03:00:00.000Z",
+                            "IIBBExemptionDateTo": null,
+                            "IIBBExemptionJurisdiction": null,
+                            "IIBBExemptionPercentage": null
+                        }
+                    ]
+                },
+                "NewIVAConditionBlock": {
+                    "IVACondition": "IVA_RI",
+                    "IVAExemptionDateFrom": "2017-07-28T03:00:00.000Z",
+                    "IVAExemptionDateTo": null,
+                    "IVAPercentage": null
+                },
+                "RespaldatoryDocumentationBlock": {
+                    "RespaldatoryDocumentationFile": [
+                        {
+                            "data": "11b904fd-8d46-41a3-8959-14b62bd89060",
+                            "filename": "Jul 2017.pdf",
+                            "size": 139482
+                        }
+                    ],
+                    "TotalRespaldatoryDocumentation": 1,
+                    "Validation - At least one file attached": true
+                }
+            },
+            "TotalActiveAccounts": 1,
+            "error": "OK",
+            "id": "a1q6C0000001nqFQAQ",
+            "layout": "lightning",
+            "sInstanceId": "a1p6C0000001RAqQAM",
+            "testContextId": "0016C000008fYqU",
+            "timeStamp": "2017-07-28T18:04:11.290Z",
+            "userId": "0056C000000gQeEQAU",
+            "userName": "lino.acosta@accenture.com",
+            "userProfile": "Vlocity CMT",
+            "vlcPersistentComponent": {
+            },
+            "vlcTimeTracking": {
+                "DataRaptor - CreateCase": 1370,
+                "DataRaptor - GetAccountInfoById": 1032,
+                "DataRaptor - GetBillingAccountsByContactId": 1000,
+                "DataRaptor - GetIIBBExemptionsByAccountId": 468,
+                "OmniScriptSessionToken": "cb18ab2f-4cf1-4f05-ae22-98370ac824ff",
+                "Remote Action  - getDocumentType": 273,
+                "Remote Action - getTotalActiveAccounts": 931,
+                "Set Values Step 6": 10,
+                "Step_2_Select_Tax_Condition_To_Modify": 2911,
+                "Step_3_Select_Billing_Accounts": 3277,
+                "Step_6_Select_New_Tax_Condition_DNI_To_CUIT": 16459
+            }
+        }
+    }
+}

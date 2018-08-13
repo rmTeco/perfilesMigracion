@@ -1,0 +1,24 @@
+<tr data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" >
+    <td 
+        class="slds-truncate" 
+        data-label="{{field.label}}" 
+        ng-repeat="field in data.fields" 
+        ng-show="key != 'attributes'"
+        ng-switch="field.name">
+        <a 
+            target="_parent"
+            href="/{{obj.Id}}"
+            ng-switch-when="OrderNumber">{{obj | getter: field | picker: field.type}} </a>
+            
+        <span ng-switch-default>{{obj | getter: field | picker: field.type}} </span>
+    </td>
+    
+    <td class="" ng-if="data.actions.length > 0" data-label="Actions" style="overflow: visible">
+        <slds-dropdown content="data.actions" ng-if="data.actions.length > 0" icon-attribute="vlocityIcon" label-attribute="displayName" action-function="performAction(item)"></slds-dropdown>
+        
+         <!--<button ng-if="obj.Status == 'Preparar Pedido'" class="slds-button slds-button--neutral" href="#" ng-click="performAction(data.actions[0])" hotkey-card-action><span>{{data.actions[0].displayName}}</span></button>
+         
+         <button ng-if="obj.Status == 'Pendiente de Entrega'" class="slds-button slds-button--neutral" href="#" ng-click="performAction(data.actions[1])" hotkey-card-action><span>{{data.actions[1].displayName}}</span></button>-->
+        
+    </td>
+</tr>

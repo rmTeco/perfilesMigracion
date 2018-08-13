@@ -1,0 +1,53 @@
+<apex:page controller="taOrderController" sidebar="false" showheader="false" standardStylesheets="false" applyBodyTag="false">
+    <apex:slds />
+    <html>
+        <head>
+            <apex:includeScript value="/support/console/40.0/integration.js"/>
+            <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script> -->
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>   
+        </head>
+        <body>
+        
+        {!valor}
+        
+<!--<h1> {!$Api.Session_ID} </h1>-->
+            <!-- <h1>{!$CurrentPage.parameters.Id}</h1> -->
+                <!-- <apex:image value="/img/loading.gif" title="Processing..."/> -->
+            <div class="slds-scope">
+                <div styleClass="mask vlc-slds-mask" ng-show="loading">
+                    <div styleClass="center-block spinner" vlc-slds-spinner="test"></div>
+                </div>
+            </div>
+            <script>
+                /*var closeSubtab = function closeSubtab(result) {
+                    var tabId = result.id;
+                    sforce.console.closeTab(tabId);
+                };
+
+                 Visualforce.remoting.Manager.invokeAction(
+                    "taOrderController.gettingMiracle",
+                    function(result, event) {
+                            console.info('result from gettingMiracle', result);
+                        },
+                        
+                    {escape: false} // No escaping, please
+                );*/
+
+                Visualforce.remoting.Manager.invokeAction(
+                    "taOrderController.CancelOrderAndRedirect",
+                    "{!$CurrentPage.parameters.Id}",
+                    function(result, event) {
+                            console.info(result);
+                            //sforce.console.getEnclosingTabId(closeSubtab);
+                            var urlToRedirect = '/home/home.jsp';
+                            //$window.location.href = urlToRedirect;
+                        },
+                        
+                    {escape: false} // No escaping, please
+                );
+                
+            </script>
+        </body>
+    </html>
+</apex:page>

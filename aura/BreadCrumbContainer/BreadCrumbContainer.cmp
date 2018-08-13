@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="myBreadcrumbsC" type="Object"/>
+    <aura:attribute name="activeElementC" type="string"/>
+    <aura:handler event="c:BreadCrumbEvent"  action="{!c.handleevent}" access="global"/>
+
+    <lightning:breadcrumbs>
+        <aura:iteration items="{!v.myBreadcrumbsC}" var="crumbs" indexVar="i">
+            <lightning:breadcrumb label="{!crumbs.label}" href="{!crumbs.url}" 
+                                  style="color: rgb(0, 109, 204); font-family: 'Salesforce Sans',Arial,sans-serif;"/>
+        </aura:iteration>
+        <li class="slds-breadcrumb__item slds-text-title_caps" style="padding: 0px 10px;">
+            {!v.activeElementC}
+        </li>
+    </lightning:breadcrumbs>
+    
+</aura:component>

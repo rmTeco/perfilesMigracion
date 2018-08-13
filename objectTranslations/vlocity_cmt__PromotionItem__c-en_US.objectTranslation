@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- PromotionItem --></label>
+        <name>PromotionItem</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Action Type --></label>
+        <name>vlocity_cmt__ActionType__c</name>
+        <picklistValues>
+            <masterLabel>Add</masterLabel>
+            <translation><!-- Add --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Add/Update</masterLabel>
+            <translation><!-- Add/Update --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Delete</masterLabel>
+            <translation><!-- Delete --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Update</masterLabel>
+            <translation><!-- Update --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Cardinality Check Scope --></label>
+        <name>vlocity_cmt__CardinalityCheckScope__c</name>
+        <picklistValues>
+            <masterLabel>Cart Scope</masterLabel>
+            <translation><!-- Cart Scope --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Context Product Scope</masterLabel>
+            <translation><!-- Context Product Scope --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Context Rule --></label>
+        <name>vlocity_cmt__ContextEntityFilterId__c</name>
+        <relationshipLabel><!-- Promotion Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Context Product --></label>
+        <name>vlocity_cmt__ContextProductId__c</name>
+        <relationshipLabel><!-- Promotion Items (Context Product Id) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>vlocity_cmt__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective From --></label>
+        <name>vlocity_cmt__EffectiveFromDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Effective Until --></label>
+        <name>vlocity_cmt__EffectiveUntilDate__c</name>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>vlocity_cmt__IsActive__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Undoable --></label>
+        <name>vlocity_cmt__IsUndoable__c</name>
+    </fields>
+    <fields>
+        <label><!-- Maximum Quantity --></label>
+        <name>vlocity_cmt__MaxQuantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Minimum Quantity --></label>
+        <name>vlocity_cmt__MinQuantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Offer Product --></label>
+        <name>vlocity_cmt__OfferId__c</name>
+        <relationshipLabel><!-- Promotion Items (Offer Product Id) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Product Hierarchy Path --></label>
+        <name>vlocity_cmt__ProductHierarchyPath__c</name>
+    </fields>
+    <fields>
+        <label><!-- Product --></label>
+        <name>vlocity_cmt__ProductId__c</name>
+        <relationshipLabel><!-- Promotion Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Promotion --></label>
+        <name>vlocity_cmt__PromotionId__c</name>
+        <relationshipLabel><!-- Promotion Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Quantity --></label>
+        <name>vlocity_cmt__Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Undoable Message --></label>
+        <name>vlocity_cmt__UndoableMessage__c</name>
+    </fields>
+    <fields>
+        <label><!-- Update Scope --></label>
+        <name>vlocity_cmt__UpdateScope__c</name>
+        <picklistValues>
+            <masterLabel>Update Item Only</masterLabel>
+            <translation><!-- Update Item Only --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Update Item and Child Items</masterLabel>
+            <translation><!-- Update Item and Child Items --></translation>
+        </picklistValues>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Default Quantity should be greater than or equal to 0 --></errorMessage>
+        <name>vlocity_cmt__Default_greater_than_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Default Quantity must be greater than or equal to Min Quantity --></errorMessage>
+        <name>vlocity_cmt__Default_greater_than_Min</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Default Quantity must be less than or equal to Max Quantity --></errorMessage>
+        <name>vlocity_cmt__Default_less_than_Max</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Max Quantity should be greater than or equal to 0 --></errorMessage>
+        <name>vlocity_cmt__Max_greater_than_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Max Quantity must be greater than or equal to Min Quantity --></errorMessage>
+        <name>vlocity_cmt__Max_less_than_Min</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Min Quantity should be greater than or equal to 0 --></errorMessage>
+        <name>vlocity_cmt__Min_greater_than_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Min Quantity must be less than or equal to Max Quantity --></errorMessage>
+        <name>vlocity_cmt__Min_greater_than_Max</name>
+    </validationRules>
+</CustomObjectTranslation>

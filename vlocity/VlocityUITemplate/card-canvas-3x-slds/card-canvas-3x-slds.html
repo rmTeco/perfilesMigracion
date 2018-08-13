@@ -1,0 +1,20 @@
+<div class="via-slds">
+    <form class="slds-grid slds-m-around--small slds-wrap slds-grid--pull-padded">
+        <div class="slds-col slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--4-of-12 slds-form-element">
+          <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+            <slds-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-input__icon'"></slds-svg-icon>
+            <input ng-model="searchTerm" class="slds-input" type="text" placeholder="{{::$root.vlocity.getCustomLabel('SearchCards', 'Search Cards')}}" />
+          </div>
+        </div>
+        <div class="slds-col slds-col--bump-left slds-button slds-col--padded">
+            <button class="slds-button slds-button--neutral slds-float--right" onclick="window.location.reload()">
+                <slds-button-svg-icon sprite="'utility'" icon="'refresh'" no-hint="true" extra-classes="'slds-button__icon--left'"></slds-button-svg-icon>
+              {{::$root.vlocity.getCustomLabel('Refresh', 'Refresh')}}</button>
+        </div>
+    </form>
+    <div class="slds-grid slds-wrap slds-m-around--small slds-grid--pull-padded cards-container">
+        <div ng-repeat="card in cards |orderBy:order|filter: searchFunc(card, searchTerm)" vloc-card ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"
+            class="slds-p-around--small slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--4-of-12" use-existing-element-type></div>
+        <span id="flyout" class="slds-p-around--small slds-size-1-of-1"></span>
+    </div>
+</div>

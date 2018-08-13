@@ -1,0 +1,96 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "02i41000000asV1"
+            }
+        ],
+        "type": null,
+        "value": {
+            "query": "SELECT AccountId,Description,InstallDate,IsDeleted,Name,Price,Quantity,SerialNumber,Status FROM Asset WHERE Id = '{{params.id}}'"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "RET_getSupport",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "RET_UpgradePlan",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "RET_ViewService",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "RET_ChangeService",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['%vlocity_namespace%__OneTimeTotal__c']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "OneTimeTotal",
+                    "name": "['%vlocity_namespace%__OneTimeTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['%vlocity_namespace%__RecurringTotal__c']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "RecurringTotal",
+                    "name": "['%vlocity_namespace%__RecurringTotal__c']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['InstallDate']",
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "InstallDate",
+                    "name": "['InstallDate']",
+                    "type": "date"
+                }
+            ],
+            "name": "Asset Detail",
+            "sObjectType": "Account",
+            "templateUrl": "mobile-ret-asset-detail"
+        }
+    ],
+    "title": "mobile-ret-asset-detail"
+}

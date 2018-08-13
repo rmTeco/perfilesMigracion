@@ -1,0 +1,31 @@
+<div ng-controller="CustomerHistoryCtrl as mhc"
+     ng-init="mhc.init()">
+    <!-- WEB -->
+    <div ng-if="!mhc.mobile">
+        <div class="lineNumber via-slds slds-m-around--small slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium">
+            <span class="asset_type">{{params.AssetType}}</span>
+            <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                <p><b>{{params.LineNumber}}</b></p>
+            </div>
+        </div>
+        <vloc-card ng-repeat="card in cards" 
+                   ng-model="card" 
+                   data="card" 
+                   records="records" 
+                   index="{{$index}}" 
+                   session-id="{{sessionId}}">
+        </vloc-card>
+    </div>
+    
+    <!-- MOBILE -->
+    <div ng-if="mhc.mobile">
+        <div ng-repeat="card in cards | filter:mhc.mobileFilter">
+            <vloc-card ng-model="card" 
+                       data="card" 
+                       records="records" 
+                       index="{{$index}}" 
+                       session-id="{{sessionId}}">
+            </vloc-card>
+        </div>
+    </div>
+</div>

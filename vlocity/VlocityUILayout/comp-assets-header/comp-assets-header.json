@@ -1,0 +1,31 @@
+{
+    "Cards": [
+        "comp-assets-header"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "attrs.accountId",
+                "val": "0013600000QqLUZ"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v2/accounts/{{attrs.accountId}}",
+            "inputMap": {
+                "id": "{{attrs.accountId}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "CpqAppHandler",
+            "remoteMethod": "getAccounts",
+            "remoteNSPrefix": "%vlocity_namespace%"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "comp-assets-header"
+        }
+    }
+}

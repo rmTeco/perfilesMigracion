@@ -1,0 +1,17 @@
+<div class="cpq-base-header-payment-choice slds-picklist slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+    <div class="slds-text-body_small">{{::importedScope.customLabels.CPQPaymentChoice}}</div>
+    <button cpq-dropdown-handler="viewOpen = false" class="slds-button custom-view-dropdown-button slds-button_neutral slds-p-right_small slds-picklist__label cpq-base-header-picklist-label" aria-haspopup="true" ng-click="viewOpen = !viewOpen">
+        <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top_x-small slds-float_right custom-view-dropdown-button'"></slds-button-svg-icon>
+        {{importedScope.currentPaymentChoice.paymentChoice}}
+    </button>
+    <div class="cpq-base-header-dropdown slds-dropdown slds-dropdown_left" ng-if="viewOpen">
+        <ul class="slds-dropdown__list slds-dropdown_length-5" role="menu">
+            <li class="slds-dropdown__item" role="presentation" ng-repeat="paymentChoice in records"
+                ng-click="importedScope.changePaymentChoice(paymentChoice)">
+                <a  href="javascript:void(0);"  tabindex="0">
+                    <span class="slds-truncate">{{paymentChoice.Name}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<aura:component extends="et4ae5:DataTablePlus">
+
+    <!-- Scripts -->
+    <ltng:require styles="/resource/et4ae5__SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+
+    <!-- Handlers -->
+    <aura:handler event="et4ae5:DataTablePlusUpdate" action="{!c.upddateRecords}" />
+    <aura:handler event="et4ae5:DataTablePlusStartSearch" action="{!c.searchRecords}" />
+
+    <!-- Inherited Attributes -->
+    <aura:set attribute="showSelectAll" value="true" />
+    <aura:set attribute="sObjectAPIName" value="et4ae5__Business_Unit__c" />
+    <aura:set attribute="sObjectFields" value="Id, et4ae5__Business_Unit_Name__c, et4ae5__Business_Unit_ID__c, et4ae5__Enabled__c, et4ae5__IsParentAccountMID__c" />
+    <aura:set attribute="pageTitleLabel" value="{!$Label.et4ae5.buMgmt}" />
+    <aura:set attribute="pageSubTitleLabel" value="{!$Label.et4ae5.msg0035}" />
+    <aura:set attribute="tableHeaderLabels" value="{!$Label.et4ae5.BUMgmTableHeaders}" />
+    <aura:set attribute="paginatePreviousLabel" value="{!$Label.et4ae5.previous}" />
+    <aura:set attribute="paginateNextLabel" value="{!$Label.et4ae5.next}" />
+    <aura:set attribute="entriesPerPageLabel" value="{!$Label.et4ae5.DTEntriesPerPageSuf}" />
+    <aura:set attribute="showingLabel" value="{!$Label.et4ae5.DTInfoPrefix}" />
+    <aura:set attribute="toLabel" value="{!$Label.et4ae5.DTInfoMid1}" />
+    <aura:set attribute="ofLabel" value="{!$Label.et4ae5.DTInfoMid2}" />
+    <aura:set attribute="entriesLabel" value="{!$Label.et4ae5.DTInfoSuffix}" />
+    <aura:set attribute="saveLabel" value="{!$Label.et4ae5.save}" />
+    <aura:set attribute="cancelLabel" value="{!$Label.et4ae5.cancel}" />
+    <aura:set attribute="saveErrorTitleLabel" value="{!$Label.et4ae5.buMgmtSaveErrorTitle}" />
+    <aura:set attribute="saveErrorLabel" value="{!$Label.et4ae5.buMgmtSaveError}" />
+    <aura:set attribute="saveServerErrorTitleLabel" value="{!$Label.et4ae5.buMgmtSaveServerErrorTitle}" />
+    <aura:set attribute="saveServerErrorLabel" value="{!$Label.et4ae5.buMgmtSaveServerError}" />
+    <aura:set attribute="saveNoChangeTitleLabel" value="{!$Label.et4ae5.buMgmtNoChangeErrorTitle}" />
+    <aura:set attribute="saveNoChangeLabel" value="{!$Label.et4ae5.buMgmtNoChangeError}" />
+    <aura:set attribute="recordLimitLoadTitleLabel" value="{!$Label.et4ae5.buMgmtRecordLimitErrorTitle}" />
+    <aura:set attribute="recordLimitLoadLabel" value="{!$Label.et4ae5.buMgmtRecordLimitError}" />
+    <aura:set attribute="recordLoadErrorTitleLabel" value="{!$Label.et4ae5.buMgmtRecordLoadErrorTitle}" />
+    <aura:set attribute="recordLoadErrorLabel" value="{!$Label.et4ae5.buMgmtRecordLoadError}" />
+
+    <!-- Component Body -->
+    <aura:iteration items="{!v.records}" var="record" indexVar="rowindex">
+        <et4ae5:BusinessUnitRow record="{!record}" page="{!v.currentpage}" itemsperpage="{!v.itemsperpage}" index="{!rowindex}" highindex="{!v.highindex}" lowindex="{!v.lowindex}" />
+    </aura:iteration>
+
+</aura:component>

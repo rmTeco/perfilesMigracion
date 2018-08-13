@@ -1,0 +1,87 @@
+<div class="slds-grid slds-grid--vertical cpq-product-cart-config">
+    <div class="slds-col slds-no-flex cpq-product-cart-config-header">
+        <div class="slds-grid slds-grid--align-end">
+            <!--We should expand the attribute categories in configuration panel.For this initial release, remove the collapse button.
+            <button class="slds-button slds-button--neutral slds-m-right--medium" ng-click="importedScope.collapseAll()">
+                <span>Collapse All</span>
+            </button>
+            -->
+            <button class="slds-button slds-button--icon" ng-click="importedScope.close()">
+                <slds-button-svg-icon sprite="'utility'" size="'large'" icon="'close'"></slds-button-svg-icon>
+                <span class="slds-assistive-text">{{::importedScope.customLabels.CPQClose}}</span>
+            </button>
+        </div>
+    </div>
+    <!-- scroll class is added for ionic scroll-->
+    <div class="slds-col cpq-product-cart-config-form scroll">
+        <!--Standard config form with nested VDF form controls-->
+        <!-- <form ng-submit="importedScope.configSubmit(importedScope.attributesObj)"> -->
+            <div>
+                <!-- leaving form commented out in case we want to revert to submit for save functionality -->
+                <!-- form -->
+                <!--Note: If you modify this if condition, VDF re-render will fail when user clicks and moves to other config. Ensure re rendering is taken care-->
+                <div ng-if="importedScope.attributesObj && importedScope.attributesObj.length > 0 && !importedScope.reRenderAttributesForm">
+                    <vlocity-dynamic-form name="productconfig" form-on-change="importedScope.getModifiedAttributes(e, formValidation, null, true);"
+                        ng-model="importedScope.attributesObj" map-object="{{importedScope.mapObject()}}" class="slds-form--stacked" form-auto-save="true">
+                    </vlocity-dynamic-form>
+                </div>
+                <div ng-if="importedScope.attributesObj && importedScope.attributesObj.length === 0">
+                    {{::importedScope.customLabels.CPQCartConfigNoAttrsText}}
+                </div>
+            </div>
+            <div class="slds-m-top--x-large" ng-init="showInfo = true">
+                <div class="slds-section" ng-class="{'slds-is-open': showInfo, 'slds-is-closed': !showInfo}">
+                    <h3 href="javascript:void(0);" class="slds-section__title" ng-click="showInfo = !showInfo">
+                        <button type="button" class="slds-button slds-section__title-action">
+                            <slds-button-svg-icon sprite="'utility'" icon="'switch'" extra-classes="'slds-section__title-action-icon slds-button__icon--left'"></slds-button-svg-icon>
+                            {{::importedScope.customLabels.CPQCartConfigAdditionalSetting}}
+                        </button>
+                     </h3>
+                    <div class="slds-section__content">
+                        <div class="slds-form--stacked">
+                            <div class="slds-form-element" ng-repeat="lookupItem in importedScope.lookupItemList">
+                                <span class="slds-form-element__label slds-text-body--regular">{{::lookupItem.label}}</span>
+                                <div class="slds-form-element__control slds-input-has-fixed-addon">
+                                    <span class="slds-form-element__static">{{lookupItem.displayValue}}</span>
+                                    <span class="slds-form-element__addon">
+                                        <button type="button" class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.launchLineItemLookup(lookupItem)">
+                                            <slds-button-svg-icon sprite="'utility'" icon="'edit'"></slds-button-svg-icon>
+                                            <span class="slds-assistive-text">{{::importedScope.customLabels.CPQCartConfigLookupValues}}</span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <span class="error-msg" ng-if="importedScope.detailEditableServerErrorMsg">{{importedScope.detailEditableServerErrorMsg}}</span>
+                            </div>
+                            <div class="slds-form-element" ng-repeat="editableItem in importedScope.editableItemList">
+                                <label class="slds-form-element__label">{{::editableItem.label}}<span ng-if="editableItem.dataType === 'PERCENT'"> %</span></label>
+                                <div class="slds-form-element__control">
+                                    <input ng-if="::editableItem.dataType === 'STRING'" type='text' class="slds-input" ng-model='editableItem.value' ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }"
+                                    ng-change="importedScope.refreshEditableField(editableItem , true);"/>
+                                    <input ng-if="::(editableItem.fieldName === 'Quantity' || editableItem.dataType === 'CURRENCY' || editableItem.dataType === 'PERCENT')" type='number' step='any' class="slds-input" ng-model='editableItem.value'  ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }"
+                                        ng-change="importedScope.refreshEditableField(editableItem, true);"/>
+                                    <span class="error-msg">{{editableItem.qtyValidationMessage}}</span>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <!--Display save button only when editable fields are available-->
+            <div class="slds-form-element cpq-product-cart-config-form-savebar" ng-if="importedScope.attributesObj && importedScope.attributesObj.length >0 || importedScope.lookupItemList && importedScope.lookupItemList.length >0 || importedScope.editableItemList && importedScope.editableItemList.length >0">
+                <div class="slds-spinner_container" ng-show="importedScope.isConfigSubmit">
+                    <div class="slds-spinner--brand slds-spinner slds-spinner--small" aria-hidden="false" role="alert">
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+                <!-- leaving save button and closing form tag to revert easily to submit for save functionality -->
+                <!-- <button class="slds-button slds-button--brand" type="submit" ng-disabled="productconfig.$invalid || importedScope.isConfigSubmit">
+                    <span ng-show="!importedScope.isConfigSubmit">Save</span>
+                    <span ng-show="importedScope.isConfigSubmit">Saving</span>
+                </button> -->
+            </div>
+        <!-- </form> -->
+    </div>
+</div>

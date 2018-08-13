@@ -1,0 +1,116 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.SubscriptionId",
+                "val": "54726279-0157-44b9-94e8-484a8a440966"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "cantidadItemsConsulta": "0",
+                "cantidadMaxConsulta": "5",
+                "codSuscriptor": "{{params.SubscriptionId}}",
+                "referenciaItemPaginado": "0"
+            },
+            "optionsMap": {
+                "vlcClass": "ta_care_queryAdjustmentsHelper"
+            },
+            "remoteClass": "ta_care_queryAdjustmentsHelper",
+            "remoteMethod": "GetAdjustmentHistory",
+            "resultVar": "['IPResult']['listaDetalleAjuste']"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "sorteableField": {
+        "fisrtSort": "['fechaAjuste']",
+        "reverse": true
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "params.SubscriptionId",
+                            "LineNumber": "params.LineNumber"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-care-adjustment-history-action",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Fecha",
+                    "name": "['fechaAjuste']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Vencimiento",
+                    "name": "['fechaExpiracionBalance']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['motivoAjuste']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Motivo",
+                    "name": "['motivoAjuste']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "data": {
+                        "Vencimiento": "['fechaAjuste']"
+                    },
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Ajuste",
+                    "name": "['montoAjuste']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "templateUrl": "ta-care-table-adjustment-history"
+        }
+    ],
+    "title": "Historial de ajustes"
+}

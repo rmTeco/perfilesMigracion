@@ -1,0 +1,792 @@
+<apex:page standardController="Opportunity" extensions="SCP_Certa_GC.OpportunityBigDealController" tabStyle="Strategic_Client_Plan__tab" sidebar="false" showHeader="true" rendered="{!canRead}">
+	<c:SCPMenu ></c:SCPMenu>
+
+	<style>
+		.pbSubheader h3 {
+			display: inline;
+			margin-left: 5px;
+			font-weight: bold;
+		}
+		
+		.separator {
+			width: 100%;
+			margin-top: 20px;
+		}
+		
+        #big-deal-tab-content th {
+        	width : 50%;
+        	text-align : left;
+        	padding-left : 20%;
+        	font-size: 14px;
+        	font-weight: normal;
+        }
+        
+        #big-deal-tab-content th label {
+        	font-size: 14px;
+        	font-weight: normal;
+        }
+
+        .icon-sectors {
+            width: 90px;            
+        }
+
+        #ul-menu-img {
+            width: 100% ! important;
+            border-bottom: 0px solid #cfd0d2;
+        }
+
+        #ul-menu-img li {
+            text-align: center;
+            width: 16%;
+            height: 185px;
+            min-height: 185px;
+            max-height: 185px;
+            text-transform: none ! important;
+        }
+
+        #ul-menu-img li:hover, #ul-menu-img li.active {
+            border: 2px solid #539fc6;            
+        }
+
+        #ul-menu-img li a, #ul-menu-img li a:hover {
+            border: 0px solid #539fc6 ! important;
+        }
+        
+	</style>
+
+	<script>
+    $j = jq213; //jQuery.noConflict();
+		
+		$j(document).ready(function() {
+            initializeToggles();
+
+            $j("#" + GetURLParameter("section")).click();
+            captureFileButtons();
+        });
+
+        function captureFileButtons() {
+            <apex:outputText rendered="{!canEdit}">
+                $j("[name=newNote]").on("mousedown", function(){
+                    SaveChanges();
+                });
+                $j("[name=attachFile]").on("mousedown", function(){
+                    SaveChanges();
+                });            
+                $j("[name=viewAll]").on("mousedown", function(){
+                    SaveChanges();
+                });
+            </apex:outputText>
+        }
+		
+        function GetURLParameter(sParam) {
+            
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
+        function ajaxshow () {
+	        $j(".ajaxloader").show();
+	    }
+	    function ajaxstop () {
+	        $j(".ajaxloader").hide();
+	    }
+    	
+    	function initializeToggles () {
+            var toggle = $j("[id$=reach-defined-checkbox]");
+            toggle.click(function () {
+                toggleRowClass("reach-file-upload", this.checked);
+                toggleRow("reach-file-valoration", this.checked);
+            });
+            toggleRowClass("reach-file-upload", toggle.is(':checked'));
+            toggleRow("reach-file-valoration", toggle.is(':checked'));
+            //---------------------------------------------------------------------
+            toggle = $j("[id$=reach-similar-projects-exp]");
+            toggle.click(function () {
+                toggleRow("reach-similar-projects-exp-detail", 
+                          $j(this).find('option:selected').val() === "Si");
+            });
+            toggleRow("reach-similar-projects-exp-detail", toggle.find('option:selected').val() === "Si");
+            //---------------------------------------------------------------------
+            toggle = $j("[id$=reach-technical-checkbox]");
+            toggle.click(function () {
+                //toggleRow("reach-technical-text", this.checked);
+                toggleRowClass("reach-technical-text", this.checked);
+                toggleRow("reach-technical-valoration", this.checked);
+            });
+            //toggleRow("reach-technical-text", toggle.is(':checked'));
+            toggleRowClass("reach-technical-text", toggle.is(':checked'));
+            toggleRow("reach-technical-valoration", toggle.is(':checked'));
+            //---------------------------------------------------------------------
+            toggle = $j("[id$=reach-third-party-required-checkbox]");
+            toggle.click(function () {
+                toggleRow("reach-third-party-amount", this.checked);
+            });
+            toggleRow("reach-third-party-amount", toggle.is(':checked'));
+            //---------------------------------------------------------------------
+            toggle = $j("[id$=reach-hire-checkbox]");
+            toggle.click(function () {
+                toggleRow("reach-hire-amount", this.checked);
+            });
+            toggleRow("reach-hire-amount", toggle.is(':checked'));
+            //---------------------------------------------------------------------
+            toggle = $j("[id$=team-fte-not-present]");
+            var toggleB = $j("[id$=team-fte-third-party]");
+            var toggleFunction = function () {
+                toggleRow("team-fte-detail", 
+                          ($j("[id$=team-fte-not-present]").find('option:selected').val() !== "" && 
+                           		$j("[id$=team-fte-not-present]").find('option:selected').val() !== "0") ||
+                          ($j("[id$=team-fte-third-party]").find('option:selected').val() !== "" && 
+								$j("[id$=team-fte-third-party]").find('option:selected').val() !== "0"));
+            }
+            toggle.click(toggleFunction);
+            toggleB.click(toggleFunction);
+            toggleFunction();
+            //---------------------------------------------------------------------
+            toggle = $j("[id$=risk-project-SLA-checkbox]");
+            toggle.click(function () {
+                toggleRowClass("risk-project-SLA-detail", this.checked);
+                toggleRow("risk-project-SLA-valoration", this.checked);
+            });
+            toggleRowClass("risk-project-SLA-detail", toggle.is(':checked'));
+            toggleRow("risk-project-SLA-valoration", toggle.is(':checked'));
+        }
+    	
+    	function toggleRow(id, condition) {
+            //the closest("tr") obtain the element that is generated as 
+            //part of the pageBlockSection that contains both the title and
+            //the input field
+            if(condition) {
+                $j("[id$=" + id + "]").closest("tr").show("fast");
+            }
+            else {
+                $j("[id$=" + id + "]").closest("tr").hide("fast");
+            }
+        }
+
+        function toggleRowClass(aClass, condition) {
+            //the closest("tr") obtain the element that is generated as 
+            //part of the pageBlockSection that contains both the title and
+            //the input field
+            if(condition) {
+                $j("." + aClass).closest("tr").show("fast");
+            }
+            else {
+                $j("." + aClass).closest("tr").hide("fast");
+            }
+        }
+    </script>
+
+	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+		<apex:pageMessages id="errorMsg"/>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<span style="float:left;">
+						Big Deal
+					</span>
+					<!-- <c:tutorial />  -->
+					<span style="float:left;">
+    					<c:showVideo />
+    				</span>
+				</h2>
+				<div class="row paddingRight">
+					<div class="btn-group pull-right" role="group" aria-label="...">
+						
+                        <apex:outputPanel id="buttonPanel">
+						<div class="btn-group pull-right" role="group" aria-label="...">
+                            <apex:outputText id="button-group" rendered="{!canEdit}">
+			                    <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+			   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+			                    </button>                                
+                            </apex:outputText>
+                            <apex:outputText rendered="{!canEdit && !isBlocked}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="SaveChangesAndBlock()">
+                                    <span class="glyphicon glyphicon-floppy-remove icon-btn-left"></span>&nbsp;{!$Label.saveAndBlock}
+                                </button>                                
+			                </apex:outputText>
+                            <apex:outputText rendered="{!canEdit && isBigDealAdmin && isBlocked}">
+                                <button type="button" class="btn btn-default btn-sm" onclick="SaveChangesAndUnblock()">
+                                    <span class="glyphicon glyphicon-ok icon-btn-left"></span>&nbsp;{!$Label.saveAndUnblock}
+                                </button>
+                            </apex:outputText>
+			                <apex:outputLink value="{!$Page.SCP_Certa_GC__OpportunitySnapshot}?id={!BigDealOpportunity.id}">
+	                        	<button type="button" class="btn btn-default btn-sm">
+			   						<span class="glyphicon glyphicon-camera icon-btn-left"></span>&nbsp;{!$Label.gotoSnapshot}
+			                 	</button>
+	                        </apex:outputLink>                            
+	    				</div>
+                        </apex:outputPanel>  
+                        
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+                
+                <!-- validation message -->
+                <apex:outputPanel id="validationMessage">
+                    <apex:outputPanel rendered="{!missingObligatoriField.size > 0}">
+                        <div class="alert alert-danger" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <apex:repeat value="{!missingObligatoriField}" var="error">
+                                
+                                <p>
+                                    <span class="sr-only">Error:</span>
+                                    {!error}
+                                </p>
+                                
+                            </apex:repeat>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <!-- ------------------ -->
+                
+				<h2 style="margin-top: 0px;">{!$Label.scp_certa_gc__opportunity}: <span style="font-size: 16px;"><apex:outputLink value="/{!BigDealOpportunity.id}">{!BigDealOpportunity.Name}</apex:outputLink></span></h2>
+				<apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="ajaxstop();"/>
+	            <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+    	            <img src="{!$Resource.SCP_Certa_GC__AjaxLoader}"/><br/>Loading...
+        	    </div>
+				<apex:form >                    
+                    <apex:actionFunction action="{!save}" name="SaveChanges" status="renderMeStatus"/>
+                    <apex:actionFunction action="{!saveAndBlock}" name="SaveChangesAndBlock" status="renderMeStatus" reRender="validationMessage, buttonPanel"/>
+                    <apex:actionFunction action="{!saveAndUnblock}" name="SaveChangesAndUnblock" status="renderMeStatus"/>
+					<br/>
+                    <ul id="ul-menu-img" class="nav nav-tabs">
+						<li class="active"><a id="general-info" data-toggle="tab" href="#div-general-info"><apex:image url="{!$Resource.SCP_Certa_GC__Info_general}" styleClass="icon-sectors"/><br/><h2>{!$Label.General_information}</h2></a></li>
+						<li><a id="offer-schedule" data-toggle="tab" href="#div-offer-schedule"><apex:image url="{!$Resource.SCP_Certa_GC__calendario}" styleClass="icon-sectors"/><br/><h2>{!$Label.scp_certa_gc__offer_schedule}</h2></a></li>
+					  	<li><a id="economical-info" data-toggle="tab" href="#div-economical-info"><apex:image url="{!$Resource.SCP_Certa_GC__Info_eco}" styleClass="icon-sectors"/><br/><h2>{!$Label.scp_certa_gc__economical_information}</h2></a></li>
+					  	<li><a id="detail-reach" data-toggle="tab" href="#div-detail-reach"><apex:image url="{!$Resource.SCP_Certa_GC__detalle_alcance}" styleClass="icon-sectors"/><br/><h2>{!$Label.scp_certa_gc__detail_of_reach}</h2></a></li>
+						<li><a id="offer-presale" data-toggle="tab" href="#div-Team-offer-presale"><apex:image url="{!$Resource.SCP_Certa_GC__preventa}" styleClass="icon-sectors"/><br/><h2>{!$Label.scp_certa_gc__team_for_offer_and_presale}</h2></a></li>
+                        <li><a id="risks" data-toggle="tab" href="#div-Risks"><apex:image url="{!$Resource.SCP_Certa_GC__riesgo}" styleClass="icon-sectors"/><br/><h2>{!$Label.Risks}</h2></a></li>
+					</ul>
+                    <br/>
+					<div class="tab-content" id="big-deal-tab-content">
+                        <!-- General_information ----------------------------------------------------------- -->
+                        <!-- Informacion General ----------------------------------------------------------- -->
+						<div id="div-general-info" class="tab-pane fade active in">
+							<apex:pageBlock title="" mode="maindetail">
+                                
+                                <!-- Pais -->
+								<apex:pageBlockSection title="{!$Label.scp_certa_gc__country}" columns="1">
+									                                  
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Pais__c.inlineHelpText}">
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Pais__c}"/>  
+                                    </apex:outputText>
+                                    
+								</apex:pageBlockSection>
+                                
+                                <!-- Proyecto -->
+								<apex:pageBlockSection title="{!$Label.scp_certa_gc__project}" columns="1">
+									<apex:outputField value="{!BigDealOpportunity.Name}" />
+									<apex:outputField value="{!BigDealOpportunity.Description}" />
+                                    
+                                    <!-- no es necesario en el paquete generico -->
+									<!--apex:outputField value="{!Survey.Codigo_en_Sales_Force_del_proyecto__c}" 
+										label="{!$ObjectType.Big_deals_Survey__c.fields.Codigo_en_Sales_Force_del_proyecto__c.inlineHelpText}"
+									/-->
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Sector__c}" 
+                                    	label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Sector__c.inlineHelpText}" 
+                                    />
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Tipo_de_oportunidad__c}"
+                                    	label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Tipo_de_oportunidad__c.inlineHelpText}"
+                                    />
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Tipo_de_negocio__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Tipo_de_negocio__c.inlineHelpText}"
+                                    />
+								</apex:pageBlockSection>
+                                
+                                <!-- Cliente -->
+								<apex:pageBlockSection title="{!$Label.scp_certa_gc__client}" columns="1">
+                                    <apex:outputField value="{!BigDealAccount.Name}" />
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Responsable_comercial__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Responsable_comercial__c.inlineHelpText}"
+                                    />
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Nivel_de_interlocucion_con_el_cliente__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Nivel_de_interlocucion_con_el_cliente__c.inlineHelpText}"
+                                    />
+                                    <!-- ---------------------------------------------------------------- -->
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Es_cliente_actual_de_TEF__c.inlineHelpText}"/>
+                                        <apex:outputField value="{!Survey.SCP_Certa_GC__Es_cliente_actual_de_TEF__c}" id="general-info-client-is-currently" style="margin-top: 3pt;" />
+                                    </apex:pageBlockSectionItem>
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Ambito_donde_ya_es_cliente_con_TEF__c}" id="general-info-client-where-is-client"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Ambito_donde_ya_es_cliente_con_TEF__c.inlineHelpText}"
+                                    />
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__FCV_de_contratos_actuales__c}" id="general-info-client-fcv-current-contracts"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__FCV_de_contratos_actuales__c.inlineHelpText}"
+                                    />
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Es_moroso_con_el_Grupo__c.inlineHelpText}">
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Es_moroso_con_el_Grupo__c}"/>  
+                                    </apex:outputText>
+                                    
+                                    <!-- ---------------------------------------------------------------- -->
+								</apex:pageBlockSection>
+							</apex:pageBlock>
+						</div>
+						<!-- offer_schedule ---------------------------------------------------------------- -->
+                        <!-- Calendario de la oferta ---------------------------------------------------------------- -->
+						<div id="div-offer-schedule" class="tab-pane fade">
+							<apex:pageBlock title="" mode="maindetail">
+								<apex:pageBlockSection title="{!$Label.scp_certa_gc__offer_schedule}" columns="1">
+									<apex:outputField value="{!BigDealOpportunity.CreatedDate}" label="{!$Label.scp_certa_gc__opportunity_arrival_date}" />                                   
+                                                                        
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__fecha_de_entrega__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__fecha_de_entrega__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+									<apex:inputField value="{!Survey.SCP_Certa_GC__Fecha_de_defensa__c}" label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Fecha_de_defensa__c.inlineHelpText}"/>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Fecha_estimada_del_fallo__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Fecha_estimada_del_fallo__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Fecha_comienzo_de_contrato__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Fecha_comienzo_de_contrato__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+						        </apex:pageBlockSection>
+							</apex:pageBlock>
+						</div>
+						<!-- Economical_information -------------------------------------------------------- -->
+                        <!-- Informacion economica  -------------------------------------------------------- -->
+						<div id="div-economical-info" class="tab-pane fade">
+							<apex:pageBlock title="" mode="maindetail">
+								<apex:pageBlockSection title="{!$Label.scp_certa_gc__economical_information}" columns="1">
+                                                                        
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Full_contract_value__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Full_contract_value__c}" />  
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__NAV_12_meses_naturales__c}" />  
+                                        </div>
+                                    </apex:outputText>	
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__NAV_12_meses_naturales__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__NAV_o_ingresos_proximos_12_meses__c}" />  
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Valor_estimado_one_shot__c.inlineHelpText}">
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Valor_estimado_one_shot__c}" />  
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Valor_estimado_ingresos_recurrentes__c.inlineHelpText}">
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Valor_estimado_ingresos_recurrentes__c}" />  
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Capex_total__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Capex_total__c}" />  
+                                        </div>
+                                    </apex:outputText>
+									
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Capex_a_o_en_curso__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Capex_a_o_en_curso__c}" />  
+                                        </div>
+                                    </apex:outputText>                                    
+						        </apex:pageBlockSection>
+							</apex:pageBlock>
+						</div>
+						<!-- Detail_of_reach --------------------------------------------------------------- -->
+						<div id="div-detail-reach" class="tab-pane fade">
+							<apex:pageBlock title="" mode="maindetail">
+								<apex:pageBlockSection title="{!$Label.scp_certa_gc__detail_of_reach}" columns="1">
+									
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Lineas_implicadas__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Lineas_implicadas__c}"/>            
+                                        </div>
+                                    </apex:outputText>                                 
+									
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__l_neas_de_producto_principales__c}"
+										label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__l_neas_de_producto_principales__c.inlineHelpText}"
+									/>
+                                    <!-- ----------------------------------------------------------- -->
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Alcance_definido__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Alcance_definido__c}" id="reach-defined-checkbox"/>
+                                    </apex:pageBlockSectionItem>                                    
+                                    
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__use_notes_and_files}" id="reach-file-upload" labelStyleClass="reach-file-upload">
+                                        <apex:outputLabel value="{!$Label.scp_certa_gc__deliberables_description}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Descripcion_de_los_entregables_del__c}" style="margin-top: 3pt;" />
+                                    </apex:pageBlockSectionItem>   
+
+                                    <!--
+                                    <apex:outputText label="{!$Label.scp_certa_gc__deliberables_description}" id="reach-file-upload">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                        	<apex:inputField value="{!Survey.SCP_Certa_GC__Descripcion_de_los_entregables_del__c}" style="margin-top: 3pt;" />
+                                        </div>
+                                    </apex:outputText>
+                                    -->
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Valoracion_de_relacion_de_entregables__c}" id="reach-file-valoration" rendered="{!isBigDealAdmin}"/>
+                                    <!-- ----------------------------------------------------------- -->
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Existe_descripcion_tecnica__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Existe_descripcion_tecnica__c}" id="reach-technical-checkbox"/>
+                                    </apex:pageBlockSectionItem>
+                                    
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__use_notes_and_files}" id="reach-technical-text" labelStyleClass="reach-technical-text">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__arquitectura_tecnica__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__arquitectura_tecnica__c}" style="margin-top: 3pt;" />
+                                    </apex:pageBlockSectionItem>
+
+                                    <!--
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__arquitectura_tecnica__c.inlineHelpText}" id="reach-technical-text">                                        
+                                        <div class="requiredInput">                                            
+                                            <div class="requiredBlock"></div>
+                                        	<apex:inputField value="{!Survey.SCP_Certa_GC__arquitectura_tecnica__c}" style="margin-top: 3pt;" />
+                                        </div>
+                                    </apex:outputText>
+                                    -->
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Valoracion_de_arquitectura_tecnica__c}" id="reach-technical-valoration" rendered="{!isBigDealAdmin}"/>
+                                    <!-- ----------------------------------------------------------- -->
+									
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Necesario_desarrollar_oferta_con_tercero__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Necesario_desarrollar_oferta_con_tercero__c}" id="reach-third-party-required-checkbox"/>
+                                    </apex:pageBlockSectionItem>
+
+									<apex:inputField value="{!Survey.SCP_Certa_GC__Alcance_de_la_colaboracion_con_terceros__c}" id="reach-third-party-amount"
+										label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Alcance_de_la_colaboracion_con_terceros__c.inlineHelpText}"
+									/>
+                                    <!-- ----------------------------------------------------------- -->									
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Duracion_del_proyecto__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Duracion_del_proyecto__c}"  />
+                                        </div>
+                                    </apex:outputText>
+
+									<apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Plazo_de_ejecucion__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Plazo_de_ejecucion__c}" />        
+                                        </div>
+                                    </apex:outputText>
+
+                                    <!-- ----------------------------------------------------------- -->                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Experiencia_con_proyectos_similares__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Experiencia_con_proyectos_similares__c}" id="reach-similar-projects-exp"/>        
+                                        </div>
+                                    </apex:outputText>
+
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Detalle_de_experiencia_en_el_Grupo__c}" id="reach-similar-projects-exp-detail"
+										label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Detalle_de_experiencia_en_el_Grupo__c.inlineHelpText}"
+									/>
+                                    <!-- ----------------------------------------------------------- -->
+									<apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Necesidad_de_incorporar_personas__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Necesidad_de_incorporar_personas__c}" id="reach-hire-checkbox"/>
+                                    </apex:pageBlockSectionItem>
+
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Cantidad_de_personas_a_incorporar__c.inlineHelpText}"                     >
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Cantidad_de_personas_a_incorporar__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    <!-- ----------------------------------------------------------- -->
+                                   
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Competencia__c.inlineHelpText}">
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Competencia__c}"/>
+                                    </apex:outputText>
+
+						        </apex:pageBlockSection>                                
+							</apex:pageBlock>
+						</div>
+						<!-- Team_for_offer_and_presale ---------------------------------------------------- -->
+						<div id="div-Team-offer-presale" class="tab-pane fade">
+							<apex:pageBlock title="" mode="maindetail">
+								<apex:pageBlockSection title="{!$Label.scp_certa_gc__team_for_offer_and_presale}" columns="1">
+						            
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__FTE_que_se_aportaran__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__FTE_que_se_aportaran__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <!-- ----------------------------------------------------------- -->
+									<apex:inputField value="{!Survey.SCP_Certa_GC__FTE_no_presentes__c}" id="team-fte-not-present"
+										label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__FTE_no_presentes__c.inlineHelpText}"
+									/>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__FTE_terceros_requeridos__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__FTE_terceros_requeridos__c}" id="team-fte-third-party"/>
+                                        </div>
+                                    </apex:outputText>
+
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Duracion_estimada_Preventa__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Duracion_estimada_Preventa__c}"/>
+                                        </div>
+                                    </apex:outputText>    
+                                    <!-- ----------------------------------------------------------- -->
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Cantidad_jornadas_preventa_y_oferta__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Cantidad_jornadas_preventa_y_oferta__c}"/>
+                                        </div>
+                                    </apex:outputText>
+
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Actividades_durante_preventa__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Actividades_durante_preventa__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Detalle_de_perfiles_necesarios__c}" id="team-fte-detail"
+                                                     label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Detalle_de_perfiles_necesarios__c.inlineHelpText}"
+                                                     />
+                               
+						        </apex:pageBlockSection>
+							</apex:pageBlock>
+						</div>
+						<!-- Risks ------------------------------------------------------------------------- -->
+                        <div id="div-Risks" class="tab-pane fade">
+                            <apex:pageBlock title="" mode="maindetail">
+                                <apex:pageBlockSection title="{!$Label.scp_certa_gc__client_s}" columns="1">
+                        			
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Grado_de_conocimiento_del_cliente__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Grado_de_conocimiento_del_cliente__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Interrelacion_con_principales_decisores__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Interrelacion_con_principales_decisores__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Impacto_en_el_cliente__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Impacto_en_el_cliente__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Estabilidad_organizacion_del_cliente__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Estabilidad_organizacion_del_cliente__c.inlineHelpText}"
+                                    />
+                                </apex:pageBlockSection>
+                                <apex:pageBlockSection title="{!$Label.scp_certa_gc__from_the_technical_solution}" columns="1">
+                        			<apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Informacion_formalizada_suficiente__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Informacion_formalizada_suficiente__c}"/>
+                                    </apex:pageBlockSectionItem>
+
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Existe_experiencia_previa_con_solucion__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Existe_experiencia_previa_con_solucion__c}"/>
+                                    </apex:pageBlockSectionItem>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Grado_exigencia_SLA__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Grado_exigencia_SLA__c}"/>
+                                        </div>
+                                    </apex:outputText>
+
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Capacidad_para_cumplir_los_SLA__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Capacidad_para_cumplir_los_SLA__c}"/>
+                                        </div>
+                                    </apex:outputText>                                    
+
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Grado_certeza_continuidad_plataforma__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Grado_certeza_continuidad_plataforma__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                </apex:pageBlockSection>
+                                <apex:pageBlockSection title="{!$Label.scp_certa_gc__from_the_project}" columns="1">
+                                    
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Condiciones_previas_para_licitar__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Condiciones_previas_para_licitar__c}"/>
+                                    </apex:pageBlockSectionItem>
+
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Importe_fianzas_depositar__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Importe_fianzas_depositar__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Duracion_de_la_garantia__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Duracion_de_la_garantia__c.inlineHelpText}"
+                                    />
+                                    <!-- ----------------------------------------------------------- -->
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__SLA_definidos__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__SLA_definidos__c}" id="risk-project-SLA-checkbox"/>
+                                    </apex:pageBlockSectionItem>
+                                    
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__use_notes_and_files}" id="risk-project-SLA-detail" labelStyleClass="risk-project-SLA-detail">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__SLA_Detalle__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__SLA_Detalle__c}"/>
+                                    </apex:pageBlockSectionItem>    
+                                    <!--
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__SLA_Detalle__c.inlineHelpText}"
+                                                     id="risk-project-SLA-detail">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__SLA_Detalle__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    -->
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Valoracion_de_detalle_de_SLA__c}" id="risk-project-SLA-valoration" rendered="{!isBigDealAdmin}"/>
+                                    <!-- ----------------------------------------------------------- -->
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Detalle_penalizaciones_indemnizaciones__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Detalle_penalizaciones_indemnizaciones__c}"/>
+                                        </div>
+                                    </apex:outputText>
+
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Duracion_de_responsabilidad_civil__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Duracion_de_responsabilidad_civil__c.inlineHelpText}"
+                                    />
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Tiempo_responsabilidad_terceros__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Tiempo_responsabilidad_terceros__c.inlineHelpText}"
+                                    />
+                                </apex:pageBlockSection>
+                                <apex:pageBlockSection title="{!$Label.scp_certa_gc__financial}" columns="1">
+                        			<apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Estabilidad_financiera_cliente__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Estabilidad_financiera_cliente__c}"/>
+                                    </apex:pageBlockSectionItem>
+
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Consumo_capex_activos_fijos__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Consumo_capex_activos_fijos__c}"/>
+                                    </apex:pageBlockSectionItem>
+                                    
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__facturacion_estandar__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__facturacion_estandar__c}"/>
+                                    </apex:pageBlockSectionItem>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__porcentaje_penalizacion_incumplimiento__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__porcentaje_penalizacion_incumplimiento__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__porcentaje_penalizacion_resicion__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__porcentaje_penalizacion_resicion__c}"/>
+                                        </div>
+                                    </apex:outputText>
+
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__porcentage_indemnizacion_total_importe__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__porcentage_indemnizacion_total_importe__c}"/>
+                                        </div>
+                                    </apex:outputText>
+
+                                    <apex:outputText label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Porcentaje_pasivo_laboral_importe__c.inlineHelpText}">
+                                        <div class="requiredInput">
+                                            <div class="requiredBlock"></div>
+                                            <apex:inputField value="{!Survey.SCP_Certa_GC__Porcentaje_pasivo_laboral_importe__c}"/>
+                                        </div>
+                                    </apex:outputText>
+                                    
+                                </apex:pageBlockSection>
+                                <apex:pageBlockSection title="{!$Label.scp_certa_gc__from_the_organization}" columns="1">
+                        			<apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Productos_clave_estan_en_porfolio__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Productos_clave_estan_en_porfolio__c}"/>
+                                    </apex:pageBlockSectionItem>
+
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Estan_perfiles_clave_necesarios__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Estan_perfiles_clave_necesarios__c}"/>
+                                    </apex:pageBlockSectionItem>                                    
+
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Personal_clave_del_cliente_identificado__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Personal_clave_del_cliente_identificado__c}"/>
+                                    </apex:pageBlockSectionItem>
+                                    
+                                </apex:pageBlockSection>
+                                <apex:pageBlockSection title="{!$Label.scp_certa_gc__from_third_parties}" columns="1">
+                        			<apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Partners_necesarios_identificados__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Partners_necesarios_identificados__c}"/>
+                                    </apex:pageBlockSectionItem>
+
+                                    <apex:pageBlockSectionItem HelpText="{!$Label.scp_certa_gc__checkbox_help}">
+                                        <apex:outputLabel value="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Situacion_con_partners_favorable__c.inlineHelpText}"/>
+                                        <apex:inputField value="{!Survey.SCP_Certa_GC__Situacion_con_partners_favorable__c}"/>
+                                    </apex:pageBlockSectionItem>
+                                    
+                                    <apex:inputField value="{!Survey.SCP_Certa_GC__Productos_terceros_cumplen_SLA__c}"
+                                        label="{!$ObjectType.SCP_Certa_GC__Big_deals_Survey__c.fields.SCP_Certa_GC__Productos_terceros_cumplen_SLA__c.inlineHelpText}"
+                                    />
+                                </apex:pageBlockSection>
+                            </apex:pageBlock>
+                        </div>
+					</div>
+				</apex:form>
+                <apex:pageBlock mode="maindetail">
+                    <apex:pageBlockSection columns="1">         
+                        <apex:relatedList list="CombinedAttachments" />
+                    </apex:pageBlockSection>
+                </apex:pageBlock>
+			</div>
+		</div>
+	</apex:outputpanel>
+</apex:page>

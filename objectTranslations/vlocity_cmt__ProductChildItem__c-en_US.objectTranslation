@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldSets>
+        <label><!-- Product Structure --></label>
+        <name>ProductStructure</name>
+    </fieldSets>
+    <fields>
+        <label><!-- Price Included --></label>
+        <name>Price_Included__c</name>
+    </fields>
+    <fields>
+        <label><!-- Sequence --></label>
+        <name>vlocity_cmt__ChildLineNumber__c</name>
+    </fields>
+    <fields>
+        <label><!-- Child Product --></label>
+        <name>vlocity_cmt__ChildProductId__c</name>
+        <relationshipLabel><!-- Product Child Items (Child) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Collapse Hierarchy --></label>
+        <name>vlocity_cmt__CollapseHierarchy__c</name>
+    </fields>
+    <fields>
+        <label><!-- Global Key --></label>
+        <name>vlocity_cmt__GlobalKey__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Override --></label>
+        <name>vlocity_cmt__IsOverride__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Root Product Child Item --></label>
+        <name>vlocity_cmt__IsRootProductChildItem__c</name>
+    </fields>
+    <fields>
+        <label><!-- Virtual Item --></label>
+        <name>vlocity_cmt__IsVirtualItem__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max Quantity --></label>
+        <name>vlocity_cmt__MaxQuantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Max Children Quantity --></label>
+        <name>vlocity_cmt__MaximumChildItemQuantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Min, Max, Default --></label>
+        <name>vlocity_cmt__MinMaxDefaultQty__c</name>
+    </fields>
+    <fields>
+        <label><!-- Min Quantity --></label>
+        <name>vlocity_cmt__MinQuantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Min Children Quantity --></label>
+        <name>vlocity_cmt__MinimumChildItemQuantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- Parent Product --></label>
+        <name>vlocity_cmt__ParentProductId__c</name>
+        <relationshipLabel><!-- Product Child Items --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Default Quantity --></label>
+        <name>vlocity_cmt__Quantity__c</name>
+    </fields>
+    <fields>
+        <label><!-- RelationshipType --></label>
+        <name>vlocity_cmt__RelationshipType__c</name>
+        <picklistValues>
+            <masterLabel>Child</masterLabel>
+            <translation><!-- Child --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Realization</masterLabel>
+            <translation><!-- Realization --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Selection Method Implementation --></label>
+        <name>vlocity_cmt__SelectionMethodImplementation__c</name>
+    </fields>
+    <fields>
+        <label><!-- SeqNumber --></label>
+        <name>vlocity_cmt__SeqNumber__c</name>
+    </fields>
+    <validationRules>
+        <errorMessage><!-- Default Quantity should be greater than or equal to 0 --></errorMessage>
+        <name>vlocity_cmt__Default_greater_than_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Default Quantity must be greater than or equal to Min Quantity --></errorMessage>
+        <name>vlocity_cmt__Default_greater_than_Min</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Default Quantity must be less than or equal to Max Quantity --></errorMessage>
+        <name>vlocity_cmt__Default_less_than_Max</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Max Quantity should be greater than or equal to 0 --></errorMessage>
+        <name>vlocity_cmt__Max_greater_than_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Max Quantity must be greater than or equal to Min Quantity --></errorMessage>
+        <name>vlocity_cmt__Max_less_than_Min</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Min Children Quantity must be less than or equal to Max Children Quantity --></errorMessage>
+        <name>vlocity_cmt__Min_child_greater_than_Max_child_item</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Min Quantity should be greater than or equal to 0 --></errorMessage>
+        <name>vlocity_cmt__Min_greater_than_0</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Min Quantity must be less than or equal to Max Quantity --></errorMessage>
+        <name>vlocity_cmt__Min_greater_than_Max</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Parent Product cannot be added as Child Product --></errorMessage>
+        <name>vlocity_cmt__ParentProduct_cannot_be_ChildProduct</name>
+    </validationRules>
+</CustomObjectTranslation>

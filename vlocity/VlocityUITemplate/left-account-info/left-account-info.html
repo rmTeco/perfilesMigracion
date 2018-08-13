@@ -1,0 +1,24 @@
+<div class="console-account-info" ng-init="showInfo = true">
+    <div class="spacer acct-spacer" ng-click="showInfo = !showInfo">
+        {{::$root.vlocity.getCustomLabel('Account', 'Account')}} <span ng-if="showInfo"><i class="icon-v-down-caret"></i></span>
+                <span ng-if="!showInfo"><i class="icon-v-right-caret"></i></span>
+    </div>
+    <div class="acct-info" ng-show="showInfo">
+        <table>
+            <tr>
+                <td><strong>{{::$root.vlocity.getCustomLabel('Address', 'Address')}}:</strong></td> <td>{{records[0].BillingAddress.street}}<br/>{{records[0].BillingAddress.city}} {{records[0].BillingAddress.state}} {{records[0].BillingAddress.postalCode}}</td>
+            </tr>
+            <tr>
+                <td><strong>{{::$root.vlocity.getCustomLabel('Phone', 'Phone')}}:</strong></td> <td>{{records[0].Phone}}</td>
+            </tr>
+        </table>
+        <div class="acct-links">
+            <ul>
+                <li ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:3)">
+                    <a href="#" ng-click="performAction(action)">{{action.displayName}}</a>
+                    <span ng-if="!$last" class="separator">|</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

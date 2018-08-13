@@ -1,0 +1,47 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objType']": "Policy"
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Status",
+                    "name": "['subtitle']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Number",
+                    "name": "['highlight']",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Policy Expiration",
+            "sObjectType": "%vlocity_namespace%__Policy__c",
+            "templateUrl": "campaign-member-story-card"
+        }
+    ],
+    "title": "Policy"
+}

@@ -1,0 +1,59 @@
+{
+    "Cards": [
+        "ta-cpq-product-item"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "8016C0000000jvaQAA"
+            },
+            {
+                "name": "attrs.includeIneligible",
+                "val": "true"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "records",
+            "apexRestResultVar": "records",
+            "endpoint": "/%vlocity_namespace%/v2/cpq/carts/{{params.id}}/products?offsetSize=0&pagesize=10&fields=IsActive,Id,Name,UnitPrice,ProductCode,%vlocity_namespace%__RecurringPrice__c&includeIneligible={{attrs.includeIneligible}}",
+            "inputMap": {
+                "cartId": "{{params.id}}",
+                "fields": "IsActive,Id,Name,UnitPrice,ProductCode,%vlocity_namespace%__RecurringPrice__c,product2.description,Product2.Tipo_de_Bien_de_Uso__c,Product2.Marca__c,Product2.%vlocity_namespace%__HelpText__c,Product2.PrefaRequired__c,Product2.%vlocity_namespace%__CategoryData__c,Product2.Family,Product2.TA_Custom_Description__c,Product2.%vlocity_namespace%__Type__c,Product2.%vlocity_namespace%__SubType__c,Product2.NMU__c,Product2.Tangible__c",
+                "includeIneligible": "{{attrs.includeIneligible}}",
+                "offsetSize": "0",
+                "pagesize": "10"
+            },
+            "methodType": "GET",
+            "remoteClass": "taCpqAppHandler",
+            "remoteMethod": "getCartsProducts",
+            "remoteNSPrefix": null,
+            "resultVar": "result.records"
+        }
+    },
+    "session": {
+        "query": "iPhone and {{params.Id}}",
+        "size": "{{payload.totalSize}}"
+    },
+    "sessionVars": [
+        {
+            "formula": "",
+            "name": "totalSize",
+            "val": "payload.totalSize"
+        },
+        {
+            "name": "nextProducts",
+            "val": "payload.actions.nextproducts"
+        }
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-cpq-product-list"
+        }
+    },
+    "workspace": [
+        "ta-cpq-product-item/Personal - DESA01/null/1517425957710",
+        "ta-cpq-product-item/Personal - DESA01/4/1519656790036"
+    ]
+}

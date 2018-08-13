@@ -1,0 +1,99 @@
+/*** ASSETS THEME VARIABLES ***/
+@import "comp-assets-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-card-mixin";
+
+/* $assets-namespace is defined in cpq-base-variables */
+$namespace: $assets-namespace;
+$padding-wrapper: 40;
+@include cardMixin($namespace);
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .comp-#{$namespace}-product-item-child {
+            .#{$namespace}-item-base-product {
+
+                .#{$namespace}-item-base-product-name {
+                    .#{$namespace}-item-child-product-name-wrapper {
+                        .#{$namespace}-item-no-children {
+                            padding-left: 21px !important;
+                        }
+                    }
+                }
+
+                .#{$namespace}-item-base-product-name .slds-button__icon {
+                    transform: rotate(0deg);
+                    transform-origin: 45%;
+                }
+            }
+
+            .#{$namespace}-item-product-group {
+                color: $cpq-cart-item-product-group-label-color;
+                font-weight: $cpq-cart-item-product-group-font-weight;
+                text-transform: uppercase;
+                padding: 4px 0;
+            }
+        }
+
+        /* Generate padding for product name label in tree */
+        @include productChildLevelStyling($namespace, 'left', $padding-wrapper);
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .comp-#{$namespace}-product-item-child {
+            .#{$namespace}-item-base-product {
+                .#{$namespace}-item-base-product-name {
+                     padding: 0 0 0 6px;
+                    .#{$namespace}-product-name {
+                        padding-left: 0;
+                    }
+                    .#{$namespace}-item-has-children {
+                        .slds-button__icon {
+                            float: right; 
+                            margin: 0.3rem 0 0 0.5rem;
+
+                            &.#{$namespace}-fix-slds-close-switch {
+                                transform: rotate(90deg) !important;
+                            }
+                        }
+                    }
+                   .#{$namespace}-item-child-product-name-wrapper {
+                        .#{$namespace}-item-no-children {
+                            padding-left: 0;
+                            padding-right: 21px;
+                        }
+                    }
+
+                }
+
+                .#{$namespace}-item-base-product-currency {
+                    .slds-popover.cpq-price-actions-popover {
+                        left: auto;
+                        right: -0.5rem;
+                    }
+                }
+            }
+        }
+
+        @include productChildLevelStyling($namespace, 'right', $padding-wrapper);
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .comp-#{$namespace}-product-item-child {
+            .#{$namespace}-item-base-product {
+                &.#{$namespace}-item-selected {
+                    &:after {
+                        left: -$cpq-padding-large-horizontal;
+                        right: auto;
+                    }
+                }
+            }
+        }
+    }
+}

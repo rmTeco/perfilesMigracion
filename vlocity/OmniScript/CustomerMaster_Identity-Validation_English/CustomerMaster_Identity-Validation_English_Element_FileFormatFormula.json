@@ -1,0 +1,41 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 1,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "IdentityValidation",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/CustomerMaster/Identity Validation/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 14,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/CustomerMaster/Identity Validation/English",
+        "Name": "DocumentMethod",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/CustomerMaster/Identity Validation/English/DocumentMethod",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "DocumentMethod",
+    "%vlocity_namespace%__ParentElementType__c": "Step",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "currencySymbol": "$",
+        "dataType": "Boolean",
+        "dateFormat": "MM-dd-yyyy",
+        "expression": "IF(%ImagesCount% > 1,\n    AND(\n        OR(\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"jpg\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"gif\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"png\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"doc\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"docx\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"pdf\"\n        ),\n        OR(\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\"))-1], LOWER) = \"jpg\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\"))-1], LOWER) = \"gif\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\"))-1], LOWER) = \"png\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\"))-1], LOWER) = \"doc\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\"))-1], LOWER) = \"docx\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|2:filename%, \".\"))-1], LOWER) = \"pdf\"\n        )\n    ),\n    IF(%ImagesCount% = 1,\n        OR(\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"jpg\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"gif\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"png\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"doc\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"docx\",\n            CASE(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\")[COUNT(SPLIT(%DocumentMethod:FileDocumentImage|1:filename%, \".\"))-1], LOWER) = \"pdf\"\n        ),\n        false\n    )\n)",
+        "hide": true,
+        "hideGroupSep": false,
+        "inputWidth": 12,
+        "label": null,
+        "mask": null,
+        "show": null,
+        "showInputWidth": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Formula",
+    "Name": "FileFormatFormula",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/CustomerMaster/Identity Validation/English/FileFormatFormula"
+}

@@ -1,0 +1,92 @@
+<div class="right-sidebar-overlay" ng-click="importedScope.responsiveHelper.toggleCollapseRightCol()"></div>
+<div class="slds-grid slds-grid--vertical campaign-member-detail-top" ng-init="importedScope.setObj(obj); showMoreInfo = false" ng-class="{'slds-p-horizontal--small slds-p-top--small': importedScope.isMobile}">
+    <!-- <pre>{{importedScope.campaignMember | json}}</pre> -->
+    <div class="slds-spinner_container" ng-show="!importedScope.isLoaded">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+    <div class="member-information">
+        <span class="slds-grid">
+            <div class="left slds-col--padded slds-p-left--none">
+                <h2 class="slds-m-bottom--xx-small">
+                    <a ng-if="!importedScope.isMobile" ng-click="importedScope.navigateTo(importedScope.campaignMember)">{{importedScope.campaignMember.Name.value}}</a>
+                    <a ng-if="importedScope.isMobile" href="#/app/{{importedScope.campaignMember.objectTypeRoute}}/{{importedScope.campaignMember[importedScope.campaignMember.objectType].value}}">{{importedScope.campaignMember.Name.value}}</a>
+                </h2>
+                <span class="line title-employer slds-m-bottom--xx-small">{{importedScope.campaignMember.Title.value}}<span ng-if="importedScope.campaignMember.Title.value">,</span> {{importedScope.campaignMember.Company.value}}</span>
+                <div class="line phone-email slds-m-bottom--xx-small">
+                    {{importedScope.campaignMember.Phone.value}}
+                    <span ng-if="importedScope.campaignMember.Phone.value"> |</span> 
+                    {{importedScope.campaignMember.Email.value}} 
+                    <span ng-if="(importedScope.campaignMember.Phone.value || importedScope.campaignMember.Email.value) && data.fields.length > 0"> | </span>
+                    <div class="member-more-info-container" ng-class="{'via-show-nubbin': showMoreInfo}" ng-show="importedScope.campaignMember && data.fields.length > 0">
+                        <button class="slds-button slds-button--link" ng-click="showMoreInfo === true ? showMoreInfo = false : showMoreInfo = true" style="box-shadow:none">
+                            <slds-button-svg-icon ng-if="!showMoreInfo" sprite="'utility'" icon="'info'" extra-classes="'slds-m-bottom--xxx-small'"></slds-button-svg-icon>
+                            <slds-button-svg-icon ng-if="showMoreInfo" sprite="'utility'" icon="'close'" extra-classes="'slds-m-bottom--xxx-small'"></slds-button-svg-icon>
+                            <span class="slds-p-left--xx-small">More Info</span>
+                        </button>
+                    </div>
+                    <div class="member-more-info slds-p-bottom--small" ng-class="{'via-show-info': showMoreInfo}">
+                        <div class="slds-popover more-info" role="dialog">
+                            <div class="slds-popover__body  slds-grid ">
+                                 <div class="slds-col no-overflow" ng-repeat="field in data.fields | limitTo:(data.actions.length  > 0 ? 11 : 12)" ng-if="importedScope.campaignMember[field.name].value !== null && importedScope.campaignMember[field.name].value !== ''">
+                                    <label class="slds-text-heading--label slds-m-top--none">{{field.label}}</label>
+                                    <div class="slds-text-body--regular">
+                                    {{importedScope.campaignMember[field.name].value}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right slds-col--padded slds-p-right--none">
+                <div class="slds-dropdown-trigger slds-dropdown-trigger--click slds-is-open member-status-select" aria-expanded="true" ng-if="importedScope.campaignMember.CampaignId && importedScope.$parent.$root.memberStatus.result.records.length">
+                    <button class="slds-button via-status-select-button slds-button--neutral slds-truncate" ng-click="importedScope.toggleStatusDropdown()">
+                        <slds-button-svg-icon size="type === 'button-group' ? null : 'small'" sprite="'utility'" icon="'down'" extra-classes="'slds-button__icon--left'"></slds-button-svg-icon>
+                        <span>{{importedScope.campaignMember.Status.value}}</span>
+                    </button>
+                    <div class="slds-dropdown slds-dropdown--right" ng-if="importedScope.statusOpen">
+                        <ul class="dropdown__list" role="menu">
+                            <li class="slds-dropdown__item" ng-repeat="record in importedScope.$parent.$root.memberStatus.result.records | filter: importedScope.statusFilter">
+                                <a role="menuitem" ng-href="#" ng-click="importedScope.updateMemberStatus(importedScope.campaignMember.Id.value, record.Label.value, isOpen)" title="{{record.Label.value}}">
+                                    <p class="slds-truncate">{{record.Label.value}}</p>
+                                </a>
+                            </li>
+                            <li class="slds-dropdown__item slds-has-divider--top-space">
+                                <a role="menuitem" title="Call Attempted" ng-click="importedScope.logAttemptedCall()">
+                                    <p class="slds-truncate">Call Attempted</p>
+                                </a>
+                            </li>
+                            <li class="slds-dropdown__item" ng-class="{'slds-has-divider--top-space': $index === 0}" ng-repeat="callBack in importedScope.callBacks">
+                                <a role="menuitem" title="{{callBack.label}}" ng-click="importedScope.changeCallDate(callBack.action)">
+                                    <p class="slds-truncate">{{callBack.label}}</p>
+                                </a>
+                            </li>
+                            <li class="slds-dropdown__item slds-has-divider--top-space">
+                                <a role="menuitem" title="Remove From List" ng-click="importedScope.openDeleteWarning()">
+                                    <p class="slds-truncate">Remove From List</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </div>
+    <div class="member-actions">
+        <div class="target-call-date-wrapper slds-m-right--medium">
+            <div class="slds-text-heading--label">Target Call Date</div>
+            <input ng-if="!importedScope.isMobile" class="slds-input target-call-date" ng-model="importedScope.campaignMember.datePickerDate" type="text" bs-datepicker="true"  ng-change="importedScope.changeCallDate(null, importedScope.campaignMember.datePickerDate)" data-date-type="date" placeholder="Pick Call Date"/>
+            <input ng-if="importedScope.isMobile" class="slds-input target-call-date via-mobile-datetime" ng-model="importedScope.campaignMember.datePickerDate" type="date" ng-blur="importedScope.changeCallDate(null, importedScope.campaignMember.datePickerDate)" placeholder="Pick Call Date" ng-class="{'date-picked': importedScope.campaignMember.datePickerDate}" />
+        </div>
+        <button class="slds-button slds-button--brand {{action.class}} member-action" ng-repeat="action in importedScope.campaignMember.memberMobileActions" ng-click="importedScope.invokeMemberMobileActions(action)" ng-if="importedScope.isMobile">
+            <slds-button-svg-icon sprite="'utility'" icon="action.icon" extra-classes="'slds-button__icon--left'"></slds-button-svg-icon>
+            <span class="action-label">{{action.label}}</span>
+        </button>
+        <button class="slds-button slds-button--brand {{action.class}} member-action" ng-repeat="action in importedScope.campaignMember.memberActions" ng-click="importedScope.invokeMemberActions(action)">
+            <slds-button-svg-icon sprite="'utility'" icon="action.icon" extra-classes="'slds-button__icon--left'"></slds-button-svg-icon>
+            <span class="action-label">{{action.label}}</span>
+        </button>
+    </div>
+</div>

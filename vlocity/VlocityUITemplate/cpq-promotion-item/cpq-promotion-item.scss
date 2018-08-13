@@ -1,0 +1,67 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-promotion-item {
+            border-bottom: $cpq-product-item-padding solid $cpq-page-bg-color;
+            
+            .#{$namespace}-promotion-item-container {
+                padding: $cpq-padding-large-vertical 0px;
+                margin: 0px $cpq-padding-large-horizontal;
+            
+                .#{$namespace}-product-item-select-checkbox {
+                    // Ensure atleast 40px width for inputs for device touch area
+                    padding: $cpq-padding-small-horizontal;
+                    margin-top: -$cpq-padding-small-horizontal/2;
+                }
+                
+                .#{$namespace}-promotion-name {
+                    font-weight: $cpq-headings-font-weight;
+                    line-height: 30px;
+                }
+                
+                .#{$namespace}-promotion-info div {
+                    padding-right: $cpq-padding-large-horizontal;
+                    padding-top:$cpq-padding-large-vertical;
+                    color: $dark-gray;
+                    &:last-child {
+                        padding-bottom:$cpq-padding-large-vertical;
+                    }
+                    
+                    .#{$namespace}-promotion-label {
+                      font-size: $cpq-cart-item-attr-label-font-size;
+                    }
+                }
+
+                .#{$namespace}-promotion-info .#{$namespace}-item-promotion-messages {
+                    font-size: 95%;
+
+                    .#{$namespace}-error-msg {
+                        color: $error;
+                    }
+                    .#{$namespace}-warning-msg {
+                        color: $warning;
+                    }
+                }
+            }
+            
+            .#{$namespace}-promotion-actions {
+                padding-top:$cpq-padding-large-vertical;
+                padding-bottom:$cpq-padding-large-vertical; 
+                
+                .#{$namespace}-add-button {
+                    padding-left:$cpq-padding-small-horizontal;
+                    padding-right:$cpq-padding-small-horizontal;
+               }
+            }
+        }
+    }
+}

@@ -1,0 +1,49 @@
+<div class="cpq-product-item-details ta-product-details-container" ng-controller="DeviceMoreDetailsController as dmdc" ng-init="dmdc.init()">
+    <section class="slds-m-bottom--xx-large ta-header">
+		<h3 class="slds-text-heading--large slds-text-align--center "><strong>{{::obj.Name.value}}</strong></h3>
+	</section>
+	<section class="slds-m-bottom--x-large">
+		<div class="slds-list--vertical slds-wrap slds-grid taDeviceDetailsContainer">
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large">
+				<dt class="slds-item--label slds-truncate" title="Tecnologia de acceso"><strong>Stock</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{obj.Stock.Ammount}}</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large">
+				<dt class="slds-item--label slds-truncate" title="Requiere cambio de numero?"><strong>Tipo Producto</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{dmdc.details['Charge Code'][0]['displayText']}}</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large">
+				<dt class="slds-item--label slds-truncate" title="Requiere cambio de numero?"><strong>NMU</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{obj.ProductCode.value}}</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large">
+				<dt class="slds-item--label slds-truncate" title="Esta disponible?"><strong>Precio de lista</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{obj.UnitPrice.value | currency:"$":0}}</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large">
+				<dt class="slds-item--label slds-truncate" title="Second Label"><strong>Precio con impuestos</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{obj.PricingElement.value | currency:"$":0}}</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large">
+				<dt class="slds-item--label slds-truncate" title="Second Label"><strong>Tamaño</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{dmdc.details.Alto}}cm x {{dmdc.details.Ancho}}cm</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large" ng-if="dmdc.details.Peso !== undefined">
+				<dt class="slds-item--label slds-truncate" title="Second Label"><strong>Peso</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{dmdc.details.Peso}} gr</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large" ng-if="dmdc.details['Gama Equipo'][0]['displayText'] !== undefined">
+				<dt class="slds-item--label slds-truncate" title="Second Label"><strong>Gama</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{dmdc.details['Gama Equipo'][0]['displayText']}}</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large" ng-if="dmdc.details['Marca'][0]['displayText'] !== undefined">
+				<dt class="slds-item--label slds-truncate" title="Second Label"><strong>Marca</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{dmdc.details['Marca'][0]['displayText']}}</dd>
+			</div>
+			<div class="slds-size--1-of-2 slds-m-bottom--small taPaddingLeft-x-large" ng-if="dmdc.details['Modelo'] !== undefined">
+				<dt class="slds-item--label slds-truncate" title="Second Label"><strong>Modelo</strong></dt>
+				<dd class="slds-item--detail slds-truncate">{{dmdc.details['Modelo']}}</dd>
+			</div>
+		</div>
+	</section>
+</div>

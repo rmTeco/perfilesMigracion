@@ -1,0 +1,134 @@
+<div ng-controller="leftProductItemController as lpic">
+    <!-- promt error expire time -->
+    <div 
+        role="alertdialog" 
+        tabindex="-1" 
+        aria-labelledby="prompt-heading-id" 
+        aria-describedby="prompt-message-wrapper" 
+        class="slds-modal slds-fade-in-open slds-modal--prompt ng-cloak" 
+        ng-show="lpic.showErrorTimeout">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme--error slds-theme--alert-texture">
+                <button 
+                    class="slds-button slds-modal__close slds-button--icon-inverse" 
+                    title="Close">
+                    <svg 
+                        class="slds-button__icon slds-button__icon--large" 
+                        aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 
+                    class="slds-text-heading--medium" 
+                    id="prompt-heading-id">{{ lpic.titleModal }}</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <p>{{ lpic.bodyModal }}</p>
+            </div>
+            <div class="slds-modal__footer slds-theme--default">
+            <button 
+                class="slds-button slds-button--neutral"
+                ng-click="lpic.closeModal();">Close</button>
+            </div>
+        </div>
+    </div>
+    <div 
+        class="slds-backdrop slds-backdrop--open ng-cloak" 
+        ng-show="lpic.showErrorTimeout"></div>
+    <!-- fin promt error expire time -->
+    
+    <div 
+        class="slds-tile cpq-product-item" 
+        data-product-id="{{obj.Id.value}}"
+        ng-init="lpic.init()">
+        <div class="slds-media cpq-product-item-container">
+            <div class="slds-media__body">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-small-size--10-of-12 slds-medium-size--10-of-12 slds-large-size--10-of-12">
+                        <p class="slds-tile__title slds-truncate product-name">
+                            {{::obj.Name.value}}
+                            <span 
+                                class="prefaseablitiyLabel"
+                                ng-if="obj.Product2.PrefaRequired__c && !obj.PrefaMade">
+                                Requiere Prefactibilidad
+                            </span>
+                        </p>
+                        
+                        <span 
+                            class="slds-tile__title slds-truncate"
+                            ng-if="obj.Product2 && obj.Product2.Tangible__c && obj.Stock"
+                            ng-class="{'taTextSuccess' : obj.Stock.Ammount }">
+                            <!--{{::obj.Product2.Tipo_de_Bien_de_Uso__c}}-->
+                            Stock: {{::obj.Stock.Ammount}}
+                        </span>
+                        
+                        <!--<span ng-if="obj.Product2.PrefaRequired__c && !obj.PrefaMade">-->
+                        <!--    Prefa Required: {{obj.Product2.PrefaRequired__c}}-->
+                        <!--</span>-->
+                        
+                    </div>
+                    <div class="slds-colslds-small-size--2-of-12 slds-medium-size--2-of-12 slds-large-size--2-of-12">
+                        <a 
+                            href="#" 
+                            ng-click="importedScope.viewMore()" 
+                            class="product-link slds-text-body--small slds-float--right">
+                            {{::importedScope.customLabels.CPQMore}}
+                        </a>
+                    </div>
+                </div>
+                <div class="slds-tile__detail">
+                    <div class="slds-grid">
+                        <!-- <div class="slds-col slds-small-size--8-of-12 slds-medium-size--7-of-12 slds-large-size--8-of-12 slds-text-align--left product-price">
+                            <div ng-if="::obj | resolveCustomField:'RecurringPrice__c'">
+                                <span class="price-label">
+                                {{::obj | resolveCustomField:'RecurringPrice__c':'label' | uppercase}}
+                                </span>
+                                <span class="slds-text-body--small">
+                                {{::obj | resolveCustomField:'RecurringPrice__c':'value'}}
+                                </span>
+                            </div>
+                            <div>
+                                <span class="price-label">{{::obj['PricingElement']['label'] | uppercase}} </span>
+                                <span class="slds-text-body--small"> {{::obj['PricingElement']['value'] | currency}} </span>
+                            </div>
+                        </div> -->
+
+                        <div class="slds-col slds-small-size--8-of-12 slds-medium-size--7-of-12 slds-large-size--8-of-12 slds-text-align--left product-description">
+                            <div class="taPriceContainer">
+                                <span class="taPrice">{{obj.PricingElement.value | currency:"$":0}}</span>
+                            </div>
+                            <span class="taItemDesc">{{obj.Product2.Description}}</span>
+                            
+                        </div>
+
+                        <div class="slds-col slds-small-size--4-of-12 slds-medium-size--5-of-12 slds-large-size--4-of-12 slds-text-align--right cpq-product-actions">
+                            <button 
+                                ng-if="!obj.Product2.PrefaRequired__c || obj.PrefaMade"
+                                class="slds-button slds-button--neutral add-button" 
+                                ng-click="lpic.checkCredit(obj)" 
+                                ng-disabled="!obj.actions">
+                                
+                                {{::importedScope.customLabels.CPQAddToCart}}
+                            </button>
+                            
+                            <button 
+                                ng-if="obj.Product2.PrefaRequired__c && !obj.PrefaMade"
+                                class="slds-button slds-button--neutral add-button" 
+                                ng-click="$root.showModal = true; $root.iframeOSUrl(
+                                        '/apex/%vlocity_namespace%__OmniScriptUniversalPage?id=a1q6C0000001nl5QAA&layout=lightning&OmniScriptType=Sales&OmniScriptSubType=Installation%20Address&OmniScriptLang=English&ContextId=a1q6C0000001nl5QAA', 
+                                        {
+                                            orderId: params.id
+                                        });" 
+                                ng-disabled="!obj.actions">
+                                
+                                <!--{{::importedScope.customLabels.CPQAddToCart}}-->
+                                Validar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

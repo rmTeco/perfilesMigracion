@@ -1,0 +1,52 @@
+<div class="via-slds" ng-controller="viaStoryCardCanvasController as storyCardController">
+  <div class="via-slds-story-cards--canvas  slds-grid slds-grid--vertical slds-grid--vertical-stretch ">
+    <div class="slds-grid slds-p-around--small slds-wrap via-slds-story-cards--header" vloc-sticky-top>
+      <div class="slds-p-right--x-small via-slds-story-cards--header-title">
+        <div class="slds-text-heading--medium">{{storyCardController.title}}</div>
+      </div>
+      <div class="slds-col--bump-left slds-p-left--x-small via-slds-story-cards--header-title" ng-if="cards.length > 0"
+          ng-init="storyCardController.isOpen = false">
+          <div class="slds-dropdown-trigger slds-dropdown-trigger--click" ng-class="{'slds-is-open': storyCardController.isOpen}" aria-expanded="true">
+            <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small" aria-haspopup="true" ng-click="storyCardController.isOpen = !storyCardController.isOpen">
+              <slds-button-svg-icon size="'small'" sprite="'utility'" icon="'down'"></slds-button-svg-icon>
+              <span class="slds-assistive-text">Show More</span>
+            </button>
+            <div class="slds-dropdown slds-dropdown--right slds-dropdown--actions">
+              <ul class="dropdown__list" role="menu">
+                <li class="slds-dropdown__item" ng-class="{'slds-is-selected': storyCardController.isSelected(card)}" ng-repeat="(title, card) in storyCardController.filters">
+                  <a role="menuitem"
+                      href="javascript:void(0)"
+                      ng-click="storyCardController.changeFilter(card)">
+                    <p class="slds-truncate">
+                      <slds-svg-icon size="'x-small'" extra-classes="'slds-icon--selected slds-m-right--x-small'" sprite="'utility'" icon="'check'"></slds-svg-icon>
+                      {{title}}
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </div>
+    </div>
+    <ul class="slds-p-around--small slds-col">
+      <li ng-repeat="card in filteredCards | orderBy:'-obj.LastActivityDate'">
+        <vloc-card ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>
+      </li>
+      <li class="via-slds-story-cards--no-results slds-align--absolute-center slds-text-align--center slds-p-top--large" ng-if="filteredCards.length == 0 && storyCardController.searchComplete">
+            <div>
+                <slds-svg-icon sprite="'utility'" icon="'info'"
+                                size="'large'"></slds-svg-icon>
+                <p class="slds-m-top--small slds-text-heading--medium">No Results Found</p>
+            </div>
+        </li>
+    </ul>
+    <div style="position: relative; height: 30px; margin-bottom: 10px" class="loading-row" data-name="{{layoutName}}">
+      <div class="slds-spinner_container" style="z-index: 5">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--small" aria-hidden="false" role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

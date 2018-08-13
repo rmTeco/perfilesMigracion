@@ -1,0 +1,41 @@
+<!-- Displays a Thor UI page -->
+<apex:page showHeader="true" sidebar="true" controller="vlocity_cmt.SimpleDecompositionController" extensions="vlocity_cmt.XOMOffPlatformAccessConfigController,vlocity_cmt.XOMThorLocalizationController" standardStylesheets="false" docType="html-5.0">
+    <apex:slds />
+    <script type="text/javascript" src="{!URLFOR($Resource.ThorJsBundle)}"></script>
+    <!-- <script src="https://localhost:8443/main.js"></script> -->
+    <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__TreeViewCss, 'TreeViewCss/TreeView.css')}"/>
+    <script type="text/javascript" src="{!URLFOR($Resource.vlocity_assets, '/javascripts/components/remoteActions.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.XomThorIntegration)}"></script>
+    <!--<link rel="stylesheet" href="https://localhost:8443/main.css" />-->
+    <link rel="stylesheet" href="{!URLFOR($Resource.ThorBundleCss)}" />
+    <script src="{!URLFOR($Resource.CollapsibleLists)}"></script> 
+    <div class="slds-scope">
+        <ng-view ng-app="xom">loading...</ng-view>
+    </div>
+    <script type="application/javascript">
+        angular.module('xom')
+        .config(['remoteActionsProvider', function(remoteActionsProvider) 
+        {
+            remoteActionsProvider.setRemoteActions(
+            {
+                getThorBackendUrl: "{!$RemoteAction.XOMOffPlatformAccessConfigController.getOffplatformUrl}",
+                getSourceOrderAssetInfo :"{!$RemoteAction.SimpleDecompositionController.getSourceOrderAssetInfo}",
+                thorInfo:'{!$RemoteAction.SimpleDecompositionController.thorInfo}',
+                getMappingDetails:'{!$RemoteAction.SimpleDecompositionController.getMappingDetails}',
+                getTranslation:'{!$RemoteAction.XOMThorLocalizationController.getTranslation}',
+                getOrderOrchestrationPlanReferenceId : '{!$RemoteAction.SimpleDecompositionController.getOrderOrchestrationPlanReferenceId}'
+            });
+        }])
+        .value('thorLayoutConfig', 
+        {
+            hideObjectHierarchy: false,
+            hideHeader: false,
+            showCurrentTabOnly: false,
+            hideLogoutButton: true,
+            hideInactiveTabsForObjectTypes: [], // Object Type Ids to display default tab only
+            hideUsername: true,
+            namespace: '{!nsPrefix}'
+        });
+    </script>
+</apex:page>

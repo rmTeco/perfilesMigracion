@@ -1,0 +1,34 @@
+{
+    "Cards": [
+        "TrafficDevicePos",
+        "DataFreeUnitPos",
+        "VoiceFreeUnitPos",
+        "SMSFreeUnitPos",
+        "MMSFreeUnitPos"
+    ],
+    "dataSource": {
+        "orderBy": {
+            "name": ""
+        },
+        "type": "Inherit",
+        "value": {
+            "body": "[\n                {\n                    \"freeUnitCode\": \"Voz\",\n                    \"remainingSecondaryUnits\": 38,\n                    \"remainingPrimaryUnits\": 107,\n                    \"fechaVigenciaHastaProdAdq\": \"2017-10-31 10:10:10\",\n                    \"cantUnidadesRemanentes\": 6458,\n                    \"codUnidadDeMedida\": \"SEGUNDOS\",\n                    \"codUsoUnidadesLibres\": \"Voice\"\n                },\n                {\n                    \"freeUnitCode\": null,\n                    \"remainingSecondaryUnits\": null,\n                    \"remainingPrimaryUnits\": null,\n                    \"fechaVigenciaHastaProdAdq\": \"2017-11-31 10:10:10\",\n                    \"cantUnidadesRemanentes\": 200,\n                    \"codUnidadDeMedida\": \"ITEMS\",\n                    \"codUsoUnidadesLibres\": \"SMS\"\n                },\n                {\n                    \"freeUnitCode\": \"Internet\",\n                    \"remainingSecondaryUnits\": 1014,\n                    \"remainingPrimaryUnits\": 56,\n                    \"fechaVigenciaHastaProdAdq\": \"2017-12-31 10:10:10\",\n                    \"cantUnidadesRemanentes\": 58358,\n                    \"codUnidadDeMedida\": \"KB\",\n                    \"codUsoUnidadesLibres\": \"Data\"\n                }\n            ]",
+            "query": "SELECT Id FROM Asset WHERE Id = '02i6C0000002SNC'",
+            "resultVar": ""
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-prepaid-flyout-grid"
+        }
+    },
+    "workspace": [
+        "TrafficDevicePos/Telecom/1512056543565",
+        "DataFreeUnitPos/Telecom/1512068654906",
+        "VoiceFreeUnitPos/Telecom/1512068726333",
+        "SMSFreeUnitPos/Telecom/1512068916338",
+        "MMSFreeUnitPos/Telecom/1512156688659"
+    ]
+}

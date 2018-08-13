@@ -1,0 +1,9 @@
+<aura:component >
+    <aura:attribute name="searchField" type="String" />	
+    <aura:attribute name="request" type="vlocity_cmt.LookupRequest"/>
+    <aura:attribute name="datatype" type="String" />
+    <aura:attribute name="label" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+     {!v.body}
+</aura:component>

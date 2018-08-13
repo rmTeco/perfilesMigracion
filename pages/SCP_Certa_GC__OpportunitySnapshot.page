@@ -1,0 +1,373 @@
+<apex:page standardController="Opportunity" extensions="SCP_Certa_GC.OpportunitySnapshotController" tabStyle="Strategic_Client_Plan__tab" sidebar="false">
+    
+	<c:SCPMenu ></c:SCPMenu>
+	
+	<style>
+		.pbSubheader h3 {
+			display: inline;
+			margin-left: 5px;
+			font-weight: bold;
+		}
+		
+		.separator {
+			width: 100%;
+			margin-top: 50px;
+		}
+		
+		#value_proposition span span {
+			height: 100px;
+		}
+		
+		#bigDealDiv * {
+			display: block;
+		}
+		
+	</style>
+	
+	<script>
+    $j = jQuery.noConflict();
+        $j(document).ready(function() {         
+	    	$j(".hideShowSection").click(function(){
+	    		var grparent = $j(this).parent().parent();	    		
+	    		
+	    		if ($j(this).hasClass("hideListButton")) {
+	    			$j(".pbSubsection", grparent).css("display","none");
+	    			$j(this).removeClass("hideListButton");
+	    			$j(this).addClass("showListButton");
+	    		} else {
+	    			$j(".pbSubsection", grparent).css("display","block");
+	    			$j(this).removeClass("showListButton");
+	    			$j(this).addClass("hideListButton");
+	    		}
+	    	});
+        })
+        /*
+        SfdcApp.Visualforce.chart.VFChartMgrInst.afterMethod('load', function() {
+			addText();
+        });
+        
+        function addText() {
+        	var x = d3.select('svg').attr('width') / 2 - 25;
+        	var y = d3.select('svg').attr('height') / 2;
+
+        	if (total < 10) {
+        		total = '0'+total;
+        	}
+        	
+        	d3.select('svg')
+        		.append('text')
+	        		.attr('x',x)
+	        		.attr('y',y)
+	        		.attr('font-family','sans-serif')
+	        		.attr('font-size','50px')
+	        		.attr('fill','black')
+	        		.text(total);	        	
+        	
+        }
+        */
+        
+        function ajaxshow(){
+	        $j(".ajaxloader").show();
+	    }    
+	    function ajaxstop(){
+	        $j(".ajaxloader").hide();
+	    }
+    </script>
+	
+	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h2 class="panel-title">
+					<span style="float:left;">
+						{!$Label.scp_certa_gc__snapshot}
+					</span>
+
+					<span style="float:left;">
+    					<c:showVideo />
+    				</span>
+				</h2>
+				<div class="row paddingRight">
+					<div class="btn-group pull-right" role="group" aria-label="...">   					
+					</div>
+				</div>
+			</div>    		
+			<div class="panel-body">
+				<h2 style="margin-top: 0px;">{!$Label.Opportunity}: <span style="font-size: 16px;"><apex:outputLink value="/{!opportunity.id}">{!opportunity.Name}</apex:outputLink></span></h2>
+			
+				<apex:pageBlock title="" mode="maindetail">
+				
+					<!-- Campos de la Oportunidad -->
+					<apex:pageBlockSection title="{!$Label.scp_certa_gc__opportunity_fields}" columns="2">
+			            <apex:outputField value="{!Opportunity.Name}" />
+			            <apex:outputField value="{!Opportunity.accountId}" />            
+			            <apex:outputField value="{!Opportunity.CloseDate}" />           
+			            <apex:outputField value="{!Opportunity.StageName}" />            
+			            <apex:outputField value="{!Opportunity.Probability}" />
+			            <apex:outputText label="{!$ObjectType.Opportunity.fields.amount.label}" value="{!isoCode}{0, number, ###,###,###,###,###,##0.00}">
+							<apex:param value="{!fcv}" />
+						</apex:outputText>
+			        </apex:pageBlockSection>
+			        <div class="separator"></div>
+			        
+			        <!-- Big Deal -->
+                    <c:bigDealCharts opportunity="{!Opportunity}" rendered="{!Opportunity.SCP_Certa_GC__BigDeals__c}" />
+			        
+                    <!-- Solutions -->
+				    <div>    
+				        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+				        	<img src="/s.gif" class="hideListButton hideShowSection" />
+				        	<h3>{!$Label.value_driver_sector}</h3>
+				        </div>
+				        <div class="pbSubsection">
+				        	<table class="table table-striped table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th>
+											<apex:outputText value="{!$ObjectType.SCP_Certa_GC__Industry_Trend__c.fields.SCP_Certa_GC__Title__c.Label}"/>
+										</th>
+										<th>
+											<apex:outputText value="{!$Label.scp_certa_gc__description}"/>
+										</th>									
+									</tr>
+								</thead>
+								<tbody>
+									<apex:repeat value="{!solutionsList}" var="item">
+										<tr>
+			                       			<td>
+			                       				<apex:outputText value="{!item.argument}" />
+			                       			</td>
+			                       			<td>
+			                       				<apex:outputText value="{!item.argType}" />
+			                       			</td>
+			                       		</tr>
+	                        		</apex:repeat>
+	                        	</tbody>	
+	                        </table>
+				        </div>
+				    </div>
+				    <div class="separator"></div>
+
+			        <!-- Value Drivers -->
+				    <div>    
+				        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+				        	<img src="/s.gif" class="hideListButton hideShowSection" />
+				        	<h3>{!$Label.value_drivers_account}</h3>
+				        </div>
+				        <div class="pbSubsection">
+				        	<table class="table table-striped table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th>
+											<apex:outputText value="{!$Label.scp_certa_gc__numero_de_la_oportunidad}"/>
+										</th>
+										<th>
+											<apex:outputText value="{!$Label.scp_certa_gc__value_arguments}"/>
+										</th>
+										<th>
+											<apex:outputText value="{!$Label.scp_certa_gc__type}"/>
+										</th>									
+									</tr>
+								</thead>
+								<tbody>
+									<apex:repeat value="{!valueArgumentsList}" var="item">
+										<tr>
+											<td>
+			                       				<apex:outputText value="{!item.id}" />
+			                       			</td>
+			                       			<td>
+			                       				<apex:outputText value="{!item.argument}" />
+			                       			</td>
+			                       			<td>
+			                       				<apex:outputText value="{!item.argType}" />
+			                       			</td>
+			                       		</tr>
+	                        		</apex:repeat>
+	                        	</tbody>	
+	                        </table>
+				        </div>
+				    </div>
+				    <div class="separator"></div>
+				    
+				    <!-- Propuesta de Valor -->
+				    <apex:actionStatus id="renderMeStatus2" onstart="ajaxshow()" onstop="ajaxstop();"/>
+		            <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px; margin-bottom: 30px;">
+		                <img src="{!$Resource.SCP_Certa_GC__AjaxLoader}"/><br/>Loading...
+		            </div>
+				    <apex:form id="todo">
+					    <div>    
+					        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+					        	<img src="/s.gif" class="hideListButton hideShowSection" />
+					        	<h3>Propuesta de Valor</h3>					        	
+					        </div>
+					        <div id="value_proposition" class="pbSubsection" style="background-color: #f9f9f9;border: 1px solid #dadee2;margin-left: 10px;margin-right: 10px;height: ">
+				        		<apex:outputField value="{!Opportunity.SCP_Certa_GC__Value_Proposition__c}" style="width:99%;height: 200px;border:1px solid black;">
+				        			<apex:inlineEditSupport event="ondblclick"/>
+				        		</apex:outputField>				        		
+					        </div>
+					        <apex:outputText ><div style="clear:both; text-align:center; font-style: italic;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+					        <div style="float:right; margin-right: 10px;">
+				        		<apex:actionFunction action="{!save}" name="save" rerender="todo" status="renderMeStatus2"/>
+				        		<button type="button" class="btn btn-default btn-sm" onclick="save()">
+			   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+			                    </button>
+				        	</div>
+					    </div>
+				    
+				    <div class="separator"></div>
+				    
+				    <!-- Mosaico -->
+				    <div>    
+				        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+				        	<div class="btn-group pull-right" role="group" aria-label="...">
+					            <apex:outputLink value="{!$Page.SCP_Certa_GC__accountRDMWindow}?id={!opportunity.id}">
+				                 	<button type="button" class="btn btn-default btn-sm">
+										<span class="glyphicon glyphicon-th-large icon-btn-left"></span>&nbsp;{!$Label.gotoMosaic}
+				               		</button>
+				                </apex:outputLink>
+				            </div>
+				        	<img src="/s.gif" class="hideListButton hideShowSection" />
+				        	<h3>{!$Label.rdm}</h3>
+				        </div>
+				        <div class="pbSubsection">
+				        	<c:accountRDMChartComponent />	
+				        </div>
+				    </div>
+				    <div class="separator"></div>
+				    
+				    <!-- Criterios -->
+				    <div>    
+				        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+				        	<div class="btn-group pull-right" role="group" aria-label="...">
+					            <apex:outputLink value="{!$Page.SCP_Certa_GC__DCMEvaluateCriteria}?id={!opportunity.id}">
+		                         	<button type="button" class="btn btn-default btn-sm">
+				   						<span class="glyphicon glyphicon-comment icon-btn-left"></span>&nbsp;{!$Label.gotoCriteria}
+				                    </button>
+		                        </apex:outputLink>
+				            </div>
+				        	<img src="/s.gif" class="hideListButton hideShowSection" />
+				        	<h3>{!$Label.dcm}</h3>
+				        </div>
+				        <div class="pbSubsection">
+				        	<c:DCMEvaluateCriteriaComponent />	
+				        </div>
+				    </div>
+				   <div class="separator"></div>
+				    
+				    <!-- Tareas - APV -->
+				    <apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="ajaxstop();"/>
+		            <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;margin-bottom: 30px;">
+		                <img src="{!$Resource.AjaxLoader}"/><br/>Loading...<br/><br/>
+		            </div>
+				    
+					    <div>    
+					        <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+					        	<img src="/s.gif" class="hideListButton hideShowSection" />
+					        	<h3>{!$Label.Activities}</h3>
+					        	<div class="btn-group pull-right" role="group" aria-label="...">
+					        		<apex:actionFunction action="{!saveTask}" name="saveTask" rerender="todo" status="renderMeStatus"/>
+					        		<button type="button" class="btn btn-default btn-sm" onclick="saveTask()">
+				   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+				                    </button>
+					        	</div>
+					        </div>
+					        <div class="pbSubsection">				        	
+					        	<table class="table table-striped table-bordered table-condensed">
+									<thead>
+										<tr>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__created_date}"/>
+											</th>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__subject}"/>
+											</th>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__description}"/>
+											</th>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__url_attachment}"/>
+											</th>	
+											<th>
+												<apex:outputText value="{!$ObjectType.Task.Fields.ActivityDate.Label}"/>
+											</th>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__completed}"/>
+											</th>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__task_status}"/>
+											</th>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__priority}"/>
+											</th>
+											<th>
+												<apex:outputText value="{!$Label.scp_certa_gc__assigned_to}"/>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<apex:repeat value="{!taskList}" var="task">
+											<tr>
+												<td>
+				                       				<apex:outputField value="{!task.CreatedDate}"/>
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.Subject}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField>
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.Description}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField>
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.SCP_Certa_GC__URL__c}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField>	
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.ActivityDate}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField>
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.SCP_Certa_GC__End_Date__c}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField>
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.Status}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField> 
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.Priority}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField>
+				                       			</td>
+				                       			<td>
+				                       				<apex:outputField value="{!task.Owner.name}">
+						                                <apex:inlineEditSupport event="ondblclick"/>
+						                            </apex:outputField>
+				                       			</td>
+				                       		</tr>
+		                        		</apex:repeat>
+		                        	</tbody>	
+		                        </table>		                        
+					        </div>
+					    </div>
+				    </apex:form>
+				    <div class="separator"></div>
+				    
+				    <!-- Notas y Adjuntos -->
+				    
+				    <apex:pageBlockSection title="{!$Label.scp_certa_gc__notes_attachments}" columns="1">         
+			            <apex:relatedList list="NotesAndAttachments" />
+			        </apex:pageBlockSection>
+			        
+			         <c:FastTask page="{!$Label.scp_certa_gc__snapshot}" account="{!opportunity.accountId}" opp="{!opportunity.id}"></c:FastTask>
+					<chatter:feed entityId="{!opportunity.accountId}" />
+				</apex:pageBlock>
+			</div>
+		</div>		
+	</apex:outputpanel>
+</apex:page>

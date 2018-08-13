@@ -1,0 +1,528 @@
+<apex:page controller="SCP_Certa_GC.FormularioCapexPDFController" renderAs="PDF">
+    <html>
+        <head>
+            <style>
+                @page {
+                size: letter;
+                margin: 25mm;
+                @top-center {
+                content: "Sample";
+                }
+                @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                }
+                }
+                .page-break {
+                display:block;
+                page-break-after:always;
+                }
+                body {
+                font-family: Arial;
+                }
+                
+                .inputClass{
+                border: 1px solid blue;
+                font-size: 90%;             
+                width: 84%;
+                overflow: hidden;
+                margin: 0 0 0 15%;
+                }
+            </style>
+        </head>
+        <body>
+            
+            
+            <h2>
+                BIG DEAL: Solicitud de CAPEX
+            </h2>
+            <br/>
+            
+            <!-- Solicitante pageBlock -->
+            <div style = "background-color: #427EE5;            
+                          width: 100%;" >
+                
+                <div style = "font-weight: bold;
+                              color: white;             
+                              width: 90%;
+                              margin: 0 0 0 1%;">
+                    SOLICITANTE
+                </div>
+                
+            </div>
+            <br/>
+            
+            <!-- form solicitante -->
+            <div style ="margin: 0 0 0 1%;">
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Operadora/Pais: </div>
+                    <div  style = "                border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 84%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 15%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Operator_or_country__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Quien realiza la solicitud: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 76%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 23%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.applicant_name__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Posicion y Area del solicitante: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 71%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 28%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Applicant_Position__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Fecha de la solicitud (dd/mm/aaaa): </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 67%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 32%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__Application_Date__c}" />&nbsp;
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <br/>
+            <br/>
+            <!-- Informacion general del proyecto -->
+            <div style = "background-color: #427EE5;            
+                          width: 100%;" >
+                
+                <div style = "font-weight: bold;
+                              color: white;             
+                              width: 90%;
+                              margin: 0 0 0 1%;">
+                    INFORMACÍON GENERAL DEL PROYECTO
+                </div>
+                
+            </div>
+            <br/>
+            
+            <!-- form informacion general -->
+            <div style ="margin: 0 0 0 1%;">
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Nombre del Proyecto: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 79%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 20%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Proyect_Name__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Codigo en Salesforce: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 79%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 20%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Salesforce_code__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Descripcion del proyecto: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 76%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 23%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Proyect_description__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Nombre del Cliente: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 80%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 19%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Client_Name__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Fecha de la licitacion (dd/mm/aaaa): </div>
+                    <div  style = "border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 66%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 33%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputLabel value="{!fechaLicitacion}"/>&nbsp;
+                        </div>
+                    </div>
+                </div>       
+                
+                
+            </div>
+            
+            
+            <br/>
+            <br/>
+            <!-- Informacion economica del proyecto -->
+            <div style = "background-color: #427EE5;            
+                          width: 100%;" >
+                
+                <div style = "font-weight: bold;
+                              color: white;             
+                              width: 90%;
+                              margin: 0 0 0 1%;">
+                    INFORMACÍON ECONOMICA DEL PROYECTO
+                </div>
+                
+            </div>
+            <br/>
+            
+            <!-- form informacion economica -->
+            <div style ="margin: 0 0 0 1%;">
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; position: relative;">FCV: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 35%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 8%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__FCV__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; margin: 0 0 0 44%; position: absolute;">NAV: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 48%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 50%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__NAV__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; position: relative;">TIR Anual (%): </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 26%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 17%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__TIR__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; margin: 0 0 0 44%; position: absolute;">Margen de OIBDA (%): </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 32%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 66%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__OIBDA__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                </div>
+                <br/>
+                
+            </div>
+            
+            <br/>
+            <br/>
+            <!-- capex proyecto -->
+            <div style = "background-color: #427EE5;            
+                          width: 100%;" >
+                
+                <div style = "font-weight: bold;
+                              color: white;             
+                              width: 90%;
+                              margin: 0 0 0 1%;">
+                    CAPEX
+                </div>
+                
+            </div>
+            <br/>
+            
+            <!-- form Capex -->
+            <div style ="margin: 0 0 0 1%;">
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; position: relative;">Capex total del proyecto: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 18%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 25%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__Total_Capex__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; margin: 0 0 0 44%; position: absolute;">Capex solicitado:  </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 38%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 60%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__Requested_Capex__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <br/>
+                
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; position: relative;">Dispositivo multianual: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 20%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 23%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__Multiyear_Disposition__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; margin: 0 0 0 44%; position: absolute;">Capex solicitado para el año en curso: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 21%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 77%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__Capex_Import_for_this_year__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Concepto para el que se lo solicita: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 68%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 31%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__Solicitation_Concept__c}"/>&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; position: relative;">Capex marco inversor año en curso: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 13%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 34%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                           <apex:outputField value="{!solicitud.SCP_Certa_GC__Capex_Investor_current_year__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; margin: 0 0 0 48%; position: absolute;">Capex marco inversor ya comprometido: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 14%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 84%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            <apex:outputField value="{!solicitud.SCP_Certa_GC__Capex_Investor_commited__c}"/>&nbsp;
+                        </div>
+                    </div>
+                    
+                </div>
+                
+               <br/>                
+                
+            </div>            
+            
+            <br/>
+            <br/>
+            <br/>
+            <!-- Documentacion proyecto -->
+            <div style = "background-color: #427EE5;            
+                          width: 100%;" >
+                
+                <div style = "font-weight: bold;
+                              color: white;             
+                              width: 90%;
+                              margin: 0 0 0 1%;">
+                    DOCUMENTACION
+                </div>
+                
+            </div>
+            <br/>
+            
+            <!-- form Documentacion -->
+            <div style ="margin: 0 0 0 1%;">
+                
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; position: relative;">Adjunta el Business Case: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 7%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 25%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Attach_Business_case__c}&nbsp;
+                        </div>
+                    </div>
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; margin: 0 0 0 33%; position: absolute;">Revisado por CdG local:  </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 10%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 55%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Reviewed_by_management_control__c}&nbsp;
+                        </div>
+                    </div>
+                    
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left; margin: 0 0 0 66%; position: absolute;">Aprobado por CdG local: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 9%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 89%;
+                                   position: absolute;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.approved_by_management_control__c}&nbsp;
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+                <br/>                               
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">En caso negativo, explicar por que no ha sido aprobado: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 58%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 41%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Description_Not_Approved__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div style = "width: 100%;
+                              overflow: hidden;">
+                    <div style = "width: 300px; font-size: 90%; font-weight: bold; float:left;">Informacion adicional que se adjunta: </div>
+                    <div  style = "
+                                   border: 1px solid blue;
+                                   font-size: 90%;             
+                                   width: 65%;
+                                   overflow: hidden;
+                                   margin: 0 0 0 34%;" >
+                        <div style = "margin: 0 0 0 1%;">
+                            {!solicitud.Aditional_information__c}&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+                
+            </div>
+            
+        </body>
+    </html>
+</apex:page>

@@ -1,0 +1,144 @@
+<aura:component extends="et4ae5:BaseComponent" extensible="true" controller="et4ae5.LightningListViewPlusControl">
+
+    <!-- Scripts -->
+    <ltng:require styles="/resource/et4ae5__SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="et4ae5:UpdateRecord" action="{!c.updateEvent}" name="UpdateRecord" />
+
+    <!-- Events -->
+    <aura:registerevent name="DataTablePlusPaginationUpdate" type="et4ae5:DataTablePlusPaginationUpdate" />
+    <aura:registerevent name="DataTablePlusSelectAll" type="et4ae5:DataTablePlusSelectAll" />
+    <aura:registerevent name="DataTablePlusSearch" type="et4ae5:DataTablePlusSearch" />
+    <aura:registerevent name="DataTablePlusUpdate" type="et4ae5:DataTablePlusUpdate" />
+    <aura:registerevent name="DataTablePlusStartSearch" type="et4ae5:DataTablePlusStartSearch" />
+
+    <!-- Attributes -->
+    <aura:attribute name="returnPage" type="String" default="/apex/MarketingCloudSettings" />
+    <aura:attribute name="tableHeaders" type="String[]" />
+    <aura:attribute name="records" type="sObject[]" />
+    <aura:attribute name="updatedRecords" type="sObject[]" />
+    <aura:attribute name="searchvalue" type="String" />
+    <aura:attribute name="currentpage" type="Integer" default="1" />
+    <aura:attribute name="maxpage" type="Integer" />
+    <aura:attribute name="itemsperpage" type="Integer" default="10" />
+    <aura:attribute name="recordcount" type="Integer" />
+    <aura:attribute name="highindex" type="Integer" />
+    <aura:attribute name="lowindex" type="Integer" />
+    
+    <!-- External Attributes -->
+    <aura:attribute name="tableHeaderLabels" type="String" required="true" />
+    <aura:attribute name="showSelectAll" type="Boolean" required="true" />
+    <aura:attribute name="sObjectAPIName" type="String" required="true" />
+    <aura:attribute name="sObjectFields" type="String" required="true" />
+    <aura:attribute name="pageTitleLabel" type="String" required="true" />
+    <aura:attribute name="pageSubTitleLabel" type="String" required="true" />
+    <aura:attribute name="paginatePreviousLabel" type="String" required="true" />
+    <aura:attribute name="paginateNextLabel" type="String" required="true" />
+    <aura:attribute name="saveLabel" type="String" required="true" />
+    <aura:attribute name="cancelLabel" type="String" required="true" />
+    <aura:attribute name="entriesPerPageLabel" type="String" required="true" />
+    <aura:attribute name="showingLabel" type="String" required="true" />
+    <aura:attribute name="toLabel" type="String" required="true" />
+    <aura:attribute name="ofLabel" type="String" required="true" />
+    <aura:attribute name="entriesLabel" type="String" required="true" />
+    <aura:attribute name="saveErrorTitleLabel" type="String" required="true" />
+    <aura:attribute name="saveErrorLabel" type="String" required="true" />
+    <aura:attribute name="saveServerErrorTitleLabel" type="String" required="true" />
+    <aura:attribute name="saveServerErrorLabel" type="String" required="true" />
+    <aura:attribute name="saveNoChangeTitleLabel" type="String" required="true" />
+    <aura:attribute name="saveNoChangeLabel" type="String" required="true" />
+    <aura:attribute name="recordLimitLoadTitleLabel" type="String" required="true" />
+    <aura:attribute name="recordLimitLoadLabel" type="String" required="true" />
+    <aura:attribute name="recordLoadErrorTitleLabel" type="String" required="true" />
+    <aura:attribute name="recordLoadErrorLabel" type="String" required="true" />
+    <aura:attribute name="saveDisabled" type="Boolean" default="false" />
+    
+    <!-- Component Body -->
+    <div class="slds">
+        <div class="slds-grid slds-m-top--medium slds-m-left--medium">
+        	<div>
+	            <h1 class="slds-text-heading--large slds-truncate">
+	                {!v.pageTitleLabel}
+	            </h1>
+            </div>
+        </div>
+        <div class="slds-m-left--medium">
+        	<div>
+	            <p class="slds-m-top--x-small">
+	                {!v.pageSubTitleLabel}
+	            </p>
+            </div>
+        </div>
+        <div class="slds-grid slds-m-top--x-large slds-m-left--medium slds-m-right--medium">
+            <div class="slds-m-right--small">
+                <ui:inputText aura:id="searchtext" value="{!v.searchvalue}" class="slds-input" size="50" />
+            </div>
+            <div>
+                <et4ae5:button class="slds-button slds-button--brand slds-not-selected" label="Search" onclick="{!c.search}" />
+            </div>
+            <div class="slds-col--bump-left">
+                <et4ae5:button class="slds-button slds-button--neutral slds-not-selected" onclick="{!c.cancel}" label="{!v.cancelLabel}" />
+                <et4ae5:button class="slds-button slds-button--brand slds-not-selected" disabled="{!v.saveDisabled}" onclick="{!c.update}" label="{!v.saveLabel}" />
+            </div>
+        </div>
+        <div class="slds-grid slds-m-top--medium slds-m-left--medium slds-m-right--medium">
+            <div class="slds-form-element">
+                {!v.entriesPerPageLabel}
+                <ui:inputSelect aura:id="itemsperpage" change="{!c.itemsPerPageChange}" class="slds-select">
+                    <ui:inputSelectOption text="10" value="10" />
+                    <ui:inputSelectOption text="15" value="15" />
+                    <ui:inputSelectOption text="25" value="25" />
+                </ui:inputSelect>
+            </div>
+        </div>
+        <div class="slds-grid slds-m-top--medium slds-m-left--medium slds-m-right--medium">
+            <table id="tabledata" class="slds-table slds-table--bordered slds-table--cell-buffer">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <aura:if isTrue="{!v.showSelectAll}">
+                            <th>
+                                <label class="slds-checkbox">
+                                    <ui:inputCheckbox aura:id="selectall" click="{!c.selectAllChange}" />
+                                    <span class="slds-checkbox--faux"></span>
+                                </label>
+                            </th>
+                        </aura:if>
+                        <aura:iteration items="{!v.tableHeaders}" var="header">
+                            <th>
+                                {!header}
+                            </th>
+                        </aura:iteration>
+                    </tr>
+                </thead>
+                <tbody>
+                    {!v.body}
+                </tbody>
+            </table>
+        </div>
+        <div class="slds-grid slds-grid--align-spread slds-m-top--medium slds-m-left--medium slds-m-right--medium">
+            <div>
+                <div>
+                    {!v.showingLabel}&nbsp;{!v.lowindex}&nbsp;{!v.toLabel}&nbsp;{!v.highindex}&nbsp;{!v.ofLabel}&nbsp;{!v.recordcount}&nbsp;{!v.entriesLabel}
+                </div>
+            </div>
+            <div>
+                <div class="slds-button-group" role="group">
+                    <aura:if isTrue="{!v.currentpage == 1}">
+                        <et4ae5:button disabled="true" class="slds-button slds-button--brand slds-not-selected" label="{!v.paginatePreviousLabel}" />
+                        <aura:set attribute="else">
+                            <et4ae5:button disabled="false" class="slds-button slds-button--brand slds-not-selected" label="{!v.paginatePreviousLabel}" onclick="{!c.previousPage}" />
+                        </aura:set>
+                    </aura:if>
+                    <aura:if isTrue="{!v.maxpage &lt; v.currentpage}">
+                        <et4ae5:button disabled="true" class="slds-button slds-button--brand slds-not-selected" label="{!v.paginateNextLabel}" />
+                        <aura:set attribute="else">
+                            <et4ae5:button disabled="false" class="slds-button slds-button--brand slds-not-selected" label="{!v.paginateNextLabel}" onclick="{!c.nextPage}" />
+                        </aura:set>
+                    </aura:if>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

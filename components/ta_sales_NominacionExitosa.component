@@ -1,0 +1,42 @@
+<apex:component access="global" controller="ta_sales_NominacionExitosaController" id="ta_sales_NominacionExitosa">
+
+<apex:attribute id="croId" name="croId" type="Id" description="CrossObject id" assignTo="{!crossId}"/>
+    <apex:outputPanel rendered="{!loadedCro.Order__r.Delivery_Method__c=='Delivery'}">
+        Modalidad de entrega: estándar o express
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!loadedCro.Order__r.Delivery_Method__c=='Presencial'}">
+        Modalidad de entrega: Retiro en Sucursal del Correo
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!loadedCro.Order__r.Delivery_Method__c=='Store Pick Up'}">
+        Modalidad de entrega: Store Pick Up 
+    </apex:outputPanel>
+    <br/><br/>
+    {!loadedCro.Order__r.Account.Name}<br/>
+    {!loadedCro.Order__r.OrderNumber}<br/><br/>
+    <apex:outputPanel rendered="{!loadedCro.Order__r.Delivery_Method__c=='Delivery'}">
+        Dirección de envío:<br/>
+        Provincia: {!loadedCro.Order__r.ShippingState}<br/>
+        Ciudad: {!loadedCro.Order__r.ShippingCity}<br/>
+        Domicilio: {!loadedCro.Order__r.ShippingStreet}<br/>
+        Código Postal: {!loadedCro.Order__r.ShippingPostalCode}<br/>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!loadedCro.Order__r.Delivery_Method__c=='Presencial'}">
+        Datos de la sucursal de Correo:<br/>
+        Sucursal Andreani: {!store.Name} <br/>
+        Domicilio: {!store.vlocity_cmt__StreetAddress__c}<br/>
+        Ciudad: {!store.vlocity_cmt__City__c}<br/>
+        Provincia: {!store.vlocity_cmt__State__c}<br/>
+        Código Postal: {!store.vlocity_cmt__PostalCode__c}<br/>
+        Teléfono: {!store.PostOfficePhone__c}<br/>
+        Días y horarios de entrega: {!store.PostOfficeHours__c} <br/>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!loadedCro.Order__r.Delivery_Method__c=='Store Pick Up'}">
+        Datos del PDV: {!store.Name}<br/>
+        Domicilio: {!store.vlocity_cmt__StreetAddress__c}<br/>
+        Ciudad: {!store.vlocity_cmt__City__c}<br/>
+        Provincia: {!store.vlocity_cmt__State__c}<br/>
+        Código Postal: {!store.vlocity_cmt__PostalCode__c}<br/>
+        Días y horarios de entrega: {!horas}<br/>
+    </apex:outputPanel>
+    Recibe: Juan Test<br/>
+</apex:component>

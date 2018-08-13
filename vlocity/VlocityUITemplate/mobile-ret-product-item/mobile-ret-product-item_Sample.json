@@ -1,0 +1,179 @@
+{
+    "obj": {
+        "%vlocity_namespace%__RecurringPrice__c": {
+            "label": "Recurring Price",
+            "value": 0
+        },
+        "Name": {
+            "value": "Apple iPhone 7"
+        },
+        "UnitPrice": {
+            "value": 649
+        },
+        "actions": [
+            {
+                "method": "get",
+                "prev": "/services/apexrest/v2/cpq/carts/01t36000000pfcKAAQ/products?start=0&next=20"
+            },
+            {
+                "method": "get",
+                "next": "/services/apexrest/v2/cpq/carts/01t36000000pfcKAAQ/products?start=40&next=20"
+            }
+        ],
+        "messages": [
+            {
+                "code": "PRODUCT-200",
+                "message": "OK"
+            }
+        ],
+        "records": [
+            {
+                "ApprovedBy__c": null,
+                "ApprovedOn__c": null,
+                "BaseProductId__c": null,
+                "CanUseQuantitySchedule": true,
+                "CanUseRevenueSchedule": true,
+                "CreatedById": "005360000017lFdAAI",
+                "CreatedDate": "2016-03-04T20:57:05.000+0000",
+                "Description": null,
+                "EffectiveDate__c": null,
+                "EndDate__c": null,
+                "Family": null,
+                "GlobalKeyVersion__c": null,
+                "GlobalKey__c": null,
+                "HelpText__c": null,
+                "Id": "01t36000000pfcKAAQ",
+                "ImageId__c": null,
+                "IsActive": true,
+                "IsConfigurable__c": false,
+                "IsDeleted": false,
+                "IsOrderable__c": false,
+                "JSONAttribute__c": null,
+                "LastModifiedById": "005360000017lFdAAI",
+                "LastModifiedDate": "2016-03-04T21:32:47.000+0000",
+                "LastReferencedDate": "2016-03-11T23:07:22.000+0000",
+                "LastViewedDate": "2016-03-11T23:07:22.000+0000",
+                "Name": "SLA: Silver",
+                "NumberOfQuantityInstallments": null,
+                "NumberOfRevenueInstallments": null,
+                "PreviousProductId__c": null,
+                "PreviousVersionName__c": null,
+                "PreviousVersionNumber__c": null,
+                "ProductCode": "SL9040",
+                "ProductTemplateProductId__c": null,
+                "QuantityInstallmentPeriod": null,
+                "QuantityScheduleType": null,
+                "RecordTypeId": null,
+                "RevenueInstallmentPeriod": null,
+                "RevenueScheduleType": null,
+                "SpecificationType__c": null,
+                "Status__c": null,
+                "SubType__c": null,
+                "SystemModstamp": "2016-03-04T21:32:47.000+0000",
+                "TrackAsAgreement__c": false,
+                "Type__c": null,
+                "VendorAccountId__c": null,
+                "VersionNumber__c": null,
+                "actions": [
+                    {
+                        "method": "get",
+                        "refreshlist": "/services/apexrest/v2/cpq/carts/01t36000000pfcKAAQ/products?start=20&next=20"
+                    }
+                ],
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v36.0/sobjects/Product2/01t36000000pfcKAAQ"
+                },
+                "messages": [
+                    {
+                        "code": "PROD-404",
+                        "message": "Product no longer available for this location",
+                        "severity": "error"
+                    },
+                    {
+                        "code": "PROD-401",
+                        "message": "Product requires configuration",
+                        "severity": "warn"
+                    }
+                ]
+            },
+            {
+                "ApprovedBy__c": null,
+                "ApprovedOn__c": null,
+                "BaseProductId__c": null,
+                "CanUseQuantitySchedule": true,
+                "CanUseRevenueSchedule": true,
+                "CreatedById": "005360000017lFdAAI",
+                "CreatedDate": "2016-03-04T20:57:05.000+0000",
+                "Description": null,
+                "EffectiveDate__c": null,
+                "EndDate__c": null,
+                "Family": null,
+                "GlobalKeyVersion__c": null,
+                "GlobalKey__c": null,
+                "HelpText__c": null,
+                "Id": "01t36000000pfcKAAQ",
+                "ImageId__c": null,
+                "IsActive": true,
+                "IsConfigurable__c": false,
+                "IsDeleted": false,
+                "IsOrderable__c": false,
+                "JSONAttribute__c": null,
+                "LastModifiedById": "005360000017lFdAAI",
+                "LastModifiedDate": "2016-03-04T21:32:47.000+0000",
+                "LastReferencedDate": "2016-03-11T23:07:22.000+0000",
+                "LastViewedDate": "2016-03-11T23:07:22.000+0000",
+                "Name": "SLA: Gold",
+                "NumberOfQuantityInstallments": null,
+                "NumberOfRevenueInstallments": null,
+                "PreviousProductId__c": null,
+                "PreviousVersionName__c": null,
+                "PreviousVersionNumber__c": null,
+                "ProductCode": "SL9041",
+                "ProductTemplateProductId__c": null,
+                "QuantityInstallmentPeriod": null,
+                "QuantityScheduleType": null,
+                "RecordTypeId": null,
+                "RevenueInstallmentPeriod": null,
+                "RevenueScheduleType": null,
+                "SpecificationType__c": null,
+                "Status__c": null,
+                "SubType__c": null,
+                "SystemModstamp": "2016-03-04T21:32:47.000+0000",
+                "TrackAsAgreement__c": false,
+                "Type__c": null,
+                "VendorAccountId__c": null,
+                "VersionNumber__c": null,
+                "actions": [
+                    {
+                        "addtocart": "CpqAddCartService"
+                    },
+                    {
+                        "configureandaddtocart": "/services/apexrest/v2/carts/801360000008b2LAAQ/attributes/attr-001",
+                        "method": "post"
+                    },
+                    {
+                        "configureattribute": "/services/apexrest/v2/carts/801360000008b2LAAQ/attributes/attr-001",
+                        "method": "post"
+                    },
+                    {
+                        "checkout": "/services/apexrest/v2/carts/801360000008b2LAAQ/checkout",
+                        "method": "post"
+                    }
+                ],
+                "attributes": {
+                    "type": "Product2",
+                    "url": "/services/data/v36.0/sobjects/Product2/01t36000000pfcKAAW"
+                },
+                "messages": [
+                    {
+                        "code": "PROD-401",
+                        "message": "Product requires configuration",
+                        "severity": "warn"
+                    }
+                ]
+            }
+        ],
+        "totalSize": 2
+    }
+}

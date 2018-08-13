@@ -1,0 +1,13 @@
+<section class="console-card open" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" hotkey-layout-card>
+    <a href="#" ng-click="performAction(data.actions[0])" class="add-policy" hotkey-card-action>
+        <i ng-if="!data.actions[0].imageRef" class="icon {{data.actions[0].vlocityIcon}}"></i>
+        <img ng-if="data.actions[0].imageRef" ng-src="{{data.actions[0].imageRef}}" alt="{{data.actions[0].displayName}}"/>
+        <span>{{data.title}}</span>
+    </a>
+    <p class="description">{{data.actions[0].displayName}}</p>
+    <ul class="secondary-actions">
+        <li ng-repeat="action in data.actions.slice(1,actions.length)">
+            <a href="#" ng-click="performAction(action)" hotkey-card-action>{{action.displayName}}</a>
+        </li>
+    </ul>
+</section>

@@ -1,0 +1,358 @@
+<div class="via-slds riders-list-canvas container-table-canvas unselectable" ng-controller="containerTableCanvarController" unselectable="on" >
+    <!--/*****************************************
+    ***********Grilla con paginado por cards
+    ********************************************-->
+    
+    <div id="advancerFilters" style="display:none;">
+    <div class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;">
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="slds-form-element">
+                <label class="slds-text-heading--small" for="text-input-01">Número de origen o destino</label>
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+                    <slds-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-input__icon'"></slds-svg-icon>
+                    
+                    <input ng-model="searchTerm" class="slds-input" type="text" placeholder="Buscar" ng-change="search()"/>
+                    
+                  </div>
+            </div>
+        </div>
+        
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="slds-form-element">
+                <label class="slds-text-heading--small" for="text-input-01">Tipo de consumo</label>
+                     
+                <div class="slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLAditionalFilter= false;" ng-class="{'slds-is-open': isDDLAditionalFilter}"
+                        ng-click="isDDLAditionalFilter = !isDDLAditionalFilter">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                            <input type="search" id="text-input-02" class="slds-lookup__search-input slds-input" aria-owns="option-list-01" role="combobox"
+                                aria-activedescendant="" aria-expanded="false" readonly="true" placeholder="{{filterAditonalOption}}"
+                                ng-blur="isDDLAditionalFilter = false;"/>
+                            <button class="slds-button slds-input__icon slds-text-color--default" aria-expanded="false" tabindex="-1">
+                                <slds-svg-icon sprite="'utility'" icon="'down'" size="'x-small'" no-hint="true"
+                                extra-classes="'slds-icon-text-default'"></slds-svg-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown--left" role="listbox">
+                        <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-5" role="presentation"
+                            ng-focus="isDDLAditionalFilterOption=false;">
+                            <li role="presentation" ng-mousedown="changeAditionalFilter('Todos los consumos');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Todos los consumos</span>
+                                </span>
+                            </li>
+                            <li ng-repeat="record in records | uniqueValues : 'descripcionTipoEvento'" role="presentation" ng-mousedown="changeAditionalFilter(record.descripcionTipoEvento);">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="0" id="listbox-option-248">
+                                <span class="slds-truncate">{{record.descripcionTipoEvento}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>   
+            </div>            
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="slds-form-element">
+                <label class="slds-text-heading--small" for="text-input-01">Con o sin cargo</label>
+                <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLAditionalFilterOption = false;" ng-class="{'slds-is-open': isDDLAditionalFilterOption}"
+                    ng-click="isDDLAditionalFilterOption = !isDDLAditionalFilterOption">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                            <input type="search" id="text-input-01" class="slds-lookup__search-input slds-input" aria-owns="option-list-01" role="combobox"
+                                    aria-activedescendant="" aria-expanded="false" readonly="true" placeholder="{{filterTypeFilterOption}}"
+                                    ng-model="filterTypeFilterOption"
+                                    ng-blur="isDDLAditionalFilterOption = false;" /> <!--ng-blur="isDDLServiceOpen = false;"-->
+                            <button class="slds-button slds-input__icon slds-text-color--default" aria-expanded="false" tabindex="-1">
+                                <slds-svg-icon sprite="'utility'" icon="'down'" size="'x-small'" no-hint="true"
+                                extra-classes="'slds-icon-text-default'"></slds-svg-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown--left" role="listbox">
+                        <ul id="option-list-01" class="slds-dropdown__list slds-dropdown--length-5" role="presentation">
+                            <li role="presentation" ng-mousedown="changeAditionalFilterOption('Con cargo');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Con cargo</span>
+                                </span>
+                            </li>
+                            <li role="presentation" ng-mousedown="changeAditionalFilterOption('Sin cargo');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Sin cargo</span>
+                                </span>
+                            </li>
+                            <li role="presentation" ng-mousedown="changeAditionalFilterOption('Con y sin cargo');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-249">
+                                <span class="slds-truncate">Con y sin cargo</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="slds-form-element">
+                <label class="slds-text-heading--small" for="text-input-01">Producto</label><br>
+                <div class="slds-dropdown-trigger slds-dropdown-trigger--click" ng-init="isDDLProductOpen= false;" ng-class="{'slds-is-open': isDDLProductOpen}" ng-click="isDDLProductOpen = !isDDLProductOpen">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right slds-picklist__input">
+                            <input type="search" id="text-input-03" class="slds-lookup__search-input slds-input" aria-owns="option-list-03" role="combobox"
+                                aria-activedescendant="" aria-expanded="false" readonly="true" placeholder="{{filterAditonalOptionProduct}}"
+                                ng-blur="isDDLProductOpen = false;"/>
+                            <button class="slds-button slds-input__icon slds-text-color--default" aria-expanded="false" tabindex="-1">
+                                <slds-svg-icon sprite="'utility'" icon="'down'" size="'x-small'" no-hint="true"
+                                extra-classes="'slds-icon-text-default'"></slds-svg-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown--left" role="listbox">
+                        <ul id="option-list-03" class="slds-dropdown__list slds-dropdown--length-5" role="presentation"
+                            ng-focus="isDDLProductOpen=false;">
+                            <li role="presentation" ng-mousedown="changeAditionalFilterProduct('Todos los productos');">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="-1" id="listbox-option-250">
+                                <span class="slds-truncate">Todos los productos</span>
+                                </span>
+                            </li>
+                            <li ng-repeat="record in pageProductList" role="presentation" ng-mousedown="changeAditionalFilterProduct(record.nombreProducto);">
+                                <span class="slds-lookup__item-action slds-lookup__item-action--label" role="option" tabindex="0" id="listbox-option-251">
+                                <span class="slds-truncate">{{record.nombreProducto}}</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div> 
+    
+    </div>
+    
+    
+    <div ng-class="{'slds-hide': !showGrid}"  class="slds-grid slds-wrap slds-card slds-m-bottom--small slds-p-around--medium" style="background: #FFF;" id="divConsumptionDetailhead">
+        
+         <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="unit-div">
+                <div style="float:left;padding: 5%;">
+                    <slds-svg-icon  sprite="'utility'" 
+                                    icon="'broadcast'" 
+                                    size="'medium'" 
+                                    no-hint="true"
+                                    extra-classes="'ta-care-omniscript-done-icon'">
+                    </slds-svg-icon>
+                </div>
+                <div class="slds-float--left">
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;font-weight: bold;">$ {{pageSumatoryCostData}}</label>
+                    </div>
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;">{{pageSumatoryUnitsData}}  Mb</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="unit-div">
+                <div style="float:left;padding: 5%;">
+                   <slds-svg-icon  sprite="'utility'" 
+                                    icon="'call'" 
+                                    size="'medium'" 
+                                    no-hint="true"
+                                    extra-classes="'ta-care-omniscript-done-icon'">
+                    </slds-svg-icon>
+                </div>
+                <div class="slds-float--left">
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;font-weight: bold;">$ {{pageSumatoryCostVoice}}</label>
+                    </div>
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;">{{pageSumatoryUnitsVoice}} Voz</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="unit-div">
+                <div style="float:left;">
+                    <div style="float:left; padding: 5%;">
+                       <slds-svg-icon  sprite="'utility'" 
+                                    icon="'sms'" 
+                                    size="'medium'" 
+                                    no-hint="true"
+                                    extra-classes="'ta-care-omniscript-done-icon'">
+                        </slds-svg-icon>
+                    </div>  
+                </div>
+                <div class="slds-float--left">
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;font-weight: bold;"> $ {{pageSumatoryCostSms}}</label>
+                    </div>
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;">{{pageSumatoryUnitsSms}} Mensajes</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size--1-of-4 slds-medium-size--1-of-4 slds-large-size--1-of-4 slds-m-top--small">
+            <div class="unit-div">
+                <div style="float:left; padding: 5%;">
+                    <slds-svg-icon  sprite="'utility'" 
+                                    icon="'threedots'" 
+                                    size="'medium'" 
+                                    no-hint="true"
+                                    extra-classes="'ta-care-omniscript-done-icon'">
+                    </slds-svg-icon>
+                </div>
+                <div class="slds-float--left">
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;font-weight: bold;">$ {{pageSumatory}}</label>
+                    </div>
+                    <div>
+                        <label class="slds-text-heading--small" style="white-space: nowrap;">Otros</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+           
+        <!--table-->
+       <!-- </br> -->
+       
+        <div class="slds-scrollable--x slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-top--small">  
+            <table  class="slds-table slds-table--bordered slds-table--resizable-cols via-slds-table-pinned-header">
+              <thead>
+                <tr class="slds-text-heading--label">
+                    <th class="slds-p-bottom--small detailHead{{field.label}}"
+                        ng-repeat="field in cards[0].states[0].fields | limitTo: 8" 
+                        scope="col"
+                        ng-class="{
+                            'slds-is-sorted' : sortingOrder == field.name,
+                            'slds-is-sorted--desc' : reverse && sortingOrder == field.name, 
+                            'slds-is-sorted--asc': ! reverse && sortingOrder == field.name}"> 
+                            <a  ng-if="field.label != 'Sentido'"
+                                class="slds-truncate slds-th__action" 
+                                ng-click="sortBy(field)" 
+                                href="javascript:void(0)">
+                                {{field.label}}
+                                <div class="slds-icon_container">
+                                    <slds-svg-icon sprite="'utility'" 
+                                                   size="'x-small'" 
+                                                   icon="'arrowdown'" 
+                                                   extra-classes="'slds-icon-text-default slds-is-sortable__icon'">
+                                    </slds-svg-icon>
+                                
+                                </div>
+                            </a>
+                    </th>
+                </tr>
+              </thead>
+              
+              
+              <tbody>
+                    <tr vloc-card 
+                        ng-repeat-start="card in getCardList() | orderBy:sortingOrder"
+                        ng-model="card" 
+                        data="card"
+                        data-status="closed"
+                        data-card={{data.cardIndex}}
+                        ng-click="$parent.$parent.$parent.toogleOpen($event, this);"
+                        records="records" 
+                        use-existing-element-type>
+                    </tr>
+              <!--<tbody>
+                    <tr vloc-card 
+                        ng-repeat-start="card in getCardList()"
+                        ng-model="card" 
+                        data="card"
+                        data-status="closed"
+                        data-card={{data.cardIndex}}
+                        ng-click="$parent.$parent.$parent.toogleOpen($event, this);"
+                        records="records" 
+                        use-existing-element-type>
+                    </tr>-->
+                  <tr ng-init="sortingOrder = '['+'\''+'fechaTasacionTrafico'+'\''+']'; reverse = true; "
+                      ng-repeat-end 
+                      data-status="closed"
+                      data-id = children{{card.cardIndex}}
+                      class = "nghided"
+                      ng-if= "$parent.$parent.$parent.cards[card.cardIndex].status == 'expanded'" >
+                    <td colspan="8" > 
+                        <div class="slds-grid">
+                          <div class="slds-col">
+                            <div class="slds-box--small">
+                                <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                                    <tbody>
+                                        <tr>
+                                            <td class="slds-text-heading--label">Fecha de inicio</td>
+                                            <td class="slds-text-color--default">{{cards[card.cardIndex].obj.fechaTasacionTrafico}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="slds-text-heading--label">Fecha de fin</td>
+                                            <td class="slds-text-color--default">{{cards[card.cardIndex].obj.fechaHoraFinTrafico}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="slds-text-heading--label">Producto</td>
+                                            <td class="slds-text-color--default">{{cards[card.cardIndex].obj.nombreProducto}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
+                          <div class="slds-col">
+                            <div class="slds-box--small">
+                                <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
+                                    <tbody>
+                                        <tr>
+                                            <td class="slds-text-heading--label">Importe</td>
+                                            <td class="slds-text-color--default">{{cards[card.cardIndex].obj.importeTasado}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="slds-text-heading--label">Operador móvil</td>
+                                            <td class="slds-text-color--default">{{cards[card.cardIndex].obj.operador}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="slds-text-heading--label">Destino</td>
+                                            <td class="slds-text-color--default">{{cards[card.cardIndex].obj.numeroOrigen | phoneMask}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                          </div>
+                        </div>r
+
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="slds-grid slds-p-top--small slds-grid--pull-padded slds-m-horizontal--x-small paginador">
+            <div class="slds-col">
+              <label class="slds-form-element__label">Filas por página</label>
+              <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                  <select class="slds-select" ng-options="item for item in numberOfRowsOption" ng-model="itemsPerPage">
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="slds-col slds-align_absolute-center texcentered">
+              Total: {{filteredItems.length}} filas 
+            </div>
+            <div class="slds-col slds-col--bump-right">
+                <div class="slds-form-element slds-button-group pull-right" role="group">
+                    <button class="slds-button slds-button--neutral" title="Previous" ng-click="goToPage(previousPage);" ng-disabled="currentPage == 0">« Anterior</button>
+                    <button ng-repeat="n in currentRange" class="slds-button slds-button--neutral" ng-click="goToPage(n);" ng-disabled="n == currentPage">
+                        {{n + 1}}
+                    </button>
+                    <button class="slds-button slds-button--neutral" ng-click="goToPage(nextPage);" ng-disabled="currentPage == pagedItems.length - 1">Siguiente »
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        
+  </div>  
+
+</div>
+
+<script src="/support/console/39.0/integration.js"></script>

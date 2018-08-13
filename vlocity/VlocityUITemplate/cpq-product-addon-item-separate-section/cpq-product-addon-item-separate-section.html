@@ -1,0 +1,275 @@
+<!-- *** In this template: Component section ONLY displays lineItems that are NOT Addons (lineItem.defaultQuantity > 0). *** -->
+<!-- *** In this template: There is a SEPARATE Addon Section, which displays BOTH Addons that have NOT been added to cart (childProd.inCartQuantity == 0), and those that have been added (lineItem.defaultQuantity == 0)) *** -->
+<!-- *** NOTE: obj.lineItems is a JSON structure that contains all child products added to cart.  This may include Addons (definition those with defaultQuantity == 0) *** -->
+<!-- *** NOTE: obj.childProducts is a JSON structure that contains all Addons.  Those that have not been added to cart would have inCartQuantity == 0 *** -->
+<div class="cpq-product-cart-item-addon-separate-section">
+    <!-- Components -->
+    <div class="slds-section" ng-class="{'slds-is-open': componentState}" ng-if="importedScope.showComponents">
+        <div class="slds-section__title" ng-click="componentState = !componentState" ng-init="componentState = importedScope.expandMode">
+            <a href="javascript:void(0);" class="slds-section__title-action cpq-product-cart-item-section-heading">
+                <button class="slds-button slds-button--icon-container slds-button--icon-x-small">
+                    <svg aria-hidden="true" class="slds-button__icon"  ng-class="{'fix-slds-close-switch' : !componentState}">
+                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#switch' | sldsStaticResourceURL}}"></use>
+                    </svg>
+                </button>
+                Components
+            </a>
+        </div>
+        <div class="slds-section__content cpq-component-content" ng-show="componentState">
+            <div class="cpq-cart-item-section-components" ng-if="obj.lineItems" role="application">
+                <div ng-repeat="childProd in obj.lineItems.records" role="treeitem" aria-expanded="{{!childProdState}}">
+                    <!-- *** In Component Section, Only display lineItems that are NOT Addons (defaultQuantity > 0) *** -->
+                    <div ng-if="childProd.defaultQuantity > 0">
+                        <ul ng-if="childProd.messages.length > 0">
+                            <li ng-repeat="msg in childProd.messages">
+                                <span class="error-msg" ng-if="msg.severity === 'ERROR'">
+                                    {{msg.message}}
+                                    <i ng-init="data.hasError = true"></i>
+                                </span>
+                                <span class="warning-msg" ng-if="msg.severity !== 'ERROR'">
+                                    {{msg.message}}
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="cpq-cart-item-child-product">
+                            <div class="cpq-cart-item-child-product-name">
+                                <button ng-click="childProdState = !childProdState" class="slds-button slds-button--icon-small" aria-controls="tree0-node1" ng-init="childProdState = importedScope.expandMode"
+                                    ng-class="{'slds-hidden': (!childProd.lineItems && !childProd.childProducts && !childProd.attributeCategories.records.length > 0)}">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small" ng-class="{'fix-slds-close-switch' : !childProdState}">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#switch' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Toggle</span>
+                                </button>
+                                {{childProd.PricebookEntry.Product2.Name || childProd.Product2.Name}}
+                            </div>
+                            <div class="cpq-cart-item-child-product-input">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control cpq-cart-item-qty-input">
+                                        <input type='number' min="1" ng-disabled="childProd.minQuantity && childProd.minQuantity === childProd.maxQuantity" class="slds-input cpq-cart-item-input" ng-model='childProd.Quantity.value' ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }" ng-change="importedScope.updateLineField(obj, childProd)" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-cart-item-child-product-price cpq-cart-item-currency-value">{{childProd | resolveCustomField:'RecurringTotal__c':'value' | currency}}</div>
+                            <div class="cpq-cart-item-child-product-price cpq-cart-item-currency-value">{{childProd | resolveCustomField:'OneTimeTotal__c':'value' | currency}}</div>
+                            <div class="cpq-cart-item-child-product-input">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control cpq-cart-item-qty-input">
+                                        <input type='number' min="0" class="slds-input cpq-cart-item-input" ng-model="childProd[$root.nsPrefix+'RecurringManualDiscount__c']['value']" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }" ng-change="importedScope.updateLineField(obj, childProd)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-cart-item-child-product-input">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control cpq-cart-item-qty-input">
+                                        <input type='number' min="0" class="slds-input cpq-cart-item-input" ng-model="childProd[$root.nsPrefix+'OneTimeManualDiscount__c']['value']" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }" ng-change="importedScope.updateLineField(obj, childProd)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-cart-item-child-product-actions slds-text-align--right">
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.addToCart(childProd)" ng-if="childProd.actions.addtocart && importedScope.checkCardinalityForAdd(obj, childProd)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#add' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Add to Cart</span>
+                                </button>                                              
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.clone(childProd, $event)" ng-if="childProd.actions.cloneitem && importedScope.checkCardinalityForClone(obj, childProd)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#copy' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Clone</span>
+                                </button>
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.config(childProd)" ng-if="childProd.actions.updateitems && !attrs.lineItemModal">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#settings' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Settings</span>
+                                </button>
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.delete(childProd)" ng-if="childProd.actions.deleteitem && importedScope.checkCardinalityForDelete(obj, childProd)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#close' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="cpq-cmp-config-panel">
+                            <div class="slds-m-vertical--medium" ng-if="childProd.attributeCategories.records.length > 0" ng-show="childProdState && attrs.lineItemModal">
+                                <div class="slds-section" ng-class="{'slds-is-open': productLineItemToggle}">
+                                    <div class="slds-section__title">
+                                        <a href="javascript:void(0);" ng-click="productLineItemToggle = !productLineItemToggle" class="slds-section__title-action cpq-product-cart-item-section-heading" ng-init="productLineItemToggle = importedScope.expandMode">
+                                        <button class="slds-button slds-button--icon-container slds-button--icon-small">
+                                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small" ng-class="{'fix-slds-close-switch' : !productLineItemToggle}">
+                                                <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#switch' | sldsStaticResourceURL}}"></use>
+                                            </svg>
+                                        </button>Product Configuration</a>
+                                    </div>
+                                    <div class="slds-section__content slds-p-left--large cpq-product-item-details-form" ng-show="productLineItemToggle">
+                                        <vlocity-dynamic-form form-on-change="importedScope.saveUpdates(childProd)" name="productconfig{{childProd.Id.value}}" ng-model="childProd.attributeCategories.records" map-object="{{importedScope.mapObject()}}" tooltip-container=".slds-modal" class="slds-form--stacked"></vlocity-dynamic-form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-product-addon-container" ng-show="childProdState" ng-if="childProd.childProducts.records || childProd.lineItems.records">
+                                <vloc-layout layout-name="cpq-product-addon" ctrl="" ng-model="card" data="card" records="childProd" nested="true" line-item-modal="{{attrs.lineItemModal}}" aria-level="{{(attrs.ariaLevel - 0) + 0}}"></vloc-layout>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add-ons -->
+    <div class="slds-section" ng-class="{'slds-is-open': addonState}" ng-if="importedScope.showAddons">
+        <div class="slds-section__title" ng-click="addonState = !addonState" ng-init="addonState = importedScope.expandMode">
+            <a href="javascript:void(0);" class="slds-section__title-action cpq-product-cart-item-section-heading">
+                <button class="slds-button slds-button--icon-container slds-button--icon-x-small">
+                    <svg aria-hidden="true" class="slds-button__icon"  ng-class="{'fix-slds-close-switch' : !addonState}">
+                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#switch' | sldsStaticResourceURL}}"></use>
+                    </svg>
+                </button>
+                Add-ons
+            </a>
+        </div>
+        <div class="cpq-cart-item-section-addons" role="application" ng-if="obj.childProducts" ng-show="addonState">
+            <div ng-repeat="childProd in importedScope.viewModelRecords | orderBy: 'sequenceNumber'" role="treeitem" aria-expanded="{{!addonState}}">
+                <div ng-if="childProd.PricebookEntry">
+                    <div ng-if="childProd.defaultQuantity == 0">
+                        <ul ng-if="childProd.messages.length > 0">
+                            <li ng-repeat="msg in childProd.messages">
+                                <span class="error-msg" ng-if="msg.severity === 'ERROR'">
+                                    {{msg.message}}
+                                    <i ng-init="data.hasError = true"></i>
+                                </span>
+                                <span ng-if="msg.severity !== 'ERROR'">
+                                    {{msg.message}}
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="cpq-cart-item-child-product">
+                            <div class="cpq-cart-item-child-product-name">
+                                <button ng-click="childProdState = !childProdState" class="slds-button slds-button--icon-small" aria-controls="tree0-node1"  ng-init="childProdState = importedScope.expandMode"
+                                    ng-class="{'slds-hidden': (!childProd.lineItems && !childProd.childProducts)}">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small" ng-class="{'fix-slds-close-switch' : !childProdState}">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#switch' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Toggle</span>
+                                </button>
+                                {{childProd.PricebookEntry.Product2.Name || childProd.Product2.Name}}
+                            </div>
+                            <div class="cpq-cart-item-child-product-input">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control cpq-cart-item-qty-input">
+                                        <input type='number' min="1" ng-disabled="childProd.minQuantity && childProd.minQuantity === childProd.maxQuantity" class="slds-input cpq-cart-item-input" ng-model='childProd.Quantity.value' ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }" ng-change="importedScope.updateLineField(obj, childProd)" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-cart-item-child-product-price cpq-cart-item-currency-value">{{childProd | resolveCustomField:'RecurringTotal__c':'value' | currency}}</div>
+                            <div class="cpq-cart-item-child-product-price cpq-cart-item-currency-value">{{childProd | resolveCustomField:'OneTimeTotal__c':'value' | currency}}</div>
+                            <div class="cpq-cart-item-child-product-input">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control cpq-cart-item-qty-input">
+                                        <input type='number' min="0" class="slds-input cpq-cart-item-input" ng-model="childProd[$root.nsPrefix+'RecurringManualDiscount__c']['value']" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }" ng-change="importedScope.updateLineField(obj, childProd)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-cart-item-child-product-input">
+                                <div class="slds-form-element">
+                                    <div class="slds-form-element__control cpq-cart-item-qty-input">
+                                        <input type='number' min="0" class="slds-input cpq-cart-item-input" ng-model="childProd[$root.nsPrefix+'OneTimeManualDiscount__c']['value']" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 800, 'blur': 0 } }" ng-change="importedScope.updateLineField(obj, childProd)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-cart-item-child-product-actions slds-text-align--right">
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.addToCart(childProd)" ng-if="childProd.actions.addtocart && importedScope.checkCardinalityForAdd(obj, childProd)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#add' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Add to Cart</span>
+                                </button>
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.clone(childProd, $event)" ng-if="childProd.actions.cloneitem && importedScope.checkCardinalityForClone(obj, childProd)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#copy' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Clone</span>
+                                </button>
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.config(childProd)" ng-if="childProd.actions.updateitems && !attrs.lineItemModal">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#settings' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Settings</span>
+                                </button>
+                                <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.delete(childProd)" ng-if="childProd.actions.deleteitem && importedScope.checkCardinalityForDelete(obj, childProd)">
+                                    <svg aria-hidden="true" class="slds-button__icon">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#close' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="cpq-cmp-config-panel">
+                            <div class="slds-m-vertical--medium" ng-if="childProd.attributeCategories.records.length > 0" ng-show="childProdState && attrs.lineItemModal">
+                                <div class="slds-section" ng-class="{'slds-is-open': productLineItemToggle}">
+                                    <div class="slds-section__title">
+                                        <a href="javascript:void(0);" ng-click="productLineItemToggle = !productLineItemToggle" class="slds-section__title-action cpq-product-cart-item-section-heading" ng-init="productLineItemToggle = importedScope.expandMode">
+                                        <button class="slds-button slds-button--icon-container slds-button--icon-small">
+                                            <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small" ng-class="{'fix-slds-close-switch' : !productLineItemToggle}">
+                                                <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#switch' | sldsStaticResourceURL}}"></use>
+                                            </svg>
+                                        </button>Product Configuration</a>   
+                                    </div>
+                                    <div class="slds-section__content slds-p-left--large cpq-product-item-details-form" ng-show="productLineItemToggle">
+                                        <vlocity-dynamic-form form-on-change="importedScope.saveUpdates(childProd)" name="productconfig{{childProd.Id.value}}" ng-model="childProd.attributeCategories.records" map-object="{{importedScope.mapObject()}}" tooltip-container=".slds-modal" class="slds-form--stacked"></vlocity-dynamic-form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cpq-product-addon-container" ng-show="childProdState" ng-if="childProd.childProducts.records || childProd.lineItems.records">
+                                <vloc-layout layout-name="cpq-product-addon" ctrl="" ng-model="card" data="card" records="childProd" nested="true" line-item-modal="{{attrs.lineItemModal}}" aria-level="{{(attrs.ariaLevel - 0) + 0}}"></vloc-layout>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="!childProd.PricebookEntry">
+                    <div ng-if="importedScope.checkIfAddonIsNotInCart(obj, childProd)">
+                        <ul ng-if="childProd.messages.length > 0">
+                            <li ng-repeat="msg in childProd.messages">
+                                <span class="error-msg" ng-if="msg.severity === 'ERROR'">
+                                    {{msg.message}}
+                                    <i ng-init="data.hasError = true"></i>
+                                </span>
+                                <span class="warning-msg" ng-if="msg.severity !== 'ERROR'">
+                                    {{msg.message}}
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="cpq-cart-item-child-product">
+                            <div class="cpq-cart-item-child-product-name">
+                                <button ng-click="childProdState = !childProdState" class="slds-button slds-button--icon-small" aria-controls="tree0-node1" ng-class="{'slds-hidden': !childProd.childProducts}" ng-init="childProdState = importedScope.expandMode">
+                                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--small" ng-class="{'fix-slds-close-switch' : !childProdState}">
+                                        <use xlink:href="{{'/assets/icons/utility-sprite/svg/symbols.svg#switch' | sldsStaticResourceURL}}"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Toggle</span>
+                                </button>
+                                {{childProd.PricebookEntry.Product2.Name || childProd.Product2.Name}}
+                            </div>
+                            <div class="cpq-cart-item-child-product-input"></div>
+                            <div class="cpq-cart-item-child-product-price cpq-cart-item-currency-value">{{childProd | resolveCustomField:'RecurringPrice__c':'value' | currency}}</div>
+                            <div class="cpq-cart-item-child-product-price cpq-cart-item-currency-value">{{childProd.UnitPrice.value | currency}}</div>
+                            <div class="cpq-cart-item-child-product-input"></div>
+                            <div class="cpq-cart-item-child-product-input"></div>
+                            <div class="cpq-cart-item-child-product-actions slds-text-align--right">
+                                <div ng-if="childProd.actions.addtocart && importedScope.checkCardinalityForAddon(obj, childProd)">
+                                    <button class="slds-button slds-button--neutral" ng-click="importedScope.addToCart(childProd)">Add to Cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cpq-cmp-config-panel" ng-show="childProdState">
+                            <div class="cpq-product-addon-container" ng-show="childProdState" ng-if="childProd.childProducts.records || childProd.lineItems.records">
+                                <vloc-layout layout-name="cpq-product-addon" ctrl="" ng-model="card" data="card" records="childProd" nested="true" line-item-modal="{{attrs.lineItemModal}}" aria-level="{{(attrs.ariaLevel - 0) + 0}}"></vloc-layout>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

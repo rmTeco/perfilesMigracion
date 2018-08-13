@@ -1,0 +1,106 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "resultVar": "['listaDetallePrestamo']"
+        }
+    },
+    "filter": {
+    },
+    "limitRows": 5,
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['txId']",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "null"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": ".['fechaAltaProductoAdq']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha",
+                    "name": "['fechaAltaProductoAdq']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "data": {
+                        "": ""
+                    },
+                    "displayLabel": "['estadoPrestamoAdq']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['estadoPrestamoAdq']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaVtoPagoPrestamo']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Cancelación sin cargo",
+                    "name": "['fechaVtoPagoPrestamo']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaVigenciaHastaProdAdq']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de pago",
+                    "name": "['fechaVigenciaHastaProdAdq']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['montoPrestamo']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Monto",
+                    "name": "['montoPrestamo']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['importePago']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Medio de pago",
+                    "name": "['importePago']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['txId'] != 'null'",
+            "name": "Active",
+            "templateUrl": "card-table-row-historys"
+        }
+    ]
+}

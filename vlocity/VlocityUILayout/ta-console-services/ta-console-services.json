@@ -1,0 +1,49 @@
+{
+    "Cards": [
+        "Alert",
+        "PrepaidFamily",
+        "PospaidFamily",
+        "DeviceFamily",
+        "NewService"
+    ],
+    "bypassSave": true,
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.Id",
+                "val": "001c000001REqMF"
+            }
+        ],
+        "type": "IntegrationProcedures",
+        "value": {
+            "bundle": "GetServicesByAccountId",
+            "ctxId": "params.Id",
+            "inputMap": {
+                "Id": "{{params.Id}}"
+            },
+            "ipMethod": "Care_GetServicesDetailsForConsole",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "Care_GetServicesDetailsForConsole",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "['PlanAssets']"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "card-canvas-zones"
+        }
+    },
+    "workspace": [
+        "Alert/Telecom/1502744430403",
+        "PrepaidFamily/Telecom/1504031050382",
+        "PospaidFamily/Personal - DESA01/1511979190823",
+        "DeviceFamily/Personal - DESA01/1/1527522658217",
+        "NewService/Telecom/1502744425617",
+        "PrepaidFamily/Telecom/1/1533326327593",
+        "PospaidFamily/Personal - DESA01/1/1533326674103",
+        "DeviceFamily/Personal - DESA01/2/1533326781762"
+    ]
+}

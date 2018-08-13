@@ -1,0 +1,22 @@
+<div class="via-acuity-sidebar-offer-card slds-p-around--x-small" data-card="card-{{cardIndex}}" ng-controller="viaAcuitySidebarOfferCard as vm">
+    <div class="slds-media" ng-if="obj.targetObjectType == 'VlocityAction'" ng-click="performAction(obj.info)">
+      <div class="slds-media__figure">
+        <img ng-src="{{vm.getImageUrl(obj)}}" class="slds-avatar  slds-avatar--large" />
+      </div>
+      <div class="slds-media__body">
+        <h2 class="slds-text-heading--label">{{obj | getter: data.fields[0] | picker: data.fields[0].type}}</h2>
+        <p>{{obj | getter: data.fields[1] | picker: data.fields[1].type}}</p>
+        <ul class="slds-list--horizontal slds-has-inline-block-links--space"><li ng-repeat="tag in vm.getTags(obj)"><span class="slds-badge">{{tag.name}}</span></li></ul>
+      </div>
+    </div>
+    <div class="slds-media" ng-if="obj.targetObjectType != 'VlocityAction'" href="{{obj.targetObjectKey}}">
+      <div class="slds-media__figure">
+        <img ng-src="{{vm.getImageUrl(obj)}}" class="slds-avatar  slds-avatar--large" />
+      </div>
+      <div class="slds-media__body">
+        <h2 class="slds-text-heading--label">{{obj | getter: data.fields[0] | picker: data.fields[0].type}}</h2>
+        <p>{{obj | getter: data.fields[1] | picker: data.fields[1].type}}</p>
+        <ul class="slds-list--horizontal slds-has-inline-block-links--space"><li ng-repeat="tag in vm.getTags(obj)"><span class="slds-badge">{{tag.name}}</span></li></ul>
+      </div>
+    </div>
+</div>

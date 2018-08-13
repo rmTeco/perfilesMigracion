@@ -1,0 +1,28 @@
+<td class="slds-truncate slds-p-vertical--medium" 
+    ng-if="data" 
+    data-label="{{field.label}}"
+    ng-repeat="field in data.fields | limitTo: 6" 
+    title="{{obj | getter: field | picker: field.type}}">
+    <div ng-if="$first" class="chevronClosed">
+        <slds-svg-icon  sprite="'utility'" 
+                        class="slds-input__icon--left"
+                        icon="'chevronright'"
+                        size="'x-small'" 
+                        style="fill:#181818"
+                        extra-classes="'slds-input__icon'">
+        </slds-svg-icon>
+    </div><div ng-if="$first" class="chevronOpen openTopFix ng-hide">
+        <slds-svg-icon  sprite="'utility'" 
+                        icon="'chevrondown'"
+                        size="'x-small'" 
+                        style="fill:#181818"
+                        extra-classes="'slds-input__icon'">
+        </slds-svg-icon>
+    </div>
+    <div ng-if="field.label == 'Monto'">
+        <b>{{obj | getter: field | picker: field.type}}</b>
+    </div>
+    <div ng-if="field.label != 'Monto'">
+        {{obj | getter: field | picker: field.type}}
+    </div>
+</td>

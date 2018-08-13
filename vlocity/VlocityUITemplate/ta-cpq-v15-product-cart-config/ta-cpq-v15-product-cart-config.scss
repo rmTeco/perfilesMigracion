@@ -1,0 +1,51 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    .cpq-product-cart-config {
+        background-color: $cpq-product-container-bg-color;
+        position: absolute;
+        top: $cpq-cart-container-tabs-height + $cpq-cart-container-tabs-top-margin;
+        right: $cpq-padding-large-horizontal/2;
+        bottom: 0;
+        left: $cpq-padding-large-horizontal/2;
+        .cpq-product-cart-config-header {
+            padding: $cpq-padding-large-vertical $cpq-padding-large-horizontal;
+        }
+        .cpq-product-cart-config-form {
+            margin-bottom: 60px;
+            overflow-y: scroll;
+            margin-top: -$cpq-padding-large-vertical;
+            padding: 0px $cpq-padding-large-horizontal $cpq-padding-large-vertical*2;
+            .cpq-product-cart-config-form-savebar {
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                right: 0px;
+                padding: 15px 15px 18px;
+                background: $white;
+            }
+            .error-msg {
+                color: $error;
+                font-size: $cpq-product-cart-config-error-font-size;
+                margin-top: $cpq-product-cart-config-error-margin-top;
+            }
+        }
+    }
+    // 64rem
+    @media screen and (max-width: $bp-large) {
+        .cpq-product-cart-config {
+            position: static;
+
+            .cpq-product-cart-config-form {
+                .cpq-product-cart-config-form-savebar {
+                    position: static;
+                }
+            }
+        }
+    }
+}

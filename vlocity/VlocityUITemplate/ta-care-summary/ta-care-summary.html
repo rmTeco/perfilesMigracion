@@ -1,0 +1,17 @@
+<article class="slds-card" ng-repeat="item in control.vlcSI[control.itemsKey]">
+  <div class="slds-card__header slds-grid">
+      <ul>
+        <li ng-repeat="field in control.propSetMap.customOptions.header">
+            <span>{{control.propSetMap.customOptions.header[$index].text_field}}<b> {{control.propSetMap.customOptions.header[$index].text_result.replace('{0}', item[control.propSetMap.customOptions.header[$index].params[0].fieldName])}}</b><b ng-if="control.propSetMap.customOptions.header[$index].params.length>1"> - {{control.propSetMap.customOptions.header[$index].text_plus.replace('{1}', item[control.propSetMap.customOptions.header[$index].params[1].fieldName])}}</b></span>
+        </li>
+      </ul>
+  </div>
+  <hr style="margin: 0px"/>
+  <div class="slds-card__header slds-grid">
+      <ul>
+          <li ng-repeat="field in control.propSetMap.customOptions.fields">
+              <span ng-if="item[control.propSetMap.customOptions.fields[$index].params[0].fieldName] !== ''"> {{control.propSetMap.customOptions.fields[$index].text_field}}<b> {{control.propSetMap.customOptions.fields[$index].text_result.replace('{0}', item[control.propSetMap.customOptions.fields[$index].params[0].fieldName])}}</b></span>
+          </li>
+      </ul>
+  </div>
+</article>

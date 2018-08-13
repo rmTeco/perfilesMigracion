@@ -1,0 +1,25 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "parent.obj.AccountId",
+                "val": "0016C000008ZYse"
+            }
+        ],
+        "type": "Inherit",
+        "value": {
+            "body": "",
+            "query": "SELECT Name,Phone,Title FROM Contact where AccountId = '{{parent.obj.AccountId}}'",
+            "resultVar": ""
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "flyout-console"
+        }
+    }
+}

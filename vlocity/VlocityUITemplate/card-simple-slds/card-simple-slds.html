@@ -1,0 +1,12 @@
+<div class="via-slds-card--simple slds-theme--{{pickedState.name}} slds-box slds-box--x-small slds-grid--vertical" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}" data-embed-flyout=".embed-flyout" ng-click="expandCard = !expandCard">
+    <div class="slds-col slds-col--padded  slds-p-bottom--small via-slds-border--bottom">
+      <h3 class="slds-section__title via-slds-card--simple__title">{{data.title}}&nbsp;</h3>
+    </div>
+    <div class="slds-col slds-grid via-slds-card--simple__body slds-grid--vertical" ng-class="{'via-slds-card--simple__expanded': expandCard, 'via-slds-card--simple__collapse': !expandCard}">
+        <div class="slds-grid slds-p-top--small slds-p-bottom--small " ng-repeat="field in data.fields" ng-show="key != 'attributes'">
+            <div class="slds-col--padded slds-col slds-text-body--regular">{{field.label}}&nbsp;</div>
+            <div class="slds-col--padded slds-col slds-text-align--right slds-text-body--regular" ng-if="!obj[field.relationshipName]">{{obj | getter: field | picker: field.type}}&nbsp;</div>
+            <div class="slds-col--padded slds-col slds-text-align--right slds-text-body--regular" ng-if="obj[field.relationshipName]">{{obj[field.relationshipName]['Name']}}&nbsp;</div>
+        </div>
+    </div>
+</div>

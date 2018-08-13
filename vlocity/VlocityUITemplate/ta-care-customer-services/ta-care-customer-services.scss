@@ -1,0 +1,30 @@
+@import "variables";
+
+/*** MIXINS ***/
+//@import "mixin";
+
+@import url('/resource/ta_slds/slds.min.css');
+
+.vlocity {
+    
+    .lineNumber {
+        font-family: "Platform Light", Platform, "Salesforce Sans", Arial, sans-serif;
+        background: #FFF !important;
+        font-size: 28px;
+    }
+    
+    .asset_type {
+        font-family: "Platform Light", Platform, "Salesforce Sans", Arial, sans-serif;
+        font-size: 18px;
+    }
+    
+     @media (max-width: 695px) {
+        .title-line {
+            padding-left: 13px !important;
+        }
+     }
+}
+
+    .cfp-hotkeys, .cfp-hotkeys-container {
+        height: auto;
+     }

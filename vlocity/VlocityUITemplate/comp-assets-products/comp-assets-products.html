@@ -1,0 +1,89 @@
+<div class="comp-assets-products slds-grid slds-grid_vertical">
+
+    <!--Tabs-->
+    <div class="slds-col slds-no-flex assets-products-global-tabs" ng-init="tabSelected = 'Assets'">
+        <ul class="slds-tabs_default__nav assets-products-tabs" role="tablist">
+            <li class="slds-tabs_default__item slds-text-heading_label" title="Item One" role="presentation" ng-class="{'slds-active' : tabSelected === 'Assets'}" ng-click="tabSelected = 'Assets'; importedScope.changeCustomView(1);">
+                <a class="slds-tabs_default__link" href="#voi" role="tab" tabindex="0" aria-selected="tabSelected === 'Assets'" aria-controls="tab-default-1" id="tab-default-1__item">{{::importedScope.customLabels.CPQAssets}}</a>
+            </li>
+            <li class="slds-tabs_default__item slds-text-heading_label" title="Item One" role="presentation" ng-class="{'slds-active' : tabSelected === 'Promotions'}" ng-click="tabSelected = 'Promotions';  importedScope.changeCustomView(0)" ng-show="$root.customViews.cpqCustomViews.length >= 1 && attrs.promotionMode === 'on'">
+                <a class="slds-tabs_default__link" href="#voi" role="tab" tabindex="0" aria-selected="tabSelected === 'Promotions'" aria-controls="tab-default-2" id="tab-default-2__item">{{::importedScope.customLabels.CPQPromotions}}</a>
+            </li>
+        </ul>
+    </div> 
+    <!--End Tabs--> 
+
+    <!--The scroll Class is used for mobile devices -->
+    <div class="slds-col assets-products-items scroll" >
+        <!--Assets Container-->
+        <div ng-if="tabSelected === 'Assets'">
+
+            <div class="slds-clearfix">
+
+                <div class="slds-float_left slds-grid">
+
+                    <!--Custom View-->
+                    <div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open slds-m-around_small custom-view-dropdown" ng-show="$root.customViews.cpqCustomViews" ng-if="attrs.pricingMode === 'on'">
+                        <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">    
+                            <button cpq-dropdown-handler="importedScope.viewOpen = false" id="assets-custom-view-button" class="slds-button custom-view-dropdown-button slds-button_neutral slds-picklist__label slds-p-right_small" aria-haspopup="true" ng-click="importedScope.viewOpen = !importedScope.viewOpen">
+                                <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top_x-small slds-float_right custom-view-dropdown-button'"></slds-button-svg-icon>
+                                <span class="slds-truncate" title="Select an Option">
+                                    {{$root.customViews.cpqCustomViews[$root.customViews.currentCustomView].viewName}}
+                                </span>
+                            </button>
+                            <div class="slds-dropdown slds-dropdown_left" ng-if="importedScope.viewOpen">
+                                <ul class="slds-dropdown__list slds-dropdown_length-5" role="menu">
+                                    <li class="slds-dropdown__item" role="presentation" ng-repeat="customView in $root.customViews.cpqCustomViews" ng-click="importedScope.changeCustomView($index)">
+                                        <a ng-show="$root.customViews.currentCustomView !== $index" href="javascript:void(0);" role="menuitemcheckbox" tabindex="0">
+                                            <span class="slds-truncate">{{customView.viewName}}</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> 
+                    </div>
+                    <!--End Custom View-->
+
+                    <div class="slds-m-left_small slds-form-element slds-m-top_small">
+                        <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                            <slds-input-svg-icon sprite="'utility'" icon="'dayview'" extra-classes="'slds-float_right'"></slds-input-svg-icon>
+                             <input type="text" id="text-input-01" class="slds-input" ng-model="importedScope.effectiveAssetsDateSelected.value" data-date-format="yyyy-MM-dd" slds-date-picker ng-change="importedScope.changeEffectiveAssetsDate()" data-container=".via-slds"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="slds-float_right slds-button-group slds-m-top_small slds-m-right_small" role="group">
+                    <button class="slds-button slds-button_neutral" ng-click="importedScope.assetChangeToQuote(attrs.accountId, attrs.assetIncludeType)" ng-disabled="!$root.vlocityAssets.enableChangeToCartButton">
+                        {{::importedScope.customLabels.ASSETChangeToQuote}}
+                    </button>
+                    <button class="slds-button slds-button_neutral" ng-click="importedScope.assetChangeToOrder()" ng-disabled="!$root.vlocityAssets.enableChangeToCartButton">
+                        {{::importedScope.customLabels.ASSETChangeToOrder}}
+                    </button>
+                    <button class="slds-button slds-button_neutral" ng-click="importedScope.assetMove()" ng-disabled="!$root.vlocityAssets.enableMoveButton">
+                        {{::importedScope.customLabels.ASSETMove}}
+                    </button>
+                </div>
+
+            </div>
+
+            <vloc-card ng-repeat="card in cards" ng-model="card" data="card" records="records" 
+                group-assets-by-contracts="{{attrs.groupAssetsByContracts}}" 
+                asset-include-type="{{attrs.assetIncludeType}}" 
+                account-id="{{attrs.accountId}}" 
+                effective-date="{{importedScope.getEffectiveDate()}}"
+                index="{{$index}}" is-last="{{$last}}"
+                ctrl="{{ctrl}}"
+                ng-if="isLoaded" >
+            </vloc-card>
+
+        </div>
+        <!--End Assets Container-->  
+       
+        <!--Promotions Container-->
+        <div class="slds-m-around--small" ng-if="tabSelected === 'Promotions' && attrs.promotionMode === 'on'">
+            <vloc-layout layout-name="comp-assets-promotions" account-id="{{attrs.accountId}}"></vloc-layout>
+        </div>
+        <!--End Promotions Container-->
+    </div>
+</div>

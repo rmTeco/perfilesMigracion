@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Se manejan las configuraciones de tdc por Dni por Segmento</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>MaxNumberCreditCards__c</fullName>
+        <description>Numero maximo de tarjetas  por segmento</description>
+        <externalId>false</externalId>
+        <label>MaxNumberCreditCards</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Months__c</fullName>
+        <description>Ventana de tiempo en meses para numero maximo de tarjetas de credito</description>
+        <externalId>false</externalId>
+        <label>Months</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Segment__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Segmento de Cliente</description>
+        <externalId>false</externalId>
+        <label>Segment</label>
+        <length>50</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <label>CreditCardsByDniBySegment</label>
+    <visibility>Public</visibility>
+</CustomObject>

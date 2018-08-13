@@ -1,0 +1,10 @@
+<div class="home-actions" ng-controller="CpqHomeActionController as ct">
+	<div class="home-action" ng-repeat="action in data.actions | limitTo: (data.limitActionLinksTo?data.limitActionLinksTo:5)">
+		<a class="slds-button via-slds-button slds-button_neutral slds-size_1-of-1" href="javascript:void(0)" ng-click="ct.createOrder(action, params)" hotkey-card-action>
+			<span class="action-icon">
+				<vloc-card-icon data="action" obj="obj" size="'small'" extra-classes="'action-icon big slds-icon-text-default via-action-icon slds-m-bottom_xx-small'"></vloc-card-icon>
+			</span>
+			<span class="action-text">{{action.displayName}}</span>
+		</a>
+	</div>
+</div>

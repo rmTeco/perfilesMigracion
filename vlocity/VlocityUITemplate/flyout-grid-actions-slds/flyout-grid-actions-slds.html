@@ -1,0 +1,22 @@
+<div class="slds-m-around--small via-slds-flyout-grid-actions" ng-controller="viaFlyoutGridActions as viaFlyoutGridActions">
+    <div class="slds-media slds-media--center slds-m-bottom--small">
+      <div class="slds-media__figure">
+        <span class="slds-icon_container slds-icon-standard-marketing-actions">
+            <slds-svg-icon sprite="'standard'" icon="'marketing_actions'" size="'medium'" no-hint="true"></slds-svg-icon>
+          <span class="slds-assistive-text">{{::$root.vlocity.getCustomLabel('Actions', 'Actions')}}</span>
+        </span>
+      </div>
+      <div class="slds-media__body"><a href="javascript:void(0);" class="slds-text-heading--medium">{{::$root.vlocity.getCustomLabel('Actions', 'Actions')}}</a></div>
+    </div>
+    <ul >
+        <li ng-repeat="action in viaFlyoutGridActions.getActions()"
+            class="slds-m-top--large">
+            <a href="javascript:void(0);" class="slds-truncate via-action-link" ng-click="performAction(action)" hotkey-card-action>
+                <vloc-card-icon data="action" obj="obj" size="'medium'" extra-classes="'big slds-icon-text-default'"></vloc-card-icon>{{action.displayName}} 
+              </a>
+        </li>
+    </ul>
+    <p ng-if="(!viaFlyoutGridActions.parentHasActions() && parent.actions.length === 0) || (viaFlyoutGridActions.parentHasActions() && parent.actions.length <= (parent.limitActionLinksTo?parent.limitActionLinksTo:5))">
+        <small>{{::$root.vlocity.getCustomLabel('NoAdditionalActionsAvailable', 'No additional actions available.')}}</small>
+    </p>
+</div>

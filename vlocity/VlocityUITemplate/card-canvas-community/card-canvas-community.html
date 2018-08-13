@@ -1,0 +1,29 @@
+<div class="cards-container">
+    <div>
+        <div 
+            vloc-card 
+            ng-if="card.zone == 'top'"
+            ng-repeat="card in cards |orderBy:order" 
+            ctrl="{{ctrl}}" 
+            ng-model="card" 
+            data="card" 
+            records="records" 
+            index="{{$index}}" 
+            session-id="{{sessionId}}">
+        </div>
+    </div>
+    <div>
+        <div 
+            vloc-card 
+            ng-if="card.zone == 'middle'"
+            ng-repeat="card in cards |orderBy:order| filter: searchFunc(card, searchTerm)"
+            ctrl="{{ctrl}}" 
+            ng-model="card" 
+            data="card" 
+            records="records" 
+            index="{{$index}}" 
+            session-id="{{sessionId}}">
+        </div>
+    </div>
+    <span id="flyout"></span>
+</div>

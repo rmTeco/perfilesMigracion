@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Configuration created to compare the type of credit card with the one sent in a JSON of the S059 service.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>CardTypeCode__c</fullName>
+        <externalId>false</externalId>
+        <label>Card Type Code</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ResponseCardType__c</fullName>
+        <description>value that must come when answering the S059 service for each type of card.</description>
+        <externalId>false</externalId>
+        <label>Response Card Type</label>
+        <length>3</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>CardType</label>
+    <visibility>Public</visibility>
+</CustomObject>

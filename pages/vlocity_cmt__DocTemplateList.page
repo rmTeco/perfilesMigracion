@@ -1,0 +1,417 @@
+<apex:page controller="vlocity_cmt.DocTemplateListController" 
+    showHeader="true" 
+    sidebar="false" 
+    standardStylesheets="false" 
+    tabStyle="VlocityContractDocumentTemplate__tab" 
+    extensions="vlocity_cmt.DRDataPackRunnerController" 
+    docType="html-5.0" 
+    applyBodyTag="false">
+    <head>
+        <meta charset="utf-8"/>
+        <base href="/apex/DocTemplateList"/>
+
+        <apex:stylesheet value="{!IF(isLanguageRTL, URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css'), URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.min.css'))}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/font-hack.css')}"/>
+        <style type="text/css">
+            i.icon-v-close-circle {
+                cursor: pointer;
+            }
+        </style>
+
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/ng-table/dist/ng-table.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__ngInfiniteScroll, '/build/ng-infinite-scroll.min.js')}"/>
+        <apex:includeScript value="{!$Resource.vlocity_cmt__SldsAngular}"/>
+        <apex:includeScript value="{!$Resource.vlocity_cmt__DRVComp}"/>
+    </head> 
+    <body>
+        <div ng-app="docTemplateListApp" ng-controller="docTemplateListController" class="vlocity via-slds ng-cloak {!$User.UIThemeDisplayed}">
+            <div class="slds-spinner_container" ng-show="vlcLoading">
+                <div class="slds-spinner slds-spinner_brand slds-spinner_large" aria-hidden="false" role="status">
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+            <div ng-if="templateActionErrorMsg" class="slds-notify slds-notify_alert slds-theme_error slds-theme_alert-texture" role="alert" ng-bind-html="templateActionErrorMsg" ng-click="clearTemplateActionErrorMsg()"></div>
+            <slds-home new-url="'{!newUrl}'" s-object-type="'{!$ObjectType.DocumentTemplate__c.Name}'" row-actions="rowActions" id-prefix="document-home" default-columns="defaultColumns"></slds-home>
+            <script type="text/ng-template" id="confirm-delete-template-modal.tpl.html">
+                <div class="slds-modal slds-fade-in-open" tabindex="-1" role="dialog">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <button class="slds-button slds-button_icon-inverse slds-modal__close" ng-click="$hide()">
+                                <slds-svg-icon sprite="'action'" icon="'close'" size="'medium'"></slds-svg-icon>
+                            </button>
+                            <h4 class="slds-text-heading_medium">{{labels.CLMTemplateDeleteTemplate}}</h4>
+                        </div>
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <div>
+                                <p>{{labels.CLMClauseAreYouSureDeleteTemplate}} '{{currentTemplateName}}'?</p>
+                            </div>
+                        </div>
+                        <div class="slds-modal__footer">
+                            <button type="button" class="slds-button slds-button_neutral" ng-click="$hide()">{{labels.CLMTemplateCancel}}</button>
+                            <button type="button" class="slds-button slds-button_destructive" ng-click="deleteDocumentTemplate(); $hide();">{{labels.CLMTemplateDeleteTemplate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </script>
+        </div>
+        <c:VFActionFunction />
+
+        <script type="text/javascript">
+            /* Labels */
+            window.i18n = {
+                "SldsObjectHomeHeaderInfo": "{!$Label.vlocity_cmt__sldsobjecthomeheaderinfo}",
+                "RefreshData": "{!$Label.vlocity_cmt__refreshdata}",
+                "Export": "{!$Label.vlocity_cmt__export}",
+                "New": "{!$Label.vlocity_cmt__new}",
+                "FilterList": "{!$Label.vlocity_cmt__filterlist}",
+                "Import": "{!$Label.vlocity_cmt__import}",
+                "AdditionalActions": "{!$Label.vlocity_cmt__additionalactions}",
+                "Delete": "{!$Label.vlocity_cmt__delete}",
+                "Preview": "{!$Label.vlocity_cmt__preview}",
+                "LastModified": "{!$Label.vlocity_cmt__lastmodified}",
+                "Name": "{!$Label.vlocity_cmt__name}",
+                "ModifiedOnBy": "{!$Label.vlocity_cmt__modifiedonby}",
+                "DeleteLayout": "{!$Label.vlocity_cmt__deletelayout}",
+                "InstallDataPack": "{!$Label.vlocity_cmt__installdatapack}",
+                "DeleteLayoutConfirmation": "{!$Label.vlocity_cmt__deletelayoutconfirmation}",
+                "Filters": "{!$Label.vlocity_cmt__filters}",
+                "HideFilter": "{!$Label.vlocity_cmt__hidefilter}",
+                "Cancel": "{!$Label.vlocity_cmt__cancel}",
+                "Save": "{!$Label.vlocity_cmt__save}",
+                "ShowMe": "{!$Label.vlocity_cmt__showme}",
+                "MatchingAllOfTheseFilters": "{!$Label.vlocity_cmt__matchingallofthesefilters}",
+                "Remove": "{!$Label.vlocity_cmt__remove}",
+                "NewFilter": "{!$Label.vlocity_cmt__newfilter}",
+                "AddFilter": "{!$Label.vlocity_cmt__addfilter}",
+                "RemoveAll": "{!$Label.vlocity_cmt__removeall}",
+                "Field": "{!$Label.vlocity_cmt__field}",
+                "Operator": "{!$Label.vlocity_cmt__operator}",
+                "Value": "{!$Label.vlocity_cmt__value}",
+                "Done": "{!$Label.vlocity_cmt__done}",
+                "AllType": "{!$Label.vlocity_cmt__alltype}",
+                "MyType": "{!$Label.vlocity_cmt__mytype}"
+            };
+            var labels = {
+                'CLMTemplateCloneTemplate': '{!$Label.vlocity_cmt__clmtemplateclonetemplate}',
+                'CLMTemplateActivate': '{!$Label.vlocity_cmt__clmtemplateactivate}',
+                'CLMTemplateDeactivateTemplate': '{!$Label.vlocity_cmt__clmtemplatedeactivatetemplate}',
+                'CLMTemplateCreateNewVersion': '{!$Label.vlocity_cmt__clmtemplatecreatenewversion}',
+                'CLMTemplateDeleteTemplate': '{!$Label.vlocity_cmt__clmtemplatedeletetemplate}',
+                'CLMTemplateSeeMoreContracts':'{!$Label.vlocity_cmt__clmtemplateseemorecontracts}',
+                'CLMTemplateTheTemplate':'{!$Label.vlocity_cmt__clmtemplatethetemplate}',
+                'CLMTemplateCannotBeDeletedUsed':'{!$Label.vlocity_cmt__clmtemplatecannotbedeletedused}',
+                'CLMTemplateCannotBeDeactivatedUsed':'{!$Label.vlocity_cmt__clmtemplatecannotbedeactivatedused}',
+                'CLMClauseAreYouSureDeleteTemplate': '{!$Label.vlocity_cmt__clmclauseareyousuredeletetemplate}',
+                'CLMTemplateCancel': '{!$Label.vlocity_cmt__clmtemplatecancel}'
+            };
+
+            /* Remote Actions */
+            var remoteActions = {
+                cloneDocumentTemplate: {
+                    action: '{!$RemoteAction.DocTemplateListController.cloneDocumentTemplate}',
+                    config: {escape: false}
+                },
+                deactivateDocumentTemplate: {
+                    action: '{!$RemoteAction.DocTemplateListController.deactivateDocumentTemplate}',
+                    config: {escape: false}
+                },
+                createNewVersion: {
+                    action: '{!$RemoteAction.DocTemplateListController.createNewVersionOfDocumentTemplate}',
+                    config: {escape: false}
+                },
+                deleteDocumentTemplate: {
+                    action: '{!$RemoteAction.DocTemplateListController.deleteDocumentTemplate}',
+                    config: {escape: false}
+                }
+            };
+
+            // Angular Module
+            var docTemplateList = angular.module('docTemplateListApp', ['drvcomp', 'sldsangular', 'ngTable', 'vlocity', 'infinite-scroll'])
+            .config(['$localizableProvider', function($localizableProvider) {
+                'use strict';
+                $localizableProvider.setLocalizedMap(window.i18n);
+                $localizableProvider.setDebugMode(false);
+            }])
+            .config(['remoteActionsProvider', function(remoteActionsProvider) {
+                'use strict';
+                remoteActionsProvider.setRemoteActions(window.remoteActions || {});
+            }]);
+
+            // Angular Controller
+            docTemplateList.controller('docTemplateListController', ['$scope', '$filter', '$localizable', 'remoteActions', '$sldsModal', function($scope, $filter, $localizable, remoteActions, $sldsModal) {
+                'use strict';
+                var namespacePrefix = '{!namespacePrefix}';
+                var templateTypeCodeMap = {
+                    'Vlocity Web Template': 'web',
+                    'Microsoft Word .DOCX Template': 'docx',
+                    'Microsoft Powerpoint .PPTX Template': 'pptx'
+                };
+                $scope.vlcLoading = false;
+                $scope.templateActionErrorMsg = '';
+                $scope.labels = labels;
+
+                $scope.cloneDocumentTemplate = function(documentTemplateId) {
+                    $scope.vlcLoading = true;
+                    remoteActions.cloneDocumentTemplate(documentTemplateId).then(function(result) {
+                        var templateId = result.templateData.Id;
+                        var templateType = result.templateData[namespacePrefix + 'TemplateContentFormat__c'];
+                        var templateTypeParam = (templateType ? '&templateType=' + templateTypeCodeMap[templateType] : '');
+                        location.href = '/apex/' + namespacePrefix + 'DocumentTemplate?templateId=' + templateId + templateTypeParam;
+                    }, function(error) {
+                        $scope.vlcLoading = false;
+                    });
+                };
+
+                $scope.deactivateDocumentTemplate = function(documentTemplateId, documentTemplateName) {
+                    $scope.vlcLoading = true;
+                    remoteActions.deactivateDocumentTemplate(documentTemplateId).then(function(result) {
+                        if (result.length === 0) {
+                            location.href = '/apex/DocTemplateList';
+                        } else {
+                            $scope.showTemplateActionErrorMsg(result, documentTemplateName, 'DEACTIVATE');
+                            $scope.vlcLoading = false;
+                        }
+                    }, function(error) {
+                        $scope.vlcLoading = false;
+                    });
+                };
+
+                $scope.createNewVersion = function(documentTemplateId) {
+                    $scope.vlcLoading = true;
+                    remoteActions.createNewVersion(documentTemplateId).then(function(result) {
+                        var templateId = result.templateData.Id;
+                        var templateType = result.templateData[namespacePrefix + 'TemplateContentFormat__c'];
+                        var templateTypeParam = (templateType ? '&templateType=' + templateTypeCodeMap[templateType] : '');
+                        location.href = '/apex/' + namespacePrefix + 'DocumentTemplate?templateId=' + templateId + templateTypeParam;
+                    }, function(error) {
+                        $scope.vlcLoading = false;
+                    });
+                };
+
+                $scope.confirmDeleteTemplate = function(templateId, templateName) {
+                    $scope.currentTemplateId = templateId;
+                    $scope.currentTemplateName = templateName;
+                    $sldsModal({
+                        templateUrl: 'confirm-delete-template-modal.tpl.html',
+                        container: 'div.vlocity',
+                        placement: 'center',
+                        html: true,
+                        scope: $scope
+                    });
+                };
+
+                $scope.deleteDocumentTemplate = function() {
+                    $scope.vlcLoading = true;
+                    remoteActions.deleteDocumentTemplate($scope.currentTemplateId).then(function(result) {
+                        if (result.length === 0) {
+                            location.href = '/apex/DocTemplateList';
+                        } else {
+                            $scope.showTemplateActionErrorMsg(result, $scope.currentTemplateName, 'DELETE');
+                            $scope.vlcLoading = false;
+                        }
+                    }, function(error) {
+                        $scope.vlcLoading = false;
+                    });
+                };
+
+                $scope.showTemplateActionErrorMsg = function(contractList, documentTemplateName, action) {
+                    var i, j, contracts, versions, versionNumbers;
+                    function sortNumber(a, b) {
+                        return a - b;
+                    }
+                    contracts = '';
+                    for (i = 0; i < contractList.length; i++) {
+                        versions = '';
+                        versionNumbers = contractList[i].contractversion.sort(sortNumber);
+                        for (j = 0; j < versionNumbers.length; j++) {
+                            if (j === contractList[i].contractversion.length - 1) {
+                                versions += versionNumbers[j] + '.';
+                            } else {
+                                versions += versionNumbers[j] + ', ';
+                            }
+                        }
+                        if (!contractList[i].contractname) {
+                            contractList[i].contractname  = '';
+                        }
+                        if (i === 2) {
+                            contracts +=
+                                '</ul>' +
+                                '<span class="see-more-contracts">' + labels.CLMTemplateSeeMoreContracts + '<i class="icon icon-v-right-caret"></i></span>' +
+                                '<ul class="more-contracts collapsed">';
+                        }
+                        contracts += '<li>' + contractList[i].contractname + ' (<a href="/' + contractList[i].contractid + '" target="_blank">' + contractList[i].contractnumber + '</a>) - Versions: ' + versions;
+                    }
+
+                    if (action === 'DELETE') {
+                        $scope.templateActionErrorMsg = '<i class="contract-icon icon icon-v-close-circle"></i>' + labels.CLMTemplateTheTemplate + ' ' + documentTemplateName + ' ' + labels.CLMTemplateCannotBeDeletedUsed + '<ul>' + contracts + '</ul>';
+                    } else if (action === 'DEACTIVATE') {
+                        $scope.templateActionErrorMsg = '<i class="contract-icon icon icon-v-close-circle"></i>' + labels.CLMTemplateTheTemplate  + ' ' + documentTemplateName + ' ' + labels.CLMTemplateCannotBeDeactivatedUsed + '<ul>' + contracts + '</ul>';
+                    }
+                };
+
+                $scope.clearTemplateActionErrorMsg = function() {
+                    $scope.templateActionErrorMsg = '';
+                };
+
+                /* sldsHome directive data */
+                // row action config
+                $scope.rowActions = [
+                    {
+                        text: labels.CLMTemplateCloneTemplate,
+                        icon: {
+                            sprite: 'action',
+                            icon: 'clone'
+                        },
+                        click: function(row, group) {
+                            $scope.cloneDocumentTemplate(row.Id);
+                        },
+                        hide: function(row, group) {
+                            return (row[namespacePrefix + 'Status__c'] !== 'Active');
+                        }
+                    },
+                    {
+                        text: labels.CLMTemplateDeactivateTemplate,
+                        icon: {
+                            sprite: 'action',
+                            icon: 'remove'
+                        },
+                        click: function(row, group) {
+                            $scope.deactivateDocumentTemplate(row.Id, row.Name);
+                        },
+                        hide: function(row, group) {
+                            return (row[namespacePrefix + 'Status__c'] !== 'Active');
+                        }
+                    },
+                    /*{
+                        text: labels.CLMTemplateActivate,
+                        icon: {
+                            sprite: 'action',
+                            icon: 'check'
+                        },
+                        click: function(row, group) {
+                            $scope.activateDocumentTemplate(row.Id);
+                        },
+                        hide: function(row, group) {
+                            return (row[namespacePrefix + 'Status__c'] !== 'Draft');
+                        }
+                    },*/
+                    {
+                        text: labels.CLMTemplateCreateNewVersion,
+                        icon: {
+                            sprite: 'utility',
+                            icon: 'new'
+                        },
+                        click: function(row, group) {
+                            $scope.createNewVersion(row.Id);
+                        },
+                        hide: function(row, group) {
+                            return (row[namespacePrefix + 'Status__c'] === 'Draft');
+                        }
+                    },
+                    {
+                        text: labels.CLMTemplateDeleteTemplate,
+                        icon: {
+                            sprite: 'action',
+                            icon: 'delete'
+                        },
+                        click: function(row, group) {
+                            $scope.confirmDeleteTemplate(row.Id, row.Name);
+                        }
+                    },
+                    {
+                        type: 'export',
+                        drvType: 'DocumentTemplate'
+                    }
+                ];
+
+                // column config
+                $scope.defaultColumns = [
+                    {
+                        //field: $localizable('Name', 'Name'),
+                        field: 'Name',
+                        additionalFields: [namespacePrefix + 'VersionNumber__c'],
+                        getValue: function($scope, row) {
+                            var templateTypeParam = row[namespacePrefix + 'TemplateContentFormat__c'] ? '&templateType=' + templateTypeCodeMap[row[namespacePrefix + 'TemplateContentFormat__c']] : '';
+                            return '<a href="/apex/' + namespacePrefix + 'DocumentTemplate?templateId=' + row.Id + templateTypeParam +'">' + row.Name + ' (Version ' +
+                                            row[namespacePrefix + 'VersionNumber__c'] + ')</a>';
+                        }
+                    },
+                    {
+                        field: namespacePrefix + 'TemplateContentFormat__c',
+                        getValue: function() {
+                            return '';
+                        }
+                    },
+                    {
+                        field: namespacePrefix + 'ApplicableTypes__c',
+                        getValue: function() {
+                            return '';
+                        }
+                    },
+                    {
+                        field: namespacePrefix + 'MappingType__c',
+                        getValue: function() {
+                            return '';
+                        }
+                    },
+                    /*{
+                        field: namespacePrefix + 'UsageType__c',
+                        getValue: function() {
+                            return '';
+                        }
+                    },*/
+                    {
+                        field: namespacePrefix + 'Status__c',
+                        getValue: function($scope, row) {
+                            return row[namespacePrefix + 'Status__c'];
+                        }
+                    },
+                    {
+                        //title: $localizable('LastModified', 'Last Modified'),
+                        field: 'LastModifiedDate',
+                        getValue: function($scope, row) {
+                            return 'Modified on ' + $filter('date')(row.LastModifiedDate) + ' by ' + row.LastModifiedBy.Name;
+                        },
+                        getGroupValue: function($scope, $group) {
+                            var mostRecent = $group.data[0].LastModifiedDate;
+                            $group.data.forEach(function(data) {
+                                if (data.LastModifiedDate > mostRecent) {
+                                    mostRecent = data.LastModifiedDate;
+                                }
+                            });
+                            return $filter('date')(mostRecent);
+                        }
+                    },
+                    {
+                        field: namespacePrefix + 'IsActive__c',
+                        additionalFields: [namespacePrefix + 'Status__c'],
+                        shrink: true,
+                        dynamic: true,
+                        getValue: function($scope, row) {
+                            if (row[namespacePrefix + 'IsActive__c']) {
+                                return '<span class="slds-icon_container" title="Is Active"><slds-svg-icon sprite="\'utility\'"' +
+                                        ' icon="\'success\'" size="\'x-small\'" extra-classes="\'slds-icon-text-default\'"></slds-svg-icon></span>';
+                            }
+                        },
+                        getGroupValue: function($scope, $group) {
+                            var hasAnActiveEntry = false;
+                            $group.data.forEach(function(row) {
+                                if (row[namespacePrefix + 'IsActive__c']) {
+                                    hasAnActiveEntry = true;
+                                    return false;
+                                }
+                            });
+                            if (hasAnActiveEntry) {
+                                return '<span class="slds-icon_container" title="Is Active"><slds-svg-icon sprite="\'utility\'"' +
+                                        ' icon="\'success\'" size="\'x-small\'" extra-classes="\'slds-icon-text-default\'"></slds-svg-icon></span>';
+                            }
+                        }
+                    }
+                ];
+            }]);
+        </script>
+    </body>
+</apex:page>

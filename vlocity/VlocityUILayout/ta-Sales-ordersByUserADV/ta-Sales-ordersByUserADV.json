@@ -1,0 +1,38 @@
+{
+    "Cards": [
+        "OrdenesByUser"
+    ],
+    "customPreviewPages": [
+        {
+            "group": "Custom Pages",
+            "label": "taUserOrders",
+            "page": "taUserOrders"
+        }
+    ],
+    "dataSource": {
+        "contextVariables": [
+        ],
+        "orderBy": {
+            "isReverse": "false",
+            "name": "CreatedDate"
+        },
+        "type": "Query",
+        "value": {
+            "optionsMap": {
+                "vlcClass": "ta_sales_UserUtils"
+            },
+            "query": "SELECT Id, OrderNumber, Account.Name,Status, Account.Id, %vlocity_namespace%__TrackingNumber__c, Operation_Code__c, Account.%vlocity_namespace%__PrimaryContactId__c, TrackingStatus__c, %vlocity_namespace%__OriginatingChannel__c, CreatedDate, LastModifiedDate, Account.RecordType.Name, Account.ParentId, OrderApprovalStatus__c  FROM Order WHERE Gestion__c IN('Venta', 'Alta') AND OrderApprovalStatus__c = 'Pendiente de aprobación'",
+            "remoteClass": "ta_sales_ordersByUser",
+            "remoteMethod": "getOrdersByUserADV",
+            "remoteNSPrefix": null
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Sales-list-card-canvas"
+        }
+    },
+    "workspace": [
+        "OrdenesByUser/Personal - DESA01/1507644761284"
+    ]
+}

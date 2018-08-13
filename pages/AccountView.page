@@ -1,0 +1,60 @@
+<apex:page standardController="Account" title="Account View" id="Account_View" sidebar="true">
+    <head>
+        <apex:includeScript value="/support/console/41.0/integration.js"/>
+        <apex:slds />
+        
+        <script type="text/javascript">                
+            function setTabTitle() {
+                if(sforce.console.isInConsole()){
+                    sforce.console.setTabTitle("{!Account.Name}");
+                }
+            }
+
+            var previousOnload = window.onload;        
+            window.onload = function() { 
+                if (previousOnload) { 
+                    previousOnload();
+                }                
+                setTimeout(setTabTitle(), 500); 
+            }
+            
+            function closeAccountTab() {
+                if (sforce.console.isInConsole()) {
+                    sforce.console.getEnclosingPrimaryTabId(getTabId);
+                } else {
+                    var retUrl = "{!$CurrentPage.parameters.retUrl}";
+                    console.log(retUrl);
+                    window.location.href = retUrl || "/001/o";
+                }
+            }
+            var getTabId = function getTabId(result) {
+                var tabId = result.id;
+                sforce.console.closeTab(tabId);
+            };
+        </script>
+        <style type="text/css">
+            .okBtn {
+            float:right;
+            width:120px;
+            background-color:#00b4c5 !important;
+            border-color:#00b4c5 !important;
+            }
+        </style>
+    </head>
+    <apex:detail rendered="{!NOT(Account.UnnamedCustomer__c)}" />
+    <apex:outputPanel id="PanelMsg" rendered="{!Account.UnnamedCustomer__c}">
+        <div class="slds-scope">
+            <div class="demo-only" style="height: 640px;">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <p>{!$Label.UnnamedCustomerMsg}</p>
+                            <button class="slds-button slds-button_brand slds-m-top--x-large slds-m-right--x-large okBtn" onclick="javascript:closeAccountTab();" >Ok</button>
+                        </div>
+                    </div>
+                </section>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+            </div>
+        </div>
+    </apex:outputPanel>
+</apex:page>

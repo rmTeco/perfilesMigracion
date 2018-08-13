@@ -1,0 +1,158 @@
+{
+    "filter": {
+        "['%vlocity_namespace%__PolicyType__c']": "Dental"
+    },
+    "icon": "custom91",
+    "sprite": "custom",
+    "states": [
+        {
+            "actionCtxId": "['InteractionPolicyId']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                    {
+                        "id": "Policy-PolicyDetails",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Change Coverage",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Policy-Pay Premium",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Int_Policy_Preauthorize",
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "id": "Policy-Get ID Card",
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy #",
+                    "name": "['PolicyNumber']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Carrier",
+                    "name": "['Carrier__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['%vlocity_namespace%__PolicyStatus__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Expiration Date",
+                    "name": "['%vlocity_namespace%__ExpirationDate__c']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Billing Method",
+                    "name": "['%vlocity_namespace%__BillingMethod__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Annual Premium",
+                    "name": "['%vlocity_namespace%__AnnualPremium__c']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Beneficiary Role",
+            "sObjectType": "%vlocity_namespace%__CustomerInteractionTopic__c",
+            "templateUrl": "card-active-slds-clone"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                },
+                {
+                    "field": "['Role']",
+                    "operator": "==",
+                    "type": "custom",
+                    "value": "Agency"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Type",
+                    "name": "['%vlocity_namespace%__PolicyType__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Role",
+                    "name": "['Role']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Policy Number",
+                    "name": "['PolicyNumber']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Role'] == 'Agency'",
+            "name": "Agency Role",
+            "sObjectType": "%vlocity_namespace%__PolicyPartyRelationship__c",
+            "templateUrl": "card-active-slds"
+        }
+    ],
+    "title": "Dental"
+}

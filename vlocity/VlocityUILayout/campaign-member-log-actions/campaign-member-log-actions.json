@@ -1,0 +1,34 @@
+{
+    "Cards": [
+        "Campaign Member Log Actions2"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.campaignMember.Id.value",
+                "val": "00v41000000Ven3AAC"
+            }
+        ],
+        "type": "Dual",
+        "value": {
+            "apexRemoteResultVar": "result.records",
+            "apexRestResultVar": "result.records",
+            "endpoint": "/services/apexrest/%vlocity_namespace%/v1/storyquickactions/actionlist/{{$root.campaignMember.Id.value}}",
+            "inputMap": {
+                "storyId": "{{$root.campaignMember.Id.value}}"
+            },
+            "methodType": "GET",
+            "remoteClass": "StoryListHandler",
+            "remoteMethod": "getStoryObjects",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "result.records"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "campaign-column-middle"
+        }
+    }
+}

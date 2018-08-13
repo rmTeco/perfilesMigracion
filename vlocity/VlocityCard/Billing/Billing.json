@@ -1,0 +1,169 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0016C0000095jLJ"
+            }
+        ],
+        "type": "IntegrationProcedures",
+        "value": {
+            "bundle": "getBillingInformationByAccountId",
+            "inputMap": {
+                "Id": "{{params.id}}"
+            },
+            "ipMethod": "Care_GetBillingInformationWithBalanceByAccountId",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "",
+            "remoteMethod": "IFS_S018",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "['BillingAccounts']"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "active"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AccountId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "AutomaticDebitSubscription",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AccountId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "taCreditCardPayment",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "AccountIntegrationId": "['AccountIntegrationId__c']",
+                            "Balance": "['Balance']",
+                            "CreatedDateAcc": "['CreatedDate']",
+                            "direccionFactura": "['BillingStreet']",
+                            "numeroServicio": "['AccountId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleCardsBillingResumen",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "Id": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatings",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "['AccountId']",
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "RefundsforGeneralPurposesAction",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "editMode": false,
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['AccountIntegrationId__c']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Cuenta",
+                    "name": "['AccountIntegrationId__c']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Dirección de Facturación",
+                    "name": "['BillingStreet']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Balance",
+                    "name": "['Balance']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Último vencimiento",
+                    "name": "['Statement']['DueDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Recepción de factura",
+                    "name": "['BillingReceipt']",
+                    "type": "boolean"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Ciclo de facturación",
+                    "name": "['BillingDay']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active'",
+            "name": "Information billing",
+            "sObjectType": "Account",
+            "templateUrl": "Card-Active-ByOrderedFields"
+        }
+    ],
+    "title": "",
+    "zone": "middle"
+}

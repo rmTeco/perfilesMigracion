@@ -1,0 +1,178 @@
+[
+    {
+        "%vlocity_namespace%__Action__c": "Add",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "184ce811-11cf-8214-9fce-ce3e46820980",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "b926cec5-de3b-b078-6aa8-14e55d2cc58e",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/COMPTEL - New Mobile Comptel provisioning orch plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "COMPTEL - New provisioning",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/COMPTEL - New provisioning/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Add",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "475f064b-fced-db15-4d00-a830e814fac6",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "adb1cd29-21c9-6ac5-3281-6f957f4da00a",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/REPRO PreActivation plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "REPRO",
+        "Name": "REPRO PreActivation scenario",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/REPRO PreActivation scenario/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Disconnect",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "a8811572-51f1-7480-b010-e3574134d51e",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "3902540f-f0e2-b182-2dec-2376004174b7",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/COMPTEL - Disconnect mobile services",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "COMPTEL - Disconnect RFS",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/COMPTEL - Disconnect RFS/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Modify",
+        "%vlocity_namespace%__ConditionData__c": "{\r\n    \"name\": \"SimpleCondition\",\r\n    \"type\": \"AND\",\r\n    \"singleconditions\": [\r\n        {\r\n            \"conditionname\": \"Condition 1\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"!=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Conciliate\",\r\n            \"product\": {\r\n            }\r\n        },\r\n        {\r\n            \"conditionname\": \"Condition 2\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"!=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Cambio de titularidad\",\r\n            \"product\": {\r\n            }\r\n        },\r\n        {\r\n            \"conditionname\": \"Condition 3\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"!=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Numero Gratis\",\r\n            \"product\": {\r\n            }\r\n        },\r\n        {\r\n            \"conditionname\": \"Condition 4\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"!=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Alta producto genérico\",\r\n            \"product\": {\r\n            }\r\n        },\r\n        {\r\n            \"conditionname\": \"Condition 5\",\r\n            \"left-side-type\": \"attribute\",\r\n            \"left-side-datatype\": \"picklist\",\r\n            \"left-side\": \"XOM_GESTION\",\r\n            \"left-side-name\": \"Gestion\",\r\n            \"op\": \"!=\",\r\n            \"right-side-type\": \"value\",\r\n            \"right-side\": \"Compra de Pack\",\r\n            \"product\": {\r\n            }\r\n        }\r\n    ]\r\n}",
+        "%vlocity_namespace%__GlobalKey__c": "9481630d-a26d-8a3b-01a9-1ffadcaf12e7",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "c2f12335-74b7-7bdf-0d68-02b1dbba41ba",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/COMPTEL - Modify orch plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "COMPTEL - Modify provisioning",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/COMPTEL - Modify provisioning/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Modify;NoChange",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "c45d8483-4d73-2b83-0fd9-95153c18204f",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "3c93a08b-5a24-3d9f-ebb5-6e30029cea9b",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/COMPTEL - Conciliador",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "Conciliate",
+        "Name": "COMPTEL - Conciliador",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/COMPTEL - Conciliador/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Modify;Suspend",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "f8f738c0-0dbb-b42a-8db5-be7871715e4c",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "00dc1fd8-4bf4-b26d-02ca-c85b477f11cb",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/COMPTEL - Suspend Orch Plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "Suspend-Siniestro;Suspend-Voluntaria;Suspend-Portabilidad;Suspend-Fraude",
+        "Name": "COMPTEL - Suspend Orch Plan",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/COMPTEL - Suspend Orch Plan/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Resume",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "e5195fc7-1e57-6026-5600-32c9d969d134",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "9cccf3fd-b825-5db7-a5f3-74bc7eddec44",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/COMPTEL - Resume Orch Plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "Resume-Siniestro;Resume-Voluntaria;Resume-Fraude",
+        "Name": "COMPTEL - Resume Orch Plan with SubAction",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/COMPTEL - Resume Orch Plan with SubAction/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    },
+    {
+        "%vlocity_namespace%__Action__c": "Resume",
+        "%vlocity_namespace%__ConditionData__c": "",
+        "%vlocity_namespace%__GlobalKey__c": "e7f7d4ee-849c-7ab9-7996-51a1a18793ec",
+        "%vlocity_namespace%__OrchestrationPlanDefinitionId__c": {
+            "%vlocity_namespace%__GlobalKey__c": "9cccf3fd-b825-5db7-a5f3-74bc7eddec44",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__OrchestrationPlanDefinition__c/COMPTEL - Resume Orch Plan",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationPlanDefinition__c"
+        },
+        "%vlocity_namespace%__Product2Id__c": {
+            "%vlocity_namespace%__GlobalKey__c": "89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "Product2/89778554-90bb-40a2-1e4e-f4141f85eabc",
+            "VlocityRecordSObjectType": "Product2"
+        },
+        "%vlocity_namespace%__SubAction__c": "",
+        "Name": "COMPTEL - Resume Orch Plan",
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OrchestrationScenario__c",
+        "VlocityRecordSourceKey": "%vlocity_namespace%__OrchestrationScenario__c/COMPTEL - Resume Orch Plan/Product2/89778554-90bb-40a2-1e4e-f4141f85eabc"
+    }
+]

@@ -1,0 +1,38 @@
+<table 
+    ng-if="bpTree.response.depositos"
+    ng-controller="StockController as sc"
+    ng-init="sc.processData(bpTree.response.depositos)"
+    class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--col-bordered">
+	<thead>
+		<tr class="slds-text-title--caps">
+			<th scope="col">
+				<div class="slds-truncate" title="PuntoDeVenta">Punto de venta</div>
+			</th>
+			<th scope="col">
+				<div class="slds-truncate" title="Direccion">Dirección</div>
+			</th>
+			<th scope="col">
+				<div class="slds-truncate" title="AtencionCliente">Atención al Cliente</div>
+			</th>
+			<th scope="col">
+				<div class="slds-truncate" title="Cantidad">Cantidad</div>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in sc.depositos">
+			<td data-label="PuntoDeVenta">
+				<div class="slds-truncate slds-text-body--small" title="Punto de Venta">{{item.Name}}</div>
+			</td>
+			<td data-label="Direccion">
+				<div class="slds-truncate font-weight-light slds-text-body--small" title="Direccion">{{item.%vlocity_namespace%__StreetAddress__c}} {{item.PointOfSaleAddressNumber__c}}</div>
+			</td>
+			<td data-label="AtencionCliente">
+		        <div class="slds-truncate slds-text-body--small" title="Atención al Cliente">{{item.PostOfficeHours__c}}</div>
+			</td>
+			<td data-label="Cantidad">
+				<div class="slds-truncate slds-text-body--small" title="Cantidad">{{item.Cantidad}}</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

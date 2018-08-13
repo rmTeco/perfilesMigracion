@@ -1,0 +1,58 @@
+@import "variables";
+@import "community-variables";
+
+.vlocity {
+    .flyoutPrepaidTitle {
+        border-bottom: 1px solid #EFEFEF;
+        padding: 16px 0;
+        margin-bottom: 10px;
+    }
+    .community-flyout-content {
+        /*padding:10px;*/
+        overflow:auto;
+        .items {
+            overflow:auto;
+            padding-left:10px;
+            min-height:200px;
+            min-width:200px;
+            &-card {
+                border-bottom: 1px solid #EFEFEF;
+                &:last-child {
+                    border: none;
+                }
+            }
+        }
+        .flyout-actions {
+            .panel {
+                min-width: 300px;
+            }
+        }
+    }
+    @media only screen and (max-width : 725px) {
+        .community-flyout-content {
+            .flyout-actions {
+                padding-bottom:20px;
+            }
+            .items {
+                padding:10px 0px 0px;
+            }
+        }
+    }
+    
+    @media only screen and (min-width : 725px) {
+        .community-flyout-content {
+            display: flex;
+            .flyout-actions {
+                display:table-cell;
+                max-width:175px;
+                min-width: 175px;
+                vertical-align:top;
+                border-right: 1px solid #efefef;
+            }
+            .items {
+                width: 100%;
+                vertical-align:top;
+            }
+        }
+    }
+}

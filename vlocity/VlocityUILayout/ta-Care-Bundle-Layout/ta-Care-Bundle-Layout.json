@@ -1,0 +1,27 @@
+{
+    "Cards": [
+        "Fixed",
+        "Prepaid",
+        "Interent"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "02i6C0000002Mw1"
+            }
+        ],
+        "type": "Inherit",
+        "value": {
+            "body": "[\n  {\n    \"Product\": {\n      \"Type\": \"FixedLine\",\n      \"Id\": \"01t6C000000ZdgeQAC\",\n      \"Name\": \"VOZ\"\n    },\n    \"Id\": \"02i6C0000002MwBQAU\",\n    \"Name\": \"Linea fija del Bundle\",\n    \"Status\": \"Active\"\n  },\n  {\n    \"Product\": {\n      \"Family\": \"Internet\",\n      \"vlocityIcon\": \"iconInternet\",\n      \"Type\": \"Internet\",\n      \"Id\": \"01t6C000000ZdgFQAS\",\n      \"Image\": \"iconInternet\",\n      \"Name\": \"Arnet Wifi hasta 20MB\"\n    },\n    \"Id\": \"02i6C000000EXQwQAO\",\n    \"Name\": \"Internet del Bundle\",\n    \"Status\": \"Active\"\n  },\n  {\n    \"Product\": {\n      \"Type\": \"Mobile\",\n      \"Id\": \"01t6C000000ZdgUQAS\",\n      \"Name\": \"Mobile\"\n    },\n    \"Id\": \"02i6C0000002Mw6QAE\",\n    \"Name\": \"Linea movil del Bundle\",\n    \"LineNumber\": \"+541125560770\",\n    \"Status\": \"Active\"\n  }\n]",
+            "bundle": "GetChildAssetsByAssetId",
+            "ctxId": "params.id",
+            "resultVar": "['0']"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-Care-Bundle-Container"
+        }
+    }
+}

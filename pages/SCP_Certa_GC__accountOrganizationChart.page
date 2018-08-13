@@ -1,0 +1,673 @@
+<apex:page standardController="Account" extensions="SCP_Certa_GC.AccountOrganizationChart" tabStyle="Strategic_Client_Plan__tab"  sidebar="false">
+    
+    <c:SCPMenu ></c:SCPMenu>
+    
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUI}"  />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__DataTable}"  />
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryTooltip}"  />
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryDimensions}"  />
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryOrgChart}"  />
+	<apex:stylesheet value="{!$Resource.SCP_Certa_GC__JQueryUICSS}"  />
+	<apex:stylesheet value="{!$Resource.SCP_Certa_GC__JOrgChart}"  />
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__html2canvas}"/>
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__SecureFilters}"/>
+
+    <style>
+		.LeftCol{
+		    width:auto;
+		    margin-right:360px;
+		}
+		.RightCol{
+		    width:350px;
+		    float: right;
+		}
+		.FillWidth{
+		    width:100%;
+		}
+		
+		.apexp{
+		    float: left;
+		    width: 100%;
+		}
+		
+		
+		
+		
+		.jOrgChart .node {
+		    font-size           : 14px;    
+		    /*background-color: #4682B4;*/
+		    /*background-color: #F8F8F8;*/
+		    background-color: #F3EFEF;
+		    /*border-radius       : 8px;*/
+		    border              : 2px teal;
+		    border              : 2px solid #4682B4;
+		    /*border              : 2px solid #F8F8F8;*/
+		    /*color               : white;*/
+		    color               : black;
+		    /*-moz-border-radius  : 8px;*/
+		    /*width: auto;*/
+		    width: 200px;
+		    max-width: 200px;
+		    min-height: 30px;
+		    margin: 0 5px;
+		    height: auto;
+		}
+		
+		.ShowContactInfluencesInfluenced {
+		    float: left;
+		    margin-left:auto;
+		    margin-right:auto;
+		    font-size           : 14px;
+		background-image: linear-gradient(right , #75000A 0%, #007613 100%) ! important;
+		background-image: -o-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		background-image: -moz-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		background-image: -webkit-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		background-image: -ms-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		
+		background-image: -webkit-gradient(
+		    linear,
+		    right bottom,
+		    left bottom,
+		    color-stop(0, #75000A),
+		    color-stop(1, #007613)
+		) ! important;
+		    /*border-radius       : 8px;*/
+		    border              : 2px solid black;
+		    color               : white;
+		    /*-moz-border-radius  : 8px;*/
+		    width: 150px;
+		    height: 30px;
+		    line-height:30px;
+		    margin: 0 5px;
+		    text-align:center;
+		}
+		
+		.ShowContactInfluenced {
+		    background-color: #75000A ! important;
+		    border: 1px solid black;    
+		    color: white;
+		    width: 20px;
+		    height: 20px;
+		    line-height: 30px;
+		}
+		.ShowContactInfluences {    
+		    background-color: #007613 ! important;
+		    border: 1px solid black;    
+		    width: 20px;
+		    height: 20px;
+		    line-height: 30px;    
+		}
+		
+		.ContactInfluencesInfluenced{
+		
+		background-image: linear-gradient(right , #75000A 0%, #007613 100%) ! important;
+		background-image: -o-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		background-image: -moz-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		background-image: -webkit-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		background-image: -ms-linear-gradient(right , #75000A 0%, #007613 100%)! important;
+		
+		background-image: -webkit-gradient(
+		    linear,
+		    right bottom,
+		    left bottom,
+		    color-stop(0, #75000A),
+		    color-stop(1, #007613)
+		) ! important;
+		/*
+		    border-width: 2px ! important;
+		    border-style: solid ! important;
+		    border-left-color: #75000A ! important;
+		    border-bottom-color: #75000A ! important;
+		    border-right-color: #007613 ! important;
+		    border-top-color: #007613 ! important;
+		*/
+		}
+		
+		.ContactInfluenced{
+		        background-color: #75000A ! important;
+		        /*border: 2px solid #75000A ! important;*/
+		        color: white;
+		}
+		
+		.ContactInfluences{
+		        background-color: #007613 ! important;
+		        /*border: 2px solid #007613 ! important;*/
+		}
+		
+		
+		.ContactMouseOver{
+		        background-color: #7BB2EE ! important;
+		        /*border: 2px solid #7BB2EE ! important;*/
+		}
+		
+		.ContactMouseOver .AccountName, .ContactInfluences .AccountName, .ContactInfluenced .AccountName, .ContactInfluencesInfluenced .AccountName{
+			color: white !important;
+		}
+							
+		.jOrgChart .line {
+		height: 20px;
+		width: 2px;
+		}
+		
+		.jOrgChart .right {
+		border-left: 2px solid #4682B4;
+		}
+		
+		.jOrgChart .left {
+		border-right: 2px solid #4682B4;
+		}
+		
+		.jOrgChart .top {
+		border-top: 2px solid #4682B4;
+		}
+		
+		.jOrgChart .down {
+		background-color: #4682B4;
+		}
+		    .node p{
+		        font-family     : tahoma;
+		        font-size       : 10px;
+		        line-height     : 11px;
+		        padding         : 2px;
+		    }
+		
+		
+		.leaf{
+		    width:100%;
+		}
+		
+		.ContactTitle{
+		    font-size:11px;
+		
+		}
+		
+		.jOrgChart>table{
+		margin-left: auto;
+		margin-right: auto;
+		}
+		
+		.closestcontact {
+		position: absolute;
+		width: 108px;
+		font-size: 10px;
+		background-color: white;
+		opacity: 0.6;
+		color: black;
+		/*border-radius: 2px;*/
+		display: none;
+		margin: 1px;
+		}
+		
+		.ContactMouseOver>.closestcontact{
+		    display:block;
+		}
+		
+		.AccountPicture {
+		}
+		
+		.AccountName {
+		    font-size:13px; 
+		    text-align: left !important;
+		    /*color : white !important;*/
+		    padding-left: 2px !important;
+		}
+		
+		.AccountTitle {
+		    font-size: 11px;    
+		    vertical-align: bottom !important;
+		    text-align: right !important;
+		}
+		
+		.trasparentClass {
+		    background-color: transparent ! important;
+		    border-color: transparent ! important;
+		}
+				
+		.selected {
+			background-color: rgb(230, 230, 230) ! important;
+		}
+	</style>
+    
+    <apex:outputText id="scriptPanel">
+	    <script>
+		    $j = jQuery.noConflict();
+		    
+		    $j(document).ready(function() {
+		        generateOrg();
+		        init();
+		    }); 
+		    
+		    var ret = '';
+			  
+        
+		    function generateOrg() {
+                
+                //Encodeado con json.parse por motivos de seguridad de salesforce.
+                var html_encode = secureFilters.html;  
+                var contacts = JSON.parse('{!JSENCODE(list)}');
+				
+                
+                console.log(contacts);
+				var ret = '<ul id="org" style="display:none;">';
+		        ret += '<li><div id="Parent"> {!HTMLENCODE(account.Name)} </div>';
+		        ret += '<ul style="display:none;">';
+		        $j.each(contacts, function() {
+					
+                    console.log('aca');
+                    console.log(this.c);
+                    
+		        	ret += '<li><div class="leaf '+html_encode(this.c.Id)+'" id="'+html_encode(this.c.Id)+'"><Table><tr><td rowspan="2" class="AccountPicture">'+this.c.SCP_Certa_GC__Picture__c+'</td><td class="AccountName">'+ html_encode(this.c.Name) +'</td></tr><tr><td class="AccountTitle">'+html_encode(this.c.Title)+'</td></tr></table></div>';
+		        	ret += '<div class="influences"  style="display:none;">';
+		        	$j.each(this.Influences, function() {
+		        		ret += this+',';
+		        	});
+		        	ret += '</div><div class="influenced"  style="display:none;">';
+		        	$j.each(this.Influenced, function() {
+		        		ret += this+',';
+		        	});
+		        	ret += '</div>'+processChilds(this.childs)+'</li>';
+		        });
+		        ret += '</ul>';
+		        ret += '</li>';
+		        ret += '</ul>';		
+		        
+		        $j("#orgContainer").html(ret);  	
+		    }
+		    
+		    function processChilds(childs) {
+		    	var ret = '<ul>';
+		    	var html_encode = secureFilters.html;  
+                
+		    	$j.each(childs, function() {
+                    console.log(this.c);
+		    		ret += '<li><div class="leaf '+html_encode(this.c.Id)+'" id="'+html_encode(this.c.Id)+'"><Table><tr><td rowspan="2" class="AccountPicture">'+this.c.SCP_Certa_GC__Picture__c+'</td><td class="AccountName">'+html_encode(this.c.Name)+'</td></tr><tr><td class="AccountTitle">'+html_encode(this.c.Title)+'</td></tr></table></div>';
+		        	ret += '<div class="influences"  style="display:none;">';
+		        	$j.each(this.Influences, function() {
+		        		ret += this+',';
+		        	});
+		        	ret += '</div><div class="influenced"  style="display:none;">';
+		        	$j.each(this.Influenced, function() {
+		        		ret += this+',';
+		        	});
+		        	ret += '</div>'+processChilds(this.childs)+'</li>';
+		    	});
+		    	
+		    	ret += '</ul>';
+		    	
+		    	return ret;
+		    }
+		    
+		    function init() {
+		        $j(".selectFunction").click(function(){
+		            $j(".selectFunction").css("color","black");
+		            $j(this).css("color","red");
+		        });
+		        
+		        var zoom = 1;
+		        $j("#zoomIn").click(function(){
+		        	zoom+=0.2;
+		        	$j("#chart").animate({ 'zoom': zoom }, 400);
+		        });
+		        
+		        $j("#zoom0").click(function(){
+		        	zoom=1;
+		        	$j("#chart").animate({ 'zoom': zoom }, 400);
+		        });
+		        
+		        $j("#zoomOut").click(function(){
+		        	zoom-=0.2;
+		        	$j("#chart").animate({ 'zoom': zoom }, 400);
+		        });
+		        
+		        $j("#mainTable").dataTable({
+	                "bPaginate": false,        
+	                "bInfo": false
+	            });
+		        
+		        $j("#org").jOrgChart({chartElement : '#chart', dragAndDrop  : true });
+		     
+		     $j(".node").live("click",function() {
+		        nodeMouseover($j(this));
+		     });
+		          
+		     $j(".save").click(function(){
+		        saveClick();
+		        /*
+		        hasChanged = false;
+		        listNodes = new Array();
+		        createTree($j(".jOrgChart > table"), "Parent");         
+		        Certa_SCP.AccountOrganizationChart.saveOrg(listNodes, function(){
+		            location.reload();
+		        });
+		        */         
+		     });
+		          
+		     $j(".generateImg").click(function(){
+		        zoom=1;
+		        $j("#chart").animate({ 'zoom': zoom }, 0);
+		        var chartArea = $j('#chart');
+		        html2canvas(chartArea, {
+		            onrendered: function(canvas) {          
+		                var img = canvas.toDataURL("image/png");
+		                //window.location.href = img.replace('image/png', 'image/octet-stream');
+		                var ua = window.navigator.userAgent;
+		                if (ua.indexOf("Chrome") > 0) {
+			                var link = document.createElement('a');
+							link.download = "{!$Label.scp_certa_gc__influence_org}.png";
+							link.href = img.replace('image/png', 'image/octet-stream');
+							link.click();
+						} else {
+							window.location.href = img.replace('image/png', 'image/octet-stream');
+						}
+		            }
+		        });
+		     });
+		        
+		     $j(".myBtn").click(function(){
+		        $j(".myBtn").removeClass("selected");
+		        orgFunction = $j(this).data("value");       
+		        if (orgFunction == "org") {
+		            $j(".orgBtn").addClass("selected");
+		        } else if (orgFunction == "influence") {
+		            $j(".influenceBtn").addClass("selected");
+		        } else if (orgFunction == "saveImg") {
+		            $j(".generateImg").addClass("selected");
+		        }
+		        
+		        $j(".messageText").html($j(this).data("msg"));
+		     });
+		     
+		     	$j("#OrgBtn").click();
+		        
+		        $j("#checkAll").change(function(){
+	        		$j("input",$j(".checkTD")).attr('checked', $j(this).attr('checked') == 'checked');
+		        		
+		        });		    		
+		    
+		    }
+		    
+		    
+		    var listNodes;
+		    
+		    var orgFunction = 'org';
+		    var undo = '';
+		    var hasChanged = false;
+		    
+		    window.onbeforeunload = function(){
+			  if (hasChanged){
+			    return "{!$Label.close_without_save}"
+			  }
+			};
+		    
+		    function orgFunctionAction(source, target) {                
+		        var sourceId = source.draggable.element.context.children[0].id;
+		        var targetId = target.droppable.element.context.children[0].id;
+		        
+		        var sourceNode = $j("#"+sourceId ,$j("#org"));
+		        var targetNode = $j("#"+targetId ,$j("#org"));          
+		        
+		        var sourceParent = sourceNode.parent();
+		        var targetParent = targetNode.parent();     
+		        
+		        if (sourceId != 'Parent' && targetId != 'Parent') {                 
+		            if (orgFunction == 'change') {      
+		                            
+		                    var sourceInfluences = $j(".influences" ,sourceParent).get(0); 
+		                    var targetInfluences = $j(".influences" ,targetParent).get(0);
+		                    
+		                    var sourceInfluenced = $j(".influenced" ,sourceParent).get(0); 
+		                    var targetInfluenced = $j(".influenced" ,targetParent).get(0);
+		                    
+		                    sourceParent.prepend(targetInfluenced);
+		                    targetParent.prepend(sourceInfluenced);
+		                    
+		                    sourceParent.prepend(targetInfluences);
+		                    targetParent.prepend(sourceInfluences);
+		                    
+		                    sourceParent.prepend(targetNode);
+		                    targetParent.prepend(sourceNode);           
+		                    
+		                    $j("#org").jOrgChart({chartElement : '#chart', dragAndDrop  : true });
+		                
+		            } else {
+		                if (orgFunction == 'influence') {
+		                    
+		                    var sourceInfluences = $j(sourceParent.children().get(1));
+		                    var targetInfluenced = $j(targetParent.children().get(2));
+		                                    
+		                    var sourceInfluencesHTML = sourceInfluences.html(); 
+		                    var targetInfluencedHTML = targetInfluenced.html();
+		                    
+		                    if (sourceInfluencesHTML.indexOf(targetId) == -1) {
+		                        sourceInfluencesHTML += ","+targetId;
+		                        targetInfluencedHTML += ","+sourceId;               
+		                    } else {
+		                        sourceInfluencesHTML = sourceInfluencesHTML.replace(targetId,"");
+		                        targetInfluencedHTML = targetInfluencedHTML.replace(sourceId,"");
+		                    }
+		                    sourceInfluences.html(sourceInfluencesHTML);
+		                    targetInfluenced.html(targetInfluencedHTML);
+		                }
+		            }           
+		        }       
+		    }
+		    
+		    function createTree(tableNode, nodeParent) {
+		        var nodeValue = $j("tr:eq(0) div div", tableNode).attr("id");        
+		        var nodeInfluences = $j("tr:eq(0) div .influences", tableNode).html();
+		        var node = {};
+		        node["parent"] = nodeParent;
+		        node["value"] = nodeValue;          
+		        node["influences"] = nodeInfluences;
+		        listNodes.push(node);
+		        if (tableNode.children("tbody").children("tr").size()>3) {
+		            tableNode.children("tbody").children("tr").eq(3).children("td").each(function(){
+		                tableNode.attr("id","");        
+		                createTree($j(this).children("table"), node.value);
+		            })
+		        }               
+		    }    
+		    
+		    function nodeMouseout() {       
+		        $j(".node").removeClass("ContactInfluenced").removeClass("ContactInfluences").removeClass("ContactInfluencesInfluenced").removeClass("ContactMouseOver");
+		    }
+		    
+		    function nodeMouseover(element) {
+		         
+		         nodeMouseout();
+		         element.addClass("ContactMouseOver");
+		     
+		         var inf = element.children(".influences").text();
+		         
+		         var myArray = inf.split(",");
+		         
+		         for(var i = 0; i < myArray.length; i++){
+		             if(myArray[i]) {
+		                  $j("."+myArray[i]).parent().addClass("ContactInfluences");
+		             }
+		        }
+		        
+		        var inf = element.children(".influenced").text();
+		         
+		         var myArray = inf.split(",");
+		         
+		         for(var i = 0; i < myArray.length; i++){
+		             if(myArray[i]) {
+		                 if($j("."+myArray[i]).parent("div").hasClass("ContactInfluences")){
+		                     $j("."+myArray[i]).parent().removeClass("ContactInfluences").addClass("ContactInfluencesInfluenced");
+		                 }else {
+		                     $j("."+myArray[i]).parent().addClass("ContactInfluenced");
+		                 }
+		             }
+		        }
+		    }
+		    
+		    function saveClick() {
+		    	hasChanged = false;
+		        listNodes = new Array();
+		        createTree($j(".jOrgChart > table"), "Parent");         
+		        SCP_Certa_GC.AccountOrganizationChart.saveOrg(listNodes, function(){
+		            location.reload();
+		        });
+		    }
+	    </script>
+    </apex:outputText> 
+    
+	<apex:outputpanel styleClass="container-fluid bootstrap-sf1" id="pageContent">
+
+    	<div class="panel panel-default">
+			<apex:form >
+				<apex:actionFunction action="{!rerenderPageBlock}" name="rerenderPageBlock" rerender="pageBlock,errorMsg" />	    	
+	    		<div class="panel-heading">
+	    			<h3 class="panel-title">
+	    				<span style="float:left;">
+	    					{!$Label.scp_certa_gc__influence_org}
+	    				</span>
+                        <span style="float:left;">
+                            <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/q4FMC3XaKC0"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                        </span>
+	    			</h3>   			
+	    			<div class="row paddingRight">   					
+						<div class="btn-group pull-right" role="group" aria-label="...">	    					
+	              			<apex:actionFunction action="{!$Page.accountOrganizationChartWindow}?id={!account.id}" name="backToContacts"/>
+	              			
+	              			<button type="button" class="btn btn-default btn-sm myBtn orgBtn selected" id="OrgBtn" data-value="org" data-msg="{!$Label.modify_org}">
+		   						<span class="glyphicon glyphicon-user icon-btn-left"></span>&nbsp;{!$Label.modify_org_btn}
+		                    </button>
+	                        
+	                        <button type="button" class="btn btn-default btn-sm myBtn influenceBtn" data-value="influence" data-msg="{!$Label.modify_influences}">
+		   						<span class="glyphicon glyphicon-random icon-btn-left"></span>&nbsp;{!$Label.modify_influences_btn}
+		                    </button>
+	                                                        
+	                        <button type="button" class="btn btn-default btn-sm generateImg" data-value="saveImg" data-msg="{!$Label.save_msg}">
+		   						<span class="glyphicon glyphicon-picture icon-btn-left"></span>&nbsp;{!$Label.save_image}
+		                    </button>
+	                        
+	                        <button type="button" class="btn btn-default btn-sm save">
+		   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save_changes}
+		                    </button>
+
+	    				</div>
+	    			</div>
+	    		</div>
+	    		<div class="panel-body">
+	    			<div class="alert alert-info" role="alert">	
+	    				<span class="glyphicon glyphicon-info-sign"></span>
+	    				<span class="messageText"></span>   					
+	    			</div>
+	    			<div>
+	    				<table cellpadding="10" cellspacing="10">
+		                    <tr>
+		                        <td colspan="2">
+		                            <span style="font-weight: bold;">{!$Label.mouseover}</span> 
+		                        </td>
+		                    </tr>
+		                    <tr>
+		                        <td colspan="2" style="height: 8px;">
+		                        </td>
+		                    </tr>		                   
+		                    <tr>
+		                        <td style="width:30px; margin:10px" >
+		                            <div class="ShowContactInfluences"/>
+		                        </td>
+		                        <td style="color:#007613;font-weight:bold; margin:10px">
+		                            {!$Label.Influences_over}
+		                        </td>
+		                    </tr>
+		                    <tr>
+		                        <td colspan="2" style="height: 5px;">
+		                        </td>
+		                    </tr>
+		                    <tr>
+		                        <td style="margin:10px">
+		                            <div class="ShowContactInfluenced"/>
+		                        </td>
+		                        <td style="color:#75000A;font-weight:bold;  margin:10px">
+		                            {!$Label.Influenced_by}
+		                        </td>
+		                    </tr>
+		                </table>
+	    			</div>
+	    			<br/>
+	    			<table style="width:100%;">              
+		                <tr>
+		                	<td style="vertical-align: top;"> 
+		                		<table id="mainTable" class="table table-striped table-bordered table-condensed">
+		                			<thead>
+			                			<tr>
+			                				<th>
+			                					<input id="checkAll" type="checkbox" value="0"/>
+			                				</th>
+			                				<th class="sorting_desc">
+			                					{!$Label.contact_to_view}
+			                				</th>
+			                			</tr>
+		                			</thead>
+		                			<tbody>
+			                			<apex:repeat value="{!contacts}" var="contact">                				
+			                				<tr>
+			                					<td class="checkTD">
+			                						<apex:inputField value="{!Contact.SCP_Certa_GC__inOrg__c}"/>
+			                					</td>
+			                					<td style="white-space: nowrap;">
+			                						<apex:outputLink value="/{!Contact.id}">{!Contact.name}</apex:outputLink><br/>
+			                					</td>                					
+			                				</tr>
+			                			</apex:repeat>
+		                			</tbody>
+		                			<tfoot>
+			                			<tr>		                			
+			                				<td colspan="2" style="text-align: center">
+			                					<apex:commandButton styleClass="btn btn-default btn-sm" action="{!saveContacts}" value="{!$Label.scp_certa_gc__save}" oncomplete="saveClick()" reRender="null"/> 
+			                				</td>
+			                			</tr> 
+		                			</tfoot>
+		                		</table>
+		                	</td>                    
+		                    <td style="width:100%; text-align:left;vertical-align: top;">      
+		                        <div class="btn-group pull-left" style="margin-left: 100px;" role="group" aria-label="...">
+		                        	<button type="button" class="btn btn-default btn-sm" id="zoomOut">
+				   						<span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>
+				                    </button>
+				                    <button type="button" class="btn btn-default btn-sm" id="zoom0">
+				   						<span class="glyphicon glyphicon-search icon-btn-left"></span>
+				                    </button>			                    
+				                    <button type="button" class="btn btn-default btn-sm" id="zoomIn">
+				   						<span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>
+				                    </button>
+		                        </div>
+		                        <div id="orgContainer">
+		                        </div>	                        
+		                        <div style="width:100%;min-height:400px;margin-top:50px;">
+		                            <div id="chart" class="orgChart" style="maring-left:auto; margin-right:auto;"></div>
+		                        </div>
+		                    </td>
+		                </tr>	               
+		            </table>  
+	    		</div>
+	    		<div class="panel-footer">
+	    			<div class="row paddingRight">   					
+						<div class="btn-group pull-right" role="group" aria-label="...">	    					
+	              			<button type="button" class="btn btn-default btn-sm myBtn orgBtn selected" id="OrgBtn" data-value="org" data-msg="{!$Label.modify_org}">
+		   						<span class="glyphicon glyphicon-user icon-btn-left"></span>&nbsp;{!$Label.modify_org_btn}
+		                    </button>
+	                        <button type="button" class="btn btn-default btn-sm myBtn influenceBtn" data-value="influence" data-msg="{!$Label.modify_influences}">
+		   						<span class="glyphicon glyphicon-random icon-btn-left"></span>&nbsp;{!$Label.modify_influences_btn}
+		                    </button>
+	                        <button type="button" class="btn btn-default btn-sm generateImg" data-value="saveImg" data-msg="{!$Label.save_msg}">
+		   						<span class="glyphicon glyphicon-picture icon-btn-left"></span>&nbsp;{!$Label.save_image}
+		                    </button>
+	                        <button type="button" class="btn btn-default btn-sm save">
+		   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save_changes}
+		                    </button>
+
+						</div>
+	    			</div>
+	    		</div>
+			</apex:form>
+	    	<c:FastTask page="{!$Label.scp_certa_gc__influence_org}" account="{!account.id}"></c:FastTask>
+			<chatter:feed entityId="{!Account.id}" />
+    	</div>
+    </apex:outputpanel>
+</apex:page>

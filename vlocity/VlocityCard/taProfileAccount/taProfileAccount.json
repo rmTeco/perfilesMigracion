@@ -1,0 +1,115 @@
+{
+    "Alerts": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0036C000006wzsS"
+            }
+        ],
+        "type": null,
+        "value": {
+            "query": "",
+            "resultVar": ""
+        }
+    },
+    "definedActions": [
+        {
+            "actionIds": [
+                {
+                    "id": "Add",
+                    "type": "Vlocity Action"
+                }
+            ],
+            "filter": "$scope.data.status == 'active'"
+        }
+    ],
+    "states": [
+        {
+            "actionCtxId": "Id",
+            "alerts": [
+            ],
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-ProfileChange",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "params.id"
+                        },
+                        "hasExtraParams": true,
+                        "id": "TA Care-PasswordReset",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Atributo:",
+                    "name": "['Account']['Attribute']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Account']['Contact']['DocumentNumber']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "DNI/CUIT:",
+                    "name": "['Account']['Contact']['DocumentNumber']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "NPS:",
+                    "name": "['Account']['NPS']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status == 'active'",
+            "flyout": "",
+            "name": "active",
+            "sObjectType": "Account",
+            "templateUrl": "ta-left-profile"
+        }
+    ],
+    "templates": [
+        {
+            "filter": "$scope.data.status == 'active'",
+            "templateUrl": "left-profile"
+        },
+        {
+            "filter": "$scope.data.status == 'non-existent'",
+            "templateUrl": "left-profile"
+        }
+    ],
+    "title": "Profile"
+}

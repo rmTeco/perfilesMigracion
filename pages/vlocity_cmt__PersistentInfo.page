@@ -1,0 +1,472 @@
+<apex:page standardController="Account" extensions="vlocity_cmt.ConsoleUtilController">
+
+    <apex:includeScript value="/support/console/33.0/integration.js"/>
+    <apex:includeScript value="/soap/ajax/33.0/connection.js" />    
+    <c:ConsoleGlobalComponent />
+
+
+    <apex:outputField value="{!Account.Name}" rendered="false"/>
+    <apex:outputField value="{!Account.vlocity_cmt__Churn__c}" rendered="false"/>
+    <apex:outputField value="{!Account.vlocity_cmt__CLTV__c}" rendered="false"/>
+    
+    <div id="vlocity-persistent-header">
+    <div class="vlocity-client not-auth">    
+        <h1>{!DispName}</h1>
+        <a href="#" onclick="ToggleAuthentication(this);">{!$Label.Authenticate}</a>
+    </div>    
+    <div id="vlocity-persistent-client">    
+    <dl>
+            <dt id="h1_i1_t"><span class="circle green"></span>{!$Label.ServiceOutage}</dt>
+            <dd id="h1_i1">{!SvcOutage}</dd>
+            
+            <dt id="h1_i2_t"><span class="circle purple"></span>{!$Label.CasesOpenLongestOpen}</dt>
+            <dd id="h1_i2">{!NumOpenCases} / {!OldestOpenCaseInterval}</dd>
+
+    </dl>             
+            
+    <dl>            
+            
+            <dt id="h1_i3"><span class="circle red"></span>{!$Label.Status}</dt>
+            <dd id="h1_i4">{!Account.Status__c}</dd>            
+
+            <dt id="h1_i1_t"><span class="circle yellow"></span>{!$Label.CLTV}</dt>
+            <dd id="h1_i1">{!CLTVStr}</dd>
+ 
+    </dl>           
+           
+    <dl>
+            <dt id="h1_i2_t"><span class="circle blue"></span>{!$Label.Churn}</dt>
+            <dd id="h1_i2">{!ChurnStr}</dd>
+ 
+            <dt id="h1_i3"><span class="circle orange"></span>{!$Label.Balance}</dt>
+            <dd id="h1_i4">{!latestBalance}</dd> 
+            
+    </dl>
+            
+    </div>
+        
+        <div class="vlocity-cti-ticker">
+            <div class="vlocity-time-label">{!$Label.TimeElapsed}</div>
+            <div class="vlocity-ticker" id="call-timer"></div>
+            <!-- <div class="vlocity-ticker">01:23</div> -->
+        </div>
+
+        
+        <div id="vlocity-persistent-quicklinks">
+            <ul id="RightLinks" style="list-style: none; width:100%; padding: 0px;">
+                <li class="statement"><a value="{!$Label.LastStatement}" onclick="OpenLastStmt();">{!$Label.LastStatement}</a></li>
+                <li class="paybill"><a value="{!$Label.PayBill}" onclick="PayBill();">{!$Label.PayBill}</a></li>
+                <li class="dispute"><a value="{!$Label.BillingDispute}" onclick="CreateBillCase();">{!$Label.BillingDispute}</a></li>
+                <li class="changeservice"><a value="{!$Label.ChangeService}" onclick="ModifySvc();">{!$Label.ChangeService}</a></li>
+                <li class="outage"><a value="{!$Label.CheckOutageMap}" onclick="OpenMap();">{!$Label.CheckOutageMap}</a></li>
+                <li class="disconnect"><a value="{!$Label.Disconnect}" onclick="DisconnectSvc();">{!$Label.Disconnect}</a></li>
+                <li class="serviceproblem"><a value="{!$Label.ServiceProblem}" onclick="CreateSvcCase();">{!$Label.ServiceProblem}</a></li>
+                <li><a onclick="consoleHelper.startInteraction();">{!$Label.StartDT}</a></li>
+                <li><a onclick="consoleHelper.endInteraction();">{!$Label.Stop}</a></li>
+            </ul>
+        </div>        
+    </div>
+
+<!-- 	
+    <div align="center">
+    	<apex:image url="{!$Resource.InfoBar}" width="1000" height="100"/>    
+    </div>
+-->
+
+    
+    
+
+
+    <style>
+        #vlocity-persistent-quicklinks .statement{
+            background: transparent url("{!URLFOR($Resource.iconstatement)}") no-repeat right top;
+        }
+        #vlocity-persistent-quicklinks .paybill{
+            background: transparent url("{!URLFOR($Resource.iconpay)}") no-repeat right top;
+        }
+        #vlocity-persistent-quicklinks .dispute{
+            background: transparent url("{!URLFOR($Resource.iconadjustment)}") no-repeat right top;
+        }
+        #vlocity-persistent-quicklinks .changeservice{  
+            background: transparent url("{!URLFOR($Resource.iconchange)}") no-repeat right top;
+        }
+        #vlocity-persistent-quicklinks .outage{  
+            background: transparent url("{!URLFOR($Resource.iconmap)}") no-repeat right top;
+        }
+        #vlocity-persistent-quicklinks .disconnect{   
+            background: transparent url("{!URLFOR($Resource.icondisconnect)}") no-repeat right top;
+        }
+        #vlocity-persistent-quicklinks .serviceproblem{   
+            background: transparent url("{!URLFOR($Resource.iconserviceproblem)}") no-repeat right top;
+        }
+        .vlocity-client .not-auth{
+            background: transparent url("{!URLFOR($Resource.UIndiNoAuth)}") no-repeat left top;
+        }
+        .vlocity-client .auth{
+            background: transparent url("{!URLFOR($Resource.UIndiAuth)}") no-repeat left top;
+        }
+        .vlocity-time-label  {
+            background: transparent url("{!URLFOR($Resource.icontelephone)}") no-repeat left bottom;
+        }  
+    </style>
+
+    <script type="text/javascript">
+        sforce.connection.sessionId = '{!$Api.Session_ID}';
+        var enclosingTabId;
+        var delayTime = 200;
+        
+        sforce.console.setSidebarVisible(true, 'scc-pt-1', sforce.console.Region.TOP, function (result) {
+            console.debug("debug this");
+        });
+        
+        sforce.console.getEnclosingPrimaryTabId(function(result) {
+            enclosingTabId = result.id;
+        });
+        
+        function failed(result) {console.log(result);}
+
+        /*=====================================================================
+                                            OPEN MAP
+        =====================================================================*/
+        
+        function OpenMap() {
+            window.open("https://maps.google.com","Google Map","width=600, height=600, location=no");
+        }
+    
+        /*=====================================================================
+                                     OPEN LAST STATEMENT
+        =====================================================================*/
+        function OpenLastStmtHelper(result){
+            var stmtAlreadyOpen = false;
+            consoleHelper.startMappingSubtabs(function (result1) {
+                for (var i = 0; i<Object.keys(result1).length; i++) {
+                    if (result1[Object.keys(result1)[i]]=='{!stmt}') {
+                        sforce.console.focusSubtabById(Object.keys(result1)[i], function (result2) {
+                            if (!result2.success) {
+                                openStatementSubTab(result.id);
+                            }
+                        });
+                        stmtAlreadyOpen = true;
+                    }
+                }
+                if (!stmtAlreadyOpen) {
+                    openStatementSubTab(result.id); 
+                }
+            });            
+        }
+
+        function openStatementSubTab(ptID) {
+            //sforce.console.openSubtab(ptID, '{!stmt}', true, '{!stmt.Name}'); 
+            consoleHelper.openSubTabManager('{!stmt}', '{!JSENCODE(stmt.Name)}', 6, true, ptID);
+
+            msg = {};
+            msg.command = 'event';
+            msg.type = 'Button';
+            msg.objIdD = '{!stmt}';
+            msg.tabID = ptID;
+            msg.source = 'OpenLastStmtQB';
+            sforce.console.fireEvent("VlocityConsoleHelper", JSON.stringify(msg));
+        }
+
+        function OpenLastStmt() {
+            // TODO: Add popup of last statement.
+            console.log('Get last statement button pressed');
+            sforce.console.getEnclosingPrimaryTabId(OpenLastStmtHelper);
+        }
+        
+        
+        /*=====================================================================
+                                     PAY BILL
+        =====================================================================*/
+        function successPayBill(result1) {
+            if (result1[0].getBoolean("success")) {
+                msg = {};
+                msg.command = 'event';
+                msg.type = 'Button';
+                msg.objID = result1[0].id;
+                msg.tabID = enclosingTabId;
+                msg.source = 'PayBillQB';
+                sforce.console.fireEvent("VlocityConsoleHelper", JSON.stringify(msg));
+                sforce.console.openSubtab(enclosingTabId, result1[0].id, true, '{!$Label.NewPayment}'); // Need to be able to pass tab title
+            }
+            else { failed(result1); }
+        }
+
+        function PayBill() {
+            newPmt = new sforce.SObject("{!JSENCODE(nsPrefix)}PaymentAdjustment__c");
+            newPmt.{!JSENCODE(nsPrefix)}AccountId__c = '{!JSENCODE(Account.id)}';
+            newPmt.{!JSENCODE(nsPrefix)}Status__c = '{!$Label.Pending}';
+            newPmt.{!JSENCODE(nsPrefix)}Amount__c = '{!latestBalance}'; //TODO: If latestBalance is nothing there is a problem.
+            newPmt.{!JSENCODE(nsPrefix)}Amount__c = newPmt.{!JSENCODE(nsPrefix)}Amount__c || 0.0;
+            newPmt.{!JSENCODE(nsPrefix)}PaymentMethodId__c = '{!PrimaryPayment}';
+            newPmt.{!JSENCODE(nsPrefix)}Type__c = "Customer Payment";
+            newPmt.{!JSENCODE(nsPrefix)}Date__c = new Date();
+            newPmt.{!JSENCODE(nsPrefix)}Method__c = "Credit Card";
+            //newPmt.Date__c = Date.now();
+            var saveStatus = sforce.connection.create([newPmt]);
+            
+            if (saveStatus[0].getBoolean("success")) {
+                successPayBill(saveStatus);
+            }   else {
+                failed(saveStatus[0]);
+            }
+        }        
+
+        /*=====================================================================
+                           BILLING DISPUTE (CREATE CASE)
+        =====================================================================*/
+        function successBillCase(result) {
+            if (result[0].getBoolean("success")) {
+                sforce.console.openSubtab(enclosingTabId, result[0].id, true, '{!$Label.NewBillDispute}'); // Need to be able to pass tab title
+                msg = {};
+                msg.command = 'event';
+                msg.type = 'Button';
+                msg.objIdD = result[0].id;
+                msg.tabID = enclosingTabId;
+                msg.source = 'BillingDisputeQB';
+                sforce.console.fireEvent("VlocityConsoleHelper", JSON.stringify(msg));
+
+            }
+        }
+        
+        function CreateBillCase() {
+            var newCase = new sforce.SObject("Case");
+            newCase.AccountId = '{!Account.id}';
+            newCase.RecordTypeId = '{!BillCaseT.id}';
+            
+            var saveStatus = sforce.connection.create([newCase]);
+            
+            if (saveStatus[0].getBoolean("success")) {
+                successBillCase(saveStatus);
+            }   else {
+                failed(saveStatus[0]);
+            }
+        }
+        
+        /*=====================================================================
+                                 MODIFY SERVICE
+        =====================================================================*/
+        /////////ModifySvc()
+        function ModifySvc() {
+            SwitchToDetail();
+        }
+
+        function SwitchToDetail() {
+            console.log('Modify Service button pressed');
+            tabsList.startMappingSubtabs( function (result) {
+                for (var i = 0; i<Object.keys(result).length; i++) {
+                    if (result[Object.keys(result)[i]].substring(0,15)=='{!account.id}'.substring(0,15)) {
+                        sforce.console.focusSubtabById(Object.keys(result)[i], function (result) {
+                            //Pass   
+                        });
+                    }
+                }
+            });
+        }
+
+        /*=====================================================================
+                                  DISCONNECT SERVICE
+        =====================================================================*/
+        function DisconnectSvc() {
+            SwitchToDetail();
+            // This needs to actually create a new order with all service assets
+            // already added. TODO
+        }
+        
+        /*=====================================================================
+                             SERVICE PROBLEM (CREATE CASE)
+        =====================================================================*/
+        function successSvcCase(result) {
+            if (result[0].getBoolean("success")) {
+                sforce.console.openSubtab(enclosingTabId, result[0].id, true, '{!$Label.ReportServiceProblem}'); // Need to be able to pass tab title
+                msg = {};
+                msg.command = 'event';
+                msg.type = 'Button';
+                msg.objIdD = result[0].id;
+                msg.tabID = enclosingTabId;
+                msg.source = 'ServiceProblemQB';
+                sforce.console.fireEvent("VlocityConsoleHelper", JSON.stringify(msg));
+
+            }
+        }
+        
+        function CreateSvcCase() {
+            var newCase = new sforce.SObject("Case");
+            newCase.AccountId = '{!Account.id}';
+            newCase.RecordTypeId = '{!SvcCaseT.id}';
+            
+            var saveStatus = sforce.connection.create([newCase]);
+            
+            if (saveStatus[0].getBoolean("success")) {
+                successSvcCase(saveStatus);
+            }   else {
+                failed(saveStatus[0]);
+            }
+        }
+
+        /*=====================================================================
+                             AUTHENTICATION
+        =====================================================================*/        
+
+        function ToggleAuthentication(element) {
+        	
+            if ($('.not-auth')[0]) { 
+        		$('.not-auth').toggleClass('not-auth').toggleClass('auth');
+                element.innerText = '{!$Label.Verified}';
+        	} else { 
+        		$('.auth').toggleClass('auth').toggleClass('not-auth');
+                element.innerText = '{!$Label.Authenticate}';
+        	}
+            selectCorrectIcon();
+        }
+
+        function selectCorrectIcon() {
+            
+            var imageLocationsAuth = {
+                'Billing': '{!URLFOR($Resource.UBusAuth)}',
+                'Billing Aggregator': '{!URLFOR($Resource.UBusAuth)}',
+                'Business': '{!URLFOR($Resource.UBusAuth)}',
+                'Consumer': '{!URLFOR($Resource.UIndiAuth)}',
+                'Service': '{!URLFOR($Resource.UBusAuth)}',
+                'Service Aggregator': '{!URLFOR($Resource.UBusAuth)}'
+            }
+
+            var imageLocationsNoAuth = {
+                'Billing': '{!URLFOR($Resource.UBusNoAuth)}',
+                'Billing Aggregator': '{!URLFOR($Resource.UBusNoAuth)}',
+                'Business': '{!URLFOR($Resource.UBusNoAuth)}',
+                'Consumer': '{!URLFOR($Resource.UIndiNoAuth)}',
+                'Service': '{!URLFOR($Resource.UBusNoAuth)}',
+                'Service Aggregator': '{!URLFOR($Resource.UBusNoAuth)}'
+            }
+
+            $('.not-auth').css('background', 'transparent url("' + imageLocationsNoAuth['{!JSENCODE(acctRecType)}'] + '") no-repeat left top');
+            $('.auth').css('background', 'transparent url("' + imageLocationsAuth['{!JSENCODE(acctRecType)}'] + '") no-repeat left top');
+
+        }
+
+        /*=====================================================================
+                             TIMER STUFF
+        =====================================================================*/
+        
+		var Stopwatch = function(elem, options) {
+		
+		    var timer = createTimer(),
+		        startButton = createButton("start", start),
+		        stopButton = createButton("stop", stop),
+		        resetButton = createButton("reset", reset),
+		        offset,
+		        clock,
+		        interval;
+		
+		    // default options
+		    options = options || {};
+		    options.delay = options.delay || 1;
+		
+		    // append elements     
+		    elem.appendChild(timer);
+		    //  elem.appendChild(startButton);
+		    //  elem.appendChild(stopButton);
+		    //  elem.appendChild(resetButton);
+		
+		    // initialize
+		    reset();
+		
+		    // private functions
+		    function createTimer() {
+		        return document.createElement("span");
+		    }
+		
+		    function createButton(action, handler) {
+		        var a = document.createElement("a");
+		        a.href = "#" + action;
+		        a.innerHTML = action;
+		        a.addEventListener("click", function(event) {
+		            handler();
+		            event.preventDefault();
+		        });
+		        return a;
+		    }
+		
+		    function start() {
+		        if (!interval) {
+		            offset = Date.now();
+		            interval = setInterval(update, options.delay);
+		        }
+		    }
+		
+		    function stop() {
+		        if (interval) {
+		            clearInterval(interval);
+		            interval = null;
+		        }
+		    }
+		
+		    function reset() {
+		        clock = 0;
+		        render(0);
+		    }
+		
+		    function update() {
+		        clock += delta();
+		        render();
+		    }
+		
+		    function render() {
+		        seconds = clock / 1000;
+		        minutes = Math.floor(seconds / 60);
+		        minutes = (minutes < 10) ? ("0" + minutes) : minutes;
+		        seconds = Math.floor(seconds % 60)
+		        seconds = (seconds < 10) ? ("0" + seconds) : seconds;
+		        timer.innerHTML = minutes + ":" + seconds;
+		    
+                if (seconds % 2 == 0) {
+                    //sforce.console.setTabStyle('background:red;', null, null);
+                    //sforce.console.setTabStyle(null, 'scc-st-0', null);
+                    sforce.console.getFocusedSubtabId(function (result) {
+                        sforce.console.setSidebarVisible(true, result.id, sforce.console.Region.TOP, function (result) {
+                            //console.log("SHOT TOP BAR");
+                            var i = 0;
+                            i++;
+                        });
+                    });
+                } else {
+                //sforce.console.setTabStyle(null, null, null);
+                    //sforce.console.setTabStyle('width: 200px; float: left; padding-left: 67px; padding-top:3px; margin-left: 24px; margin-top: 25px;', 'scc-st-0', null);
+                    //sforce.console.setTabStyle('background:red;', 'scc-st-0', null);
+                    sforce.console.getFocusedSubtabId(function (result) {
+                        sforce.console.setSidebarVisible(false, result.id, sforce.console.Region.TOP, function (result) {
+                            //console.log("HIDE TOP BAR");
+                            var i = 0; 
+                            i++;
+                        });
+                    });
+                }
+                    
+		    }
+		
+		    function delta() {
+		        var now = Date.now(),
+		            d = now - offset;
+		
+		        offset = now;
+		        return d;
+		    }
+		
+		    // public API
+		    this.start = start;
+		    this.stop = stop;
+		    this.reset = reset;
+		};
+		
+		var d = document.getElementById("call-timer");
+		dTimer = new Stopwatch(d, {
+		    delay: 1000
+		});
+
+    </script>
+   
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" onload="selectCorrectIcon()"/>
+ 
+</apex:page>

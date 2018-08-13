@@ -1,0 +1,46 @@
+{
+    "dataSource": {
+        "type": "Query",
+        "value": {
+            "query": "Select Id, Name from CampaignMember"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Name",
+                    "name": "['Name']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "fieldType": "standard",
+                    "label": "Id",
+                    "name": "['Id']",
+                    "type": "string"
+                }
+            ],
+            "name": "Campaign Member Detail Card",
+            "sObjectType": "CampaignMember",
+            "templateUrl": "campaign-member-manager"
+        }
+    ],
+    "title": "Campaign Member Detail Card"
+}

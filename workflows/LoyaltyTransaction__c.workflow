@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>ClubPersonal_RevertedTransactionNotification</fullName>
+        <description>ClubPersonal_RevertedTransactionNotification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/ClubPersonal_RevertedTransaction</template>
+    </alerts>
+    <fieldUpdates>
+        <fullName>LoyaltyTransaction_ContactEmail</fullName>
+        <field>ContactEmail__c</field>
+        <formula>LoyaltyAccount__r.vlocity_cmt__PrimaryContactId__r.Email</formula>
+        <name>LoyaltyTransaction_ContactEmail</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <rules>
+        <fullName>ClubPersonal_RevertedTransaction</fullName>
+        <actions>
+            <name>ClubPersonal_RevertedTransactionNotification</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>AND( 				ISPICKVAL(Status__c,&apos;Reverted&apos;) 				,INCLUDES(LoyaltyAccount__r.vlocity_cmt__ContactPreferences__c, &apos;eMail&apos;) 	)</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>LoyaltyTransaction_ContactEmail</fullName>
+        <actions>
+            <name>LoyaltyTransaction_ContactEmail</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <formula>True</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

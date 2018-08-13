@@ -1,0 +1,2097 @@
+<apex:page standardController="vlocity_cmt__CalculationProcedureVersion__c" extensions="vlocity_cmt.PricingCalculationConfController" standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <html xmlns:ng="http://angularjs.org" lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__JQUERYJS}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/css/vlocity.css')}"/>
+            <apex:stylesheet value="{!$Resource.vlocity_cmt__CalculationProcedureCss}" />
+            <apex:includeScript value="{!$Resource.vlocity_cmt__AngularJS}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__AngularSanitizeJS}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__ANGULARBOOT}"/>
+            <apex:includeScript value="{!$Resource.vlocity_cmt__SEGJS}" /> 
+            <apex:includeScript value="{!$Resource.vlocity_cmt__AngularAnimateJS}" /> 
+            <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js')}"/>
+             <apex:stylesheet value="{!URLFOR($Resource.vlocity_cmt__slds, '/assets/styles/salesforce-lightning-design-system-vf.rtl.min.css')}"/>
+        </head>
+        <script type="text/javascript">
+            angular.element(document).ready(function() {
+              angular.bootstrap(document, ['pricingCalculationConfigurationApp']);
+            });
+            function getPricingMatrixList(versionObjId,callback)
+            {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.PricingCalculationConfController.getEnabledPricingMatrixList}', versionObjId, callback,
+                                    {buffer: false, escape: false});   
+            }
+
+            function getMatrixLookupTableHeaders(matrixId,versionObjId,callback)
+            {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.PricingCalculationConfController.getMatrixLookupTableHeaders}', matrixId,versionObjId, callback,
+                                    {buffer: false, escape: false}); 
+            }
+
+            function savePricingStepDetails(pricingStepConfDetails,callback)
+            {
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.PricingCalculationConfController.savePricingStepDetails}', pricingStepConfDetails, callback,
+                                    {buffer: false, escape: false});
+            }            
+            
+            var pricingCalculationConfiguration = angular.module('pricingCalculationConfigurationApp', ['ngTagsInput','ui.bootstrap','ngAnimate', 'dndLists']);
+            //Factory Definition
+            pricingCalculationConfiguration.factory('pricingCalculationConfigurationFactory',function($q,$rootScope)
+            {  
+                var factory = {};
+
+                factory.getPricingMatrixList = function(versionObjId)
+                {
+                    var deferred = $q.defer();
+                    var callbackfunction = function(result)
+                    {
+                        $rootScope.$apply(function()
+                        {
+                            var sresult = [];
+                            if (result)
+                            {
+                                sresult = angular.fromJson(result);
+                            }
+                            deferred.resolve(sresult);
+                        });
+                    };
+                    getPricingMatrixList(versionObjId,callbackfunction);
+                    return deferred.promise;
+                }                
+
+                factory.getMatrixLookupTableHeaders = function(matrixId, versionObjId)
+                {
+                    var deferred = $q.defer();
+                    var callbackfunction = function(result)
+                    {
+                        $rootScope.$apply(function()
+                        {
+                            var sresult = [];
+                            if (result)
+                            {
+                                sresult = angular.fromJson(result);
+                            }
+                            deferred.resolve(sresult);
+                        });
+                    };
+                    getMatrixLookupTableHeaders(matrixId,versionObjId,callbackfunction);
+                    return deferred.promise;
+                };
+
+                factory.savePricingStepDetails = function(pricingStepConfDetails)
+                {
+                    var deferred = $q.defer();
+                    var callbackfunction = function(result)
+                    {
+                        $rootScope.$apply(function()
+                        {
+                            deferred.resolve(result);
+                        });
+                    };
+                    savePricingStepDetails(pricingStepConfDetails,callbackfunction);
+                    return deferred.promise;
+                }
+                return factory; 
+            });
+
+            //Controller for the Detail view
+            var pricingDetail = pricingCalculationConfiguration.controller('detail',function($scope, $timeout, pricingCalculationConfigurationFactory,$filter,$q)
+            {
+                $scope.isSforce = (typeof sforce != 'undefined' && typeof sforce.one != 'undefined')?(true):(false);
+                $scope.namespacePrefix = '{!namespacePrefix}';
+                $scope.versionObj= JSON.parse('{!JSENCODE(pricingVersionObj)}');
+                $scope.versionObjId = $scope.versionObj['Id'];
+                $scope.enableLooping = false;
+                //console.log(' verison object is '+$scope.versionObj);
+                var variablesWithNamespacePrefix = $scope.namespacePrefix + 'Variables__c';
+                var constantsWithNamespacePrefix = $scope.namespacePrefix + 'Constants__c';
+                var isEnabledWithNamespacePrefix =  $scope.namespacePrefix + 'IsEnabled__c';
+                var preprocessorWithNamespacePrefix = $scope.namespacePrefix + 'PreProcessorClass__c';
+                var postprocessorWithNamespacePrefix = $scope.namespacePrefix + 'PostProcessorClass__c';
+                var enableLoopingWithNameSpaceprefix = $scope.namespacePrefix + 'EnableLooping__c';
+                
+                if($scope.versionObj[enableLoopingWithNameSpaceprefix] !==undefined){
+                    $scope.enableLooping = $scope.versionObj[enableLoopingWithNameSpaceprefix];
+                }
+                //console.log(' $scope.enableLooping is ' + $scope.enableLooping);
+                $scope.versionEnabled = false;
+
+                $scope.variables= [];
+                if ($scope.versionObj[variablesWithNamespacePrefix]!==undefined)
+                    $scope.variables = JSON.parse($scope.versionObj[variablesWithNamespacePrefix]);
+                $scope.constants= [];
+                $scope.customClass = {};
+                $scope.preProcessorClassName ='';
+                $scope.postProcessorClassName ='';
+                if ($scope.versionObj[constantsWithNamespacePrefix]!==undefined)
+                    $scope.constants= JSON.parse($scope.versionObj[constantsWithNamespacePrefix]);
+                if ($scope.versionObj[isEnabledWithNamespacePrefix]!==undefined)
+                    $scope.versionEnabled = $scope.versionObj[isEnabledWithNamespacePrefix];
+                if ($scope.versionObj[preprocessorWithNamespacePrefix]!==undefined)
+                {
+                    $scope.customClass['preProcessorClassName'] = $scope.versionObj[preprocessorWithNamespacePrefix];                    
+                }
+                if ($scope.versionObj[postprocessorWithNamespacePrefix]!==undefined)
+                {
+                    $scope.customClass['postProcessorClassName'] = $scope.versionObj[postprocessorWithNamespacePrefix];                    
+                }
+
+
+                $scope.sequenceNumber = 1;
+                $scope.selectedPricingInput = {};
+                $scope.variableTypes = [
+                    'Number',
+                    'Boolean',
+                    'Percent',
+                    'Currency',
+                    'Text',
+                    'Date'
+                ];
+
+                $scope.constantTypes = [
+                    'Number',
+                    'Percent',
+                    'Currency',
+                    'Text'
+                ];
+                
+                $scope.pricingStepInputCopy = [];                
+                var svcSteps = JSON.parse('{!JSENCODE(serviceSteps)}');
+                $scope.pricingStepInputs = svcSteps;
+                $scope.validationErrors = [];
+                $scope.validationErrorsFound = true;
+                $scope.aggregateStepInputs = [];
+
+                $scope.addVariableRow = function()
+                {
+                    var idx = -1;
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                        $scope.variables[i].isEditable = false;
+                        $scope.variables[i].isSelected = false;
+                        if ($scope.variables[i].name.trim()=='' && $scope.variables[i].dataType.trim()=='')
+                            idx = i;
+                    }
+                    var newRow = {
+                        name:'',
+                        dataType:'',
+                        alias:'',
+                        typeaheadDisplayName:'',
+                        isEditable:true,
+                        userDefined:true,
+                        isSelected:true,
+                        precision:'',
+                        defaultValue:''
+                    };
+                    if (idx == -1){
+                        $scope.variables.push(newRow);
+                    }else{
+                        $scope.variables[idx].isEditable = true;
+                        $scope.variables[idx].isSelected = true;
+                    }
+                }
+
+                $scope.addConstantRow = function()
+                {
+                    var idx = -1;
+                    for (var i=0;i<$scope.constants.length;i++)
+                    {
+                       $scope.constants[i].isEditable = false;
+                       if ($scope.constants[i].name.trim()=='' && 
+                           $scope.constants[i].dataType.trim()=='' &&
+                           $scope.constants[i].value.trim()=='')
+                            idx = i;
+                    }
+                    var newRow = {
+                        name:'',
+                        value:'',
+                        dataType:'',
+                        isEditable:true,
+                        userDefined:true,
+                        precision:'',
+                        valuePlaceHolder:'Enter a Value'
+                    };
+                    if (idx == -1)
+                        $scope.constants.push(newRow);
+                    else
+                        $scope.constants[idx].isEditable = true;
+                }
+
+                $scope.makeVariableEditable = function(index)
+                {
+                    if ($scope.versionEnabled)
+                        index = -1;
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                       $scope.variables[i].isEditable = false;
+                       $scope.variables[i].isSelected = false;
+                    }
+                    if (index > -1 ){
+                        if($scope.variables[index].userDefined){
+                         $scope.variables[index].isEditable = true;   
+                        }
+                        $scope.variables[index].isSelected = true;
+                    }
+                        
+                    
+
+                    
+                }
+                $scope.makeConstantEditable = function(index)
+                {
+                    if ($scope.versionEnabled)
+                        index = -1;
+                    for (var i=0;i<$scope.constants.length;i++)
+                    {
+                       $scope.constants[i].isEditable = false;
+                    }
+                    if (index > -1)
+                        $scope.constants[index].isEditable = true;
+                }
+
+                $scope.deleteFromVariables = function(index)
+                {
+                    $scope.variables.splice(index,1);
+                }
+
+                $scope.deleteFromConstants = function(index)
+                {
+                    $scope.constants.splice(index,1);
+                }
+
+                $scope.createVariableAlias = function(index)
+                {
+                    var variable = $scope.variables[index];
+                    var oldVariable = angular.copy(variable);
+                    
+                    var variableName = variable.name;
+                    var alias = '';
+                    for (var i=0;i<variableName.length;i++)
+                    {
+                        if (variableName[i]!=' ')
+                            alias = alias + variableName[i];
+                    }
+                    variable.alias = alias;
+
+                    $scope.validationErrors = [];
+                    $scope.validateVariableConstantUniqueness();
+                    if (variable.dataType!='') {
+                        $scope.editCalculationSteps(oldVariable,variable);
+                    }
+                }                
+
+                $scope.createConstantAlias = function(index)
+                {
+                    var constant = $scope.constants[index];
+                    var oldConstant = angular.copy(constant);
+                    var constantName = constant.name;
+                    var alias = '';
+                    for (var i=0;i<constantName.length;i++)
+                    {
+                        if (constantName[i]!=' ')
+                            alias = alias + constantName[i];
+                    }
+                    constant.alias = alias;
+                    $scope.validationErrors = [];
+                    $scope.validateVariableConstantUniqueness();
+                    if (constant.value!='' && constant.dataType!='') {
+                        $scope.editCalculationSteps(oldConstant,constant);
+                        constant.precision = '';
+                    }
+                }
+
+                $scope.onConstantDataTypeChange = function (index) {
+                    var constant = $scope.constants[index];
+                    if (constant.dataType === 'Text') {
+                        constant.valuePlaceHolder = 'Enter text inside single quotes';
+                    }
+                }
+
+                $scope.onVariableDataTypeChange = function (index) {
+                    var variable = $scope.variables[index];
+                    if (variable.dataType === 'Text' || variable.dataType === 'Boolean' || variable.dataType === 'Date') {
+                        variable.precision = '';
+                    }
+                }
+
+                $scope.validateConstantValue = function(index)
+                {
+                    var constant = $scope.constants[index];
+                    var constantValue = constant.value;
+                    if (constantValue != null && !isNumber(constantValue) && constant.dataType!='Text')
+                    {
+                        var replacedValue = constantValue.replace(/[^0-9.-]/g, "");
+                        constant.value = replacedValue;
+                    }
+                }
+
+                $scope.editCalculationSteps = function(oldObject,newObject)
+                {
+                    for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                    {
+                        var stepInput = $scope.pricingStepInputs[i];
+                        if (stepInput['functionType'] == 'Calculation')
+                        {
+                            $scope.setInputOutputTagList(stepInput);
+                            var inputs = stepInput['calculationInputExpressions'];
+                            var outputs = stepInput['calculationOutput'];
+                            
+                            for(var j=0;j<inputs.length;j++)
+                            {
+                                var input = inputs[j];
+                                if (input['alias'] == oldObject['alias'])
+                                {
+                                    input['dataType'] = newObject['dataType'];
+                                    input['text'] = newObject['name'];
+                                    input['alias'] = newObject['alias'];
+                                }
+                            }
+                            for (var j=0;j<outputs.length;j++)
+                            {
+                                var output = outputs[j];
+                                if (output['alias'] == oldObject['alias'])
+                                {
+                                    output['dataType'] = newObject['dataType'];
+                                    output['text'] = newObject['name'];
+                                    output['alias'] = newObject['alias'];
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+
+                function isNumber(n) 
+                {
+                    return n != undefined && !isNaN(parseFloat(n)) && isFinite(n);
+                }
+
+                $scope.addTooltipToTag = function() {                    
+                    jQuery(window).trigger('new-tag-added');
+                }
+                
+                $scope.deleteFromPricingStep = function(index)
+                {
+                    var pricingStep = $scope.pricingStepInputs[index];
+                    //If function type is Matrix Lookup, delete
+                    //the associated variables
+                    if (pricingStep['functionType'] == 'Matrix Lookup')
+                    {
+                        var matrixName = pricingStep['matrixName'];
+                        $scope.deleteMatrixVariables(matrixName);                        
+                    }
+                    $scope.pricingStepInputs.splice(index,1);
+
+                    for(var i = 0; i < $scope.pricingStepInputs.length; i++) {
+                        $scope.pricingStepInputs[i].sequence = i + 1;
+                    }
+                }
+
+                $scope.deleteFromAggregationStep = function(index)
+                {
+                    $scope.aggregateStepInputs.splice(index,1);
+                }
+
+                $scope.deleteMatrixVariables = function(matrixName)
+                {
+                    //Go over the variable list and delete variables whose alias 
+                    //is associated to the Matrix being deleted
+                    var removalIndices = [];
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                        var variable = $scope.variables[i];
+                        if (variable['matrixName'] == matrixName)
+                            removalIndices.push(i);
+                    }
+                    for (var i=removalIndices.length-1;i>=0;i--)
+                    {
+                        $scope.variables.splice(removalIndices[i],1);
+                    }
+                }
+
+                $scope.processPricingStepInputs = function()
+                {
+                    for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                    {
+                        var sequence = i + 1;
+                        var stepInput = $scope.pricingStepInputs[i];
+                        stepInput['sequence'] = sequence;
+                        //Set Calculation Formula, Calculation Formula tags and 
+                        //Create an alias for Calculation Function Type
+                        if (stepInput['functionType'] == 'Calculation')
+                        {
+                            var calculationFormula = '';
+                            var calculationFormulaTags = [];
+                            var inputList = [];
+                            var outputMap = {};
+                            var outputAliasMap = {};
+
+                            for (var j=0;j<stepInput.calculationInputExpressions.length;j++)
+                            {
+                                var calcExpression = stepInput.calculationInputExpressions[j];
+                                if (calcExpression['userDefined'])
+                                {
+                                    var inputMap = {};
+                                    var inputName = calcExpression['text'];
+                                    var inputDataType = calcExpression['dataType'];
+                                    inputMap['name'] = inputName;
+                                    inputMap['dataType'] = inputDataType;
+                                    inputList.push(inputMap);
+                                }
+                                calculationFormula = calculationFormula + calcExpression['alias'] + ' ';
+                                calculationFormulaTags.push(calcExpression);                                
+                            }
+                            for (var j=0;j<stepInput.calculationOutput.length;j++)
+                            {
+                                var outputName = stepInput.calculationOutput[j]['text']
+                                outputMap['name'] = outputName;
+                                outputMap['dataType'] = stepInput.calculationOutput[j]['dataType'];
+                                outputMap['alias'] = stepInput.calculationOutput[j]['alias'];
+                                var alias = $scope.removeSpace(stepInput.calculationOutput[j]['text']);
+                                outputAliasMap[outputName] = alias;
+                            }
+                            stepInput['calculationFormula'] = calculationFormula;
+                            stepInput['calculationFormulaTags'] = JSON.stringify(calculationFormulaTags);
+                            stepInput['calculationOutputJSON'] = JSON.stringify(outputMap);
+                            stepInput['outputAliasMap'] = JSON.stringify(outputAliasMap);
+                            stepInput['calculationInputJSON'] = JSON.stringify(inputList);
+                        }
+                        var conditionalInput = '';
+                        for (var k = 0; k < stepInput.conditionalInputExpressions.length; k++) {
+                            var conditionalInputExpression = stepInput.conditionalInputExpressions[k];
+                            conditionalInput = conditionalInput + conditionalInputExpression.alias + ' '; 
+                        }
+                        stepInput['condition'] = conditionalInput;
+                    }
+                }
+
+                $scope.processAggregationStepInputs = function()
+                {
+                    for (var i=0;i<$scope.aggregateStepInputs.length;i++)
+                    {
+                        var sequence = i + 1;
+                        var aggregateStepInput = $scope.aggregateStepInputs[i];
+                        aggregateStepInput['sequence'] = sequence;
+                        aggregateStepInput['task'] = 'Aggregation';
+                        var calculationFormula = '';
+                        var calculationFormulaTags = [];
+                        var inputList = [];
+                        var outputMap = {};
+                        var outputAliasMap = {};
+                        if (aggregateStepInput['functionType'] == 'Calculation')
+                        {
+                            for (var j=0;j<aggregateStepInput.calculationInputExpressions.length;j++)
+                            {
+                                var calcExpression = aggregateStepInput.calculationInputExpressions[j];
+                                if (calcExpression['userDefined'])
+                                {
+                                    var inputMap = {};
+                                    var inputName = calcExpression['text'];
+                                    var inputDataType = calcExpression['dataType'];
+                                    inputMap['name'] = inputName;
+                                    inputMap['dataType'] = inputDataType;
+                                    inputList.push(inputMap);
+                                }
+                                calculationFormula = calculationFormula + calcExpression['alias'] + ' ';
+                                calculationFormulaTags.push(calcExpression);                                
+                            }
+                            for (var j=0;j<aggregateStepInput.calculationOutput.length;j++)
+                            {
+                                var outputName = aggregateStepInput.calculationOutput[j]['text']
+                                outputMap['name'] = outputName;
+                                outputMap['dataType'] = aggregateStepInput.calculationOutput[j]['dataType'];
+                                outputMap['alias'] = aggregateStepInput.calculationOutput[j]['alias'];
+                                var alias = $scope.removeSpace(aggregateStepInput.calculationOutput[j]['text']);
+                                outputAliasMap[outputName] = alias;
+                            }
+                            aggregateStepInput['calculationFormula'] = calculationFormula;
+                            aggregateStepInput['calculationFormulaTags'] = JSON.stringify(calculationFormulaTags);
+                            aggregateStepInput['calculationOutputJSON'] = JSON.stringify(outputMap);
+                            aggregateStepInput['outputAliasMap'] = JSON.stringify(outputAliasMap);
+                            aggregateStepInput['calculationInputJSON'] = JSON.stringify(inputList);
+                        }
+                        else if(aggregateStepInput['functionType'] == 'Aggregation')
+                        {
+                            for (var j=0;j<aggregateStepInput.aggregateInputExpressions.length;j++)
+                            {
+                                var aggregateExpression = aggregateStepInput.aggregateInputExpressions[j];
+                                if (aggregateExpression['userDefined'])
+                                {
+                                    var inputMap = {};
+                                    var inputName = aggregateExpression['text'];
+                                    var inputDataType = aggregateExpression['dataType'];
+                                    inputMap['name'] = inputName;
+                                    inputMap['dataType'] = inputDataType;
+                                    inputList.push(inputMap);
+                                }
+                                calculationFormula = calculationFormula + aggregateExpression['alias'] + ' ';
+                                calculationFormulaTags.push(aggregateExpression); 
+
+                            }
+                            for (var j=0;j<aggregateStepInput.aggregateOutput.length;j++)
+                            {
+                                var outputName = aggregateStepInput.aggregateOutput[j]['text']
+                                outputMap['name'] = outputName;
+                                outputMap['dataType'] = aggregateStepInput.aggregateOutput[j]['dataType'];
+                                outputMap['alias'] = aggregateStepInput.aggregateOutput[j]['alias'];
+                                var alias = $scope.removeSpace(aggregateStepInput.aggregateOutput[j]['text']);
+                                outputAliasMap[outputName] = alias;
+                            }
+                            aggregateStepInput['calculationFormula'] = calculationFormula;
+                            aggregateStepInput['calculationFormulaTags'] = JSON.stringify(calculationFormulaTags);
+                            aggregateStepInput['calculationInputJSON'] = JSON.stringify(inputList);
+                            aggregateStepInput['calculationOutputJSON'] = JSON.stringify(outputMap);
+                            aggregateStepInput['outputAliasMap'] = JSON.stringify(outputAliasMap);
+                        }
+                    }
+                }
+
+                $scope.getUnsavedStepInputData = function() {
+                    var chunkSize = 30;
+                    // Split the pricing step inputs in chunks and save
+                    var pricingStepInputChunk = [];
+                    for (var i = 0; i < $scope.pricingStepInputCopy.length; i++) {
+                        pricingStepInputChunk.push($scope.pricingStepInputCopy[i]);
+                        if (pricingStepInputChunk.length == chunkSize) {                                
+                            break;
+                        } 
+                    }
+                    //Delete the first chunk
+                    if ($scope.pricingStepInputCopy.length > chunkSize) {
+                        $scope.pricingStepInputCopy.splice(0,chunkSize);
+                    }
+                    else {
+                        $scope.pricingStepInputCopy = [];
+                    }
+                    return pricingStepInputChunk;                    
+                }
+
+                $scope.savePricingStep = function(recursiveCall)
+                {
+                    var pricingStepMap = {};
+                    var stepInputDelta = [];
+                    $scope.processPricingStepInputs();
+                    $scope.processAggregationStepInputs();  
+                    $scope.validationWarning = 'Calculation Steps are currently being saved, please remain on page or data will be lost.';                  
+                    if ($scope.pricingStepInputCopy.length === 0) {
+                        $scope.pricingStepInputCopy = angular.copy($scope.pricingStepInputs);
+                    }
+                    var chunkedInputs = $scope.getUnsavedStepInputData();
+                    pricingStepMap['pricingStep'] = JSON.stringify(chunkedInputs);
+                    pricingStepMap['versionId'] = $scope.versionObjId;
+                    if (recursiveCall === null || recursiveCall === undefined) {
+                        pricingStepMap['aggregation'] = JSON.stringify($scope.aggregateStepInputs);
+                        pricingStepMap['variables'] = JSON.stringify($scope.variables);
+                        pricingStepMap['constants'] = JSON.stringify($scope.constants);
+                        pricingStepMap['preprocessor'] = $scope.customClass['preProcessorClassName']
+                        pricingStepMap['postprocessor'] = $scope.customClass['postProcessorClassName'];
+                        pricingStepMap['firstChunk'] = true;
+                        $scope.validateData();
+                    } else if(recursiveCall) {
+                        pricingStepMap['firstChunk'] = false;
+                        var emptyArray = [];
+                        pricingStepMap['aggregation'] = JSON.stringify(emptyArray);
+                    }                                        
+                    var pricingStepConfDetails = JSON.stringify(pricingStepMap);                                        
+                    
+                    if ($scope.validationErrors.length == 0)
+                    {
+                        //var inputCalculationTooLong = '{!$Label.CalcProcSaveWarning}';
+                        //$scope.validationErrors.push(inputCalculationTooLong);
+                        $scope.validationErrorsFound = false;
+                        pricingCalculationConfigurationFactory.savePricingStepDetails(pricingStepConfDetails).then(function(result, event){
+                            if ($scope.pricingStepInputCopy.length == 0) {
+                                 $scope.validationErrors = [];
+                                if (result){
+                                    alert('Save successful.'); 
+                                    $scope.validationWarning = null;  
+                                }else {
+                                    alert('Save unsuccessful due to errors. Please look at the logs.') 
+                                    $scope.validationWarning = null;    
+                                }                                
+                            } else {
+                                $scope.savePricingStep(true); 
+                            }
+                            
+                        });
+                    } else {
+                        //If there is validation errors, clear the copy and wait for the user to fix it
+                        $scope.pricingStepInputCopy = [];
+                    }
+                }
+
+                $scope.validateVariableConstantUniqueness = function()
+                {
+                    var variableConstantMap = {};
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                        var variable = $scope.variables[i];
+                        if (variableConstantMap[variable.alias]==null)
+                            variableConstantMap[variable.alias] = true;
+                        else if (variableConstantMap[variable.alias])
+                        {
+                            variable.duplicateAlias = true;
+                            var variableNotUnique = '{!$Label.VariableNotUnique}';
+                            var variableNotUniqueLabel = variableNotUnique.replace('{0}',variable.name);
+                            $scope.validationErrors.push(variableNotUniqueLabel);
+                        }
+                    }
+                    for (var i=0;i<$scope.constants.length;i++)
+                    {
+                        var constant = $scope.constants[i];
+                        if (variableConstantMap[constant.alias]==null)
+                            variableConstantMap[constant.alias] = true;
+                        else if (variableConstantMap[constant.alias])
+                        {
+                            constant.duplicateAlias = true;
+                            var constantNotUnique = '{!$Label.ConstantNotUnique}';
+                            var constantNotUniqueLabel = constantNotUnique.replace('{0}',constant.name);
+                            $scope.validationErrors.push(constantNotUniqueLabel);
+                        }
+                    }
+                }
+
+                $scope.validateDefaultvalue = function(variable)
+                {
+                    var value = variable.defaultValue;
+                    // check if error already there or value is undefined then ignore
+                    if(value==null || typeof value == 'undefined' || value.trim() == '' || $scope.validationErrors.includes('{!$Label.DefaultValueInvalid}')){
+                        return;
+                    }
+                    value =value.trim();
+                    switch (variable.dataType.trim()) {
+                        case 'Date':
+                            $scope.validateDateData(value);
+                        break;
+                        case 'Number Range':
+                        case 'Number':
+                        case 'Percent':
+                        case 'Currency':
+                            $scope.validateNumberData(value);
+                        break;
+                        case 'Boolean':
+                            $scope.validateBooleanData(value);
+                        break;
+                    }
+                }
+
+                $scope.validateBooleanData = function(value){
+                    var validValues = ['TRUE','FALSE'];
+                    if(!validValues.includes(value.toUpperCase())){
+                        $scope.validationErrors.push('{!$Label.DefaultValueInvalid}');
+                    }
+                }
+                $scope.validateNumberData = function(value){
+                    //replaces all decimal with blank
+                    var numberValue = value.replace(/\./g, "");
+                    //check if number and if only 1 decimal was placed by checking the length of the old number value with the replaced number value - 1
+                    if(!isNumber(numberValue) || (value.length - numberValue.length) > 1){
+                        
+                        $scope.validationErrors.push('{!$Label.DefaultValueInvalid}');
+                    }
+                    
+                }
+                $scope.validateDateData = function(value){
+                    console.log(new Date(value));
+                    if((new Date(value) == "Invalid Date") || isNaN(new Date(value))){
+                        $scope.validationErrors.push('{!$Label.DefaultValueInvalid}');
+                    }
+                }
+
+                $scope.validateVariableConstantEmptyValue = function()
+                {
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                        var variable = $scope.variables[i];
+                        if (variable.name.trim() == '' || variable.dataType.trim() == '')
+                        {
+                            var variableEntryEmpty = '{!$Label.VariableEmpty}';
+                            $scope.validationErrors.push(variableEntryEmpty);
+                        }
+                        $scope.validateDefaultvalue(variable);
+                    }
+                    for (var i=0;i<$scope.constants.length;i++)
+                    {
+                        var constant = $scope.constants[i];
+                        if (constant.name.trim() == '' || constant.dataType.trim() == '' || constant.value.trim() == '')
+                        {
+                            var constantEntryEmpty = '{!$Label.ConstantEmpty}';
+                            $scope.validationErrors.push(constantEntryEmpty);
+                        }
+                    }
+                }
+
+                $scope.validateCalculationStepOutput = function()
+                {
+                    var outputVariableMap = {};
+                    for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                    {
+                        var stepInput = $scope.pricingStepInputs[i];
+                        if (stepInput['functionType'] == 'Calculation' && stepInput['calculationOutputJSON']=='{}')
+                        {
+                            var outputCalculationEmpty = '{!$Label.OutputCalculationEmpty}';
+                            var outputCalculationEmptyLabel = outputCalculationEmpty.replace('{0}',stepInput['sequence']);
+                            $scope.validationErrors.push(outputCalculationEmptyLabel);
+                        }
+                        else if(stepInput['functionType'] == 'Calculation' && stepInput['calculationOutputJSON']!='{}')
+                        {
+                            var outputAlias = stepInput['calculationOutput'][0]['alias'];
+                            var outputName = stepInput['calculationOutput'][0]['text'];
+                            if (outputVariableMap[outputAlias]==null)
+                            {
+                                outputVariableMap[outputAlias] = true;
+                            }
+                            else
+                            {
+                                //var outputVariableReused = '{!$Label.OutputVariableReused}';
+                                //var outputVariableReusedLabel1 = outputVariableReused.replace('{0}',outputName);
+                                //var outputVariableReusedLabel = outputVariableReusedLabel1.replace('{1}',stepInput['sequence']);
+                                //$scope.validationErrors.push(outputVariableReusedLabel);
+                            }
+                        }                        
+                    }
+                    // Validate Aggregation Steps
+                    for (var i=0;i<$scope.aggregateStepInputs.length;i++)
+                    {
+                        var aggregateStepInput = $scope.aggregateStepInputs[i];
+                        if (aggregateStepInput['functionType'] == 'Calculation' && aggregateStepInput['calculationOutputJSON']=='{}')
+                        {
+                            var outputCalculationEmpty = 'Output for Aggregation Step {0} is empty.';
+                            var outputCalculationEmptyLabel = outputCalculationEmpty.replace('{0}',aggregateStepInput['sequence']);
+                            $scope.validationErrors.push(outputCalculationEmptyLabel);
+                        }
+                    }
+                }
+
+                $scope.validateCalculationStepInput = function()
+                {
+                    //Validate Pricing Step Input
+                    for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                    {
+                        var stepInput = $scope.pricingStepInputs[i];
+                        if (stepInput['functionType'] == '')
+                        {
+                            var inputCalculationEmpty = 'Function Type for Calculation Step {0} is empty.';
+                            var inputCalculationEmptyLabel = inputCalculationEmpty.replace('{0}',stepInput['sequence']);
+                            $scope.validationErrors.push(inputCalculationEmptyLabel);
+                        }
+                        if (stepInput['functionType'] == 'Calculation' && stepInput['calculationFormula']=='')
+                        {
+                            var inputCalculationEmpty = '{!$Label.InputCalculationEmpty}';
+                            var inputCalculationEmptyLabel = inputCalculationEmpty.replace('{0}',stepInput['sequence']);
+                            $scope.validationErrors.push(inputCalculationEmptyLabel);
+                        }
+                        //check if the formula input is too long
+                        if (stepInput['functionType'] === 'Calculation' && (stepInput['calculationFormula'].length > 131072 || stepInput['calculationFormulaTags'].length > 131072))
+                        {
+                            var inputCalculationTooLong = '{!$Label.CPInputFormulaTooLong}';
+                            var inputCalculationTooLongLabel = inputCalculationTooLong.replace('{0}', stepInput['sequence']);
+                            $scope.validationErrors.push(inputCalculationTooLongLabel);
+                        }               
+                    }
+                    //Validate Aggregation Step Input
+                    for (var i=0;i<$scope.aggregateStepInputs.length;i++)
+                    {
+                        var aggregateStepInput = $scope.aggregateStepInputs[i];
+                        if (aggregateStepInput['functionType'] == 'Calculation' && aggregateStepInput['calculationFormula']=='')
+                        {
+                            var inputCalculationEmpty = 'Input for Aggregation Step {0} is empty.';
+                            var inputCalculationEmptyLabel = inputCalculationEmpty.replace('{0}',aggregateStepInput['sequence']);
+                            $scope.validationErrors.push(inputCalculationEmptyLabel);
+                        }
+                    }
+                }
+
+                $scope.validateMatrixSelection = function()
+                {
+                    for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                    {
+                        var stepInput = $scope.pricingStepInputs[i];
+                        if (stepInput['functionType'] == 'Matrix Lookup' && stepInput['matrixId']=='')
+                        {
+                            var matrixSelectionInvalid = '{!$Label.MatrixSelectionInvalid}';
+                            var matrixSelectionInvalidLabel = matrixSelectionInvalid.replace('{0}',stepInput['sequence']);
+                            $scope.validationErrors.push(matrixSelectionInvalidLabel);
+                        }
+                    }
+                }
+
+                $scope.validateAggregationStep = function()
+                {
+                    for (var i=0;i<$scope.aggregateStepInputs.length;i++)
+                    {
+                        var aggregateStepInput = $scope.aggregateStepInputs[i];
+                        if (aggregateStepInput['functionType'] == '')
+                        {
+                            var inputCalculationEmpty = 'Function Type for Aggregation Step {0} is empty.';
+                            var inputCalculationEmptyLabel = inputCalculationEmpty.replace('{0}',aggregateStepInput['sequence']);
+                            $scope.validationErrors.push(inputCalculationEmptyLabel);
+                        }
+                        if (aggregateStepInput['functionType'] == 'Aggregation')
+                        {
+                            if (aggregateStepInput['aggregateInputExpressions'].length == 0)
+                            {
+                                var inputCalculationEmpty = 'Input for Aggregation Step {0} is empty.';
+                                var inputCalculationEmptyLabel = inputCalculationEmpty.replace('{0}',aggregateStepInput['sequence']);
+                                $scope.validationErrors.push(inputCalculationEmptyLabel);
+                            }
+                            else if(aggregateStepInput['aggregateOutput'].length == 0)
+                            {
+                                var outputCalculationEmpty = 'Output for Aggregation Step {0} is empty.';
+                                var outputCalculationEmptyLabel = outputCalculationEmpty.replace('{0}',aggregateStepInput['sequence']);
+                                $scope.validationErrors.push(outputCalculationEmptyLabel);
+                            }
+                            
+                        }
+                    }
+                }
+
+                $scope.validateData = function()
+                {
+                    $scope.validationErrors = [];
+                    //Ensure Variables and Constants aliases are unique
+                    //Ensure Variables and Constants have no empty value
+                    //Ensure Calculation Steps have input specified
+                    //Ensure Calculation Steps have output specified
+                    //Ensure Matrix Selection is valid
+                    //Ensure Aggregation Step is valid
+                    $scope.validateVariableConstantUniqueness();
+                    $scope.validateVariableConstantEmptyValue();
+                    $scope.validateCalculationStepInput();
+                    $scope.validateCalculationStepOutput();
+                    $scope.validateMatrixSelection();
+                    $scope.validateAggregationStep();
+                    if($scope.validationErrors.length >0){
+                        $scope.validationWarning = null;     
+                        //remove validate warning to remove the message being displayed as there is an error
+                    }
+                    
+                }
+
+                $scope.removeAlert = function(obj, $event) {
+                    var target = angular.element($event.target);
+                    target.parents('.alert').remove();
+                };
+
+                $scope.addCalculationStep = function()
+                {
+                    $scope.selectedPricingInput = {};
+                    $scope.openCalculationModal();
+                }
+
+                $scope.addPricingCalculationStep = function()
+                {
+                    var sequence = $scope.pricingStepInputs.length + 1;
+                    var selectedMatrix = {
+                        'Name':'',
+                        'ObjectId':''
+                    };
+                    $scope.pricingStepInputs.push(
+                        {
+                            'functionType':'',
+                            'matrixName':'',
+                            'matrixId':'',
+                            'matrixInputTagList':[],
+                            'matrixOutputTagList':[],
+                            'matrixInputJSON':'',
+                            'matrixOutputJSON':'',
+                            'calculationFormula':'',
+                            'calculationFormulaTags':'',
+                            'calculationInputJSON':'',
+                            'calculationOutputJSON':'',
+                            'outputMap':'',
+                            'resultIncluded':false,
+                            'matrixMode':false,
+                            'calculationMode':false,
+                            'matrixList': [],
+                            'calculationInputTagList': [],
+                            'calculationOutputTagList': [],
+                            'calculationInputExpressions':[],
+                            'calculationOutput':[],
+                            'selectedMatrix':selectedMatrix,
+                            'sequence': sequence,
+                            'conditionalStep':false
+                        }
+                    );
+                }
+
+                $scope.addAggregationStep = function()
+                {
+                    var sequence = $scope.aggregateStepInputs.length + 1;
+                    $scope.aggregateStepInputs.push(
+                        {
+                            'functionType':'',
+                            'calculationFormula':'',
+                            'calculationFormulaTags':'',
+                            'calculationInputJSON':'',
+                            'calculationOutputJSON':'',
+                            'outputMap':'',
+                            'aggregateMode':false,
+                            'resultIncluded':false,
+                            'calculationMode':false,
+                            'calculationInputTagList': [],
+                            'calculationOutputTagList': [],
+                            'calculationInputExpressions':[],
+                            'calculationOutput':[],
+                            'aggregateInputTagList': [],
+                            'aggregateInputExpressions':[],
+                            'aggregateOutput':[], 
+                            'sequence': sequence
+                        }
+                    );
+                }
+
+                $scope.aggregateFunctionTypeChanged = function(index)
+                {
+                    var aggregateStep = $scope.aggregateStepInputs[index];
+                    if (aggregateStep.functionType == 'Aggregation')
+                    {
+                        aggregateStep.aggregateMode = true;
+                        aggregateStep.calculationMode = false;
+                    }
+                    else
+                    {
+                        aggregateStep.aggregateMode = false;
+                        aggregateStep.calculationMode = true;
+                    }
+                }
+
+                $scope.functionTypeChanged = function(index)
+                {   
+                    var pricingStep = $scope.pricingStepInputs[index];
+                    if (pricingStep.functionType == 'Matrix Lookup')
+                    {
+                        pricingStep.matrixMode = true;
+                        pricingStep.calculationMode = false;
+                        pricingCalculationConfigurationFactory.getPricingMatrixList($scope.versionObjId).then(function(result, event)
+                        {
+                            var allMatrices = result;
+                            var usedMatricesMap = {};
+                            var availableMatrices = [];
+                            //Go over the Calculation steps and remove Matrices already used in
+                            //Calculation steps
+                            for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                            {
+                                var stepInput = $scope.pricingStepInputs[i];
+                                if (stepInput['functionType'] == 'Matrix Lookup')
+                                {
+                                    usedMatricesMap[stepInput['selectedMatrix']['ObjectId']] = true;
+                                }
+                            }
+                            for (var i=0;i<allMatrices.length;i++)
+                            {
+                                var matrix = allMatrices[i];
+                                if (usedMatricesMap[matrix['ObjectId']] == null)
+                                    availableMatrices.push(matrix);
+                            }
+
+                            pricingStep.matrixList = availableMatrices;
+                        });
+                    }
+                    else
+                    {
+                        pricingStep.matrixMode = false;
+                        pricingStep.calculationMode = true;
+                    }
+                }
+
+                $scope.removeNonCalculationOutputFlagInputs = function (inputList)
+                {
+                    //Create a Map of all the Pricing Step Outputs
+                    //with Include in Calculation Output flag checked
+                    var calcOutputMap = {};
+                    var removalIndices = [];
+                    for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                    {
+                        var pricingStep = $scope.pricingStepInputs[i];
+                        if (pricingStep['resultIncluded']!=null && pricingStep['resultIncluded'])
+                        {
+                            //calculationOutput matrixOutputTagList
+                            if (pricingStep['functionType'] == 'Matrix Lookup')
+                            {
+                                var outputList = pricingStep['matrixOutputTagList'];
+                                var outputAliasMap = JSON.parse(pricingStep['outputAliasMap']);
+                                for (var j=0;j<outputList.length;j++)
+                                {
+                                    var output = outputList[j];
+                                    var outputAlias = outputAliasMap[output['text']];
+                                    calcOutputMap[outputAlias] = true;
+                                }                                
+                            }
+                            else if (pricingStep['functionType'] == 'Calculation')
+                            {
+                                var outputList = pricingStep['calculationOutput'];
+                                for (var j=0;j<outputList.length;j++)
+                                {
+                                    var output = outputList[j];
+                                    calcOutputMap[output['alias']] = true;
+                                }                                
+                            }
+                        }                        
+                    }
+                    
+                    //Iterate through inputList and remove aliases not in the map
+                    for (var i=0;i<inputList.length;i++)
+                    {
+                        var input = inputList[i];
+                        if (calcOutputMap[input['alias']] == null)
+                            removalIndices.push(i);
+                    }
+
+                    for (var i=removalIndices.length-1;i>=0;i--)
+                    {
+                        inputList.splice(removalIndices[i],1);
+                    }
+                }
+
+                $scope.setAggregationInputList = function (aggregateStep)
+                {
+                    var functions = [
+                        'MIN',
+                        'MAX',
+                        'AVG',
+                        'SUM',
+                        '(',
+                        ')'
+                    ];
+                    var inputList = [];
+
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                        var variable = $scope.variables[i];
+                        if (variable.userDefined)
+                        {
+                            inputList.push(
+                            {
+                                'text':variable.name,
+                                'alias':variable.alias,
+                                'userDefined': variable.userDefined,
+                                'dataType':variable.dataType
+                            }
+                            );
+                        }
+                        else
+                        {
+                            inputList.push(
+                            {
+                                'text':variable.typeaheadDisplayName,
+                                'alias':variable.alias,
+                                'userDefined': variable.userDefined,
+                                'dataType': variable.dataType
+                            }
+                            );
+                        }                        
+                                               
+                    }
+                    //Delete from Input List, variables without
+                    //the Include in calculation output flag
+                    $scope.removeNonCalculationOutputFlagInputs(inputList);
+
+                    for (var i=0;i<$scope.constants.length;i++)
+                    {
+                        var constant = $scope.constants[i];
+                        inputList.push(
+                            {
+                                'text':constant.name,
+                                'alias':constant.alias
+                            }
+                        );
+                    }
+                    for (var i=0;i<functions.length;i++)
+                    {
+                        var func = functions[i];
+                        inputList.push(
+                            {
+                                'text':func,
+                                'alias':func
+                            }
+                        );
+                    }
+                    aggregateStep.aggregateInputTagList = inputList;
+                }
+
+                $scope.setInputOutputTagList = function (pricingStep)
+                {
+                    var operators = ['+','-','*','/','^','(',')',','];
+                    var inputList = [];
+                    var outputList = [];
+                    var inputFunctions = ['DATEDIFF','AGE','AGEON','MONTH','YEAR','EOM','ADDDAY','ADDMONTH','ADDYEAR','ROUND','TODAY ( )'];
+                    
+                    //only when looping is enabled, we expose the INDEX,index and preivous function
+                    //console.log(' $scope.enableLooping is ' + $scope.enableLooping);
+                    if($scope.enableLooping) {
+	                    inputList.push (
+	                    {
+	                       'text':'ITERATION',
+	                       'alias':'ITERATION',
+	                       'userDefined':false,
+	                       'dataType':'Object'
+	                    });
+	                    
+	                    inputList.push (
+	                    {
+	                       'text':'index',
+	                       'alias':'index',
+	                       'userDefined':false,
+	                       'dataType':'Number'
+	                    });
+	                    
+	                    inputFunctions.push('PREVIOUS');
+	                }
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                        var variable = $scope.variables[i];
+                        if (variable.userDefined)
+                        {
+                            inputList.push(
+                            {
+                                'text':variable.name,
+                                'alias':variable.alias,
+                                'userDefined': variable.userDefined,
+                                'dataType':variable.dataType
+                            }
+                            );
+                        }
+                        else
+                        {
+                            inputList.push(
+                            {
+                                'text':variable.typeaheadDisplayName,
+                                'alias':variable.alias,
+                                'userDefined': variable.userDefined,
+                                'dataType': variable.dataType
+                            }
+                            );
+                           
+                        }
+                        
+                        if (variable.userDefined)
+                        {
+                            outputList.push(
+                            {
+                                'text':variable.name,
+                                'alias':variable.alias,
+                                'dataType':variable.dataType
+                            }
+                            );
+                        }                        
+                    }
+                    for (var i=0;i<$scope.constants.length;i++)
+                    {
+                        var constant = $scope.constants[i];
+                        inputList.push(
+                            {
+                                'text':constant.name,
+                                'alias':constant.alias
+                            }
+                        );
+                    }
+                    for (var i=0;i<operators.length;i++)
+                    {
+                        var operator = operators[i];
+                        inputList.push(
+                            {
+                                'text':operator,
+                                'alias':operator
+                            }
+                        );
+                    }
+                    //Add Input Functions 
+                    for (var i = 0; i < inputFunctions.length; i++) {
+                        var inputFunction = inputFunctions[i];
+                        inputList.push({
+                            'text':inputFunction,
+                            'alias':inputFunction                            
+                        });
+                    }
+                                       
+                    pricingStep.calculationInputTagList = inputList;
+                    pricingStep.calculationOutputTagList = outputList;
+                }
+
+                $scope.aliasPresent = function(inputHeader)
+                {
+                    for (var i=0;i<$scope.variables.length;i++)
+                    {
+                        var variable = $scope.variables[i];
+                        if (variable.name==inputHeader)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                $scope.matrixPicked = function(selectedMatrix,index)
+                {
+                    var pricingStep = $scope.pricingStepInputs[index];
+                    if (pricingStep.matrixName!='')
+                        $scope.deleteMatrixVariables(pricingStep.matrixName);
+                    pricingStep.matrixName = selectedMatrix.Name;
+                    pricingStep.matrixId = selectedMatrix.ObjectId;
+                    pricingStep.matrixInputTagList = [];
+                    pricingStep.matrixOutputTagList = [];
+                    pricingCalculationConfigurationFactory.getMatrixLookupTableHeaders(selectedMatrix.ObjectId,$scope.versionObjId).then( function(result, event)
+                    {
+                        var matrixName = selectedMatrix.Name;
+                        var matrixLookupHeader = result;
+                        var inputHeaders = matrixLookupHeader['inputHeader'];
+                        var outputHeaders = matrixLookupHeader['outputHeader'];
+                        pricingStep.matrixInputJSON = JSON.stringify(inputHeaders);
+                        pricingStep.matrixOutputJSON = JSON.stringify(outputHeaders);
+                        for (var i=0;i<inputHeaders.length;i++)
+                        {
+                            var inputHeader = inputHeaders[i]['name'];
+                            var inputAlias = $scope.removeSpace(inputHeader);
+                            var inputHeaderDataType = inputHeaders[i]['dataType'];
+                            //Check if variable is already present before adding
+                            if (!$scope.aliasPresent(inputHeader))
+                            {
+                                $scope.variables.push(
+                                    {
+                                        name:inputHeader,
+                                        typeaheadDisplayName: inputHeader ,
+                                        userDefined:false,
+                                        alias:inputAlias,
+                                        isEditable:false,
+                                        isSelected:false,
+                                        dataType: inputHeaderDataType,
+                                        matrixName: matrixName,
+                                        index: index                                 
+                                    }
+                                );                                
+                            }
+                            pricingStep.matrixInputTagList.push(
+                            {
+                                text:inputHeader
+                            });
+                        }
+                        var outputMap = {};
+                        //Create an alias for output map and add the output alias variables
+                        //to the variable list
+                        for (var j=0;j<outputHeaders.length;j++)
+                        {
+                            var outputHeader = outputHeaders[j]['name'];
+                            var outputAlias = $scope.removeSpace(matrixName)+'__'+$scope.removeSpace(outputHeader);
+                            var outputHeaderDataType = outputHeaders[j]['dataType'];
+                            pricingStep.matrixOutputTagList.push(
+                            {
+                                text:outputHeader
+                            });
+                            $scope.variables.push(
+                                {
+                                    name:outputHeader,
+                                    typeaheadDisplayName: outputHeader + ' ( '+ matrixName + ' )',
+                                    userDefined:false,
+                                    alias:outputAlias,
+                                    isEditable:false,
+                                    dataType: outputHeaderDataType,
+                                    matrixName: matrixName,
+                                    index: index                                 
+                                }
+                            );
+                            outputMap[outputHeader] = outputAlias;
+                        }
+                        pricingStep['outputAliasMap'] = JSON.stringify(outputMap);
+                    });
+                }
+
+                $scope.removeSpace = function(inputText)
+                {
+                    var outputText='';
+                    if (inputText!=null)
+                    {
+                        for (var i=0;i<inputText.length;i++)
+                        {
+                            if (inputText[i]!=' ')
+                                outputText = outputText + inputText[i];
+                        }
+                    }                    
+                    return outputText;
+                }
+
+                $scope.searchInputText = function(index,query,type)
+                {
+                    var deferred = $q.defer();
+                    var callbackfunction = function(result)
+                    {
+                        $scope.$apply(function()
+                        {
+                            var sresult = [];
+                            if (result)
+                            {
+                                sresult = angular.fromJson(result);
+                            }
+                            deferred.resolve(sresult);
+                        });
+                    };
+                    $scope.searchInputCallback(index,query,type,callbackfunction);
+                    return deferred.promise;
+                }
+
+                $scope.searchInputCallback = function(index,query,type,callback)
+                {
+                    var input = {};
+                    if (type == 'Calculation')
+                        input = $scope.pricingStepInputs[index];
+                    else
+                        input = $scope.aggregateStepInputs[index];
+
+                    $scope.setInputOutputTagList(input);
+                    query = query.trim();
+                    var filter = {};
+                    
+                    if (query!='')
+                    {
+                        filter['text'] = query;
+                        var data = $filter('filter')(input.calculationInputTagList, filter);
+                        data.sort(function (a, b) {
+                            return a.text.length - b.text.length;                                                        
+                        });
+                        callback(data);    
+                    }
+                    else
+                    {
+                        callback(input.calculationInputTagList); 
+                    }   
+                }
+
+                $scope.searchCalculationInput = function(query,index,type)
+                {
+                    var searchList = $scope.searchInputText(index,query,type);
+                    return searchList;
+                }
+
+                $scope.setConditionTagList = function (pricingStep) {
+                    $scope.setInputOutputTagList(pricingStep);
+                    //Add conditional based inputs to the list
+                    var conditionalInputs = ['AND', 'OR', '>', '>=', '<', '<=', '==', 
+                                             '<>', 'LIKE', 'NOTLIKE', 'INCLUDES', 'EXCLUDES'];
+                    for (var i = 0; i < conditionalInputs.length; i++) {
+                        var conditionalInput = conditionalInputs[i];
+                        pricingStep.calculationInputTagList.push({
+                                'text':conditionalInput,
+                                'alias':conditionalInput
+                        });
+                    }
+                }
+
+                $scope.searchConditionInputCallback = function(query,index,callback) {
+                    var input = $scope.pricingStepInputs[index];
+                    $scope.setConditionTagList(input);
+                    query = query.trim();
+                    var filter = {};
+                    if (query!=''){
+                        filter['text'] = query;
+                        var data = $filter('filter')(input.calculationInputTagList, filter);
+                        data.sort(function (a, b) {
+                            return a.text.length - b.text.length;
+                        });
+                        callback(data); 
+                    }else {
+                        callback(input.calculationInputTagList); 
+                    }
+                }
+
+                $scope.searchConditionInputText = function (query,index) {
+                    var deferred = $q.defer();
+                    var callbackfunction = function(result){
+                        $scope.$apply(function(){
+                            var sresult = [];
+                            if (result){
+                                sresult = angular.fromJson(result);
+                            }
+                            deferred.resolve(sresult);
+                        });
+                    };
+                    $scope.searchConditionInputCallback(query,index,callbackfunction);
+                    return deferred.promise;
+                }
+
+                $scope.searchConditionInput = function(query,index) {
+                    var searchList = $scope.searchConditionInputText(query,index);
+                    return searchList;
+                }
+
+                $scope.onConditionalInputChecked = function (index) {
+                    var pricingStepInput = $scope.pricingStepInputs[index];
+                    pricingStepInput.conditionalInputExpressions = [];
+                }
+
+                $scope.searchAggregateInputCallback = function(index,query,callback)
+                {
+
+                    var aggregateStepInput = $scope.aggregateStepInputs[index];
+                    $scope.setAggregationInputList(aggregateStepInput);
+                    query = query.trim();
+                    var filter = {};
+                    
+                    if (query!='')
+                    {
+                        filter['text'] = query;
+                        var data = $filter('filter')(aggregateStepInput.aggregateInputTagList, filter);
+                        data.sort(function (a, b) {
+                            return a.text.length - b.text.length;
+                        });
+                        callback(data);    
+                    }
+                    else
+                    {
+                        callback(aggregateStepInput.aggregateInputTagList); 
+                    }   
+                }
+
+                $scope.searchAggregateInputText = function(index,query)
+                {
+                    var deferred = $q.defer();
+                    var callbackfunction = function(result)
+                    {
+                        $scope.$apply(function()
+                        {
+                            var sresult = [];
+                            if (result)
+                            {
+                                sresult = angular.fromJson(result);
+                            }
+                            deferred.resolve(sresult);
+                        });
+                    };
+                    $scope.searchAggregateInputCallback(index,query,callbackfunction);
+                    return deferred.promise;
+                }
+
+                $scope.searchAggregateInput = function(query,index)
+                {
+                    var searchList = $scope.searchAggregateInputText(index,query);
+                    return searchList;
+                }
+
+                $scope.searchOutputText = function(index,query,type)
+                {
+                    var deferred = $q.defer();
+                    var callbackfunction = function(result)
+                    {
+                        $scope.$apply(function()
+                        {
+                            var sresult = [];
+                            if (result)
+                            {
+                                sresult = angular.fromJson(result);
+                            }
+                            deferred.resolve(sresult);
+                        });
+                    };
+                    $scope.searchOutputCallback(index,query,type,callbackfunction);
+                    return deferred.promise;
+                }
+
+                $scope.searchOutputCallback = function(index,query,type,callback)
+                {
+                    var input = {};
+                    if (type == 'Calculation')
+                        input = $scope.pricingStepInputs[index];
+                    else
+                        input = $scope.aggregateStepInputs[index];                    
+                    $scope.setInputOutputTagList(input);
+
+                    query = query.trim();
+                    var filter = {};
+                    
+                    if (query!='')
+                    {
+                        filter['text'] = query;
+                        var data = $filter('filter')(input.calculationOutputTagList, filter);
+                        data.sort(function (a, b) {
+                            return a.text.length - b.text.length;
+                        });
+                        callback(data);    
+                    }
+                    else
+                    {
+                        callback(input.calculationOutputTagList); 
+                    }   
+                }
+
+                $scope.searchCalculationOutput = function(query,index,type)
+                {
+                    return $scope.searchOutputText(index,query,type);
+                }
+
+                $scope.initializeCalculationSteps = function(svcStep)
+                {
+                    //Create Input and Output Tags for Matrix Lookup
+                    if (svcStep.functionType == 'Matrix Lookup')
+                    {
+                        svcStep.matrixMode = true;
+                        svcStep.calculationMode = false;
+                        var selectedMatrix = {
+                            'Name':svcStep.matrixName,
+                            'ObjectId':svcStep.matrixId
+                        };
+                        svcStep.selectedMatrix = selectedMatrix;
+                        var matrixInputs = JSON.parse(svcStep.matrixInputJSON);
+                        var matrixInputTags = [];
+                        var matrixOutputs = JSON.parse(svcStep.matrixOutputJSON);
+                        var matrixOutputTags = [];
+                        for (var j=0;j<matrixInputs.length;j++)
+                        {
+                            var matrixInput = matrixInputs[j]['name'];
+                            matrixInputTags.push(
+                                {
+                                    text:matrixInput
+                                }
+                            );
+                        }
+                        for (var j=0;j<matrixOutputs.length;j++)
+                        {
+                            var matrixOutput = matrixOutputs[j]['name'];
+                            matrixOutputTags.push(
+                                {
+                                    text:matrixOutput
+                                }
+                            );
+                        }
+                        svcStep.matrixInputTagList = matrixInputTags;
+                        svcStep.matrixOutputTagList = matrixOutputTags;
+                    }
+                    //Create Calculation Formula and Output Tags for Calculation
+                    else
+                    {
+                        svcStep.matrixMode = false;
+                        svcStep.calculationMode = true;
+                        var calculationFormulaTags = JSON.parse(svcStep.calculationFormulaTags);
+                        var calculationFormulaList = [];
+                        var calculationOutputList = [];
+                        var calculationOutput = JSON.parse(svcStep.calculationOutput);
+                        for (var j=0;j<calculationFormulaTags.length;j++)
+                        {
+                            var calculationFormulaTag = calculationFormulaTags[j];
+                            calculationFormulaList.push(
+                            {
+                                text: calculationFormulaTag['text'],
+                                alias: calculationFormulaTag['alias'],
+                                userDefined: calculationFormulaTag['userDefined'],
+                                dataType: calculationFormulaTag['dataType']
+
+                            }
+                            );                            
+                        }
+                        calculationOutputList.push(
+                        {
+                            text: calculationOutput.name,
+                            dataType:calculationOutput.dataType,
+                            alias: calculationOutput.alias
+                        }
+                        );
+                        svcStep.calculationInputExpressions = calculationFormulaList;
+                        svcStep.calculationOutput = calculationOutputList;
+                        $scope.setInputOutputTagList(svcStep);
+                    }
+                    if (svcStep.conditionalInputData!=null){
+                        svcStep.conditionalInputExpressions = JSON.parse(svcStep.conditionalInputData);                        
+                    }
+                }
+                
+                $scope.initializeAggregationSteps = function(svcStep)
+                {
+                    var calculationFormulaTags = JSON.parse(svcStep.calculationFormulaTags);
+                    var calculationFormulaList = [];
+                    var calculationOutputList = [];
+                    var calculationOutput = JSON.parse(svcStep.calculationOutput);
+                    for (var j=0;j<calculationFormulaTags.length;j++)
+                    {
+                        var calculationFormulaTag = calculationFormulaTags[j];
+                        calculationFormulaList.push(
+                        {
+                            text: calculationFormulaTag['text'],
+                            alias: calculationFormulaTag['alias'],
+                            userDefined: calculationFormulaTag['userDefined'],
+                            dataType: calculationFormulaTag['dataType']
+
+                        }
+                        );                            
+                    }
+                    calculationOutputList.push(
+                    {
+                        text: calculationOutput.name,
+                        dataType:calculationOutput.dataType,
+                        alias: calculationOutput.alias
+                    }
+                    );
+                    if (svcStep['functionType'] == 'Calculation')
+                    {
+                        svcStep.aggregateMode = false;
+                        svcStep.calculationMode = true;
+                        
+                        svcStep.calculationInputExpressions = calculationFormulaList;
+                        svcStep.calculationOutput = calculationOutputList;
+                        $scope.setInputOutputTagList(svcStep);
+                    }
+                    else
+                    {
+                        svcStep.aggregateMode = true;
+                        svcStep.calculationMode = false;
+                        svcStep.aggregateInputExpressions = calculationFormulaList;
+                        svcStep.aggregateOutput  = calculationOutputList;
+                    }
+                    $scope.aggregateStepInputs.push(svcStep);
+                }
+
+                $scope.initializePricingSteps = function()
+                {
+                    $scope.makeVariableEditable(-1);
+                    $scope.makeConstantEditable(-1);
+                    var aggregationIndices = [];
+                    //Iterate through the Pricing Service Steps 
+                    //and create the tags
+                    for (var i=0;i<$scope.pricingStepInputs.length;i++)
+                    {
+                        var svcStep = $scope.pricingStepInputs[i];
+                        if (svcStep['taskType'] == null)
+                        {
+                            $scope.initializeCalculationSteps(svcStep);
+                        }
+                        else if (svcStep['taskType'] == 'Aggregation')
+                        {
+                            aggregationIndices.push(i);
+                            $scope.initializeAggregationSteps(svcStep);
+                        }                        
+                    }
+                    //Remove Aggregation Steps from the Pricing Steps
+                    for (var i=aggregationIndices.length-1;i>=0;i--)
+                    {
+                        $scope.pricingStepInputs.splice(aggregationIndices[i],1);
+                    }
+
+                }
+                $scope.initializePricingSteps(); 
+                
+                $scope.navigateMatrix = function(matrixId) 
+                {                 
+                                     
+                   if(!$scope.isSforce)
+                   {
+                        window.top.location.href = '{!$Site.BaseRequestUrl}' + '/' + matrixId;
+                        return false;
+                   }
+                   else if ($scope.isSforce)
+                   {
+                        sforce.one.navigateToURL('/'+matrixId);
+                   }
+                        
+                };
+
+                $scope.reorderSteps = function(index, pricingStep)
+                {
+                    var i;   
+                    if(index > $scope.insertedItem){
+                        $scope.pricingStepInputs[index + 1] = $scope.pricingStepInputs[index]; 
+                    }
+                    $scope.pricingStepInputs.splice(index, 1);
+                    for (i = 0; i < $scope.pricingStepInputs.length; i++) {
+                        $scope.pricingStepInputs[i].sequence = i + 1;
+                    }
+                } 
+
+                $scope.reorderAggSteps = function(index, aggStep)
+                {
+                    var i;   
+                    if(index > $scope.insertedItem){
+                        $scope.aggregateStepInputs[index + 1] = $scope.aggregateStepInputs[index]; 
+                    }
+                    $scope.aggregateStepInputs.splice(index, 1);
+                    for (i = 0; i < $scope.aggregateStepInputs.length; i++) {
+                        $scope.aggregateStepInputs[i].sequence = i + 1;
+                    }
+                } 
+
+                $scope.insertedStep = function(index, item){
+                    $scope.insertedItem = index;
+                    $scope.selectedItem = item;
+                }
+             });  
+
+        </script>
+        <script type="text/javascript">
+            function TagToolTip() {
+                this.showToolTip();
+            }
+            function DisableInputs() {
+                this.disableAllInputs();
+            }
+            var $j = jQuery;
+            TagToolTip.prototype.showToolTip = function() {
+                var tagItem = $j('.tag-item');
+                tagItem.each(function() {                    
+                    $j(this).hover(function() {                     
+                        /* 
+                        Make sure the tag is equal to or wider than 120px as that is where the ellipses kicks in,
+                        and make sure spanCreated data does not exist on the element yet to avoid duplication
+                        */                      
+                        if($j(this).outerWidth() >= 120) {
+                            // Add hover class every time
+                            $j(this).addClass('hover');
+                            // Check for spanCreated data
+                            if(!$j(this).data('spanCreated')) {
+                                var tagText = $j(this).find('span.display-text').text();
+                                $j(this).append('<span class="tag-tooltip">'+tagText+'</span>');
+                                // Add spanCreated data to the element because we've already added the span element
+                                $j(this).data('spanCreated', true);
+                                var tooltip = $j(this).find('span.tag-tooltip'),
+                                    tooltipW = tooltip.outerWidth(),
+                                    tagW = $j(this).outerWidth(),
+                                    differenceW = ((tooltipW - tagW)/2)*-1;
+                                tooltip.css({'left': differenceW + 'px'});
+                            }                           
+                        }
+                    }, function() {
+                        $j(this).removeClass('hover');
+                    });
+                });             
+            };
+
+            DisableInputs.prototype.disableAllInputs = function() {
+                var vlocity = $j('.vlocity');
+                if(vlocity.hasClass('vlocity-readonly')) {
+                    vlocity.find('input').prop('disabled','disabled');
+                }
+            };
+
+            angular.element(document).ready(function() {
+                var tagToolTip = new TagToolTip(),
+                    disableInputs = new DisableInputs();
+            });
+            $j(window).on('new-tag-added', function() {
+                setTimeout(function() {
+                    var tagToolTip = new TagToolTip();
+                },100);                
+            });             
+        </script>
+        <body>
+            <!-- Detail HTML Content -->
+            <div ng-controller="detail" class="vlocity via-slds calculationPage" ng-class="{'vlocity-readonly':versionEnabled}">
+              <div class="slds-spinner_container vloc-spinner_container vloc-show-loader" style="position: fixed;width: 100%; height: 100%;" ng-if="validationWarning && validationErrors.length === 0">
+                    <div class="slds-notify_container">
+                      <div class="slds-notify slds-notify--alert slds-theme--warning" role="alert">
+                        <div class="slds-notify__content">
+                          <h2 class="slds-text-heading--small" style="color: white">{{validationWarning}}</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert" style="position:absolute; top:10rem">
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+                <div class="readonly-check" ng-class="{'vlocity-readonly':versionEnabled}">
+                    <button class="btn btn-primary" ng-click="savePricingStep()">{!$Label.CPSave}</button>
+                    <div ng-repeat="validationError in validationErrors" class="alert alert-danger" role="alert">
+                        {{validationError}}
+                    </div>                     
+                    <accordion close-others="false">
+                        <accordion-group ng-init="isOneOpen = true" is-open="isOneOpen" ng-click="oneToggle = !oneToggle" ng-class="{'is-open': !oneToggle}">
+                            <accordion-heading>
+                                <i class="icon icon-v-right-arrow"></i> {!$Label.Variables} {!$Label.and} {!$Label.Constants}
+                            </accordion-heading>
+                            <div class="variables-constants-container">
+                                <div class="variables">
+                                    <h3>{!$Label.Variables}</h3>
+                                    <table class="table" onblur="disableAllVariableRows()">
+                                        <tr>
+                                            <th>{!$Label.Name}</th>
+                                            <th>{!$Label.Datatype}</th>
+                                            <th>{!$Label.Precision}</th>
+                                            <th>{!$Label.DefaultValue}</th>
+                                            <th>{!$Label.VariableId}</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr ng-click="makeVariableEditable($index)" ng-repeat="variable in variables track by $index">
+                                            <td ng-show="variable.isEditable">
+                                                <input type="text" 
+                                                       class="form-control"
+                                                       ng-model="variable.name" 
+                                                       ng-change="createVariableAlias($index)"
+                                                       placeholder="Enter a Name"/>
+                                            </td>
+                                            <td ng-show="variable.isEditable">
+                                                <select ng-model="variable.dataType"  class="form-control"
+                                                        ng-options="variableType for variableType in variableTypes"
+                                                        ng-change="onVariableDataTypeChange($index)"
+                                                        style="width: 144px">
+                                                </select>
+                                            </td>
+                                            <td ng-show="variable.isEditable && variable.dataType!='Text' && variable.dataType!='Boolean'  && variable.dataType!='Date'">
+                                                <input type="number" 
+                                                       class="form-control"
+                                                       ng-model="variable.precision"
+                                                       placeholder="Enter Precision"/>
+                                            </td>
+                                            <td ng-show="variable.isEditable && (variable.dataType == 'Text' || variable.dataType == 'Boolean' || variable.dataType == 'Date')">{{variable.precision}}</td>
+                                            <td ng-show="!variable.isEditable" ng-class="{'var-read-only':!variable.userDefined}">{{variable.name}}</td>
+                                            <td ng-show="!variable.isEditable" ng-class="{'var-read-only':!variable.userDefined}">{{variable.dataType}}</td>
+                                            <td ng-show="!variable.isEditable" ng-class="{'var-read-only':!variable.userDefined}">{{variable.precision}}</td>
+                                            <td ng-show="variable.isSelected">
+                                                <input type="text" 
+                                                       class="form-control"
+                                                       ng-model="variable.defaultValue"
+                                                       placeholder="Enter Default Value"/>
+                                            </td>
+                                            <td ng-show="!variable.isSelected" ng-class="{'var-read-only':false}" title="{{variable.defaultValue}}">{{variable.defaultValue}}</td>
+                                            <td ng-show="variable.isEditable">{{variable.alias}}</td>
+                                            <td ng-show="!variable.isEditable" ng-class="{'var-read-only':!variable.userDefined}" title="{{variable.alias}}">{{variable.alias}}</td>
+                                            
+                                            <td>
+                                                <i ng-show="variable.userDefined" class="icon icon-v-trash" ng-click="deleteFromVariables($index)"></i>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <a class="add-link" ng-click="addVariableRow()">
+                                        <i class="icon icon-v-plus-circle"></i>
+                                        <span>{!$Label.AddVariable}</span>
+                                    </a>
+                                                            
+                                </div>
+                                <div class="constants">
+                                    <h3>{!$Label.Constants}</h3>
+                                    <table class="table">
+                                        <tr>
+                                            <th>{!$Label.Name}</th>
+                                            <th>{!$Label.Datatype}</th>
+                                            <th>{!$Label.Precision}</th>
+                                            <th>{!$Label.Value}</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr ng-click="makeConstantEditable($index)" ng-blur="makeConstantEditable(-1)" ng-repeat="constant in constants track by $index">
+                                            <td ng-show="constant.isEditable">
+                                                <input type="text" 
+                                                       class="form-control"
+                                                       ng-model="constant.name"
+                                                       ng-change="createConstantAlias($index)" 
+                                                       placeholder="Enter a Name"/>
+                                            </td>
+                                            <td ng-show="constant.isEditable">
+                                                <select ng-model="constant.dataType"  class="form-control"
+                                                        ng-options="variableType for variableType in constantTypes"
+                                                        ng-change="onConstantDataTypeChange($index)" 
+                                                        style="width: 144px">
+                                                </select>
+                                            </td>
+                                            <td ng-show="constant.isEditable && constant.dataType!='Text'">
+                                                <input type="number" 
+                                                       class="form-control"
+                                                       ng-model="constant.precision"
+                                                       placeholder="Enter Precision"/>
+                                            </td>
+                                            <td ng-show="constant.isEditable && constant.dataType == 'Text'">{{constant.precision}}</td>
+                                            <td ng-show="constant.isEditable">
+                                                <input type="text" 
+                                                       class="form-control"
+                                                       ng-change="validateConstantValue($index)"
+                                                       ng-model="constant.value"
+                                                       bs-tooltip="true"
+                                                       ng-attr-title="{{constant.valuePlaceHolder}}" 
+                                                       placeholder="{{constant.valuePlaceHolder}}"/>
+                                            </td>                                            
+                                            <td ng-show="!constant.isEditable">{{constant.name}}</td>
+                                            <td ng-show="!constant.isEditable">{{constant.dataType}}</td>
+                                            <td ng-show="!constant.isEditable">{{constant.precision}}</td>
+                                            <td ng-show="!constant.isEditable" title="{{constant.value}}">{{constant.value}}</td>
+                                            <td>
+                                                <i class="icon icon-v-trash" ng-click="deleteFromConstants($index)"></i>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
+                                    <a class="add-link" ng-click="addConstantRow()">
+                                        <i class="icon icon-v-plus-circle"></i>
+                                        <span>{!$Label.AddConstant}</span>
+                                    </a>
+                                                           
+                                </div>
+                            </div>
+                        </accordion-group>
+
+                        <accordion-group ng-click="twoToggle = !twoToggle" ng-class="{'is-open': twoToggle}">
+                            <accordion-heading>
+                                <i class="icon icon-v-right-arrow"></i> {!$Label.CPPreProcClassName} <span class="optional">({!$Label.CPOptional})</span>
+                            </accordion-heading>
+                            <div class="form-group class-form pre-class">
+                                <div>
+                                    <span class="alert alert-warning" role="alert">{!$Label.CPProcClassWarning}</span> 
+                                </div>
+                                <label for="preprocessor-class-name"><h5>{!$Label.CPEnterPreProcClassName}</h5></label>
+                                <input type="text" id="preprocessor-class-name" class="form-control" placeholder="{!$Label.CPEnterClassPlaceholder}" ng-model="customClass.preProcessorClassName"/>
+                                <!-- <i class="icon icon-v-information-line" tooltip-placement="right" tooltip="Adapter Apex class that implements the Vlocity Open Interface. The class must support the 'calculate' method."></i> -->                                
+                            </div>
+                        </accordion-group>
+
+                        <accordion-group ng-init="isThreeOpen = true" is-open="isThreeOpen" ng-click="threeToggle = !threeToggle" ng-class="{'is-open': !threeToggle}">
+                            <accordion-heading>
+                                <i class="icon icon-v-right-arrow"></i> {!$Label.CalculationSteps}
+                            </accordion-heading>
+                            <div class="calc-steps">
+                                <h5>{!$Label.CPAddCalStep}</h5>
+                                <ul dnd-list="pricingStepInputs" dnd-inserted="insertedStep(index, item)">
+                                <li class="row draggable-items" ng-repeat="pricingStepInput in pricingStepInputs track by $index" dnd-draggable="pricingStepInput" dnd-effect-allowed="move" dnd-moved="reorderSteps($index, pricingStepInput)">
+                                    <i class="icon icon-v-grip" add-hover-class="true"></i>
+                                    <span class="row-index abs">{{pricingStepInput.sequence}}</span>
+                                    <div class="col-xs-2 calc-col">
+                                        <div class="radio-wrapper">
+                                            <input type="radio" id="matrix-lookup-{{$index+1}}" ng-model="pricingStepInput.functionType" value="Matrix Lookup" ng-change="functionTypeChanged($index)" />
+                                            <label for="matrix-lookup-{{$index+1}}">{!$Label.MatrixLookup}</label>
+                                        </div>
+                                        <div class="radio-wrapper">
+                                            <input type="radio" id="calculation-{{$index+1}}" ng-model="pricingStepInput.functionType" value="Calculation" ng-change="functionTypeChanged($index)" />
+                                            <label for="calculation-{{$index+1}}">{!$Label.Calculation}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 matrix-mode" ng-show="pricingStepInput.matrixMode">
+                                        <input class="form-control" ng-model="pricingStepInput.selectedMatrix"  type="text" placeholder="Matrix Name" value="pricingStepInput.selectedMatrix.Name" typeahead="matrix as matrix.Name for matrix in pricingStepInput.matrixList | filter:{Name:$viewValue} | limitTo:8" typeahead-on-select="matrixPicked(pricingStepInput.selectedMatrix,$index)" />
+                                        <tags-input placeholder="Inputs" ng-model="pricingStepInput.matrixInputTagList" read-Only="true" disable-Tag="true" on-tag-added="alert('asdf')"  add-from-autocomplete-only="true" allow-leftover-text="false" >
+                                        </tags-input>
+                                        <!--Condition for Matrix -->
+                                        <div class="checkbox-wrapper checkbox-wrapper-conditional-section">
+                                            <input type="checkbox" id="show-conditional-section-{{$index+1}}" 
+                                                   ng-model="pricingStepInput.conditionalStep"/>
+                                            <label for="show-conditional-section-{{$index+1}}">{!$Label.ConditionalStep}</label>
+                                        </div>
+                                        <tags-input ng-model="pricingStepInput.conditionalInputExpressions" min-length="1" placeholder="Enter Condition" on-tag-added="addTooltipToTag()"  add-from-autocomplete-only="true" allow-leftover-text="false"  replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true" bind-internal-input-to="variable" class="matrix-condition-typeahead" ng-show="pricingStepInput.conditionalStep">
+                                            <auto-complete source="searchConditionInput($query,$index)" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                        <div style="clear:both;padding-top:13px" ng-if="pricingStepInput.selectedMatrix.Name" >                                       
+                                         <a  ng-click="navigateMatrix(pricingStepInput.selectedMatrix.ObjectId)">{!$Label.CPNavigateToMatrix}{{pricingStepInput.selectedMatrix.Name}}</a>
+                                         </div> 
+                                    </div>
+                                    <div class="col-xs-4 matrix-mode" ng-show="pricingStepInput.matrixMode">
+                                        <tags-input placeholder="Outputs" ng-model="pricingStepInput.matrixOutputTagList" read-Only="true" disable-Tag="true"  add-from-autocomplete-only="true" allow-leftover-text="false" >
+                                        </tags-input>
+                                        <div class="checkbox-wrapper">
+                                            <input type="checkbox" id="include-calc-output-{{$index+1}}" ng-model="pricingStepInput.resultIncluded" />
+                                            <label for="include-calc-output-{{$index+1}}">{!$Label.IncludeinCalculationOutput}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 calc-mode" ng-show="pricingStepInput.calculationMode">
+                                        <tags-input ng-model="pricingStepInput.calculationInputExpressions" min-length="1" placeholder="Type or press space to see available inputs" on-tag-added="addTooltipToTag()"  add-from-autocomplete-only="true" allow-leftover-text="false"  replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true" bind-internal-input-to="variable">
+                                            <auto-complete source="searchCalculationInput($query,$index,'Calculation')" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                        <!-- Condition for Calculation-->
+                                        <div class="checkbox-wrapper checkbox-wrapper-conditional-section">
+                                            <input type="checkbox" id="show-conditional-section-{{$index+1}}" 
+                                                   ng-model="pricingStepInput.conditionalStep"/>
+                                            <label for="show-conditional-section-{{$index+1}}">{!$Label.ConditionalStep}</label>
+                                        </div>
+                                        <tags-input ng-model="pricingStepInput.conditionalInputExpressions" min-length="1" placeholder="Enter Condition" on-tag-added="addTooltipToTag()"  add-from-autocomplete-only="true" allow-leftover-text="false"  replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true" bind-internal-input-to="variable" class="matrix-condition-typeahead" ng-show="pricingStepInput.conditionalStep">
+                                            <auto-complete source="searchConditionInput($query,$index)" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                    </div>
+                                    <div class="col-xs-4 calc-mode" ng-show="pricingStepInput.calculationMode">
+                                        <tags-input ng-model="pricingStepInput.calculationOutput" min-length="1" placeholder="Type or press space to see available outputs" on-tag-added="addTooltipToTag()"  add-from-autocomplete-only="true" allow-leftover-text="false"  replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true">
+                                            <auto-complete source="searchCalculationOutput($query,$index,'Calculation')" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                        
+                                        <div class="checkbox-wrapper">
+                                            <input type="checkbox" id="include-calc-output-{{$index+1}}" ng-model="pricingStepInput.resultIncluded"/>
+                                            <label for="include-calc-output-{{$index+1}}">{!$Label.IncludeinCalculationOutput}</label>
+                                        </div>
+                                    </div>
+                                    <span class="row-remove abs">
+                                        <i class="icon icon-v-trash" ng-click="deleteFromPricingStep($index)"></i>
+                                    </span>
+                                </li>
+                                </ul>
+                                <!-- /.row -->
+                                
+                                <a class="add-link" ng-click="addPricingCalculationStep()">
+                                        <i class="icon icon-v-plus-circle"></i> 
+                                        <span>{!$Label.AddStep}</span>
+                                </a>                    
+                            </div>
+                        </accordion-group>
+
+                        <accordion-group ng-click="fourToggle = !fourToggle" ng-class="{'is-open': fourToggle}">
+                            <accordion-heading>
+                                <i class="icon icon-v-right-arrow"></i> {!$Label.CPAggregationSteps} <span class="optional">({!$Label.CPOptional})</span>
+                            </accordion-heading>
+                            <div class="calc-steps">
+                                <h5>{!$Label.CPAddAggStep}</h5>
+                                <ul dnd-list="aggregateStepInputs" dnd-inserted="insertedStep(index, item)">
+                                <li class="row draggable-items" ng-repeat="aggregateStepInput in aggregateStepInputs track by $index" dnd-draggable="aggregateStepInput" dnd-effect-allowed="move" dnd-moved="reorderAggSteps($index, aggregateStepInput)">
+                               <i class="icon icon-v-grip" add-hover-class="true"></i> 
+                                    <span class="row-index abs">{{aggregateStepInput.sequence}}</span>
+                                    <div class="col-xs-2 calc-col">
+                                        <div class="radio-wrapper">
+                                            <input type="radio" id="aggregation-{{$index+1}}" ng-model="aggregateStepInput.functionType" value="Aggregation" ng-change="aggregateFunctionTypeChanged($index)" />
+                                            <label for="aggregation-{{$index+1}}">{!$Label.CPAggregation}</label>
+                                        </div>
+                                        <div class="radio-wrapper">
+                                            <input type="radio" id="aggregation-calculation-{{$index+1}}" ng-model="aggregateStepInput.functionType" value="Calculation" ng-change="aggregateFunctionTypeChanged($index)" />
+                                            <label for="aggregation-calculation-{{$index+1}}">{!$Label.Calculation}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 calc-mode" ng-show="aggregateStepInput.calculationMode">
+                                        <tags-input text="text1" ng-model="aggregateStepInput.calculationInputExpressions" min-length="1" placeholder="Type or press space to see available inputs" on-tag-added="addTooltipToTag()" add-from-autocomplete-only="true" allow-leftover-text="false" replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true">
+                                            <auto-complete source="searchCalculationInput($query,$index,'Aggregation')" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                    </div> 
+
+                                    <div class="col-xs-4 calc-mode" ng-show="aggregateStepInput.calculationMode">
+                                        <tags-input text="text" ng-model="aggregateStepInput.calculationOutput" min-length="1" placeholder="Type or press space to see available outputs" on-tag-added="addTooltipToTag()" add-from-autocomplete-only="true" allow-leftover-text="false" replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true">
+                                            <auto-complete source="searchCalculationOutput($query,$index,'Aggregation')" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                        <div class="checkbox-wrapper">
+                                            <input type="checkbox" id="include-calc-aggregate-output-{{$index+1}}" ng-model="aggregateStepInput.resultIncluded" />
+                                            <label for="include-calc-aggregate-output-{{$index+1}}">{!$Label.IncludeinCalculationOutput}</label>
+                                        </div>                                    
+                                    </div>
+
+                                    <div class="col-xs-6 calc-mode" ng-show="aggregateStepInput.aggregateMode">
+                                        <tags-input text="text2" ng-model="aggregateStepInput.aggregateInputExpressions" min-length="1" placeholder="Type or press space to see available inputs" on-tag-added="addTooltipToTag()" add-from-autocomplete-only="true" allow-leftover-text="false" replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true">
+                                            <auto-complete source="searchAggregateInput($query,$index)" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                    </div>
+                                    <div class="col-xs-4 calc-mode" ng-show="aggregateStepInput.aggregateMode">
+                                        <tags-input ng-model="aggregateStepInput.aggregateOutput" min-length="1" placeholder="Type or press space to see available outputs" on-tag-added="addTooltipToTag()" add-from-autocomplete-only="true" allow-leftover-text="false" replace-spaces-with-dashes="false" allow-Duplicates="true" disable-Tag="true">
+                                            <auto-complete source="searchCalculationOutput($query,$index,'Aggregation')" max-results-to-show="5" min-length="1" />
+                                        </tags-input>
+                                        <div class="checkbox-wrapper">
+                                            <input type="checkbox" id="include-calc-aggregate-output-{{$index+1}}" ng-model="aggregateStepInput.resultIncluded" />
+                                            <label for="include-calc-aggregate-output-{{$index+1}}">{!$Label.IncludeinCalculationOutput}</label>
+                                        </div>                                    
+                                    </div>
+                                    <span class="row-remove abs">
+                                        <i class="icon icon-v-trash" ng-click="deleteFromAggregationStep($index)"></i>
+                                    </span>                            
+                                </li>
+                                </ul>
+                                <a class="add-link" ng-click="addAggregationStep()">
+                                    <i class="icon icon-v-plus-circle"></i> 
+                                    <span>{!$Label.AddStep}</span>
+                                </a> 
+                            </div>
+                        </accordion-group>
+
+                        <accordion-group ng-click="fiveToggle = !fiveToggle" ng-class="{'is-open': fiveToggle}">
+                            <accordion-heading>
+                                <i class="icon icon-v-right-arrow"></i> {!$Label.CPPostProcClass} <span class="optional">({!$Label.CPOptional})</span>
+                            </accordion-heading>
+                            <div class="form-group class-form post-class">
+                                <div>
+                                    <span class="alert alert-warning" role="alert">{!$Label.CPProcClassWarning}</span> 
+                                </div>
+                                <label for="preprocessor-class-name"><h5>{!$Label.CPEnterPostProcClassName}</h5></label>
+                                <input type="text" id="preprocessor-class-name" class="form-control" placeholder="{!$Label.CPEnterClassPlaceholder}" ng-model="customClass.postProcessorClassName"/>
+                                <!-- <i class="icon icon-v-information-line" tooltip-placement="right" tooltip="Adapter Apex class that implements the Vlocity Open Interface. The class must support the 'calculate' method."></i> -->
+                            </div>
+                        </accordion-group>
+                    </accordion>
+                    <button class="btn btn-primary" ng-click="savePricingStep()">{!$Label.CPSave}</button>   
+                </div><!-- /.readonly-check -->   
+            </div><!-- /.vlocity-->
+        </body>            
+    </html>
+</apex:page>

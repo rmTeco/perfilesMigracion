@@ -1,0 +1,121 @@
+<apex:page standardStylesheets="true" showHeader="false" sidebar="false" docType="html-5.0">
+   <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+   <style>
+    body {
+      background-image: url('{!$Resource.greybg}');
+      background-repeat: repeat;}
+    strong {
+      font-weight: bold;}
+    .vlc-move-wrapper {
+        background-color: #f2f2f2;
+        color: #777;
+        margin-top: 20px;}
+        .vlc-move-wrapper .header {
+            height: 265px;
+            width: 1224px;
+            margin: 0 auto;
+            margin-top: -20px;}
+            .vlc-move-wrapper .header .headline {
+                float: right;
+                width: 750px;
+                padding: 0 215px 0 10px;
+                border-left: 1px solid #cac8c8;
+                margin-top: 20px;}
+            .vlc-move-wrapper .header .headline h1 {
+                color: #444;
+                text-shadow: #fff 1px 1px 1px;}
+            .vlc-move-wrapper .header .headline p {
+                font-size: 14px;
+                line-height: 20px;
+                color: #3b3b3b;
+                margin-bottom: 10px;}
+        .vlc-move-wrapper .vlcpanel {
+            border-top: 4px solid #cbc9c9;
+            background: url("{!$Resource.greybg}") repeat #e6e6e6;
+            margin: 50px auto 0;}
+            .vlc-move-wrapper .vlcpanel .content {
+                width: 980px;
+                margin: -80px auto auto;
+                background-color: #fff;
+                -webkit-box-shadow: 0 -8px 30px 0 rgba(33, 29, 31, 0.38);
+                -moz-box-shadow: 0 -8px 30px 0 rgba(33, 29, 31, 0.38);
+                box-shadow: 0 -8px 30px 0 rgba(33, 29, 31, 0.38);}
+                    .vlc-move-wrapper .vlcpanel .content .top .title {
+                        background: url("{!$Resource.movepin}") no-repeat top left;
+                        font-size: 18px;
+                        padding: 7px 0 7px 40px;
+                        color: #3b3b3b;}
+                    .vlc-move-wrapper .vlcpanel .content .bot .form {
+                        padding: 3px 45px;          
+                        margin: 8px;}
+                        .vlc-move-wrapper .vlcpanel .content .bot .form .title {
+                            margin: 0 0 10px 0;
+                            line-height: 1.38em;}
+                        .vlc-move-wrapper .vlcpanel .content .bot .form .vlcinput {
+                        float: left;}
+                            .vlc-move-wrapper .vlcpanel .content .bot .form .vlcinput label {
+                                line-height: normal;
+                                font-size: 13px;}
+                        .vlc-move-wrapper .vlcpanel .content .bot .form .vlc-button {
+                            padding-top: 20px;}
+    .vlocity .panel-oui {
+        border-top: 1px solid #CBC9C9 !important;}                
+        .vlocity .panel-oui > .panel-heading > .icon:before {
+            color: #000000;}
+            .vlocity .panel-oui > .panel-heading > .panel-title > span {
+                font-size: 18px !important;
+                text-transform: none !important;}  
+    .vlocity .panel-group {
+        border: 4px solid #cbc9c9;}
+        .vlocity .panel-group .panel {
+            margin-top: 10px;}    
+    .vlocity [class*="v-col-md"] {
+        padding: 0 0px;}
+    .vlocity .horizontal-cart .panel-body section {
+        border-bottom: none !important;
+        padding: 0 !important;}
+    .vlocity .vlc-cart-knowledge-padding {
+         margin: 0 !important;
+         border: 4px solid #cbc9c9;            
+        margin-bottom: 5px !important;}
+   </style>
+   <html>
+   <head>
+   <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__JQUERYJS)}"/>
+   </head> 
+   <body>
+    <div class="vlc-move-wrapper">
+        <div class="header">
+            <div class="headline">
+                <h1><br/><br/><strong>{!$Label.vlocity_cmt__macdfdotitle}</strong></h1><br/>
+            </div>
+        </div>
+        <div class="vlcpanel">
+            <div class="content">
+                <div class="vlocity" ng-app="MACDFdo">
+                    <c:BusinessProcessComponent strOmniScriptType="MACD"
+                                strOmniScriptSubType="FDO"
+                                strOmniScriptLang="English"/>
+                    <c:BusinessProcessHelperComponent />
+                    <c:JSONTreeHTMLTemplateComponent />
+                    <c:MACDMoveAssetHTMLTemplateComponent />         
+                    <c:RenderAssetTreeHierarchyComponent />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <apex:includeScript value="{!$Resource.vlocity_cmt__AngularAnimate}"/>
+    <apex:includeScript value="{!$Resource.vlocity_cmt__AngularMaterialJS}"/>
+    <apex:includeScript value="{!$Resource.vlocity_cmt__AngularAriaJS}"/>
+    <apex:includeScript value="{!$Resource.vlocity_cmt__AngularMessagesJS}"/>
+    <apex:includeScript value="{!$Resource.vlocity_cmt__AngularAnimateMinJS}"/>
+
+    <script type="text/javascript">
+        (function(){                                                                     
+            var myModule = angular.module('MACDFdo', ['vlocity-business-process', 'ngMaterial']);
+        })(); 
+    </script>    
+  </body>
+  </html>
+</apex:page>

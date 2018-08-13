@@ -1,0 +1,51 @@
+<span class="slds-assistive-text">{{obj.objAPIName}}</span>
+<div class="slds-media">
+  <div class="slds-media__body">
+    <div class="slds-media slds-media--timeline slds-timeline__media--{{$root.cardIconFactory(obj.objAPIName + ' ' + obj.title).sprite}}-{{$root.cardIconFactory(obj.objAPIName + ' ' + obj.title).icon}}">
+      <div class="slds-media__figure slds-timeline__icon">
+        <div class="slds-icon_container">
+            <vloc-card-icon data="data" obj="obj" size="'small'" ng-if="data.sprite && data.icon"></vloc-card-icon>
+            <slds-svg-icon sprite="$root.cardIconFactory(obj.objAPIName + ' ' + obj.title).sprite" icon="$root.cardIconFactory(obj.objAPIName + ' ' + obj.title).icon" size="'small'" extra-classes="'slds-icon-' + $root.cardIconFactory(obj.objAPIName + ' ' + obj.title).sprite + '-' + $root.cardIconFactory(obj.objAPIName + ' ' + obj.title).icon" no-hint="true"
+              ng-if="!data.sprite || !data.icon"></slds-svg-icon>
+        </div>
+      </div>
+      <div class="slds-media__body" ng-controller="viaTaskController">
+        <div ng-class="{'slds-media': obj.objAPIName == 'Task'}">
+          <div class="slds-media__figure" ng-if="obj.objAPIName == 'Task'">
+            <label class="slds-checkbox" >
+              <slds-svg-icon sprite="'utility'" icon="'spinner'" size="'x-small'" ng-if="obj.loading"></slds-svg-icon>
+              <input name="checkbox" type="checkbox" ng-model="obj.highlight" ng-true-value="'Completed'" ng-false-value="'Not Started'" ng-change="updateTask(obj.Id, obj.highlight, obj)" ng-if="!obj.loading"  />
+              <span class="slds-checkbox--faux" ng-if="!obj.loading" ></span>
+              <span class="slds-form-element__label slds-assistive-text" ng-if="!obj.loading" >mark-complete</span>
+            </label>
+          </div>
+          <div ng-class="{'slds-media__body': obj.objAPIName == 'Task'}">
+            <p class="slds-truncate" title="{{obj.title}}">
+                <a href="javascript:void(0);" ng-click="performAction(data.actions[0])" ng-if="data.actions.length > 0">{{obj.title}}</a>
+                <a ng-click="openStory(obj)" ng-data-url="/{{obj.Id}}" ng-if="!(data.actions.length > 0)" ng-object-type="{{obj.objAPIName}}">{{obj.title}}</a>
+            </p>
+            <p class="slds-truncate" ng-repeat="detailField in obj.detailFieldList" ng-if="obj.detailValueMap.TaskSubtype !== 'Email'">{{obj.detailValueMap[detailField]}}</p>
+            <ul class="slds-list--horizontal slds-wrap">
+              <li class="slds-m-right--large" ng-repeat="field in data.fields" ng-show="key != 'attributes' && (obj[field.relationshipTypeField] || field.label) && (obj | getter: field)">
+                <span class="tile__label slds-text-heading--label-normal">{{obj[field.relationshipTypeField] || field.label}}:</span>
+                <span class="slds-text-body--small" ng-if="field.relationshipType !== '_sobjects'">
+                    <a ng-class="{'slds-text-link--reset': !(obj[field.relationshipTypeField] || field.relationshipType || obj[field.relationshipName].attributes.type)}" href="javascript:void(0);" ng-data-url="/{{obj[field.relationshipId]}}" ng-object-type="{{obj[field.relationshipTypeField] || field.relationshipType || obj[field.relationshipName].attributes.type}}">{{obj | getter: field | picker: field.type}}</a> 
+                </span>
+                <span class="slds-text-body--small"  ng-if="field.relationshipType == '_sobjects'">
+                  <span ng-repeat="child in obj[field.name] ">
+                    <a href="javascript:void(0);" ng-data-url="/{{child.Id}}" ng-object-type="{{child.Type}}">{{child.Name}}</a><span ng-if="!$last">, </span>
+                  </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slds-media__figure slds-media__figure--reverse">
+    <div class="slds-timeline__actions">
+      <p class="slds-timeline__date">{{obj.LastActivityDate | date:'MMM dd'}}</p>
+        <slds-dropdown content="data.actions" ng-if="data.actions.length > 0" icon-attribute="vlocityIcon" label-attribute="displayName" action-function="performAction(item)" button-size="x-small" icon-size="x-small"></slds-dropdown>
+    </div>
+  </div>
+</div>

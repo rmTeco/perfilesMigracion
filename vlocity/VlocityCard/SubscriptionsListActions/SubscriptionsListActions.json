@@ -1,0 +1,67 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "{}"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['createdById']",
+                        "logicalOperator": "&&",
+                        "operator": "!=",
+                        "type": "custom",
+                        "value": "null"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "params.AssetId",
+                            "BlackListed": "['IPResult']['respuesta']",
+                            "configSubscriptions": "\"removeSubscriptions\"",
+                            "subscriptions": "$root.vlocity.subscriptions"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Delete-Subscription",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "params.AssetId",
+                            "configSubscriptions": "\"removeBlacklist\"",
+                            "subscriptions": "$root.vlocity.subscriptions"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Blacklist-Remove-Subscription",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['createdById'] != 'null'",
+            "name": "Actions",
+            "templateUrl": "ta-TechCare-Subscriptions-Actions"
+        }
+    ],
+    "title": ""
+}

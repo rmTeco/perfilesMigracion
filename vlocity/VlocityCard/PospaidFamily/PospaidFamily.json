@@ -1,0 +1,143 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+        "['Family']": "Movil",
+        "['ProductType']": "Plan Pospago"
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Activo"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "ConsoleHistoryStatus",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "params.Id",
+                            "AssetId": "['AssetId']",
+                            "AssetName": "['Name']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleMyServices",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "ConsoleCampaigns",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "hasExtraParams": false,
+                        "id": "ConsolePlanInfo",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "techCare-Diagnosis-Mobile",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Cuenta de Facturación",
+                    "name": "['NumeroCuenta']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalesBalance']['saldoBalance']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Consumo acutal",
+                    "name": "['Balance']['totalesBalance']['saldoBalance']",
+                    "type": "currency"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Balance']['totalUnidadesLibres']['unidadLibre']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Internet Disponible",
+                    "name": "['Balance']['totalUnidadesLibres']['unidadLibre']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Activo'",
+            "flyout": {
+                "data": "",
+                "layout": "ta-care-pospaid-flyout"
+            },
+            "name": "Active",
+            "templateUrl": "ta-care-pospaid-card"
+        }
+    ],
+    "title": "Services",
+    "zone": "middle"
+}

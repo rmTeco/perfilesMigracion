@@ -1,0 +1,49 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 1,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "CreditRefillSOS",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Sales/CreditRefillSOS/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 4,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/Sales/CreditRefillSOS/English",
+        "Name": "InfoMessaging",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/CreditRefillSOS/English/InfoMessaging",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "InfoMessaging",
+    "%vlocity_namespace%__ParentElementType__c": "Step",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "controlWidth": 12,
+        "dataJSON": false,
+        "documentNames": [
+            "CABHBBAJAa088abbf78af430992e1b954e738bf5b",
+            "CABIABAJA38d501d61e584ad89de0f86a459c4c6e"
+        ],
+        "label": "TextBlock2",
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "false",
+                        "field": "ValidationOperationCompleted"
+                    }
+                ]
+            }
+        },
+        "text": "<p style=\"text-align: center; font-size: 42px; font-weight: 300; color: #333333;\"><img src=\"../servlet/servlet.ImageServer?id=015c00000004G1wAAE&amp;&amp;docName=CABHBBAJAa088abbf78af430992e1b954e738bf5b&amp;&amp;oid=00Dc0000003w19TEAQ\" alt=\"error-msg-icon\" width=\"71\" height=\"71\" /></p>\n<p style=\"text-align: center; font-size: 42px; font-weight: 300; color: #333333;\">Ups, no se pudo completar la recarga.</p>\n<p style=\"text-align: center; font-size: 14px; color: #666666;\">%ErrorMessage%</p>"
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "Text Block",
+    "Name": "ErrorMessaging",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Sales/CreditRefillSOS/English/ErrorMessaging"
+}

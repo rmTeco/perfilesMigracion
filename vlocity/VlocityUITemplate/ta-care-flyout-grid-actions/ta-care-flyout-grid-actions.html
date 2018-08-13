@@ -1,0 +1,10 @@
+<div class="community-flyout-actions-card">
+    <ul>
+        <li ng-repeat="action in data.actions" ng-if="$index >= (parent.limitActionLinksTo?parent.limitActionLinksTo:4)">
+            <a href="#" ng-click="performAction(action)" hotkey-card-action><i class="icon {{action.vlocityIcon}}"></i><span>{{action.displayName}}</span></a>
+        </li>
+    </ul>
+    <p ng-if="parent.actions.length <= (parent.limitActionLinksTo?parent.limitActionLinksTo:5)">
+            <small>{{::$root.vlocity.getCustomLabel('NoAdditionalActionsAvailable', 'No additional actions available.')}}</small>
+    </p>
+</div>

@@ -1,0 +1,33 @@
+.techCare-PriceList {
+    margin-bottom: 30px;
+    &.slds-table &-tbody {
+        td, th {
+            max-width: 30px;
+            white-space: initial;
+        }
+    }
+}
+
+.TechCare-DownloadPDF-Btn {
+    &-label {
+        padding-right: 10px;
+        color: #666666;
+        font-size: .7rem;    
+        font-weight: 700;
+    }
+    
+    &.slds-button--neutral {
+        padding-right: 11px;
+        padding-left: .75rem;
+        height: 3rem;
+        &:hover,
+        &:focus {
+            .pdf-Download-Icon.slds-icon {
+                fill: #666666;
+            }   
+        }
+    }
+    .pdf-Download-Icon.slds-icon {
+        fill: #666666;
+    }
+}

@@ -1,0 +1,106 @@
+@import "variables";
+@import "community-variables";
+
+.vlocity {
+    .community-flyout-grid-items-card {
+        padding:10px;
+        .item-name {
+            padding:10px 0px;
+            font-weight:bold;
+            text-transform:uppercase;
+        }
+        ul{
+            list-style-type: none;
+            padding-left: 0px;
+            li {
+                div {
+                    color: #9999a7;
+                }
+                span {
+                    font-size:12px;
+                    color:#000;
+                }
+                label{
+                    /*padding-right:20px;*/
+                    width:80px;
+                    /*text-transform:uppercase;
+                    font-weight:bold;*/
+                }
+                &.service {
+                    /*display: flex;
+                    align-items: center;*/
+                }
+                & .service-content {
+                    margin-right: 10px;
+                    &-icon {
+                        fill: #000;
+                    }
+                }
+            }
+            
+        }
+        .actions {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            .slds-button--neutral {
+            	border: 1px solid #00B4C5;	
+            	border-radius: 3px;	
+            	background-color: #FFFFFF;
+                padding-left: 5px;
+                padding-right: 5px;
+                width: 110px;
+            }
+            .ta-button-font {
+                color: #00B4C5;	
+                
+                font-size: 11px;	
+                line-height: 12px;	
+                text-align: right;
+            }
+            a {
+                font-size:12px;
+            }
+            .separator {
+                color:#d4d4d4;
+                padding:0px 5px;
+            }
+        }
+    }
+    @media only screen and (max-width : 725px) {
+        .community-flyout-grid-items-card {
+            float: none;
+            width: auto;
+        }
+    }
+    
+    .demo-wrapper {
+	width: 300px;
+	margin: 30px auto 0;
+    }
+    .html5-progress-bar {
+    //	padding: 15px 15px;
+    }
+    .html5-progress-bar progress {
+    	background-color: #e5e5e5;
+    	border: 0;
+    	width: 80%;
+    	height: 18px;
+    	border-radius: 4px;
+    }
+    
+    .html5-progress-bar progress::-webkit-progress-bar {
+    	background-color: #e5e5e5;
+    	border-radius: 4px;
+    }
+    
+    .html5-progress-bar progress::-webkit-progress-value {
+    	background: #055972;
+    	border-radius: 4px;
+    }
+    
+    .html5-progress-bar progress::-moz-progress-bar {
+    	background: #055972;
+    	border-radius: 4px;
+    }
+}

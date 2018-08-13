@@ -1,0 +1,59 @@
+/*** ASSETS THEME VARIABLES ***/
+@import "comp-assets-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $assets-namespace is defined in cpq-base-variables */
+$namespace: $assets-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .comp-#{$namespace}-products {
+            position: absolute;
+            top: 0;
+            right: $cpq-padding-large-horizontal/2;
+            bottom: 0;
+            left: $cpq-padding-large-horizontal/2;
+            height: calc(100% - 80px);
+        }
+        .#{$namespace}-products-tabs {
+            margin-top: $cpq-cart-container-tabs-top-margin;
+        }
+        .#{$namespace}-products-items {
+            background-color: $cpq-product-cart-items-bg-color;
+            overflow-y: auto;
+        }
+
+        // 64rem
+        @media screen and (max-width: $bp-large) {
+            .comp-#{$namespace}-products {
+                left: 0;
+                right: 0;
+
+                .#{$namespace}-products-global-tabs {
+                    ul.#{$namespace}-products-tabs {
+                        padding-left: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        // 64rem
+        @media screen and (max-width: $bp-large) {
+            .comp-#{$namespace}-products {
+                .#{$namespace}-products-global-tabs {
+                    ul.#{$namespace}-products-tabs {
+                        padding-left: 0;
+                        padding-right: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}

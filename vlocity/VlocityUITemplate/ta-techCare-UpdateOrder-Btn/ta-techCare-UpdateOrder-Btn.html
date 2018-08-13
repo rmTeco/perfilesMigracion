@@ -1,0 +1,24 @@
+<!-- <pre>
+   {{control.propSetMap.selectableItemConfig |json}}
+</pre> -->
+
+<div 
+	ng-controller="TSModuleCtrl as mmc"
+	style="width: 100%"
+	>	
+
+	<div ng-init="mmc.init(this)" ng-if="control.propSetMap.selectableItemConfig.updateOrder">
+		<button 
+			ng-href	
+			class="slds-button slds-button--neutral TechCare-createOrder-Btn"
+			ng-click="mmc.updateItemsInOrder(
+				bpTree.response.Case.OrderId, 
+				bpTree.response.infoImei.AccountId, 
+				bpTree.response.Items, 
+				bpTree.response.priceBookEntryItems)">
+			<span class="TechCare-createOrder-Btn-label">
+				Actualizar Orden
+			</span>
+		</button>
+	</div>
+</div>

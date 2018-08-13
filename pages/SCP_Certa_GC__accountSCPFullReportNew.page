@@ -1,0 +1,620 @@
+<apex:page renderAs="html" sidebar="false" showHeader="false" controller="SCP_Certa_GC.accountSCPFullReportNew">
+<!-- 
+<html>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <head>
+        <style type="text/css">
+            body { font-family: Arial Unicode MS; }
+        
+            .tablelist {
+                border-collapse: collapse;
+                border: 1px solid #D4DADC;
+            }
+            
+            .headerRow {
+                white-spaces:nowrap;
+                background-color:#E3F5FA;
+                background-clip: border-box;
+                background-image: url(https://c.na14.visual.force.com/img/alohaSkin/grid_headerbg.gif);
+                background-origin: padding-box;
+                background-position: 0px 100%;
+                background-repeat: repeat-x;
+                text-align:left;
+                font-size: 13px;
+                /*text-align: center;*/
+            }
+            
+            .dataRow>td{
+                border-bottom:1px solid #D4DADC;
+                border-top:1px solid #D4DADC;
+                padding-left:1pt;
+                padding-right:1pt;
+                font-size: 12px;
+            }
+            
+            #TitlePageDiv p {
+                text-align: center;
+                font-size: 34px;
+            }   
+            
+            p.h2 {
+                text-align: center;
+                font-size: 24px;
+            }
+            
+            p.h3 {              
+                font-size: 20px;
+            }
+            
+            @media screen {
+                body {                          
+                    width: 900px;
+                }
+                
+                div.separator {
+                    width: 100%;
+                    height: 200px;
+                }
+                
+                .print {
+                    display: block ! important;
+                }
+            }
+        </style>        
+    </head>
+    <body>      
+        <a class="print" href="#" onclick="print();" style="display:none">Print</a>
+        <apex:outputLink style="display:none" styleClass="itemLink print" value="{!$Page.accountSCPFullReportNewWord}?id={!account.id}">Save as MS-Word</apex:outputLink>
+        <--<apex:outputLink style="display:none" styleClass="itemLink print" value="{!$Page.accountSCPFullReportNewWord}?id={!account.id}">Guardar como archivo de MS-Word (Solo texto)</apex:outputLink>->
+        <-- Title Page ->        
+        <div id="TitlePageDiv" style="page-break-after:always;">
+            <-- <p><img width="198" height="198" src="{!$Resource.ReportImage}" /></p>  ->
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <p><apex:outputText value="{!$Label.FullReport}"/></p>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <p><apex:outputText value="{!account.name}"/></p>
+        </div>
+        <div class="separator"></div>        
+        <-- Industry Trends ->
+        <p class="h2"><apex:outputText value="{!$Label.Trend}"/></p>
+        <br/>       
+        <div id="AccountTeamDiv" style="page-break-after:always;">
+            <apex:repeat value="{!regions}" var="item">             
+                <apex:outputText rendered="{!IF(item.Trends.size > 0 , true , false)}">
+                    <p class="h3">{!$Label.Trend}: {!item.Region.Name}</p>                   
+                    <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                        <tr class="headerRow">
+                            <th width="150px" class="headerRow">
+                                <apex:outputText value="{!$Label.LastModifiedDate}"/>       
+                            </th>
+                            <--
+                            <th width="50px" class="headerRow">
+                                <apex:outputText value="{!$Label.Numero_de_la_oportunidad}"/>       
+                            </th>
+                            ->
+                            <th width="200px" class="headerRow">
+                                <apex:outputText value="{!$Label.Linked_Opportunities}"/>       
+                            </th>
+                            <th class="headerRow">
+                                <apex:outputText value="{!$Label.Description}"/>        
+                            </th>
+                        </tr>
+                        <apex:repeat value="{!item.Trends}" var="subitem">
+                        <tr class="dataRow">
+                            <td>
+                                <apex:outputText value="{0,date,dd'/'MM'/'yyyy HH:mm:ss z}">
+                                    <apex:param value="{!subitem.LastModifiedDate}" /> 
+                                </apex:outputText>
+                            </td>
+                            <td>
+                                {!subitem.Name}
+                            </td>
+                            <--
+                            <td>
+                                <apex:repeat value="{!subitem.Opportunities__R}" var="Opps"><apex:outputField value="{!Opps.Opportunity__r.AutoId__c}"/>&nbsp;</apex:repeat>
+                            </td>
+                            ->
+                            <td>
+                                <apex:outputField value="{!subitem.Trend__c}  "/>&nbsp;&nbsp;<apex:outputLink rendered="{!IF(subitem.URL_Attachment__c != null,true,false)}" value="{!subitem.URL_Attachment__c}" target="_blank">[Attachment]</apex:outputLink>
+                            </td>
+                        </tr>
+                        </apex:repeat>
+                    </table>
+                </apex:outputText>
+                <br/>
+            </apex:repeat>          
+        </div>      
+        <div class="separator"></div>
+        <-- Strategic Context  ->
+        <p class="h2"><apex:outputText value="{!$Label.Client_Context}"/></p>
+        <br/>       
+        <div id="StrategicContextDiv" style="page-break-after:always;">
+            <p class="h3"><apex:outputText value="{!$Label.Global_Strategic_Context}"/></p>                  
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th width="170px" class="headerRow">
+                        <apex:outputText value="{!$Label.LastModifiedDate}"/>       
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Global_Strategic_Context}"/>       
+                    </th>
+                </tr>
+                <apex:repeat value="{!globalStrategicContext}" var="item">
+                <tr class="dataRow">
+                    <td>
+                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy HH:mm:ss z}">
+                            <apex:param value="{!item.Strategic_Context_Last_Update__c}" /> 
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.Strategic_Context__c} ({!item.Name})"/>                          
+                    </td>
+                </tr>
+                </apex:repeat>
+            </table>
+            <br/>
+            <p class="h3"><apex:outputText value="{!$Label.Local_Strategic_Context}"/></p>
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th width="170px" class="headerRow">
+                        <apex:outputText value="{!$Label.LastModifiedDate}"/>       
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Local_Strategic_Context}"/>        
+                    </th>
+                </tr>
+                <apex:repeat value="{!account}" var="account">
+                <tr class="dataRow">
+                    <td>
+                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy HH:mm:ss z}">
+                            <apex:param value="{!account.Strategic_Context_Last_Update__c}" /> 
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{!account.Strategic_Context__c})"/>                         
+                    </td>
+                </tr>
+                </apex:repeat>
+            </table>
+            <br/>
+            <p class="h3"><apex:outputText value="{!$Label.Global_Strategic_Initiative}"/></p>                   
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th width="170px" class="headerRow">
+                        <apex:outputText value="{!$Label.LastModifiedDate}"/>       
+                    </th>
+                    <th width="80px" class="headerRow">
+                        <apex:outputText value="{!$Label.Numero_de_la_oportunidad}"/>       
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Iniciativa}"/>     
+                    </th>
+                </tr>
+                <apex:repeat value="{!globalStrategicInitiatives}" var="item">
+                <tr class="dataRow">
+                    <td>
+                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy HH:mm:ss z}">
+                            <apex:param value="{!item.LastModifiedDate}" /> 
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.name}"/>                         
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.Strategic_Initiative__c} ({!item.account__r.Name})"/>                        
+                    </td>
+                </tr>
+                </apex:repeat>
+            </table>
+            <br/>
+            <p class="h3"><apex:outputText value="{!$Label.Local_Strategic_Initiative}"/></p>           
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th width="170px" class="headerRow">
+                        <apex:outputText value="{!$Label.LastModifiedDate}"/>       
+                    </th>
+                    <th width="80px" class="headerRow">
+                        <apex:outputText value="{!$Label.Numero_de_la_oportunidad}"/>       
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Iniciativa}"/>     
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.SCP_Iniciativa_URL}"/>     
+                    </th>
+                </tr>
+                <apex:repeat value="{!localStrategicInitiatives}" var="item">
+                <tr class="dataRow">
+                    <td>
+                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy HH:mm:ss z}">
+                            <apex:param value="{!item.LastModifiedDate}" /> 
+                        </apex:outputText>
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.name}"/>                         
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.Strategic_Initiative__c}"/>                          
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.Strategic_Initiative_URL__c}"/>                          
+                    </td>
+                </tr>
+                </apex:repeat>
+            </table>
+            <br/>
+            <p class="h3"><apex:outputText value="{!$Label.Global_Buying_Criteria}"/></p>           
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Global_Buying_Criteria}"/>     
+                    </th>                       
+                </tr>
+                <apex:repeat value="{!globalBuyingCriteria}" var="item">
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!item}"/>                          
+                    </td>
+                </tr>
+                </apex:repeat>
+            </table>
+            <br/>
+            <p class="h3"><apex:outputText value="{!$Label.Local_Buying_Criteria}"/></p>            
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Local_Buying_Criteria}"/>      
+                    </th>                       
+                </tr>
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!account.Buying_Criteria__c}"/>                        
+                    </td>
+                </tr>
+            </table>            
+        </div>      
+        <div class="separator"></div>
+        <-- KPI ->
+        <p class="h2"><apex:outputText value="{!$Label.KPI}"/></p>
+        <br/>       
+        <div id="KPIDiv" style="page-break-after:always;">
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.KPI}"/>        
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.unit}"/>       
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!(year)}"/>        
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!(year-1)}"/>      
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!(year-2)}"/>      
+                    </th>                       
+                </tr>
+                <apex:repeat value="{!globaldata}" var="item">
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!item.kpi.Name__c}"/>                          
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.kpi.Unit__c}"/>                          
+                    </td>
+                    <td>
+                        <apex:outputField value="{!item.thisyear.Value__c}"/>                           
+                    </td>
+                    <td>
+                        <apex:outputField value="{!item.lastyear.Value__c}"/>                           
+                    </td>
+                    <td>
+                        <apex:outputField value="{!item.last2year.Value__c}"/>                          
+                    </td>                       
+                </tr>
+                </apex:repeat>
+                <apex:repeat value="{!data}" var="item">
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!item.kpi.Name__c}"/>                          
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.kpi.Unit__c}"/>                          
+                    </td>
+                    <td>
+                        <apex:outputField value="{!item.thisyear.Value__c}"/>                           
+                    </td>
+                    <td>
+                        <apex:outputField value="{!item.lastyear.Value__c}"/>                           
+                    </td>
+                    <td>
+                        <apex:outputField value="{!item.last2year.Value__c}"/>                          
+                    </td>                       
+                </tr>
+                </apex:repeat>
+            </table>
+        </div>
+        <div class="separator"></div>
+        <-- Overall Relationship  ->
+        <p class="h2"><apex:outputText value="{!$Label.Overall_Relationship}"/></p>
+        <br/>       
+        <div id="OverallRelationshiopDiv" style="page-break-after:always;">
+            <p class="h3"><apex:outputText value="{!$Label.main_competitors}"/></p>
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Nombre_de_los_miembros_del_equipo}"/>      
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Comments}"/>       
+                    </th>                       
+                </tr>                   
+                <apex:repeat value="{!newCompetitors}" var="item">
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!item.Name}"/>                         
+                    </td>
+                    <td>
+                        <apex:outputText value="{!item.Fact__c}"/>                          
+                    </td>
+                </tr>
+                </apex:repeat>
+            </table>                
+        </div>
+        <div class="separator"></div>
+        <-- Historical Business Window  ->
+        <p class="h2"><apex:outputText value="{!$Label.net_activity}"/></p>
+        <br/>       
+        <div id="HistoricalBusinessDiv" style="page-break-after:always;">
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">
+                <tr class="headerRow">
+                    <th class="headerRow">
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!(year)}"/>        
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!(year-1)}"/>      
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!(year-2)}"/>      
+                    </th>                       
+                </tr>
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!$Label.totalict}"/>                           
+                    </td>
+                    <td>
+                        <apex:outputField value="{!thisyear.a__c}"/>                        
+                    </td>
+                    <td>
+                        <apex:outputField value="{!lastyear.a__c}"/>                        
+                    </td>
+                    <td>
+                        <apex:outputField value="{!last2year.a__c}"/>                           
+                    </td>                       
+                </tr>
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!$Label.totrevenue}"/>                         
+                    </td>
+                    <td>
+                        <apex:outputField value="{!thisyear.b__c}"/>                        
+                    </td>
+                    <td>
+                        <apex:outputField value="{!lastyear.b__c}"/>                        
+                    </td>
+                    <td>
+                        <apex:outputField value="{!last2year.b__c}"/>                           
+                    </td>                       
+                </tr>
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!$Label.share_of_wallet} (b/a)"/>                          
+                    </td>
+                    <td>
+                        <apex:outputField value="{!thisyear.Share_of_Wallet__c}"/>                          
+                    </td>
+                    <td>
+                        <apex:outputField value="{!lastyear.Share_of_Wallet__c}"/>                          
+                    </td>
+                    <td>
+                        <apex:outputField value="{!last2year.Share_of_Wallet__c}"/>                         
+                    </td>                       
+                </tr>
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!$Label.our_expenditures} (c)"/>                           
+                    </td>
+                    <td>
+                        <apex:outputField value="{!thisyear.cc__c}"/>                        
+                    </td>
+                    <td>
+                        <apex:outputField value="{!lastyear.cc__c}"/>                        
+                    </td>
+                    <td>
+                        <apex:outputField value="{!last2year.cc__c}"/>                           
+                    </td>                       
+                </tr>                   
+                <tr class="dataRow">                    
+                    <td>
+                        <apex:outputText value="{!$Label.net_activity} (b-c)"/>                         
+                    </td>
+                    <td>
+                        <apex:outputField value="{!thisyear.Net_Activity_With_Client__c}"/>                         
+                    </td>
+                    <td>
+                        <apex:outputField value="{!lastyear.Net_Activity_With_Client__c}"/>                         
+                    </td>
+                    <td>
+                        <apex:outputField value="{!last2year.Net_Activity_With_Client__c}"/>                        
+                    </td>                       
+                </tr>
+            </table>
+        </div>        
+        <div class="separator"></div>
+        <-- Review of Current Contracts ->
+        <p class="h2"><apex:outputText value="{!$Label.Step2}"/></p>
+        <br/>       
+        <div id="UpsellingOpportunitiesWindowDiv" style="page-break-after:always;">
+            <p class="h3"><apex:outputText value="{!$Label.Own_installed_base}"/></p>
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">              
+                <tr class="headerRow">
+                    <th class="headerRow">{!$ObjectType.Contract.fields.ContractNumber.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.Description.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.StartDate.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.ContractTerm.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.EndDate.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.mrc__c.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.fcv__c.Label}</th>
+                    <th class="headerRow"></th> 
+                </tr>              
+                <apex:repeat value="{!contracts}" var="ourContract">
+                    <tr class="dataRow">
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.ContractNumber}"/>
+                        </td>
+                        <td style="width:180px;">
+                            <apex:outputField value="{!ourContract.Description}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.StartDate}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.ContractTerm}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.EndDate}"/>
+                        </td>                       
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.mrc__c}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!ourContract.fcv__c}"/>
+                        </td>
+                        <td class="alignCenter" style="width:160px; max-width:160px; min-width:160px;">                         
+                        </td>
+                    </tr>
+                    </apex:repeat>              
+            </table>
+            <br/>
+            <p class="h3"><apex:outputText value="{!$Label.competitor_s_installed_base}"/></p>
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">              
+                <tr class="headerRow">
+                    <th class="headerRow">{!$ObjectType.Contract.fields.ContractNumber.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.Description.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.StartDate.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.ContractTerm.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.EndDate.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.mrc__c.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.fcv__c.Label}</th>
+                    <th class="headerRow">{!$ObjectType.Contract.fields.competitorName__c.Label}</th>   
+                </tr>               
+                <apex:repeat value="{!competitors_contracts}" var="competitorContract">
+                    <tr>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.ContractNumber}"/>
+                        </td>
+                        <td style="width:180px;">
+                            <apex:outputField value="{!competitorContract.Description}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.StartDate}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.ContractTerm}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.EndDate}"/>
+                        </td>                       
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.mrc__c}"/>
+                        </td>
+                        <td class="alignCenter">
+                            <apex:outputField value="{!competitorContract.fcv__c}"/>
+                        </td>
+                        <td class="alignCenter" style="width:160px; max-width:160px; min-width:160px;">
+                            <apex:outputField value="{!competitorContract.competitorName__c}"/>
+                        </td>
+                    </tr>
+                    </apex:repeat>             
+            </table>    
+            <-- <apex:image width="400px" height="400px" value="{!total_opc.snapshot__c}"/> ->                                            
+        </div>  
+        <div class="separator"></div>
+        <-- Value Proposition Business Support ->
+        <p class="h2"><apex:outputText value="{!$Label.Step4}"/></p>
+        <br/>       
+        <div id="ValuePropositionBusinessSupportDiv" style="page-break-after:always;">
+            <p class="h3"><apex:outputText value="{!$Label.Opportunities}"/></p>
+            <table class="tablelist" cellspacing="0" cellpadding="0" width="100%">              
+                <tr class="headerRow">
+                    <--
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Numero_de_la_oportunidad}"/>       
+                    </th>
+                    ->
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.name}"/>       
+                    </th>
+                    <--
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.fcv}"/>        
+                    </th>
+                    ->
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Linked_Trend}"/>       
+                    </th>
+                    <th class="headerRow">
+                        <apex:outputText value="{!$Label.Linked_Strategic_Initiatives}"/>     
+                    </th>
+                </tr>               
+                <apex:repeat value="{oppsList}" var="oppWrapper">
+                <tr class="dataRow">
+                    <--
+                    <td>
+                        <apex:outputField value="{!oppWrapper.opp.AutoId__c}"/>                         
+                    </td>
+                    ->
+                    <td>
+                        <apex:outputField value="{!oppWrapper.opp.Name}"/>                          
+                    </td>
+                    <--
+                    <td>
+                        <apex:outputText value="{!oppWrapper.Full_Contract_Value}"/>                        
+                    </td>
+                    ->
+                    <td>
+                        <apex:repeat value="{!oppWrapper.opp.IndustryTrends__r}" var="subitemIT">
+                            <div style="float: left; margin: 5px;">
+                                <apex:outputField value="{!subitemIT.Industry_Trend__r.name}"/>
+                            </div>
+                        </apex:repeat>                          
+                    </td>
+                    <td>
+                        <apex:repeat value="{!oppWrapper.opp.StrategicInitiatives__r}" var="subitemSI">
+                            <div style="float: left; margin: 5px;">
+                                <apex:outputField value="{!subitemSI.Strategic_Initiative__r.name}"/>
+                            </div>
+                        </apex:repeat>                          
+                    </td>  
+                </tr>               
+                </apex:repeat>              
+            </table>
+            <br/>
+        </div>  
+    </body>
+</html> 
+ -->
+</apex:page>

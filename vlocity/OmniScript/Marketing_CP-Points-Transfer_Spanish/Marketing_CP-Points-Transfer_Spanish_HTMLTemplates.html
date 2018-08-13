@@ -1,0 +1,61 @@
+<script type="text/ng-template" id="accounts.tpl">
+<div class="panel panel-default">
+<table class="table slds-table slds-table--bordered
+    slds-table--cell-buffer" style="table-layout: auto;">
+   <thead>
+    <tr>
+     <!-- Header for checkbox is blank -->
+     <th class="slds-cell-shrink"></th>
+     <th>Nombre</th>
+     <th>Puntos</th>
+    </tr>
+   </thead>
+   <tbody class='ins'>
+    <tr ng-if="p" ng-repeat='p in control.vlcSI[control.itemsKey]'
+      ng-class="{ 'vlc-selectableitem-selected' : p.vlcSelected }" >
+     <th class="slds-cell-shrink">
+      <label class="slds-checkbox">
+       <input type="checkbox" ng-model='p.vlcSelected' ng-disabled="{{p.puntosSocio <1}}"
+         ng-change='onSelectItem(control, p, $index, this)'/>
+       <span class="slds-checkbox--faux"></span>
+      </label>
+     </th>
+     <td>{{p.Name}}</td>
+     <td>{{p.puntosSocio}}</td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <p>&nbsp;</p>
+</script>
+
+<script type="text/ng-template" id="destination.tpl">
+<div class="panel panel-default">
+<table class="table slds-table slds-table--bordered
+    slds-table--cell-buffer" style="table-layout: auto;">
+   <thead>
+    <tr>
+     <!-- Header for checkbox is blank -->
+     <th class="slds-cell-shrink"></th>
+     <th>Nombre</th>
+     <th>Puntos</th>
+    </tr>
+   </thead>
+   <tbody class='ins'>
+    <tr ng-if="p" ng-repeat='p in control.vlcSI[control.itemsKey]'
+      ng-class="{ 'vlc-selectableitem-selected' : p.vlcSelected }" >
+     <th class="slds-cell-shrink">
+      <label class="slds-checkbox">
+       <input type="checkbox" ng-model='p.vlcSelected'
+         ng-change='onSelectItem(control, p, $index, this)'/>
+       <span class="slds-checkbox--faux"></span>
+      </label>
+     </th>
+     <td>{{p.Name}}</td>
+     <td>{{p.puntosSocio}}</td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <p>&nbsp;</p>
+</script>

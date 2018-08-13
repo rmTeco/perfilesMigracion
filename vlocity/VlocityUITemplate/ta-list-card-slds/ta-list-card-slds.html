@@ -1,0 +1,80 @@
+<tr 
+    data-card="{{uniqueLayoutId}}-card-{{cardIndex}}"
+    ng-controller="OrderListItemController as olic"
+    class="ta-orders-row">
+    <td 
+        class="slds-truncate slds-text-align--center" 
+        data-label="{{field.label}}" 
+        ng-repeat="field in data.fields" 
+        ng-show="key != 'attributes'"
+        ng-switch="field.name">
+        <a 
+            target="_parent"
+            href="/{{obj.Id}}"
+            ng-switch-when="OrderNumber">{{obj | getter: field | picker: field.type}}</a>
+            
+        <span ng-switch-default>{{obj | getter: field | picker: field.type}}</span>
+    </td>
+    
+    <td data-label="Actions" style="overflow: visible">
+        <!--<slds-dropdown content="data.actions" ng-if="data.actions.length > 0" icon-attribute="vlocityIcon" label-attribute="displayName" action-function="olic.openCustomTab(item)"></slds-dropdown>-->
+        <ul ng-if="data.actions.length > 0" class="slds-list--horizontal">
+            <li ng-repeat="action in data.actions">
+                <button 
+                    ng-if="action.Name == 'ta-annulment-precess' && $root.profileName!= 'FAN_Administracion_de_Ventas' && (obj.PreInvoiceNumber__c || obj.LegalInvoiceNumber__c || obj.Delivery_Method__c == 'Delivery' || obj.TrackingStatus__c == 'Cobrado' || obj.TrackingStatus__c == 'Entregado') && obj.Gestion__c != 'Desconexión' && obj.TrackingStatus__c != 'Cancelada - Timeout Validacion'"
+                    class="slds-button slds-button--neutral" 
+                    href="#" 
+                    ng-click="olic.openCustomTab(action)" 
+                    hotkey-card-action>
+                    <span>{{action.displayName}}</span>
+                </button>
+                <button 
+                    ng-if="(action.Name == 'ta-annulment-retake-precess' && $root.profileName!= 'FAN_Administracion_de_Ventas' && obj.Gestion__c == 'Desconexión' && obj.TrackingStatus__c == 'Pendiente de Anulacion') || (action.Name == 'ta-annulment-retake-precess' && obj.TrackingStatus__c == 'Cancelada - Timeout Validacion')"
+                    class="slds-button slds-button--neutral" 
+                    href="#" 
+                    ng-click="olic.openCustomTab(action)" 
+                    ng-disabled="obj.TrackingStatus__c == 'Cancelada - Timeout Validacion'"
+                    hotkey-card-action>
+                    <span>{{action.displayName}}</span>
+                </button>
+                <button 
+                    ng-if="action.Name != 'ta-annulment-precess' && $root.profileName!= 'FAN_Administracion_de_Ventas' && action.Name != 'ta-annulment-retake-precess'"
+                    class="slds-button slds-button--neutral" 
+                    href="#" 
+                    ng-click="olic.openCustomTab(action)" 
+                    hotkey-card-action>
+                    <span>{{action.displayName}}</span>
+                </button>
+            </li>
+        </ul>
+        
+        <!--<button -->
+        <!--    ng-if="obj.Status == 'Preparar Pedido'" -->
+        <!--    class="slds-button slds-button--neutral" -->
+        <!--    href="#" -->
+        <!--    ng-click="performAction(data.actions[0])" -->
+        <!--    hotkey-card-action>-->
+        <!--    <span>{{data.actions[0].displayName}}</span>-->
+        <!--</button>-->
+         
+        <!--<button -->
+        <!--    ng-if="obj.Status == 'Pendiente de Entrega'" -->
+        <!--    class="slds-button slds-button--neutral" -->
+        <!--    href="#" -->
+        <!--    ng-click="performAction(data.actions[1])" -->
+        <!--    hotkey-card-action>-->
+        <!--    <span>{{data.actions[1].displayName}}</span>-->
+        <!--</button>-->
+        
+        <!--<button -->
+            
+        <!--    ng-if="action == 'Pendiente de Entrega'" -->
+        <!--    class="slds-button slds-button--neutral" -->
+        <!--    href="#" -->
+        <!--    ng-click="performAction(data.actions[1])" -->
+        <!--    hotkey-card-action>-->
+        <!--    <span>{{data.actions[1].displayName}}</span>-->
+        <!--</button>-->
+        
+    </td>
+</tr>

@@ -1,0 +1,115 @@
+<!--<pre>data: {{data |json}}</pre>-->
+<!--<pre>data: {{obj |json}}</pre>-->
+<td ng-if="obj.Services"> 
+	<a 
+		ng-href 
+		ng-click="$parent.$parent.$parent.toogleOpenSVA($event, this, obj.Name);">		
+		<slds-svg-icon  sprite="'utility'" 
+			icon="'chevronright'" 
+			size="'x-small'" 
+			no-hint="true"
+			extra-classes="'slds-icon-text-default'">
+		</slds-svg-icon>
+	</a>
+</td>
+<td ng-if="!obj.Services"></td>
+<td 
+	ng-repeat="field in data.fields | limitTo:(data.actions.length  > 0 ? 11 : 12)"
+	ng-switch="field.name" 
+	role="gridcell"
+	class="addedValueServices-card-td">
+	<!-- ng-if="field.label != null">-->
+	<div  class="slds-truncate">
+		<div ng-switch-when="['Fol']" >
+			<input 
+				type="checkbox" 
+				name="options" 
+				id="checkbox-123"
+				ng-checked="(obj | getter: field | picker: field.type)" 
+				ng-disabled="true"/>
+		</div>
+
+		<div 
+			ng-switch-when="['AccountName']" 
+			class="slds-truncate">
+				<a href="javascript:void(0);">
+					{{obj | getter: field | picker: field.type}}
+				</a>
+		</div>
+		
+		<!-- <pre>Field: {{field |json}}</pre> -->			
+		<!-- <pre>Obj: {{obj|json}}</pre>
+		<pre>Status: {{obj.Status}}</pre> -->
+		<div  
+			ng-class="obj.Status == 'In Activation' ? 'inActivationCopy' : ''" 
+			ng-switch-default>
+			{{obj | getter: field | picker: field.type}}
+		</div>
+
+		<div
+			ng-switch-when="['InstallDate']"
+			ng-class="obj.Status == 'In Activation' ? 'inActivationCopy' : ''" >
+			<span ng-if="obj.Status == 'In Activation'">Se activa el </span>		
+			{{obj | getter: field | picker: field.type | date: "dd/MM/yyyy"}}			
+		</div>
+
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'Inactive'"			
+			class="slds-truncate slds-text-color--error">
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'clear'"				
+				size="'x-small'"
+				extra-classes="'inactiveIcon'">
+			</slds-svg-icon> Inactivo
+		</div>
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'Active'"			
+			class="activeCopy">
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'success'"				
+				size="'x-small'"
+				extra-classes="'activeIcon'">
+			</slds-svg-icon> Activo
+		</div>
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'In Activation'"			
+			class="inActivationCopy">		
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'threedots'"				
+				size="'x-small'"
+				extra-classes="'inActivationIcon'">
+			</slds-svg-icon> En activación
+		</div>
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'Limited'"			
+			class="activeCopy">
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'warning'"
+				size="'x-small'"
+				extra-classes="'activeIcon'">
+			</slds-svg-icon> Limitado
+		</div>
+	</div>
+</td>
+<td ng-if="data.actions.length == 0"></td>
+<td 
+	class="slds-cell-shrink" 
+	ng-if="data.actions.length > 0" 
+	data-label="Actions" 
+	style="overflow: visible">
+	<slds-dropdown 
+		content="data.actions" 
+		ng-if="data.actions.length > 0" 
+		icon-attribute="vlocityIcon" 
+		label-attribute="displayName" 
+		action-function="performAction(item)">
+	</slds-dropdown>
+</td>

@@ -1,0 +1,74 @@
+<div class="assets-child-products" post-render >
+    <div ng-repeat="childProd in importedScope.viewModelRecords | orderBy: 'sequenceNumber'">
+        <!-- Line Item -->
+        <div class="slds-is-relative">
+            <div class="assets-item-base-product" ng-class="{'assets-item-selected':importedScope.isSelected && importedScope.isSelectedItemObjId.value === childProd.Id.value}" ng-init="childProdState.show = importedScope.expandMode">
+                <div ng-repeat="customField in $root.customViews.cpqCustomViews[$root.customViews.currentCustomView].fields" class="assets-item-base-product-{{customField.data.classSuffix}}" ng-class="{'assets-item-currency-value': customField.type === 'currency', 'assets-item-text-value': customField.type === 'string', 'assets-item-product-title': customField.name === 'Name'}">
+                    <!-- Name -->
+                    <div ng-if="customField.name === 'Name'" class="assets-item-child-product-name-wrapper">
+                        <button ng-click="childProdState.show = importedScope.determineChildProdOpenOrCloseAfterClick(childProd, childProdState.show); importedScope.fullScreen(attrs.ariaLevel, childProdState.show)" class="slds-button assets-item-has-children" aria-controls="tree0-node1" ng-hide="importedScope.determineIfChildProdOpenOrCloseIconShouldBeHidden(childProd)" ng-init="childProdState.show = importedScope.determineChildProdOpenOrCloseInitially(childProd)">
+                            <slds-button-svg-icon sprite="'utility'" size="'small'" icon="'switch'" extra-classes="'slds-button__icon--left'" ng-class="{'fix-slds-close-switch' : !childProdState.show}"></slds-button-svg-icon>
+                            <span class="slds-assistive-text">Toggle</span>
+                            <span class="assets-product-name">
+                                {{(childProd.PricebookEntry.Product2.Name || childProd.Product2.Name || childProd[customField.fieldName])}}
+                            </span>
+                        </button>
+                        <div class="assets-item-no-children" ng-show="!importedScope.checkIfChildProdHasChildren(childProd)">
+                            {{(childProd.PricebookEntry.Product2.Name || childProd.Product2.Name || childProd[customField.fieldName])}}
+                        </div>
+                    </div>
+                    
+                    <!-- Text -->
+                    <div ng-if="customField.fieldName !== 'Name' && customField.type === 'string'">
+                        {{childProd[customField.fieldName]['value']}}
+                    </div>
+
+                    <!-- Price -->
+                    <div ng-if="customField.type === 'currency'">
+                        <div cpq-dropdown-handler="showPopover = false">
+                            <div><strike> {{childProd[customField.fieldName]['originalValue'] | currency}}</strike></div>
+                            <span ng-class="{'hovered': showPopover, 'assets-underline' : childProd[customField.fieldName]['actions']['pricedetail']}" ng-click="showPopover = !showPopover">
+                                <span ng-class="{'assets-item-discount-price': childProd[customField.fieldName]['originalValue']}">
+                                    {{childProd[customField.fieldName]['value'] | currency}}
+                                </span>
+                            </span>
+
+                            <div class="slds-popover slds-nubbin--bottom-left assets-price-actions-popover" role="dialog" ng-show="showPopover && childProd[customField.fieldName]['actions']['pricedetail']">
+                                <div class="slds-popover__body assets-price-actions-popover__body">
+                                    <div class="slds-button-group" role="group">
+                                        <button class="slds-button slds-button--icon-border" aria-haspopup="true" title="{{::importedScope.customLabels.CPQPriceDetails}}" ng-click="importedScope.openAdjustmentModal(childProd[customField.fieldName], 'pricedetail')">
+                                            <slds-button-svg-icon sprite="'utility'" icon="'info'"></slds-button-svg-icon>
+                                            <span class="slds-assistive-text">{{::importedScope.customLabels.CPQPriceDetails}}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div> 
+
+                    <!-- Promotions -->
+                    <div ng-if="customField.type === 'promo'">
+                        <div ng-repeat="promoItem in childProd[customField.fieldName].records">
+                            {{promoItem.Name}}{{$last ? '' : ', '}}
+                        </div> 
+                    </div> 
+                </div>
+                <div class="assets-item-base-product-actions slds-text-align--right" ng-class="{'compacted': !$root.customViews.productListHidden}" ng-if="!childProd.isVirtualItem">
+                    <div ng-class="{'slds-button-group slds-float--right': importedScope.isMobileTablet}" role="group">
+                        <button class="slds-button slds-p-horizontal--xx-small" ng-click="importedScope.config(obj, childProd)"  title="{{::importedScope.customLabels.CPQSettings}}" ng-class="{'slds-button--icon-border': importedScope.isMobileTablet}">
+                            <slds-button-svg-icon sprite="'utility'" icon="'info'"></slds-button-svg-icon>
+                            <span class="slds-assistive-text">{{::importedScope.customLabels.CPQSettings}}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="assets-item-base-product-details">
+                <div ng-if="childProd.childAssets.records || obj.lineItems.records || obj.productGroups.records" ng-show="childProdState.show">
+                    <vloc-layout layout-name="comp-assets-product-children" ng-model="card" data="card" records="childProd" nested="true"
+                        aria-level="{{(attrs.ariaLevel - 0) + 0}}" show-config-panel="{{attrs.showConfigPanel}}">
+                    </vloc-layout>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

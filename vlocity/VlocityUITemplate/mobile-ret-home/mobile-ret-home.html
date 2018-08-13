@@ -1,0 +1,48 @@
+<div class="slds-grid slds-wrap slds-grid_pull-padded home-container" ng-controller="CpqHomeController as vm" ng-style="$root.bgImage && {'background-image':'url(' +$root.bgImage+ ')'}">
+    <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 left-coloumn">
+        <div class="left-wrapper">
+            <div class="home-logo"> </div>
+            
+            <div class="left-content">
+                <div class="search-box">
+                    <form class="slds-input-has-icon">
+                        <input type="text" class="slds-input" placeholder="Search by name or phone" ng-model="vm.searchTerm" ng-change="vm.performSearch()" />
+                    </form>
+                </div>
+                <div ng-show="vm.searchResults.length === 0">
+                    <p class="welcome-message">
+                        Stream Saver is here！Same plan.<br/>
+                        Same data. More video.
+                    </p>
+                    <div class="learn-more-link">
+                        <a>Learn more</a>
+                    </div>
+                    
+                </div>
+                <ul class="slds-scrollable search-results" ng-show="vm.searchResults.length > 0">
+                    <li ng-repeat="item in vm.searchResults" ng-click="vm.viewSearchDetail(item.Id)">
+                        <div class="search-result-name">
+                            {{item.Name}}
+                        </div>
+                        <div class="search-result-phone">
+                            {{item.Type}}
+                        </div>
+                        <!--div class="search-result-location">
+                            {{item.City}} / {{item.State}}
+                        </div-->
+                    </li>
+                </ul>
+            </div>
+            <!--<div class="sign-out-btn">-->
+            <!--    <button class="slds-button">Sign Out</button>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="column-divider"></div>
+    <div class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 right-coloumn">
+        <div class="right-wrapper">
+            <vloc-layout layout-name="mobile-ret-home-action">
+            </vloc-layout>
+        </div>
+    </div>
+</div>

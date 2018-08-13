@@ -1,0 +1,14 @@
+<div>
+  <div class="slds-spinner_container" ng-if="!isLoaded">
+        <div class="slds-spinner_brand slds-spinner slds-spinner_medium" aria-hidden="false" role="alert">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+    <vloc-layout layout-name="mobile-ret-account-header" ctrl="MobileController"></vloc-layout>
+  
+     <div>
+        <vloc-card ng-repeat="card in cards |orderBy:order|filter: searchFunc(card)" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>
+    </div>
+    <vloc-layout layout-name="mobile-ret-asset-grid" ctrl="MobileController"></vloc-layout>
+</div>

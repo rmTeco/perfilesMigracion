@@ -1,0 +1,56 @@
+<apex:page docType="html-5.0" lightningStylesheets="true">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:includeScript value="/soap/ajax/33.0/connection.js" />
+            <apex:slds />
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+            <script src="/support/console/41.0/integration.js"></script>
+            
+            <script type="text/javascript">
+                /*function setTabIcon (result) {
+                    if (result.success){
+                        sforce.console.setTabIcon('/img/icon/t4v35/custom/custom9_60.png',result.id,null);
+                    } else {
+                        console.info('Primary tab cannot be opened');
+                    }
+                }*/
+            </script>
+        </head>
+        
+        <body>
+            <div class="slds-scope">
+                <div onclick="sforce.console.openPrimaryTab(null, '/apex/vlocity_cmt__OmniScriptUniversalPage?id={0}&layout=lightning#/OmniScriptType/TechCare/OmniScriptSubType/ToolNegativeBand/OmniScriptLang/English/ContextId/{0}/PrefillDataRaptorBundle//true', true, 'Banda Negativa')" class="slds-box slds-box_link slds-box_x-small slds-media slds-m-top_medium">
+                    <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small">
+                      <span class="slds-icon_container slds-icon-utility-knowledge_base" title="">
+                        <span class="slds-icon_container slds-icon__svg--default slds-align_absolute-center">
+                            <svg aria-hidden="true" class="slds-icon slds-icon-utility-edit_form slds-icon_large slds-icon-text-default">
+                                <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#edit_form')}"></use>
+                            </svg>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="slds-media__body slds-border_left slds-p-around_small">
+                      <h2 class="slds-truncate slds-text-heading_small" title="Share the knowledge">Consulta en Banda Negativa de Equipos</h2>
+                      <p class="slds-m-top_small"> Para consultar equipos en banda negativa</p>
+                    </div>
+                </div>
+                <div onclick="sforce.console.openPrimaryTab(null, '/apex/vlocity_cmt__OmniScriptUniversalPage?id={0}&layout=lightning#/OmniScriptType/TechCare/OmniScriptSubType/ToolHLR/OmniScriptLang/English/ContextId/{0}/PrefillDataRaptorBundle//true',true, 'HLR')" class="slds-box slds-box_link slds-box_x-small slds-media slds-m-top_medium">
+                    <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center slds-m-left_xx-small">
+                      <span class="slds-icon_container slds-icon-utility-knowledge_base" title="">
+                        <span class="slds-icon_container slds-icon__svg--default slds-align_absolute-center">
+                            <svg aria-hidden="true" class="slds-icon slds-icon-utility-package slds-icon_large slds-icon-text-default">
+                                <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#package')}"></use>
+                            </svg>
+                        </span>
+                      </span>
+                    </div>
+                    <div class="slds-media__body slds-border_left slds-p-around_small">
+                      <h2 class="slds-truncate slds-text-heading_small" title="Share the knowledge">HLR</h2>
+                      <p class="slds-m-top_small"> Información de HLR </p>
+                    </div>
+                </div>                
+            </div>
+        </body>
+    </html>
+</apex:page>

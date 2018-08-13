@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>A catalog is a container of one or more items such as products. Catalogs can be contained within other catalogs forming a hierarchical structure for organizing the contained items.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__CatalogCode__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Any ID the customer wants to add.</description>
+        <externalId>false</externalId>
+        <label>Catalog Code</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Description__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__EndDateTime__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>End Date Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__GlobalKey__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The globally unique identifier of this catalog. Used to identify the catalog across Salesforce instances and potentially within other systems. Vlocity uses a UUID as described in http://en.wikipedia.org/wiki/Universally_unique_identifier, but when migrated from other initiating systems, any globally unique catalog identifier can be used.</description>
+        <externalId>true</externalId>
+        <label>Global Key</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsActive__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Is Active</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsCatalogRoot__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>How to ID the top of the catalog chain since it goes through intersection table</description>
+        <externalId>false</externalId>
+        <label>Is Catalog Root</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SourceType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>What was the source of the catalog.  Like source control.</inlineHelpText>
+        <label>Source Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Internal - Original Source</fullName>
+                    <default>false</default>
+                    <label>Internal - Original Source</label>
+                </value>
+                <value>
+                    <fullName>Internal - Replicated</fullName>
+                    <default>false</default>
+                    <label>Internal - Replicated</label>
+                </value>
+                <value>
+                    <fullName>External - Partner</fullName>
+                    <default>false</default>
+                    <label>External - Partner</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__StartDateTime__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Start Date Time</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__VendorAccount__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Vendor</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Catalogs</relationshipLabel>
+        <relationshipName>Catalogs</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Catalog</label>
+    <listViews>
+        <fullName>vlocity_cmt__All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__CatalogCode__c</columns>
+        <columns>vlocity_cmt__IsCatalogRoot__c</columns>
+        <columns>vlocity_cmt__StartDateTime__c</columns>
+        <columns>vlocity_cmt__EndDateTime__c</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>vlocity_cmt__IsActive__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>vlocity_cmt__All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>vlocity_cmt__MasterCatalogs</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__CatalogCode__c</columns>
+        <columns>vlocity_cmt__IsActive__c</columns>
+        <columns>vlocity_cmt__StartDateTime__c</columns>
+        <columns>vlocity_cmt__EndDateTime__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>vlocity_cmt__IsCatalogRoot__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Master Catalogs</label>
+    </listViews>
+    <nameField>
+        <label>Catalog Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Catalogs</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>vlocity_cmt__End_After_Start</fullName>
+        <active>true</active>
+        <errorConditionFormula>vlocity_cmt__EndDateTime__c  &lt;  vlocity_cmt__StartDateTime__c</errorConditionFormula>
+        <errorDisplayField>vlocity_cmt__EndDateTime__c</errorDisplayField>
+        <errorMessage>End Date Time must be greater than Start Date Time</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>vlocity_cmt__Start_Before_End</fullName>
+        <active>true</active>
+        <errorConditionFormula>vlocity_cmt__StartDateTime__c  &gt;  vlocity_cmt__EndDateTime__c</errorConditionFormula>
+        <errorDisplayField>vlocity_cmt__StartDateTime__c</errorDisplayField>
+        <errorMessage>Start Date Time must be less than End Date Time</errorMessage>
+    </validationRules>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>vlocity_cmt__UpdateCategoryData</fullName>
+        <availability>online</availability>
+        <description>Updates products&apos; CategoryData field with current category hierarchy</description>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Update Category Data</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/25.0/apex.js&quot;)}
+
+var namespace_prefix_dot = &apos;&apos;; 
+var gettingnamespace = sforce.connection.query(&quot;SELECT NamespacePrefix FROM ApexClass where Name = &apos;ApplicationUtilities&apos; LIMIT 1&quot;); 
+var getname = gettingnamespace.getArray(&quot;records&quot;); 
+if(getname.length &gt; 0 &amp;&amp; getname[0].NamespacePrefix) 
+{ 
+namespace_prefix_dot = getname[0].NamespacePrefix+&quot;.&quot;; 
+}
+
+var result = sforce.apex.execute(namespace_prefix_dot+&quot;CategoryDataBatchJob&quot;,&quot;executeCategoryDataBatch&quot;,{catalogId:&quot;{!vlocity_cmt__Catalog__c.Id}&quot;});
+
+if (result != null)
+{
+window.location.reload();
+}
+else
+{
+alert(&apos;Updating Category Data Failed&apos;);
+}</url>
+    </webLinks>
+</CustomObject>

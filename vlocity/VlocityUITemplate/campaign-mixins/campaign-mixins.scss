@@ -1,0 +1,73 @@
+/*** MIXINS ***/
+@mixin clearfix {
+    &:before, &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+@mixin columnHeader($className, $position: absolute) {
+    .#{$className} {
+        height: 3rem;
+        position: $position;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: $neutral-lightest;
+        border-bottom: 1px solid $cards-border-gray;
+        
+        .slds-icon_container.column-header-icon {
+            position: absolute;
+            left: 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            cursor: pointer;
+        }
+        
+        .slds-text-heading--small {
+            line-height: 3rem;
+            padding-left: 3.1rem;
+        }
+    }
+}
+
+@mixin rightSideIcons {
+    .right-side-icons {
+        @include clearfix;
+        width: 4rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+
+        .slds-icon_container {
+            float: left;
+            line-height: 2.7rem;
+            width: 2rem;
+            cursor: pointer;
+
+            svg {
+                fill: $neutral-medium;
+                transition: fill 100ms ease-in;
+            }
+
+            &:hover {
+                svg {
+                    fill: $neutral-dark;
+                }
+            }
+
+            &.filter-icon {
+                &.active {
+                    svg {
+                        fill: #04844b;
+                    }
+                }
+            }
+        }
+    }
+}

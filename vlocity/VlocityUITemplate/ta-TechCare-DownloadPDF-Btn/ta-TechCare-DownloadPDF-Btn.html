@@ -1,0 +1,25 @@
+<!-- <pre>{{control | json}}</pre> -->
+<div ng-controller="TSModuleCtrl as mmc"
+    ng-init="Label=control.propSetMap.ButtonLabel">
+	<button 
+		class="slds-button slds-button--neutral TechCare-DownloadPDF-Btn" 
+		ng-click="mmc.getURL(bpTree.response)">
+		<span class="TechCare-DownloadPDF-Btn-label"
+		    ng-if="control.propSetMap.ButtonLabel != false">
+		    {{Label}}
+		</span>
+		<span class="TechCare-DownloadPDF-Btn-label"
+		    ng-if="control.propSetMap.ButtonLabel == undefined">
+		    Descargar PDF
+		</span>
+		
+		<slds-svg-icon 
+			class="slds-icon slds-icon--small slds-button__icon slds-button__icon--right"
+			sprite="'utility'"
+			icon="'download'"
+			size="'small'"
+			no-hint="true"
+			extra-classes="'pdf-Download-Icon'">
+		</slds-svg-icon>	
+	</button>
+</div>

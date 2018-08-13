@@ -1,0 +1,47 @@
+{
+    "dataSource": {
+        "type": null
+    },
+    "filter": {
+        "['objAPIName']": "%vlocity_namespace%__OmniScriptInstance__c"
+    },
+    "states": [
+        {
+            "collapse": false,
+            "conditions": [
+                {
+                    "field": "$scope.data.status",
+                    "operator": "===",
+                    "type": "system",
+                    "value": "'active'"
+                }
+            ],
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "Status",
+                    "name": "['subtitle']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "editing": false,
+                    "fieldType": "standard",
+                    "label": "OmniScript Type",
+                    "name": "['highlight']",
+                    "type": "string"
+                }
+            ],
+            "name": "Saved OmniScript",
+            "sObjectType": "%vlocity_namespace%__OmniScriptInstance__c",
+            "templateUrl": "ta-Care-story-card"
+        }
+    ],
+    "title": "Saved OmniScripts"
+}

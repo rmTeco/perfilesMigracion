@@ -1,0 +1,19 @@
+<!-- JARN: Visualforce Creada con el fin de cumplir los requqerimientos de la historia PFTA-9428 en la cual
+    se requiere realizar la aprobacion y rechzo de las Ordenes que entren acorde a la configuracion
+    personalizada TaSalesOperationADV Nombre de visualforce: pagAprobalADV
+-->
+<apex:page standardController="Order" extensions="taOrderController">
+  <apex:form >
+      <div style="margin-right:25px;padding:25px;font-family: Platform;font-size:14px;">
+        <h1 style="color: #333333;font-family: Platform;font-size: 32px;font-weight: 300;line-height: 46px;margin-top:15px;">¿Desea Aprobar la Orden?</h1>
+        <hr style="background-image: linear-gradient(to right, #3bb9c2, #009a97 17%, #97a96b 34%, #ebbb1d 49%, #f28cb9 65%, #e30f72 79%, #91268f);min-height: 3px;height: 3px;border:0px;" />
+        <p><b>Nombre de cuenta:</b> {!Order.Account.Name}</p>
+        <p><b>Número de Orden: </b> {!Order.OrderNumber}</p>
+        <p><b>Estado de la Orden: </b> {!Order.OrderApprovalStatus__c}</p>
+        <p style="text-align:center;">
+          <apex:commandButton action="{!aprobarOrderADV}" value="Aceptar" style="background:rgb(0, 180, 197);color:white;padding:5px;border-radius:2px;height:35px;width:85px;border:0px;"/>
+
+        </p>
+    </div>
+  </apex:form>
+</apex:page>

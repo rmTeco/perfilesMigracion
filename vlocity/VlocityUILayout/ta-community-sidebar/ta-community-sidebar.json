@@ -1,0 +1,25 @@
+{
+    "Cards": [
+        "ClubPersonal"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "$root.vlocity.userAccountId",
+                "val": "0016C000008eeAo"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT PersonalClubPoints__c, \tSegment_Level1__c FROM Account WHERE Id = '{{$root.vlocity.userAccountId}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "ta-community-sidebar"
+        }
+    },
+    "workspace": [
+        "ClubPersonal/Personal - DESA01/1508966192452"
+    ]
+}

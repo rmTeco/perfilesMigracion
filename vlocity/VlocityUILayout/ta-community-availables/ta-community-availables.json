@@ -1,0 +1,45 @@
+{
+    "Cards": [
+        "AssetDetail",
+        "CommunityMyCredit",
+        "Disponibles",
+        "LastConsumption",
+        "Action"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.AssetId",
+                "val": "02i6C0000002r9JQAQ"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "AssetId": "{{params.AssetId}}"
+            },
+            "ipMethod": "IFS_S439",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "CommunityIntegration",
+            "remoteMethod": "Get_IFS_S439",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']"
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-community-layout"
+        }
+    },
+    "workspace": [
+        "AssetDetail/Personal - DESA01/1509979927319",
+        "LastConsumption/Personal - DESA01/1510064547348",
+        "Action/Personal - DESA01/2/1527700271915",
+        "CommunityMyCredit/Personal - DESA01/2/1533131983761",
+        "Disponibles/Personal - DESA01/2/1533129273925"
+    ]
+}

@@ -1,0 +1,111 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-card-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+@include cardMixin($namespace);
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-product-cart-item {
+            .#{$namespace}-transitional-hide {
+                opacity: 0;
+                transition: all linear 0.5s;
+            }
+            .#{$namespace}-item-product {
+                .#{$namespace}-item-product-header {
+                    font-size: $cpq-cart-item-attr-label-font-size;
+
+                    div[class^="#{$namespace}-item-base-product-"],
+                    div[class*="#{$namespace}-item-base-product-"] {
+                        padding: 0 $cpq-padding-base-horizontal/2 0 0;
+                        line-height: 1.3;
+
+                        &.#{$namespace}-item-base-product-actions {
+
+                        }
+                    }
+                }
+                .#{$namespace}-item-base-product {
+                    .#{$namespace}-item-product-title {
+                        color: $mid-black;
+                        font-weight: $cpq-headings-font-weight;
+                        padding-top: 0;
+                    }
+                }
+            }    
+
+            // 64rem
+            @media screen and (max-width: $bp-large) {
+                .#{$namespace}-item-product {
+                    .#{$namespace}-item-base-product {
+                        .#{$namespace}-item-base-product-actions {
+                            .slds-button {
+                                .slds-button__icon {
+                                    fill: $primary-medium;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .#{$namespace}-product-cart-item {
+            .#{$namespace}-item-product {
+                &.#{$namespace}-item-selected {
+                    &:after {
+                        right: auto;
+                        left: 0;
+                    }
+                }
+                .#{$namespace}-item-base-product-cfg-attr {
+                    .slds-section__title {
+                        button.slds-button {
+                            .slds-button__icon {
+                                &.#{$namespace}-fix-slds-close-switch {
+                                    transform: rotate(90deg) !important;
+                                }
+                            }
+                        }
+                    }
+                }
+                .#{$namespace}-item-base-product {
+                    .#{$namespace}-item-base-product-name {
+                        padding: 0 0 0 6px;
+                        .#{$namespace}-item-has-children {
+                            width: 90%;
+                            .slds-button__icon {
+                                float: right; 
+                                margin: 0.3rem 0 0 0.5rem;
+                                &.#{$namespace}-fix-slds-close-switch {
+                                    transform: rotate(90deg);
+                                }
+                            }
+                            .#{$namespace}-product-name {
+                                text-align: right;
+                                float: right;
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                    .#{$namespace}-item-base-product-currency {
+                        .slds-popover.#{$namespace}-price-actions-popover {
+                            left: auto;
+                            right: -0.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,28 @@
+<aura:component access="GLOBAL" extends="vlocity_cmt:vlocityIframeComponent" implements="forceCommunity:availableForAllPageTypes,force:hasRecordId">
+    <aura:attribute name="layout" type="String" access='global'/>
+    <aura:attribute name="disableCache" type="Boolean" access='global'/>
+    <aura:attribute name="recordId" type="String" access='global'/>
+    <aura:attribute name="customVFPage" type="String" access='global'/>
+
+    <aura:attribute name="hostURL" type="String" access='global'/>
+    <aura:attribute name="baseURL" type="String" access='global'/>
+    <aura:attribute name="url" type="String" access='global'/>
+    <aura:attribute name="nsPrefix" type="String" access='global'/>
+    <aura:attribute name="isPreview" type="Boolean" access='global'/>
+    <aura:attribute name="backgroundColor" type="String" access='global'/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="vlocity_cmt:vlocityCardEvent" action="{!c.handleCardEvent}"/>
+    <aura:if isTrue="{!v.layout}">
+
+        {!v.body}
+        <aura:set attribute="else">
+            <div class="defaultText"> 
+                <div class="slds-align_absolute-center slds-text-heading_large slds-p-around_large">
+                    {!$Label.vlocity_cmt.CardComponentDefaultText} 
+                </div> 
+            </div>
+        </aura:set>
+    </aura:if>
+    
+</aura:component>

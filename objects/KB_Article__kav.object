@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <articleTypeChannelDisplay>
+        <articleTypeTemplates>
+            <channel>App</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Prm</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Csp</channel>
+            <template>Tab</template>
+        </articleTypeTemplates>
+        <articleTypeTemplates>
+            <channel>Pkb</channel>
+            <template>Toc</template>
+        </articleTypeTemplates>
+    </articleTypeChannelDisplay>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Único tipo de artículo para cargar todo tipo de contenido.</description>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <fields>
+        <fullName>KB_ArticleType__c</fullName>
+        <externalId>false</externalId>
+        <label>Tipo de Artículo</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Contenido Libre</fullName>
+                    <default>true</default>
+                    <label>Contenido Libre</label>
+                </value>
+                <value>
+                    <fullName>Pregunta y Respuesta</fullName>
+                    <default>false</default>
+                    <label>Pregunta y Respuesta</label>
+                </value>
+                <value>
+                    <fullName>Paso a Paso</fullName>
+                    <default>false</default>
+                    <label>Paso a Paso</label>
+                </value>
+                <value>
+                    <fullName>Video</fullName>
+                    <default>false</default>
+                    <label>Video</label>
+                </value>
+                <value>
+                    <fullName>Adjunto</fullName>
+                    <default>false</default>
+                    <label>Adjunto</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>KB_ArticuloActualizado__c</fullName>
+        <description>Checkbox que indica si el artículo fue actualizado en los últimos 7 días.</description>
+        <externalId>false</externalId>
+        <formula>AND( (LastPublishedDate &lt;&gt; FirstPublishedDate), 
+((NOW() - LastPublishedDate) &lt;= 7) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Artículo Actualizado</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KB_ArticuloDestacado__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Si el campo se encuentra tildado, el artículo será destacado y aparecerá primero en las búsquedas.</description>
+        <externalId>false</externalId>
+        <label>Artículo Destacado</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KB_ArticuloNuevo__c</fullName>
+        <description>Checkbox que indica si el artículo fue creado en los últimos 7 días.</description>
+        <externalId>false</externalId>
+        <formula>AND( (FirstPublishedDate = LastPublishedDate), 
+((NOW() - FirstPublishedDate) &lt;= 7) )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Artículo Nuevo</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KB_AssignedCategory__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Campo &quot;read only&quot; utilizado para las validaciones en la publicación de artículos.</description>
+        <externalId>false</externalId>
+        <label>Assigned Category</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KB_AssignedTopic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Campo &quot;Read Only&quot; utilizado en las validaciones de publicación de artículos.</description>
+        <externalId>false</externalId>
+        <label>Assigned Topic</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KB_Attachment__c</fullName>
+        <externalId>false</externalId>
+        <label>Contenido Adjunto</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>File</type>
+    </fields>
+    <fields>
+        <fullName>KB_Body__c</fullName>
+        <externalId>false</externalId>
+        <label>Contenido HTML</label>
+        <length>131072</length>
+        <trackHistory>false</trackHistory>
+        <type>Html</type>
+        <visibleLines>20</visibleLines>
+    </fields>
+    <fields>
+        <fullName>KB_ExternalID__c</fullName>
+        <description>Campo &quot;Read Only&quot; Generado automáticamente al guardar un registro. Se utiliza en la vinculación de Base de Conocimiento y OmniScripts.</description>
+        <externalId>false</externalId>
+        <label>External ID</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>KB_ValidationsMessage__c</fullName>
+        <externalId>false</externalId>
+        <formula>&apos;Para publicar el artículo: &apos; 
++ IF(ISBLANK(Summary),IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta completar el resumen del artículo.&apos;,&apos;&apos;) 
++ IF(!KB_AssignedCategory__c,IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta categorizar el artículo.&apos;,&apos;&apos;) 
++ IF(!KB_AssignedTopic__c,IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta asignarle al menos un tema al artículo.&apos;,&apos;&apos;) 
++ IF(!ISBLANK(Summary) &amp;&amp; KB_AssignedCategory__c &amp;&amp; KB_AssignedTopic__c,IMAGE(&apos;/img/msg_icons/confirm16.png&apos;,&apos;&apos;)+ &apos; Enviar para aprobación.&apos;,&apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Validaciones</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <gender>Masculine</gender>
+    <label>Contenido</label>
+    <pluralLabel>Contenidos</pluralLabel>
+    <validationRules>
+        <fullName>KB_LimiteCaracteresResumen</fullName>
+        <active>true</active>
+        <description>Límite de caracteres para el resumen</description>
+        <errorConditionFormula>LEN(Summary) &gt; 500</errorConditionFormula>
+        <errorMessage>Se ha excedido el límite de caracteres para el Resumen (500 caracteres)</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>KB_LimiteCaracteresTitulo</fullName>
+        <active>true</active>
+        <description>Límite de caracteres para el título</description>
+        <errorConditionFormula>LEN(Title) &gt; 150</errorConditionFormula>
+        <errorMessage>Se ha excedido el límite de caracteres para el Título (150 caracteres)</errorMessage>
+    </validationRules>
+</CustomObject>

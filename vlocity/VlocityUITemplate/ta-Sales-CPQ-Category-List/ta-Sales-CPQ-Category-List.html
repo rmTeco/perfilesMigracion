@@ -1,0 +1,17 @@
+<div class="slds-grid slds-grid--vertical cpq-products scroll">
+    <div class="slds-col cpq-items-container categories-items-container scroll removeScroll">
+        
+        <div class="slds-spinner_container" ng-show="!isLoaded">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert">
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+        <vloc-card ng-repeat="card in cards |orderBy:order|filter: searchFunc(card)" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}" ng-if="isLoaded">
+        </vloc-card>
+        
+        <div class="slds-grid slds-grid--vertical-align-center slds-grid--align-center cpq-no-products-msg" ng-if="records.length === 0">
+            No Hay Categorias Disponibles.
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<aura:component extends="vlocity_cmt:vlocityIframeComponent" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName" controller="vlocity_cmt.InteractionSummaryController" access="global">
+	<lightning:workspaceAPI aura:id="workspace" />
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="sObjectName" type="String" />
+	<aura:attribute name="islayout" type="boolean" default="true" access='global'/>
+
+    <aura:attribute name="layout" type="String" access='global'/>
+    <aura:attribute name="disableCache" type="Boolean" access='global'/>
+    <aura:attribute name="customVFPage" type="String" access='global'/>
+
+    <aura:attribute name="hostURL" type="String" access='global'/>
+    <aura:attribute name="baseURL" type="String" access='global'/>
+    <aura:attribute name="url" type="String" access='global'/>
+    <aura:attribute name="nsPrefix" type="String" access='global'/>
+    <aura:attribute name="isPreview" type="Boolean" access='global'/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="vlocity_cmt:vlocityCardEvent" action="{!c.handleCardEvent}"/>
+
+    <aura:if isTrue="{!v.islayout}">
+         {!v.body}
+        <aura:set attribute="else">
+        	<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning" role="alert">
+              <span class="slds-assistive-text">warning</span>
+              <h2>Layout is not configured on the object.</h2>
+            </div>
+        </aura:set>
+    </aura:if>
+
+</aura:component>

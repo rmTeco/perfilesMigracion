@@ -1,0 +1,44 @@
+<div class="slds-col slds-size--1-of-1 slds-p-right--x-small filter-container" ng-show="importedScope.show_filter">
+    <div class="slds-section__title slds-p-top--x-small slds-p-left--medium">Filters </div>
+    <div ng-show="!records[0]" class="slds-text-body--regular slds-m-top--medium  slds-p-left--medium">
+        Please configure Vlocity Attributes to enable filters for campaign member list.
+    </div>
+    <ul class="slds-has-block-links--space slds-has-list-interactions" onmouseover="this.style.cursor='pointer'">
+    <li ng-repeat="category in records[0] track by $index | orderBy:'displaySequence':true">
+              <label class="slds-form-element__label" ng-click="show[$index] ? show[$index] = false : show[$index] = true"><icon ng-class="show[$index] ? 'slds-icon icon-v-down-caret' : 'slds-icon icon-v-right-caret'"></icon>
+              {{category.name}}</label>
+                  <ul class="slds-is-nested slds-list--vertical" ng-show="show[$index]">
+                    <li class="slds-item" ng-repeat="attribute in category.attributes.records | orderBy : 'displaySequence'">
+                        <div ng-if="category.uiControlType !== '1-5 scale' && category.uiControlType !== 'TextComment'" >
+                          <label class="slds-checkbox">
+                            <input type="checkbox" name="attribute.name" id="checkbox-contacts" ng-model="attribute.isSelected" ng-change="importedScope.invokeFilter(attribute)"/>
+                            <span class="slds-checkbox--faux slds-m-horizontal--xx-small"></span>
+                            <span class="slds-form-element__label">{{attribute.name}}</span>
+                             </label>
+                         </div>
+                        <div ng-if="category.uiControlType == '1-5 scale'" class="slds-clearfix">
+                           <label class="slds-form-element__label slds-m-bottom--x-small slds-float--left">{{attribute.name}}<span class="slds-float--right slds-p-left--x-small slds-text-body--xx-small" ng-show="attribute.minvalue && attribute.maxvalue" >({{attribute.minvalue}} - {{attribute.maxvalue}})</span></label>
+                            <input type="range" class="input-range-filter slds-m-bottom--x-small min-range" id="scale" min="1" max="{{attribute.maxvalue}}" value="1" step="1" ng-model="attribute.minvalue" ng-change="importedScope.invokeFilter(attribute)"> 
+                            <input  type="range" class="input-range-filter slds-m-bottom--x-small max-range" id="scale" min="{{attribute.minvalue}}" max="5" value="5" step="1" ng-model="attribute.maxvalue" ng-change="importedScope.invokeFilter(attribute)"> 
+                        </div>
+                         <div ng-if="category.uiControlType == 'TextComment'">
+                           <label class="slds-form-element__label">{{attribute.name}}</label>
+                            <div class="slds-form-element__control">
+                            <input id="text-input-01" class="slds-input" type="text" placeholder="{{attribute.value}}" ng-model="attribute.value" ng-change="importedScope.invokeFilter(attribute)" />
+                           </div>
+                        </div>
+                  </li>
+                   
+                </ul>
+        </li>
+        <ul class="slds-is-nested slds-list--vertical" ng-show="show_interests">
+            <li class="slds-item" ng-repeat="interest in interests track by $index">
+              <label class="slds-checkbox">
+                <input type="checkbox" name="options" id="checkbox-contacts" ng-model="interest.isSelected"/>
+                <span class="slds-checkbox--faux"></span>
+                <span class="slds-form-element__label">{{interest.name}}</span>
+              </label>
+          </li>
+        </ul>
+    </ul>
+</div>

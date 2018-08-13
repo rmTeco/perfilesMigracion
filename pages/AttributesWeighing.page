@@ -1,0 +1,26 @@
+<apex:page sidebar="true" controller="AttributesWeighingController">
+   <apex:form > 
+	   <apex:pageBlock title="{!$Label.AttributesWeighing}">
+			<apex:pageMessages />
+		   <apex:pageBlockSection >
+		        <apex:selectList label="{!$Label.Object}" value="{!record.Object__c}" multiselect="false" size="1" required="true">
+		            <apex:selectOptions value="{!objectsList}"/>
+		            <apex:actionSupport event="onchange" rerender="theTable" action="{!refillAttributesList}"/>
+		        </apex:selectList>
+	        </apex:pageBlockSection>
+	    	<br/>
+	    	<apex:pageBlockSection id="theTable" columns="2">
+			    <apex:pageBlockTable value="{!attributesList}" var="a">
+	      			<apex:column value="{!a.Attribute__c}" width="300px"/>
+	      			<apex:column headerValue="{!$Label.Weighing}" width="300px">
+	        			<apex:inputField value="{!a.Weighing__c}"/>
+	      			</apex:column>
+	   			</apex:pageBlockTable>
+			</apex:pageBlockSection>
+		    <apex:pageBlockButtons >
+		     	<apex:commandButton value="Guardar" action="{!save}"/>
+               	<apex:commandButton value="Volver" action="{!cancel}"  />
+		    </apex:pageBlockButtons>
+	   </apex:pageBlock>
+   </apex:form>
+</apex:page>

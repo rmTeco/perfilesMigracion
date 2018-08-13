@@ -1,0 +1,63 @@
+<div class="via-slds ta-community-services">
+    <div ng-if="data.%vlocity_namespace%__Definition__c.title != undefined &&
+                data.%vlocity_namespace%__Definition__c.title != ''">
+        <p class="title" >{{data.%vlocity_namespace%__Definition__c.title}}</p>
+        <div class="slds-m-top--small slds-m-bottom--small" 
+             style="height:1px; width:100%; background-color:#A4A4A4;">
+        </div>  
+    </div>
+    <div class="slds-grid slds-grid--vertical-stretch slds-wrap slds-grid--pull-padded" >
+        <!--nav role="navigation" aria-label="Breadcrumbs">
+            <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                <li class="slds-breadcrumb__item slds-text-title_caps"
+                ng-repeat="action in data.Deck[0].states[0].definedActions.actions">
+                    <a ng-click="performAction(action)" class="celeste" hotkey-card-action>
+                        <p class="breadtext">{{action.displayName}}</p>
+                    </a>
+                </li>
+                <li class="slds-breadcrumb__item slds-text-title_caps">
+                    <p class="breadtext">{{params.resourceId}}</p>
+                </li>
+            </ol>
+        </nav-->
+    </div>
+    <div class="slds-grid slds-grid--vertical-stretch slds-wrap slds-grid--pull-padded cards-container" >
+        <div ng-repeat="card in cards | filter: {cardName: 'AssetDetail'}"
+             vloc-card 
+             ng-model="cards[0]" 
+             data="cards[0]" 
+             records="records" 
+             class="slds-m-around--small slds-size--6-of-6 slds-medium-size--6-of-6 slds-large-size--12-of-12 community_card-1x"
+             use-existing-element-type>
+        </div>
+    </div>
+    
+    
+    <div class="slds-grid slds-grid--vertical-stretch slds-wrap slds-grid--pull-padded cards-container">
+       <div class="via-slds ta-community-services slds-size--1-of-1 HeadingLarge" ng-show="data.Name == 'ta-community-recargas'" style="margin-left:35px; margin-top:30px;">Recargà crédito
+       </div>
+        <div ng-repeat="card in cards | filter: {cardName: '!AssetDetail'} | orderBy:order"
+             vloc-card 
+             ctrl="{{ctrl}}" 
+             ng-model="card" 
+             data="card" 
+             records="records" 
+             index="{{$index}}" 
+             session-id="{{sessionId}}"
+             class="slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--6-of-12"
+             use-existing-element-type>
+        </div>
+
+         <!-- <div class="slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--6-of-12 ">
+            <div class="via-slds slds-m-around--small ng-scope" style="height: 320px;">
+                <div class="slds-grid slds-wrap slds-grid--pull-padded card_misg_desk">
+                        <div class="slds-p-horizontal--small slds-size--1-of-1 slds-border--bottom">
+                            <p class="slds-text-heading--large slds-p-bottom--small" id="title-mobile">{{AssetDetail}}</p>
+                        </div>
+                </div>
+            </div>
+        </div> -->
+        
+        
+    </div>
+</div>

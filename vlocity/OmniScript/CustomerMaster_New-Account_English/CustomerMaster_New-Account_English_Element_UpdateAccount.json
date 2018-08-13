@@ -1,0 +1,94 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "NewAccount",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/CustomerMaster/New Account/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 37,
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "bundle": "ta-sales-DR-Update-Account",
+        "controlWidth": 5,
+        "failureAbortLabel": "Abort",
+        "failureAbortMessage": "Are you sure?",
+        "failureNextLabel": "Continue",
+        "inProgressMessage": "In Progress",
+        "label": null,
+        "message": {
+        },
+        "postMessage": "Done",
+        "postTransformBundle": "",
+        "redirectNextLabel": "Guardar",
+        "redirectNextWidth": 3,
+        "redirectPageName": "",
+        "redirectPreviousLabel": "Previous",
+        "redirectPreviousWidth": 3,
+        "redirectTemplateUrl": "vlcAcknowledge.html",
+        "remoteTimeout": 30000,
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "show": {
+            "group": {
+                "operator": "AND",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": null,
+                        "field": "AccountData:ImageFile"
+                    },
+                    {
+                        "condition": "<>",
+                        "data": null,
+                        "field": "accountId"
+                    },
+                    {
+                        "condition": "=",
+                        "data": null,
+                        "field": "accountParentId"
+                    },
+                    {
+                        "condition": "=",
+                        "data": null,
+                        "field": "AccountData:ImageIVAexento"
+                    },
+                    {
+                        "condition": "=",
+                        "data": null,
+                        "field": "AccountData:ImageDNI"
+                    },
+                    {
+                        "condition": "=",
+                        "data": null,
+                        "field": "AccountData:ImageIGJ"
+                    },
+                    {
+                        "condition": "=",
+                        "data": null,
+                        "field": "AccountData:ImageDJ"
+                    },
+                    {
+                        "condition": "=",
+                        "data": null,
+                        "field": "AccountData:ImageCI"
+                    }
+                ]
+            }
+        },
+        "showPersistentComponent": [
+            false,
+            false
+        ],
+        "ssm": false,
+        "validationRequired": null,
+        "wpm": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "DataRaptor Post Action",
+    "Name": "UpdateAccount",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/CustomerMaster/New Account/English/UpdateAccount"
+}

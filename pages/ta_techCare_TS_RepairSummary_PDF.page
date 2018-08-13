@@ -1,0 +1,414 @@
+<apex:page docType="html-5.0" showHeader="false" standardStylesheets="false" title="Informe de Reparación" controller="ta_techCare_technical_service_controller" renderAs="advanced_pdf">
+    <html>
+        <head>
+            <apex:stylesheet value="{!$Resource.taTechnicalServicePDF}" />
+        </head>
+        <body>
+            <div class="pdf-technicalService">
+            
+                   <table class="slds-table--bordered slds-table--cell-buffer">
+                      <tbody>
+                          <td>
+                               <apex:image id="theImage" value="{!$Resource.logoPersonal_Azul}" width="100" height="70" alt="Description of image here"/>
+                          </td>
+                          <td>
+                               <b>Informe de Reparación Nº {!tsCase.CaseNumber}</b>
+                          </td>
+                      </tbody>
+                    </table>
+                    <br/>
+                   
+                <div class="slds-box slds-section-title--divider slds-text-align--center">
+                    Datos del Taller
+                </div>
+ 
+                <div style="margin-bottom: 20px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                            <tr>
+                                <td COLSPAN="1">
+                                    <div class="slds-truncate"><b>Taller</b></div>
+                                </td>
+                                <td COLSPAN="2">
+                                    <div class="slds-truncate">{!workLocation.Name}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate"></div>
+                                </td>
+                                <td COLSPAN="1">
+                                    <div><b>Dirección</b></div>
+                                </td>                            
+                                <td COLSPAN="2">
+                                    <div class="slds-truncate">{!workLocation.vlocity_cmt__StreetAddress__c}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                 <td COLSPAN="1">
+                                    <div><b>Localidad</b></div>
+                                </td>
+                                <td COLSPAN="2">
+                                    <div class="slds-truncate">{!workLocation.vlocity_cmt__State__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate"></div>
+                                </td>
+                                <td COLSPAN="1">
+                                    <div><b>Provincia</b></div>
+                                </td>
+                                <td COLSPAN="2">
+                                    <div class="slds-truncate">{!workLocation.vlocity_cmt__City__c}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate"></div>
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="slds-box slds-section-title--divider slds-text-align--center">
+                       Información del Cliente
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div><b>Nombre y Apellido</b></div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!contact.Name}</div>
+                                </td>
+                                 <td>
+                                    <div><b>Numero de Orden</b></div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!caseOrder.OrderNumber}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div><b>Numero de Línea</b></div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!tsCase.Asset.MSISDN__c}</div>
+                                </td>
+                                <td>
+                                    <div><b>Numero de Teléfono Alternativo</b></div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!contact.OtherPhone}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div><b>Email</b></div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!contact.Email}</div>
+                                </td>
+                                <td>
+                                    <div><b></b></div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate"></div>
+                                </td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    
+                <div class="slds-box slds-section-title--divider slds-text-align--center">
+                    <p>Datos del Terminal</p>
+                </div>
+               
+                <div style="margin-bottom: 20px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-text-align--left">
+                        <tbody>
+                            <tr>
+                                <td COLSPAN="1">
+                                    <div><b>Marca</b></div>
+                                </td>
+                                <td COLSPAN="3">
+                                    <div class="slds-truncate">{!brand}</div>
+                                </td>
+                                 <td COLSPAN="1">
+                                    <div><b>Modelo</b></div>
+                                </td>
+                                <td COLSPAN="3">
+                                    <div class="slds-truncate">{!model}</div>
+                                </td>
+                                <td COLSPAN="1">
+                                    <div><b>Imei</b></div>
+                                </td>
+                                <td COLSPAN="3">
+                                    <div class="slds-truncate">{!tsCase.Asset.imei__c}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td COLSPAN="1">
+                                    <div><b>Garantía</b></div>
+                                </td>
+                                <td COLSPAN="3">
+                                    <div class="slds-truncate">{!saleWarranty}</div>
+                                </td>  
+                                <td COLSPAN="3">
+                                    <div><b>Fecha de Compra</b></div>
+                                </td>
+                                <td COLSPAN="2">
+                                    <div class="slds-truncate">{!saleDate}</div>
+                                </td>
+                                 <td COLSPAN="2">
+                                    <div><b>Destrucción Total</b></div>
+                                </td>
+                                <td COLSPAN="1">
+                                    <div class="slds-truncate">{!IF ((tsCase.Asset.Total_Destruction__c=true),"Si","No")}</div>
+                                </td> 
+                            </tr>
+                             
+                            <tr>
+                               
+                                <td COLSPAN="2">
+                                    <div><b>Protección</b></div>
+                                </td>
+                                <td COLSPAN="4">
+                                    <div class="slds-truncate">{!IF ((protectionAsset.Name=""),"No Aplica", protectionAsset.Name)}</div>
+                                </td> 
+                                <td COLSPAN="4">
+                                    <div><b>Garantía por Reparación</b></div>
+                                </td>
+                                <td COLSPAN ="2">
+                                    <div class="slds-truncate">{!IF ((tsCase.Repaired_With_Warranty__c=true),"Si","No")}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td COLSPAN ="2">
+                                    <div><b>Accesorios</b></div>
+                                </td>
+                                <td COLSPAN="10">
+                                    <div class="slds-truncate"></div>
+                                </td> 
+                               
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="slds-box slds-section-title--divider slds-text-align--center">
+                    <p>Anotaciones</p>
+                </div>                
+  
+                <div style="margin-bottom: 20px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                            <td>
+                                <div class="slds-truncate">{!tsCase.Description}</div>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+                
+               <div class="slds-box slds-section-title--divider slds-text-align--center">
+                    <p>Motivos de Reparación</p>
+                </div>
+                 <div style="margin-bottom: 20px;">
+                    <table class="slds-table slds-grid slds-wrap slds-table--bordered slds-table--cell-buffer" style="table-layout:fixed" >
+                        <tbody>
+                          <tr>
+                                <td COLSPAN="1"> 
+                                    <div>
+                                        <b>Problema</b>
+                                    </div> 
+                                </td>
+                                <td> 
+                                    <div>
+                                        &nbsp;
+                                    </div> 
+                                </td>
+                                 <td> 
+                                    <div>
+                                        &nbsp;
+                                    </div> 
+                                </td>
+                                 <td> 
+                                    <div>
+                                        &nbsp;
+                                    </div> 
+                                </td>
+                                 <td> 
+                                    <div>
+                                        &nbsp;
+                                    </div> 
+                                </td>
+                                 <td> 
+                                    <div>
+                                        &nbsp;
+                                    </div> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td COLSPAN="1">
+                                    <div>
+                                        <b>Síntomas</b>
+                                    </div>
+                                </td>
+                                <td COLSPAN="5">
+                                    <div>
+                                       {!tsCase.ContactMotive__r.Name} 
+                                    </div>
+                                </td>
+                                
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+               <div class="slds-box slds-section-title--divider slds-text-align--center">
+                    <p>Reparaciones Efectuadas</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                            <apex:repeat var="rep" value="{!Repairs}">
+                                <tr>
+                                  <td scope="row" data-label="Nombre">
+                                    <div class="slds-truncate" title="{!rep.Product2.Name}">{!rep.Product2.Name}</div>
+                                  </td>
+                                </tr>
+                            </apex:repeat>
+                           
+                        </tbody>
+                    </table>
+                </div>                
+
+               <div class="slds-box slds-section-title--divider slds-text-align--center">
+                    <p>Presupuesto</p>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <tbody>
+                           <tr>
+                                <td>
+                                    <div>Cambio de Placa</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!IF ((tsCase.Board_Change__c=true),"Si","No")}</div>
+                                </td>
+                                
+                                <td>
+                                    <div>Serial Anterior</div>
+                                </td>
+                                <td>
+                                    <div>{!imeiOld}</div>
+                                </td>
+                            </tr>
+                           <tr>
+                                <td>
+                                    <div>Estado del Presupuesto</div>
+                                </td>
+                                <td>
+                                    <div>{!tsCase.RelatedTechQuoteStatus__c}</div>
+                                </td>
+                                <td>
+                                    <div>Estado de Gestión</div>
+                                </td>
+                                <td>
+                                    <div><div class="slds-truncate">{!tsCase.Status}</div></div>
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div> 
+                 
+                 <div style="margin-top: 50px;">
+                    <table>
+                        <tbody>
+                          
+                                <td>
+                                    <div class="slds-table slds-table--bordered slds-text-align--center">Firma del Tecnico</div>
+                                </td>
+                                  <td>
+                                    <div>  &nbsp; &nbsp; &nbsp; </div>
+                                </td>
+                                <td>
+                                    <div class="slds-table slds-table--bordered slds-text-align--center">Fecha</div>
+                                </td>
+                                <td>
+                                    <div>  &nbsp; &nbsp; &nbsp; </div>
+                                </td>
+                                <td>
+                                    <div>  &nbsp; &nbsp; &nbsp; </div>
+                                </td>
+                                <td>
+                                    <div class="slds-table slds-table--bordered slds-text-align--center">Firma del Cliente</div>
+                                </td>
+                                <td>
+                                    <div>  &nbsp; &nbsp; &nbsp; </div>
+                                </td>
+                                <td>
+                                    <div class="slds-table slds-table--bordered slds-text-align--center">Aclaracion</div>
+                                </td>
+                                                      
+                        </tbody>
+                    </table>
+                </div> 
+                
+                <div style="margin-top: 10px;" class="slds-text-align--center">
+                    <p style="font-size:12px; color:red"><b>La reparación efectuada tiene una garantía reconocida de 90 días</b></p>
+                </div>
+                
+                <div style="margin-top: 10px;" class="slds-text-align--center">
+                    <p style="font-size:11px; color:red"><b>*** Todo Diagnóstico de Destrucción Total a realizar sobre el terminal a reparar tendrá un costo. ***</b></p>
+                </div>
+                 <div align= "justify" style="font-size:11px">
+                        <p> 
+                            **01** PERDIDA DE INFORMACIÓN: EL CLIENTE CONOCE Y ACEPTA EXPRESAMENTE QUE CIERTAS
+                            REPARACIONES EXIGEN EL RESETEO DEL EQUIPO TERMINAL CON LA CONSIGUIENTE PERDIDA DE
+                            DATOS ALMACENADOS, Y EL RETIRO DE LOS PROTECTORES DE PANTALLA, EN CUYO CASO,
+                            RENUNCIA A EFECTUAR CUALQUIER RECLAMO AL RESPECTO.
+                        </p>
+                        <p>
+                            **02** GARANTÍA: ANTE LA EVIDENCIA
+                            DE DAÑO FÍSICO, INGRESO DE LÍQUIDOS O INTERVENCIÓN DE TERCEROS NO AUTORIZADOS, UN 
+                            TÉCNICO AUTORIZADO DETERMINARÁ LA VALIDEZ DE LA GARANTÍA. 
+                        </p>
+                        <p>
+                            **03** EQUIPO DEL CLIENTE: EL
+                            CLIENTE DEBERÁ RETIRAR DEL SERVICIO DE TECNICO DE TELECOM ARGENTINA S.A. EL EQUIPO
+                            INGRESADO, DENTRO DEL PLAZO DE 30 DÍAS CORRIDOS DE HABER SIDO NOTIFICADO. CUMPLIDO
+                            DICHO PLAZO, SI EL CLIENTE NO LO HICIESE, TELECOM ARGENTINA S.A. PODRÁ DISPONER
+                            LIBREMENTE DEL EQUIPO DEL CLIENTE. SE EFECTUARAN 2 (DOS) NOTIFICACIONES VIA EMAIL, SMS O
+                            TELEFÓNICA. 
+                        </p>
+                        <p>
+                            **04** EQUIPO MULETO: EL CLIENTE SE COMPROMETE A DEVOLVER AL SERVICIO
+                            TECNICO DE TELECOM ARGENTINA S.A. (EN LOS CASOS QUE FIGURE CONSTANCIA) EL EQUIPO
+                            TERMINAL QUE RECIBIÓ EN PRESTAMO (EN ADELANTE “EQUIPO MULETO”), EN PERFECTO ESTADO
+                            DE CONSERVACIÓN Y FUNCIONAMIENTO DENTRO DE LOS 30 DIAS CORRIDOS DE HABER SIDO
+                            NOTIFICADO DE LA DISPONIBILIDAD DEL EQUIPO TERMINAL DE SU PROPIEDAD (EN ADELANTE
+                            “EQUIPO DEL CLIENTE”). 
+                        </p>
+                        <p>
+                            **05** CARGOS: EL CLIENTE RECONOCE Y EXPRESAMENTE ACEPTA QUE
+                            VENCIDO DICHO PLAZO, LA FALTA DE DEVOLUCIÓN DEL EQUIPO MULETO, IMPORTARA SU
+                            VOLUNTAD DE ADQUIRIRLO, POR LO QUE TELECOM ARGENTINA S.A. DEBITARÁ EN LA PROXIMA
+                            FACTURA DE SU CUENTA EL PRECIO DE LISTA VIGENTE DEL EQUIPO MULETO. DE IGUAL FORMA
+                            TELECOM ARGENTINA S.A. DEBITARÁ EN LA PROXIMA FACTURA DE SU CUENTA EL COSTO DE LA
+                            REPARACIÓN QUE OPORTUNAMENTE HUBIESE PRESUPUESTADO, ACEPTADO Y REALIZADO AL
+                            EQUIPO DEL CLIENTE, COMO ASI TAMBIÉN EL COSTO DE REPARACIÓN DEL TERMINAL MULETO ANTE
+                            LA ROTURA DEL MISMO.
+                        </p> 
+                        <p>
+                            **06** VIGENCIA: SI EL PRESENTE INFORME INDICA 'CERRADO PARA CAMBIO
+                            EN GARANTÍA', LA VIGENCIA PARA ACCEDER AL CAMBIO DE UNIDAD EN GARANTÍA ES DE 15 (QUINCE)
+                            DIAS CORRIDO. FINALIZADO ESTE PERIODO, SE DEBERA REINGRESAR EL EQUIPO TERMINAL PARA
+                            UN NUEVO DIAGNOSTICO.
+                       </p>
+                </div>
+
+            </div>
+        </body>
+    </html>
+</apex:page>

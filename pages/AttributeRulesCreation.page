@@ -1,0 +1,28 @@
+<apex:page sidebar="true" controller="AttributeRulesCreationController">
+    <apex:form >
+    	<apex:pageBlock title="{!$Label.NewRule}">
+    		<apex:pageMessages id="theMessage"></apex:pageMessages>
+    		<apex:pageBlockSection >
+		        <apex:selectList label="{!$Label.Object}" value="{!record.Object__c}" multiselect="false" size="1" required="true">
+		            <apex:selectOptions value="{!objectsList}"/>
+		            <apex:actionSupport event="onchange" rerender="theBlock" action="{!refillAttributesList}"/>
+		        </apex:selectList>
+	        </apex:pageBlockSection>
+	    	<br/>
+        	<apex:pageBlockSection id="theBlock">
+		        <apex:selectList label="{!$Label.Attribute}" value="{!record.Attribute1__c}" multiselect="false" size="1" required="true">
+		            <apex:selectOptions value="{!attribute1List}"/>
+		            <apex:actionSupport event="onchange" rerender="theMessage"/>
+		        </apex:selectList>
+		        <apex:selectList label="{!$Label.Attribute}" value="{!record.Attribute2__c}" multiselect="false" size="1" required="true">
+		            <apex:selectOptions value="{!attribute2List}"/>
+		            <apex:actionSupport event="onchange" rerender="theMessage"/>
+		        </apex:selectList>
+	        </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Guardar" action="{!save}" />
+                <apex:commandButton value="Volver" action="{!cancel}"  />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

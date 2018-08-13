@@ -1,0 +1,32 @@
+{
+    "Cards": [
+        "TrafficDevice",
+        "MMSFreeUnit",
+        "SMSFreeUnit",
+        "DataFreeUnit",
+        "VoiceFreeUnit"
+    ],
+    "dataSource": {
+        "type": "Inherit",
+        "value": {
+            "body": "[\n    {\n        \"ServiceType\": \"Internet\",\n        \"AvailableFirstUnit\": \"56\",\n        \"AvailableSecondUnit\": \"1024\",\n        \"DueDate\": \"20/12/2017\"\n    },\n    {\n        \"ServiceType\": \"Voz\",\n        \"AvailableFirstUnit\": \"100\",\n        \"AvailableSecondUnit\": \"52\",\n        \"DueDate\": \"10/12/2017\"\n    },\n    {\n        \"ServiceType\": \"SMS\",\n        \"AvailableFirstUnit\": \"200\",\n        \"AvailableSecondUnit\": \"\",\n        \"DueDate\": \"15/12/2017\"\n    }\n]",
+            "query": "SELECT Id FROM Asset WHERE Id = '02i6C0000002SNC'",
+            "resultVar": ""
+        }
+    },
+    "sessionVars": [
+    ],
+    "templates": {
+        "0": {
+            "templateUrl": "ta-care-prepaid-flyout-grid"
+        }
+    },
+    "workspace": [
+        "TrafficDevice/Telecom/1506437892976",
+        "MMSFreeUnit/Telecom/1508786290438",
+        "NoDataFound/Personal - DESA01/1/1526585101785",
+        "SMSFreeUnit/Telecom/1/1530191214500",
+        "DataFreeUnit/Telecom/1/1530192241688",
+        "VoiceFreeUnit/Telecom/1/1530190982018"
+    ]
+}

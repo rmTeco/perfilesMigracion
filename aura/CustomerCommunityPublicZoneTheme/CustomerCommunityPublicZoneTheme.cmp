@@ -1,0 +1,27 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,forceCommunity:themeLayout" access="global" description="Customer Theme Layout Public Zone" >
+        
+    <div class="page">
+        <header class="slds-grid ta-login-header">
+            <div class="sdls-col slds-size_1-of-4 ta-login-headerNarrow">
+                <div class="slds-global-header__logo"></div>
+            </div>
+        	
+    	</header>
+        <section class="ta-login-container">
+            <div class="ta-login-form">
+                {!v.body}
+            </div>
+        </section>
+        <footer class="slds-grid slds-grid_vertical-align-center">
+                <div class="slds-col slds-size_1-of-4 slds-text-align_center">
+                    <img class="logo" src="{!$Resource.logoPersonal_Gris}"/>
+                </div>
+                <div class="slds-col slds-size_2-of-4 slds-text-align_center">
+                    Compromiso ante la CNDC
+                </div>
+                <div class="slds-col slds-size_1-of-4 slds-text-align_center qr">
+                    <a target="_blank" href="http://qr.afip.gob.ar/?qr=iXv6btZqF5zo7kGdhp77SQ,,"><img src="{!$Resource.QR_Code}"/></a>
+                </div>
+        </footer>
+    </div>
+</aura:component>

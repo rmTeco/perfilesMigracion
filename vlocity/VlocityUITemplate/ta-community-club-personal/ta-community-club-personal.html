@@ -1,0 +1,79 @@
+<div
+    ng-controller="MyModuleCtrl as mmc"
+    ng-init="mmc.init()">
+    <!-- WEB -->
+    <div class="slds-m-bottom--small slds-p-around--medium" 
+        style="border-left: 1px solid black; background: #FFF;"
+        ng-if="!mmc.mobile">
+        <div class="slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+            <b>{{data.title}}</b>
+        </div>
+        <div ng-repeat="record in records">
+            <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small" 
+                 ng-repeat="field in data.fields">
+                <div ng-if="field.label == 'ClubPoint'">
+                    <div class="slds-text-heading--large">
+                        <b>{{record | getter: field | picker: field.type}}</b>
+                    </div>
+                    <p class="slds-text-body--small slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+                        Puntos Club
+                    </p>
+                </div>
+                <div ng-if="field.label != 'ClubPoint'">
+                    {{record | getter: field | picker: field.type}}
+                    <p class="slds-text-body--small slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+                        Categoria
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+            <button class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive">
+                Canjear Puntos
+            </button>
+        </div>
+        <div class="slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small">
+            <a href="#">Adherite a Club ></a>
+        </div>
+    </div>
+    <!-- MOBILE -->
+    <div class="slds-text-heading--large slds-size--1-of-1 slds-p-around--medium slds-border--bottom"
+        ng-if="mmc.mobile">
+        {{data.title}}
+    </div>
+    <div class="slds-m-bottom--small slds-p-around--medium slds-border--bottom"
+        style="background: #FFF;"
+        ng-if="mmc.mobile">
+        <div ng-repeat="record in records">
+            <div class="slds-size--1-of-1 slds-m-bottom--small slds-p-vertical--x-small"
+                 ng-repeat="field in data.fields">
+                <div ng-if="field.label == 'ClubPoint'">
+                    <div class="slds-text-heading--medium slds-align--absolute-center">
+                        <b>Acumulaste</b>
+                    </div>
+                    <div class="slds-text-heading--large slds-align--absolute-center fontStyle">
+                        <div class="slds-grid slds-grid--vertical-align-center">
+                            <slds-svg-icon
+                				sprite="'utility'"
+                				icon="'checkin'"				
+                				size="'small'"
+                				extra-classes="'iconStyle'">
+                			</slds-svg-icon>
+                            <b> {{record | getter: field | picker: field.type}}
+                            </b>
+                        </div>
+                    </div>
+                    <p class="slds-text-body--medium slds-size--1-of-1 slds-align--absolute-center">
+                        Puntos Club
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="slds-size--1-of-1 slds-align--absolute-center slds-m-bottom--small">
+            <button class="slds-button slds-button--brand slds-size--1-of-1 slds-not-selected buttonStyle"
+                aria-live="assertive">
+                <b style="color:#FFF;">Canjear</b>
+            </button>
+        </div>
+    </div>
+</div>

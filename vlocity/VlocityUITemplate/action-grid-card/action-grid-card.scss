@@ -1,0 +1,60 @@
+@import "variables";
+
+.vlocity {
+    .vloc-action-grid {
+        margin-top: 60px;
+        background-color: $white;
+        padding-right: 8px;
+        padding-top: 8px;
+        
+        &:after {
+            clear: both;
+            content:'';
+            display: block;
+        }
+        .vloc-action-grid-cell {
+            padding-left: 8px;
+            margin: auto;
+            min-width: 70px;
+            float: left;
+            width: 20%;
+        }
+        
+        a {
+            background-color: $lightest-gray;
+            display: block;
+            height: 100px;
+            max-width: 300px;
+            text-align:center;
+            cursor: pointer;
+            color: $light-blue;
+            margin: 0 0 8px;
+            padding: 30px 2px;
+            overflow: hidden;
+            text-decoration: none;
+          
+            i, p {
+              color: $light-blue;
+            }
+          
+            i {
+                font-size: 24px;
+            }
+          
+            p {
+              text-transform: capitalize;
+              
+            }
+            
+            &:hover, &:active, &:focus {
+                background: $light-blue;
+                text-decoration: none;
+                i,p {
+                    color: $white;
+                    text-decoration: none;
+                }
+            }
+          
+        }
+    }
+}

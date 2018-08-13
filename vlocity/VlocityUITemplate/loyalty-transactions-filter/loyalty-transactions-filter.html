@@ -1,0 +1,148 @@
+<div ng-controller="MyCtrl">
+    <div class="slds-card via-slds-card--active slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}"  data-popover-flyout="true">
+        <div class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center slds-p-around--small" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <section>
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <slds-svg-icon sprite="'custom'" size="'medium'" icon="'custom14'" extra-classes="'slds-icon-standard-orders'"></slds-svg-icon>
+                    </div>
+                    <div class="slds-media__body slds-truncate">
+                        <h1 href="javascript:void(0);" class="slds-text-link--reset" tooltip-placement="bottom" tooltip="'Transactions'">
+                            <span class="slds-text-heading--small">Transactions</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="slds-media slds-media--center slds-has-flexi-truncate"><a><br></a></div>
+                <div class="slds-media slds-media--center slds-has-flexi-truncate">
+                    <!--  FILTROS -->
+                        <table> 
+                                <tr> 
+                                    <td>
+                                        <!--<div class="slds-p-horizontal--small">-->
+                                            <input type="text" placeholder="Asset" class="form-control" ng-model="search.asset" />
+                                        <!--</div>-->
+                                    </td>  
+                                    <td>
+                                        <div class="slds-p-horizontal--small">
+                                            <input type="text" placeholder="Account"  class="form-control" ng-model="search.billingAccount" />
+                                        </div>
+                                    </td>  
+                                    <td>
+                                        <!--<div class="slds-p-horizontal--small">-->
+                                            <input type="text" placeholder="Motivo" class="form-control" ng-model="search.reason" />
+                                        <!--</div>-->
+                                    </td>  
+                                    <td>
+                                        <div class="slds-p-horizontal--small">
+                                            <a>Fecha Desde:</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input  
+                                            id="text-input-id-1"
+                                            class="form-control" 
+                                            type="datetime" 
+                                            ng-model="from"
+                                            slds-date-picker
+                                            date-format="dd/MM/yyyy"/>
+                                    </td>
+                                      <td>
+                                        <div class="slds-p-horizontal--small">
+                                            <a>Fecha Hasta:</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input  
+                                            id="text-input-id-2"
+                                            class="form-control" 
+                                            type="datetime" 
+                                            ng-change="setMinMaxDate()"
+                                            ng-model="to"
+                                            slds-date-picker
+                                            date-format="dd/MM/yyyy"/>
+                                    </td>
+                                </tr> 
+                            </table>
+                    <!--</div>
+                    <!--/ FILTROS
+                </div>             -->
+                </div> 
+            </section>
+        </div>
+    </div>
+    <table 
+        ng-if="data.obj.transactions"
+        ng-init="items = data.obj.transactions"
+        class="slds-table slds-table--bordered slds-table--cell-buffer techCare-PriceList" >
+      <thead> 
+        <tr class="slds-text-title--caps">
+          <th scope="col">
+            <div class="slds-truncate" title="Name">Nombre</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Asset">Asset</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Account">Account</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Description">Motivo</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Points">Puntos</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Date">Fecha</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="techCare-PriceList-tbody">
+        <tr ng-repeat="item in data.obj.transactions |filter:search |filterFrom : from |filterTo : to |startFrom: currentPage * pageSize | limitTo:pageSize ">
+          <th scope="row" data-label="Name">
+            <div class="" title="Name">{{item.transactionNumber}}</div>
+          </th>
+          <th scope="row" data-label="Asset">
+            <div class="" title="Asset">{{item.asset}}</div>
+          </th>
+          <th scope="row" data-label="Account">
+            <div class="" title="Asset">{{item.billingAccount}}</div>
+          </th>
+          <th scope="row" data-label="Description">
+            <div class="" title="Description">{{item.reason}}</div>
+          </th>
+          <td data-label="Points">
+            <div class="" title="Points">{{item.points}}</div>
+          </td>
+          <td data-label="Date">
+            <div class="" title="Date">{{item.transactionDate | date:'dd/MM/yyyy'}}</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="via-slds-card__header slds-card__header slds-grid slds-grid--vertical-align-center slds-p-around--small" ng-click="performFlyout(uniqueLayoutId + '-card-'+cardIndex)">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-col">
+                <div class="slds-form-element slds-button-group pull-right" role="group">
+                <!--<input ng-model="q" id="search" class="form-control" placeholder="Filter text">
+                    <select ng-model="pageSize" id="pageSize" class="form-control">
+                        <option value="3">3</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>-->
+                    <button class="slds-button slds-button--neutral" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+                        Prev
+                    </button>
+                    <button ng-repeat="n in currentRange" class="slds-button slds-button--neutral" ng-click="goToPage(n);" ng-disabled="n == currentPage">
+                        {{n + 1}}
+                    </button>
+                    <button class="slds-button slds-button--neutral" ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

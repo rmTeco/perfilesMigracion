@@ -1,0 +1,69 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "[{\n\"title\": \"dsf\"\n}]"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "actionCtxId": "",
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "params.AssetId",
+                            "AssetType": "['AssetDetail']['AssetName']",
+                            "LineNumber": "['identificadorRecurso']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "CommunityMyServices",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "params.AssetId",
+                            "AssetType": "['AssetDetail']['AssetName']",
+                            "LineNumber": "['identificadorRecurso']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "CommunityMyNegotiation",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "sObjectType": null,
+            "templateUrl": "ta-community-actions"
+        }
+    ],
+    "title": "Gestiones"
+}

@@ -1,0 +1,72 @@
+$dark-color: #333333;
+$grey-color: #999999;
+$blue-color-dark: #163268;
+$cyan-color-dark: #0a767f;
+$cyan-color: #00b4c5;
+
+
+.slds-tree__container {
+    width: 100%;
+    .ta-header {
+        font-weight: 500;
+        color: $dark-color;    
+    }
+    
+    .ta-subHeader{
+        text-transform: uppercase;
+        color: $grey-color;
+        &.slds-form-element__label {
+            font-size: 12px;    
+        }
+    }
+    
+    .ta-cyan-color {
+        color: $cyan-color;
+    }
+    
+    .ta-cyan-color-dark {
+        color: $cyan-color-dark;    
+    }
+    
+    .lines{
+       margin-right:20px;
+    }
+    
+    .lineMessage{
+        display: block;
+        width: 100%;
+    }
+    
+    .ta-line-selector-row {
+        display: flex;
+        align-items: center;
+    }
+    
+    .ta-delete-decesiveLine {
+        .slds-button {
+            vertical-align: middle;
+            fill: $blue-color-dark;
+        }
+        
+        span, a {
+            vertical-align: middle;
+        }
+    }
+    
+    .ta-selectDecisiveLine.slds-form-element {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        .slds-form-element__control {
+            flex-grow: 0;
+        }
+        .slds-input {
+            width: auto;
+            height: 50px;
+            &::-webkit-inner-spin-button, &::-webkit-outer-spin-button { 
+              -webkit-appearance: none; 
+              margin: 0; 
+            }
+        }
+    }
+}

@@ -1,0 +1,133 @@
+<td 
+ng-if="data.states[0].fields[0].label !='Fecha y Hora'"
+    class="slds-cell-shrink"
+	ng-controller="containerTableSubscriptionsController as CTSCtrl">	
+	<label   class="slds-checkbox">
+		<input type="checkbox" ng-model='data.vlcSelected' ng-change="CTSCtrl.addSubscription(obj.DatosServicioSuscrip.codServicio, data.vlcSelected, false)"/>
+		<!-- <input type="checkbox" ng-model='p.vlcSelected' ng-change='onSelectItem(control, p, $index, this)'/> -->
+		<span class="slds-checkbox--faux"></span>
+		<span class="slds-assistive-text">Select</span>
+	</label>
+ 
+
+	<!-- ng-if="CTSCtrl.historyBlackList==false" <div ng-switch-when="['Fol']" >
+		<input 
+			type="checkbox" 
+			name="options" 
+			id="checkbox-123"
+			ng-checked="(obj | getter: field | picker: field.type)" 
+			ng-disabled="true"/>
+	</div> -->
+
+	<!-- <label ng-if="control.propSetMap.selectMode == 'Single'" class="slds-radio">
+		<input 
+			type="radio" 
+			ng-model="bpTree.response[control.propSetMap.selectableItemConfig.vlcSelected]"
+			ng-value="p"/>							
+		<span class="slds-radio--faux"></span>
+		<span class="slds-assistive-text">Select</span>
+	</label> -->
+</td>
+
+
+<td 
+	ng-repeat="field in data.fields | limitTo:(data.actions.length  > 0 ? 11 : 12)"
+	ng-switch="field.name" 
+	role="gridcell"
+	class="addedValueServices-card-td">
+	<!-- ng-if="field.label != null">-->
+	<div  class="slds-truncate">
+		<div ng-switch-when="['Fol']" >
+			<input 
+				type="checkbox" 
+				name="options" 
+				id="checkbox-123"
+				ng-checked="(obj | getter: field | picker: field.type)" 
+				ng-disabled="true"/>
+		</div>
+
+		<div 
+			ng-switch-when="['AccountName']" 
+			class="slds-truncate">
+				<a href="javascript:void(0);">
+					{{obj | getter: field | picker: field.type}}
+				</a>
+		</div>
+						
+		<div  
+			ng-class="obj.Status == 'In Activation' ? 'inActivationCopy' : ''" 
+			ng-switch-default>
+			{{obj | getter: field | picker: field.type}}
+		</div>
+
+		<div
+			ng-switch-when="['InstallDate']"
+			ng-class="obj.Status == 'In Activation' ? 'inActivationCopy' : ''" >
+			<span ng-if="obj.Status == 'In Activation'">Se activa el </span>		
+			{{obj | getter: field | picker: field.type | date: "dd/MM/yyyy"}}			
+		</div>
+
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'Inactive'"			
+			class="slds-truncate slds-text-color--error">
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'clear'"				
+				size="'x-small'"
+				extra-classes="'inactiveIcon'">
+			</slds-svg-icon> Inactivo
+		</div>
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'Active'"			
+			class="activeCopy">
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'success'"				
+				size="'x-small'"
+				extra-classes="'activeIcon'">
+			</slds-svg-icon> Activo
+		</div>
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'In Activation'"			
+			class="inActivationCopy">		
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'threedots'"				
+				size="'x-small'"
+				extra-classes="'inActivationIcon'">
+			</slds-svg-icon> En activación
+		</div>
+		<div
+			ng-switch-when="['Status']"
+			ng-if="(obj | getter: field | picker: field.type) == 'Limited'"			
+			class="limitedCopy">
+			<slds-svg-icon
+				sprite="'utility'"
+				icon="'warning'"				
+				size="'x-small'"
+				extra-classes="'limitedIcon'">
+			</slds-svg-icon> Limitado
+		</div>
+		<!-- <div
+			ng-switch-when="['fechaAltaSuscripcion']">
+			Date:{{obj | getter: field | picker: field.type | date: "dd/MM/yyyy"}}		
+		</div>	-->
+	</div>
+</td>
+<td ng-if="data.actions.length == 0"></td>
+<td 
+	class="slds-cell-shrink" 
+	ng-if="data.actions.length > 0" 
+	data-label="Actions" 
+	style="overflow: visible">
+	<slds-dropdown 
+		content="data.actions" 
+		ng-if="data.actions.length > 0" 
+		icon-attribute="vlocityIcon" 
+		label-attribute="displayName" 
+		action-function="performAction(item)">
+	</slds-dropdown>
+</td>

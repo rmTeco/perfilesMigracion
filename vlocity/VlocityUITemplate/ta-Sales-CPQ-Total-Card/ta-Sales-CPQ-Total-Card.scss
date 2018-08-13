@@ -1,0 +1,29 @@
+/*** CPQ Theme VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    .cpq-total-card {
+        margin-top: $cpq-padding-large-horizontal;
+        
+        .cart-action {
+            button {
+               margin: $cpq-padding-small-horizontal;  
+            }
+            .slds-button--brand.ta-button-brand {
+                background-color: #00b4c5;
+                border: 0px;
+                &:hover {
+                    background-color: #007C85;
+                }
+            }
+        }
+    }
+    
+    .svg-icon-margin {
+        margin: 0.25em;
+    }
+}

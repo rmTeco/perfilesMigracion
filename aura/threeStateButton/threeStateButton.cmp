@@ -1,0 +1,22 @@
+<aura:component access="GLOBAL">
+    <aura:attribute name="nsPrefix" type="String"/>
+    <aura:registerEvent name="change" type="vlocity_cmt:threeStateButtonChangedEvent"/>
+    <aura:attribute name="state" type="String"/>
+    <aura:attribute name="color" type="String"/>
+    <aura:attribute name="isLanguageRTL" type="Boolean"/>
+
+    <div class="{! concat('three-state-button ', (v.state=='-1')?'toggle-off':(v.state=='0')?'toggle-neutral':'toggle-on')}"  onclick="{!c.cancelOnclick}" dir="{! (v.isLanguageRTL ? 'rtl' : 'ltr') }">
+        <ul>
+            <li onclick="{!c.toggleOff}" style="{! v.color ? 'background-color: ' + v.color : ''}">
+                <span style="{! v.color ? 'background-color: ' + v.color + '; color:' + v.color : ''}">-</span>
+            </li>
+            <li onclick="{!c.toggleNeutral}" style="{! v.color ? 'background-color: ' + v.color : ''}">
+                <span style="{! v.color ? 'background-color: ' + v.color + '; color:' + v.color : ''}"></span>
+            </li>
+            <li onclick="{!c.toggleOn}" style="{! v.color ? 'background-color: ' + v.color : ''}">
+                <span style="{! v.color ? 'background-color: ' + v.color + '; color:' + v.color : ''}">+</span>
+            </li>
+        </ul>
+    </div>
+    
+</aura:component>

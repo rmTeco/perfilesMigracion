@@ -1,0 +1,122 @@
+<apex:page standardController="Account" extensions="SCP_Certa_GC.accountOpportunities" tabStyle="Strategic_Client_Plan__tab" sidebar="false">
+
+	
+	<c:SCPMenu ></c:SCPMenu>
+	
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUI}"  />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__DataTable}"  />
+	
+	<style>
+    	table.dataTable thead .sorting {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_both.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_asc {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_desc {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_asc_disabled {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc_disabled.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_desc_disabled {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc_disabled.png')}") no-repeat center right ! important;
+	    }
+	    
+	    table.dataTable thead .sorting_asc,
+	    table.dataTable thead .sorting_desc,
+	    table.dataTable thead .sorting {
+	      cursor: pointer;
+	      *cursor: hand;
+	    }
+	    
+	    .dataTables_filter {
+	        text-align: right ! important;
+	        padding-right: 15px ! important;
+	    }
+    </style>
+	
+	<script  type="text/javascript">
+	    $j = jQuery.noConflict();
+		
+		$j(document).ready(function() {
+            createDataTableSerch();                        
+        });
+        
+        function createDataTableSerch(){
+            $j("#mainTable").dataTable({
+                "bPaginate": false,        
+                "bInfo": false
+            });
+        }	
+	</script>
+	
+   	<apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1">
+		<apex:outputPanel layout="block"  styleClass="panel panel-default">
+	   		<apex:outputPanel layout="block"  styleClass="panel-heading">
+    			<h3 class="panel-title">
+    				<span style="float:left;">
+    					{!$Label.scp_certa_gc__dcm}
+    				</span>
+                    
+                    <span style="float:left;">
+                        <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/N0Z7o2X04pQ"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                    </span>
+    			</h3>
+    			<div class="row paddingRight"></div>
+    		</apex:outputPanel>
+			<apex:outputPanel layout="block" styleClass="panel-body" id="pageContent">
+				<table id="mainTable" class="table table-striped table-bordered table-condensed">
+					<thead>
+		                <tr>
+		                    <th style="width: 100px;"></th>                    
+		                    <th>{!$Label.opportunityName}</th>
+		                    <th>{!$ObjectType.Opportunity.Fields.amount.Label}</th>
+		                    <th>{!$ObjectType.Opportunity.Fields.probability.Label}</th>                
+		                    <th> {!$ObjectType.Opportunity.Fields.StageName.Label}</th>
+		                </tr>
+	                </thead>
+	                <tbody>
+	                	<apex:repeat value="{!oppWrappers}" var="opportunity">                
+			                <tr>
+			                    <td style="text-align: center;"> 
+			                        <!--
+			                        <apex:outputLink value="{!$Page.SCP_Certa_GC__DCMEvaluateCriteria}?id={!opportunity.opp.id}"><apex:image url="{!$Resource.icon_question}" height="25px" width="25px"/></apex:outputLink>
+			                        -->
+			                        <apex:outputLink value="{!$Page.SCP_Certa_GC__DCMEvaluateCriteria}?id={!opportunity.opp.id}">
+			                         	<button type="button" class="btn btn-default btn-sm">
+					   						<span class="glyphicon glyphicon-comment icon-btn-left"></span>&nbsp;{!$Label.gotoCriteria}
+					                    </button>
+			                        </apex:outputLink>	
+			                    </td>                    
+			                    <td> 
+			                        <apex:outputLink value="/{!opportunity.opp.id}">{!opportunity.opp.Name}</apex:outputLink>                         
+			                    </td>
+			                    <td style="text-align: right;">                        
+			                        <apex:outputText value="{!opportunity.position}" style="display:none;"/>
+			                        <!--
+                                    <apex:outputText value="{!isoCode}"/>-->			                        
+			                        <apex:outputField value="{!opportunity.opp.SCP_Certa_GC__FCV__c}"/>
+                                    <!--
+                                    <apex:outputText value="{0, number, ###,###,###,###,###,##0.00}">
+										<apex:param value="{!opportunity.amount}" />
+									</apex:outputText>		
+									-->
+			                    </td>
+			                    <td style="text-align: right;">                        
+			                        <apex:outputField value="{!opportunity.opp.Probability}"></apex:outputField>
+			                    </td>                    
+			                    <td>                
+			                        <apex:outputField value="{!opportunity.opp.StageName}"></apex:outputField>         
+			                    </td>                    
+			                </tr>
+	                	</apex:repeat>
+	                </tbody>
+	           	</table>
+				<c:FastTask page="{!$Label.scp_certa_gc__dcm}" account="{!account.id}"></c:FastTask>
+				<chatter:feed entityId="{!Account.Id}" />
+			</apex:outputPanel>			
+		</apex:outputPanel>
+	</apex:outputPanel>
+</apex:page>

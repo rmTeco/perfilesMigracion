@@ -1,0 +1,112 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.resourceId",
+                "val": "13800001139"
+            }
+        ],
+        "type": "IntegrationProcedures",
+        "value": {
+            "inputMap": {
+                "body": {
+                    "cantidadItemsConsulta": 2,
+                    "cantidadMaxConsulta": 5,
+                    "codigoAcceso": {
+                        "identificadorRecurso": "{{params.resourceId}}"
+                    },
+                    "fechaDesde": "2015-01-01 00:00:00",
+                    "fechaHasta": "2090-12-31 00:00:00",
+                    "referenciaItemPaginado": 0
+                }
+            },
+            "ipMethod": "IFS_S139",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "remoteClass": "IntegrationProcedureService",
+            "remoteMethod": "IFS_S139",
+            "remoteNSPrefix": "%vlocity_namespace%",
+            "resultVar": "['detalleDeMovimientosLista']['elementoDetalleDeMovimientos']"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "actionCtxId": "id",
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "$scope.data.cardIndex",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "0"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AccountId": "$root.vlocity.userAccountId",
+                            "AssetId": "params.AssetId"
+                        },
+                        "hasExtraParams": true,
+                        "id": "taCommunityConsumptionDetails",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['descripcionTipoEvento']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "type",
+                    "name": "['descripcionTipoEvento']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['fechaTasacionTrafico']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "date",
+                    "name": "['fechaTasacionTrafico']",
+                    "type": "datetime"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['importeTasado']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "importe",
+                    "name": "['importeTasado']",
+                    "type": "currency"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.data.cardIndex == '0'",
+            "name": "Active",
+            "sObjectType": "%vlocity_namespace%__VlocityAction__c",
+            "templateUrl": "ta-community-card-last-consumption"
+        }
+    ],
+    "title": "Ultimos consumos"
+}

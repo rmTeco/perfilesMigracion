@@ -1,0 +1,234 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.Id",
+                "val": "0016C0000095jLJ"
+            }
+        ],
+        "type": "IntegrationProcedures",
+        "value": {
+            "inputMap": {
+                "Id": "{{params.Id}}"
+            },
+            "ipMethod": "Care_GetDeviceDetailsForConsole",
+            "optionsMap": {
+                "vlcClass": "%vlocity_namespace%.IntegrationProcedureService"
+            },
+            "resultVar": "['DeviceAssets']"
+        }
+    },
+    "filter": {
+    },
+    "sessionVars": [
+    ],
+    "states": [
+        {
+            "actionCtxId": "['Id']",
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Activo"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatings",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "ContextId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-sales-ChangeTerminalInWarranty",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "Id": "['OrderId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ta-annulment-precess",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['PurchaseDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de compra",
+                    "name": "['PurchaseDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Garantia']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Plazo de garantia",
+                    "name": "['Garantia']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['SO']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Sistema operativo",
+                    "name": "['SO']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Activo'",
+            "name": "Active",
+            "sObjectType": "Asset",
+            "templateUrl": "ta-care-device-card"
+        },
+        {
+            "actionCtxId": "['Id']",
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "['Status']",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Suspendido"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "assetId": "['AssetId']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "Care-HistoricSuspensionsRatings",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    },
+                    {
+                        "collapse": true,
+                        "extraParams": {
+                            "AssetId": "['AssetId']",
+                            "AssetType": "['Name']",
+                            "LineNumber": "['LineNumber']"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleSessions",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Status']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Estado",
+                    "name": "['Status']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['PurchaseDate']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Fecha de compra",
+                    "name": "['PurchaseDate']",
+                    "type": "date"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['Garantia']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Plazo de garantia",
+                    "name": "['Garantia']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['SO']",
+                    "editing": false,
+                    "fieldType": "standard",
+                    "group": "Custom Properties",
+                    "label": "Sistema operativo",
+                    "name": "['SO']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj['Status'] == 'Suspendido'",
+            "name": "Suspended",
+            "sObjectType": "Account",
+            "templateUrl": "ta-care-device-card"
+        }
+    ],
+    "zone": "middle"
+}

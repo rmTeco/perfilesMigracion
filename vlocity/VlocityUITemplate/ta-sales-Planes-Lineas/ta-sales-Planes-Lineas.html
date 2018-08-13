@@ -1,0 +1,129 @@
+<div ng-if="!bpTree.response.Order.lineasReservadas"
+     class="slds-text-align--center slds-form-element__label slds-text-color--error lineMessage">Falta asignar números de líneas
+</div> 
+<!--<pre>-->
+<!--    {{bpTree.response.Order | json}}-->
+<!--</pre>-->
+<div  
+    class="slds-tree__container" 
+    role="application"
+    ng-controller="LinesController as lc"
+    ng-init="expanded = true">
+    <ul 
+        class="slds-tree" 
+        role="tree" 
+        aria-labelledby="treeheading" 
+        aria-activedescendant="tree0-node1">
+        <li 
+            id="tree0-node1" 
+            role="treeitem" 
+            aria-level="1" 
+            aria-expanded="{{expanded}}"
+            ng-repeat="plan in bpTree.response.Order.planes track by $index"
+            class="slds-m-bottom--x-large">
+            <h3 class="slds-m-bottom--small slds-text-heading--medium ta-header">{{plan.nombre}}</h3>
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <span class="slds-checkbox">
+                        <input 
+                            type="checkbox" 
+                            name="options" 
+                            id="id-{{$index}}"
+                            plan.isSelected=true
+                            ng-model="plan.isSelected"
+                            ng-click="lc.checkAll(plan)"
+                            ng-checked="plan.isSelected"/>
+                            
+                        <label class="slds-checkbox__label" for="id-{{$index}}">
+                            <span class="slds-checkbox--faux"></span>
+                            <span id="tree0-node1__label" class="slds-form-element__label slds-truncate ta-subHeader" tabindex="-1" role="presentation" title="Tree Branch">Lineas Disponibles</span>
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <ul 
+                ng-class="{'slds-is-expanded' : expanded, 'slds-is-collapsed': !expanded}"
+                class="slds-has-dividers--top"
+                role="group" 
+                aria-labelledby="<tree0-node1_></tree0-node1_>_label">
+                <li 
+                    ng-class="{'slds-has-divider--bottom' : $last}"
+                    class="slds-item ta-line-selector-row"
+                    id="tree0-node1-0" 
+                    role="treeitem" 
+                    aria-level="2"
+                    ng-repeat="linea in plan.lineas track by $index">
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+                            <span class="slds-checkbox">
+                                <input 
+                                    type="checkbox" 
+                                    name="options" 
+                                    id="id-{{$parent.$index}}-{{$index}}"
+                                    ng-model="linea.isSelected"
+                                    ng-click="lc.verifyChecker(plan)"
+                                    ng-checked="linea.isSelected"
+                                    checked/>
+                                    
+                                <label 
+                                    class="slds-checkbox__label ta-cyan-color-dark" 
+                                    for="id-{{$parent.$index}}-{{$index}}">
+                                    <span class="slds-checkbox--faux"></span>
+                                    <span>{{linea.linea | tel}}</span>
+                                    <span 
+                                        ng-if="linea.validacionLinea"
+                                        class="slds-form-element__label slds-text-color--error">{{linea.validacionLinea}}</span>
+                                </label>
+                            </span>
+                        </div>
+                    </div>
+                    <div 
+                        class="slds-m-left--x-large" 
+                        ng-if="!bpTree.response.Account.IDPhone && !bpTree.response.LineAssignment.NewIDPhoneFormula">
+                        
+                        <div 
+                            ng-if="bpTree.response.LineAssignment.NewIDPhone == linea.linea"
+                            class="ta-delete-decesiveLine">
+                            <slds-svg-icon
+								sprite="'utility'"
+								icon="'info'"
+								size="'small'"
+								no-hint="true"
+								extra-classes="'slds-button slds-button--icon'">
+							</slds-svg-icon>
+                            <span>Esta línea es decisora. </span>
+                            <a 
+                                ng-click="bpTree.response.LineAssignment.NewIDPhone = ''"
+                                class="ta-cyan-color"
+                                href="javascript:void(0);">
+                                Eliminar</a>
+                        </div>
+                        <a 
+                            ng-if="bpTree.response.LineAssignment.NewIDPhone != linea.linea" 
+                            ng-click="bpTree.response.LineAssignment.NewIDPhone = linea.linea"
+                            class="ta-cyan-color"
+                            href="javascript:void(0);">
+                            Elegir como línea decisora</a>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="ta-selectDecisiveLine slds-form-element" ng-if="!bpTree.response.Account.IDPhone">
+        <div class="slds-form-element__control">
+            <input 
+                type="number" 
+                id="text-input-01" 
+                class="slds-input" 
+                ng-model="bpTree.response.LineAssignment.NewIDPhone"
+                placeholder="Agregar línea decisora" />
+        </div>
+        <a 
+            ng-click="bpTree.response.LineAssignment.NewIDPhone = ''"
+            class="slds-m-left--large ta-cyan-color"
+            href="javascript:void(0);">
+            x Eliminar línea decisora
+        </a>
+    </div>
+</div>

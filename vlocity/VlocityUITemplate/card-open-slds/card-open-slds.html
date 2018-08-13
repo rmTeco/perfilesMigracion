@@ -1,0 +1,14 @@
+<div class="slds-card via-slds-card via-slds-card__open slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(obj.Id)}" hotkey-layout-card>
+  <div class="slds-card__body  via-slds-card__body slds-grid slds-wrap slds-theme--default slds-is-relative slds-p-bottom--medium slds-p-top--medium slds-grid--vertical-align-end slds-grid--align-center">
+    <div class="slds-grid slds-grid--vertical slds-grid--vertical-align-center slds-grid--align-center via-slds-main-action-wrapper">
+        <a href="#" ng-click="performAction(data.actions[0])" class="via-slds-main-action slds-text-align--center" hotkey-card-action>
+            <vloc-card-icon ng-if="!data.actions[0].imageRef" data="data.actions[0]" obj="obj" size="'medium'" extra-classes="'slds-icon-text-default'"></vloc-card-icon>
+            <img ng-if="data.actions[0].imageRef" ng-src="{{data.actions[0].imageRef}}" alt="{{data.actions[0].displayName}}"/>
+            <span class="slds-m-left--small slds-text-align--center slds-text-heading--medium">{{data.title}}&nbsp;</span>
+        </a>
+      </div>
+      <a href="javascript:void(0)" class="slds-p-right--small" ng-click="performAction(action)" ng-repeat="action in data.actions.slice(1)" hotkey-card-action>
+        <vloc-card-icon ng-if="!action.imageRef" data="action" obj="obj" size="'x-small'" extra-classes="'slds-icon-text-default big'"></vloc-card-icon>{{action.displayName}}&nbsp;
+      </a>
+  </div>
+</div>

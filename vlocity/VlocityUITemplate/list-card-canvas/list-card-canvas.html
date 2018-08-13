@@ -1,0 +1,13 @@
+<div class="list-card-canvas container">
+    <div class="row headers">
+        <div class="col-sm-{{12/(cards[0].fields.length + (cards[0].actions.length  > 0 ? 1 : 0))| number:0}}"
+        ng-repeat="field in cards[0].fields | limitTo:(cards[0].actions.length  > 0 ? 11 : 12)" ng-click="$parent.listCardCanvasOrder === '+obj'+field.name ?  $parent.listCardCanvasOrder = '-obj'+field.name : $parent.listCardCanvasOrder = '+obj'+field.name">
+            {{field.label}}
+            <i class="icon " ng-class="{'icon-v-down-arrow': $parent.listCardCanvasOrder[0] === '-', 'icon-v-up-arrow': $parent.listCardCanvasOrder[0] === '+'}" ng-if="$parent.listCardCanvasOrder.substring(1) === 'obj'+field.name"></i>
+        </div>
+        <div class="col-sm-{{12/(cards[0].fields.length + (cards[0].actions.length  > 0 ? 1 : 0))}}" ng-if="cards[0].actions.length > 0">
+        </div>
+    </div> 
+    <vloc-card ng-repeat="card in cards | orderBy:listCardCanvasOrder" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"></vloc-card>
+    <span id="flyout"></span>
+</div>

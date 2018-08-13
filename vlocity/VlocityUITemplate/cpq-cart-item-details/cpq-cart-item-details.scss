@@ -1,0 +1,48 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-cart-item-details {
+            .#{$namespace}-cart-errors {
+                padding: $cpq-padding-large-vertical $cpq-padding-large-horizontal;
+                color: white;
+                h2 {
+                    font-size: 14px;
+                }
+                a {
+                    text-decoration: none;
+                    font-weight: 300;
+                    font-size: 1rem;
+                    line-height: 1.25;
+                }
+                .#{$namespace}-modal-button {
+                    line-height: 1.25;
+                    color: white;
+                }
+
+            }
+
+            .#{$namespace}-product-cart-item-container {
+                border-bottom: none;
+            }
+        }
+        .#{$namespace}-lineitem-details-form {
+            display: inline; 
+            .#{$namespace}-modal-content-position {
+                position: relative;
+            }
+            .#{$namespace}-modal-spinner-position {
+                right: 85px;
+                float: right;
+            }
+        }
+    }
+}

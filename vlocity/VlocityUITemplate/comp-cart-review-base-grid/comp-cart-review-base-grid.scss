@@ -1,0 +1,78 @@
+/*** ASSETS THEME VARIABLES ***/
+@import "comp-assets-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/*** STYLES ***/
+.vlocity {
+    .comp-cart-review-base-grid {
+        background-color: $cpq-page-bg-color;
+    }
+    .cart-review-container {
+        .review-info-container-wrapper {
+            transition: margin-right 250ms ease-in;
+            margin-right: -59%;
+
+            &.review-product-container-visible {
+                margin-right: 0;
+            }
+        }
+
+        // 64rem
+        @media screen and (max-width: $bp-large) {
+            .comp-cart-review-base-grid {
+                input {
+                    -webkit-appearance: none;
+                }
+            }
+
+            .review-info-container-wrapper {
+                transition-property: right;
+                position: fixed;
+                z-index: 999;
+                margin-right: 0;
+                right: -33.33%;
+                top: 0;
+                height: 100%;
+                overflow-y: auto;
+                background-color: #fff;
+
+                ng-include {
+                    display: block;
+                }
+                &.review-product-container-visible {
+                    margin-right: 0;
+                    right: 0;
+                    box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+                }
+            }
+        }
+
+        // 48rem
+        @media screen and (max-width: $bp-medium) {
+
+        }
+
+        // 30rem
+        @media screen and (max-width: $bp-small) {
+
+        }
+    }    
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        .comp-cart-review-base-grid{
+            .cart-review-container {
+                .review-info-container-wrapper {
+                    margin-right: 0;
+                    &.review-product-container-visible{
+                        left: 0;
+                        right: auto;
+                    }
+                }
+            }
+        }
+    }
+}

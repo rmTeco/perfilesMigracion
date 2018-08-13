@@ -1,0 +1,4 @@
+Name
+GUIDGenerator
+CategoryGUIDBatchJobQuery
+AttributeGUIDBatchJobQuery

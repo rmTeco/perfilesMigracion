@@ -1,0 +1,21 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "0035000002hUcp4"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT Id, Name, Title, MobilePhone, Email, PhotoUrl,  MailingAddress, OtherAddress, Account.Name, %vlocity_namespace%__CustomerSentiment__c FROM CONTACT WHERE Id = '{{params.id}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "mobile-highlight-card"
+        }
+    }
+}

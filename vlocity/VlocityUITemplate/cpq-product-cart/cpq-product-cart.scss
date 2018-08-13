@@ -1,0 +1,117 @@
+/*** CPQ THEME VARIABLES ***/
+@import "cpq-theme-variables";
+
+/*** MIXINS ***/
+@import "cpq-mixin";
+
+/* $cpq-namespace is defined in cpq-base-variables */
+$namespace: $cpq-namespace;
+
+/*** STYLES ***/
+.vlocity {
+    &.via-slds {
+        .#{$namespace}-product-cart {
+            position: absolute;
+            top: 0;
+            right: $cpq-padding-large-horizontal/2;
+            bottom: 0;
+            left: $cpq-padding-large-horizontal/2;
+            height: calc(100% - 80px);
+
+            .#{$namespace}-errors-container-sticky {
+                position: absolute;
+                z-index: 1;
+                width: 100%;
+                @-moz-document url-prefix() {
+                    /* targeting Firefox only */
+                    top: 31px;
+                }
+                .#{$namespace}-border-radius {
+                    border-radius: 4px 4px 0 0;
+                }
+                .#{$namespace}-close-switch {
+                    transform: rotate(-90deg);
+                }
+            }
+            .#{$namespace}-cart-container-padding {
+                padding-top: 40px;
+            }
+            .#{$namespace}-cart-errors {
+                padding: $cpq-padding-large-vertical $cpq-padding-large-horizontal;
+                color: white;
+                h2 {
+                    font-size: 14px;
+                }
+                a {
+                    text-decoration: none;
+                    font-weight: 300;
+                    font-size: 1rem;
+                    line-height: 1.25;
+                    background-color: inherit;
+                }
+                .#{$namespace}-errors-button {
+                    line-height: 1.25;
+                    color: white;
+                }
+            }
+            .#{$namespace}-product-cart-global-tabs {
+                background-color: transparent;
+                .#{$namespace}-product-cart-tabs {
+                    margin-top: $cpq-cart-container-tabs-top-margin;
+                }
+            }
+            .#{$namespace}-product-cart-items {
+                background-color: $cpq-product-cart-items-bg-color;
+                overflow-y: auto;
+                .#{$namespace}-product-cart-items-tab-content {
+                    padding-top: 0px; //slds override
+                    .#{$namespace}-no-cart-items-msg {
+                        padding: $cpq-padding-large-vertical*4 $cpq-padding-large-vertical;
+                    }
+                }
+                .#{$namespace}-next-product {
+                    padding: $cpq-padding-large-vertical;
+
+                    .#{$namespace}-spinner-container {
+                        position: relative;
+                        padding-top: 10px;
+                    }
+                }
+            }
+
+            .#{$namespace}-cart-promotions-tab-container {
+                min-height: 300px;
+            }
+        }
+
+        // 64rem
+        @media screen and (max-width: $bp-large) {
+            .#{$namespace}-product-cart {
+                left: 0;
+                right: 0;
+
+                .#{$namespace}-product-cart-global-tabs {
+                    ul.#{$namespace}-product-cart-tabs {
+                        padding-left: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+[dir=rtl] .vlocity {
+    &.via-slds {
+        // 64rem
+        @media screen and (max-width: $bp-large) {
+            .#{$namespace}-product-cart {
+                .#{$namespace}-product-cart-global-tabs {
+                    ul.#{$namespace}-product-cart-tabs {
+                        padding-left: 0;
+                        padding-right: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}

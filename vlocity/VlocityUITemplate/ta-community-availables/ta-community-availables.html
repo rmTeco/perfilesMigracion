@@ -1,0 +1,282 @@
+<div ng-controller="AvailablesModuleCtrl as amc"
+     ng-init="amc.init()">
+    <!-- WEB -->
+    <div ng-if="!amc.mobile">
+        <div class="slds-p-around--small"  ng-if="data.title == 'Mi crédito'">
+            <div class="slds-p-around--large community_card-2x">
+                <p class="slds-text-heading--large availables_title">Mi crédito</p>
+                <section class hotkey-layout-card>
+                    <div class="cards-container slds-p-horizontal--small">
+                        <!-- {{data.obj}} -->
+                        <!-- iconos disponibles -->
+                        <div class = "slds-grid slds-grid--pull-padded slds-grid--align-center slds-m-top--xx-large">
+        
+                            <div class="slds-size--1-of-2 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                    <slds-svg-icon  sprite="'utility'"
+                                        icon="'phone_portrait'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">{{obj.saldoBalance | currency}}</div>
+                                <div class="slds-size--1-of-1 availables_unit">Crédito de recarga</div>
+
+                            </div>
+                            
+                            <div class="slds-size--1-of-2 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                 <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                    <slds-svg-icon  sprite="'utility'"
+                                        icon="'phone_portrait'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount" ng-if="obj.saldoSuscripcionRegalado == undefined">$ 0.00</div>
+                                 <div class="slds-size--1-of-1 availables_ammount" ng-if="obj.saldoSuscripcionRegalado != undefined">{{obj.saldoSuscripcionRegalado / 1 | currency}}</div>
+                                <div class="slds-size--1-of-1 availables_unit">Crédito de Promociones</div>
+                            </div>
+        
+                        </div>  
+                    </div>
+                </section>
+                   
+                <div class="availables_actions">   
+                    <div class="slds-wrap slds-m-top--xx-small" ng-repeat="action in data.actions | limitTo: 1">
+                        <a ng-click="performAction(action)"
+                                    class="Helvetica-Neue-Regul"
+                                    hotkey-card-action>
+                        <button class="availables_buy_more slds-button slds-align--absolute-center slds-size--2-of-4 ">Ver historiales <slds-svg-icon  sprite="'utility'"
+                                    icon="'chevronright'"
+                                    size="'x-small'"
+                                    style="fill:#00b4c5"
+                                    extra-classes="'slds-input__icon availables_svg slds-m-left--small'">
+                                </slds-svg-icon>
+                        </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-p-around--small" ng-if="data.title == 'Disponibles'">
+            <div class="slds-p-around--large community_card-2x">
+                <div class="slds-text-heading--large availables_title">Disponibles</div>
+                <section class hotkey-layout-card>
+                    <div class="cards-container slds-p-horizontal--small">
+                        
+                        <!-- {{data.obj}} -->
+                        <!-- iconos disponibles -->
+                        <div class = "slds-grid slds-grid--pull-padded slds-grid--align-center slds-m-top--xx-large">
+                           <div class="slds-size--1-of-3 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                 <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                        <slds-svg-icon  sprite="'utility'"
+                                        icon="'broadcast'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">
+                                    <!-- {{obj.unidadLibre[2].cantUnidadesRemanentes / 1024 | rounddown}} -->
+                                    {{dato.data / 1024 | rounddown}}
+                                </div>
+                                <div class="slds-size--1-of-1 availables_unit">MB</div>
+                            </div> 
+        
+                            <div class="slds-size--1-of-3 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                        <slds-svg-icon  sprite="'utility'"
+                                        icon="'call'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">
+                                    <!-- {{obj.unidadLibre[0].cantUnidadesRemanentes / 60 | rounddown}} -->
+                                    {{dato.voice / 60 | rounddown}}
+                                </div>
+                                <div class="slds-size--1-of-1 availables_unit">Minutos</div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-3 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                 <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                        <slds-svg-icon  sprite="'utility'"
+                                        icon="'sms'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">
+                                    <!-- {{obj.unidadLibre[1].cantUnidadesRemanentes / 1 | rounddown}} -->
+                                    {{dato.sms / 1 | rounddown}}
+                                </div>
+                                <div class="slds-size--1-of-1 availables_unit">SMS</div>
+                            </div>
+        
+                        </div>  
+                    </div>
+                </section>
+                
+                <div class="availables_actions">   
+                    <div class="slds-wrap slds-m-top--xx-small" ng-repeat="action in data.actions | limitTo: 1">
+                        <a ng-click="performAction(action)"
+                                    class="Helvetica-Neue-Regul"
+                                    hotkey-card-action>
+                            <button class="availables_buy_more slds-button slds-align--absolute-center slds-size--2-of-4 ">Comprar packs <slds-svg-icon  sprite="'utility'"
+                                        icon="'chevronright'"
+                                        size="'x-small'"
+                                        style="fill:#00b4c5"
+                                        extra-classes="'slds-input__icon availables_svg slds-m-left--small'">
+                                    </slds-svg-icon>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MOBILE -->
+    <div ng-if="amc.mobile">
+        <div class="slds-p-around--small" ng-if="data.title == 'Mi crédito'">
+            <div class="slds-p-around--large community_card-2x">
+                <p class="slds-text-heading--large availables_title">Mi crédito</p>
+                <section class hotkey-layout-card>
+                    <div class="cards-container slds-p-horizontal--small">
+                        <!-- {{data.obj}} -->
+                        <!-- iconos disponibles -->
+                        <div class = "slds-grid slds-grid--pull-padded slds-grid--align-spread slds-m-top--xx-large">
+        
+                            <div class="slds-size--1-of-2 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                        <slds-svg-icon  sprite="'utility'"
+                                        icon="'phone_portrait'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">{{obj.saldoBalance | currency}}</div>
+                                <!-- {{obj.saldoBalance}} -->
+                                <div class="slds-size--1-of-2 availables_unit">Crédito de recarga</div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-2 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                 <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                        <slds-svg-icon  sprite="'utility'"
+                                        icon="'phone_portrait'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount" ng-if="obj.saldoSuscripcionRegalado == undefined">$ 0.00</div>
+                                 <div class="slds-size--1-of-1 availables_ammount" ng-if="obj.saldoSuscripcionRegalado != undefined">{{obj.saldoSuscripcionRegalado / 1 | currency}}</div>
+                                <div class="slds-size--1-of-2 availables_unit">Crédito de Promociones</div>
+                            </div>
+        
+                        </div>  
+                    </div>
+                </section>
+                   
+                <div class="availables_actions">   
+                    <div class="slds-wrap slds-m-top--xx-small" ng-repeat="action in data.actions | limitTo: 1">
+                        <a ng-click="performAction(action)"
+                                    class="Helvetica-Neue-Regul"
+                                    hotkey-card-action>
+                        <button class="availables_buy_more slds-button slds-align--absolute-center slds-size--2-of-4 ">Ver historiales <slds-svg-icon  sprite="'utility'"
+                                    icon="'chevronright'"
+                                    size="'x-small'"
+                                    style="fill:#00b4c5"
+                                    extra-classes="'slds-input__icon availables_svg slds-m-left--small'">
+                                </slds-svg-icon>
+                        </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-p-around--small" ng-if="data.title == 'Disponibles'">
+            <div class="slds-p-around--large community_card-2x">
+                <div class="slds-text-heading--large availables_title">Disponibles</div>
+                <section class hotkey-layout-card>
+                    <div class="cards-container slds-p-horizontal--small">
+                        
+                        <!-- {{data.obj}} -->
+                        <!-- iconos disponibles -->
+                        <div class = "slds-grid slds-grid--pull-padded slds-grid--align-spread slds-m-top--xx-large">
+                           <div class="slds-size--1-of-3 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                 <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                    <slds-svg-icon  sprite="'utility'"
+                                        icon="'broadcast'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">
+                                    <!-- {{obj.unidadLibre[2].cantUnidadesRemanentes / 1024 | rounddown}} -->
+                                    {{dato.data / 1024 | rounddown}}
+                                </div>
+                                <div class="slds-size--1-of-1 availables_unit">MB</div>
+                            </div> 
+        
+                            <div class="slds-size--1-of-3 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                    <slds-svg-icon  sprite="'utility'"
+                                        icon="'call'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">
+                                    <!-- {{obj.unidadLibre[0].cantUnidadesRemanentes / 60 | rounddown}} -->
+                                    {{dato.voice / 60 | rounddown}}
+                                </div>
+                                <div class="slds-size--1-of-1 availables_unit">Minutos</div>
+                            </div>
+                            
+                            <div class="slds-size--1-of-3 slds-grid slds-wrap slds-grid--pull-padded slds-grid--align-center">
+                                 <div class="slds-size--1-of-1 availables_icon slds-align--absolute-center">
+                                    <slds-svg-icon  sprite="'utility'"
+                                        icon="'sms'"
+                                        size="'large'"
+                                        style="fill:#333333"
+                                        extra-classes="'slds-input__icon availables_svg'">
+                                    </slds-svg-icon>
+                                </div>
+                                <div class="slds-size--1-of-1 availables_ammount">
+                                    <!-- {{obj.unidadLibre[1].cantUnidadesRemanentes}} -->
+                                    {{dato.sms / 1 | rounddown}}
+                                </div>
+                                <div class="slds-size--1-of-1 availables_unit">SMS</div>
+                            </div>
+        
+                        </div>  
+                    </div>
+                </section>
+                
+                <div class="availables_actions">   
+                    <div class="slds-wrap slds-m-top--xx-small">
+                        <a href="/historics">
+                        <button class="availables_buy_more slds-button slds-align--absolute-center slds-size--2-of-4 ">Comprar packs <slds-svg-icon  sprite="'utility'"
+                                    icon="'chevronright'"
+                                    size="'x-small'"
+                                    style="fill:#00b4c5"
+                                    extra-classes="'slds-input__icon availables_svg slds-m-left--small'">
+                                </slds-svg-icon>
+                        </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

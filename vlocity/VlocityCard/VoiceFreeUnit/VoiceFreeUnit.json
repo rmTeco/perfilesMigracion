@@ -1,0 +1,83 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+            "body": "{\n    \"remainingPrimaryUnits\": \"100\",\n    \"remainingSecondaryUnits\": \"10000\",\n\"fechaVigenciaHastaProdAdq\": \"20/11/18\"\n}"
+        }
+    },
+    "filter": {
+        "['codUsoUnidadesLibres']": "Voice"
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                    {
+                        "collapse": false,
+                        "extraParams": {
+                            "ContextId": "['AssetId']",
+                            "operationCode": "VTPACK",
+                            "operationFlow": "'Compra de Pack'"
+                        },
+                        "hasExtraParams": true,
+                        "id": "ConsoleBuyMinutes",
+                        "isCustomAction": false,
+                        "type": "Vlocity Action"
+                    }
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "",
+                    "name": "['freeUnitCode']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Minutos",
+                    "name": "['remainingPrimaryUnits']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Segundos",
+                    "name": "['remainingSecondaryUnits']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Vencimiento",
+                    "name": "['fechaVigenciaHastaProdAdq']",
+                    "type": "date"
+                }
+            ],
+            "name": "Active",
+            "templateUrl": "ta-care-prepaid-flyout-grid-items"
+        }
+    ],
+    "title": ""
+}

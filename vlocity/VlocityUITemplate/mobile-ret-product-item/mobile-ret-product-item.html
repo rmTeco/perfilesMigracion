@@ -1,0 +1,21 @@
+<div class="cpq-product-item" data-product-id="{{obj.Id.value}}" ng-controller="CpqProductItemController as vm">
+    <div class=" cpq-product-item-container">
+        <div class="product-image" ng-click="importedScope.viewMore()">
+            <img alt="Placeholder" ng-src="{{$root.instanceUrl + obj.Attachments[0].url}}"/>
+        </div>
+        <div class="product-info">
+            <div class="product-name">
+                {{::obj.Name.value}}
+            </div>
+            <div class="product-price">
+                {{::obj | resolveCustomField:'RecurringPrice__c':'value' | currency}} | 
+             {{::obj['UnitPrice']['value'] | currency}} Retail
+            </div>
+        </div>
+        <div class="cpq-product-actions">
+            <button class="slds-button slds-button_neutral add-button" ng-click="importedScope.addToCart(obj)">
+                    Add to Cart
+            </button>
+        </div>
+    </div>
+</div>

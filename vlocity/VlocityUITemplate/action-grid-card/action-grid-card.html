@@ -1,0 +1,11 @@
+<section data-card="{{uniqueLayoutId}}-card-{{$parent.$index}}" class="vloc-action-grid" hotkey-layout-card>
+    <div ng-repeat="action in data.actions" class="vloc-action-grid-cell">
+        <a ng-click="performAction(action)" hotkey-card-action>
+            <i ng-if="!action.imageRef" class="icon {{action.vlocityIcon}}"></i>
+            <span ng-if="action.imageRef">
+                <img ng-src="{{action.imageRef}}" alt="{{action.displayName}}"/>
+            </span>
+            <p>{{action.displayName}}</p>
+        </a>
+    </div>
+</section>

@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Represents a specific discount, fee, override price or charge applied to the overall quote or to a specific line item. Used for write-in overrides, adjustments added through an applied promotion or any price, charge or fee identified for the quote or line item. The price or adjustment indicates the action and sub-action requested such as adding or removing the price or adjustment as well as the date the change is requested to be applied. It also indicates the expected dates for any recurring but limited-time pricing.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__Action__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The action requested in this quote for this price, charge or adjustment with values such as Add, Change, Disconnect, Existing. Existing means no change requested.</description>
+        <externalId>false</externalId>
+        <label>Action</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Add</fullName>
+                    <default>false</default>
+                    <label>Add</label>
+                </value>
+                <value>
+                    <fullName>Change</fullName>
+                    <default>false</default>
+                    <label>Change</label>
+                </value>
+                <value>
+                    <fullName>Disconnect</fullName>
+                    <default>false</default>
+                    <label>Disconnect</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__AddedByUserId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Identifies the user who added this price, charge or adjustment; typically for write-in price adjustments.</description>
+        <externalId>false</externalId>
+        <label>Added By</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__AdjustmentValue__c</fullName>
+        <deprecated>false</deprecated>
+        <description>For write-in percentage adjustments, the percentage value of the adjustment. For example, 5 for a 5% discount. This value is null for pricing using a selected pricing element since the adjustment value is defined by the selected pricing element.</description>
+        <externalId>false</externalId>
+        <label>Adjustment Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Amount__c</fullName>
+        <deprecated>false</deprecated>
+        <description>For write-in prices, the new or overriding amount. For example, $100 USD. This value is null for pricing using a selected pricing element since the pricing amount is defined by the selected pricing element.</description>
+        <externalId>false</externalId>
+        <label>Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__AppliesTo__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Identifies to what the price, charge or adjustment will be applied: to a specific asset, to multiple assets, to a contract or to an account.</description>
+        <externalId>false</externalId>
+        <label>Applies To</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Account</fullName>
+                    <default>false</default>
+                    <label>Account</label>
+                </value>
+                <value>
+                    <fullName>Asset</fullName>
+                    <default>false</default>
+                    <label>Asset</label>
+                </value>
+                <value>
+                    <fullName>Multiple Assets</fullName>
+                    <default>false</default>
+                    <label>Multiple Assets</label>
+                </value>
+                <value>
+                    <fullName>Contract</fullName>
+                    <default>false</default>
+                    <label>Contract</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__BillingAccountId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Identifies the account with billing/charging responsibility to which the price, charge or adjustment is applied.</description>
+        <externalId>false</externalId>
+        <label>Account</label>
+        <referenceTo>Account</referenceTo>
+        <relationshipLabel>Quote Pricing</relationshipLabel>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ContractId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Contract</label>
+        <referenceTo>Contract</referenceTo>
+        <relationshipLabel>Quote Pricing</relationshipLabel>
+        <relationshipName>QuotePricing</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__EstimatedEndDate__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Estimated end date of this price, charge or adjustment given the request date.</description>
+        <externalId>false</externalId>
+        <label>Estimated End Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__EstimatedStartDate__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Estimated start date of this price, charge or adjustment given the request date.</description>
+        <externalId>false</externalId>
+        <label>Estimated Start Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__FulfilmentStatus__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The status of fulfillment of this price, charge or adjustment with values such as Draft, In Progress, Activated, Superseded, Cancelled, Point of No Return, Pending.</description>
+        <externalId>false</externalId>
+        <label>Fulfilment Status</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>false</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>In Progress</fullName>
+                    <default>false</default>
+                    <label>In Progress</label>
+                </value>
+                <value>
+                    <fullName>Activated</fullName>
+                    <default>false</default>
+                    <label>Activated</label>
+                </value>
+                <value>
+                    <fullName>Superseded</fullName>
+                    <default>false</default>
+                    <label>Superseded</label>
+                </value>
+                <value>
+                    <fullName>Cancelled</fullName>
+                    <default>false</default>
+                    <label>Cancelled</label>
+                </value>
+                <value>
+                    <fullName>PONR</fullName>
+                    <default>false</default>
+                    <label>PONR</label>
+                </value>
+                <value>
+                    <fullName>Pending</fullName>
+                    <default>false</default>
+                    <label>Pending</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__OverrideDefinitionId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Override Definition</label>
+        <referenceTo>vlocity_cmt__OverrideDefinition__c</referenceTo>
+        <relationshipLabel>Quote Pricing</relationshipLabel>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PriceListEntryId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>(Optional) Id of the source price list entry when the pricing is based on a price list entry.</description>
+        <externalId>false</externalId>
+        <label>Price List Entry</label>
+        <referenceTo>vlocity_cmt__PriceListEntry__c</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PricingElementGlobalKey__c</fullName>
+        <deprecated>false</deprecated>
+        <description>For selected prices, charges or adjustments, the global key identifier of the selected pricing element. This global key reference is used to point to the currently active pricing element version among all the versions of this pricing element.</description>
+        <externalId>true</externalId>
+        <label>Pricing Element Global Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PricingElementVersionId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>For selected prices, charges or adjustments, this identifies the pricing element version at the time it was selected.</description>
+        <externalId>false</externalId>
+        <label>Pricing Element Version</label>
+        <referenceTo>vlocity_cmt__PricingElement__c</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PricingVariableCode__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Formula: The code of the price, charge or adjustment pricing variable. This value is null for pricing using a selected pricing element since that pricing variable is defined by the selected pricing element.</description>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__PricingVariableId__r.vlocity_cmt__Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Pricing Variable Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PricingVariableId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Id of the price, charge or adjustment pricing variable. Used for write-in price adjustments to identify the kind of price, charge or adjustment. This value is null for pricing using a selected pricing element since the pricing variable is defined by the selected pricing element.</description>
+        <externalId>false</externalId>
+        <label>Pricing Variable</label>
+        <referenceTo>vlocity_cmt__PricingVariable__c</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PromotionId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>DEPRECATED. Use the Applied Promotion (QuoteAppliedPromotionId__c) field to identify the promotion which is the source of this price or adjustment.</description>
+        <externalId>false</externalId>
+        <label>Promotion</label>
+        <referenceTo>vlocity_cmt__Promotion__c</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__QuoteAppliedPromotionId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>For promotional pricing, identifies the applied promotion which provides this pricing.</description>
+        <externalId>false</externalId>
+        <label>Applied Promotion</label>
+        <referenceTo>vlocity_cmt__QuoteAppliedPromotion__c</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__QuoteId__c</fullName>
+        <deprecated>false</deprecated>
+        <description>(Required) Identifies the parent quote for this quote price, charge or adjustment.</description>
+        <externalId>false</externalId>
+        <label>Quote</label>
+        <referenceTo>Quote</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__QuoteItemId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <description>Identifies the line item (therefore asset) to which the price, charge or adjustment will be applied. Used when the price, charge or adjustment is applied to a specific asset.</description>
+        <externalId>false</externalId>
+        <label>Quote Item</label>
+        <referenceTo>QuoteLineItem</referenceTo>
+        <relationshipName>QuotePricingAdjustments</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RequestDate__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Date requested for the application or cancellation of the customer&apos;s participation in this promotion.</description>
+        <externalId>false</externalId>
+        <label>Request Date</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Sequence__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Sequence in which this promotion is applied to the customer&apos;s asset or assets. Used to properly calculate discounted pricing.</description>
+        <externalId>false</externalId>
+        <label>Sequence</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Source__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The source of this price, charge or adjustment such as &quot;Agent&quot; for write-in adjustments, &quot;Promotion&quot; for promotional pricing, or &quot;Offer&quot; for offer-specific pricing.</description>
+        <externalId>false</externalId>
+        <label>Source</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Agent</fullName>
+                    <default>false</default>
+                    <label>Agent</label>
+                </value>
+                <value>
+                    <fullName>Promotion</fullName>
+                    <default>false</default>
+                    <label>Promotion</label>
+                </value>
+                <value>
+                    <fullName>Offer</fullName>
+                    <default>false</default>
+                    <label>Offer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SubAction__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The sub-action requested in this quote for this price, charge or adjustment with values such as Move or Cancel.</description>
+        <externalId>false</externalId>
+        <label>Sub Action</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Move</fullName>
+                    <default>false</default>
+                    <label>Move</label>
+                </value>
+                <value>
+                    <fullName>Cancel</fullName>
+                    <default>false</default>
+                    <label>Cancel</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__TimePlanId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Time Plan</label>
+        <referenceTo>vlocity_cmt__TimePlan__c</referenceTo>
+        <relationshipLabel>Quote Pricing</relationshipLabel>
+        <relationshipName>QuotePricing</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__TimePolicyId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Time Policy</label>
+        <referenceTo>vlocity_cmt__TimePolicy__c</referenceTo>
+        <relationshipLabel>Quote Pricing</relationshipLabel>
+        <relationshipName>QuotePricing</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Quote Pricing</label>
+    <nameField>
+        <label>Reference Number</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Quote Pricing</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

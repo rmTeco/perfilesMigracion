@@ -1,0 +1,1292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__AsyncResponseVlocityDataRaptorBundleId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Async Vlocity DataRaptor Bundle</label>
+        <referenceTo>vlocity_cmt__DRBundle__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>AsyncRespOrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__AttributesEncodingStyle__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Attributes Encoding Style</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Flat</fullName>
+                    <default>false</default>
+                    <label>Flat</label>
+                </value>
+                <value>
+                    <fullName>Structure</fullName>
+                    <default>true</default>
+                    <label>Structure</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__AutoTaskParameters__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Parameters passed to Auto Task</inlineHelpText>
+        <label>Auto Task Parameters</label>
+        <length>131072</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ConditionData__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Condition</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Condition__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Condition (this field is deprecated)</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__CustomTaskExecutionURL__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Customization : url for custom VF page or Omni which would launch on selection of any task action/name of the item in a manual queue.</inlineHelpText>
+        <label>Custom Task Execution URL</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ErrorQueueId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Error Queue</label>
+        <referenceTo>vlocity_cmt__ManualQueue__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions (Error Queue)</relationshipLabel>
+        <relationshipName>Orchestration_Item_Definitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__EventConditionData__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Event Condition</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__GlobalKey__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The globally unique identifier of the Product. Used to identify the product across Salesforce instances.</description>
+        <externalId>false</externalId>
+        <label>Global Key</label>
+        <length>80</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsPointOfNoReturn__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Point Of No Return</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__IsSkipBranch__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Skip Branch</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ItemLength__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Item Length</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__JeopardySafetyIntervalUnit__c</fullName>
+        <defaultValue>&quot;Seconds&quot;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Jeopardy Safety Interval Unit</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Seconds</fullName>
+                    <default>true</default>
+                    <label>Seconds</label>
+                </value>
+                <value>
+                    <fullName>Business Hours</fullName>
+                    <default>false</default>
+                    <label>Business Hours</label>
+                </value>
+                <value>
+                    <fullName>Business Days</fullName>
+                    <default>false</default>
+                    <label>Business Days</label>
+                </value>
+                <value>
+                    <fullName>Calendar Hours</fullName>
+                    <default>false</default>
+                    <label>Calendar Hours</label>
+                </value>
+                <value>
+                    <fullName>Calendar Days</fullName>
+                    <default>false</default>
+                    <label>Calendar Days</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__JeopardySafetyInterval__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Jeopardy Safety Interval</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Key__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__OrchestrationPlanDefinitionId__r.Name &amp; &quot;:&quot; &amp; Name</formula>
+        <label>Key</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__LengthUnit__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Length Unit</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Seconds</fullName>
+                    <default>true</default>
+                    <label>Seconds</label>
+                </value>
+                <value>
+                    <fullName>Business Hours</fullName>
+                    <default>false</default>
+                    <label>Business Hours</label>
+                </value>
+                <value>
+                    <fullName>Business Days</fullName>
+                    <default>false</default>
+                    <label>Business Days</label>
+                </value>
+                <value>
+                    <fullName>Calendar Hours</fullName>
+                    <default>false</default>
+                    <label>Calendar Hours</label>
+                </value>
+                <value>
+                    <fullName>Calendar Days</fullName>
+                    <default>false</default>
+                    <label>Calendar Days</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ManualTaskExecutionMode__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Manual Task Execution Mode (Deprecated)</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>VisualForce Page</fullName>
+                    <default>true</default>
+                    <label>VisualForce Page</label>
+                </value>
+                <value>
+                    <fullName>Omniscript</fullName>
+                    <default>false</default>
+                    <label>Omniscript</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__NumberOfRetries__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Number Of Retries</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__OrchestrationPlanDefinitionId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Orchestration Plan Definition</label>
+        <referenceTo>vlocity_cmt__OrchestrationPlanDefinition__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>OrchestrationItemDefinitions</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__OrderItemsNodeName__c</fullName>
+        <defaultValue>&apos;orderItems&apos;</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Order Items Node Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ProcessAfter__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Process After</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__QueueType__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Queue Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Priority Queue</fullName>
+                    <default>true</default>
+                    <label>Priority Queue</label>
+                </value>
+                <value>
+                    <fullName>Round Robin</fullName>
+                    <default>false</default>
+                    <label>Round Robin</label>
+                </value>
+                <value>
+                    <fullName>Least Loaded</fullName>
+                    <default>false</default>
+                    <label>Least Loaded</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RequestItemsEncodingStyle__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Request Items Encoding Style</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Flat</fullName>
+                    <default>false</default>
+                    <label>Flat</label>
+                </value>
+                <value>
+                    <fullName>Structure</fullName>
+                    <default>true</default>
+                    <label>Structure</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RequestItemsVlocityDataRaptorBundleId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Request Items Vlocity DataRaptor Bundle</label>
+        <referenceTo>vlocity_cmt__DRBundle__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>RequestItemsOrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ResponseAttrsVlocityDataRaptorBundleId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Response Attrs Vlocity DataRaptor Bundle</label>
+        <referenceTo>vlocity_cmt__DRBundle__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>RespAttrsOrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ResponseItemsVlocityDataRaptorBundleId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Response Items Vlocity DataRaptor Bundle</label>
+        <referenceTo>vlocity_cmt__DRBundle__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>RespItemsOrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ResponseVlocityDataRaptorBundleId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Response Vlocity DataRaptor Bundle</label>
+        <referenceTo>vlocity_cmt__DRBundle__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>ResponseOrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RetryPolicy__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Integration Retry Policy to use on failures</inlineHelpText>
+        <label>Retry Policy</label>
+        <referenceTo>vlocity_cmt__IntegrationRetryPolicy__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>OrchestrationItemDefsForRetryPolicy</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RollBackPlanDefinitionId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Roll Back Plan Definition</label>
+        <referenceTo>vlocity_cmt__OrchestrationPlanDefinition__c</referenceTo>
+        <relationshipLabel>Roll Back Item Definitions</relationshipLabel>
+        <relationshipName>RollbackItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Scope__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Scope</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Global</fullName>
+                    <default>false</default>
+                    <label>Global</label>
+                </value>
+                <value>
+                    <fullName>Order</fullName>
+                    <default>false</default>
+                    <label>Order</label>
+                </value>
+                <value>
+                    <fullName>Main Order Item</fullName>
+                    <default>false</default>
+                    <label>Main Order Item</label>
+                </value>
+                <value>
+                    <fullName>Order Item</fullName>
+                    <default>false</default>
+                    <label>Order Item</label>
+                </value>
+                <value>
+                    <fullName>Swimlane</fullName>
+                    <default>true</default>
+                    <label>Swimlane</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SubPlanDefinition__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Sub-plan Definition</label>
+        <referenceTo>vlocity_cmt__OrchestrationPlanDefinition__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions (Sub-plan Definition)</relationshipLabel>
+        <relationshipName>MasterItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SystemId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__SystemInterfaceId__r.vlocity_cmt__SystemId__c</formula>
+        <label>Dependency Plan Definition</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__SystemInterfaceId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>System Interface</label>
+        <referenceTo>vlocity_cmt__SystemInterface__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>OrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__TimeoutMs__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Timeout  (ms)</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__VlocityDataRaptorBundleId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Vlocity DataRaptor Bundle</label>
+        <referenceTo>vlocity_cmt__DRBundle__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>OrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__itemImplementationId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Item Implementation</label>
+        <referenceTo>vlocity_cmt__ItemImplementation__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>OrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__manualQueueId__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Manual Queue</label>
+        <referenceTo>vlocity_cmt__ManualQueue__c</referenceTo>
+        <relationshipLabel>Orchestration Item Definitions</relationshipLabel>
+        <relationshipName>OrchestrationItemDefinitions</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <label>Orchestration Item Definition</label>
+    <listViews>
+        <fullName>vlocity_cmt__All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Orchestration Item Definition Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Orchestration Item Definitions</pluralLabel>
+    <recordTypes>
+        <fullName>vlocity_cmt__AutoTask</fullName>
+        <active>true</active>
+        <label>Auto Task</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LengthUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ManualTaskExecutionMode__c</picklist>
+            <values>
+                <fullName>Omniscript</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Scope__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Main Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swimlane</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__Callout</fullName>
+        <active>true</active>
+        <label>Callout</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LengthUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ManualTaskExecutionMode__c</picklist>
+            <values>
+                <fullName>Omniscript</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Scope__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Main Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swimlane</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__ManualTask</fullName>
+        <active>true</active>
+        <label>Manual Task</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LengthUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ManualTaskExecutionMode__c</picklist>
+            <values>
+                <fullName>Omniscript</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Scope__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Main Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swimlane</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__Milestone</fullName>
+        <active>true</active>
+        <label>Milestone</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LengthUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ManualTaskExecutionMode__c</picklist>
+            <values>
+                <fullName>Omniscript</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Scope__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Main Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swimlane</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__PullEvent</fullName>
+        <active>true</active>
+        <label>Pull Event</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LengthUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ManualTaskExecutionMode__c</picklist>
+            <values>
+                <fullName>Omniscript</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Scope__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Main Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swimlane</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__PushEvent</fullName>
+        <active>true</active>
+        <label>Push Event</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LengthUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ManualTaskExecutionMode__c</picklist>
+            <values>
+                <fullName>Omniscript</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Scope__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Main Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swimlane</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>vlocity_cmt__SubPlan</fullName>
+        <active>true</active>
+        <label>Sub-plan</label>
+        <picklistValues>
+            <picklist>vlocity_cmt__AttributesEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LengthUnit__c</picklist>
+            <values>
+                <fullName>Business Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Days</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Calendar Hours</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seconds</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ManualTaskExecutionMode__c</picklist>
+            <values>
+                <fullName>Omniscript</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QueueType__c</picklist>
+            <values>
+                <fullName>Least Loaded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Priority Queue</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Round Robin</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RequestItemsEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Scope__c</picklist>
+            <values>
+                <fullName>Global</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Main Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Order Item</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swimlane</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>vlocity_cmt__Debug</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Debug</masterLabel>
+        <openType>sidebar</openType>
+        <page>vlocity_cmt__XOMDSIDebugPage</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

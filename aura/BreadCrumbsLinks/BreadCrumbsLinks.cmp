@@ -1,0 +1,39 @@
+<aura:component implements="force:appHostable,forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="label1" type="string"/>
+    <aura:attribute name="link1" type="string"/>
+    <aura:attribute name="label2" type="string"/>
+    <aura:attribute name="link2" type="string"/>
+    <aura:attribute name="label3" type="string"/>
+    <aura:attribute name="link3" type="string"/>
+    <aura:attribute name="label4" type="string"/>
+    <aura:attribute name="link4" type="string"/>
+    <aura:attribute name="label5" type="string"/>
+    <aura:attribute name="link5" type="string"/>
+    <aura:attribute name="activeElement" type="string"/>
+    
+    
+    <lightning:breadcrumbs>
+        <aura:if isTrue="{!v.label1 != ''}">
+            <lightning:breadcrumb label="{!v.label1}" href="{!v.link1}" class="breadcrumb"/>
+        </aura:if>
+        <aura:if isTrue="{!v.label2 != ''}">
+            <lightning:breadcrumb label="{!v.label2}" href="{!v.link2}" class="breadcrumb"/>
+        </aura:if>
+        <aura:if isTrue="{!v.label3 != ''}">
+            <lightning:breadcrumb label="{!v.label3}" href="{!v.link3}" class="breadcrumb"/>
+        </aura:if>
+        <aura:if isTrue="{!v.label4 != ''}">
+            <lightning:breadcrumb label="{!v.label4}" href="{!v.link4}" class="breadcrumb"/>
+        </aura:if>
+        <aura:if isTrue="{!v.label5 != ''}">
+            <lightning:breadcrumb label="{!v.label5}" href="{!v.link5}" class="breadcrumb"/>
+        </aura:if>
+        <aura:if isTrue="{!v.activeElement != ''}">
+            <li class="slds-breadcrumb__item slds-text-title_caps active">
+                {!v.activeElement}
+            </li>
+        </aura:if>
+    </lightning:breadcrumbs>
+    
+</aura:component>

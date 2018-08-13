@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Historial de transacciones de Socio - Gestor de Puntos</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Fecha_transaccion__c</fullName>
+        <externalId>false</externalId>
+        <label>Fecha transaccion</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Generado_por__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Generado por</label>
+        <referenceTo>GP_Regla__c</referenceTo>
+        <relationshipLabel>GP Historia transacciones</relationshipLabel>
+        <relationshipName>GP_Historia_transacciones</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Nombre_de_la_Regla_que_lo_genero__c</fullName>
+        <externalId>false</externalId>
+        <formula>Generado_por__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Nombre de la Regla que lo genero</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Nuevo_saldo__c</fullName>
+        <externalId>false</externalId>
+        <label>Nuevo saldo</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Numero_de_orden__c</fullName>
+        <externalId>false</externalId>
+        <label>Numero de orden</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Puntos__c</fullName>
+        <externalId>false</externalId>
+        <label>Puntos</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Saldo_a_consumir__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Saldo a consumir</label>
+        <referenceTo>GP_Saldo_por_vencimiento__c</referenceTo>
+        <relationshipLabel>GP Historia transacciones</relationshipLabel>
+        <relationshipName>GP_Historia_transacciones</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Saldo_anterior__c</fullName>
+        <externalId>false</externalId>
+        <label>Saldo anterior</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Socio__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Socio</label>
+        <referenceTo>GP_Socio__c</referenceTo>
+        <relationshipLabel>GP Historia transacciones</relationshipLabel>
+        <relationshipName>GP_Historia_transacciones</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Suma_o_resta__c</fullName>
+        <externalId>false</externalId>
+        <label>Suma o resta</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Suma</fullName>
+                    <default>false</default>
+                    <label>Suma</label>
+                </value>
+                <value>
+                    <fullName>Resta</fullName>
+                    <default>false</default>
+                    <label>Resta</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tipo_de_evento__c</fullName>
+        <externalId>false</externalId>
+        <label>Tipo de evento</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bienvenida</fullName>
+                    <default>false</default>
+                    <label>Bienvenida</label>
+                </value>
+                <value>
+                    <fullName>Confiabilización</fullName>
+                    <default>false</default>
+                    <label>Confiabilización</label>
+                </value>
+                <value>
+                    <fullName>Premio Recarga 3M</fullName>
+                    <default>false</default>
+                    <label>Premio Recarga 3M</label>
+                </value>
+                <value>
+                    <fullName>Castigo Recarga</fullName>
+                    <default>false</default>
+                    <label>Castigo Recarga</label>
+                </value>
+                <value>
+                    <fullName>Recarga por Monto</fullName>
+                    <default>false</default>
+                    <label>Recarga por Monto</label>
+                </value>
+                <value>
+                    <fullName>Upselling</fullName>
+                    <default>false</default>
+                    <label>Upselling</label>
+                </value>
+                <value>
+                    <fullName>Cater</fullName>
+                    <default>false</default>
+                    <label>Cater</label>
+                </value>
+                <value>
+                    <fullName>Antigüedad</fullName>
+                    <default>false</default>
+                    <label>Antigüedad</label>
+                </value>
+                <value>
+                    <fullName>Alta a FOL</fullName>
+                    <default>false</default>
+                    <label>Alta a FOL</label>
+                </value>
+                <value>
+                    <fullName>Continuidad FOL</fullName>
+                    <default>false</default>
+                    <label>Continuidad FOL</label>
+                </value>
+                <value>
+                    <fullName>Alta a Débito Automatico</fullName>
+                    <default>false</default>
+                    <label>Alta a Débito Automatico</label>
+                </value>
+                <value>
+                    <fullName>Descarga APP</fullName>
+                    <default>false</default>
+                    <label>Descarga APP</label>
+                </value>
+                <value>
+                    <fullName>Alta Nuevo Servicio Core</fullName>
+                    <default>false</default>
+                    <label>Alta Nuevo Servicio Core</label>
+                </value>
+                <value>
+                    <fullName>Referidos</fullName>
+                    <default>false</default>
+                    <label>Referidos</label>
+                </value>
+                <value>
+                    <fullName>Convergente Fiber</fullName>
+                    <default>false</default>
+                    <label>Convergente Fiber</label>
+                </value>
+                <value>
+                    <fullName>Convergente Arnet</fullName>
+                    <default>false</default>
+                    <label>Convergente Arnet</label>
+                </value>
+                <value>
+                    <fullName>Baja</fullName>
+                    <default>false</default>
+                    <label>Baja</label>
+                </value>
+                <value>
+                    <fullName>Transferencia</fullName>
+                    <default>false</default>
+                    <label>Transferencia</label>
+                </value>
+                <value>
+                    <fullName>Canje</fullName>
+                    <default>false</default>
+                    <label>Canje</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Vencimiento__c</fullName>
+        <externalId>false</externalId>
+        <label>Vencimiento</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <label>GP Historia transaccion</label>
+    <nameField>
+        <label>Historia transaccion</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>GP Historia transacciones</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

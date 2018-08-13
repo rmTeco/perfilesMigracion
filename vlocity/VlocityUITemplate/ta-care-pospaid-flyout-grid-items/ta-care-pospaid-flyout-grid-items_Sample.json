@@ -1,0 +1,77 @@
+{
+    "data": {
+        "actions": [
+        ],
+        "cardIndex": 0,
+        "cardName": "AvailableUnity",
+        "dataSource": {
+            "type": "Custom",
+            "value": {
+                "body": "[\n    {\n        \"ServiceType\": \"Internet\",\n        \"Available\": \"3 GB\",\n        \"DueDate\": \"20/12/2017\"\n    },\n    {\n        \"ServiceType\": \"Voz\",\n        \"Available\": \"3 GB\",\n        \"DueDate\": \"10/12/2017\"\n    },\n    {\n        \"ServiceType\": \"SMS\",\n        \"Available\": \"100 Minutos\",\n        \"DueDate\": \"15/12/2017\"\n    }\n]",
+                "resultVar": ""
+            }
+        },
+        "definedActions": {
+            "actions": [
+            ]
+        },
+        "fields": [
+            {
+                "collapse": true,
+                "displayLabel": "['ServiceType']",
+                "editing": false,
+                "fieldType": "standard",
+                "group": "Custom Properties",
+                "label": "",
+                "name": "['ServiceType']",
+                "type": "string"
+            }
+        ],
+        "filter": {
+        },
+        "layoutName": "vlocity.layout.taConsolePrepaidFlyout",
+        "obj": {
+            "Available": "3 GB",
+            "DueDate": "20/12/2017",
+            "ServiceType": "Internet"
+        },
+        "order": 0,
+        "states": [
+            {
+                "conditions": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ],
+                "definedActions": {
+                    "actions": [
+                    ]
+                },
+                "fields": [
+                    {
+                        "collapse": true,
+                        "displayLabel": "['ServiceType']",
+                        "editing": false,
+                        "fieldType": "standard",
+                        "group": "Custom Properties",
+                        "label": "",
+                        "name": "['ServiceType']",
+                        "type": "string"
+                    }
+                ],
+                "name": "Active",
+                "sObjectType": "All",
+                "templateUrl": "ta-care-prepaid-flyout-grid-items"
+            }
+        ],
+        "status": "active",
+        "title": "",
+        "uniqueLayoutId": 1505938313600
+    },
+    "obj": {
+        "ServiceType": "Internet"
+    }
+}

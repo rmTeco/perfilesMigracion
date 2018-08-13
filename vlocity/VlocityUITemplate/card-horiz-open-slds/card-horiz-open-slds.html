@@ -1,0 +1,13 @@
+<div class="slds-card via-slds-card--horiz-open slds-m-bottom--small" data-card="{{uniqueLayoutId}}-card-{{cardIndex}}" ng-class="{selected:isSelected(cardIndex)}">
+  <div class="slds-card__header via-slds-card__header slds-grid slds-wrap slds-p-bottom--medium slds-grid--vertical-align-center slds-theme--default">
+      <div class="slds-truncate">
+        <a href="javascript:void(0);" tooltip-placement="bottom" tooltip="{{data.actions[0].displayName}}" ng-click="performAction(data.actions[0])" >
+          <vloc-card-icon data="data.actions[0]" obj="obj" size="'medium'" extra-classes="'big slds-icon-text-default'"></vloc-card-icon>
+          <span class="slds-text-heading--small">{{data.actions[0].displayName}}&nbsp;</span>
+        </a>
+      </div>
+        <div class=" " ng-repeat="action in data.actions.slice(1)" ng-class="{'slds-col--bump-left': $first, 'slds-m-left--medium': !$first}">
+        <a href="javascript:void(0);" class="slds-button" ng-click="performAction(action)">{{action.displayName}}&nbsp;</a>
+        </div>
+  </div>
+</div>

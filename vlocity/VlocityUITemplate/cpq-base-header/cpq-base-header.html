@@ -1,0 +1,7 @@
+<div class="slds-col slds-no-flex cpq-base-header">    
+	<div class="slds-page-header cpq-base-header-container" role="banner">
+		<vloc-card ng-repeat="card in cards" ng-model="card" data="card"  
+			index="{{$index}}" session-id="{{sessionId}}" enable-pricing="{{attrs.enablePricing}}" enable-loyalty-points="{{attrs.enableLoyaltyPoints}}">
+		</vloc-card>
+	</div>
+</div>

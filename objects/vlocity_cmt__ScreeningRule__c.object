@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>vlocity_cmt__PriorityOrder__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Priority Order</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__RuleDetail__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Rule Detail</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ScreeningRuleGroupId__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Screening Rule Group</label>
+        <referenceTo>vlocity_cmt__ScreeningRuleGroup__c</referenceTo>
+        <relationshipLabel>Screening Rules</relationshipLabel>
+        <relationshipName>ScreeningRules</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__ValidateMethod__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Apex code here for the Validator Class to use to check the criteria specified in the detailed Rule Properties below. (More details on proper syntax in the Vlocity Public Sector Admin Configuration Guide.)</inlineHelpText>
+        <label>Validate Method</label>
+        <length>131072</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>20</visibleLines>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__Validator__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Enter the Apex class that will be used to validate the Application against this particular Screening Rule. Either specify an existing class, or enter a new name and click button &apos;Generate Validator Class&apos; to create the class.</inlineHelpText>
+        <label>Validator Class</label>
+        <length>40</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Screening Rule</label>
+    <listViews>
+        <fullName>vlocity_cmt__All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__RuleDetail__c</columns>
+        <columns>vlocity_cmt__Validator__c</columns>
+        <columns>vlocity_cmt__PriorityOrder__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Screening Rules</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>vlocity_cmt__RuleDetail__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__Validator__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__PriorityOrder__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__RuleDetail__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__Validator__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__PriorityOrder__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>vlocity_cmt__RuleDetail__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>vlocity_cmt__Validator__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>vlocity_cmt__PriorityOrder__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>vlocity_cmt__RuleDetail__c</searchFilterFields>
+        <searchFilterFields>vlocity_cmt__Validator__c</searchFilterFields>
+        <searchFilterFields>vlocity_cmt__PriorityOrder__c</searchFilterFields>
+        <searchResultsAdditionalFields>vlocity_cmt__RuleDetail__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__Validator__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__PriorityOrder__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>vlocity_cmt__GenerateValidatorClass</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>javascript</linkType>
+        <masterLabel>Generate Validator Class</masterLabel>
+        <openType>onClickJavaScript</openType>
+        <protected>false</protected>
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/31.0/apex.js&quot;)}
+var gettingnamespace = sforce.connection.query(&quot;SELECT NamespacePrefix FROM ApexClass WHERE Name =&apos;ApplicationUtilities&apos; LIMIT 1&quot;);
+var getname = gettingnamespace.getArray(&quot;records&quot;);
+var classname = &quot;ScreeningClassBuilder&quot;;
+if(getname.length &gt; 0)
+{
+   var namespace_prefix = getname[0].NamespacePrefix;
+   if(namespace_prefix != null &amp;&amp; namespace_prefix != &apos;&apos;)
+   {
+      classname = getname[0].NamespacePrefix + &quot;.&quot; + classname;
+   }
+}
+var res=sforce.apex.execute(classname,&quot;BuildRuleValidatorClass&quot;,{srId:&quot;{! vlocity_cmt__ScreeningRule__c.Id }&quot;});
+alert(res);</url>
+    </webLinks>
+</CustomObject>

@@ -1,0 +1,44 @@
+<aura:component >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="et4ae5:SkipWizzard" action="{!c.skipWiz}" />
+    <!-- userCredentialJSON needs to be here otherwise an exception is thrown -->
+    <aura:attribute name="userCredentialJSON" type="JSON" />
+    <aura:attribute name="oAuthConnectJSON" type="JSON" />
+    <aura:attribute name="skipWiz" type="boolean" default="false" access="private" />
+    <div class="body">
+        <div class="uxds container">
+            <div class="uxds row">
+                <div class="uxds col-sm-12">
+                    <aura:unescapedhtml aura:id="titleMain" value="" />
+                </div>
+            </div>
+        </div>
+        <div class="uxds container" style="margin: 0 auto;">
+            <hr></hr>
+            <div class="uxds row">
+                <div class="uxds col-xs-12 col-sm-6">
+                    <aura:unescapedhtml aura:id="titleDesc" value="" />
+                </div>
+                <div class="uxds col-xs-12 col-sm-6">
+                    <et4ae5:OAuthConnect json="{!v.oAuthConnectJSON}" aura:id="oAuthConnectJSON" />
+                </div>
+            </div>
+            <hr></hr>
+            <div class="uxds row">
+                <div class="uxds col-xs-12">
+                    <aura:unescapedhtml aura:id="titleSecMain" value="" />
+                </div>
+            </div>
+            <div class="left_links" style="float:left;width:50%;" aura:id="leftALinks">
+                <et4ae5:HelpLinks json="" aura:id="helpLeft" />
+            </div>
+            <!-- TODO: HelpLinks rerendering -->
+            <div class="left_links hide" style="float:left;width:50%;" aura:id="leftMLinks">
+                <et4ae5:HelpLinks json="" aura:id="manualLinks" />
+            </div>
+            <div class="left_links container" style="float:right;width:50%;" aura:id="rightLinks">
+                <et4ae5:HelpLinks json="" aura:id="helpRight" />
+            </div>
+        </div>
+    </div>
+</aura:component>

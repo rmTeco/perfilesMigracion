@@ -1,0 +1,28 @@
+<apex:component >
+
+<script>
+function cvCheckAllOrNone(allOrNoneCheckbox) {
+
+    // Find parent table
+    var container = allOrNoneCheckbox;
+    while (container.tagName != "TABLE") {
+        container = container.parentNode;
+    }
+
+    // Switch all checkboxes
+    var inputs = container.getElementsByTagName("input");
+    var checked = allOrNoneCheckbox.checked;
+    for (var i = 0; i < inputs.length; i++) { 
+        var input = inputs.item(i);
+        if (input.type == "checkbox") {
+            if (input != allOrNoneCheckbox) {
+                input.checked = checked;
+            }
+        }
+    }
+}
+</script>
+
+<apex:inputCheckbox onclick="cvCheckAllOrNone(this)" title="Toggle All Rows"/>
+
+</apex:component>

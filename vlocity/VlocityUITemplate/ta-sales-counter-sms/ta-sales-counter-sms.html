@@ -1,0 +1,14 @@
+<div ng-controller="SMSCounterController as ctrl">
+    <div ng-show="bpTree.response.SMSConfig.CounterSeconds && bpTree.response.SMSConfig.AttemptsCounter < bpTree.response.SMSConfig.AttemptsAvailable">
+        Mensaje envíado. Consultá la respuesta del cliente con el botón ‘Consultar validación‘. Si la respuesta sigue pendiente, podés volver a enviar el mensaje en {{ bpTree.response.SMSConfig.CounterSeconds }} seg.
+</div>
+<div ng-show="!bpTree.response.SMSConfig.CounterSeconds && bpTree.response.SMSConfig.AttemptsCounter < bpTree.response.SMSConfig.AttemptsAvailable">
+        Mensaje envíado. Consultá la respuesta del cliente con el botón ‘Consultar validación’.
+Si la respuesta sigue pendiente, podés volver a enviar el mensaje a partir de ahora.
+</div>
+
+<div ng-show="bpTree.response.SMSConfig.AttemptsCounter >= bpTree.response.SMSConfig.AttemptsAvailable">
+    Mensaje envíado. Consultá la respuesta del cliente con el botón ‘Consultar validación’.
+</div>
+
+</div>

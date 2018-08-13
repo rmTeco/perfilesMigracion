@@ -1,0 +1,127 @@
+<apex:page controller="SCP_Certa_GC.accountIndustryTrendsNew" contentType="application/vnd.ms-excel#{!excelName}" showheader="false">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    </head>
+    <style>
+        .headerRow {    
+            background-color: #F2F3F3;          
+            color: #000000;
+            font-size: 0.9em;
+            font-weight: bold;
+            padding: 5px 2px;
+            text-align: center;         
+        }
+        
+        .textoCentrado{
+        text-align: center !important;
+        }
+        
+        .nueva{
+        background-color: black ! important;
+        }
+        
+        .NotUsed{
+        background-color: #F30909 ! important;
+        }
+        
+        .hasPotentialBussiness {
+        background-color: #3796F7 ! important;    
+        }
+        
+        .hasOpportunity {
+        background-color: #37F760 ! important;        
+        }
+        
+        .vendidoEnElPasado{
+        background-color: #FFC200 ! important;
+        }
+        
+        .noAplica{
+        background-color: #808080 ! important;
+        }
+    </style>
+    
+    <h2><apex:outputText value="{!Account.Name} - Segmento Vertical: {!account.SCP_Certa_GC__Segmento_Vertical__c}"/></h2>
+    <div class="panel-body">
+        <apex:repeat value="{!trendsWrapperList}" var="trendWrapper">					
+            <div>
+                <div class="pbSubheader brandTertiaryBgr first tertiaryPalette">
+                    <h3>{!trendWrapper.type}</h3>
+                </div>
+                <div class="pbSubsection">
+                    <apex:outputText rendered="{!trendWrapper.Trends.size > 0}">
+                        <table class="table table-striped table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <th style="width:50px;">
+                                        <apex:outputText value="{!$Label.scp_certa_gc__numero_de_la_oportunidad}"/>
+                                    </th>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <th style="min-width:230px;max-width:230px;">
+                                        <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Industry_Trend__c.fields.SCP_Certa_GC__Title__c.Label}"/>
+                                    </th>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <th style="width:100%;">
+                                        <apex:outputText value="{!$Label.scp_certa_gc__description}"/>
+                                    </th>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <th style="min-width: 80px;max-width: 80px;">
+                                        <apex:outputText value="{!$Label.scp_certa_gc__source}"/>
+                                    </th>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                    <th>
+                                        <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}"/>
+                                    </th>
+                                    <!-- ------------------------------------------------------------------------------ -->
+                                </tr>
+                            </thead>
+                            <!-- ------------------------------------------------------------------------------ -->
+                            <!-- ------------------------------------------------------------------------------ -->
+                            <tbody>
+                                <apex:repeat value="{!trendWrapper.Trends}" var="subitem">                            
+                                    <tr>
+                                        <!-- ------------------------------------------------------------------------------ -->
+                                        <td class = "textoCentrado">
+                                            {!subitem.Name}
+                                        </td>
+                                        <!-- ------------------------------------------------------------------------------ -->
+                                        <td class = "textoCentrado">
+                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Title__c}  "/>
+                                        </td>
+                                        <!-- ------------------------------------------------------------------------------ -->
+                                        <td class = "textoCentrado">
+                                            <apex:outputField value="{!subitem.SCP_Certa_GC__Trend__c}"/>
+                                        </td>
+                                        <!-- ------------------------------------------------------------------------------ -->
+                                        <td class = "textoCentrado">
+                                            <apex:outputText value="{!subitem.Region__r.Name}" />
+                                        </td>
+                                        <!-- ------------------------------------------------------------------------------ -->
+                                        <td style="text-align: center;">
+                                            <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                <apex:param value="{!subitem.LastModifiedDate}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                        <!-- ------------------------------------------------------------------------------ -->
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </apex:outputText>
+                    <apex:outputText rendered="{!IF(OR(trendWrapper.Trends == null, trendWrapper.Trends.size == 0) , true , false)}">
+                        <table class="table table-striped table-bordered table-condensed">
+                            <tr>
+                                <td class = "textoCentrado">
+                                    <apex:outputText value="{!$Label.scp_certa_gc__no_industry_trends}" />
+                                </td>
+                            </tr>
+                        </table>	                        
+                    </apex:outputText>
+                </div>
+            </div>
+            <BR/>
+        </apex:repeat>
+
+    </div>
+</apex:page>

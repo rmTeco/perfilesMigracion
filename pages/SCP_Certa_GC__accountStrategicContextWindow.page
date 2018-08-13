@@ -1,0 +1,822 @@
+<apex:page sidebar="false" controller="SCP_Certa_GC.accountStrategicContextWindow"  tabStyle="Strategic_Client_Plan__tab" action="{!insertarData}">
+    
+    <c:SCPMenu ></c:SCPMenu>
+    
+    <style>
+        .initiative input {
+        width: 100%;
+        }
+        
+        .ocultar{
+        display:none;
+        }
+        
+        .label-link a {
+        color: white;
+        }
+        
+        .inlineEditUndo {
+        display: none;
+        }
+        
+        .inlineEditLockOn:hover {
+        background: rgba(0, 0, 0, 0) url("/img/func_icons/util/lock12.gif") no-repeat scroll right 2px;
+        }
+        .inlineEditWriteOn {
+        background: rgba(0, 0, 0, 0) url("/img/func_icons/util/pencil12.gif") no-repeat scroll right 2px;		    
+        }
+        
+        .pbSubheader h3 {
+        display: inline;
+        margin-left: 5px;
+        font-weight: bold;
+        }
+        
+        .pbSubheader.brandTertiaryBgr.first.tertiaryPalette {
+        background-color: transparent;
+        border-width: 2px 0 0;
+        border-style: solid;
+        color: #27282e;
+        padding: 4px 3px;
+        }
+        
+        .hideListButton.hideShowSection {
+        background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 -11px no-repeat;
+        padding-top: 13px;
+        margin-top: -8px;
+        }
+        
+        .hideShowSection.showListButton {
+        background: transparent url('/img/alohaSkin/twisty_sprite.png') 0 0 no-repeat;
+        padding-top: 13px;
+        margin-top: -8px;
+        }
+        
+        .separator {
+        width: 100%;
+        margin-top: 50px;
+        }
+        
+        #icons-table {
+        width:100%;
+        }
+        
+        #icons-table td {
+        text-align: center;            
+        max-width: 90px;
+        vertical-align: top;
+        padding-top: 5px;
+        border: 0px solid #539fc6;
+        }
+        
+        #icons-table td.selected {
+        border: 2px solid #539fc6;
+        }    
+        
+        .icon-sectors {
+        width: 120px;
+        cursor: pointer;
+        }
+        
+        .hiddenTable {
+        display: none;
+        }
+        
+        .solutionTable th {
+        vertical-align: top ! important;
+        white-space: normal ! important;
+        }
+        
+        #big-deal-tab-content th {
+        width : 50%;
+        text-align : left;
+        padding-left : 20%;
+        font-size: 14px;
+        font-weight: normal;
+        }
+        
+        
+        #big-deal-tab-content th label {
+        font-size: 14px;
+        font-weight: normal;
+        }
+    </style>
+    
+    <script  type="text/javascript">
+    $j = jq213;
+    
+    $j(document).ready(function() {
+        $j(".PopupHolderOpp").mouseenter(function(event){
+            if ($j(this).children(".lookupHoverDetail").css("display") == "none") {
+                $j(this).children(".lookupHoverDetail").css("top", event.clientY + 'px');
+                $j(this).children(".lookupHoverDetail").css("left",(event.clientX - 360) + 'px');
+                $j(this).children(".lookupHoverDetail").css("position","fixed");    		
+                $j(this).children(".lookupHoverDetail").show();            	
+            }
+        });
+        
+        siEstaEnSiSeVeLaFlota();
+        
+        
+        
+        $j(".icon-sectors").click(function(){
+            
+            var parent = $j(this).parent();
+            var div = $j("."+parent.attr("id"));
+            if (div.css("display") == "block") {
+                div.fadeOut();
+                parent.removeClass('selected');
+            } else {
+                div.fadeIn();
+                parent.addClass('selected');
+            }
+        });
+        
+        $j(".PopupHolderOpp").mouseleave(function(){
+            $j(this).children(".lookupHoverDetail").hide();
+        });
+        
+        $j(".disponeDeAutomotor").change(function(){
+            siEstaEnSiSeVeLaFlota();
+        });
+        
+        $j(".showMore").click(function(){
+            var gparent = $j(this).parent().parent();
+            $j(".lessSpan", gparent).fadeOut(function(){
+                $j(".moreSpan", gparent).fadeIn();
+            });            	 
+        });
+        $j(".showLess").click(function(){
+            var gparent = $j(this).parent().parent();
+            $j(".moreSpan", gparent).fadeOut(function(){
+                $j(".lessSpan", gparent).fadeIn();
+            });            	 
+        });
+    });
+    
+    
+    function siEstaEnSiSeVeLaFlota(){
+        console.log($j(".disponeDeAutomotor").val());
+        if($j(".disponeDeAutomotor").val() === 'Si'){
+            $j('.cuestionarioFlota').removeClass('ocultar');
+        }else{
+            $j('.cuestionarioFlota').addClass('ocultar');
+        }
+    }
+    
+    
+    
+    function verSolapasAbiertas(){
+        var td = $j(".botones");
+		for ( var i = 0, l = td.length; i < l; i++ ){
+
+            var parent = td[i];
+            var div = $j("."+parent.id);
+            if ($j("#"+parent.id).hasClass('selected')) {
+                div.fadeIn();
+            }
+            
+        }
+    }
+    
+    function hola(){
+    console.log('hola');
+    }
+    
+    function ajaxshow(){
+        $j(".ajaxloader").show();
+    }    
+    function ajaxstop(){
+        $j(".ajaxloader").hide();
+    }
+    
+    function showInput(){}
+    
+    function fillInitiative() {
+        $j("#spanIniciative input").val($j("#textIniciative").val());
+        $j("#textIniciative").val("");
+        // $j('.tituloIniciativa').val('');
+        
+    }
+    
+  
+    function vacioCompetidor(){
+        $j('.competidorNombre').val(''); 
+        $j('.competidorFact').val('');
+    }
+    
+    function prueba() {
+        
+        $j("#hidden-mainCompetitors").removeClass('selected');
+        
+    }
+    
+    </script>
+    
+    <apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1">
+        <apex:outputPanel layout="block"  styleClass="panel panel-default">
+            <apex:form id="Form">
+                <apex:outputPanel layout="block"  styleClass="panel-heading">
+                    <h2 class="panel-title">
+                        <span style="float:left;">
+                            {!$Label.scp_certa_gc__client_context}
+                        </span>
+
+                        <span style="float:left;">
+                            <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/9tQfXYLcp1w"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                        </span>
+                    </h2>
+                    <div class="row paddingRight">
+                        <apex:actionFunction action="{!exportToExcel}" name="exportToExcel"/>
+                        <apex:actionFunction action="{!SaveChanges}" name="SaveChanges" rerender="localStrategicInitiativeTable, contexto, descripciones, competidoresRender" status="renderMeStatus"/>
+                        <div class="btn-group pull-right" role="group" aria-label="...">    					
+                            <apex:outputText >
+                                <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges(); verSolapasAbiertas();" >
+                                    <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                                </button>
+                            </apex:outputText>    
+                            <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+                                <span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+                            </button>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <br/><br/>
+                <table id="icons-table">
+                    <tr>
+                        <td id="hidden-descripcionCliente" class="botones">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/dollar-rotation-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__descripcion_del_cliente}</h2>
+                        </td>
+                        <td id="hidden-strategicContext" class="botones">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/world-stat-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.Global_Strategic_Context}</h2>
+                        </td>
+                        <td id="hidden-strategicIniciative" class="botones">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/file-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.Global_Strategic_Initiative}</h2>
+                        </td>
+                        <td id="hidden-mainCompetitors" class="botones">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/market-flow-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.main_competitors}</h2>
+                        </td>
+                        <td id="hidden-csat" class="botones">
+                            <apex:image url="{!URLFOR($Resource.SCP_Certa_GC__Iconos, '256/order-icon.png')}" styleClass="icon-sectors"/>
+                            <h2>{!$Label.scp_certa_gc__csat}</h2>
+                        </td>
+                        
+                    </tr>
+                </table>
+                <br/><br/>
+                	
+                    <!-- descripcion Cliente -->
+                    <apex:outputPanel layout="block" styleClass="panel-body" id="descripcionCliente">
+                        <div class = "hiddenTable hidden-descripcionCliente">
+                            <h2>{!$Label.scp_certa_gc__descripcion_del_cliente}</h2>
+                            <apex:outputPanel id="descripciones">
+                                <div class="tab-content" id="big-deal-tab-content">
+                                    <apex:pageBlock title="" mode="maindetail">
+                                        <apex:pageBlockSection title="{!$Label.scp_certa_gc__descripcion_del_cliente}" columns="1">
+                                            
+                                            <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__Presupuesto_anual_que_maneja_tu_cliente__c}" label="{!$Label.scp_certa_gc__cuales_son_ingresos_anuales}" />
+                                            
+                                            <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__cantidad_de_empleados__c}" label="{!$Label.scp_certa_gc__indica_cantidad_empleados}" />
+                                            
+                                            <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__Cantidad_de_edificios__c}" label="{!$Label.scp_certa_gc__edificios_centrales_administrativos}" />
+                                            
+                                            <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__cantidad_de_sucursales__c}" label="{!$Label.scp_certa_gc__indica_cant_sucursales}" />
+                                            
+                                            <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__El_n_mero_de_sucursales_crece_decrece__c}" label="{!$Label.scp_certa_gc__sucursales_crece_decrece}" />
+                                            
+                                            <apex:inputField styleClass="disponeDeAutomotor" value="{!descripcionDelClienteActual.SCP_Certa_GC__dispone_de_parque_automotor__c}" label="{!$Label.scp_certa_gc__dispone_parque_automotor}" />
+                                            
+                                            <apex:outputPanel styleClass="cuestionarioFlota ocultar" >
+                                                
+                                                <table class="detailList" border="0" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                        <tr class="">
+                                                            <th class="labelCol vfLabelColTextWrap first" scope="row">
+                                                                <label style="margin-left: -2%;">{!$Label.Parque_automotor_propio_gestionado}</label>
+                                                            </th>
+                                                            <td class="data2Col">
+                                                                <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__Parque_Automotor_Propio_o_Gestionado__c}"/> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="">
+                                                            <th class="labelCol vfLabelColTextWrap first" scope="row">
+                                                                <label style="margin-left: -2%;">{!$Label.scp_certa_gc__cuantos_vehiculos_parque}</label>
+                                                            </th>
+                                                            <td class="data2Col">
+                                                                <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__veh_culos_dispone_el_parque__c}"/> 
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                
+                                            </apex:outputPanel>
+                                            
+                                            <apex:inputField value="{!descripcionDelClienteActual.SCP_Certa_GC__siguientes_pa_ses_tienen_negocio__c}" label="{!$Label.scp_certa_gc__seleccionar_paises_presencia}"/>  
+                                            
+                                        </apex:pageBlockSection>
+                                        
+                                    </apex:pageBlock>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        
+                    </apex:outputPanel>
+                
+                <!--<apex:outputPanel layout="block" styleClass="panel-body" id="pageContent">
+				<!-- Strategic Context -->
+                <apex:outputPanel layout="block" styleClass="panel-body" id="strategicContext">
+                    <div class = "hiddenTable hidden-strategicContext">
+                        
+                        <apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="showInput(); ajaxstop();"/>
+                        <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+                            <img src="{!$Resource.SCP_Certa_GC__AjaxLoader}"/><br/>Loading...
+                        </div>
+                        <h2>{!$Label.scp_certa_gc__global_strategic_context}</h2>
+                        <!--<apex:outputPanel rendered="{!globalStrategicContext.size > 0}">                
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <apex:outputText value="{!$Label.scp_certa_gc__parent_account}"/>
+                                        </th>
+                                        <th style="width:255px;text-align: center;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}"/>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>	
+                                    <apex:repeat value="{!globalStrategicContext}" var="item">
+                                        <tr>
+                                            <td>
+                                                {!item.Strategic_Context__c} ({!item.Name})	
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                    <apex:param value="{!item.Strategic_Context_Last_Update__c}" /> 
+                                                </apex:outputText>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>                
+                                </tbody>
+                            </table>                    
+                        </apex:outputPanel>-->
+                        <apex:outputPanel id="contexto">
+                            <table id="localTable" class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                           <!-- <apex:outputText rendered="{!globalStrategicContext.size > 0}" value="{!$Label.scp_certa_gc__current_account}"/>-->
+                                        </th>
+                                        <th style="width:180px;text-align: center;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}"/>
+                                        </th>
+                                        <th style="width:75px;">
+                                            
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <apex:outputField value="{!descripcionDelClienteActual.SCP_Certa_GC__Strategic_Context__c}">
+                                                <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+                                            </apex:outputField>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                <apex:param value="{!descripcionDelClienteActual.SCP_Certa_GC__Strategic_Context_Last_Update__c}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                        <td>
+                                            <apex:commandButton styleClass="btn btn-default btn-sm" action="{!borra}" value="{!$Label.scp_certa_gc__delete}" rerender="contexto"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+                        <apex:outputText ><div style="clear:both; text-align:center; font-style: italic;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>			
+                    </div>
+                </apex:outputPanel>
+                
+                <!-- Strategic Iniciatives -->
+                <apex:outputPanel layout="block" styleClass="panel-body" id="strategicIniciatives">
+                    <div class = "hiddenTable hidden-strategicIniciative">
+                        
+                        <h2>{!$Label.Global_Strategic_Initiative}</h2>
+                        <apex:outputPanel rendered="{!globalStrategicInitiatives.size > 0}">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__numero_de_la_oportunidad}"/>
+                                        </th>
+                                        <th>
+                                            <apex:outputText value="{!$Label.scp_certa_gc__parent_account}"/>
+                                        </th>
+                                        <th style="width:180px;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__linked_opportunities}"/>
+                                        </th>
+                                        <th style="width:255px;text-align: center;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}"/>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!globalStrategicInitiatives}" var="item">
+                                        <tr>
+                                            <td>
+                                                {!item.name}
+                                            </td>
+                                            <td>
+                                                {!item.SCP_Certa_GC__Strategic_Initiative__c} ({!item.account__r.Name})
+                                            </td>
+                                            <td>
+                                                <!-- <apex:repeat value="{!item.Opportunities__R}" var="Opps"><apex:outputField value="{!Opps.Opportunity__c}"/><br/></apex:repeat> -->
+                                                <apex:repeat value="{!item.Opportunities__R}" var="Opps">                      							
+                                                    <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">			                   								
+                                                        <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>			                   										                   										
+                                                        <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                            <div class="Custom50Block topRight">
+                                                                <div class="bPageBlock secondaryPalette">
+                                                                    <div class="pbHeader">
+                                                                        <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                            <tr>
+                                                                                <td class="pbTitle"><h2 class="mainTitle">{!$Label.opportunity}</h2></td>
+                                                                                <td class="pbButton">
+                                                                                    <a href="/{!Opps.Opportunity__c}">
+                                                                                        <button type="button" class="btn btn-default btn-xs">
+                                                                                            {!$Label.view}
+                                                                                        </button>		                     
+                                                                                    </a>
+                                                                                </td>			                                                                
+                                                                            </tr>
+                                                                            </tbody></table>
+                                                                    </div>
+                                                                    <div class="pbBody">
+                                                                        <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                            <tr>
+                                                                                <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                            </tr>
+                                                                            </tbody></table>
+                                                                    </div>
+                                                                    <div class="pbFooter secondaryPalette">
+                                                                        <div class="bg"></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </span>
+                                                </apex:repeat>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                    <apex:param value="{!item.LastModifiedDate}" /> 
+                                                </apex:outputText>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block" id="localStrategicInitiativeTable">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th style="width:50px;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__numero_de_la_oportunidad}"/>
+                                        </th>
+                                        <th style="min-width: 80pt;">
+                                            <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Strategic_Initiative__c.fields.SCP_Certa_GC__Title__c.label}"/>
+                                        </th>
+                                        <th>
+                                            <apex:outputText value="{!$Label.scp_certa_gc__description}"/>
+                                        </th>
+                                        <th style="width:180px;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__linked_opportunities}"/>
+                                        </th>
+                                        <th style="width:180px;text-align: center;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}"/>
+                                        </th>
+                                        <th style="width:75px;">		            				
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!localStrategicInitiatives}" var="item">
+                                        <tr>
+                                            <!-- -------------------------------------------------------------------------------------------------------------- -->
+                                            <td>
+                                                <apex:outputField value="{!item.name}" />
+                                            </td>
+                                            <!-- -------------------------------------------------------------------------------------------------------------- -->
+                                            <td>
+                                                <apex:outputField value="{!item.SCP_Certa_GC__Title__c}">
+                                                    <apex:inlineEditSupport event="ondblclick"/>
+                                                </apex:outputField>
+                                            </td>
+                                            <!-- -------------------------------------------------------------------------------------------------------------- -->
+                                            <td class="initiative">
+                                                <apex:outputField value="{!item.SCP_Certa_GC__Strategic_Initiative__c}" rendered="{!LEN(item.SCP_Certa_GC__Strategic_Initiative__c) < 150}">
+                                                    <apex:inlineEditSupport event="ondblclick"/>
+                                                </apex:outputField>
+                                                <apex:outputPanel rendered="{!LEN(item.SCP_Certa_GC__Strategic_Initiative__c) > 150}">
+                                                    <span class="lessSpan">
+                                                        <apex:outputText value="{!Left(item.SCP_Certa_GC__Strategic_Initiative__c, 150)}"/>
+                                                        <apex:outputText >
+                                                            ...
+                                                            <button type="button" class="btn btn-default btn-xs showMore" style="float:right;">
+                                                                <span class="glyphicon glyphicon-zoom-in icon-btn-left"></span>&nbsp;{!$Label.show_more}
+                                                            </button>
+                                                        </apex:outputText>
+                                                    </span>
+                                                    <span class="moreSpan" style="float:right;display:none;">								
+                                                        <apex:outputField value="{!item.SCP_Certa_GC__Strategic_Initiative__c}">
+                                                            <apex:inlineEditSupport event="ondblclick"/>
+                                                        </apex:outputField>
+                                                        <button type="button" class="btn btn-default btn-xs showLess" style="float:right;">
+                                                            <span class="glyphicon glyphicon-zoom-out icon-btn-left"></span>&nbsp;{!$Label.show_less}
+                                                        </button>
+                                                    </span>
+                                                </apex:outputPanel>
+                                            </td>
+                                            <!-- -------------------------------------------------------------------------------------------------------------- -->
+                                            <td>
+                                                <!-- <apex:repeat value="{!item.Opportunities__R}" var="Opps"><apex:outputField value="{!Opps.Opportunity__c}"/><br/></apex:repeat> -->
+                                                <ul style="list-style-type: none;padding: 0px;">
+                                                    <apex:repeat value="{!item.Opportunities__R}" var="Opps">                      							
+                                                        <li>
+                                                            <span class="PopupHolderOpp label label-warning label-link" style="width: 74px;  height: 16px;">			                   								
+                                                                <apex:outputText value="{!Left(Opps.Opportunity__r.Name,10)}"/><apex:outputText rendered="{!LEN(Opps.Opportunity__r.Name)>10}" value="..."/>			                   										                   										
+                                                                <div class="individualPalette lookupHoverDetail lookupHoverDetailOverridable" style="display:none; visibility:visible; position:absolute; top:auto; left:auto;">
+                                                                    <div class="Custom50Block topRight">
+                                                                        <div class="bPageBlock secondaryPalette">
+                                                                            <div class="pbHeader">
+                                                                                <table border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="pbTitle"><h2 class="mainTitle">Oportunidad</h2></td>
+                                                                                        <td class="pbButton">
+                                                                                            <a href="/{!Opps.Opportunity__c}">
+                                                                                                <button type="button" class="btn btn-default btn-xs">
+                                                                                                    Ver
+                                                                                                </button>		                     
+                                                                                            </a>
+                                                                                        </td>			                                                                
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbBody">
+                                                                                <table class="detailList" border="0" cellpadding="0" cellspacing="0" style="border-bottom:0px;"><tbody>
+                                                                                    <tr>
+                                                                                        <td class="labelCol last">{!$ObjectType.Opportunity.fields.Name.Label}:</td>
+                                                                                        <td class="dataCol last">{!Opps.Opportunity__r.Name}</td>
+                                                                                    </tr>
+                                                                                    </tbody></table>
+                                                                            </div>
+                                                                            <div class="pbFooter secondaryPalette">
+                                                                                <div class="bg"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                        </li>
+                                                    </apex:repeat>
+                                                </ul>
+                                            </td>
+                                            <!-- -------------------------------------------------------------------------------------------------------------- -->
+                                            <td style="text-align: center;">
+                                                <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+                                                    <apex:param value="{!item.LastModifiedDate}" /> 
+                                                </apex:outputText>
+                                            </td>
+                                            <!-- -------------------------------------------------------------------------------------------------------------- -->
+                                            <td>
+                                                <apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__delete}"  reRender="localStrategicInitiativeTable" status="renderMeStatus" action="{!DeleteStrategicInitiatives}">
+                                                    <apex:param assignTo="{!delid}" name="delid" value="{!item.id}"/>
+                                                </apex:commandButton>
+                                            </td>
+                                            <!-- -------------------------------------------------------------------------------------------------------------- -->
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>
+                            </table>			            
+                            <apex:outputText >
+                                <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+                                    <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.add_buttom}&nbsp;{!$Label.Initiative}
+                                </button>
+                            </apex:outputText>
+                            <apex:outputText ><div style="clear:both; text-align:center; font-style: italic;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+                        </apex:outputPanel>
+                    </div>
+                </apex:outputPanel>
+                
+                <!-- Competidores -->
+                <apex:outputPanel layout="block" styleClass="panel-body" id="competidores">
+                    <div class = "hiddenTable hidden-mainCompetitors">
+                        <h2>{!$Label.main_competitors}</h2>
+                        <apex:outputPanel id="competidoresRender">
+                            <table class="table table-striped table-bordered table-condensed">
+                                <thead>
+                                    <tr>                       
+                                        <th style="min-width: 250px;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__nombre_del_competidor_del_cliente}" />                         
+                                        </th>
+                                        <th style="width:100%;">                           
+                                            <apex:outputText value="{!$Label.scp_certa_gc__informaci_n_relevante}" />
+                                        </th>
+                                        <th style="min-width:230px; text-align: center;">                         
+                                            <apex:outputText value="{!$Label.scp_certa_gc__lastmodifieddate}" />
+                                        </th>
+                                        <th style="width:75px;"> 
+                                            
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <apex:repeat value="{!newCompetitors}" var="item">
+                                        <tr>                                           
+                                            <td class="inputFullWidth">
+                                                <apex:outputField value="{!item.Name}">
+                                                    <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" />
+                                                </apex:outputField>
+                                            </td>
+                                            <td>
+                                                <apex:outputField value="{!item.SCP_Certa_GC__Fact__c}">
+                                                    <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit" />
+                                                </apex:outputField>
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <apex:outputField value="{!item.LastModifiedDate}" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__delete}"  reRender="competidoresRender" status="renderMeStatus"
+                                                                    action="{!DeleteCompetitor}" rendered="{!item.id != null}">
+                                                    <apex:param assignTo="{!delid}" name="delid" value="{!item.id}"/>
+                                                </apex:commandButton>                     
+                                            </td>                 
+                                        </tr>
+                                    </apex:repeat>
+                                </tbody>                           
+                            </table>
+                        </apex:outputPanel>
+                        <apex:outputText >
+                            <apex:actionFunction action="{!add}" name="add" rerender="errorMsg, competidoresRender" status="renderMeStatus" />
+                            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalPrincipalCompetidores">
+                                <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.add}&nbsp;{!$Label.Competitor} 
+                            </button>
+                        </apex:outputText>
+                        <apex:outputText ><div style="clear:both; text-align:center; font-style: italic;border-bottom: 1px solid rgb(237, 239, 240);padding-bottom: 15px;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+                    </div>
+                </apex:outputPanel>
+                
+                <!-- Satisfaccion cliente -->
+                <apex:outputPanel layout="block" styleClass="panel-body" id="satisfaccionCliente">
+                    <div class = "hiddenTable hidden-csat">
+                        <h2>{!$Label.csat}</h2>                
+                        <table class="table table-striped table-bordered table-condensed">
+                            <thead>                                          
+                                <tr>
+                                    <th style="width:20%"></th>
+                                    <th style="width:20%">{!$label.Unit}</th>
+                                    <th style="text-align:right;width:20%">{!(year)}</th>
+                                    <th style="text-align:right;width:20%">{!(year-1)}</th>
+                                    <th style="text-align:right;width:20%">{!(year-2)}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                <tr>
+                                    <th>{!$Label.csat}</th>
+                                    <td class="inputFullWidth">
+                                        <apex:outputField style="width:100%;" value="{!descripcionDelClienteActual.SCP_Certa_GC__CSAT_Unit__c}">
+                                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+                                        </apex:outputField>
+                                    </td>
+                                    <td style="text-align:right;" class="inputFullWidth">
+                                        <apex:outputField value="{!descripcionDelClienteActual.SCP_Certa_GC__CSAT_Current_Year__c}">
+                                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+                                        </apex:outputField>
+                                    </td>
+                                    <td style="text-align:right;" class="inputFullWidth">
+                                        <apex:outputField value="{!descripcionDelClienteActual.SCP_Certa_GC__CSAT_Last_Year__c}">
+                                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+                                        </apex:outputField>
+                                    </td>                    
+                                    <td style="text-align:right;" class="inputFullWidth">
+                                        <apex:outputField value="{!descripcionDelClienteActual.SCP_Certa_GC__CSAT_Second_To_Last_Year__c}">
+                                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass"  resetFunction="resetInlineEdit"/>
+                                        </apex:outputField>
+                                    </td>                    
+                                </tr> 
+                            </tbody>
+                        </table>
+                        <apex:outputText ><div style="clear:both; text-align:center; font-style: italic;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+                    </div>
+                </apex:outputPanel>
+
+                <!-- -------------------------------------------------------------------------------------------------------------- -->
+                <apex:outputPanel layout="block"  styleClass="panel-footer">		   			
+                    <div class="row paddingRight">
+                        <apex:actionFunction action="{!exportToExcel}" name="exportToExcel"/>
+                        <apex:actionFunction action="{!SaveChanges}" name="SaveChanges" oncomplete="siEstaEnSiSeVeLaFlota();" rerender="localStrategicInitiativeTable, competidoresRender, contexto, descripciones" status="renderMeStatus"/>
+                        <div class="btn-group pull-right" role="group" aria-label="...">    					
+                            <apex:outputText >
+                                <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                                    <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                                </button>
+                            </apex:outputText>    
+                            <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+                                <span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+                            </button>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <!-- -------------------------------------------------------------------------------------------------------------- -->
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="z-index:9999;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{!$Label.New_Initiative}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table style="border-collapse: separate;border-spacing: 5px;">
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$ObjectType.SCP_Certa_GC__Strategic_Initiative__c.fields.SCP_Certa_GC__Title__c.label}" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="tituloIniciativa" style="width: 100%;" value="{!newInitiative.SCP_Certa_GC__Title__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__description}" />:
+                                        </td>
+                                        <td>
+                                            <textarea id="textIniciative" cols="52" rows="6"></textarea> 
+                                            <span id="spanIniciative" style="display:none;">
+                                                <apex:inputField style="width: 100%;" value="{!newInitiative.SCP_Certa_GC__Strategic_Initiative__c}"/><br/>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </table>		        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fillInitiative();InsertIniciative()" oncomplete="tituloIniciativa();">{!$Label.add_buttom}</button>
+                                <apex:actionFunction action="{!InsertIniciative}" name="InsertIniciative" rerender="localStrategicInitiativeTable" status="renderMeStatus"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal - Principales Competidores -->
+                <div class="modal fade" id="myModalPrincipalCompetidores" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="z-index:9999;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{!$Label.add}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table style="border-collapse: separate;border-spacing: 5px; width: 100%;">
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__nombre_del_competidor_del_cliente}" />:
+                                        </td>
+                                        <td style="text-align: left;">
+                                            
+                                            <apex:inputField styleClass="competidorNombre" id="competidorNombre" style="width:335px;" value="{!newCompetitor.Name}"/><br/>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__informaci_n_relevante}" />:
+                                        </td>
+                                        <td style="text-align: left;">
+                                            <apex:inputField styleClass="competidorFact" id="competidorFact" style="width:335px;" value="{!newCompetitor.SCP_Certa_GC__Fact__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                </table>		        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="add(); vacioCompetidor();" >{!$Label.add}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>	
+                
+            </apex:form>
+            <c:FastTask page="{!$Label.scp_certa_gc__client_context}" account="{!account.id}"></c:FastTask>
+            <chatter:feed entityId="{!Account.Id}" />
+        </apex:outputPanel>
+    </apex:outputpanel>
+</apex:page>

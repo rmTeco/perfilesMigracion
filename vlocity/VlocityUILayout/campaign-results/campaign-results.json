@@ -1,0 +1,26 @@
+{
+    "Cards": [
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.id",
+                "val": "70136000000JwSF"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "campaignId": "{{params.id}}"
+            },
+            "remoteClass": "CampaignListHandler",
+            "remoteMethod": "getMembersActionAggInfoByCampaign",
+            "remoteNSPrefix": "%vlocity_namespace%"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "campaign-results"
+        }
+    }
+}

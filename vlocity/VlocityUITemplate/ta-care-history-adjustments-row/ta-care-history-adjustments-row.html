@@ -1,0 +1,15 @@
+<td  ng-controller="AdjustementsRow"
+    class="slds-truncate slds-p-vertical--medium clickablerow" 
+    ng-if="data" 
+    ng-click="open_negotiation(obj.Id, obj.negNumber);"
+    data-label="{{field.label}}"
+    ng-repeat="field in data.fields | limitTo: 5" 
+    title="{{obj | getter: field | picker: field.type}}">
+        <!--{{data}}-->
+        <div ng-if="field.label == 'Ajuste'">
+            <span class="{{obj.polarity}}">{{obj.tipobalance}} {{obj | getter: field | picker: field.type}}{{obj.codUnidadDeMedida}}</span>
+        </div>
+        <div ng-if="field.label != 'Ajuste'">
+            {{obj | getter: field | picker: field.type}}
+        </div>
+</td>

@@ -1,0 +1,15 @@
+<td  ng-controller="NegotiationsRow"
+    class="slds-truncate slds-p-vertical--medium clickablerow" 
+    ng-if="data" 
+    ng-click="open_negotiation(obj.Id, obj.negNumber);"
+    data-label="{{field.label}}"
+    ng-repeat="field in data.fields | limitTo: 5" 
+    title="{{obj | getter: field | picker: field.type}}">
+        {{data}}
+        <div ng-if="field.label == 'Número'">
+            <a href="#">{{obj | getter: field | picker: field.type}}</a>
+        </div>
+        <div ng-if="field.label != 'Número'">
+            {{obj | getter: field | picker: field.type}}
+        </div>
+</td>

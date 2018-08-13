@@ -1,0 +1,233 @@
+<apex:page sidebar="false" tabStyle="Strategic_Client_Plan__tab" controller="SCP_Certa_GC.accountMasterPlan" >
+
+	<c:SCPMenu ></c:SCPMenu>
+	
+	<apex:includeScript value="{!$Resource.SCP_Certa_GC__JQuery}"  />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__JQueryUI}"  />
+    <apex:includeScript value="{!$Resource.SCP_Certa_GC__DataTable}"  />
+	
+	<style>
+    	.taskColor {
+    		background-color: #FEE ! important;
+    	}
+    	
+    	table.dataTable thead .sorting {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_both.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_asc {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_desc {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_asc_disabled {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_asc_disabled.png')}") no-repeat center right ! important;
+	    }
+	    table.dataTable thead .sorting_desc_disabled {
+	      background: #f2f3f3 url("{!URLFOR($Resource.DataTableImg, 'sort_desc_disabled.png')}") no-repeat center right ! important;
+	    }
+	    
+	    table.dataTable thead .sorting_asc,
+	    table.dataTable thead .sorting_desc,
+	    table.dataTable thead .sorting {
+	      cursor: pointer;
+	      *cursor: hand;
+	    }
+	    
+	    .dataTables_filter {
+	        text-align: right ! important;
+	        padding-right: 15px ! important;
+	    }
+    </style>
+	
+	<script  type="text/javascript">
+	    $j = jQuery.noConflict();
+		
+		$j(document).ready(function() {
+            createDataTableSerch();                        
+        });
+        
+        function createDataTableSerch(){
+            $j("#mainTable").dataTable({
+                "bPaginate": false,        
+                "bInfo": false
+            });
+        }
+		    
+	    function ajaxshow(){
+	        $j(".ajaxloader").show();
+	    }    
+	    function ajaxstop(){
+	        $j(".ajaxloader").hide();
+	    }
+	
+	    function showInput(){}
+	</script>
+	
+   	<apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1" id="pageContent">
+		<apex:pageMessages id="errorMsg"/>
+		<apex:outputPanel layout="block"  styleClass="panel panel-default">
+			<apex:form id="Form">
+		   		<apex:outputPanel layout="block"  styleClass="panel-heading">
+	    			<h3 class="panel-title">
+	    				<span style="float:left;">
+	    					{!$Label.scp_certa_gc__action_plan_builder}
+	    				</span>
+
+                    <span style="float:left;">
+                        <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/1yQ4LfSkapg"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                    </span>	 
+	    			</h3>
+	    			<div class="row paddingRight">
+	    				<apex:actionFunction action="{!SaveChanges}" name="SaveChanges" rerender="pageContent,errorMsg" status="renderMeStatus" oncomplete="createDataTableSerch()"/>
+	    				<apex:actionFunction action="{!ExportToExcel}" name="exportToExcel"/>
+	    				<apex:actionFunction action="{!MergeTasks}" oncomplete="createDataTableSerch();" name="MergeTasks" rerender="pageContent,errorMsg" status="renderMeStatus"/>
+	    				<apex:actionFunction action="{!DeleteTasks}" oncomplete="createDataTableSerch();" name="DeleteTasks" rerender="pageContent,errorMsg" status="renderMeStatus"/>
+	    				<div class="btn-group pull-right" role="group" aria-label="...">	    					
+       			        	<apex:outputText >
+		           				<button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+			   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+			                    </button>
+		                    </apex:outputText>
+		                    <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+		   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+		                    </button>
+		                    <apex:outputText >
+			                    <button type="button" class="btn btn-default btn-sm" onclick="MergeTasks()">
+			   						<span class="glyphicon glyphicon-link icon-btn-left"></span>&nbsp;{!$Label.Merge_tasks}
+			                    </button>
+			                    <button type="button" class="btn btn-default btn-sm" onclick="DeleteTasks()">
+			   						<span class="glyphicon glyphicon-trash icon-btn-left"></span>&nbsp;{!$Label.Delete_tasks}
+			                    </button>
+			                </apex:outputText>     				
+	    				</div>
+	    			</div>
+	    		</apex:outputPanel>
+				<apex:outputPanel layout="block" styleClass="panel-body">
+					<apex:actionStatus id="renderMeStatus" onstart="ajaxshow()" onstop="showInput(); ajaxstop();"/>
+		            <div class="ajaxloader" style="display: none; background-color:white; padding:5px; text-align:center; width:232px; border: 1px solid grey; margin-left: auto; margin-right: auto; border-radius: 5px;">
+		                <img src="{!$Resource.AjaxLoader}"/><br/>Loading...
+		            </div>
+					<div style="max-height: 800px;overflow: auto">
+						<table id="mainTable" class="table table-striped table-bordered table-condensed">
+							<thead>
+				                <tr>
+				                    <th style="min-width:16px;"></th>
+				                    <th>
+				                       <apex:outputText value="{!$Label.scp_certa_gc__created_date}"/>
+				                    </th>
+				                    <th>
+				                       <apex:outputText value="{!$Label.scp_certa_gc__subject}"/>
+				                    </th>
+				                    <th>{!$Label.description}</th>
+                                    <!--
+				                    <th>{!$Label.scp_telecom__url_attachment}</th>
+									-->
+				                    <th>
+				                       <apex:outputText value="{!$Label.scp_certa_gc__due_date}"/>
+				                    </th>
+				                    <th>
+				                       <apex:outputText value="{!$Label.scp_certa_gc__completed}"/>
+				                    </th>
+				                    <th>
+				                       <apex:outputText value="{!$Label.scp_certa_gc__task_status}"/>
+				                    </th>
+				                    <th>
+				                       <apex:outputText value="{!$Label.scp_certa_gc__priority}"/>                       
+				                    </th>
+				                    <th>
+				                       <apex:outputText value="{!$Label.scp_certa_gc__assigned_to}"/>                       
+				                    </th>
+				                </tr>
+			                </thead>
+			                <tbody>           
+				                <apex:repeat value="{!tasks}" var="item">
+					                <tr>
+					                    <td>                    
+					                        <apex:inputCheckbox value="{!item.selected}"/>
+					                    </td>
+					                    <td>                    
+					                        <apex:outputField value="{!item.task.CreatedDate}">
+					                        </apex:outputField>
+					                    </td>
+					                    <td> 
+					                    	<!-- 
+					                        <span class="AssignedToName">{!item.task.Subject}</span>				                         
+					                         <apex:selectList styleClass="AssignedToId SubjectSelect" style="display:none; max-width:210px;" id="SubjectPick" value="{!item.task.Subject}" size="1" rendered="{!canEdit}">
+					                            <apex:selectOptions value="{!SubjectList}"/>
+					                        </apex:selectList> 
+					                        <apex:inputField styleClass="NewSubject" style="display:none;" value="{!item.task.Subject}" rendered="{!canEdit}"/>
+					                         -->
+											<apex:outputField value="{!item.task.Subject}">
+					                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+					                        </apex:outputField>
+					                    </td>
+					                    <td>                    
+					                        <apex:outputField value="{!item.task.Description}">
+					                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+					                        </apex:outputField>
+					                    </td>
+                                        <!--
+					                    <td>    
+					                        <apex:outputLink styleClass="AssignedToName" rendered="{!IF(item.task.URL__c != null,true,false)}" value="{!item.task.URL__c}" target="_blank">Link</apex:outputLink>
+					                        <apex:inputField styleClass="AssignedToId" style="display:none;" value="{!item.task.URL__c}"/>
+					                    </td>
+										-->
+					                    <td class="{!IF(item.task.ActivityDate<Today(),'taskColor','')}">                    
+					                        <apex:outputField value="{!item.task.ActivityDate}">
+					                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit" />
+					                        </apex:outputField>
+					                    </td>
+					                    <td>             
+					                        <apex:outputField value="{!item.task.SCP_Certa_GC__End_Date__c}">
+					                        </apex:outputField>
+					                    </td>
+					                    <td>                    
+					                        <apex:outputField value="{!item.task.Status}">
+					                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+					                        </apex:outputField>
+					                    </td>
+					                    <td>                    
+					                        <apex:outputField value="{!item.task.Priority}">
+					                            <apex:inlineEditSupport event="ondblclick" changedStyleClass="myBoldClass" resetFunction="resetInlineEdit"/>
+					                        </apex:outputField>
+					                    </td>
+					                    <td>                    
+					                        <apex:outputText styleClass="AssignedToName" value="{!item.task.Owner.name}"/>
+					                        <apex:inputField required="false" styleClass="AssignedToId" style="display:none;" value="{!item.task.Ownerid}"/>
+					                    </td>
+					                </tr>
+				                </apex:repeat>
+							</tbody>
+						</table>
+					</div>
+					<apex:outputText ><div style="clear:both; text-align:center; font-style: italic;">{!$Label.scp_certa_gc__double_click}</div></apex:outputText>
+				</apex:outputPanel>
+				<apex:outputPanel layout="block"  styleClass="panel-footer">
+	    			<div class="row paddingRight">
+	    				<div class="btn-group pull-right" role="group" aria-label="...">	    					
+       			        	<apex:outputText >
+		           				<button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+			   						<span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+			                    </button>
+		                    </apex:outputText>
+		                    <button type="button" class="btn btn-default btn-sm" onclick="exportToExcel()">
+		   						<span class="glyphicon glyphicon-file icon-btn-left"></span>&nbsp;{!$Label.Export_to_Excel}
+		                    </button>
+		                    <apex:outputText >
+			                    <button type="button" class="btn btn-default btn-sm" onclick="MergeTasks()">
+			   						<span class="glyphicon glyphicon-link icon-btn-left"></span>&nbsp;{!$Label.Merge_tasks}
+			                    </button>
+			                    <button type="button" class="btn btn-default btn-sm" onclick="DeleteTasks()">
+			   						<span class="glyphicon glyphicon-trash icon-btn-left"></span>&nbsp;{!$Label.Delete_tasks}
+			                    </button>
+			                </apex:outputText>     				
+	    				</div>
+	    			</div>
+	    		</apex:outputPanel>
+			</apex:form>
+			<c:FastTask page="{!$Label.scp_certa_gc__action_plan_builder}" account="{!account.id}"></c:FastTask>
+			<chatter:feed entityId="{!account.id}" />
+		</apex:outputPanel>
+	</apex:outputPanel>
+</apex:page>

@@ -1,0 +1,137 @@
+<ng-form name='loopform' class='slds-form-element vlc-flex vlc-slds-radio-control' id="{{::control.name + $index}}" ng-repeat='control in child.eleArray'>
+  <div ng-controller="taCareRadioButtonListCtrl as rbl" class="ta-care-radio-button-list" ng-init="detailExpanded = false">
+    <fieldset ng-if="control.propSetMap.selectMode == 'Single'" class="slds-form-element">
+      <legend class="slds-form-element__legend slds-form-element__label ">
+        <label class='slds-form-element__label vlc-slds-inline-control__label'>
+        {{control.propSetMap.customOptions.radioGroupLabel}}
+      <span class='vlc-asterix icon-v-asterix' ng-show="control.propSetMap.required">
+    </span>  
+    </label>
+      </legend>
+      <div class="slds-form-element__control">
+        <span class="slds-radio" ng-repeat="item in control.vlcSI[control.itemsKey]">
+            <input 
+              type="radio"
+              ng-attr-id="{{::control.name + '-radio-' + $index}}"
+              name="options"
+              checked=""
+              ng-model="bpTree.response[control.propSetMap.customOptions.selectedItemPath]"
+              ng-value="{{item}}"
+              ng-required="control.propSetMap.required"
+              vlc-slds-val-checker="response"
+              ng-change='aggregate(this, control.index, control.indexInParent, true, -1);'
+              ng-disabled="control.propSetMap.customOptions.enabledRecord && !item[control.propSetMap.customOptions.enabledRecord]"
+              /><!-- "isValidBillingAccount" 
+            bablab: {{control.propSetMap.customOptions.enabledRecord}}-->
+            <label class="slds-radio__label" ng-attr-for="{{::control.name + '-radio-' + $index}}">
+              <span class="slds-radio--faux"></span>
+        <span class="slds-form-element__label">{{::control.propSetMap.customOptions.header.text | format:control.propSetMap.customOptions.header.params:item}}</span>
+        <div class="slds-tree_container" role="application">
+          <ul class="slds-tree" role="tree" aria-labelledby="treeheading">
+            <li ng-repeat="field in control.propSetMap.customOptions.fields" id="tree0-node0" role="treeitem" aria-level="1">
+              <div class="slds-tree__item">
+                <button class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+                        <svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+                          <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Toggle</span>
+                      </button>
+                <label ng-if="item[control.propSetMap.customOptions.fields[$index].params[0]] != undefined" href="javascript:void(0);"
+                  tabindex="-1" role="presentation" class="slds-truncate vlc-slds-inline-control__label">
+                        {{::control.propSetMap.customOptions.fields[$index].text | format:control.propSetMap.customOptions.fields[$index].params:item}}
+                      </label>
+                <label ng-if="item[control.propSetMap.customOptions.fields[$index].params[0]] == undefined" href="javascript:void(0);"
+                  tabindex="-1" role="presentation" class="slds-truncate vlc-slds-inline-control__label">
+                          {{control.propSetMap.customOptions.fields[$index].emptyTextMessage}}
+                        </label>
+              </div>
+            </li>
+            <li id="tree0-node0" role="treeitem" aria-level="1" ng-if="control.propSetMap.customOptions.pillsField && item[control.propSetMap.customOptions.pillsField.collectionValues]">
+              <div class="slds-tree__item">
+                      <button class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+                              <svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+                                <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+                              </svg>
+                              <span class="slds-assistive-text">Toggle</span>
+                            </button>
+                      <label href="javascript:void(0);"
+                        tabindex="-1" role="presentation" class="vlc-slds-inline-control__label">
+                              {{control.propSetMap.customOptions.pillsField.text}}
+                            </label>
+                  <span class="slds-pill" ng-if="isArray(item[control.propSetMap.customOptions.pillsField.collectionValues])" ng-repeat="pillItem in item[control.propSetMap.customOptions.pillsField.collectionValues]">
+                      <a href="javascript:void(0);" class="slds-p-left--x-small slds-p-right--x-small slds-pill__label" title="Full pill label verbiage mirrored here">
+                          {{pillItem[control.propSetMap.customOptions.pillsField.label]}}
+                      </a>
+                  </span>
+                  <span class="slds-pill" ng-if="!isArray(item[control.propSetMap.customOptions.pillsField.collectionValues])">
+                      <a href="javascript:void(0);" class="slds-p-left--x-small slds-p-right--x-small slds-pill__label" title="Full pill label verbiage mirrored here">
+                          {{item[control.propSetMap.customOptions.pillsField.collectionValues][control.propSetMap.customOptions.pillsField.label]}}
+                      </a>
+                  </span>
+            
+            </li>
+            <li id="tree0-node1" role="treeitem" aria-level="1" aria-expanded="{{detailExpanded}}" ng-click="detailExpanded = !detailExpanded">
+              <div class="slds-tree__item" ng-hide="{{control.propSetMap.customOptions.hideDetailsLink}}">
+                <button class="slds-button slds-button--icon slds-m-right--x-small" aria-controls="tree0-node1" title="Toggle">
+                        <slds-button-svg-icon 
+                          size="'small'" 
+                          sprite="'utility'" 
+                          icon="'chevronright'"
+                          extra-classes="'expanded-detail-icon'">
+                      </slds-button-svg-icon>
+                        <span class="slds-assistive-text">Toggle</span>
+                      </button><a id="tree0-node1__label" href="javascript:void(0);" tabindex="-1" role="presentation"
+                  class="slds-truncate" ng-hide="{{control.propSetMap.customOptions.hideDetailsLink}}" title="Tree Branch">Ver servicios contratados</a></div>
+              <ul ng-class="{'slds-is-expanded' : detailExpanded, 'slds-is-collapsed': !detailExpanded}" role="group" aria-labelledby="tree0-node1__label">
+                <li ng-if="isArray(item[control.propSetMap.customOptions.childrenList.collectionValues])" ng-repeat="children in item[control.propSetMap.customOptions.childrenList.collectionValues]" id="tree0-node1-0" role="treeitem"
+                  aria-level="2">
+                  <div class="slds-tree__item" ng-hide="{{control.propSetMap.customOptions.hideDetailsLink}}">
+                    <button  class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+                            <svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+                              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Toggle</span>
+                          </button><label href="javascript:void(0);" tabindex="-1" role="presentation" class="slds-truncate vlc-slds-inline-control__label"
+                      title="Tree Item">{{::control.propSetMap.customOptions.childrenList.text | format:control.propSetMap.customOptions.childrenList.params:children}}</label>
+                  </div>
+
+                </li>
+                <li ng-if="!isArray(item[control.propSetMap.customOptions.childrenList.collectionValues])" id="tree0-node1-0" role="treeitem"
+                  aria-level="2">
+                  <div class="slds-tree__item" ng-hide="{{control.propSetMap.customOptions.hideDetailsLink}}">
+                    <button  class="slds-button slds-button--icon slds-m-right--x-small slds-is-disabled" disabled="" title="Toggle">
+                            <svg class="slds-button__icon slds-button__icon--small" aria-hidden="true">
+                              <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#chevronright"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Toggle</span>
+                          </button><label href="javascript:void(0);" tabindex="-1" role="presentation" class="slds-truncate vlc-slds-inline-control__label"
+                      title="Tree Item">
+                              {{item[control.propSetMap.customOptions.childrenList.collectionValues].Name}}
+                              </label>
+                  </div>
+
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        </label>
+        </span>
+        <span ng-if="bpTree.response[control.propSetMap.customOptions.addNewItem.allow]" class="slds-radio">
+          <input
+            type="radio"
+            id="radio-newItem"
+            name="options"
+            checked=""
+            ng-model="bpTree.response[control.propSetMap.customOptions.selectedItemPath]"
+            value="newItem"
+            ng-required="control.propSetMap.required"/>
+          <label class="slds-radio__label" for="radio-newItem">
+            <span class="slds-radio--faux"></span>
+        <span class="slds-form-element__label">{{control.propSetMap.customOptions.addNewItem.text}}</span>
+        </label>
+        </span>
+      </div>
+    </fieldset>
+  </div>
+</ng-form>

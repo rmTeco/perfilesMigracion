@@ -1,0 +1,19 @@
+<div class="slds-panel slds-grid slds-grid--vertical slds-nowrap">
+  <div class="slds-form--stacked slds-grow slds-scrollable--y">
+    <div class="slds-panel__section slds-p-around--small" ng-show="!hideContents" >
+        <div class="slds-grid slds-wrap via-slds-action-grid-card">
+            <div style="width: auto; margin: 0px; padding: 0px;" class="slds-size--1-of-2 slds-x-small-size--1-of-3 slds-medium-size--1-of-4 slds-large-size--1-of-6 slds-align--absolute-center slds-m-bottom--xx-small slds-m-top--xx-small slds-p-left--xx-small slds-p-right--xx-small slds-grid custom-action-vls-wrapper" ng-repeat="action in data.actions" >
+                <a class="slds-button via-slds-button slds-button--neutral slds-size--1-of-1 slds-p-top--xx-small slds-p-bottom--xx-small slds-align--absolute-center slds-text-link--reset custom-action-vls-btn" href="javascript:void(0)" ng-click="performAction(action)" hotkey-card-action>
+                    <div>
+                        <vloc-card-icon data="action" obj="obj" size="'small'" extra-classes="'big slds-icon-text-default via-action-icon'"></vloc-card-icon>
+                        
+                        <p title="{{action.displayName}}">{{action.displayName}}
+                        </p>
+                        <p ng-show="{{action.displayName.length<20}}"><br/></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

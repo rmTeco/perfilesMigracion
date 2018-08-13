@@ -1,0 +1,256 @@
+<apex:page controller="SCP_Certa_GC.HitosRelevantesController" sidebar="false" tabStyle="Strategic_Client_Plan__tab" >
+    
+    <c:SCPMenu ></c:SCPMenu>
+    <apex:include pageName="SCP_Certa_GC__changeFocus"/>
+    <apex:stylesheet value="{!$Resource.SCP_Certa_GC__ipad}"/>
+    
+    <style>
+        
+        .level1, .levelGreen { 
+        background-color: #CEFD9F;
+        }
+        
+        .pbSubheader h3 {
+        display: inline;
+        margin-left: 5px;
+        font-weight: bold;
+        }
+        
+        .level2, .levelYellow {
+        background-color: rgb(255, 255, 139);
+        }
+        
+        .level3, .levelRed {
+        background-color: rgb(255, 158, 158);
+        }
+        
+        #tableList tr.hover:hover {
+        background-color: #d4ebf2;
+        }
+        
+        .category_service {
+        background-color: #006699;
+        background-color: #d4ebf2;
+        }
+        
+        .sub_category_service {
+        background-color: #8C8C8C;
+        background-color: #e2e2e2;
+        }
+        
+        h1 {
+        /*color: #ffffff;*/ 
+        }
+        
+        h2 {
+        /*color: #ffffff;*/
+        }
+        
+        #tableList {
+        border-collapse: collapse;
+        }
+        
+        .pbBody {
+        padding: 12px ! important;
+        }
+        
+        .separator, .separator td {
+        height:30px;
+        background-color: #f8f8f8 ! important;
+        border-left: 1px solid #f8f8f8 ! important;
+        border-right: 1px solid #f8f8f8 ! important;
+        }
+        
+        .message {
+        background-color: transparent ! important;
+        }
+        
+         #big-deal-tab-content th {
+        width : 50%;
+        text-align : left;
+        padding-left : 6%;
+        font-size: 14px;
+        font-weight: normal;
+        }
+        
+        
+        #big-deal-tab-content th label {
+        font-size: 14px;
+        font-weight: normal;
+        }
+        
+        .Custom27Tab .tertiaryPalette, .individualPalette .Custom27Block .tertiaryPalette, .layoutEdit .individualPalette .Custom27Block .tertiaryPalette{
+            border-color: rgba(207, 208, 210, 0.2) !important;
+        }
+        
+    </style>
+    
+    <script>
+     $j = jq213; //jQuery.noConflict();
+    //$j2 = jq161;
+    
+    $j(document).ready(function() {
+
+        
+        $j('#myModalHito').on('shown.bs.modal', function () {
+            $j('body').animate({ scrollTop: 0 }, 400);
+        });
+        
+       
+        
+    });
+    
+    </script>
+    
+    <apex:outputPanel layout="block" styleClass="container-fluid bootstrap-sf1">
+        <apex:outputPanel layout="block"  styleClass="panel panel-default">
+            <apex:form >
+                <apex:outputPanel layout="block"  styleClass="panel-heading">
+                    <h2 class="panel-title">
+                        <span style="float:left;">
+                            {!$Label.scp_certa_gc__hitos_relevantes}
+                        </span>
+                        <span style="float:left;">
+                            <a class="btn btn-xs btn-default" style="font-size:11px;color:#5c7995;" target="_blank" href="https://youtu.be/D8qDtoE5ccM"><apex:outputText value="{!$Label.scp_certa_gc__show_video}"/></a>	    
+                        </span>
+                    </h2>
+                    <div class="row paddingRight">
+                        <apex:actionFunction action="{!guardar}" name="SaveChanges" rerender="pageContent" status="renderMeStatus" oncomplete="createDataTableSerch()"/>
+                        
+                        <div class="btn-group pull-right" role="group" aria-label="...">	    					
+                            
+                            <!--
+                            <button type="button" class="btn btn-default btn-sm" onclick="SaveChanges()">
+                                <span class="glyphicon glyphicon-floppy-disk icon-btn-left"></span>&nbsp;{!$Label.save}
+                            </button>
+                            -->
+                            
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                
+                <div class="tab-content" id="big-deal-tab-content">
+                <apex:outputPanel layout="block" styleClass="panel-body" id="pageContent">
+                    
+                    <apex:pageBlock title="" mode="maindetail" id="hitosRelevantes">
+                        <apex:pageBlockSection title="" columns="1" collapsible="false">
+ 
+
+                            <apex:outputText label="{!$Label.scp_certa_gc__hitos_relevantes} ({!$Label.scp_certa_gc__vencimientos_eventos_etc})">     
+                            </apex:outputText> 
+                            
+                            <apex:pageBlockSectionItem >
+                                
+                                
+                                <apex:outputPanel layout="none" >
+                                    <table style="width: 90%;margin-left: 5%;margin-bottom: 0px;" class ="table table-striped table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="padding-left : 0% !important;text-align: center;">
+                                                    {!$Label.scp_certa_gc__description}
+                                                </th>
+                                                <th style="width: 10%;padding-left: 0;text-align: center;">
+                                                    {!$Label.scp_certa_gc__fecha}
+                                                </th>
+                                                <th style="padding-left : 0% !important;text-align: center;">
+                                                    {!$Label.scp_certa_gc__categoria}
+                                                </th>
+                                                <th style="width: 10%;">
+                                                    
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:variable var="c" value="{!0}"/>
+                                            <apex:repeat value="{!contenedor.Hitos_Relevantes_2__r}" var="hito" id="number">
+                                                <tr>
+                                                    <td id="elemento - {!c+1}">
+                                                        <apex:variable var="c" value="{!c+1}"/>
+                                                        <apex:outputText value="{!hito.SCP_Certa_GC__Descripcion__c}"/>
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputText value="{0,date,dd/MM/yyyy}"> <apex:param value="{!hito.SCP_Certa_GC__Fecha__c}" /> </apex:outputText>
+                                                    </td>
+                                                    <td >
+                                                        <apex:outputField value="{!hito.SCP_Certa_GC__Categoria__c}"/>
+                                                    </td>
+                                                    <td>
+                                                        <apex:commandButton styleClass="btn btn-default btn-sm" value="{!$Label.scp_certa_gc__delete}" reRender="hitosRelevantes" action="{!BorrarHito}">
+                                                            <apex:param assignTo="{!hitoABorrarId}" name="delid" value="{!hito.id}"/>
+                                                        </apex:commandButton>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </table>  
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            
+                            
+                            <apex:outputText >
+                                <button style="margin-left: 83%;" type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModalHito">
+                                    <span class="glyphicon glyphicon-plus icon-btn-left"></span>&nbsp;{!$Label.Nuevo_Hito}
+                                </button>
+                                <br/>
+                            </apex:outputText>
+                            
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                </div>
+                
+                <!-- modal - Nuevo Hito Relevante -->
+                <div class="modal fade" id="myModalHito" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="z-index:9999;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">{!$Label.Nuevo_Hito}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table style="border-collapse: separate;border-spacing: 5px;">
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__description}" />:
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" style="width: 100%;" value="{!hitoAInsertar.SCP_Certa_GC__Descripcion__c}"/><br/> 
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText value="{!$Label.scp_certa_gc__categoria}" />
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" value="{!hitoAInsertar.SCP_Certa_GC__Categoria__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td style="text-align: right;">
+                                            <apex:outputText style="width: 100%;" value="{!$Label.scp_certa_gc__fecha}" />
+                                        </td>
+                                        <td>
+                                            <apex:inputField styleClass="resetHito" id="datepicker" showDatePicker="true"  value="{!hitoAInsertar.SCP_Certa_GC__Fecha__c}"/><br/>
+                                        </td>
+                                    </tr>
+                                    
+                                </table>		        
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">{!$Label.Close}</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="InsertHito()">{!$Label.add_buttom}</button>
+                                <apex:actionFunction action="{!InsertHito}" name="InsertHito" rerender="hitosRelevantes" oncomplete="resetCamposHito()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </apex:form>
+            <c:FastTask page="{!$Label.scp_certa_gc__kpi}" account="{!idCuenta}"></c:FastTask>
+            <chatter:feed entityId="{!idCuenta}" />
+        </apex:outputPanel>
+    </apex:outputPanel>
+</apex:page>

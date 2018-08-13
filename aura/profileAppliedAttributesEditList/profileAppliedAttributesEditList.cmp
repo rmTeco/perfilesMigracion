@@ -1,0 +1,27 @@
+<aura:component access="GLOBAL">
+    <aura:registerEvent name="unapplyAttribute" type="vlocity_cmt:profileUnapplyAttributeEvent"/>
+    <aura:registerEvent name="unappliedAttributesFiltered" type="vlocity_cmt:profileUnappliedAttributesFilteredEvent"/>
+	<aura:handler event="vlocity_cmt:profileApplyAttributeSucceededEvent" action="{!c.handleApplyAttributeSucceededEvent}"/>
+    <aura:handler event="vlocity_cmt:profileUnapplyAttributeSucceededEvent" action="{!c.handleProfileUnapplyAttributeSucceededFailedEvent}"/>
+    <aura:handler event="vlocity_cmt:profileUnapplyAttributeFailedEvent" action="{!c.handleProfileUnapplyAttributeSucceededFailedEvent}"/>
+    <aura:attribute name="appliedAttributes" type="vlocity_cmt.SegmentElement[]"/> 
+    <aura:attribute name="unappliedAttributesToBeSearched" type="vlocity_cmt.SegmentElement[]"/>
+
+    <ul class="slds-list--horizontal slds-has-dividers--right slds-has-block-links--space slds-wrap slds-grid--vertical-align-center">
+        <aura:iteration items="{!v.appliedAttributes}" var="attribute">
+            <li class="needsClick slds-item" onclick="{!c.handleAppliedAttributeClicked}" data-code="{!attribute.SegmentCode}">
+                <a href="javascript:void(0);" data-code="{!attribute.SegmentCode}">{!attribute.Name}</a>
+            </li>
+        </aura:iteration>
+        <ui:inputText aura:id="type-ahead-input" placeholder="Add new attribute" updateOn="keyup" keyup="{!c.filterUnappliedAttributes}"/>
+
+        <div aura:id="loading-spinner" class="slds-spinner_container slds-hidden">
+            <div class="slds-spinner--brand slds-spinner slds-spinner--small" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </ul>
+    
+</aura:component>

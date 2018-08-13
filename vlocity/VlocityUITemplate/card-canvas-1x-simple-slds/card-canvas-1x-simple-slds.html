@@ -1,0 +1,6 @@
+<div class="via-slds">
+    <div class="slds-grid slds-m-bottom_small slds-wrap cards-container">
+        <div vloc-card ng-repeat="card in cards | orderBy:data.dataSource.order" ctrl="{{ctrl}}" ng-model="card" data="card" records="records" index="{{$index}}" session-id="{{sessionId}}"
+            class="slds-m-top_small slds-m-left_small slds-m-right_small slds-size_1-of-1" use-existing-element-type></div>
+    </div>
+</div>

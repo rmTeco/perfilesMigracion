@@ -1,0 +1,22 @@
+{
+    "Cards": [
+        "Sample-Interaction-Flyout-Grid-Items"
+    ],
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "parent.obj.PolicyId",
+                "val": "a2G41000000gdrm"
+            }
+        ],
+        "type": "Query",
+        "value": {
+            "query": "SELECT \nRecordType.DeveloperName,\nId,\nName,\n%vlocity_namespace%__Address1__c,\n%vlocity_namespace%__Age__c,\n%vlocity_namespace%__City__c,\n%vlocity_namespace%__ConstructionType__c,\n%vlocity_namespace%__Description__c,\n%vlocity_namespace%__DeveloperName__c,\n%vlocity_namespace%__Gender__c,\n%vlocity_namespace%__InsuredParty__c,\n%vlocity_namespace%__MaritalStatus__c,\n%vlocity_namespace%__MarketValue__c,\n%vlocity_namespace%__ModelYear__c,\n%vlocity_namespace%__Model__c,\n%vlocity_namespace%__Motors__c,\n%vlocity_namespace%__PolicyId__c,\n%vlocity_namespace%__PostalCode__c,\n%vlocity_namespace%__State__c,\n%vlocity_namespace%__Style__c,\n%vlocity_namespace%__Type__c,\n%vlocity_namespace%__Use__c,\n%vlocity_namespace%__YearBuilt__c \nFROM %vlocity_namespace%__PolicyLineItem__c WHERE %vlocity_namespace%__PolicyId__c = '{{parent.obj.PolicyId}}'"
+        }
+    },
+    "templates": {
+        "0": {
+            "templateUrl": "flyout-grid-noActions-slds"
+        }
+    }
+}

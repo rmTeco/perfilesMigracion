@@ -1,0 +1,82 @@
+<script type="text/ng-template" id="contacts.tpl" ng-show="{{!names.lenght > 0}}">
+<div class="panel panel-default">
+  <table class="table slds-table slds-table--bordered
+    slds-table--cell-buffer" style="table-layout: auto;">
+   <thead>
+    <tr>
+     <!-- Header for checkbox is blank -->
+     <th class="slds-cell-shrink">Baja</th>
+     <th>Nombre</th>
+     <th>Puntos</th>
+    </tr>
+   </thead>
+   <tbody class='ins'>
+    <tr ng-if="p" ng-repeat='p in control.vlcSI[control.itemsKey]'
+      ng-class="{ 'vlc-selectableitem-selected' : p.vlcSelected }" >
+     <th class="slds-cell-shrink">
+      <label class="slds-checkbox">
+       <input ng-disabled="{{!p.ClubMember}}"  type="checkbox" ng-model='p.vlcSelected'
+         ng-change='onSelectItem(control, p, $index, this)'/>
+       <span class="slds-checkbox--faux"></span>
+      </label>
+     </th>
+     <td>{{p.Name}}</td>
+     <td>{{p.PersonalClubPoints}}</td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <p>&nbsp;</p>
+</script>
+
+<script type="text/ng-template" id="business.tpl" ng-show="{{!names.lenght > 0}}">
+ <div class="panel panel-default">
+  <table class="table slds-table slds-table--bordered
+    slds-table--cell-buffer" style="table-layout: auto;">
+   <thead>
+    <tr>
+     <!-- Header for checkbox is blank -->
+     <th class="slds-cell-shrink">Baja</th>
+     <th>Nombre</th>
+     <th>Puntos</th>
+    </tr>
+   </thead>
+   <tbody class='ins'>
+    <tr ng-if="p" ng-repeat='p in control.vlcSI[control.itemsKey]'
+      ng-class="{ 'vlc-selectableitem-selected' : p.vlcSelected }" >
+     <th class="slds-cell-shrink">
+      <label class="slds-checkbox">
+       <input ng-disabled="{{!p.ClubMember}}"  type="checkbox" ng-model='p.vlcSelected'
+         ng-change='onSelectItem(control, p, $index, this)'/>
+       <span class="slds-checkbox--faux"></span>
+      </label>
+     </th>
+     <td>{{p.Name}}</td>
+     <td>{{p.PersonalClubPoints}}</td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <p>&nbsp;</p>
+ </script>
+
+<script type="text/ng-template" id="contactsResult.tpl">
+ <div ng-hide="control.vlcSI[control.itemsKey] == null" class="panel panel-default">
+  <table class="table slds-table slds-table--bordered
+    slds-table--cell-buffer" style="table-layout: auto;">
+   <thead>
+    <tr>
+     <th class="slds-cell-shrink" >Nombre</th>
+     <th>DNI</th>
+    </tr>
+   </thead>
+   <tbody class='ins'>
+    <tr ng-repeat='p in control.vlcSI[control.itemsKey]' ng-class="{ 'vlc-selectableitem-selected' : p.vlcSelected }" >
+     <td>{{p.Name}}</td>
+     <td>{{p.DocumentNumber}}</td>
+    </tr>
+   </tbody>
+  </table>
+ </div>
+ <p>&nbsp;</p>
+</script>

@@ -1,0 +1,70 @@
+/*** VARIABLES ***/
+
+@import "variables";
+
+/*** MIXINS ***/
+
+@import "mixin";
+.via-slds .via-slds-large-card_active {
+    .via-slds-title_bold {
+        font-weight: bold;
+    }
+    .via-slds-card__header {
+        background-clip: padding-box;
+        background-color: #f4f6f9;
+        border-bottom: 2px solid #d8dde6;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+    .via-slds-text-color_light {
+        text-transform: none;
+        color: #9999a7;
+        font-size: 14px;
+        font-weight: 300;
+    }
+    .via-action-icon:before {
+        font-size: 200%;
+    }
+    .via-action-icon:before {
+        font-size: 200%;
+    }
+    .via-action-link:hover,
+    .via-action-link:focus,
+    .via-action-link:active {
+        color: #0070d2;
+        text-decoration: underline;
+    }
+    svg.via-action-icon {
+        margin: 0 8px;
+    }
+    .via-field {
+        position: relative;
+        .track-view {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 200ms ease-in;
+            svg {
+                fill: #A7B8D1;
+                transition: fill 100ms ease-in;
+            }
+            &:hover {
+                svg {
+                    fill: #54698d;
+                }
+            }
+            &:active {
+                svg {
+                    fill: #4BC076;
+                }
+            }
+        }
+        &:hover {
+            .track-view {
+                opacity: 1;
+            }
+        }
+    }
+}

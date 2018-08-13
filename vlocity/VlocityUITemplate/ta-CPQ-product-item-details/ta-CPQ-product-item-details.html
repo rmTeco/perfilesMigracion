@@ -1,0 +1,98 @@
+<div class="cpq-product-item-details slds-scrollable--y">
+    <!--form is used for input validations-->
+    <form>
+        <div class="Table">
+          <div class="Table-row Table-header">
+            <div class="Table-row-item u-Flex-product"></div>
+            <div class="Table-row-item u-Flex-qty cpq-product-item-attr-label">
+                {{::obj['quantity']['label'] | uppercase}}
+            </div>
+            <div class="Table-row-item u-Flex-recur cpq-product-item-attr-label">
+                {{::obj[$root.nsPrefix + 'RecurringPrice__c']['label'] | uppercase}}
+            </div>
+            <div class="Table-row-item u-Flex-onetime cpq-product-item-attr-label">
+                {{::obj['UnitPrice']['label'] | uppercase}}
+            </div>
+          </div>
+          
+          <div class="Table-row">
+            <div class="Table-row-item u-Flex-product slds-tile__title slds-truncate cpq-cart-item-title">
+                <div class="slds-media slds-tile">
+                    <div class="slds-media__figure" ng-repeat="defaultImage in obj.Attachments" ng-if="::defaultImage.defaultAttachment">
+                        <span class="slds-avatar slds-avatar--large">
+                            <img src="{{::defaultImage.url}}" alt="{{::defaultImage.title}}"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <div class="slds-tile__title slds-text-heading--medium">
+                            {{::obj.Name.value}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="Table-row-item u-Flex-qty">
+              <div class="slds-form-element">
+                   <div class="slds-form-element__control cpq-product-details-qty">
+                       <input type='number' min="0" class="slds-input cpq-product-details-qty-input" ng-model='obj.quantity.value'/>
+                   </div>
+               </div>
+            </div> -->
+            <div class="Table-row-item u-Flex-recur cpq-cart-item-attr-value">
+                {{::obj[$root.nsPrefix+'RecurringPrice__c']['value'] | currency}}
+            </div>
+            <div class="Table-row-item u-Flex-onetime cpq-cart-item-attr-value">
+                {{::obj['UnitPrice']['value'] | currency}}
+            </div>
+          </div>
+        </div>
+        <!-- Description -->
+        <div class="slds-tile__detail slds-text-body--small">
+            {{::obj.Product2.Description}}
+        </div>
+        
+        <div class="cpq-product-item-details-gallery" ng-if="::obj.Attachments.length >0">
+            <div class="slds-text-heading--small">Gallery ({{::obj.Attachments.length}})</div>
+            <!-- scroll class for ionic smooth scroll -->
+            <ul class="scroll">
+                <!--Supporting only images as of now-->
+                <li ng-repeat="media in obj.Attachments">
+                    <img src="{{::media.url}}" alt="{{::media.title}}" ng-if="::media.contentType === 'Image'"/>
+    
+                    <figure ng-if="::media.contentType === 'File'">
+                        <a href="{{::media.url}}" target="_blank">
+                            <span class="slds-icon_container">
+                                <slds-svg-icon sprite="'doctype'" size="'large'" icon="'unknown'" extra-classes="'icon-unknown icon__svg--no-background'"></slds-svg-icon>
+                            </span>
+                            <figcaption class="slds-p-top--x-small slds-text-body--small">{{::media.title}}</figcaption>
+                        </a>
+                    </figure>
+    
+                    <figure ng-if="::media.contentType === 'Video'">
+                        <a href="{{::media.url}}" target="_blank">
+                            <span class="slds-icon_container">
+                                <slds-svg-icon sprite="'doctype'" size="'large'" icon="'video'" extra-classes="'icon-unknown icon__svg--no-background'"></slds-svg-icon>
+                            </span>
+                            <figcaption class="slds-p-top--x-small slds-text-body--small">{{::media.title}}</figcaption>
+                        </a>
+                    </figure>
+                </li>
+            </ul>
+        </div>
+     
+        <div class="cpq-product-item-details-features">
+            <div class="slds-text-heading--small">Details</div>
+            <table class="slds-table slds-m-top--medium slds-table--bordered">
+                <tr ng-repeat="field in data.fields" ng-if="key != 'attributes'">
+                    <td class="slds-cell-shrink">
+                        <div class="slds-text-heading--label">{{::field.label}}</div>
+                    </td>
+                    <td>
+                        <div class="slds-text-body--regular">
+                            {{::obj | getter: field | picker: (field.name == "['UnitPrice']['value']") ? 'currency' : field.type}}
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</div>

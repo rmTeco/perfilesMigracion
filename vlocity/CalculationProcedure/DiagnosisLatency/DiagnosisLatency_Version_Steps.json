@@ -1,0 +1,94 @@
+[
+    {
+        "%vlocity_namespace%__CalculationMatrixId__c": {
+            "Name": "DiagnosisLatencyMatrixByRegion",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__CalculationMatrix__c/DiagnosisLatencyMatrixByRegion",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationMatrix__c"
+        },
+        "%vlocity_namespace%__CalculationProcedureId__c": {
+            "Name": "DiagnosisLatency",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__CalculationProcedure__c/DiagnosisLatency",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedure__c"
+        },
+        "%vlocity_namespace%__CalculationProcedureVersionId__c": {
+            "%vlocity_namespace%__CalculationProcedureId__r.Name": "DiagnosisLatency",
+            "%vlocity_namespace%__VersionNumber__c": 1,
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__CalculationProcedureVersion__c/1/%vlocity_namespace%__CalculationProcedure__c/DiagnosisLatency",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedureVersion__c"
+        },
+        "%vlocity_namespace%__ConditionalInputDisplayData__c": "[]",
+        "%vlocity_namespace%__Function__c": "Matrix Lookup",
+        "%vlocity_namespace%__GlobalKey__c": "81c91cde-6e9d-e1bb-1442-331e60eaea24",
+        "%vlocity_namespace%__Input__c": "[{\"name\":\"Provincia\",\"listValues\":null,\"label\":null,\"dataType\":\"Text\",\"columnKey\":\"972dab\"}]",
+        "%vlocity_namespace%__IsConditionalStep__c": false,
+        "%vlocity_namespace%__IsIncludedInResult__c": false,
+        "%vlocity_namespace%__OutputJSON__c": "[{\"name\":\"Objetivo\",\"listValues\":null,\"label\":null,\"dataType\":\"Number\",\"columnKey\":\"7bafe9\"}]",
+        "%vlocity_namespace%__OutputMappingJSON__c": "{\"Objetivo\":\"DiagnosisLatencyMatrixByRegion__Objetivo\"}",
+        "%vlocity_namespace%__Sequence__c": 1,
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedureStep__c"
+    },
+    {
+        "%vlocity_namespace%__CalculationFormulaLong__c": "DiagnosisLatencyMatrixByRegion__Objetivo - Latency",
+        "%vlocity_namespace%__CalculationFormulaTags__c": "[{\"text\":\"Objetivo ( DiagnosisLatencyMatrixByRegion )\",\"alias\":\"DiagnosisLatencyMatrixByRegion__Objetivo\",\"userDefined\":false,\"dataType\":\"Number\"},{\"text\":\"-\",\"alias\":\"-\"},{\"text\":\"Latency\",\"alias\":\"Latency\",\"userDefined\":true,\"dataType\":\"Number\"}]",
+        "%vlocity_namespace%__CalculationProcedureId__c": {
+            "Name": "DiagnosisLatency",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__CalculationProcedure__c/DiagnosisLatency",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedure__c"
+        },
+        "%vlocity_namespace%__CalculationProcedureVersionId__c": {
+            "%vlocity_namespace%__CalculationProcedureId__r.Name": "DiagnosisLatency",
+            "%vlocity_namespace%__VersionNumber__c": 1,
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__CalculationProcedureVersion__c/1/%vlocity_namespace%__CalculationProcedure__c/DiagnosisLatency",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedureVersion__c"
+        },
+        "%vlocity_namespace%__ConditionalInputDisplayData__c": "[]",
+        "%vlocity_namespace%__Function__c": "Calculation",
+        "%vlocity_namespace%__GlobalKey__c": "66773023-8722-3e9f-8307-928b15e3a7f3",
+        "%vlocity_namespace%__Input__c": "[{\"name\":\"Latency\",\"dataType\":\"Number\"}]",
+        "%vlocity_namespace%__IsConditionalStep__c": false,
+        "%vlocity_namespace%__IsIncludedInResult__c": true,
+        "%vlocity_namespace%__OutputJSON__c": "{\"name\":\"Calculo\",\"dataType\":\"Number\",\"alias\":\"Calculo\"}",
+        "%vlocity_namespace%__OutputMappingJSON__c": "{\"Calculo\":\"Calculo\"}",
+        "%vlocity_namespace%__Sequence__c": 2,
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedureStep__c"
+    },
+    {
+        "%vlocity_namespace%__CalculationMatrixId__c": {
+            "Name": "DiagnosisLatencyMatrixByRegion2",
+            "VlocityDataPackType": "VlocityLookupMatchingKeyObject",
+            "VlocityLookupRecordSourceKey": "%vlocity_namespace%__CalculationMatrix__c/DiagnosisLatencyMatrixByRegion2",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationMatrix__c"
+        },
+        "%vlocity_namespace%__CalculationProcedureId__c": {
+            "Name": "DiagnosisLatency",
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__CalculationProcedure__c/DiagnosisLatency",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedure__c"
+        },
+        "%vlocity_namespace%__CalculationProcedureVersionId__c": {
+            "%vlocity_namespace%__CalculationProcedureId__r.Name": "DiagnosisLatency",
+            "%vlocity_namespace%__VersionNumber__c": 1,
+            "VlocityDataPackType": "VlocityMatchingKeyObject",
+            "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__CalculationProcedureVersion__c/1/%vlocity_namespace%__CalculationProcedure__c/DiagnosisLatency",
+            "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedureVersion__c"
+        },
+        "%vlocity_namespace%__ConditionalInputDisplayData__c": "[]",
+        "%vlocity_namespace%__Function__c": "Matrix Lookup",
+        "%vlocity_namespace%__GlobalKey__c": "d0c7993b-db64-dfc3-f95d-8a094946bf56",
+        "%vlocity_namespace%__Input__c": "[{\"name\":\"Calculo\",\"listValues\":\"-0.999999999999999,0\",\"label\":null,\"dataType\":\"Number Range\",\"columnKey\":\"a7a3da\"}]",
+        "%vlocity_namespace%__IsConditionalStep__c": false,
+        "%vlocity_namespace%__IsIncludedInResult__c": true,
+        "%vlocity_namespace%__OutputJSON__c": "[{\"name\":\"Respuesta\",\"listValues\":null,\"label\":null,\"dataType\":\"Text\",\"columnKey\":\"2054d8\"}]",
+        "%vlocity_namespace%__OutputMappingJSON__c": "{\"Respuesta\":\"DiagnosisLatencyMatrixByRegion2__Respuesta\"}",
+        "%vlocity_namespace%__Sequence__c": 3,
+        "VlocityDataPackType": "SObject",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__CalculationProcedureStep__c"
+    }
+]

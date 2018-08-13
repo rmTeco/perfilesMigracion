@@ -1,0 +1,355 @@
+{
+    "dataSource": {
+        "type": null,
+        "value": {
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__SubType__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Internet"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Product Id",
+                    "name": "['Product2Id']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Product Code",
+                    "name": "['ProductCode']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Unit Price",
+                    "name": "['UnitPrice']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Active",
+                    "name": "['IsActive']['value']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj.Product2.%vlocity_namespace%__SubType__c == 'Internet'",
+            "name": "Internet Product Details",
+            "templateUrl": "ta-CPQ-product-item-InternetDetails"
+        },
+        {
+            "blankStateCheck": false,
+            "collapse": false,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__Type__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Dispositivo"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Product Id",
+                    "name": "['Product2Id']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Product Code",
+                    "name": "['ProductCode']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Unit Price",
+                    "name": "['UnitPrice']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Active",
+                    "name": "['IsActive']['value']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj.Product2.%vlocity_namespace%__Type__c == 'Dispositivo'",
+            "name": "Device Product Details",
+            "templateUrl": "ta-CPQ-product-item-DeviceDetails"
+        },
+        {
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Product2.Family",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Movil"
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__Type__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Pack"
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__Type__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Numeros Amigos"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Product2Id']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Product Id",
+                    "name": "['Product2Id']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['ProductCode']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Product Code",
+                    "name": "['ProductCode']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['UnitPrice']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Unit Price",
+                    "name": "['UnitPrice']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['IsActive']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Active",
+                    "name": "['IsActive']['value']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj.Product2.Family == 'Movil' && ($scope.obj.Product2.%vlocity_namespace%__Type__c == 'Pack' || $scope.obj.Product2.%vlocity_namespace%__Type__c == 'Numeros Amigos')",
+            "name": "Pack Product Details",
+            "templateUrl": "ta-CPQ-product-item-PackDetails"
+        },
+        {
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    },
+                    {
+                        "field": "Product2.Family",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Movil"
+                    },
+                    {
+                        "field": "Product2.%vlocity_namespace%__Type__c",
+                        "logicalOperator": "&&",
+                        "operator": "==",
+                        "type": "custom",
+                        "value": "Plan Prepago"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "['Product2Id']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Product Id",
+                    "name": "['Product2Id']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['ProductCode']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Product Code",
+                    "name": "['ProductCode']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['UnitPrice']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Unit Price",
+                    "name": "['UnitPrice']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "['IsActive']['value']",
+                    "editing": false,
+                    "group": "Custom Properties",
+                    "label": "Active",
+                    "name": "['IsActive']['value']",
+                    "type": "string"
+                }
+            ],
+            "filter": "$scope.data.status === 'active' && $scope.obj.Product2.Family == 'Movil' && $scope.obj.Product2.%vlocity_namespace%__Type__c == 'Plan Prepago'",
+            "name": "Plan Product Details",
+            "templateUrl": "ta-CPQ-product-item-PlanDetails"
+        },
+        {
+            "blankStateCheck": false,
+            "collapse": true,
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Product Id",
+                    "name": "['Product2Id']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Product Code",
+                    "name": "['ProductCode']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Unit Price",
+                    "name": "['UnitPrice']['value']",
+                    "type": "string"
+                },
+                {
+                    "collapse": true,
+                    "displayLabel": "<<Custom Field>>",
+                    "editing": false,
+                    "fieldType": "custom",
+                    "label": "Active",
+                    "name": "['IsActive']['value']",
+                    "type": "string"
+                }
+            ],
+            "name": "Default Product Details",
+            "templateUrl": "ta-CPQ-product-item-details"
+        }
+    ],
+    "title": "Product Details"
+}

@@ -1,0 +1,113 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 1,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "ta-care-RefundConfiguration",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Care/RefundConfiguration/English",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 5,
+    "%vlocity_namespace%__ParentElementId__c": {
+        "%vlocity_namespace%__OmniScriptId__c": "%vlocity_namespace%__OmniScript__c/Care/RefundConfiguration/English",
+        "Name": "stepRefundData",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Care/RefundConfiguration/English/stepRefundData",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c"
+    },
+    "%vlocity_namespace%__ParentElementName__c": "stepRefundData",
+    "%vlocity_namespace%__ParentElementType__c": "Step",
+    "%vlocity_namespace%__PropertySet__c": {
+        "HTMLTemplateId": "",
+        "accessibleInFutureSteps": false,
+        "conditionType": "Hide if False",
+        "controlWidth": 5,
+        "controllingField": {
+            "element": "",
+            "source": "",
+            "type": ""
+        },
+        "disOnTplt": false,
+        "help": false,
+        "helpText": "",
+        "hide": false,
+        "inputWidth": 12,
+        "label": "Motivo",
+        "optionSource": {
+            "source": "Case.Refunds_reason__c",
+            "type": "SObject"
+        },
+        "options": [
+            {
+                "name": "Débito por error de sistema",
+                "value": "Débito por error del sistema"
+            },
+            {
+                "name": "Saldo a favor en cuenta por Migración a Prepago",
+                "value": "Saldo a favor en cuenta por Migración a Prepago"
+            },
+            {
+                "name": "Pago duplicado",
+                "value": "Pago duplicado"
+            },
+            {
+                "name": "Reclamos de facturación favorables",
+                "value": "Reclamos de facturación favorables"
+            },
+            {
+                "name": "Mala gestión / anulación de ventas",
+                "value": "Mala gestión / anulación de ventas"
+            },
+            {
+                "name": "Recategorización impositiva",
+                "value": "Recategorización impositiva"
+            },
+            {
+                "name": "Equipo mal facturado",
+                "value": "Equipo mal facturado"
+            },
+            {
+                "name": "Otros",
+                "value": "Otros"
+            }
+        ],
+        "readOnly": false,
+        "repeat": false,
+        "repeatClone": false,
+        "required": true,
+        "show": {
+            "group": {
+                "operator": "OR",
+                "rules": [
+                    {
+                        "condition": "=",
+                        "data": "tdd",
+                        "field": "radioSelectPaymentMethod"
+                    },
+                    {
+                        "condition": "=",
+                        "data": "tdc",
+                        "field": "radioSelectPaymentMethod"
+                    },
+                    {
+                        "condition": "=",
+                        "data": "check",
+                        "field": "radioSelectPaymentMethod"
+                    },
+                    {
+                        "condition": "=",
+                        "data": "cash",
+                        "field": "radioSelectPaymentMethod"
+                    }
+                ]
+            }
+        },
+        "showInputWidth": false
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": true,
+    "%vlocity_namespace%__Type__c": "Select",
+    "Name": "selectReason",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Care/RefundConfiguration/English/selectReason"
+}

@@ -1,0 +1,6 @@
+<!--c:sub-->
+<aura:component extends="vlocity_cmt:vlocityBaseComponent" access="GLOBAL">
+    <aura:set attribute="Id" value="CensusMembers"/>
+    <aura:set attribute="src" value="{!'/apex/' + v.nsPrefix + 'CensusMemberInput?id=' + v.recordId}"/>
+    <aura:set attribute="applicableTypes" value="['GroupCensus']"/>
+</aura:component>

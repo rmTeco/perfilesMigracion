@@ -1,0 +1,9 @@
+<div class="slds-grid prepaid-flyout-device-info">
+    <div class="slds-col" ng-repeat="field in data.fields">
+        <span>{{field.label}}</span>
+        <h1 ng-if="$first">{{obj | getter: field | picker: field.type}}</h1>
+        <div ng-if="!$first">
+            {{obj | getter: field | picker: field.type}}
+        </div>
+    </div>
+</div>

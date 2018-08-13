@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Descripcion__c</fullName>
+        <externalId>false</externalId>
+        <label>Descripcion</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Frecuencia_permitida__c</fullName>
+        <externalId>false</externalId>
+        <label>Frecuencia permitida</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Sin restriccion</fullName>
+                    <default>false</default>
+                    <label>Sin restriccion</label>
+                </value>
+                <value>
+                    <fullName>Diaria</fullName>
+                    <default>false</default>
+                    <label>Diaria</label>
+                </value>
+                <value>
+                    <fullName>Semanal</fullName>
+                    <default>false</default>
+                    <label>Semanal</label>
+                </value>
+                <value>
+                    <fullName>Mensual</fullName>
+                    <default>false</default>
+                    <label>Mensual</label>
+                </value>
+                <value>
+                    <fullName>Anual</fullName>
+                    <default>false</default>
+                    <label>Anual</label>
+                </value>
+                <value>
+                    <fullName>Unica Vez</fullName>
+                    <default>false</default>
+                    <label>Unica Vez</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Json_attribute__c</fullName>
+        <externalId>false</externalId>
+        <label>Json attribute</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tipo_de_evento__c</fullName>
+        <externalId>false</externalId>
+        <label>Tipo de evento</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Bienvenida</fullName>
+                    <default>false</default>
+                    <label>Bienvenida</label>
+                </value>
+                <value>
+                    <fullName>Confiabilización</fullName>
+                    <default>false</default>
+                    <label>Confiabilización</label>
+                </value>
+                <value>
+                    <fullName>Premio Recarga 3M</fullName>
+                    <default>false</default>
+                    <label>Premio Recarga 3M</label>
+                </value>
+                <value>
+                    <fullName>Castigo Recarga</fullName>
+                    <default>false</default>
+                    <label>Castigo Recarga</label>
+                </value>
+                <value>
+                    <fullName>Recarga por Monto</fullName>
+                    <default>false</default>
+                    <label>Recarga por Monto</label>
+                </value>
+                <value>
+                    <fullName>Upselling</fullName>
+                    <default>false</default>
+                    <label>Upselling</label>
+                </value>
+                <value>
+                    <fullName>Cater</fullName>
+                    <default>false</default>
+                    <label>Cater</label>
+                </value>
+                <value>
+                    <fullName>Antigüedad</fullName>
+                    <default>false</default>
+                    <label>Antigüedad</label>
+                </value>
+                <value>
+                    <fullName>Alta a FOL</fullName>
+                    <default>false</default>
+                    <label>Alta a FOL</label>
+                </value>
+                <value>
+                    <fullName>Continuidad FOL</fullName>
+                    <default>false</default>
+                    <label>Continuidad FOL</label>
+                </value>
+                <value>
+                    <fullName>Alta a Débito Automatico</fullName>
+                    <default>false</default>
+                    <label>Alta a Débito Automatico</label>
+                </value>
+                <value>
+                    <fullName>Descarga APP</fullName>
+                    <default>false</default>
+                    <label>Descarga APP</label>
+                </value>
+                <value>
+                    <fullName>Alta Nuevo Servicio Core</fullName>
+                    <default>false</default>
+                    <label>Alta Nuevo Servicio Core</label>
+                </value>
+                <value>
+                    <fullName>Referidos</fullName>
+                    <default>false</default>
+                    <label>Referidos</label>
+                </value>
+                <value>
+                    <fullName>Convergente Fiber</fullName>
+                    <default>false</default>
+                    <label>Convergente Fiber</label>
+                </value>
+                <value>
+                    <fullName>Convergente Arnet</fullName>
+                    <default>false</default>
+                    <label>Convergente Arnet</label>
+                </value>
+                <value>
+                    <fullName>Baja</fullName>
+                    <default>false</default>
+                    <label>Baja</label>
+                </value>
+                <value>
+                    <fullName>Transferencia</fullName>
+                    <default>false</default>
+                    <label>Transferencia</label>
+                </value>
+                <value>
+                    <fullName>Canje</fullName>
+                    <default>false</default>
+                    <label>Canje</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>GP Evento descriptor</label>
+    <nameField>
+        <label>Evento Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>GP Evento descriptores</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

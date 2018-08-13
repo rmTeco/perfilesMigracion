@@ -1,0 +1,57 @@
+{
+    "dataSource": {
+        "contextVariables": [
+            {
+                "name": "params.nroComprobante",
+                "val": "123456"
+            },
+            {
+                "name": "params.nroCuenta",
+                "val": "0000017607"
+            }
+        ],
+        "type": "ApexRemote",
+        "value": {
+            "inputMap": {
+                "database": "facturaciclica",
+                "fechaEmision": "{{params.fechaEmision}}",
+                "nroComprobante": "{{params.nroComprobante}}",
+                "nroCuenta": "{{params.nroCuenta}}",
+                "password": "DESARROLLO",
+                "usuario": "DESARROLLO"
+            },
+            "optionsMap": {
+                "vlcClass": "IFS_S073_getBill"
+            },
+            "remoteClass": "IFS_S073_getBill",
+            "remoteMethod": "getBill",
+            "remoteNSPrefix": null,
+            "resultVar": "['IPResult']['renderTransformResult']"
+        }
+    },
+    "filter": {
+    },
+    "states": [
+        {
+            "conditions": {
+                "group": [
+                    {
+                        "field": "$scope.data.status",
+                        "operator": "===",
+                        "type": "system",
+                        "value": "'active'"
+                    }
+                ]
+            },
+            "definedActions": {
+                "actions": [
+                ]
+            },
+            "fields": [
+            ],
+            "name": "Show Bill",
+            "templateUrl": "ta-care-bill-show"
+        }
+    ],
+    "title": "ta-care-bill-detail"
+}

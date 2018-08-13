@@ -1,0 +1,66 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="ta_techCare_technical_service_controller">
+	{!valor}
+    <head>
+    	<apex:includeScript value="/support/console/34.0/integration.js"/>
+        <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+        <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script> -->
+        <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+        <script src="{!$Resource.AngularMomentLocale}"></script>
+        <apex:slds />
+	</head>
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="tatechCareMuleto">
+    	<vlocity_cmt:BusinessProcessComponent strOmniScriptType="TechCare"
+            strOmniScriptSubType="Technical Service - Muleto"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning" />
+
+		<script type="text/javascript">
+        	var modules = ['vlocity-business-process'];
+            var myModule = angular.module('tatechCareMuleto', modules);
+
+            myModule
+            	.controller('TSModuleCtrl', TSModuleCtrl);
+
+            function TSModuleCtrl() {
+            	var mmc = this;
+                mmc.getURL = getURL;
+
+                function getURL(bpTreeJson) {
+                    var imei = bpTreeJson.PDF.Muleto.Imei
+                    if (!imei) {
+                        var imei = '-'; 
+                    }
+                    var NMU = bpTreeJson.PDF.Muleto.NMU;
+                    if (!NMU) {
+                        var NMU = '-';
+                    }
+                    var desc = bpTreeJson.PDF.Muleto.Description;
+                    if (!desc) {
+                    	var desc = '-';
+                    }
+                    var brand = bpTreeJson.PDF.Muleto.Brand;
+                    if (!brand) {
+                    	var brand = '-';
+                    }
+                    var accs = bpTreeJson.PDF.Accessories;
+                    if (!accs) {
+                    	var accs = '-';
+                    }
+
+                    Visualforce.remoting.Manager.invokeAction(
+                        "ta_techCare_technical_service_controller.getRemitoPDF",
+                        imei, NMU, desc, brand, accs,
+                        function(result, event) {
+                    	    window.open(result,'_blank');
+                        },
+                        {escape: false}
+                    );
+               	}
+            }
+        </script>
+    </div>
+	<vlocity_cmt:VFActionFunction />
+</apex:page>

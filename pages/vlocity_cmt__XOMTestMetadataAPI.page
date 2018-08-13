@@ -1,0 +1,303 @@
+<apex:page showHeader="true" sidebar="true" controller="vlocity_cmt.XOMAdminPageController">
+    <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__JsForce)}" />
+    <apex:includeScript value="{!URLFOR($Resource.vlocity_cmt__JSZip)}" />
+    <script>
+        var conn = new jsforce.Connection({ accessToken: '{!$Api.Session_Id}' });
+
+         var packageRecordTypesAssignments = [
+                {
+                    recordType: 'OrchestrationItemDefinition__c.Callout',
+                    default: false,
+                    visible: true
+                },
+                {
+                    recordType: 'OrchestrationItemDefinition__c.AutoTask',
+                    default: false,
+                    visible: true
+                },
+                {
+                    recordType: 'OrchestrationItemDefinition__c.Milestone',
+                    default: true,
+                    visible: true
+                },
+                {
+                    recordType: 'OrchestrationItemDefinition__c.PushEvent',
+                    default: false,
+                    visible: true
+                }
+            ];
+
+        var packageLayoutAssignments = {
+            'XOM Base': [
+                {
+                    layout: "Order-Order %28Vlocity XOM%29 Layout"
+                },
+                {
+                    layout: "InventoryItem__c-Inventory Item %28Vlocity XOM%29 Layout"
+                }
+            ],
+            'XOM Admin': [
+                {
+                    layout: "Order-Order %28Vlocity XOM%29 Layout"
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Orchestration Item Definition %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.Milestone'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Auto Task %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.AutoTask'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Callout %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.Callout'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Manual Task %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.ManualTask'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Push Event %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.PushEvent'
+                },
+                {
+                    layout: "Product2-Product %28Vlocity XOM%29 Layout"
+                },
+                {
+                    layout: "InventoryItem__c-Inventory Item %28Vlocity XOM%29 Layout"
+                }
+            ],
+            'Thor Admin': {
+                'Order': {
+                    layout: "Order-Order %28Vlocity Thor%29 Layout"
+                },
+                'OrchestrationItemDefinition__c_OrchestrationItemDefinition__c.Milestone':{
+                    layout: "OrchestrationItemDefinition__c-Orchestration Item Definition %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.Milestone'
+                }
+            },
+            'Thor Base':  [
+                {
+                    layout: "Order-Order %28Vlocity Thor%29 Layout"
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Orchestration Item Definition %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.Milestone'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Auto Task %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.AutoTask'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Callout %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.Callout'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Manual Task %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.ManualTask'
+                },
+                {
+                    layout: "OrchestrationItemDefinition__c-Push Event %28Vlocity XOM%29 Layout V2",
+                    recordType: 'OrchestrationItemDefinition__c.PushEvent'
+                },
+                {
+                    layout: "Product2-Product %28Vlocity XOM%29 Layout"
+                },
+                {
+                    layout: "InventoryItem__c-Inventory Item %28Vlocity XOM%29 Layout"
+                },
+                {
+                    layout: "ItemImplementation__cItem Implementation %28Vlocity XOM%29 Layout"
+                }
+            ]
+        }
+
+        //var fs = new Filer.FileSystem({ provider: Filer.FileSystem.providers.Memory() });
+
+        //console.log ('Fs', fs);
+        function checkRetrievalStatus(id, cont)
+        {
+
+            conn.metadata.checkRetrieveStatus(id, function(err, status)
+            {
+                console.log('Status', status);
+                if (status.done == "false")
+                {
+                    checkRetrievalStatus(id, cont);
+                }
+                else
+                {
+                    cont(status);
+                }
+
+            })
+        }
+
+        conn.metadata.retrieve({ packageNames: [], singlePackage: true, //specificFiles: ['profiles/Admin.profile'],
+                                unpackaged:
+                                    {   version: '36.0',
+                                        types:
+                                        [
+                                            {members: ['Admin'], name: 'Profile'},
+                                            {members: ['*'], name: 'CustomObject'},
+                                            {members: ['*'], name: 'Layout'}
+                                        ]}},
+        function(err, data)
+        {
+            console.log('Err', err);
+            console.log('Data', data);
+
+            checkRetrievalStatus(data.id, function(status)
+            {
+                console.log('End status: ', status);
+                var zip = new JSZip(status.zipFile, {base64: true});
+
+                var xml = zip.file('profiles/Admin.profile').asText();
+                console.log('Content: ', xml);
+
+                var xmlDoc = new DOMParser().parseFromString(xml,"text/xml");
+
+                console.log(xmlDoc);
+
+                var rootNode = xmlDoc.getElementsByTagName('Profile')[0];
+
+                var recordTypes = rootNode.getElementsByTagName('recordTypeVisibilities');
+
+                console.log(recordTypes);
+
+                var layoutAssignments = rootNode.getElementsByTagName('layoutAssignments');
+
+                console.log(layoutAssignments);
+
+                var standardLayoutAssignment = packageLayoutAssignments['Thor Admin'];
+
+                for (var i = 0; i< layoutAssignments.length; i++)
+                {
+                    var layoutAssignment = layoutAssignments[i];
+
+                    var layout, recordType;
+
+                    var layoutNode = layoutAssignment.getElementsByTagName('layout')[0];
+
+                    layout = layoutNode.childNodes[0].nodeValue.split('-')[0];
+
+                    var recordTypeNodes = layoutAssignment.getElementsByTagName('recordType');
+
+                    if (recordTypeNodes.length == 1)
+                    {
+                        recordType = recordTypeNodes[0].childNodes[0].nodeValue;
+
+                        layout += '_' + recordType;
+                    }
+
+                    console.log('Layout' , layout);
+                    console.log('Record Type' , recordType);
+
+                    if (standardLayoutAssignment[layout])
+                    {
+                        rootNode.removeChild(layoutAssignment);
+                    }
+
+                    console.log('Standard', standardLayoutAssignment[layout]);
+
+                }
+
+                // Now lets setup layoutAssignments
+                for (var assignment in standardLayoutAssignment)
+                {
+                    if (standardLayoutAssignment.hasOwnProperty(assignment))
+                    {
+
+                        var pageAssignment = standardLayoutAssignment[assignment];
+
+                        var newAssignment = xmlDoc.createElement('layoutAssignments');
+                        rootNode.insertBefore(newAssignment, layoutAssignments[0]);
+
+                        var newLayout = xmlDoc.createElement('layout');
+                        newAssignment.appendChild(newLayout);
+
+                        newLayout.appendChild(xmlDoc.createTextNode(pageAssignment['layout']));
+
+                        var recordType = pageAssignment['recordType'];
+
+                        if (recordType)
+                        {
+                            var newRecordType = xmlDoc.createElement('recordType');
+                            newAssignment.appendChild(newRecordType);
+
+                            newRecordType.appendChild(xmlDoc.createTextNode(recordType));
+                        }
+
+                    }
+                }
+
+                var s = new XMLSerializer();
+
+                var xml = s.serializeToString(xmlDoc);
+
+                console.log(xml);
+
+                zip.file('profiles/Admin.profile', xml);
+
+                zip.remove('objects');
+                zip.remove('layouts');
+
+                console.log ('Zip', zip);
+
+                var base64upload = zip.generate();
+
+                //console.log('Base64 ', base64upload);
+
+               // conn.metadata.pollTimeout = 30000;
+
+                function checkDeploy(id, cont)
+                {
+                    conn.metadata.checkDeployStatus(id, function(err, res)
+                    {
+                        if (err)
+                        {
+                            console.log('Error', err);
+                        }
+                        else
+                        {
+                            console.log('Check Deploy Res', res);
+                            if (res.done == "true")
+                            {
+                                cont(res);
+                            }
+                            else
+                            {
+                                checkDeploy(id, cont);
+                            }
+                        }
+                    });
+
+                }
+
+                conn.metadata.pollInterval = 3000;
+                conn.metadata.pollTimeout = 30000;
+
+                conn.metadata.deploy(base64upload, {singlePackage: true, allowMissingFiles: true})
+                   .complete(function(err, result) {
+                        if (err) { console.error(err); }
+                        console.log('done ? :' + result.done);
+                        console.log('success ? : ' + result.true);
+                        console.log('state : ' + result.state);
+                        console.log('component errors: ' + result.numberComponentErrors);
+                        console.log('components deployed: ' + result.numberComponentsDeployed);
+                        console.log('tests completed: ' + result.numberTestsCompleted);
+                      });
+
+            });
+
+        });
+
+        // fs.readFile("./MyPackage.zip", function(err, data) {
+        //     if (err) throw err;
+        //     JSZip.loadAsync(data).then(function (zip) {
+        //     // ...
+        //         console.log('Log', log);
+        //     });
+        //});
+  </script>
+</apex:page>

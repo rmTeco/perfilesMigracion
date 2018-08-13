@@ -1,0 +1,61 @@
+<div class="campaign-detail {{$root.rightColumn.toggleRightClass}}" ng-init="importedScope.setObj(obj, params.id)">
+    <div class="campaign-detail-header">
+        <div class="slds-icon_container slds-icon-standard-campaign column-header-icon" title="Campaign Details" ng-click="importedScope.responsiveHelper.toggleCollapseRightCol()">
+            <slds-svg-icon sprite="'standard'" icon="'campaign'" ></slds-svg-icon>
+            <span class="slds-assistive-text">Campaign Details</span>
+        </div>
+        <span class="slds-text-heading--small">Campaign Details</span>
+    </div>
+    <div class="campaign-detail-content">
+        <div class="campaign-progress slds-m-bottom--medium" ng-if="$root.membersAggInfoByCampaign">
+            <div class="slds-text-heading--label">Campaign Progress</div>
+            <div class="campaign-progress-bar slds-m-top--x-small">
+                <span class="campaign-member-status campaign-member-status-{{status.label.toLowerCase()}} campaign-member-status-{{$index}}" ng-repeat="status in $root.membersAggInfoByCampaign" ng-style="importedScope.campaignAggInfo.getStatusProgessStyle(status)" bs-tooltip="status.label" ng-init="importedScope.campaignAggInfo.campaignAggInfogetStatusProgressPlacement($index)"></span>
+            </div>
+        </div>
+        <div class="slds-form-element slds-m-bottom--medium" ng-repeat="field in data.fields | limitTo:(data.actions.length  > 0 ? 11 : 12)" ng-if="field.label.indexOf('footer') === -1 && field.label.indexOf('Owner') === -1">
+            <label class="slds-text-heading--label" ng-if="(obj | getter: field | picker: field.type) && (field.name.indexOf('EmailTemplate') === -1)">{{field.label}}</label>
+            <div class="slds-text-body--regular" ng-if="field.name.indexOf('EmailTemplate') === -1">
+            {{obj | getter: field | picker: field.type}}</div>
+            <div ng-if="field.name.indexOf('EmailTemplate') > -1">
+                <label class="slds-text-heading--label">{{field.label}}</label>
+                <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                      <select id="select-email-template" class="slds-select" ng-model="importedScope.selectedTemplate" ng-options="template for template in importedScope.emailTemplates track by template" ng-change="importedScope.saveSeletedTemplate()" ng-disabled="!importedScope.isCampaignOwner">
+                      </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <label ng-if="importedScope.attachments.length > 0" class="slds-text-heading--label">Content</label>
+        <div class="slds-form-element slds-m-bottom--small slds-box slds-theme--shade slds-box--x-small content-box" ng-repeat="attachment in importedScope.attachments" ng-click="importedScope.navigateTo(attachment.Id)">
+           <div class="slds-tile slds-media">
+              <div class="slds-media__figure">
+                <slds-svg-icon sprite="'doctype'" icon="attachment.icon" size="'small'" ></slds-svg-icon>
+              </div>
+              <div class="slds-media__body slds-m-top--xx-small">
+                <h3 class="slds-truncate" title="attachment">{{attachment.Name}}</h3>
+              </div>
+            </div>
+        </div>
+        <div class="slds-form-element slds-m-bottom--medium">
+            <div class="slds-text-align--center" ng-repeat="field in data.fields | limitTo:(data.actions.length  > 0 ? 11 : 12)" ng-if="field.label.indexOf('footer') > -1">
+                <span ng-if="field.name.indexOf('CreatedDate') > -1" class="slds-text-heading--label-normal">
+                 Created On {{obj | getter: field | picker: field.type}}
+                </span>
+                <span ng-if="field.name.indexOf('CreatedBy') > -1" class="slds-text-heading--label-normal">
+                    Created By {{obj | getter: field | picker: field.type}}
+                </span>
+                <span ng-if="field.name.indexOf('LastModified') > -1" class=" slds-text-heading--label-normal">
+                    Last Modified On {{obj | getter: field | picker: field.type}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="toggle-panel" ng-click="importedScope.responsiveHelper.toggleCollapseRightCol()">
+        <div class="slds-icon_container" title="Toggle Right Column">
+          <slds-svg-icon sprite="'utility'" icon="$root.rightColumn.toggleIcon" size="'small'" ></slds-svg-icon>
+          <span class="slds-assistive-text">Toggle Right Column</span>
+        </div>
+    </div>
+</div>

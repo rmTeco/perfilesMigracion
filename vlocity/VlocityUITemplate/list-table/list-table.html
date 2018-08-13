@@ -1,0 +1,53 @@
+<div class="via-slds riders-list-canvas container-table-canvas" ng-controller="containerTableCanvarController">
+    <div class="slds-card slds-p-around--large np-card">
+        <div class="slds-p-bottom--small">
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--4-of-12 slds-form-element">
+              <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--left">
+                <slds-svg-icon sprite="'utility'" icon="'search'" extra-classes="'slds-input__icon'"></slds-svg-icon>
+                <input ng-model="searchTerm" class="slds-input" type="text" placeholder="{{::$root.vlocity.getCustomLabel('Search', 'Search')}}" ng-change="search()"/>
+              </div>
+            </div>
+        </div>
+        <div class="slds-p-bottom--small">    
+            <table  class="slds-table slds-table--bordered slds-table--resizable-cols slds-table--fixed-layout via-slds-table-pinned-header">
+              <thead>
+                <tr class="slds-text-heading--label">
+                    <th ng-click="sortBy(field)" class="slds-p-bottom--small" ng-repeat="field in cards[0].states[0].fields" scope="col" ng-class="{'slds-is-sorted' : sortingOrder == 'obj'+field.name, 'slds-is-sorted--desc' : reverse, 'slds-is-sorted--asc': !reverse}">
+                        <div class="slds-truncate slds-th__action" >{{field.label}}
+                            <div class="slds-icon_container">
+                                <slds-svg-icon sprite="'utility'" size="'x-small'" icon="'arrowdown'" extra-classes="'slds-icon-text-default slds-is-sortable__icon'"></slds-svg-icon>
+                            </div>
+                        </div>
+                    </th>
+                    <th ng-if="cards[0].actions.length" class="slds-p-bottom--small" scope="col"><div class="slds-truncate slds-th__action" >{{::$root.vlocity.getCustomLabel('CustomAction', 'Custom action')}}</div></th>
+                </tr>
+              </thead>
+              <tbody>
+                 <tr ng-repeat="card in getCardList() | orderBy:sortingOrder:reverse track by card.cardIndex" ng-model="card" vloc-card data="card" records="records" use-existing-element-type>
+                  </tr>
+              </tbody>
+            </table>
+        </div>
+        <div class="slds-grid">
+            <div class="slds-col">
+              <label class="slds-form-element__label">{{::$root.vlocity.getCustomLabel('NumberOfRows', 'Number of rows')}}</label>
+              <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                  <select class="slds-select" ng-options="item for item in numberOfRowsOption" ng-model="itemsPerPage">
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="slds-col">
+                <div class="slds-form-element slds-button-group pull-right" role="group">
+                    <button class="slds-button slds-button--neutral" title="Previous" ng-click="goToPage(previousPage);" ng-disabled="currentPage == 0">« {{::$root.vlocity.getCustomLabel('Prev', 'Prev')}}</button>
+                    <button ng-repeat="n in range(pagedItems.length, currentPage, numberOfPageLinks)" class="slds-button slds-button--neutral" ng-click="goToPage(n);" ng-disabled="n == currentPage">
+                        {{n + 1}}
+                    </button>
+                    <button class="slds-button slds-button--neutral" ng-click="goToPage(nextPage);" ng-disabled="currentPage == pagedItems.length - 1">{{::$root.vlocity.getCustomLabel('Next', 'Next')}} »
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

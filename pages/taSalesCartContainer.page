@@ -1,0 +1,90 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="taSalesCartContainerController">
+    <html xmlns:ng="http://angularjs.org" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:slds />
+            <!-- <apex:includeScript value="/support/console/40.0/integration.js"/>
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script> -->
+
+            <apex:includeScript value="/support/console/34.0/integration.js"/>
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script>
+            <script src="{!URLFOR($Resource.vlocity_cmt__angular_strap_bundle_1_6)}"></script>
+            
+        </head>
+        <body>
+            <div ng-controller="CartContainerController as ccc">
+                <div class="slds-spinner_container" ng-show="!ccc.showCart">
+                    <div role="status" class="slds-spinner slds-spinner--large slds-spinner--brand">
+                        <span class="slds-assistive-text">Loading</span>
+                        <div class="slds-spinner__dot-a"></div>
+                        <div class="slds-spinner__dot-b"></div>
+                    </div>
+                </div>
+                <div ng-if="ccc.showCart">
+                    <apex:include pageName="taSalesCPQ"/>
+                </div>
+            </div>
+            
+            
+            <script type="text/javascript">
+                (function(){
+                    'use strict';
+                    
+                    angular
+                        .module('hybridCPQ')
+                        .controller('CartContainerController', CartContainerController);
+
+                    CartContainerController.$inject = ['$scope', '$rootScope'];
+
+                    function CartContainerController($scope, $rootScope) {
+                        var ccc = this;
+                        ccc.showCart = false;
+                        
+                        init();
+                        
+                        function init () {
+                            console.info('TESTING CPQ CUSTOM');
+                            Visualforce.remoting.Manager.invokeAction(
+                               "taSalesCartContainerController.CallPrefeasibility", "{!$CurrentPage.parameters.id}", "{!$CurrentPage.parameters.assetId}",
+                                    function(result, event) {
+                                       ccc.showCart = result;
+                                       $scope.$apply();
+                                    },
+                               {escape: false} // No escaping, please
+                            );
+
+                            Visualforce.remoting.Manager.invokeAction(
+                               "taSalesCartContainerController.getCreditLimit", "{!$CurrentPage.parameters.accountId}",
+                                    function(result, event) {
+                                        $rootScope.limiteDeCredito = 0;
+                                        if (result) {
+                                            $rootScope.limiteDeCredito = result;
+                                        }
+                                        console.info('Result from getCreditLimit: ', result);
+                                    },
+                               {escape: false} // No escaping, please
+                            );
+
+                            Visualforce.remoting.Manager.invokeAction(
+                               "taSalesCartContainerController.getDunningMark", "{!$CurrentPage.parameters.accountId}",
+                                    function(result, event) {
+                                        $rootScope.dunning_c = 0;
+                                        if (result) {
+                                            $rootScope.dunning_c = result;
+                                        }
+                                        console.info('Result from getDunningMark: ', result);
+                                    },
+                               {escape: false} // No escaping, please
+                            );
+
+                        }
+                        
+                    }
+
+                 })();
+            </script>
+            
+            
+        </body>
+    </html>
+</apex:page>

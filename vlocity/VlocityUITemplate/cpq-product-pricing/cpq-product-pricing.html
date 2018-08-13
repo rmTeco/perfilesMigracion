@@ -1,0 +1,18 @@
+<div class="slds-picklist slds-dropdown-trigger slds-dropdown-trigger--click slds-is-open slds-m-around--small">
+  <button class="slds-button slds-button--neutral slds-picklist__label slds-p-right--small" aria-haspopup="true" ng-click="isSelected !== 'true' ? isSelected = 'true' : isSelected = 'false'">
+      <slds-button-svg-icon sprite="'utility'" icon="'down'" extra-classes="'slds-m-top--x-small slds-float--right'"></slds-button-svg-icon></slds-button-svg-icon>
+    <span class="slds-truncate" title="Select an Option">{{::importedScope.customLabels.selectView}}</span>
+  </button>
+  <div class="slds-dropdown slds-dropdown--left" ng-if="isSelected === 'true'">
+    <ul class="slds-dropdown__list slds-dropdown--length-5" role="menu" ng-repeat="(key, value) in importedScope.cpqPricingViews">
+      <li class="slds-dropdown__item" role="presentation" ng-click="importedScope.currentView = value.fields">
+        <a href="javascript:void(0);" role="menuitemcheckbox" tabindex="0">
+          <span class="slds-truncate">{{value.labels}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+  <div ng-if="importedScope.currentView">
+    {{importedScope.currentView}}
+  </div>

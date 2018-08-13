@@ -1,0 +1,42 @@
+{
+    "%vlocity_namespace%__Active__c": true,
+    "%vlocity_namespace%__Level__c": 0,
+    "%vlocity_namespace%__OmniScriptId__c": {
+        "Name": "Diagnosis_SlowNav",
+        "VlocityDataPackType": "VlocityMatchingKeyObject",
+        "VlocityMatchingRecordSourceKey": "%vlocity_namespace%__OmniScript__c/Diagnosis/SlowNav/Procedure",
+        "VlocityRecordSObjectType": "%vlocity_namespace%__OmniScript__c"
+    },
+    "%vlocity_namespace%__Order__c": 22,
+    "%vlocity_namespace%__PropertySet__c": {
+        "additionalInput": {
+        },
+        "additionalOutput": {
+        },
+        "bundle": "TechCare_DiagnosisResponse",
+        "executionConditionalFormula": "MatrixScenario_PortStatusStatus == true",
+        "extraPayload": {
+            "ios": "[{\"label\":\"Conexión\",\"category\":\"%MatrixSessionAttributes:CategoryName%\",\"color\":\"%MatrixSessionAttributes:Color%\",\"toolTipDescription\":\"%MatrixSessionAttributes:Tooltip%\"},{\"label\":\"Módem\",\"category\":\"%MatrixSessionAttributesModem:CategoryName%\",\"color\":\"%MatrixSessionAttributesModem:Color%\",\"toolTipDescription\":\"%MatrixSessionAttributesModem:Tooltip%\"},{\"label\":\"Puerto de Conexión\",\"category\":\"%MatrixPortAttributes:CategoryName%\",\"color\":\"%MatrixPortAttributes:Color%\",\"toolTipDescription\":\"%MatrixPortAttributes:Tooltip%\"}]",
+            "scenario": "%MatrixScenario_PortStatus:Escenario%"
+        },
+        "failOnStepError": true,
+        "failureConditionalFormula": "",
+        "failureResponse": {
+        },
+        "label": "DataRaptorTransformAction1",
+        "responseJSONNode": "response",
+        "responseJSONPath": "",
+        "returnOnlyAdditionalOutput": false,
+        "sendJSONNode": "",
+        "sendJSONPath": "",
+        "sendOnlyAdditionalInput": false,
+        "sendOnlyFailureResponse": false,
+        "useFormulas": true
+    },
+    "%vlocity_namespace%__ReusableOmniScript__c": false,
+    "%vlocity_namespace%__Type__c": "DataRaptor Transform Action",
+    "Name": "TransformToResponse_PortStatus",
+    "VlocityDataPackType": "SObject",
+    "VlocityRecordSObjectType": "%vlocity_namespace%__Element__c",
+    "VlocityRecordSourceKey": "%vlocity_namespace%__Element__c/%vlocity_namespace%__OmniScript__c/Diagnosis/SlowNav/Procedure/TransformToResponse_PortStatus"
+}

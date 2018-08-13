@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>SCP_Certa_GC__Contacto__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Contacto</label>
+        <referenceTo>Contact</referenceTo>
+        <relationshipLabel>Reto Contactos</relationshipLabel>
+        <relationshipName>Reto_Contactos</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Nivel_de_Relaci_n__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Nivel de Relación</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Fluida y Constante</fullName>
+                    <default>false</default>
+                    <label>Fluida y Constante</label>
+                </value>
+                <value>
+                    <fullName>Ocasional pero Cordial</fullName>
+                    <default>false</default>
+                    <label>Ocasional pero Cordial</label>
+                </value>
+                <value>
+                    <fullName>Intensa y Difícil</fullName>
+                    <default>false</default>
+                    <label>Intensa y Difícil</label>
+                </value>
+                <value>
+                    <fullName>No lo conozco</fullName>
+                    <default>false</default>
+                    <label>No lo conozco</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Otro_contacto_del_cliente__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Otro contacto del cliente</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Reto__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Reto</label>
+        <referenceTo>SCP_Certa_GC__Reto__c</referenceTo>
+        <relationshipLabel>Reto Contactos</relationshipLabel>
+        <relationshipName>Reto_Contactos</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>SCP_Certa_GC__Tipo_de_Contacto__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Tipo de Contacto</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Director de RRHH</fullName>
+                    <default>false</default>
+                    <label>Director de RRHH</label>
+                </value>
+                <value>
+                    <fullName>CEO</fullName>
+                    <default>false</default>
+                    <label>CEO</label>
+                </value>
+                <value>
+                    <fullName>Director de Compras</fullName>
+                    <default>false</default>
+                    <label>Director de Compras</label>
+                </value>
+                <value>
+                    <fullName>Director de Negocio</fullName>
+                    <default>false</default>
+                    <label>Director de Negocio</label>
+                </value>
+                <value>
+                    <fullName>CISO</fullName>
+                    <default>false</default>
+                    <label>CISO</label>
+                </value>
+                <value>
+                    <fullName>CIO</fullName>
+                    <default>false</default>
+                    <label>CIO</label>
+                </value>
+                <value>
+                    <fullName>CTO</fullName>
+                    <default>false</default>
+                    <label>CTO</label>
+                </value>
+                <value>
+                    <fullName>CFO</fullName>
+                    <default>false</default>
+                    <label>CFO</label>
+                </value>
+                <value>
+                    <fullName>Otro</fullName>
+                    <default>false</default>
+                    <label>Otro</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <gender>Masculine</gender>
+    <label>Reto Contacto</label>
+    <nameField>
+        <label>Nombre de Retos Contacto</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Reto Contactos</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>
