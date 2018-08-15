@@ -22,10 +22,6 @@
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__GlobalKey__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -60,7 +56,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__Scope__c</fields>
         <fields>RECORDTYPE</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
         <relatedList>vlocity_cmt__OrchestrationItemDefinition__c.vlocity_cmt__OrchestrationPlanDefinitionId__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -70,21 +68,13 @@
         <fields>vlocity_cmt__SubAction__c</fields>
         <relatedList>vlocity_cmt__OrchestrationScenario__c.vlocity_cmt__OrchestrationPlanDefinitionId__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__OrchestrationItemDefinition__c.vlocity_cmt__SubPlanDefinition__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__OrchestrationItem__c.vlocity_cmt__OrchestrationPlanDefinitionId__c</relatedList>
-    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000Lmj8</masterLabel>
+        <masterLabel>00h36000002PmDG</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

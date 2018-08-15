@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>AssociatedWarehouseDefault__c</fullName>
         <externalId>false</externalId>
@@ -518,7 +519,7 @@
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
-                <sorted>true</sorted>
+                <sorted>false</sorted>
                 <value>
                     <fullName>Homologado</fullName>
                     <default>false</default>
@@ -954,6 +955,18 @@ It is depending of the region assigned to the store location.</description>
                 <valueName>AMBA</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>LITO</controllingFieldValue>
+                <valueName>Litoral Sur</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>LITO</controllingFieldValue>
+                <valueName>Litoral Norte</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>LITO</controllingFieldValue>
+                <valueName>Litoral Centro</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>MEDI</controllingFieldValue>
                 <valueName>Noroeste Andina</valueName>
             </valueSettings>
@@ -976,18 +989,6 @@ It is depending of the region assigned to the store location.</description>
             <valueSettings>
                 <controllingFieldValue>SUR</controllingFieldValue>
                 <valueName>Patagonia</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>LITO</controllingFieldValue>
-                <valueName>Litoral Sur</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>LITO</controllingFieldValue>
-                <valueName>Litoral Norte</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>LITO</controllingFieldValue>
-                <valueName>Litoral Centro</valueName>
             </valueSettings>
         </valueSet>
     </fields>
@@ -1144,7 +1145,7 @@ It is depending of the region assigned to the store location.</description>
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
-                <sorted>true</sorted>
+                <sorted>false</sorted>
                 <value>
                     <fullName>N0</fullName>
                     <default>false</default>
@@ -1167,6 +1168,17 @@ It is depending of the region assigned to the store location.</description>
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>sfxId__c</fullName>
+        <externalId>true</externalId>
+        <label>sfxId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>vlocity_cmt__City__c</fullName>
@@ -1272,27 +1284,6 @@ It is depending of the region assigned to the store location.</description>
     </fields>
     <label>Store Location</label>
     <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>AssociatedWarehouseId__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>PointOfSaleAddressNumber__c</columns>
-        <columns>PointOfSaleChannel__c</columns>
-        <columns>PointOfSaleDescription__c</columns>
-        <columns>vlocity_cmt__StreetAddress__c</columns>
-        <columns>vlocity_cmt__OrganizationId__c</columns>
-        <columns>PostOfficeHours__c</columns>
-        <columns>PostOfficePhone__c</columns>
-        <columns>vlocity_cmt__Country__c</columns>
-        <columns>vlocity_cmt__State__c</columns>
-        <columns>Type__c</columns>
-        <columns>PointOfSaleId__c</columns>
-        <columns>PostOfficeCode__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>Call_Center</fullName>
         <columns>NAME</columns>
         <columns>PointOfSaleAddressNumber__c</columns>
@@ -1314,7 +1305,34 @@ It is depending of the region assigned to the store location.</description>
         <language>es_MX</language>
     </listViews>
     <listViews>
+        <fullName>OC_ChanelType</fullName>
+        <columns>PointOfSaleStorePickupEnabled__c</columns>
+        <columns>NAME</columns>
+        <columns>AssociatedWarehouseId__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>PointOfSaleChannel__c</columns>
+        <columns>PointOfSaleDescription__c</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>vlocity_cmt__OrganizationId__c</columns>
+        <columns>vlocity_cmt__State__c</columns>
+        <columns>Type__c</columns>
+        <columns>PointOfSaleId__c</columns>
+        <columns>PaymentChannel__c</columns>
+        <columns>Channel__c</columns>
+        <columns>Channel_Type__c</columns>
+        <columns>Channel_Type_2__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>vlocity_cmt__BusinessSite__c.Punto_de_venta_OC</value>
+        </filters>
+        <label>Oficinas comerciales con chanel type</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Talleres_de_ST</fullName>
+        <columns>PointOfSaleStorePickupEnabled__c</columns>
         <columns>NAME</columns>
         <columns>vlocity_cmt__StreetAddress__c</columns>
         <columns>PointOfSaleAddressNumber__c</columns>

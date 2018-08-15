@@ -108,11 +108,11 @@ private class ta_sales_renovacionDatos_test {
     @isTest static void ChangeSubOfferingMeasureMTest() {
         //GIVEN
         String nameMethod = 'ChangeSubOffering';
-        /*
+        
         Map<String,Object> input = new Map<String,Object>();
         Map<String,Object> output = new Map<String,Object>();
         Map<String,Object> options = new Map<String,Object>();
-        */
+        
 
         String mockResponse = '{"listaModificaOferta": [{"fechaVigenciaHastaProdAdq": "201711010000","fechaVigenciaDesdeProdAdq": "201701010000","producto": {"codProducto": 1837006933}}]}';
         VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S210', mockResponse);
@@ -161,12 +161,17 @@ private class ta_sales_renovacionDatos_test {
         ordItemList.add(new OrderItem(OrderId = orderOBJ.Id, Product2Id = product.Id, Quantity = 10, PricebookEntryId = idListaPrecio, UnitPrice = 100));
         insert ordItemList;
         
+        Id recordType = [SELECT Id FROM RecordType WHERE Name = 'SMS Template'].Id;
+        CrossObject__c template = new CrossObject__c(String1__c = 'Se renovó tu cuota de datos exitosamente!', RecordTypeId = recordType, Picklist1__c = 'Renovacion de datos Exitosa');
+        insert template;
+        insert new SMSSender__c(Name='S-Confirmacion-SMS',Sender__c='S-Confirmacion-SMS');
+        
         Schema.DescribeFieldResult fieldResult = Order.PaymentMethodType__c.getDescribe();
         List<Schema.PicklistEntry> pleList = fieldResult.getPicklistValues();
         String medioDePago = pleList.get(0).getValue();
 
         OrderItem item = [SELECT Id, Product2.Id, Product2.vlocity_cmt__JSONAttribute__c, Product2.ProductCode, Product2.ID_Sistema_Origen__c, vlocity_cmt__AssetId__r.Subscription_Id__c, vlocity_cmt__AssetId__r.MSISDN__c FROM OrderItem WHERE OrderId = :idOrder LIMIT 1];
-        /*
+        
         options.put('NroLinea', nroLinea);
         options.put('SelectedCombo', selectedCombo);
         options.put('IdOrder', idOrder);
@@ -177,10 +182,6 @@ private class ta_sales_renovacionDatos_test {
         //WHEN
         Test.startTest();
         ta_sales_renovacionDato.invokeMethod(nameMethod,input,output,options);
-        Test.stopTest();
-        */
-        Test.startTest();
-        ta_sales_renovacionDatos.ChangeSubOffering(idOrder, medioDePago, item);
         Test.stopTest();
         
         //THEN

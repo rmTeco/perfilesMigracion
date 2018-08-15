@@ -3,7 +3,6 @@ public with sharing class TrackingEntryClass {
     public static void updateTrackingEntry(List<vlocity_cmt__VlocityTrackingEntry__c> triggerNew){
 
        List<Id> ownersID = new List<Id>();
-        
         for(vlocity_cmt__VlocityTrackingEntry__c t : triggerNew)
         {
             if(t.TrackedAction__c == 'Consulta de Comprobante')

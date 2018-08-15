@@ -5,6 +5,7 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>Vlocity Telecommunication Services</label>
+    <logo>vlocity_cmt__VlocityCMTResources/vlocity_cmt__CommuincationMediaAndTechnologyLogo.gif</logo>
     <tabs>standard-Contact</tabs>
     <tabs>standard-Opportunity</tabs>
     <tabs>standard-Account</tabs>
@@ -26,14 +27,4 @@
     <tabs>vlocity_cmt__CMTAdmin</tabs>
     <tabs>vlocity_cmt__Vlocity_Rule_Workbench</tabs>
     <tabs>vlocity_cmt__OfferingProcedure__c</tabs>
-    <tabs>TS_Symptom__c</tabs>
-    <tabs>vlocity_cmt__VlocityTrackingEntry__c</tabs>
-    <tabs>Transaction_History__c</tabs>
-    <tabs>AttributesConfiguration</tabs>
-    <tabs>WorkTeam__c</tabs>
-    <tabs>vlocity_cmt__SyncDeltaObject__c</tabs>
-    <tabs>Team_Member__c</tabs>
-    <tabs>vlocity_cmt__InboundRESTInterface__c</tabs>
-    <tabs>Repro_Reporter</tabs>
-    <tabs>Permissions_by_Work_Team</tabs>
 </CustomApplication>

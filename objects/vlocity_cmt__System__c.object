@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>vlocity_cmt__GlobalKey__c</fullName>
         <deprecated>false</deprecated>
@@ -79,8 +80,13 @@
     <label>System</label>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__URL__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>es</language>
     </listViews>
     <nameField>
         <label>System Name</label>

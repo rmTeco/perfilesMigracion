@@ -47,7 +47,7 @@ global with sharing class ConsumptionDetailsIntegrationHandler implements vlocit
         return Datetime.newInstance(year,month,day,0,0,0);      
     }  
 
-    static Integer getMonth(String month){
+    /* static Integer getMonth(String month){
     
         try
         {
@@ -82,7 +82,7 @@ global with sharing class ConsumptionDetailsIntegrationHandler implements vlocit
             //DebugInfo.AddDebugInfoEntry('ConsumptionDetailsIntegrationHandler', 'filterDataByFamily', 'Error al obtener mes: '+ex.getMessage());
             throw ex;
         }
-    }      
+    }  */    
 
     @RemoteAction
     global static void filterDataByFamily(Map<String, Object> inputMap, Map<String, Object> outputMap, Map<String, Object> options) 
@@ -94,7 +94,7 @@ global with sharing class ConsumptionDetailsIntegrationHandler implements vlocit
 
             String startDateScope   = String.valueOf(inputMap.get('startDateFilter'));
             String endDateScope     = String.valueOf(inputMap.get('endDateFilter'));
-            String optionFactura    = (String) inputMap.get('facturaFilter');
+            //String optionFactura    = (String) inputMap.get('facturaFilter');
             String filterOption     = (String) inputMap.get('filterOption');
             Datetime sDate;
             Datetime eDate;
@@ -102,14 +102,14 @@ global with sharing class ConsumptionDetailsIntegrationHandler implements vlocit
             //DebugInfo.AddDebugInfoEntry('ConsumptionDetailsIntegrationHandler', 'filterDataByFamily', startDateScope+ ' ' + endDateScope);
             System.debug('startDateScope ==='+ startDateScope);
             System.debug('endDateScope ==='+ endDateScope);
-            System.debug('optionFactura ==='+ optionFactura);
+            //System.debug('optionFactura ==='+ optionFactura);
             System.debug('filterOption ==='+ filterOption);
             
             try
             {
                 if (filterOption == 'Una factura')
                 {
-                    if(optionFactura != null)
+                    /*if(optionFactura != null)
                     {
                         System.debug('Factura');
                         Integer month     = getMonth(optionFactura);
@@ -119,7 +119,7 @@ global with sharing class ConsumptionDetailsIntegrationHandler implements vlocit
                         eDate             = Datetime.newInstance(year,month,day,0,0,0);
                     }
                     else
-                        return;
+                        return; */
                 }
                 else 
                 {

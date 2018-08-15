@@ -81,7 +81,8 @@ global with sharing class CostForChangesService implements vlocity_cmt.VlocityOp
         }
     }
 
-    private Map<String, Object> GetInputJson(Map<String, Object> order, Map<String, Object> options) {
+    
+  @TestVisible private Map<String, Object> GetInputJson(Map<String, Object> order, Map<String, Object> options) {
         try {
             Map<String, Object> input = new Map<String, Object>();
             Map<String, Object> item = new Map<String, Object>();

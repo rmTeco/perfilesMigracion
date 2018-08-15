@@ -5,8 +5,7 @@
         <description>Email alert test</description>
         <protected>false</protected>
         <recipients>
-            <recipient>dabudin@teco.com.ar</recipient>
-            <type>user</type>
+            <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/Calidad</template>
@@ -65,7 +64,7 @@
     </rules>
     <rules>
         <fullName>TechCare-OrderConcilitionOM_NotResponse</fullName>
-        <active>false</active>
+        <active>true</active>
         <criteriaItems>
             <field>Order.TrackingStatus__c</field>
             <operation>equals</operation>

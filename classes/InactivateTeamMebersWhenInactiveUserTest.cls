@@ -35,13 +35,13 @@ public class InactivateTeamMebersWhenInactiveUserTest {
     }
     
     @isTest static void inactivateUserTeamManager(){
-    	
-    	// Creating a * Parent Team *
-    	String ParentTeamName = 'TestinactivateUserTeamManager';
-    	
-    	User u = [SELECT Id FROM User WHERE IsActive = true LIMIT 1];
-    	
-    	WorkTeam__c workTeamParent = new WorkTeam__c(Team_Name__c = ParentTeamName, Name = ParentTeamName, Manager__c = u.Id, Is_Active__c = true );
+        
+        // Creating a * Parent Team *
+        String ParentTeamName = 'TestinactivateUserTeamManager';
+        
+        User u = [SELECT Id FROM User WHERE IsActive = true LIMIT 1];
+        
+        WorkTeam__c workTeamParent = new WorkTeam__c(Team_Name__c = ParentTeamName, Name = ParentTeamName, Manager__c = u.Id, Is_Active__c = true );
         insert workTeamParent;
         
         // Creating a * User Team * with a Manager 
@@ -63,11 +63,11 @@ public class InactivateTeamMebersWhenInactiveUserTest {
         insert newCase;
    
         // Creating a New Parent Work team to assign it to a Work Team Without Manager
-    	String ParentTeamName2 = 'ParentTeam_WOM';
-    	
-    	User Manager2 = [SELECT Id FROM User WHERE IsActive = true AND (Id != :user_team.Id AND Id != :manager_ui.Id AND Id != :u.Id) LIMIT 1];
-    	
-    	WorkTeam__c workTeamParent2 = new WorkTeam__c(Team_Name__c = ParentTeamName2, Name = ParentTeamName2, Manager__c = Manager2.Id, Is_Active__c = true );
+        String ParentTeamName2 = 'ParentTeam_WOM';
+        
+        User Manager2 = [SELECT Id FROM User WHERE IsActive = true AND (Id != :user_team.Id AND Id != :manager_ui.Id AND Id != :u.Id) LIMIT 1];
+        
+        WorkTeam__c workTeamParent2 = new WorkTeam__c(Team_Name__c = ParentTeamName2, Name = ParentTeamName2, Manager__c = Manager2.Id, Is_Active__c = true );
         insert workTeamParent2;
         
         // Creating a New Work Team Without Manager
@@ -90,17 +90,17 @@ public class InactivateTeamMebersWhenInactiveUserTest {
         // * * * * * * * * * * 
         
         // Creating a New Parent Work team to assign it to a Work Team Without Manager
-    	String ParentTeamName4 = 'ParentTeam_WOM_4';
-    	
-    	User Manager4 = [SELECT Id FROM User WHERE IsActive = true AND (Id != :user_team.Id AND  Id != :manager_ui.Id AND Id != :u.Id AND Id != :Manager2.Id AND Id != :teamMember2.Id) LIMIT 1];
-    	
-    	WorkTeam__c workTeamParent4 = new WorkTeam__c(Team_Name__c = ParentTeamName4, Name = ParentTeamName4, Manager__c = Manager4.Id, Is_Active__c = true );
+        String ParentTeamName4 = 'ParentTeam_WOM_49';
+        
+        User Manager4 = [SELECT Id FROM User WHERE IsActive = true AND (Id != :user_team.Id AND  Id != :manager_ui.Id AND Id != :u.Id AND Id != :Manager2.Id AND Id != :teamMember2.Id) LIMIT 1];
+        
+        WorkTeam__c workTeamParent4 = new WorkTeam__c(Team_Name__c = ParentTeamName4, Name = ParentTeamName4, Manager__c = Manager4.Id, Is_Active__c = true );
         insert workTeamParent4;
         
         // Creating a New Work Sub Team Without Manager
         String ParentTeamName3 = 'ParentTeam_WOM_3';
-    	    	
-    	WorkTeam__c workTeamParent3 = new WorkTeam__c(Team_Name__c = ParentTeamName3, Name = ParentTeamName3, Parent_Team__c = workTeamParent4.Id, Is_Active__c = true );
+                
+        WorkTeam__c workTeamParent3 = new WorkTeam__c(Team_Name__c = ParentTeamName3, Name = ParentTeamName3, Parent_Team__c = workTeamParent4.Id, Is_Active__c = true );
         insert workTeamParent3;             
         
         // Creating a New Work Team Without Manager
@@ -135,9 +135,9 @@ public class InactivateTeamMebersWhenInactiveUserTest {
             List<processInstanceWorkItem> processWorkItem = [SELECT Id, ActorId, ProcessInstance.Status FROM ProcessInstanceWorkitem WHERE ( ActorId =: user_team.Id OR ActorId =: user_team2.Id OR ActorId =: user_team3.Id ) AND Isdeleted = false];
               
             for(ProcessInstanceWorkitem lpIWI :processWorkItem){
-    		    	
-    		    lpIWI.ProcessInstance.Status = 'Pending';
-    		}   
+                    
+                lpIWI.ProcessInstance.Status = 'Pending';
+            }   
          
             update processWorkItem;
          

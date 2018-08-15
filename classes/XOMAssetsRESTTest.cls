@@ -12,7 +12,19 @@ private class XOMAssetsRESTTest {
         pSimcard.vlocity_cmt__GlobalKey__c = '954db6d6-8605-98ea-1fa1-e69236b45120';
         insert pSimcard;*/
 
-        Account acc = [Select Id From Account limit 1];
+        Account acc;
+
+        List<Account> accounts = [Select Id From Account limit 1];
+
+        if(accounts.isEmpty()) {
+            acc = new Account();
+            acc.Name = 'Test';
+            insert acc;
+        }
+        else {
+            acc = accounts[0];
+        }
+        
 
         Test.startTest();
 
@@ -29,7 +41,12 @@ private class XOMAssetsRESTTest {
         RestContext.response= res;
         
         XOMAssetsREST xomar = new XOMAssetsREST();
-        XOMAssetsREST.createAssets();
+        try {
+            XOMAssetsREST.createAssets();
+        }
+        catch(Exception ex) {
+
+        }
 
         //XOMAssetsREST.createAssets();
         Test.stopTest();

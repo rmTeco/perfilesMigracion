@@ -12,7 +12,7 @@ public class MktgMCSyncTest {
             Campaign cp = new Campaign(Name = 'Test Campaign ' + i, Campaign_Type__c = 'Desarrollo',
                                        Campaign_Subtype__c = 'Fidelización', Campaign_Subtype_2__c = 'Club Personal', 
                                        Channel_Type__c  = 'OUT', Channel__c  = 'SMS', Campaign_Destiny__c = 'Masivo', Type = 'Desarrollo',
-                                       Destination__c = 'Masivo',SubtypeL1__c = 'Fidelización', SubtypeL2__c = 'Club Personal');
+                                       Destination__c = 'Masivo',SubtypeL1__c = 'Activ. Comercial', SubtypeL2__c = 'Cambio de Terminal');
             campaignList.add(cp);
         }
        
@@ -33,8 +33,7 @@ public class MktgMCSyncTest {
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, multiCalloutMock);
         insert campaignList;
-	        
+            
         Test.stopTest();
     }
-
 }

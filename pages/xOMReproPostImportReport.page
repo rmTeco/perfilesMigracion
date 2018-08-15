@@ -1,61 +1,19 @@
 <apex:page showHeader="true" sidebar="true" controller="xOMReproPostImportReportController" tabStyle="XOMBatchLineJob__c">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 
 
-    
     <apex:sectionHeader title="Repro Post Import Report" subtitle="Imported and processed repro lines" />
-    <script>
-        $(document).ready(function() {
-            $('.floatingHeaderTable').vfFloatingHeaders();
-        });
-        <link href="/salesforce/assets/styles/salesforce-lightning-design-system.min.css" rel="stylesheet" type="text/css">
 
-    function highlightElem(elem){  
-        $('tr').removeClass('ui-state-active');
-        $(elem).parent().addClass('ui-state-active');  
-     } 
-
-
-
-    function highlight(element, tagName) {
-        if (element && tagName) {
-            var thingToHighlight = findParent(element, tagName);
-            if (thingToHighlight) {
-                thingToHighlight.style = 'background-color: yellow';
-            }
-        }
-    }
-
-
-    function toggleHighLight(thisEle){ ele = thisEle;
-        var elem = thisEle.parentNode.parentNode;
-
-        if(elem.style.backgroundColor == '')
-            elem.style.backgroundColor = '#F5F507';
-        else
-            elem.style.backgroundColor = '';
-    }
-
-
-    </script>
-    <style type="text/css">
-    
-   
-        .Hder
-        {
-           position:sticky;
-           top:0px;
-        }  
-     
-    
+    <style>
         .tableContainer
         {
             height:290px; 
             width: 100%;
             overflow: auto;
-         
+
         }  
 
-         .tableContainer2
+                .tableContainer2
         {
             height:190px; 
             width: 100%;
@@ -63,168 +21,51 @@
         }      
         .floatingStyle 
         { 
-            width:100%;
-            color:#CCC;
-            background:#333;
-            padding:8px;
-         }
+            position:relative; 
+        }
 
         .apexp .detailList .list .headerRow th {
         white-space: normal;
         } 
 
         tr:nth-child(even) {background-color: #f2f2f2;}
-        
-        .ui-state-active{
-        border: 1px solid #fbd850;
-        background: #ffffff;
-        font-weight: bold;
-        color: #eb8f00;
-        }
-        
-         .highlight
-        {
-            background-color: #C1C01A;
-        /* I think outputText users 
-        }
-        
     </style>
 
-    
-    <script>
-          
-          
-          var co1_1;
-          var co1_2;
-          var co1_3;
-          var co1_4;
-
-          var co1_5;
-          var co1_6;
-          var co1_7;
-          var co1_8;
-
-          var co1_9;
-          var co1_10;
-          var co1_11;
-          var co1_12;
-
-          var co1_13;
-          var col_14;
-          var col_15;
-        
-          function changeColor(loteID,wholAccountID,totLineas,ordenesCreadas,
-                    fechaIniLote,ordenesProductos,ordenesDescomp,ordenesAct,
-                    ordenesFallidas,ordenesCreadas2,ordenesCProductos,ordenesDesc2,
-                    totlinID,ordenesFallidas2,fechaFinLote)
-          {
-              
-              co1_1     = loteID;
-              co1_2     = wholAccountID;
-              co1_3     = totLineas;
-              co1_4     = ordenesCreadas;
-
-              co1_5     = fechaIniLote;
-              co1_6     = ordenesProductos;
-              co1_7     = ordenesDescomp;
-              co1_8     = ordenesAct;
-
-              co1_9     = ordenesFallidas;
-              co1_10    = ordenesCreadas2;
-              co1_11    = ordenesCProductos;
-              co1_12    = ordenesDesc2;
-
-              co1_13    = totlinID;
-              col_14    = ordenesFallidas2;
-              col_15    = fechaFinLote;              
-              
-              return false;          
-              
-          }
-          
-          function SetColorRow()
-          {
-                var c1 = document.getElementById(co1_1);
-                c1.style.backgroundColor = "Aquamarine";
-                var c2 = document.getElementById(co1_2);
-                c2.style.backgroundColor = "Aquamarine";
-                var c3 = document.getElementById(co1_3);
-                c3.style.backgroundColor = "Aquamarine";
-                var c4 = document.getElementById(co1_4);
-                c4.style.backgroundColor = "Aquamarine";
-                
-                var c5 = document.getElementById(co1_5);
-                c5.style.backgroundColor = "Aquamarine";
-                var c6 = document.getElementById(co1_6);
-                c6.style.backgroundColor = "Aquamarine";
-                var c7 = document.getElementById(co1_7);
-                c7.style.backgroundColor = "Aquamarine";
-                var c8 = document.getElementById(co1_8);
-                c8.style.backgroundColor = "Aquamarine";
-
-                var c9 = document.getElementById(co1_9);
-                c9.style.backgroundColor = "Aquamarine";
-                var c10 = document.getElementById(co1_10);
-                c10.style.backgroundColor = "Aquamarine";
-                var c11 = document.getElementById(co1_11);
-                c11.style.backgroundColor = "Aquamarine";
-                var c12 = document.getElementById(co1_12);
-                c12.style.backgroundColor = "Aquamarine";
-                
-                var c13 = document.getElementById(co1_13);
-                c13.style.backgroundColor = "Aquamarine";
-                var c14 = document.getElementById(col_14);
-                c14.style.backgroundColor = "Aquamarine";
-                var c15 = document.getElementById(col_15);
-                c15.style.backgroundColor = "Aquamarine";   
-          }
-          
-     </script>
-    
-    
-  <apex:form >
-   <apex:inlineEditSupport event="onclick"/>
+    <apex:form >
         <apex:pageBlock id="thePageBlock" title="Repro lines">
             <apex:pageBlockButtons location="top">               
             </apex:pageBlockButtons>
-            <apex:pageBlockSection id="resumenSection" title="Resumen " columns="1"> 
-            <apex:outputPanel styleClass="tableContainer" layout="block">    
-                
-                    <apex:pageBlockTable value="{!reproLines}" var="reproLine" styleClass="floatingStyle !important"  >
-                        <apex:column headerValue="Lote Id" headerClass="Hder"  value="{!reproLine.loteId}" id="loteID"/>
-                        <apex:outputLabel styleClass="highlight" />
-                        <apex:column headerValue="Wholesale Account" headerClass="Hder" id="wholAccountID">
+            <apex:pageBlockSection id="resumenSection" title="Resumen" columns="1"> 
+                <apex:outputPanel styleClass="tableContainer" layout="block">    
+                    <apex:pageBlockTable value="{!reproLines}" var="reproLine" styleClass="floatingHeaderTable !important" >
+                        <apex:column headerValue="Lote Id" value="{!reproLine.loteId}"/>
+                        <apex:column headerValue="Wholesale Account">
                             <apex:outputLink value="/{!reproLine.wholesaleAccount}" target="_blank">{!reproLine.wholesaleAccount}</apex:outputLink>
                         </apex:column>
-                        <apex:column headerValue="# Total Lineas" headerClass="Hder"   value="{!reproLine.totalLineas}" id="totLineas"/>
-                        <apex:column headerValue="# Ordenes Creadas" headerClass="Hder" value="{!reproLine.ordenesCreadas}"  id="ordenesCreadas" />
-                        <apex:column headerValue="Fecha de inicio de Lote" headerClass="Hder" value="{!reproLine.initTimestamp}" id="fechaIniLote"/>
-                        <apex:column headerValue="# Ordenes c/Productos" headerClass="Hder" value="{!reproLine.ordenesConProductos}"  id="ordenesProductos"/>
-                        <apex:column headerValue="# Ordenes Descompuestas" headerClass="Hder" value="{!reproLine.ordenesDescompuestas}" id="ordenesDescomp"/>
-                        <apex:column headerValue="# Ordenes Activadas"  headerClass="Hder" value="{!reproLine.ordenesActivadas}" id="ordenesAct"/>
-                        <apex:column headerValue="# Ordenes Fallidas"  headerClass="Hder" value="{!reproLine.ordenesFallidas}" id="ordenesFallidas"/>
-                        <apex:column headerValue="% Ordenes Creadas" headerClass="Hder" value="{!FLOOR(reproLine.ordenesCreadas / reproLine.totalLineas * 100)}%" id="ordenesCreadas2"/>
-                        <apex:column headerValue="% Ordenes c/Productos" headerClass="Hder" value="{!FLOOR(reproLine.ordenesConProductos / reproLine.totalLineas * 100)}%" id="ordenesCProductos" />
-                        <apex:column headerValue="% Ordenes Descompuestas" headerClass="Hder" value="{!FLOOR(reproLine.ordenesDescompuestas / reproLine.totalLineas * 100)}%" id="ordenesDesc"/>
-                        <apex:column headerValue="% Ordenes Activadas"  headerClass="Hder" value="{!FLOOR(reproLine.ordenesActivadas / reproLine.totalLineas * 100)}%" id="ordenesActivadas" />
-                        <apex:column headerValue="% Ordenes Fallidas"  headerClass="Hder" value="{!FLOOR(reproLine.ordenesFallidas / reproLine.totalLineas * 100)}%" id="ordenesFallidas2"/>
-                        <apex:column headerValue="Fecha de fin de Lote" headerClass="Hder" value="{!reproLine.endTimestamp}"  id="fechaFinLote" />
-                        <apex:column headerValue="Acción" headerClass="Hder">
-                            <apex:commandButton id="btn"
-                                onclick="changeColor('{!$Component.loteID}','{!$Component.wholAccountID}','{!$Component.totLineas}','{!$Component.ordenesCreadas}',
-                                '{!$Component.fechaIniLote}','{!$Component.ordenesProductos}','{!$Component.ordenesDescomp}','{!$Component.ordenesAct}',
-                                '{!$Component.ordenesFallidas}','{!$Component.ordenesCreadas2}','{!$Component.ordenesCProductos}','{!$Component.ordenesDesc}',
-                                '{!$Component.ordenesActivadas}','{!$Component.ordenesFallidas2}','{!$Component.fechaFinLote}')"  
-                                reRender="thePageBlock" value="Ver Detalle" action="{!getLoteDetail}"  >
+                        <apex:column headerValue="# Total Lineas" value="{!reproLine.totalLineas}"/>
+                        <apex:column headerValue="# Ordenes Creadas" value="{!reproLine.ordenesCreadas}"/>
+                        <apex:column headerValue="Fecha de inicio de Lote" value="{!reproLine.initTimestamp}"/>
+                        <apex:column headerValue="# Ordenes c/Productos" value="{!reproLine.ordenesConProductos}"/>
+                        <apex:column headerValue="# Ordenes Descompuestas" value="{!reproLine.ordenesDescompuestas}"/>
+                        <apex:column headerValue="# Ordenes Activadas" value="{!reproLine.ordenesActivadas}"/>
+                        <apex:column headerValue="# Ordenes Fallidas" value="{!reproLine.ordenesFallidas}"/>
+                        <apex:column headerValue="% Ordenes Creadas" value="{!FLOOR(reproLine.ordenesCreadas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes c/Productos" value="{!FLOOR(reproLine.ordenesConProductos / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes Descompuestas" value="{!FLOOR(reproLine.ordenesDescompuestas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes Activadas" value="{!FLOOR(reproLine.ordenesActivadas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes Fallidas" value="{!FLOOR(reproLine.ordenesFallidas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="Fecha de fin de Lote" value="{!reproLine.endTimestamp}"/>
+                        <apex:column headerValue="Acción">
+                            <apex:commandButton value="Ver Detalle" action="{!getLoteDetail}" reRender="thePageBlock">
                                 <apex:param assignTo="{!selectedLoteId}" name="selectedLoteId" value="{!reproLine.loteId}"/>
                             </apex:commandButton>
-                        </apex:column>>
+                        </apex:column>
                     </apex:pageBlockTable>
-             </apex:outputPanel>
+                </apex:outputPanel>
+                
             </apex:pageBlockSection>
-            
             <apex:pageBlockSection id="loteDetailSection" title="Detalle de Lote:  {!selectedLoteId}" rendered="{!selectedLoteId!=NULL}" columns="1">
-                <apex:outputPanel styleClass="tableContainer2" layout="block">                
+                <apex:outputPanel styleClass="tableContainer2" layout="block">
                 <apex:pageBlockTable value="{!reproLinesLoteDetail.listOfLines}" var="loteLineDetail" width="100%">
                     <apex:column headerValue="Orchetration Plan">
                         <apex:outputLink value="/apex/vlocity_cmt__OrchestrationPlanViewCommon?id={!loteLineDetail.orchPlanId}" target="_blank">{!loteLineDetail.orchPlanId}</apex:outputLink>
@@ -236,18 +77,13 @@
                     <apex:column headerValue="Orden Descompuesta" value="{!loteLineDetail.ordenDescompuesta}"/>
                     <apex:column headerValue="Orden Activada" value="{!loteLineDetail.ordenActivada}"/>
                     <apex:column headerValue="Orden Fallida" value="{!loteLineDetail.ordenFallida}"/>
-                    <apex:column headerValue="Mensaje" value="{!loteLineDetail.mensaje}" onclick="SetColorRow()" />
+                    <apex:column headerValue="Mensaje" value="{!loteLineDetail.mensaje}"/>
                 </apex:pageBlockTable>
-                
-                <script type="text/javascript">
-                        (function()
-                        {
-                            SetColorRow();
-                        })();
-                </script>
-                            
             </apex:outputPanel>
             </apex:pageBlockSection>
         </apex:pageBlock>
     </apex:form>
+
+
+
 </apex:page>

@@ -16,9 +16,4 @@ public class MktgCloudMultiCalloutMock implements HttpCalloutMock{
         
         return null;
 	}
-
-	public void addRequestMock(String url, HttpCalloutMock mock) {
-		requests.put(url, mock);
-	}
-
 }

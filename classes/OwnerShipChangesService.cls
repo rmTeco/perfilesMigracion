@@ -1,6 +1,5 @@
 global with sharing class OwnerShipChangesService implements vlocity_cmt.VlocityOpenInterface {
     global Boolean invokeMethod(String methodName, Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
-        
         try {
             if (methodName.equals('GetOrdersToCreate')) {
                 GetOrdersToCreate(inputMap, outMap, options);
@@ -8,16 +7,16 @@ global with sharing class OwnerShipChangesService implements vlocity_cmt.Vlocity
                 createCases(inputMap, outMap, options);
             } else if (methodName.equals('checkoutOrders')) {
                 checkoutOrders(inputMap, outMap, options);
-            } else if (methodName.equals('addOrderLine')) {
-                addOrderLine(inputMap, outMap, options);
-            }else if (methodName.equals('updateOrderAccount')) {
+            } else if (methodName.equals('updateOrderAccount')) {
                 updateOrderAccount(inputMap, outMap, options);
             } else if (methodName.equals('GetAditionalPrepaidPlanAssetInfo')) {
                 GetAditionalPrepaidPlanAssetInfo(inputMap, outMap, options);
-            }else if (methodName.equals('addOrderLineRest')) {
+            } else if (methodName.equals('addOrderLineRest')) {
                 addOrderLineRest(inputMap, outMap, options);
             }
+
             return true;
+            
         } catch(Exception ex) {
             system.debug('Error***' + ex.getStackTraceString());
             outMap.put('Error***', ex.getStackTraceString());
@@ -140,60 +139,52 @@ global with sharing class OwnerShipChangesService implements vlocity_cmt.Vlocity
             throw ex;
         }
     }
-    
-    private void addOrderLine(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options){
+
+    private void checkoutOrders(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options){
         try {
+            List<Map<String, Object>> orders = new List<Map<String, Object>>();
+            List<Object> selectedOrders = VlocityOpenInterfaceHelper.getListObjectsFromMap(options, 'Orders');
+            Set<Id> ordersSet = new Set<Id>();
+            List<Asset> assets = new List<Asset>();
             
-            List<Object> selectedOrders = VlocityOpenInterfaceHelper.getListObjectsFromMap(inputMap, 'Orders');
-            Map<String, String> orderXAsset = new Map<String, String>();
-            
-            for (Object orderItem : selectedOrders) {
-                String orderId = (String) ((Map<String,Object>)orderItem).get('OrderId');
-                String assetId = (String) ((Map<String,Object>)orderItem).get('AssetId');
-                orderXAsset.put(assetId, orderId);
+            for (Object orderObject : selectedOrders) {
+                String orderId = (String) ((Map<String,Object>)orderObject).get('OrderId');
+                String assetId = (String) ((Map<String,Object>)orderObject).get('AssetId');
+                assets.add(new Asset(Id = assetId, vlocity_cmt__OrderId__c = orderId));
+                ordersSet.add((Id)orderId);
+            }
+            try {
+                update assets;
+            } catch (DMLException dmlEx){
+                throw dmlEx;
             }
             
-            Object obj = inputMap.get('AssetSelection');
-            Map<String, Object> objMap = (Map<String, Object>)obj;
-            List<Object> allAssetsList = (List<Object>)objMap.get('SelectAsset');
+            //vlocity_cmt.CpqAppHandler appHandler = new vlocity_cmt.CpqAppHandler();
             
-            Map<String, Object> dateMap = new Map<String, Object>();
-            dateMap.put('MoveOutDate', String.valueOf(Date.today()));
-            dateMap.put('MoveInDate', String.valueOf(Date.today()));
+            //Map<String,Object> inputs = new Map<String,Object>();
+            //Map<String,Object> output = new Map<String,Object>();
+            //Map<String,Object> opt = new Map<String,Object>();
             
-            for (Object assetItem : allAssetsList) {
-                
-                List<Object> itemList = new List<Object>();
-                itemList.add(assetItem);
-                options.put('JSON Node', 'AllAssets');
-                inputMap.put('AllAssets',  itemList);
-                options.put('jsonPath', '');
-                inputMap.put('MoveInDate', Date.today());
-                inputMap.put('MoveOutDate', Date.today()); 
-                inputMap.put('moveInAccountId', options.get('AccountId'));
-                inputMap.put('moveOutAccountId', inputMap.get('ContextId'));
-                
-                String assetId = (String) ((Map<String,Object>)assetItem).get('Id');
-                
-                inputMap.put('OrderId', orderXAsset.get(assetId));
-                inputMap.put('SelectInOutDate',dateMap);
-                
-                vlocity_cmt.OmniMoveAssetWrapper moveAsset = new vlocity_cmt.OmniMoveAssetWrapper();
-                moveAsset.invokeMethod('moveNewAssets', inputMap, outMap, options);
+            //List<Id> orderList = new List<Id>();
+
+            for (Id idItem : ordersSet) {
+                vlocity_cmt.SimpleDecompositionManager.startOrderProcessing(idItem);
+                vlocity_cmt.SimpleDecompositionController.decomposeOrder(idItem);
             }
-        } catch(Exception ex) {
+        }
+        catch(Exception ex) {
             system.debug('Error: ' + ex);
             throw ex;
         }
     }
-    
+
     private void addOrderLineRest(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options){
         try {
             
             String orderId = (String)inputMap.get('OrderId');
-	        String accountId = (String)inputMap.get('AccountId');
-	        String contextId = (String)inputMap.get('ContextId');
-	        Object assetMap = (Object)inputMap.get('Asset');
+            String accountId = (String)inputMap.get('AccountId');
+            String contextId = (String)inputMap.get('ContextId');
+            Object assetMap = (Object)inputMap.get('Asset');
             
             Map<String, Object> dateMap = new Map<String, Object>();
             dateMap.put('MoveOutDate', String.valueOf(Date.today()));
@@ -215,49 +206,6 @@ global with sharing class OwnerShipChangesService implements vlocity_cmt.Vlocity
             vlocity_cmt.OmniMoveAssetWrapper moveAsset = new vlocity_cmt.OmniMoveAssetWrapper();
             moveAsset.invokeMethod('moveNewAssets', inputMap, outMap, options);
         } catch(Exception ex) {
-            system.debug('Error: ' + ex);
-            throw ex;
-        }
-    }
-    
-    private void checkoutOrders(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options){
-        
-        try {
-            
-            List<Map<String, Object>> orders = new List<Map<String, Object>>();
-            List<Object> selectedOrders = VlocityOpenInterfaceHelper.getListObjectsFromMap(options, 'Orders');
-            Set<Id> ordersSet = new Set<Id>();
-            List<Asset> assets = new List<Asset>();
-            
-            for (Object orderObject : selectedOrders) {
-                
-                String orderId = (String) ((Map<String,Object>)orderObject).get('OrderId');
-                String assetId = (String) ((Map<String,Object>)orderObject).get('AssetId');
-                assets.add(new Asset(Id = assetId, vlocity_cmt__OrderId__c = orderId));
-                ordersSet.add((Id)orderId);
-            }
-            try {
-                update assets;
-            } catch (DMLException dmlEx){
-                throw dmlEx;
-            }
-            
-            vlocity_cmt.CpqAppHandler appHandler = new vlocity_cmt.CpqAppHandler();
-            
-            Map<String,Object> inputs = new Map<String,Object>();
-            Map<String,Object> output = new Map<String,Object>();
-            Map<String,Object> opt = new Map<String,Object>();
-            
-            List<Id> orderList = new List<Id>();
-            for (Id idItem : ordersSet) {
-                
-                orderList.add(idItem);
-            }
-            inputs.put('orderIds', orderList);
-            vlocity_cmt.VOIInvoker voi = vlocity_cmt.VOIInvoker.getInstance();
-            voi.invoke('SubmitOrder', 'submitOrder', inputs, output, opt);
-        }
-        catch(Exception ex) {
             system.debug('Error: ' + ex);
             throw ex;
         }

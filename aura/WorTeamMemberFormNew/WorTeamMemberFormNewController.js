@@ -73,8 +73,6 @@
           // Add callback behavior for when response is received
             action.setCallback(this, function(response) {
                 var state = response.getState();
-                debugger;
-                console.log('state: ' + state);
                 if (state === "SUCCESS") {
                     if(response.getReturnValue() == true ){
                         component.set("v.showWorkTeamList","false");
@@ -82,14 +80,10 @@
                         component.set("v.showWorkTeamDetail","true");
                         component.set("v.showWorkTeamMembers","false");
                     }
-                    else{
-                        component.set("v.messageHelp", "Rol Inexistente, seleccione un rol valido");
-                        document.getElementById("message__helper").style.display = "block";
-                    }
                 }
                 else {
                     console.log("Failed with state: " + state);
-                }
+                  }
                });
             // Send action off to be executed
           $A.enqueueAction(action);

@@ -1,3 +1,10 @@
+/**
+ * Created by Alex Lazarev 23/08/2017
+ * Provides logic support to trigMasterTask trigger
+ * Object: Task
+ *
+ * Version: 1.2
+ */
 public class TaskTriggerHandler {
 
     public static void initiateBillingIntegrationProcess(List<Task> triggerNew) {

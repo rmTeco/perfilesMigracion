@@ -22,9 +22,27 @@ public class IFS_S326_updateNumberStatus {
         return responseNode;
     }
     
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos, String guId) {
+        DateTime dt = DateTime.now();
+        String dts = dt.format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            //IFS_LogRecord.record(dts, 'SERVICIO', 'S326', guId, pTipo, pDatos, '');  
+        }
+        else {
+            //IFS_LogRecord.record(dts, 'SERVICIO', 'S326', guId, pTipo, '', pDatos); 
+        }
+    }
+
     public static HttpResponse makePostCallout(String body) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
+        String guId = null;
         
         List<EndPointService__c> endPoints = [select Name, EndPoint__c from EndPointService__c where Name = 'IFS_s326' limit 1];
         EndPointService__c endpoint;
@@ -36,6 +54,7 @@ public class IFS_S326_updateNumberStatus {
             request.setEndpoint(endpoint.EndPoint__c);
         }
         
+
         //request.setEndpoint('https://prodgonogo.personal.com.ar/lineas/estado');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -43,9 +62,14 @@ public class IFS_S326_updateNumberStatus {
         request.setHeader('Authorization', authorizationHeader);
         request.setBody(body);
         system.debug(request.getBody());
+
+        writeLog ('REQ', request.getBody(), guId);
+
         HttpResponse response = http.send(request);
         system.debug(response);
         
+        writeLog ('RES', response.getStatusCode() + ';' + response.getBody(), guId);
+
         /*
         //Manejo de errores.
         Boolean hayError = false;

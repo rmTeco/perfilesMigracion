@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>vlocity_cmt__AttributeMetadata</fullName>
         <description>Attribute Metadata definition in the EPC Admin Console</description>
@@ -1081,7 +1082,9 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Attribute Assignments</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <searchResultsAdditionalFields>vlocity_cmt__Value__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <visibility>Public</visibility>

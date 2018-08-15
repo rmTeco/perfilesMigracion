@@ -5,12 +5,7 @@
         <description>Email</description>
         <protected>false</protected>
         <recipients>
-            <recipient>federico.h.biaus@accenture.com</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>geraldina.fiore@personal.com.ar</recipient>
-            <type>user</type>
+            <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/CLUB_PERSONAL_ALTA</template>
@@ -24,45 +19,6 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>unfiled$public/Care_SLA_vencido</template>
-    </alerts>
-    <alerts>
-        <fullName>TestEmailAlert</fullName>
-        <ccEmails>jfgarciagonzalez@vurpix.com.fan.sit</ccEmails>
-        <description>TestEmailAlert</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>federico.h.biaus@accenture.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>unfiled$public/CLUB_PERSONAL_ALTA</template>
-    </alerts>
-    <alerts>
-        <fullName>TestEmailAlert2</fullName>
-        <ccEmails>federico.h.biaus@accenture.com</ccEmails>
-        <description>TestEmailAlert2</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>jfgarciagonzalez@vurpix.com.fan</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>unfiled$public/CLUB_PERSONAL_ALTA</template>
-    </alerts>
-    <alerts>
-        <fullName>testmail</fullName>
-        <description>testmail</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>alex.lazarev@cloudgaia.com.fan</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>federico.h.biaus@accenture.com</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>unfiled$public/CLUB_PERSONAL_ALTA</template>
     </alerts>
     <fieldUpdates>
         <fullName>Asignar_caso_a_backoffice</fullName>
@@ -130,7 +86,7 @@
         <fullName>Change_Status_AprobadaRevisor</fullName>
         <description>Cambia el estado del caso a Aprobada revisor</description>
         <field>Status</field>
-        <literalValue>Aprobada revisor</literalValue>
+        <literalValue>Aprobada Pendiente de Portación</literalValue>
         <name>Change_Status_AprobadaRevisor</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -382,7 +338,7 @@
         <fields>vlocity_cmt__Amount__c</fields>
         <fields>vlocity_cmt__ServiceId__c</fields>
         <includeSessionId>false</includeSessionId>
-        <integrationUser>geraldina.fiore@personal.com.ar</integrationUser>
+        <integrationUser>mstahl@teco.com.ar</integrationUser>
         <name>RAV-SendAdjustmentToHW</name>
         <protected>false</protected>
         <useDeadLetterQueue>false</useDeadLetterQueue>
@@ -403,7 +359,7 @@
         <criteriaItems>
             <field>Case.Type</field>
             <operation>equals</operation>
-            <value>Asteriscos TP,Otros Asteriscos,Nros. emergencia,0800,WEB,APP,WAP,USSD,Mi Personal (SIM)</value>
+            <value>Asteriscos TP,Otros Asteriscos,Nros. emergencia,0800,WEB,APP,WAP,USSD,Club Personal</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
         <workflowTimeTriggers>
@@ -446,19 +402,6 @@
         </workflowTimeTriggers>
     </rules>
     <tasks>
-        <fullName>Notificacion_Prueba</fullName>
-        <assignedTo>oswaldo.morales@certaconsulting.net.fan</assignedTo>
-        <assignedToType>user</assignedToType>
-        <description>Prueba</description>
-        <dueDateOffset>0</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <offsetFromField>Case.SlaStartDate</offsetFromField>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>In Progress</status>
-        <subject>Notificacion Prueba</subject>
-    </tasks>
-    <tasks>
         <fullName>PendienteAprobacionBackoffice</fullName>
         <assignedToType>owner</assignedToType>
         <description>Tarea para aprobar un ajuste</description>
@@ -469,17 +412,5 @@
         <protected>false</protected>
         <status>Not Started</status>
         <subject>PendienteAprobacionBackoffice</subject>
-    </tasks>
-    <tasks>
-        <fullName>TestForApprovalProcess</fullName>
-        <assignedTo>jfgarciagonzalez@vurpix.com.fan</assignedTo>
-        <assignedToType>user</assignedToType>
-        <dueDateOffset>45</dueDateOffset>
-        <notifyAssignee>false</notifyAssignee>
-        <offsetFromField>Case.Start_Date__c</offsetFromField>
-        <priority>Normal</priority>
-        <protected>false</protected>
-        <status>Not Started</status>
-        <subject>TestForApprovalProcess</subject>
     </tasks>
 </Workflow>

@@ -4,6 +4,16 @@
     <active>false</active>
     <description>Community moderators review posts and comments containing banned keywords</description>
     <entitiesAndFields>
+        <entityName>FeedComment</entityName>
+        <fieldName>RawCommentBody</fieldName>
+        <keywordList>Telecom Personal.Banned</keywordList>
+    </entitiesAndFields>
+    <entitiesAndFields>
+        <entityName>FeedItem</entityName>
+        <fieldName>LinkUrl</fieldName>
+        <keywordList>Telecom Personal.Banned</keywordList>
+    </entitiesAndFields>
+    <entitiesAndFields>
         <entityName>FeedItem</entityName>
         <fieldName>RawBody</fieldName>
         <keywordList>Telecom Personal.Banned</keywordList>
@@ -16,16 +26,6 @@
     <entitiesAndFields>
         <entityName>FeedPollChoice</entityName>
         <fieldName>ChoiceBody</fieldName>
-        <keywordList>Telecom Personal.Banned</keywordList>
-    </entitiesAndFields>
-    <entitiesAndFields>
-        <entityName>FeedComment</entityName>
-        <fieldName>RawCommentBody</fieldName>
-        <keywordList>Telecom Personal.Banned</keywordList>
-    </entitiesAndFields>
-    <entitiesAndFields>
-        <entityName>FeedItem</entityName>
-        <fieldName>LinkUrl</fieldName>
         <keywordList>Telecom Personal.Banned</keywordList>
     </entitiesAndFields>
     <masterLabel>Flag posts or comments containing banned keywords</masterLabel>

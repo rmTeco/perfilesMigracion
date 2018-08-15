@@ -12,38 +12,86 @@ public with sharing class StockUtils{
             System.debug('An unexpected error has occurred: ' + e.getMessage());
             throw e;
         }
-        catch(CallOutException e)
-        {
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
-        catch(Exception e)
-        {
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
     }
 
     public static void StockMovement(List<String> serialNumbers, String codOperacion, String codDeposito)
     {
         System.debug('StockMovement');
         try{
-            Map<String,Object> serialNumbers2 = new Map<String,Object>();
-            for(String serial : serialNumbers)
+            Map<String,Object> request = new Map<String,Object>();
+            Map<String,Object> body = new Map<String,Object>();
+            String idUnicoTransaccion = GuidUtil.NewGuid();
+            System.debug('StockUtils:IP:idUnicoTransaccion: ' + idUnicoTransaccion);
+            Map<String,Object> valueIdUnico = new Map<String,Object>();
+            valueIdUnico.put('X-Consumer-Transaction-ID', idUnicoTransaccion);
+
+            if (serialNumbers.size() > 0)
             {
-                Map<String,Object> serialNode = new Map<String,Object>();
-                serialNode.put('codDeposito',codDeposito);
-                serialNode.put('codOperacion',codOperacion);
-                serialNumbers2.put(serial,serialNode);
+                //AM 06/06/2018 Ajuste para Implementar Idempotencia 
+                List<Object> serialOperationList = new List<Object>();
+
+                for(String serial : serialNumbers){
+                    Map<String,Object> serialNode = new Map<String,Object>();
+                    serialNode.put('codOperacion', codOperacion);
+                    serialNode.put('numeroSerie', serial);
+                    serialNode.put('codDeposito', codDeposito);
+                    serialOperationList.add(serialNode);
+                }
+
+                body.put('listaOperacion', serialOperationList);
+
+                request.put('body', body);
+                request.put('params', valueIdUnico);
+                //AM 06/06/2018 Ajuste para Implementar Idempotencia FIN
+                System.debug('Llamado IP');
+                Map<String, Object> response = new Map<String, Object>();
+                Map<String, Object> options = new Map<String, Object>();
+                vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
+                System.debug('IFS_S105 - request : ' + request);
+                integProcService.invokeMethod('IFS_S105', request, response, options);
+                System.debug('response: ' + response);
+                String codigoResultado = (String) response.get('codigoResultado');
+
+                if (codigoResultado == 'ERROR')
+                {
+                    String mensajeResultado = (String) response.get('listaResultado.mensajeResultado');
+                    System.debug('mensajeResultado105: ' + mensajeResultado);
+                    throw new CallOutException(mensajeResultado);
+                }
+
+
+                /*for(String serial : serialNumbers)
+                {
+                    Map<String,Object> serialNode = new Map<String,Object>();
+                    serialNode.put('codOperacion', codOperacion);
+                    serialNode.put('numeroSerie', serial);
+                    serialNode.put('codDeposito', codDeposito);
+                    serialNode.put('cantidad', 1);
+                    request.put(String.valueOf(key), serialNode);
+                    key++;
+                }
+                //JSEIBERT - IFS105 IP - INI
+                //Map<String,Object> response = IFS_S105_stockMovement.stockMovement(request);
+                System.debug('Llamado IP');
+                Map<String, Object> response = new Map<String, Object>();
+                Map<String, Object> options = new Map<String, Object>();
+                vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
+                System.debug('IFS_S105 - request : ' + request);
+                integProcService.invokeMethod('IFS_S105', request, response, options);
+                System.debug('response: ' + response);
+                String codigoResultado = (String) response.get('codigoResultado');
+
+                if (codigoResultado == 'ERROR')
+                {
+                    String mensajeResultado = (String) response.get('listaResultado.mensajeResultado');
+                    System.debug('mensajeResultado105: ' + mensajeResultado);
+                    throw new CallOutException(mensajeResultado);
+                }
+                //JSEIBERT - IFS105 IP - FIN
+                */
             }
-            StockMovement(serialNumbers2);
         }
-        catch(CallOutException e)
-        {
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
-        catch(Exception e)
+        catch(DmlException e)
         {
             System.debug('An unexpected error has occurred: ' + e.getMessage());
             throw e;
@@ -61,107 +109,35 @@ public with sharing class StockUtils{
     {
         System.debug('StockMovement');
         try{
-            String idUnicoTransaccion = GuidUtil.NewGuid();
-            String serviceRequest = '{"body": {"listaOperacion": [';
-            Integer key = 0;
-            for(String serial : serialNumbers.KeySet())
+            Map<String,Object> request = new Map<String,Object>();
+            Integer key = 1;
+
+            if (!serialNumbers.KeySet().IsEmpty())
             {
-                if (key > 0) serviceRequest += ',';
-                serviceRequest += '{';
-                serviceRequest += '"codDeposito": "' + ((Map<String,Object>)serialNumbers.get(serial)).get('codDeposito') + '",';
-                serviceRequest += '"codOperacion": "' + ((Map<String,Object>)serialNumbers.get(serial)).get('codOperacion') + '",';
-                serviceRequest += '"numeroSerie": "' + serial + '"';
-                serviceRequest += '}';
-                key++;
-            }
-            serviceRequest += ']},';
-            serviceRequest += '"params": {';
-            serviceRequest += '"X-Consumer-Transaction-ID": "' + idUnicoTransaccion + '"';
-            serviceRequest += '}}';
-
-            System.debug('IFS_S105 - request : ' + serviceRequest);
-
-            Map<String, Object> input = (Map<String, Object>) JSON.deserializeUntyped(serviceRequest);
-            Map<String, Object> output = new Map<String, Object>();
-            Map<String, Object> options = new Map<String, Object>();
-
-            vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
-            integProcService.invokeMethod('IFS_S105', input, output, options);
-
-            Map<String, Object> s105_response = (Map<String, Object>)output.get('IPResult');
-            System.debug('IFS_S105 - response : ' + JSON.serialize(s105_response));
-            String codigoResultado = (String)s105_response.get('codigoResultado');
-            if (codigoResultado == 'OK')
-            {
-                List<Object> listaDeSeriados = (List<Object>) s105_response.get('listaResultado');
-                for(Object itemSeriado : listaDeSeriados)
+                for(String serial : serialNumbers.KeySet())
                 {
-                    Map<String,Object> itemSeriadoMap = (Map<String,Object>) itemSeriado;
-                    String codigoResultadoSerial = (String) itemSeriadoMap.get('codigoResultado');
-                    if (codigoResultadoSerial != '0')
-                    {
-                        String serie = (String) itemSeriadoMap.get('numeroSerie');
-                        String mensajeResultadoSerial = (String) itemSeriadoMap.get('mensajeResultado');
-                        throw new CallOutException('Error al invocar al servicio 105. CodigoResultado: ' + codigoResultadoSerial + ', MensajeResultado: ' + mensajeResultadoSerial + ', NumeroSerie: ' + serie);
-                    }
+                    Map<String,Object> serialNode = new Map<String,Object>();
+                    serialNode.put('codOperacion', (String) ((Map<String,Object>)serialNumbers.get(serial)).get('codOperacion'));
+                    serialNode.put('numeroSerie',serial);
+                    serialNode.put('codDeposito', (String) ((Map<String,Object>)serialNumbers.get(serial)).get('codDeposito'));
+                    serialNode.put('cantidad',1);
+                    request.put(String.valueOf(key),serialNode);
+                    key++;
+                }
+                System.debug('IFS_S105 - request : ' + request);
+                String idUnicoTransaccion = GuidUtil.NewGuid();
+                System.debug('StockUtils:idUnicoTransaccion: ' + idUnicoTransaccion);
+                Map<String,Object> response = IFS_S105_stockMovement.stockMovement(request, idUnicoTransaccion);
+                System.debug('response s105: ' + response);
+
+                String httpStatusCode = (String) response.get('httpStatusCode');
+
+                if (httpStatusCode != '200' && httpStatusCode != '201' && httpStatusCode != '202' && httpStatusCode != '204')
+                {
+                    String mensaje = (String) response.get('mensaje');
+                    throw new CallOutException(mensaje);
                 }
             }
-            else
-                throw new CallOutException('Error al invocar al servicio 105. Codigo: ' + codigoResultado);
-        }
-        catch(CallOutException e)
-        {
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
-        catch(Exception e)
-        {
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
-    }
-
-    public static void StockQuantityManagement(Map<String, Map<String, Object>> nmus, String orderId, String serviceOperation)
-    {
-        System.debug('StockQuantityManagement');
-        try{
-            String idUnicoTransaccion = GuidUtil.NewGuid();
-            String serviceRequest = '{"body": {';
-            serviceRequest += '"codAplicacion": "SFDC_CRM",';
-            serviceRequest += '"codPuntoDeVenta": "0",';
-            serviceRequest += '"idOperacion": "' + orderId + '",';
-            serviceRequest += '"operacion": "' + serviceOperation + '",';
-            serviceRequest += '"listaNMU": [';
-            Integer key = 0;
-            for(String nmuToSend : nmus.KeySet())
-            {
-                if (key > 0) serviceRequest += ',';
-                serviceRequest += '{';
-                serviceRequest += '"codDeposito": "' + ((Map<String,Object>)nmus.get(nmuToSend)).get('codDeposito') + '",';
-                serviceRequest += '"codNMU": "' + nmuToSend + '",';
-                serviceRequest += '"cantidad": "' + ((Map<String,Object>)nmus.get(nmuToSend)).get('cantidad') + '"';
-                serviceRequest += '}';
-                key++;
-            }
-            serviceRequest += ']},';
-            serviceRequest += '"params": {';
-            serviceRequest += '"X-Consumer-Transaction-ID": "' + idUnicoTransaccion + '"';
-            serviceRequest += '}}';
-
-            System.debug('IFS_S101 - request : ' + serviceRequest);
-
-            Map<String, Object> input = (Map<String, Object>) JSON.deserializeUntyped(serviceRequest);
-            Map<String, Object> output = new Map<String, Object>();
-            Map<String, Object> options = new Map<String, Object>();
-
-            vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
-            integProcService.invokeMethod('IFS_S101', input, output, options);
-
-            Map<String, Object> s101_response = (Map<String, Object>)output.get('IPResult');
-            System.debug('IFS_S101 - response : ' + JSON.serialize(s101_response));
-            String codigoResultado = (String)s101_response.get('codigoResultado');
-            if (codigoResultado != 'OK')
-                throw new CallOutException('Error al invocar al servicio 101. Codigo: ' + codigoResultado);
         }
         catch(CallOutException e)
         {
@@ -196,11 +172,6 @@ public with sharing class StockUtils{
             return serialNumbers;
         }
         catch(DmlException e)
-        {
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
-        catch(Exception e)
         {
             System.debug('An unexpected error has occurred: ' + e.getMessage());
             throw e;

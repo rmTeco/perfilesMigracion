@@ -95,13 +95,12 @@ private class taSalesSMSInteractionTest {
     Test.stopTest();
     
     List<CrossObject__c> trkCross = [SELECT Id FROM CrossObject__c WHERE RecordTypeId = :trkRecordType];
-    //PFTA-10979, ya no se hace insert en acc en el metodo
-    //Account resultAcc = [SELECT PhoneValidated__c, Phone FROM Account WHERE Id = :acc.Id];
+    Account resultAcc = [SELECT PhoneValidated__c, Phone FROM Account WHERE Id = :acc.Id];
     
     System.assertEquals(1, trkCross.size());
-    //System.assertEquals(false, resultAcc.PhoneValidated__c);
-    //System.assertEquals('123456789', resultAcc.Phone);
-    //System.assertEquals(resultAcc.Id, (String) outMap.get('RootAcount'));
+    System.assertEquals(false, resultAcc.PhoneValidated__c);
+    System.assertEquals('123456789', resultAcc.Phone);
+    System.assertEquals(resultAcc.Id, (String) outMap.get('RootAcount'));
   }
 
   @isTest
@@ -139,13 +138,12 @@ private class taSalesSMSInteractionTest {
     Test.stopTest();
     
     List<CrossObject__c> trkCross = [SELECT Id FROM CrossObject__c WHERE RecordTypeId = :trkRecordType];
-    //PFTA-10979, ya no se hace insert en acc en el metodo
-    //Account resultAcc = [SELECT PhoneValidated__c, Phone FROM Account WHERE Id = :acc.Id];
+    Account resultAcc = [SELECT PhoneValidated__c, Phone FROM Account WHERE Id = :acc.Id];
     
     System.assertEquals(0, trkCross.size());
-    //System.assertEquals(true, resultAcc.PhoneValidated__c);
-    //System.assertEquals(testLine, resultAcc.Phone);
-    //System.assertEquals(resultAcc.Id, (String) outMap.get('RootAcount'));
+    System.assertEquals(true, resultAcc.PhoneValidated__c);
+    System.assertEquals(testLine, resultAcc.Phone);
+    System.assertEquals(resultAcc.Id, (String) outMap.get('RootAcount'));
   }
 
   @isTest

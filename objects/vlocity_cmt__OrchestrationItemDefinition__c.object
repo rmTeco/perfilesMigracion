@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>vlocity_cmt__AsyncResponseVlocityDataRaptorBundleId__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -648,6 +649,17 @@
         <active>true</active>
         <label>Auto Task</label>
         <picklistValues>
+            <picklist>vlocity_cmt__AttributesEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
             <values>
                 <fullName>Business Days</fullName>
@@ -701,6 +713,32 @@
             </values>
             <values>
                 <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QueueType__c</picklist>
+            <values>
+                <fullName>Least Loaded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Priority Queue</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Round Robin</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RequestItemsEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -733,6 +771,17 @@
         <active>true</active>
         <label>Callout</label>
         <picklistValues>
+            <picklist>vlocity_cmt__AttributesEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
             <values>
                 <fullName>Business Days</fullName>
@@ -786,6 +835,32 @@
             </values>
             <values>
                 <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QueueType__c</picklist>
+            <values>
+                <fullName>Least Loaded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Priority Queue</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Round Robin</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RequestItemsEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -818,6 +893,17 @@
         <active>true</active>
         <label>Manual Task</label>
         <picklistValues>
+            <picklist>vlocity_cmt__AttributesEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
             <values>
                 <fullName>Business Days</fullName>
@@ -871,6 +957,32 @@
             </values>
             <values>
                 <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QueueType__c</picklist>
+            <values>
+                <fullName>Least Loaded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Priority Queue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Round Robin</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RequestItemsEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -903,6 +1015,17 @@
         <active>true</active>
         <label>Milestone</label>
         <picklistValues>
+            <picklist>vlocity_cmt__AttributesEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
             <values>
                 <fullName>Business Days</fullName>
@@ -956,6 +1079,32 @@
             </values>
             <values>
                 <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QueueType__c</picklist>
+            <values>
+                <fullName>Least Loaded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Priority Queue</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Round Robin</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RequestItemsEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -988,6 +1137,17 @@
         <active>true</active>
         <label>Pull Event</label>
         <picklistValues>
+            <picklist>vlocity_cmt__AttributesEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
             <values>
                 <fullName>Business Days</fullName>
@@ -1041,6 +1201,32 @@
             </values>
             <values>
                 <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QueueType__c</picklist>
+            <values>
+                <fullName>Least Loaded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Priority Queue</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Round Robin</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RequestItemsEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
                 <default>true</default>
             </values>
         </picklistValues>
@@ -1073,6 +1259,17 @@
         <active>true</active>
         <label>Push Event</label>
         <picklistValues>
+            <picklist>vlocity_cmt__AttributesEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>vlocity_cmt__JeopardySafetyIntervalUnit__c</picklist>
             <values>
                 <fullName>Business Days</fullName>
@@ -1126,6 +1323,32 @@
             </values>
             <values>
                 <fullName>VisualForce Page</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__QueueType__c</picklist>
+            <values>
+                <fullName>Least Loaded</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Priority Queue</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Round Robin</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__RequestItemsEncodingStyle__c</picklist>
+            <values>
+                <fullName>Flat</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Structure</fullName>
                 <default>true</default>
             </values>
         </picklistValues>

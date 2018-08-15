@@ -172,7 +172,7 @@
         <externalId>false</externalId>
         <label>Blacklist Remove Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -181,7 +181,7 @@
         <description>Indicates if an Asset is on blacklist.</description>
         <externalId>false</externalId>
         <label>Blacklist de Suscripciones</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -566,6 +566,11 @@
                     <fullName>Conciliate</fullName>
                     <default>false</default>
                     <label>Conciliate</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Siniestro</fullName>
+                    <default>false</default>
+                    <label>Suspend-Siniestro</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1231,10 +1236,9 @@
         <filters>
             <field>ACCOUNT.NAME</field>
             <operation>equals</operation>
-            <value>Wholesale Chip TA</value>
+            <value>Victorino Rodriguez</value>
         </filters>
         <label>Todos los activos</label>
-        <language>es_MX</language>
     </listViews>
     <listViews>
         <fullName>Analisis_Asset</fullName>
@@ -1311,7 +1315,7 @@
         <filters>
             <field>ACCOUNT.NAME</field>
             <operation>contains</operation>
-            <value>Valeria Tech</value>
+            <value>Victor Rodriguez</value>
         </filters>
         <label>Prueba Victor</label>
         <language>es_MX</language>

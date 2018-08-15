@@ -1,4 +1,3 @@
-@isTest
 global class IFS_S101_reserveOrReleaseMock implements HttpCalloutMock{
          public Integer status {get;set;}
         // Implement this interface method

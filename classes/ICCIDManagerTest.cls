@@ -3,25 +3,83 @@ public with sharing class ICCIDManagerTest {
     
     @testSetup static void createDataTest(){
 
-        MockupFactory.generate();
+        //MockupFactory.generate();
+        Account account = TestDataFactory.createAccounts(1,'Consumer').get(0);
+        Asset asset = TestDataFactory.createAssets(1,account).get(0);
+        Contact contact = TestDataFactory.createContacts(1,account).get(0);
+        
+        account.vlocity_cmt__PrimaryContactId__c = contact.Id;
+        update account;
+        
+        List<Product2> products = TestDataFactory.createProduct(1);
+        
+    //  vlocity_cmt__BusinessSite__c storeLocation = new vlocity_cmt__BusinessSite__c(Name='Barrio Norte',
+    //        vlocity_cmt__OrganizationId__c=Account.Id, Status__c='Activo', Type__c='POS', Channel__c='Físico',
+    //         Channel_Type__c='Oficinas Comerciales', Channel_Type_2__c='Oficinas Comerciales', Channel_Type_3__c='Oficinas Comerciales',
+    //         Region__c='AMBA');
+    // insert storeLocation;
+
+    //  user usernew = new user(ID = UserInfo.getUserID());
+    //  string strIdUser = UserInfo.getUserID();
 
         TestDataFactory.createWorkTeam('Test');
 
-        String mockResponse = '{"listaResultado":[{"mensajeResultado": "OK","codigoResultado": "0","numeroSerie": "99543410307677114097"}],"codigoResultado": "OK"}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S105', mockResponse);
+        // WorkTeam__c workTeamParent = new WorkTeam__c(Team_Name__c = 'Test Parent', Name = 'Test Parent');
+        // insert workTeamParent;
+        // String manager = UserInfo.getUserId();
+        // String parent = workTeamParent.Id;
+        // WorkTeam__c workTeam = new WorkTeam__c(Team_Name__c = 'Test', Name = 'Test');
+        // Team_Member__c tm = TestDataFactory.setTeamMember('Call Center', userinfo.getUserId(), null);
+    
+        Order order = TestDataFactory.createOrders(1,account).get(0);
+        
+        List<OrderItem> orderItems = TestDataFactory.createOrderItemsWithAsset(1, order, asset);
 
-        mockResponse = '{"listaResultado": [],"descripcionResultado": "Liberacion Exitosa","codigoResultado": "OK"}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S101', mockResponse);
+        orderItems[0].vlocity_cmt__JSONAttribute__c = '{"FAN_ATTCAT_000062":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000EBfKUAW","attributecategoryid__c":"a0F6C0000006oxLUAQ","categorycode__c":"FAN_ATTCAT_000062","categoryname__c":"Caracteristicas Tangible","attributeuniquecode__c":"FAN_ATT_000154","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"CIUD","displaysequence__c":"null","categorydisplaysequence__c":170,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000cbtFUAQ","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":null,"valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","values":[],"default":[],"selectedItem":{}},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000EBAwUAO","attributecategoryid__c":"a0F6C0000006oxLUAQ","categorycode__c":"FAN_ATTCAT_000062","categoryname__c":"Caracteristicas Tangible","attributeuniquecode__c":"FAN_ATT_000152","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Codigo Orden Despacho","displaysequence__c":"null","categorydisplaysequence__c":170,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000cayFUAQ","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000EBAmUAO","attributecategoryid__c":"a0F6C0000006oxLUAQ","categorycode__c":"FAN_ATTCAT_000062","categoryname__c":"Caracteristicas Tangible","attributeuniquecode__c":"FAN_ATT_000150","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Aduana Ingreso","displaysequence__c":"null","categorydisplaysequence__c":170,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000cayGUAQ","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000EBArUAO","attributecategoryid__c":"a0F6C0000006oxLUAQ","categorycode__c":"FAN_ATTCAT_000062","categoryname__c":"Caracteristicas Tangible","attributeuniquecode__c":"FAN_ATT_000151","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Pais Origen","displaysequence__c":"null","categorydisplaysequence__c":170,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000cayHUAQ","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null}],"FAN_ATTCAT_000042":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pvqyUAA","attributecategoryid__c":"a0F6C000000BoqlUAC","categorycode__c":"FAN_ATTCAT_000042","categoryname__c":"Integracion","attributeuniquecode__c":"FAN_ATT_000031","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Codigo Sistema Origen","displaysequence__c":"31","categorydisplaysequence__c":31,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000VeL5UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pvqtUAA","attributecategoryid__c":"a0F6C000000BoqlUAC","categorycode__c":"FAN_ATTCAT_000042","categoryname__c":"Integracion","attributeuniquecode__c":"FAN_ATT_000030","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"ID Sistema Origen","displaysequence__c":"31","categorydisplaysequence__c":31,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"vlocity_cmt__ObjectClass__c","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000VeL4UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pvr8UAA","attributecategoryid__c":"a0F6C000000BoqlUAC","categorycode__c":"FAN_ATTCAT_000042","categoryname__c":"Integracion","attributeuniquecode__c":"FAN_ATT_000032","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Nombre Sistema Origen","displaysequence__c":"31","categorydisplaysequence__c":31,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000VeL6UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwkBUAQ","attributecategoryid__c":"a0F6C000000BoqlUAC","categorycode__c":"FAN_ATTCAT_000042","categoryname__c":"Integracion","attributeuniquecode__c":"FAN_ATT_000084","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Charge Code","displaysequence__c":"31","categorydisplaysequence__c":31,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":true,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPvUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"C_OT_MB_EQUIPMENT_SIM","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[{"value":"C_OT_MB_EQUIPMENT_SIM","id":30,"displayText":"SIM"}],"values":[{"value":"C_OT_MB_EQUIPMENT_PHONES","id":10,"displayText":"Telefono"},{"value":"C_OT_MB_EQUIPMENT_MODEMS","id":20,"displayText":"Modem"},{"value":"C_OT_MB_EQUIPMENT_SIM","id":30,"displayText":"SIM"},{"value":"C_OT_MB_EQUIPMENT_ACCESORIOS","id":40,"displayText":"Accesorio"},{"value":"C_OT_MB_EQUIPMENT_NETBOOK","id":50,"displayText":"Netbook"}]},"$$AttributeDefinitionEnd$$":null}],"FAN_ATTCAT_000045":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pvsQUAQ","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000042","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":false,"attributedisplayname__c":"Sistema Origen","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"vlocity_cmt__ObjectClass__c","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000VeL7UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":null,"valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","values":[],"default":[],"selectedItem":{}},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pvv5UAA","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000045","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Modo de Pago","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrhKUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"Prepago","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[{"value":"Prepago","id":10,"displayText":"Prepago"}],"values":[{"value":"Prepago","id":10,"displayText":"Prepago"},{"value":"Pospago","id":20,"displayText":"Pospago"},{"value":"Hibrido","id":30,"displayText":"Hibrido"}],"selectedItem":{"value":"Prepago","id":10,"displayText":"Prepago"}},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwIvUAI","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000074","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Fabricacion","displaysequence__c":"null","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":true,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPwUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":null,"valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","values":[{"value":"FAN_PKV_NAC","id":10,"displayText":"Nacional"},{"value":"FAN_PKV_INT","id":20,"displayText":"Internacional"},{"value":"FAN_PKV_TFUE","id":30,"displayText":"Tierra del Fuego"}],"default":[],"selectedItem":{}},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000EC7qUAG","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000156","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"No Aplica Promocion Financiera","displaysequence__c":"null","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000cdUtUAI","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false,"value":false},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwHJUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000067","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Provisionable","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":true,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPyUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"true","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"true","value":"true"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwHOUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000068","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Facturable en Venta","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":true,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPxUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"Requerido","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[{"value":"Requerido","id":10,"displayText":"Requerido"}],"values":[{"value":"Requerido","id":10,"displayText":"Requerido"},{"value":"Opcional","id":20,"displayText":"Opcional"},{"value":"No Aplica","id":30,"displayText":"No Aplica"}],"selectedItem":{"value":"Requerido","id":10,"displayText":"Requerido"}},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pyG9UAI","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000139","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Alicuota","displaysequence__c":"null","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":21,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000Us7MUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"21","valuedatatype__c":"Percent","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Percent","default":"21","value":21},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pyNgUAI","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000140","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Canal","displaysequence__c":"null","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000Us7NUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":null,"valuedatatype__c":"Multi Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Multi Picklist","uiDisplayType":"Dropdown","values":[],"default":[],"selectedItems":[]},"$$AttributeDefinitionEnd$$":null}],"CHAR":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pxWDUAY","attributecategoryid__c":"a0F6C000000Ba5dUAC","categorycode__c":"CHAR","categoryname__c":"Characteristics","attributeuniquecode__c":"MSISDN","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"MSISDN","displaysequence__c":"100","categorydisplaysequence__c":100,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPsUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Text","value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","uiDisplayType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pu9iUAA","attributecategoryid__c":"a0F6C000000Ba5dUAC","categorycode__c":"CHAR","categoryname__c":"Characteristics","attributeuniquecode__c":"FAN_ATT_000040","attributeconfigurable__c":true,"attributedisplaysequence__c":"20","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Susceptible de Cita","displaysequence__c":"100","categorydisplaysequence__c":100,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":true,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPtUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"false","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"false","value":"false"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pofZUAQ","attributecategoryid__c":"a0F6C000000Ba5dUAC","categorycode__c":"CHAR","categoryname__c":"Characteristics","attributeuniquecode__c":"FAN_ATT_000041","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Tangible","displaysequence__c":"100","categorydisplaysequence__c":100,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":true,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPuUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"true","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"true","value":"true"},"$$AttributeDefinitionEnd$$":null}],"FAN_ATTCAT_000048":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwIbUAI","attributecategoryid__c":"a0F6C000000BovEUAS","categorycode__c":"FAN_ATTCAT_000048","categoryname__c":"Caracteristicas Simcard","attributeuniquecode__c":"FAN_ATT_000070","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"NMU Simcard","displaysequence__c":"95","categorydisplaysequence__c":95,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqQ3UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":null,"valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","values":[{"value":"PTP3FFMMI","id":10,"displayText":"Simcard Magenta: (3FF Micro SIM)"},{"value":"PTP2FFCCI","id":20,"displayText":"Simcard Cyan: (2FF Bolsita)"},{"value":"PTP4FFVNI","id":30,"displayText":"Simcard Violeta: (4FF Nano SIM)"},{"value":"PTP23FFCI","id":40,"displayText":"Simcard Cyan 2FF/3FF Bolsita comunes"},{"value":"PTPBOLTCI","id":50,"displayText":"Usimcard Triple Corte Bolsita"}],"default":[],"selectedItem":{}},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwIgUAI","attributecategoryid__c":"a0F6C000000BovEUAS","categorycode__c":"FAN_ATTCAT_000048","categoryname__c":"Caracteristicas Simcard","attributeuniquecode__c":"FAN_ATT_000071","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"ICCID","displaysequence__c":"95","categorydisplaysequence__c":95,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqQ0UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwIlUAI","attributecategoryid__c":"a0F6C000000BovEUAS","categorycode__c":"FAN_ATTCAT_000048","categoryname__c":"Caracteristicas Simcard","attributeuniquecode__c":"FAN_ATT_000072","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"IMSI","displaysequence__c":"95","categorydisplaysequence__c":95,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqQ1UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwIqUAI","attributecategoryid__c":"a0F6C000000BovEUAS","categorycode__c":"FAN_ATTCAT_000048","categoryname__c":"Caracteristicas Simcard","attributeuniquecode__c":"FAN_ATT_000073","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"KI","displaysequence__c":"95","categorydisplaysequence__c":95,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqQ2UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","value":null},"$$AttributeDefinitionEnd$$":null}]}';
+
+        update orderItems;
+    }
+    
+    public static testmethod void serialValidationTest(){
+        //MockupFactory.generate(); //testSetup
+
+        Map<String,Object> inputMap = new Map<String, Object>();
+        Map<String,Object> outputMap = new Map<String, Object>();
+        Map<String, Object> orderMap = new Map<String, Object>();        
+        List<Object> planesList = new List<Object>();
+        Map<String, Object> planMap = new Map<String, Object>();
+        List<Object> linesList = new List<Object>();
+        Map<String, Object> lineMap = new Map<String, Object>();
+        
+        lineMap.put('serial', '1234567890');
+        lineMap.put('validacionSerial', 'test');
+        linesList.add(lineMap);
+        planMap.put('lineas', linesList);
+        planesList.add(planMap);
+        orderMap.put('planes', planesList);
+        inputMap.put('Order', orderMap);
+        
+        Test.startTest();
+        ICCIDManager im = new ICCIDManager();
+        im.invokeMethod('SerialValidation', inputMap, outputMap, null);
+
+        lineMap.put('serial','1324875490');
+        im.invokeMethod('SerialValidation', inputMap, outputMap, null);
+        
+        lineMap.put('serial','123');
+        im.invokeMethod('SerialValidation', inputMap, outputMap, null);
+        
+        lineMap.put('serial','');
+        im.invokeMethod('SerialValidation', inputMap, outputMap, null);
+        Test.stopTest();
     }
 
     @isTest
     public static void serialAssignmentTest(){
-        String mockResponse = '{"listaDeSeriados": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S094', mockResponse);
+        String mockResponse = '{"listaNumeroSeries":[{"codNMU":"codNMU","imsi":"imsi","aduanaIngreso":"aduanaIngreso","paisOrigen":"paisOrigen","codOrdenDespacho":"codOrdenDespacho","codDeposito":"codDeposito","stockProducto":"stockProducto","numeroSerie":"serial"},{"codNMU":"codNMU","imsi":"imsi","aduanaIngreso":"aduanaIngreso","paisOrigen":"paisOrigen","codOrdenDespacho":"codOrdenDespacho","codDeposito":"codDeposito","stockProducto":"stockProducto","numeroSerie":"serial2"}]}';
+        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S095', mockResponse);
 
-        mockResponse = '{"listaNumeroSerie": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S444', mockResponse);
-
+        //MockupFactory.generate(); //testSetup
         Map<String,Object> inputMap = new Map<String, Object>();
         Map<String,Object> options = new Map<String, Object>();
         Map<String,Object> outputMap = new Map<String, Object>();
@@ -46,12 +104,7 @@ public with sharing class ICCIDManagerTest {
     
     @isTest
     public static void serialAssignmentWithStorePickUp(){
-        String mockResponse = '{"listaDeSeriados": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S094', mockResponse);
-
-        mockResponse = '{"listaNumeroSerie": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S444', mockResponse);
-
+        //MockupFactory.generate(); //testSetup
         Map<String,Object> inputMap = new Map<String, Object>();
         Map<String,Object> options = new Map<String, Object>();
         Map<String,Object> outputMap = new Map<String, Object>();
@@ -83,12 +136,7 @@ public with sharing class ICCIDManagerTest {
     
     @isTest
     public static void serialAssignmentWithStorePickUpAndStockAvailableCodeNULL(){
-        String mockResponse = '{"listaDeSeriados": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S094', mockResponse);
-
-        mockResponse = '{"listaNumeroSerie": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S444', mockResponse);
-
+        //MockupFactory.generate(); //testSetup
         Map<String,Object> inputMap = new Map<String, Object>();
         Map<String,Object> options = new Map<String, Object>();
         Map<String,Object> outputMap = new Map<String, Object>();
@@ -102,6 +150,7 @@ public with sharing class ICCIDManagerTest {
         Map<String,Object> BillingOrderMap = new Map<String, Object>();
         BillingOrderMap.put('Channel', 'Agentes'  );
         inputMap.put('BillingOrder', BillingOrderMap);
+        
         
         Map<String,Object> orderMap = new Map<String,Object>();
         orderMap.put('IdOrder',ord.Id);
@@ -115,12 +164,7 @@ public with sharing class ICCIDManagerTest {
     
     @isTest
     public static void serialAssignmentWithIsTestListaDeSeriadosTestEmpty(){
-        String mockResponse = '{"listaDeSeriados": []}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S094', mockResponse);
-
-        mockResponse = '{"listaNumeroSerie": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"},{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444K","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S444', mockResponse);
-        
+        //MockupFactory.generate(); //testSetup
         Map<String,Object> inputMap = new Map<String, Object>();
         Map<String,Object> options = new Map<String, Object>();
         Map<String,Object> outputMap = new Map<String, Object>();
@@ -135,9 +179,12 @@ public with sharing class ICCIDManagerTest {
         BillingOrderMap.put('Channel', 'Agentes'  );
         inputMap.put('BillingOrder', BillingOrderMap);
         
+        
         Map<String,Object> orderMap = new Map<String,Object>();
         orderMap.put('IdOrder',ord.Id);
         options.put('Order',orderMap);
+        
+        options.put('isTestListaDeSeriadosTestEmpty',true);
       
         Test.startTest();
         ICCIDManager im = new ICCIDManager();
@@ -148,18 +195,14 @@ public with sharing class ICCIDManagerTest {
     @isTest
     public static void serialAssignmentWithSimCard()
     {
-        String mockResponse = '{"listaDeSeriados": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S094', mockResponse);
-
-        mockResponse = '{"listaNumeroSerie": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S444', mockResponse);
-
+        //MockupFactory.generate(); //testSetup
         Map<String,Object> inputMap = new Map<String, Object>();
         Map<String,Object> options = new Map<String, Object>();
         Map<String,Object> outputMap = new Map<String, Object>();
         Account acc = [SELECT Id FROM Account LIMIT 1];
         vlocity_cmt__BusinessSite__c site = new vlocity_cmt__BusinessSite__c (vlocity_cmt__City__c = 'Tigre', PointOfSaleId__c = 1, vlocity_cmt__StreetAddress__c = 'Test', PointOfSaleAddressNumber__c = '1', vlocity_cmt__OrganizationId__c = acc.Id, PointOfSaleType__c  = 'LE');
         insert site;
+        
         
         Order ord = [SELECT Id, Delivery_Method__c FROM Order LIMIT 1];
         ord.Delivery_Method__c = 'Store Pick Up';
@@ -174,14 +217,20 @@ public with sharing class ICCIDManagerTest {
         product.vlocity_cmt__Type__c = 'Simcard';
         update product;
         
+        
         options.put('IdOrder', ord.Id);
         Map<String,Object> BillingOrderMap = new Map<String, Object>();
         BillingOrderMap.put('Channel', 'Agentes'  );
         inputMap.put('BillingOrder', BillingOrderMap);
-            
+        
+        
+        
+        
         Map<String,Object> orderMap = new Map<String,Object>();
         orderMap.put('IdOrder',ord.Id);
         options.put('Order',orderMap);
+        
+        options.put('isTestListaDeSeriadosTestEmpty',true);
       
         Test.startTest();
         ICCIDManager im = new ICCIDManager();
@@ -192,18 +241,14 @@ public with sharing class ICCIDManagerTest {
     @isTest
     public static void serialAssignmentWithSimCardAndSerial()
     {
-        String mockResponse = '{"listaDeSeriados": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S094', mockResponse);
-
-        mockResponse = '{"listaNumeroSerie": [{"imsi": "a1s5d4s587sd523","ubicacionPlantilla": "UP1","fechaIngresoPuntoVenta":"201709101145","ki": "ds000001d224a45015s983a21c34a3ds1","stockProducto": "MTCA","codDeposito": "1111","fechaAltaProducto": "201705091015","aduanaIngreso": "AI23","paisProcedencia": "Argentina","paisOrigen": "Brasil","anioImportacion": 2017,"codOrdenDespacho": "A1","numeroSerie": "A1B22C333D4444E","codNMU": "1234"}]}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S444', mockResponse);
-
+        //MockupFactory.generate(); //testSetup
         Map<String,Object> inputMap = new Map<String, Object>();
         Map<String,Object> options = new Map<String, Object>();
         Map<String,Object> outputMap = new Map<String, Object>();
         Account acc = [SELECT Id FROM Account LIMIT 1];
         vlocity_cmt__BusinessSite__c site = new vlocity_cmt__BusinessSite__c (vlocity_cmt__City__c = 'Tigre', PointOfSaleId__c = 1, vlocity_cmt__StreetAddress__c = 'Test', PointOfSaleAddressNumber__c = '1', vlocity_cmt__OrganizationId__c = acc.Id, PointOfSaleType__c  = 'LE');
         insert site;
+        
         
         Order ord = [SELECT Id, Delivery_Method__c FROM Order LIMIT 1];
         ord.Delivery_Method__c = 'Store Pick Up';
@@ -219,14 +264,20 @@ public with sharing class ICCIDManagerTest {
         product.Name = 'IsGetSimcardsSerialTest';
         update product;
         
+        
         options.put('IdOrder', ord.Id);
         Map<String,Object> BillingOrderMap = new Map<String, Object>();
         BillingOrderMap.put('Channel', 'Agentes'  );
         inputMap.put('BillingOrder', BillingOrderMap);
         
+        
+        
+        
         Map<String,Object> orderMap = new Map<String,Object>();
         orderMap.put('IdOrder',ord.Id);
         options.put('Order',orderMap);
+        
+        options.put('isTestListaDeSeriadosTestEmpty',true);
       
         Test.startTest();
         ICCIDManager im = new ICCIDManager();
@@ -237,9 +288,13 @@ public with sharing class ICCIDManagerTest {
     @isTest
     public static void SerialReAssingmentTest()
     {
-        String mockResponse = '{"listaNumeroSeries":[{"codNMU":"codNMU","imsi":"imsi","aduanaIngreso":"aduanaIngreso","paisOrigen":"paisOrigen","codOrdenDespacho":"codOrdenDespacho","codDeposito":"codDeposito","stockProducto":"stockProducto","numeroSerie":"serial"}]}';
+        //String mockResponse = '{"listaNumeroSeries":[{"codNMU":"codNMU","imsi":"imsi","aduanaIngreso":"aduanaIngreso","paisOrigen":"paisOrigen","codOrdenDespacho":"codOrdenDespacho","codDeposito":"codDeposito","stockProducto":"stockProducto","numeroSerie":"serial"},{"codNMU":"codNMU","imsi":"imsi","aduanaIngreso":"aduanaIngreso","paisOrigen":"paisOrigen","codOrdenDespacho":"codOrdenDespacho","codDeposito":"codDeposito","stockProducto":"stockProducto","numeroSerie":"serial2"}]}';
+
+         String mockResponse = '{"listaNumeroSerie":[{"codNMU":"codNMU","imsi":"imsi","aduanaIngreso":"aduanaIngreso","paisOrigen":"paisOrigen","codOrdenDespacho":"codOrdenDespacho","codDeposito":"codDeposito","stockProducto":"stockProducto","numeroSerie":"serial"}]}';
+        
         VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S095', mockResponse);
         
+        //GIVEN
         String nameMethod = 'SerialReAssingment';
         
         Map<String,Object> inputMap = new Map<String, Object>();
@@ -248,13 +303,10 @@ public with sharing class ICCIDManagerTest {
         
         List<Object> serialList = new List<Object>();
         Map<String,Object> orderMap = new Map<String,Object>();
-
-        Order order = [SELECT Id FROM Order LIMIT 1];
-        OrderItem oItem = [SELECT Id FROM OrderItem WHERE orderId = :order.Id LIMIT 1];
         
         Map<String,Object> item1 = new Map<String,Object>();
         item1.put('validacionSerial','');
-        item1.put('itemId',oItem.Id);
+        item1.put('itemId','001xa000004DIlo');
         item1.put('serial','serial');
         item1.put('serialValidado','serialValidado');
         item1.put('productName','productName');
@@ -264,25 +316,31 @@ public with sharing class ICCIDManagerTest {
         serialList.add(item1);
         orderMap.put('serialList',serialList);
         
+        Order order = [SELECT Id FROM Order LIMIT 1];
+        
         options.put('Order',orderMap);
         options.put('IdOrder',order.Id);
         
         Map<String,Object> billingOrder = new Map<String,Object>();
-        billingOrder.put('Delivery_Method','Presencial');
+        billingOrder.put('Delivery_Method','Delivery');
         billingOrder.put('Channel','Agentes');
         
         inputMap.put('BillingOrder',billingOrder);
         
         ICCIDManager im = new ICCIDManager();
         
+        //WHEN
         Test.startTest();
         im.invokeMethod(nameMethod, inputMap, outputMap, options);
         Test.stopTest();
+        
+        //THEN
     }
     
     @isTest
     public static void UpdateSalesInvoiceTest()
     {
+        //GIVEN
         String nameMethod = 'UpdateSalesInvoice';
         
         Map<String,Object> inputMap = new Map<String, Object>();
@@ -294,23 +352,75 @@ public with sharing class ICCIDManagerTest {
         options.put('IdOrder',IdOrder);
                 
         ICCIDManager im = new ICCIDManager();
-    
+        
+        //WHEN
         Test.startTest();
         im.invokeMethod(nameMethod, inputMap, outputMap, options);
         Test.stopTest();
+        
+        //THEN
     }
     
     @isTest
     public static void setValuesOnJSON2Test()
     {
+        //GIVEN
         String jsonString = '{"list":[{"attributedisplayname__c":"ICCID","attributeRunTimeInfo":{"value":"ICCID"}}]}';
         String iccid = 'iccid';
                 
         ICCIDManager im = new ICCIDManager();
-
+        
+        //WHEN
         Test.startTest();
         im.setValuesOnJSON2(jsonString, iccid);
         Test.stopTest();
+        
+        //THEN
+    }
+    
+    @isTest
+    public static void GetStockDefSizeOneTest()
+    {
+        //GIVEN
+        List<String> stocksCode = new String[1];
+        String nmuCart = '';
+        List<Object> existences = new List<Object>();
+                        
+        //WHEN
+        Test.startTest();
+        ICCIDManager.GetStockDef(stocksCode, nmuCart, existences);
+        Test.stopTest();
+        
+        //THEN
+    }
+    
+    @isTest
+    public static void GetStockDefSizeMoreOneTest()
+    {
+        //GIVEN
+        List<String> stocksCode = new List<String>();
+        String nmuCart = '1';
+        List<Object> existences = new List<Object>();
+        
+        stocksCode.add('stockProducto');
+        stocksCode.add('stockProducto');
+        
+        Map<String,Object> existence = new Map<String,Object>();
+        List<Object> ListaPorCodigoStock = new List<Object>();
+        Map<String,Object> stock = new Map<String,Object>();
+        stock.put('stockProducto','stockProducto');
+        stock.put('CantidadDisponible',1);
+        ListaPorCodigoStock.add(stock);
+        existence.put('ListaPorCodigoStock',ListaPorCodigoStock);
+        existence.put('codNMU','1');
+        existences.add(existence);
+        
+        //WHEN
+        Test.startTest();
+        ICCIDManager.GetStockDef(stocksCode, nmuCart, existences);
+        Test.stopTest();
+        
+        //THEN
     }
 
     @isTest

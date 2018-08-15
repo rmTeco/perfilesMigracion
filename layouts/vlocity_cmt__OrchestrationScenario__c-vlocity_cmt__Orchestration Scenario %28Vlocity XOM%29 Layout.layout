@@ -24,6 +24,10 @@
                 <field>vlocity_cmt__SubAction__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ConditionData__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>vlocity_cmt__OrchestrationPlanDefinitionId__c</field>
             </layoutItems>
@@ -64,6 +68,22 @@
         <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Conditions</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>500</height>
+                <page>vlocity_cmt__XOMOrchestrationScenarioCondition</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

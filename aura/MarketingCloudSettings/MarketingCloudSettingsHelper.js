@@ -44,7 +44,7 @@
         var aSelected = false;
         var bSelected = false;
         if(storedValue) {
-            component.find("viewRestriction").set("v.value",$A.get("$Label.et4ae5.tSonlyAdm"));
+            component.find("viewRestriction").set("v.value",$A.get("$Label.et4ae5.tSOnlyAdm"));
             aSelected = true;
         }
         else {
@@ -53,7 +53,7 @@
         }
         //Restrictions picklist
         var dlOpts = [
-            { label: $A.get("$Label.et4ae5.tSonlyAdm"), value: "AdminsOnly", selected: aSelected },
+            { label: $A.get("$Label.et4ae5.tSOnlyAdm"), value: "AdminsOnly", selected: aSelected },
             { label: $A.get("$Label.et4ae5.tSbothAdmUsr"), value: "StandardAndAdmins", selected: bSelected }
         ];
         component.find("editRestriction").set("v.options", dlOpts);
@@ -72,7 +72,7 @@
             hourlySelected = true;
             component.find("viewTrackingFrequency").set("v.value", $A.get("$Label.et4ae5.hourly"));
         }else{
-            component.find("viewTrackingFrequency").set("v.value", $A.get("$Label.et4ae5.Daily"));
+            component.find("viewTrackingFrequency").set("v.value", $A.get("$Label.et4ae5.daily"));
         }
         //Tracking Frequencies picklist
         var dlOpts = [

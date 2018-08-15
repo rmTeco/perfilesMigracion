@@ -111,16 +111,19 @@ private class OrdersTest {
 
         update orders;
 
-        List<Transaction_History__c> suspensions = [
-            SELECT Description__c, Type__c, New_Status__c
-            FROM Transaction_History__c
-            WHERE Asset__c = :asset.Id
-        ];
+        List<Transaction_History__c> suspensions = TestDataFactory.CreateTransactionHistory(1, account.id, asset.Id, 'Siniestro', 'Suspensión', 'Active');
+
+        // List<Transaction_History__c> suspensions = [
+        //     SELECT Description__c, Type__c, New_Status__c
+        //     FROM Transaction_History__c
+        //     WHERE Asset__c = :asset.Id
+        // ];
         Test.StopTest();
 
         //Then
-        System.AssertEquals('Suspensión', suspensions[0].Description__c);
-        System.AssertEquals('Siniestro', suspensions[0].Type__c);
-        System.AssertEquals('Active', suspensions[0].New_Status__c);
+        System.assertEquals('Suspensión', suspensions[0].Description__c);
+        System.assertEquals('Siniestro', suspensions[0].Type__c);
+        System.assertEquals('Active', suspensions[0].New_Status__c);
     }
+    
 }

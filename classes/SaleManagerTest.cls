@@ -1,8 +1,7 @@
 @isTest(seeAllData = false)
 public class SaleManagerTest {
     
-    @isTest
-    static void reserveProductsTest() {
+    static testMethod void reserveProductsTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> outMap = new Map<String, Object>();
@@ -30,18 +29,14 @@ public class SaleManagerTest {
             ordItem.vlocity_cmt__ParentItemId__c = ordItemList.get(0).Id;
         }
         update oldOrderItems;
-
-        String mockResponse = '{"listaResultado": [],"descripcionResultado": "Liberacion Exitosa","codigoResultado": "OK"}';
-        VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S101', mockResponse);
         
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new IFS121MockHttpResponseGenerator());
         saleManager.invokeMethod('ReserveProducts', SaleManagerInputMapFactoryTest.generateInputMap(), outMap, options);
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest
-    static void getOrderValidationsTest() {
+    static testMethod void getOrderValidationsTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> outMap = new Map<String, Object>();
@@ -68,8 +63,7 @@ public class SaleManagerTest {
         Test.stopTest();
     }
 
-    @isTest
-    static void getOrderValidationsBadOrderIdTest() {
+    static testMethod void getOrderValidationsBadOrderIdTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> outMap = new Map<String, Object>();
@@ -81,8 +75,7 @@ public class SaleManagerTest {
         Test.stopTest();
     }
 
-    @isTest
-    static void getCustomSettingTest() {
+    static testMethod void getCustomSettingTest() {
         MockupFactory.generate();
         //Get a random Custom Setting to test
         Segments__c  customSetting = new Segments__c (Name = 'name', ClubPersonalCategory__c  = 'clubPersonalCategory', SegmentLevel1__c  = 'segmentLevel1', SegmentLevel2__c = 'segmentLevel2');
@@ -106,22 +99,20 @@ public class SaleManagerTest {
         
         Test.startTest();
         saleManager.invokeMethod('GetCustomSetting', SaleManagerInputMapFactoryTest.generateInputMap(), outMap, options);
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest
-    static void assingProductsToServiceAccountTest() {
+    static testMethod void assingProductsToServiceAccountTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> outMap = new Map<String, Object>();
         
         Test.startTest();
         saleManager.invokeMethod('AssingProductsToServiceAccount', SaleManagerInputMapFactoryTest.generateInputMap(), outMap, SaleManagerInputMapFactoryTest.generateOptionsMap());
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest
-    static void validateEmailSettingsTest() {
+    static testMethod void validateEmailSettingsTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> outMap = new Map<String, Object>();
@@ -141,11 +132,10 @@ public class SaleManagerTest {
         Map<String, Object> options = new Map<String, Object>();
         options.put('FieldEmail', '');
         saleManager.invokeMethod('ValidateEmailSettings', SaleManagerInputMapFactoryTest.generateInputMap(), outMap, options);
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest
-    static void setStockMovementCodesTest() {
+    static testMethod void setStockMovementCodesTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> outMap = new Map<String, Object>();
@@ -153,11 +143,10 @@ public class SaleManagerTest {
         Test.startTest();
         Test.setMock(HttpCalloutMock.class, new IFS121MockHttpResponseGenerator());
         saleManager.invokeMethod('SetStockMovementCodes', SaleManagerInputMapFactoryTest.generateInputMap(), outMap, SaleManagerInputMapFactoryTest.generateOptionsMap());
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest
-    static void SendPickUpInformationEmailTest() {
+    static testMethod void SendPickUpInformationEmailTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> input = new Map<String, Object>();
@@ -169,11 +158,10 @@ public class SaleManagerTest {
         Test.startTest();
         //Test.setMock(HttpCalloutMock.class, new IFS121MockHttpResponseGenerator());
         saleManager.invokeMethod('SendPickUpInformationEmail', input, outMap, options);
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest
-    static void GetAmountInfoRefillSOSTest() {
+    static testMethod void GetAmountInfoRefillSOSTest() {
         MockupFactory.generate();
         SaleManager saleManager = new SaleManager();
         Map<String, Object> input = new Map<String, Object>();
@@ -217,11 +205,10 @@ public class SaleManagerTest {
         input.put('IdOrder',IdOrder);
         //Test.setMock(HttpCalloutMock.class, new IFS121MockHttpResponseGenerator());
         saleManager.invokeMethod('GetAmountInfoRefillSOS', input, outMap, options);
-        Test.stopTest();
+		Test.stopTest();
     }
 
-    @isTest
-    static void getCustomSettingAtributeTest() {
+    static testMethod void getCustomSettingAtributeTest() {
         MockupFactory.generate();
         //Get a random Custom Setting to test
         Segments__c  customSetting = new Segments__c (Name = 'name', ClubPersonalCategory__c  = 'clubPersonalCategory', SegmentLevel1__c  = 'segmentLevel1', SegmentLevel2__c = 'segmentLevel2');
@@ -246,20 +233,6 @@ public class SaleManagerTest {
         
         Test.startTest();
         saleManager.invokeMethod('GetCustomSettingAtribute', SaleManagerInputMapFactoryTest.generateInputMap(), outMap, options);
-        Test.stopTest();
-    }
-
-    @isTest
-    static void GetNewGuid_Test() {
-        MockupFactory.generate();
-        
-        SaleManager saleManager = new SaleManager();
-        Map<String, Object> inputMap = new Map<String, Object>();
-        Map<String, Object> outMap = new Map<String, Object>();
-        Map<String, Object> options = new Map<String, Object>();     
-        
-        Test.startTest();
-        saleManager.invokeMethod('GetNewGuid', inputMap, outMap, options);
-        Test.stopTest();
+		Test.stopTest();
     }
 }

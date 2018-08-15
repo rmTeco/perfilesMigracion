@@ -38,10 +38,10 @@ public with sharing class MktIntegrationsTest {
         Product2 prod = new Product2(Name ='prod', vlocity_cmt__Type__c = 'Simcard');
         insert prod;
         
-        Asset asst1 = new Asset(Name = 'Asset', AccountId = aConsumer.Id, Product2Id = prod.Id);
+        Asset asst1 = new Asset(Name = 'Asset', AccountId = aConsumer.Id, Product2Id = prod.Id, MSISDN__c = '8U9034',Subscription_Id__c = '89743789');
         insert asst1;
         
-        Asset asst2 = new Asset(Name = 'Asset', AccountId = aBusiness.Id, Product2Id = prod.Id);
+        Asset asst2 = new Asset(Name = 'Asset', AccountId = aBusiness.Id, Product2Id = prod.Id, MSISDN__c = '8346089',Subscription_Id__c = '87987342');
         insert asst2;
         
         CPaccounts.put('consumerAccounts', (Object)'({AccountNumber=10, ClubMember=false, Id='+String.valueOf(aConsumer.Id)+', Name='+aConsumer.Name+', vlcSelected=true})');

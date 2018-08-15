@@ -33,7 +33,7 @@ public class MarketingCloudAPIUtil {
             String responseBody = res.getBody();
             
             token = ((Map<String, String>) JSON.deserialize(responseBody, Map<String, String>.class)).get('accessToken');
-            
+            system.debug('responseBody:' + responseBody);
             Decimal expiresIn = Decimal.valueOf(((Map<String, String>) JSON.deserialize(responseBody, Map<String, String>.class)).get('expiresIn'));
             
             /*mktgCloudAPISettings.get(0).MCAPIAccessToken__c = token;
@@ -86,7 +86,7 @@ public class MarketingCloudAPIUtil {
             r.setBody(reqBody);    
             HttpResponse res = h.send(r);
             
-            MCId = ((Map<String, String>) JSON.deserialize(res.getBody(), Map<String, String>.class)).get('id');		
+            MCId = ((Map<String, String>) JSON.deserialize(res.getBody(), Map<String, String>.class)).get('id');        
        // }
         
         return MCId;
@@ -155,10 +155,11 @@ public class MarketingCloudAPIUtil {
     public static Map<String, String> sendMessageWithMC(String triggeredSendName, String jsonParams, String accessToken){
         
         Map<String, String> sendMsgResponse = new Map<String,String>();
+        String responseBody;
 
         TriggeredSendNotificationSettings__c triggeredSendKey = TriggeredSendNotificationSettings__c.getValues(triggeredSendName);
         List<MktgCloudAPISettings__c> mktgCloudAPISettings = MktgCloudAPISettings__c.getall().values();
-        
+
         Http h = new Http();
         HttpRequest req = new HttpRequest();
         req.setEndpoint('https://www.exacttargetapis.com/messaging/v1/messageDefinitionSends/key:' + triggeredSendKey.TriggeredSendMCId__c + '/send'); 
@@ -167,9 +168,12 @@ public class MarketingCloudAPIUtil {
         req.setBody(jsonParams);
         req.setMethod('POST'); 
         
-        HTTPResponse res = h.send(req);
-        
-        String responseBody = res.getBody();
+        if(!Test.isRunningTest()){
+            HTTPResponse res = h.send(req);
+            responseBody = res.getBody();
+        } else {
+            responseBody = jsonParams;
+        }
        
         SendMessageResponseWrapper sendMessageWrapper = new SendMessageResponseWrapper();
 

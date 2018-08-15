@@ -20,12 +20,9 @@
 @RestResource(urlMapping='/v1/integrationprocedure/Sales_addNewProduct/*')
 global with sharing class IFS_S446_addNewProduct {
     private static final boolean K_DEBUG_ON = true;
-    private static String guId = null;
-
     private static final String K_GESTION = 'Compra de Pack';     //-- Gestion.
     private static final String K_TIPO_JOB = 'Job Request';
     private static final String K_ORDER_TEMPLATE_NAME = 'Pack IVR Order Template';
-    private static final List<String> K_LISTA_CANALES = new List<String>{'IVR', 'USSD', 'SMS'};
 
     @HttpPost
     global static void getPost() {
@@ -35,9 +32,6 @@ global with sharing class IFS_S446_addNewProduct {
         RestResponse res = RestContext.response;
         RestRequest req = RestContext.request;
         res.addHeader('Content-Type', 'application/json');
-        
-        writeLog ('REQ', req.requestBody.toString());
-
         try {
             res.statuscode = 200;
             try {
@@ -65,23 +59,6 @@ global with sharing class IFS_S446_addNewProduct {
         catch(Exception e){
             res.statuscode = 500;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('500',e.getMessage())));
-        }
-            
-        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
-    }
-
-    /**
-     * Wrapper del IFS_LogRecord.record
-     */
-    private static void writeLog (String pTipo, String pDatos) {
-        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
-
-        if (pTipo == 'REQ') {
-            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
-            IFS_LogRecord.record(dts, 'SERVICIO', 'S446', pTipo, guId, '', pDatos);  
-        }
-        else {
-            IFS_LogRecord.record(dts, 'SERVICIO', 'S446', pTipo, guId, '', pDatos);  
         }
     }
 
@@ -133,9 +110,9 @@ global with sharing class IFS_S446_addNewProduct {
             throw new CalloutException('Error en la validacion de los atributos del request. El canal vino vacio');
         }
 
-        if (!K_LISTA_CANALES.contains(codCanal)) {
+        if (!codCanal.equals('IVR') && !codCanal.equals('USSD')) {
             printDebug('canal no valido: ' + codCanal); 
-            throw new CalloutException('Error en la validacion de los atributos del request. El canal debe contener algun valor de la lista: ' + K_LISTA_CANALES );
+            throw new CalloutException('Error en la validacion de los atributos del request. El canal debe contener algun valor de la lista: [IVR, USSD]');
         }
 
         if (lstOferta == null || lstOferta.size()==0) {
@@ -468,14 +445,14 @@ global with sharing class IFS_S446_addNewProduct {
     private static OrderItem getOrderItemRecord (Id pOrderItemId) {
         printDebug('Entre en getOrderItemRecord()');
         ID recordId = pOrderItemId;
-        DescribeSObjectResult describeResult = recordId.getSObjectType().getDescribe();	
-        List<String> fieldNames = new List<String>( describeResult.fields.getMap().keySet() );	
-        String query =	  ' SELECT '  +	      
-                        String.join( fieldNames, ',' )  +	  
-                        ' FROM ' +	      
-                        describeResult.getName() +	  
-                        ' WHERE '  +	      
-                        ' id = \'' + recordId + '\' LIMIT 1 '	;	
+        DescribeSObjectResult describeResult = recordId.getSObjectType().getDescribe(); 
+        List<String> fieldNames = new List<String>( describeResult.fields.getMap().keySet() );  
+        String query =    ' SELECT '  +       
+                        String.join( fieldNames, ',' )  +     
+                        ' FROM ' +        
+                        describeResult.getName() +    
+                        ' WHERE '  +          
+                        ' id = \'' + recordId + '\' LIMIT 1 '   ;   
         List<SObject> records = Database.query( query );
         printDebug('Registro completo --> ' + records);
         return (OrderItem) records[0];    

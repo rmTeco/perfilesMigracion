@@ -23,7 +23,6 @@ global with sharing class IFS_S348 implements vlocity_cmt.VlocityOpenInterface{
         List <Order> orderList = new List <Order>();
         List <Account> accountList = new List <Account>();
         List <Map<String,Object>> listaInformacionPagos = new List <Map<String,Object>>();
-        List <Map<String,Object>> listaItemsFactura = new List <Map<String,Object>>();
         Map<String,Object> procesarPagosPeticion = new Map<String,Object>();
         Map<String,Object> body = new Map<String,Object>();
         Map<String,Object> request = new Map<String,Object>();
@@ -74,7 +73,7 @@ global with sharing class IFS_S348 implements vlocity_cmt.VlocityOpenInterface{
         }
         System.debug('payments: '+payments);
         if(payments.size() > 0){
-            orderList = [select id, Gestion__c, OriginStoreLocation__r.PointOfSaleId__c, PreInvoiceNumber__c from Order where id =: orderID];
+            orderList = [select id, Gestion__c, OriginStoreLocation__r.PointOfSaleId__c from Order where id =: orderID];
             accountList = [select id, Name, DocumentNumber__c, DocumentType__c, accountintegrationid__c from Account where id=:accountID];
             order = orderList.get(0);
             account = accountList.get(0);
@@ -87,7 +86,6 @@ global with sharing class IFS_S348 implements vlocity_cmt.VlocityOpenInterface{
             Integer i=1;
             for(vlocity_cmt__PaymentAdjustment__c pago : payments){
                 Map <String, Object> raiz = new Map<String,Object>();
-                Map <String, Object> mapItemsFactura = new Map<String,Object>();
                 Map <String, Object> pagoEfectivo = new Map<String,Object>();
                 Map <String, Object> infoBanco = new Map<String,Object>();
                 Map <String, Object> wondersoftInfo = new Map<String,Object>();
@@ -138,13 +136,9 @@ global with sharing class IFS_S348 implements vlocity_cmt.VlocityOpenInterface{
                 }
                 
                 pagoEfectivo.put('importePago',pago.vlocity_cmt__Amount__c);
-                pagoEfectivo.put('codMedioPago',pago.vlocity_cmt__PaymentMethodId__r.vlocity_cmt__MethodType__c);
+                pagoEfectivo.put('codMedioPago', IntegrationUtils.ParseCodMedioPago(pago.vlocity_cmt__PaymentMethodId__r.vlocity_cmt__MethodType__c));
                 pagoEfectivo.put('planCuota',pago.Financial_Promotion__r.InstalmentPlan__c);
                 pagoEfectivo.put('infoBanco',infoBanco);
-                mapItemsFactura.put('numeroComprobante', order.PreInvoiceNumber__c);
-                listaItemsFactura.add(mapItemsFactura);
-                pagoEfectivo.put('listaItemsFactura',listaItemsFactura);
-
                 //pago.PaymentCode__c
                 infoPago.put('pagoEfectivo',pagoEfectivo);
                 wondersoftInfo.put('ipOrigen',ipOriginValue);
@@ -172,8 +166,6 @@ global with sharing class IFS_S348 implements vlocity_cmt.VlocityOpenInterface{
                 raiz.put('objetoPago',objetoPago);
                 raiz.put('identificadorPagoCanal',i);
                 raiz.put('codCanal', pago.Order__r.OriginStoreLocation__r.PaymentChannel__c);
-                //AM 8/8/2018 - 1 para pagar factura - 2 Otros pagos(aun no definido). 
-                raiz.put('codAccionNegocio', '1'); 
                 
                 listaInformacionPagos.add(raiz);
                 ReferenceMap.put(String.valueOf(i),pago.id);

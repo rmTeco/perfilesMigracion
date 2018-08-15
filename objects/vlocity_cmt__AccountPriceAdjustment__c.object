@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>vlocity_cmt__AccountAppliedPromotionId__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -443,6 +444,18 @@
                     <fullName>Offer</fullName>
                     <default>false</default>
                     <label>Offer</label>
+                </value>
+                <value>
+                    <fullName>Base</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Base</label>
+                </value>
+                <value>
+                    <fullName>Policy Action</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Policy Action</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

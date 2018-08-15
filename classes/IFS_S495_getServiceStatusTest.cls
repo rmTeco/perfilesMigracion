@@ -15,6 +15,7 @@ public class IFS_S495_getServiceStatusTest {
     static final String K_PRODUCT_NAME = 'Numero Amigo de Voz';
     static final String K_ASSET_NAME = 'Numeros Amigos';
     static final String K_ROOT_ASSET_NAME = 'Numeros gratis a Personal 1 para voz contra recarga';
+    static final String K_URI='/v1/integrationprocedure/validateReproNoNominated/';
 
     @isTest static void testResponseStatus200 () {
         JSONRequest jrq = new JSONRequest();
@@ -23,7 +24,7 @@ public class IFS_S495_getServiceStatusTest {
 
         Test.startTest();
 
-        RestObj result = getResult(jrq); 
+        RestObj result = getResult(jrq,K_URI); 
         RestContext.request = result.restRequest;
         RestContext.response = result.restResponse;
 
@@ -41,7 +42,7 @@ public class IFS_S495_getServiceStatusTest {
 
         Test.startTest();
 
-        RestObj result = getResult(jrq); 
+        RestObj result = getResult(jrq,K_URI);
         RestContext.request = result.restRequest;
         RestContext.response = result.restResponse;
 
@@ -59,7 +60,7 @@ public class IFS_S495_getServiceStatusTest {
 
         Test.startTest();
 
-        RestObj result = getResult(jrq); 
+        RestObj result = getResult(jrq, K_URI); 
         RestContext.request = result.restRequest;
         RestContext.response = result.restResponse;
 
@@ -77,7 +78,7 @@ public class IFS_S495_getServiceStatusTest {
 
         Test.startTest();
 
-        RestObj result = getResult(jrq); 
+        RestObj result = getResult(jrq, K_URI); 
         RestContext.request = result.restRequest;
         RestContext.response = result.restResponse;
 
@@ -242,13 +243,19 @@ public class IFS_S495_getServiceStatusTest {
         System.debug('------------ Antes de crear el Account (Organization) ----');
         Account orgAcc = getCreatedAccount('TelecomTest');
         System.debug('------------ Despues de crear el Account (Organization) ----');
+        vlocity_cmt__BusinessSite__c storeLocation = new vlocity_cmt__BusinessSite__c(Name='Centro de Servicio Santa Fe', 
+            vlocity_cmt__OrganizationId__c=orgAcc.Id, Status__c='Activo', Type__c='POS', Channel__c='Físico',
+             Channel_Type__c='Oficinas Comerciales', Channel_Type_2__c='Oficinas Comerciales', Channel_Type_3__c='Oficinas Comerciales',
+             Region__c='AMBA', RecordTypeId=Schema.SObjectType.vlocity_cmt__BusinessSite__c.getRecordTypeInfosByName().get('Punto de venta OC').getRecordTypeId());
+        insert storeLocation;     
+        return [SELECT Id FROM vlocity_cmt__BusinessSite__c WHERE Name='Centro de Servicio Santa Fe'];     
 
-        vlocity_cmt__BusinessSite__c storeLocation = new vlocity_cmt__BusinessSite__c(Name='Barrio Norte', 
+/*        vlocity_cmt__BusinessSite__c storeLocation = new vlocity_cmt__BusinessSite__c(Name='Barrio Norte', 
             vlocity_cmt__OrganizationId__c=orgAcc.Id, Status__c='Activo', Type__c='POS', Channel__c='Físico',
              Channel_Type__c='Oficinas Comerciales', Channel_Type_2__c='Oficinas Comerciales', Channel_Type_3__c='Oficinas Comerciales',
              Region__c='AMBA');
         insert storeLocation;     
-        return [SELECT Id FROM vlocity_cmt__BusinessSite__c WHERE Name='Barrio Norte'];     
+        return [SELECT Id FROM vlocity_cmt__BusinessSite__c WHERE Name='Barrio Norte'];     */
     }
 
     private static WorkTeam__c createWorkTeam (Id pStoreLocationId) {
@@ -269,10 +276,10 @@ public class IFS_S495_getServiceStatusTest {
      ** Datos para invocar el servicio
      **/
 
-    private static RestObj getResult(JSONRequest pjrq){
+    private static RestObj getResult(JSONRequest pjrq,String pURI){
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
-        req.requestURI = '/v1/integrationprocedure/obtener/EstadoLinea';  
+        req.requestURI = pURI;  
         req.httpMethod = 'POST';
         req.headers.put('Authorization', 'Bearer ' + UserInfo.getSessionID());
         req.headers.put('Content-Type', 'application/json');

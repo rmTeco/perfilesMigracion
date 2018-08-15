@@ -51,7 +51,7 @@ global with sharing class ta_care_BillingsInformationsWithBalance implements vlo
                         String accountIntegrationId = String.valueOf(billingAccMap.get('AccountIntegrationId'));
                         if(accountIntId == accountIntegrationId)
                         {
-                            Double totalBalence = (Double.valueOf(balanceMap.get('saldoAFavor')) - Double.valueOf(balanceMap.get('saldoDeudor'))) * -1;
+                            Double totalBalence = (Double.valueOf(balanceMap.get('saldoAFavor')) - Double.valueOf(balanceMap.get('saldoDeudor')));
                             billingAccMap.put('Balance', totalBalence);
                             //System.debug('billingAccMap: '+billingAccMap);
                         }

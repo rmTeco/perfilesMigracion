@@ -465,15 +465,6 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
         System.debug('checkAndSaveDecisiveLine');
         String accountId = (String)options.get('accountId');
         String phone = String.valueOf(options.get('phone'));
-        String phoneS121 = String.valueOf(options.get('phoneS121'));
-
-        //PFTA-10979
-        //We only send SMS if the number is not the same
-        Boolean sendSMS = false;
-        if (phone != phoneS121) {
-            System.debug('Se ingresó un numero manualmente');
-            sendSMS = true;
-        } 
 
         Account account = [SELECT Id, RecordTypeId, vlocity_cmt__RootAccountId__c, Name FROM Account WHERE Id = :accountId];
         String recordTypeId = account.RecordTypeId;
@@ -484,18 +475,18 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
             accountId = account.vlocity_cmt__RootAccountId__c;
         }
 
-        Boolean hasPhone = false;
+        Boolean phoneValidated = false;
         List<Asset> assets = [SELECT Id, AccountId FROM Asset WHERE AccountId = :accountId AND MSISDN__c = :phone];
+
         if(assets.size() > 0){
             System.debug('TENGO ASSET CON MISMO NUMERO');
-            hasPhone = true;
+            phoneValidated = true;
         }
 
         // Llamamos al IP S159
-        if(sendSMS && !hasPhone){
-            System.debug('Mando SMS al S159');
+        if(!phoneValidated){
             SMS_Expected_Response_Type__c expected = SMS_Expected_Response_Type__c.getInstance('SMS_Expected_Response_Type');
-            
+
             //armo el text de envio de SMS haciendo los replaces
             recordType = [SELECT Id, Name FROM RecordType WHERE name = 'SMS Template'];
             String typeSMS = 'Verificación de Línea Decisora';
@@ -529,17 +520,13 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
         } 
 
         // Actualizamos siempre el account con el phone recibido, y si el telefono es unos de los assets se deja como validado
-        
-        //PFTA-10979, se debe actualizar al final de la gestión.
-        /*
         account = new Account();
         account.Id = accountId;
         account.Phone = phone;
-        account.PhoneValidated__c = hasPhone;
+        account.PhoneValidated__c = phoneValidated;
         update account;
-        */
-        
-        outMap.put('PhoneValidated', hasPhone);
+
+        outMap.put('PhoneValidated', phoneValidated);
         outMap.put('Phone',phone);
         outMap.put('RootAcount',accountId);
     }

@@ -12,15 +12,14 @@ global with sharing class taSalesCartContainerController implements vlocity_cmt.
         try
         {
             System.debug('CallPrefeasibility');
-            System.debug(idOrder);
             Order order = [SELECT PrefeasibilityResult__c FROM ORDER WHERE Id = :idOrder];
-            System.debug(order);
             if (!String.isNotBlank(order.PrefeasibilityResult__c))
             {
                 String prefaResult = null;
                 if (String.isNotBlank(idAsset))
                 {
                     vlocity_cmt__Premises__c premise = GetAssetPremise(idAsset);
+                    
                     if (premise != null)
                         prefaResult = ObtainPrefeasibility(premise);
                 }
@@ -104,7 +103,6 @@ global with sharing class taSalesCartContainerController implements vlocity_cmt.
             if(!Test.isRunningTest()){
                 prefeseabilityResponse = IFS_S271_prefeseabilty.prefeseabilty(bodyFamilia, bodyOperacion, bodyDomicilio, bodyCoord, bodyServicios);
             } else {
-                
                 Map<String, Object> auxTecno1 = new Map<String, Object>();
                 auxTecno1.put('medicionDeBajada', '1');
                 auxTecno1.put('disponibilidad', 'SI');
@@ -164,25 +162,25 @@ global with sharing class taSalesCartContainerController implements vlocity_cmt.
         Boolean result = true;
         try
         {
-            switch on methodName{
-                when 'CallPrefeasibility'{
-                    CallPrefeasibility(inputMap, outMap);
-                }
-                when 'CallStockMovement'{
-                    CallStockMovement(inputMap, outMap);
-                }
-                when 'RetrievePrefeasibilityResult'{
-                    RetrievePrefeasibilityResult(inputMap, outMap);
-                }
-                when 'DeleteCartItems'{
-                    DeleteCartItems(inputMap, outMap, options);
-                }
-                when 'updateAttrib'{
-                    updateAttrib(inputMap, outMap, options);
-                }
-                when 'AddToCartValidations'{
-                    AddToCartValidations(inputMap, outMap, options);
-                }
+            if (methodName.equals('CallPrefeasibility'))
+            {
+                CallPrefeasibility(inputMap, outMap);
+            }
+            else if (methodName.equals('CallStockMovement'))
+            {
+                CallStockMovement(inputMap, outMap);
+            }
+            else if (methodName.equals('RetrievePrefeasibilityResult'))
+            {
+                RetrievePrefeasibilityResult(inputMap, outMap);
+            }
+            else if (methodName.equals('DeleteCartItems'))
+            {
+                DeleteCartItems(inputMap, outMap, options);
+            }
+            else if (methodName.equals('updateAttrib'))
+            {
+                updateAttrib(inputMap, outMap, options);
             }
             result = false;
         }
@@ -192,49 +190,6 @@ global with sharing class taSalesCartContainerController implements vlocity_cmt.
             result = false;
         }
         return result;
-    }
-
-    void AddToCartValidations(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options)
-    {
-        System.debug('AddToCartValidations');
-        Id orderId = (Id) options.get('IdOrder');
-        Id itemToAddProductId = (Id) options.get('ItemToAddProductId');
-        String itemToAddProductType = (String) options.get('ItemToAddProductType');
-        System.debug('orderId : ' + orderId);
-        String cegErrorMessage = 'Solo se puede agregar un dispositivo para la gestión Cambio en Garantía';
-        String cegErrorMessageTitle = 'Validación Cambio en Garantía';
-
-        Order Ord = [SELECT Gestion__c FROM Order WHERE Id =: orderId LIMIT 1] ;
-
-        if (Ord.Gestion__c == 'Cambio en Garantia')
-        {
-            if (itemToAddProductType == 'Dispositivo')
-            {
-                List<OrderItem> orderItems = [SELECT Id, OrderId FROM OrderItem WHERE Product2.vlocity_cmt__Type__c = 'Dispositivo' AND OrderId = :orderId];
-                if (orderItems.size() > 1)
-                {
-                    outMap.put('ErrorMessage', cegErrorMessage);
-                    outMap.put('ErrorMessageTitle', cegErrorMessageTitle);
-                }
-            }
-            else
-            {
-                outMap.put('ErrorMessage', cegErrorMessage);
-                outMap.put('ErrorMessageTitle', cegErrorMessageTitle);
-            }
-        }
-        else
-        {
-            LinesManager linesManager = new LinesManager();
-            String methodName = 'ValidateLinesQtty';
-            linesManager.invokeMethod(methodName, inputMap, outMap, options);
-            String linesError = (String) outMap.get('LinesError');
-            if (String.isNotBlank(linesError))
-            {
-                outMap.put('ErrorMessage', linesError);
-                outMap.put('ErrorMessageTitle', 'Máximo de Lineas');
-            }
-        }
     }
 
     public static void updateAttrib(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options)
@@ -267,8 +222,6 @@ global with sharing class taSalesCartContainerController implements vlocity_cmt.
             //jsonAttributeMap = (Map<String, Object>) JSON.deserializeUntyped(inputMap);
             //lineItemsInCart = (Map<String, Object>) jsonAttributeMap.get('lineItemsInCart');
             //Bajo hasta el plan padre (asumo que el unico plan, sino hay que recorrer el records1 para buscar el plan deseado)
-
-            System.debug('Item Name: ' + options.get('itemName'));
 
             sItemName = (String) options.get('itemName');
             mAttribs = (Map<String, Object>) options.get('attribs');
@@ -441,7 +394,7 @@ global with sharing class taSalesCartContainerController implements vlocity_cmt.
         try
         {
             String orderId = (String) options.get('orderId');
-            List<OrderItem> items = [SELECT Id from OrderItem where orderId = :orderId AND vlocity_cmt__Action__c = 'Add'];
+            List<OrderItem> items = [SELECT Id from OrderItem where orderId = :orderId];
             delete items;
 
             return true;

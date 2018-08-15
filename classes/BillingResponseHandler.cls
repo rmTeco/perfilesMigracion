@@ -211,56 +211,43 @@ public static void processOrderHandOver(Order objOrder, vlocity_cmt__BusinessSit
   Boolean tangibleExists = taOrderController.ValidateTangibleExistence(objOrder.Id);
 
   if(tangibleExists = true) {
-    if (objOrder.Delivery_Method__c == 'Delivery')
-        objOrder.TrackingStatus__c = 'Cobrado';
-    else
-    {
-        switch on store.Channel_Type__c {
-            when 'Oficinas Comerciales' {
-                //PFTA-11418
-                if (statusInvoice == 'invoice succeed') {
-                    objOrder.TrackingStatus__c = 'Preparar pedido';
-                    taOrderController.CreateStateTask(objOrder.Id, taOrderController.PENDIENTE_ARMADO_NOTIFICATION);
-                }
+    switch on store.Channel_Type__c {
+        when 'Oficinas Comerciales' {
+            
+            //PFTA-11418
+            if (statusInvoice == 'invoice succeed') {
+                objOrder.TrackingStatus__c = 'Preparar pedido';
+                taOrderController.CreateStateTask(objOrder.Id, taOrderController.PENDIENTE_ARMADO_NOTIFICATION);
             }
-            when 'Agentes' {
-                if (objOrder.Delivery_Method__c == 'Presencial') {
-                    {
-                        Map<String,Object> options = new Map<String,Object>();
-                        options.put('idOrder',objOrder.Id);
-                        taOrderController orderController = new taOrderController();
-                        orderController.invokeMethod('OrderHandOverUpdate',null,null,options);
-                    }
-                }
-                if (objOrder.Delivery_Method__c == 'Store Pick Up') {
-                    vlocity_cmt__BusinessSite__c storeLocation = ta_sales_UserUtils.getStoreLocation(UserInfo.getUserId());
-                    if (storeLocation.Channel_Type__c == 'Agentes')
-                        objOrder.TrackingStatus__c = 'Pendiente de Entrega';
-                    else
-                        objOrder.TrackingStatus__c = 'Preparar pedido';
-
-                    taOrderController.CreateStateTask(objOrder.Id, taOrderController.PENDIENTE_ARMADO_NOTIFICATION);
-                }
-            }
-            when 'Call Center' {
-                if (objOrder.Delivery_Method__c == 'Store Pick Up') {
-                    objOrder.TrackingStatus__c = 'Preparar pedido';
-                    taOrderController.CreateStateTask(objOrder.Id, taOrderController.PENDIENTE_ARMADO_NOTIFICATION);
-                }
-            }
+        
+            
+        }
+        when 'Agentes' {
+        if (objOrder.Delivery_Method__c == 'Presencial' || objOrder.Delivery_Method__c == 'Delivery') {
+            objOrder.TrackingStatus__c = 'Entregado';
+        }
+        if (objOrder.Delivery_Method__c == 'Store Pick Up') {
+            objOrder.TrackingStatus__c = 'Preparar pedido';
+            taOrderController.CreateStateTask(objOrder.Id, taOrderController.PENDIENTE_ARMADO_NOTIFICATION);
+        }
+        }
+        when 'Call Center' {
+        if (objOrder.Delivery_Method__c == 'Delivery') {
+            objOrder.TrackingStatus__c = 'Cobrado';
+        }
+        if (objOrder.Delivery_Method__c == 'Store Pick Up') {
+            objOrder.TrackingStatus__c = 'Preparar pedido';
+            taOrderController.CreateStateTask(objOrder.Id, taOrderController.PENDIENTE_ARMADO_NOTIFICATION);
+        }
         }
     }
   }
-  update objOrder;
+
   system.debug('OM Antes' + objOrder.Id);
-  //DA - 3/8/2018: Se envia la Orden a OM a través de un Future para evitar problema de operaciones DML
-  //boolean isOmniScript = false;
-  //vlocity_cmt.SimpleDecompositionController.decomposeAndCreatePlanEx(objOrder.Id, isOmniScript);
-  List<Id> oIDs = new List<Id>();
-  oIDs.add(objOrder.Id);
-  sendOrderToOMFuture(OIds);
+  boolean isOmniScript = false;
+  vlocity_cmt.SimpleDecompositionController.decomposeAndCreatePlanEx(objOrder.Id, isOmniScript);
   system.debug('OM Paso');
-  
+  update objOrder;
 }
 
 private static void sendOrderToOM(String orderId) {
@@ -273,16 +260,6 @@ private static void sendOrderToOM(String orderId) {
     }
         
 }  
-
-@future(callout=true)
-private static void sendOrderToOMFuture(List<Id> orderIds) {
-//DA - 3/8/2018: Method used to send an order to OM using future method
-    system.debug('sendOrderToOMFuture Begin');
-    for (Id oId: orderIds) {
-        vlocity_cmt.SimpleDecompositionController.decomposeAndCreatePlanEx(oId,false);
-    }
-    system.debug('sendOrderToOMFuture End');    
-}
 
 public static String processRecharge(Order objOrder, String legalInvoiceNumber, String statusInvoice) {
   String txId;

@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>false</enableSharing>
     <enableStreamingApi>false</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Alarm_Level__c</fullName>
         <description>Alarm Level</description>
@@ -79,16 +80,16 @@
         <valueSet>
             <controllingField>Type__c</controllingField>
             <valueSetDefinition>
-                <sorted>true</sorted>
-                <value>
-                    <fullName>IIBB_NIS</fullName>
-                    <default>false</default>
-                    <label>IBB No informó situación</label>
-                </value>
+                <sorted>false</sorted>
                 <value>
                     <fullName>IIBB_ENA</fullName>
                     <default>false</default>
                     <label>IIBB Exento / No Alcanzado</label>
+                </value>
+                <value>
+                    <fullName>IIBB_ICM</fullName>
+                    <default>false</default>
+                    <label>Inscripto en Convenio Multilateral</label>
                 </value>
                 <value>
                     <fullName>IIBB_IL</fullName>
@@ -96,9 +97,9 @@
                     <label>IIBB Inscripto Local</label>
                 </value>
                 <value>
-                    <fullName>IIBB_ICM</fullName>
+                    <fullName>IIBB_NIS</fullName>
                     <default>false</default>
-                    <label>Inscripto en Convenio Multilateral</label>
+                    <label>IBB No informó situación</label>
                 </value>
                 <value>
                     <fullName>IVA_CF</fullName>
@@ -111,24 +112,24 @@
                     <label>IVA Exento / No Alcanzado</label>
                 </value>
                 <value>
-                    <fullName>IVA_LEY23905</fullName>
-                    <default>false</default>
-                    <label>IVA Exento Art. 22 Ley 23.905</label>
-                </value>
-                <value>
                     <fullName>IVA_LEY20646</fullName>
                     <default>false</default>
                     <label>IVA Exento Ley 20.646 6/2/74</label>
                 </value>
                 <value>
-                    <fullName>IVA_RG3290</fullName>
+                    <fullName>IVA_LEY23905</fullName>
                     <default>false</default>
-                    <label>IVA Exento RG 3290 3349/91</label>
+                    <label>IVA Exento Art. 22 Ley 23.905</label>
                 </value>
                 <value>
                     <fullName>IVA_M</fullName>
                     <default>false</default>
                     <label>IVA Monotributista</label>
+                </value>
+                <value>
+                    <fullName>IVA_RG3290</fullName>
+                    <default>false</default>
+                    <label>IVA Exento RG 3290 3349/91</label>
                 </value>
                 <value>
                     <fullName>IVA_RI</fullName>
@@ -143,11 +144,11 @@
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>IIBB</controllingFieldValue>
-                <valueName>IIBB_NIS</valueName>
+                <valueName>IIBB_ENA</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IIBB</controllingFieldValue>
-                <valueName>IIBB_ENA</valueName>
+                <valueName>IIBB_ICM</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IIBB</controllingFieldValue>
@@ -155,7 +156,7 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IIBB</controllingFieldValue>
-                <valueName>IIBB_ICM</valueName>
+                <valueName>IIBB_NIS</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IVA</controllingFieldValue>
@@ -167,19 +168,19 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IVA</controllingFieldValue>
-                <valueName>IVA_LEY23905</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IVA</controllingFieldValue>
                 <valueName>IVA_LEY20646</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IVA</controllingFieldValue>
-                <valueName>IVA_RG3290</valueName>
+                <valueName>IVA_LEY23905</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IVA</controllingFieldValue>
                 <valueName>IVA_M</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVA</controllingFieldValue>
+                <valueName>IVA_RG3290</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IVA</controllingFieldValue>
@@ -225,7 +226,7 @@
         <type>Picklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>true</sorted>
+                <sorted>false</sorted>
                 <value>
                     <fullName>Bs. As</fullName>
                     <default>false</default>
@@ -402,7 +403,7 @@
         <type>Picklist</type>
         <valueSet>
             <valueSetDefinition>
-                <sorted>true</sorted>
+                <sorted>false</sorted>
                 <value>
                     <fullName>Ex IIBB</fullName>
                     <default>false</default>

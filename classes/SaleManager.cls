@@ -68,7 +68,6 @@ global with sharing class SaleManager implements vlocity_cmt.VlocityOpenInterfac
         outMap.put('X-Consumer-Transaction-ID', idUnico);
     }
 
-    /*
     Boolean ValidateServicePlanExistence(String orderId) {
       List<OrderItem> items = [select Product2.Name from OrderItem where OrderId = :orderId and (Product2.Family = 'Service Plan' or Product2.Family = :internetFamily or Product2.Family = :voiceFamily)];
       Boolean serviceExists = false ;
@@ -127,7 +126,6 @@ global with sharing class SaleManager implements vlocity_cmt.VlocityOpenInterfac
         //outMap.put('appointmentRequired', appointmentRequired);
         return appointmentRequired;
     }
-    */
 
     public void GetOrderValidations(Map<String,Object> inputMap, Map<String, Object> outMap, Map<String,Object> options) {
         /*
@@ -155,6 +153,48 @@ global with sharing class SaleManager implements vlocity_cmt.VlocityOpenInterfac
             throw e;
         }
     }
+  
+    /*void GenerateJson(Map<String,Object> inputMap, Map<String, Object> outMap){
+       String idOrder = (String) inputMap.get('IdOrder');
+       List<OrderItem> plansCollection = [select Id, Product2.Name from OrderItem where Product2.ProductCode = 'PTNAC' and OrderId = :idOrder order by Product2.Name];
+       List<Map<String, Object>>  plans = new List<Map<String,Object>>();
+       List<Map<String, Object>> lines;
+       //Empiezan los cambios
+       String aux = '';
+       for (OrderItem orderItem : plansCollection){
+          if (aux != orderItem.Product2.Name){
+              Map<String, Object> plan = new Map<String, Object>();
+              lines = new List<Map<String,Object>>();
+              plan.put('nombre', orderItem.Product2.Name);
+              plan.put('isSelected', false);
+              plan.put('lineas', lines);
+              plans.add(plan);
+              aux = orderItem.Product2.Name;
+          }
+          List<OrderItem> items = [select Product2.Name, Product2.ProductCode from OrderItem where Product2.Family = 'Simcard' and vlocity_cmt__ParentItemId__c = :orderItem.Id];
+          for(OrderItem lineItem : items){
+                  Map<String, Object> tempMapLine = new Map<String, Object>();
+                  tempMapLine.put('isSelected', false);
+                  tempMapLine.put('linea', null);
+                  tempMapLine.put('validacionLinea', null);
+                  tempMapLine.put('NMU', lineItem.Product2.ProductCode);
+                  tempMapLine.put('serial', null);
+                  tempMapLine.put('validacionSerial', null) ;
+
+                  lines.add(tempMapLine);                                       
+              }
+        }
+
+       Map<String, Object> principalNode = new Map<String, Object>();
+               principalNode.put('lineasReservadas', false);
+               principalNode.put('planes', plans);
+               principalNode.put('serialesReservados', false); 
+
+       List<Map<String, Object>>  returnList = new List<Map<String,Object>>();
+
+        returnList.add(principalNode);
+        outMap.put('options', returnList);
+    }*/
 
     void GetCustomSetting(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
         System.debug('GetCustomSetting');
@@ -233,107 +273,107 @@ global with sharing class SaleManager implements vlocity_cmt.VlocityOpenInterfac
             Map<String,String> getPointOfSaleWarehouseResponse = taOrderController.GetPointOfSaleWarehouse(orderId);
             String codPuntoDeVenta = getPointOfSaleWarehouseResponse.get('codPuntoDeVenta');
             String codDeposito = getPointOfSaleWarehouseResponse.get('codDeposito');
+            String codAplicacion = '2';
 
             List<Map<String, Object>>  plans = new List<Map<String,Object>>();
             List<Map<String, Object>>  returnList = new List<Map<String,Object>>();
-            Map<String, Object> principalNode = new Map<String, Object>();
-            List<OrderItem> items;
-            List<OrderItem> tangibles;
-            List<OrderItem> tangAReservar;
 
             Set<Id> oiIds = new Set<Id>();
 
             Map<String, Object> billingOrder = (Map<String, Object>) inputMap.get('BillingOrder');
-            if(billingOrder == null){
-                billingOrder = (Map<String, Object>) options.get('BillingOrder');
-            }
-            String billingOrderGestion = (String) billingOrder.get('Gestion__c');
-
             Map<String, List<OrderItem>> itemsByProductName = new Map<String, List<OrderItem>>();
+            Map<String, Integer> groupedNmus = new Map<String, Integer>();
+            Map<String, Map<String, Object>> nmus = new Map<String, Map<String, Object>>();
+            Map<String, Object> principalNode = new Map<String, Object>();
             Map<String, Object> plan = new Map<String, Object>();
             Map<String, String> planNames = new Map<String, String>();
             Map<String, String> itemParents = new Map<String, String>();
 
+            //List<OrderItem> plansCollection = [SELECT Id, Product2.Name FROM OrderItem WHERE Product2.ProductCode = 'FAN_TSEG1' AND OrderId = :orderId ORDER BY Product2.Name];
+            //Added By Venkatesh - PFTA-7872
             List<OrderItem> plansCollection = [SELECT Id, Product2.Name FROM OrderItem WHERE Product2.vlocity_cmt__Type__c = 'Plan Prepago' AND OrderId = :orderId ORDER BY Product2.Name];
-            if (plansCollection.size() > 0)
-            {    
-                System.debug('PlansCollection: ' + plansCollection);
-                for(OrderItem orderItem : plansCollection){
-                    oiIds.add(orderItem.Id);
-                    planNames.put(orderItem.Id, orderItem.Product2.Name);
-                }
+            
+            System.debug('PlansCollection: ' + plansCollection);
 
-                items = [select Id, Product2.Name, Product2.ProductCode, Quantity, vlocity_cmt__ParentItemId__c from OrderItem where Product2.vlocity_cmt__Type__c = 'Simcard' and vlocity_cmt__ParentItemId__c IN :oiIds];
-                for(OrderItem item: items){
-                    List<OrderItem> children = itemsByProductName.get(planNames.get(item.vlocity_cmt__ParentItemId__c));
-                    if(children == null){
-                        children = new List<OrderItem>();
-                    }
-                    children.add(item);
-                    itemParents.put(item.Product2.Name, item.vlocity_cmt__ParentItemId__c);
-                    itemsByProductName.put(planNames.get(item.vlocity_cmt__ParentItemId__c), children);
-                }
-
-                System.debug('itemsByProductName'+itemsByProductName+'.keySet()'+itemsByProductName.keySet());
-                for(String productName: itemsByProductName.keySet()){
-                    plan = new Map<String, Object>();
-                    List<Map<String, Object>> lines = new List<Map<String, Object>>();
-                    for(OrderItem item: (List<OrderItem>)itemsByProductName.get(productName)){
-                        Map<String, Object> tempMapLine = new Map<String, Object>();
-                        tempMapLine.put('isSelected', false);
-                        tempMapLine.put('linea', null);
-                        tempMapLine.put('validacionLinea', null);
-                        tempMapLine.put('NMU', productName);
-                        tempMapLine.put('serial', null);
-                        tempMapLine.put('validacionSerial', null);
-                        tempMapLine.put('orderItemId', item.Id) ;
-                        tempMapLine.put('orderItemParentId', item.vlocity_cmt__ParentItemId__c) ;
-                        lines.add(tempMapLine);
-                    }
-                    plan.put('nombre', productName);
-                    plan.put('isSelected', false);
-                    plan.put('lineas', lines);
-                    plans.add(plan);
-                    System.debug('Plan'+Plan);
-                }
+            for(OrderItem orderItem : plansCollection){
+                oiIds.add(orderItem.Id);
+                planNames.put(orderItem.Id, orderItem.Product2.Name);
             }
+
+            //List<OrderItem> items = [select Product2.Name, Product2.ProductCode, Quantity, vlocity_cmt__ParentItemId__c from OrderItem where Product2.Family = 'Simcard' and vlocity_cmt__ParentItemId__c IN :oiIds];
+            //List<OrderItem> items = [select Id, Product2.Name, Product2.ProductCode, Quantity, vlocity_cmt__ParentItemId__c from OrderItem where Product2.ProductCode = 'FAN_PSIM_STANDARD' and vlocity_cmt__ParentItemId__c IN :oiIds];
+            List<OrderItem> items = [select Id, Product2.Name, Product2.ProductCode, Quantity, vlocity_cmt__ParentItemId__c from OrderItem where Product2.vlocity_cmt__Type__c = 'Simcard' and vlocity_cmt__ParentItemId__c IN :oiIds];
+            for(OrderItem item: items){
+                //List<OrderItem> children = itemsByProductName.get(item.Product2.Name);
+                //if(planNames.contains(items.vlocity_cmt__ParentItemId__c))
+                List<OrderItem> children = itemsByProductName.get(planNames.get(item.vlocity_cmt__ParentItemId__c));
+                if(children == null){
+                    children = new List<OrderItem>();
+                }
+                children.add(item);
+                itemParents.put(item.Product2.Name, item.vlocity_cmt__ParentItemId__c);
+                itemsByProductName.put(planNames.get(item.vlocity_cmt__ParentItemId__c), children);
+            }
+
+            System.debug('itemsByProductName'+itemsByProductName+'.keySet()'+itemsByProductName.keySet());
+            for(String productName: itemsByProductName.keySet()){
+                plan = new Map<String, Object>();
+                List<Map<String, Object>> lines = new List<Map<String, Object>>();
+                for(OrderItem item: (List<OrderItem>)itemsByProductName.get(productName)){
+                    Map<String, Object> tempMapLine = new Map<String, Object>();
+                    tempMapLine.put('isSelected', false);
+                    tempMapLine.put('linea', null);
+                    tempMapLine.put('validacionLinea', null);
+                    tempMapLine.put('NMU', productName);
+                    tempMapLine.put('serial', null);
+                    tempMapLine.put('validacionSerial', null);
+                    tempMapLine.put('orderItemId', item.Id) ;
+                    tempMapLine.put('orderItemParentId', item.vlocity_cmt__ParentItemId__c) ;
+                    lines.add(tempMapLine);
+                }
+                  
+                //plan.put('nombre', planNames.get(itemParents.get(productName)));
+                plan.put('nombre', productName);
+                plan.put('isSelected', false);
+                plan.put('lineas', lines);
+                plans.add(plan);
+                System.debug('Plan'+Plan);
+            }
+
+            for(OrderItem item: items){
+                Integer i = groupedNmus.get(item.Product2.ProductCode);
+                if(i == null){
+                    i = 0;
+                }
+                i += (Integer)item.Quantity;
+                groupedNmus.put(item.Product2.ProductCode, i);
+            }
+
+            for(String s: groupedNmus.keySet()){
+                Map<String, Object> nmu = new Map<String, Object>();
+                nmu.put('codNMU', s);
+                nmu.put('codDeposito', codDeposito);
+                nmu.put('cantidad', groupedNmus.get(s));
+                nmus.put(s, nmu);
+            }
+
+            System.debug('nmus: ' + nmus);
 
             /* DA - 6/11/2017: PFTA-6749. Se quita el paso de reserva por NMU de las SIMCards.
             Cuando se realice reserva de otro tipo de producto hay que revisar el código.  
             */
-            tangibles = taOrderController.GetOrderSerials(orderId);
-            tangAReservar = new List<OrderItem>(); 
-
-            Map<String, Map<String, Object>> nmus = new Map<String, Map<String, Object>>();
-            for(OrderItem item: tangibles)
+            try
             {
-                if (item.Product2.vlocity_cmt__Type__c != 'Simcard')//Si es Simcard no reservo
-                {
-                    tangAReservar.add(item);
-                    Map<String, Object> nmu = (Map<String, Object>) nmus.get(item.Product2.NMU__c);
-                    if(nmu == null)
-                    {
-                        nmu = new Map<String, Object>();
-                        nmu.put('codNMU', item.Product2.NMU__c);
-                        nmu.put('codDeposito', codDeposito);
-                        nmu.put('cantidad', (Integer)item.Quantity);
-                        nmus.put(item.Product2.NMU__c, nmu);
-                    }
-                    else
-                    {
-                        Integer cantidad = (Integer) nmu.get(item.Product2.NMU__c);
-                        cantidad += (Integer)item.Quantity;
-                        nmu.put('cantidad', cantidad);
-                    }
-                }
-            }
-            
-            System.debug('nmus.keySet().size() = '+nmus.keySet().size());
-            
-            if (nmus.keySet().size() > 0){
-                StockUtils.StockQuantityManagement(nmus, orderId, 'R');
+                //PFTA - 10326 - Se envia siempre punto de venta 0
+                String idUnicoTransaccion = GuidUtil.NewGuid();
+                System.debug('SaleManager:idUnicoTransaccion: ' + idUnicoTransaccion);
+                Map<String,Object> response = IFS_S101_reserveOrRelease.reserveOrRelease('R', codAplicacion, orderId, '0', idUnicoTransaccion, nmus);
 
+                String httpResponseCode = (String) response.get('httpStatusCode');
+                if (httpResponseCode != '200' && httpResponseCode != '201')
+                    throw new FuncException('Error al invocar al servicio de reserva por NMU. ' + response);
             }
+            catch(Exception e){}
           
             principalNode.put('lineasReservadas', false);
             principalNode.put('planes', plans);
@@ -348,8 +388,6 @@ global with sharing class SaleManager implements vlocity_cmt.VlocityOpenInterfac
             System.debug('SaleManager:invokeMethod -> exception: '+e);
         }
     }
-    
-
 
     void AssingProductsToServiceAccount(Map<String,Object> inputMap, Map<String, Object> outMap, Map<String, Object> options) {
         try

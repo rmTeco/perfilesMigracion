@@ -12,40 +12,9 @@
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <tabs>standard-home</tabs>
-    <tabs>TS_Symptom__c</tabs>
-    <tabs>vlocity_cmt__VlocityTrackingEntry__c</tabs>
-    <tabs>Transaction_History__c</tabs>
-    <tabs>AttributesConfiguration</tabs>
-    <tabs>WorkTeam__c</tabs>
-    <tabs>vlocity_cmt__SyncDeltaObject__c</tabs>
-    <tabs>Team_Member__c</tabs>
-    <tabs>vlocity_cmt__InboundRESTInterface__c</tabs>
-    <tabs>Repro_Reporter</tabs>
-    <tabs>Permissions_by_Work_Team</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>LightningService_UtilityBar</utilityBar>
     <workspaceConfig>
-        <mappings>
-            <tab>AttributesConfiguration</tab>
-        </mappings>
-        <mappings>
-            <tab>Permissions_by_Work_Team</tab>
-        </mappings>
-        <mappings>
-            <tab>Repro_Reporter</tab>
-        </mappings>
-        <mappings>
-            <tab>TS_Symptom__c</tab>
-        </mappings>
-        <mappings>
-            <tab>Team_Member__c</tab>
-        </mappings>
-        <mappings>
-            <tab>Transaction_History__c</tab>
-        </mappings>
-        <mappings>
-            <tab>WorkTeam__c</tab>
-        </mappings>
         <mappings>
             <tab>standard-Account</tab>
         </mappings>
@@ -63,15 +32,6 @@
         </mappings>
         <mappings>
             <tab>standard-report</tab>
-        </mappings>
-        <mappings>
-            <tab>vlocity_cmt__InboundRESTInterface__c</tab>
-        </mappings>
-        <mappings>
-            <tab>vlocity_cmt__SyncDeltaObject__c</tab>
-        </mappings>
-        <mappings>
-            <tab>vlocity_cmt__VlocityTrackingEntry__c</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>

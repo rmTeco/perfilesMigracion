@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
-    <customButtons>vlocity_cmt__Clone_Product</customButtons>
     <customButtons>vlocity_cmt__Export</customButtons>
+    <customButtons>vlocity_cmt__XOMSynchronizeCatalog</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -21,10 +21,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__TrackAsAgreement__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SourceOrgProductId__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -86,30 +82,6 @@
         <label>Order Management</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__Scope__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>Custom Links</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>CustomLinks</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Product Attributes</label>
-        <layoutColumns>
-            <layoutItems>
                 <height>500</height>
                 <page>vlocity_cmt__TelcoProductAttributes</page>
                 <showLabel>false</showLabel>
@@ -135,10 +107,16 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__OrchestrationScenario__c.vlocity_cmt__Product2Id__c</relatedList>
-    </relatedLists>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>false</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Custom Links</label>
+        <layoutColumns/>
+        <layoutColumns/>
+        <layoutColumns/>
+        <style>CustomLinks</style>
+    </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__SourceProductId__c</relatedList>
@@ -148,33 +126,14 @@
         <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__DestinationProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedStandardPriceList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
-        <fields>vlocity_cmt__FromPostalCode__c</fields>
-        <fields>vlocity_cmt__ToPostalCode__c</fields>
-        <fields>vlocity_cmt__State__c</fields>
-        <fields>vlocity_cmt__City__c</fields>
-        <fields>vlocity_cmt__Country__c</fields>
-        <relatedList>vlocity_cmt__ProductAvailability__c.vlocity_cmt__Product2Id__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>vlocity_cmt__AccountRecordType__c</fields>
-        <fields>vlocity_cmt__AccountSLA__c</fields>
-        <fields>vlocity_cmt__StartDate__c</fields>
-        <fields>vlocity_cmt__EndDate__c</fields>
-        <relatedList>vlocity_cmt__ProductEligibility__c.vlocity_cmt__Product2Id__c</relatedList>
+        <relatedList>vlocity_cmt__OrchestrationScenario__c.vlocity_cmt__Product2Id__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>vlocity_cmt__DefaultQuantity__c</fields>
         <fields>vlocity_cmt__RelationshipType__c</fields>
         <fields>vlocity_cmt__RelatedProductId__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
         <relatedList>vlocity_cmt__ProductRelationship__c.vlocity_cmt__Product2Id__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -188,10 +147,6 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>Contact_Motive__c.Id_Service__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
