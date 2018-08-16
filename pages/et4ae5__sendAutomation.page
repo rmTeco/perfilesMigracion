@@ -276,6 +276,7 @@
             <apex:param name="emailName" value="" />
             <apex:param name="emailSubject" value="" />
             <apex:param name="emailAssetId" value="" />
+            <apex:param name="Preheader" value="" />
         </apex:actionfunction>
         <apex:actionfunction name="toggleSort" action="{!toggleSort}" rerender="results">
             <apex:param name="tsSortField" value="" />
@@ -295,6 +296,7 @@
         <apex:actionfunction name="calculateInputType" action="{!calculateInputType}" rerender="fieldCriteria" status="fieldDependent" />
         <apex:actionfunction name="showFilterLogic" action="{!showFilterLogic}" rerender="fieldCriteria" />
         <apex:actionfunction name="validateSubscriberField" action="{!validateSubscriberField}" rerender="pageMessages" />
+        <apex:actionfunction name="checkForTooManyFieldsWarning" action="{!checkForTooManyFieldsWarning}" rerender="pageMessages" />
         <apex:actionfunction name="saveAutomation" action="{!automationSave}" rerender="pageMessages, fieldCriteria">
             <apex:param name="notificationEmails" value="" />
             <apex:param name="DEId" assignto="{!dataextensionId}" value="" />
@@ -361,7 +363,7 @@
                             <apex:outputpanel id="objectSelected">
                                 <apex:selectlist size="1" value="{!send.et4ae5__Object__c}">
                                     <apex:selectoptions value="{!objectSOs}" />
-                                    <apex:actionsupport event="onchange" action="{!null}" rerender="objectSelected,subscriberField,fieldCriteria" status="subscriberFieldStatus" />
+                                    <apex:actionsupport event="onchange" oncomplete="checkForTooManyFieldsWarning();" action="{!null}" rerender="objectSelected,subscriberField,fieldCriteria,pageMessages" status="subscriberFieldStatus" />
                                 </apex:selectlist>
                                 <img src="/s.gif" style="width:1px;" />
                                 <img style="vertical-align:middle;" height="18px" src="{!URLFOR( $Resource.ExactTargetImages, 'reqEmail.png' )}" />
@@ -511,7 +513,7 @@
 	                                    </apex:outputpanel>
 	                                </apex:facet>
 	                            </apex:actionstatus>
-                                <c:MCEmailPicker singlesend="false" businessunitid="{!businessUnitId}" deeplinks="{!showDeepLinks}" apilink="{!JSENCODE(etLink)}" emailid="{!localSend.email.id}" emailname="{!localSend.email.name}" emailsubject="{!emailSubjectLine}" emailassetid="{!emailassetid}" />
+                                <c:MCEmailPicker singlesend="false" businessunitid="{!businessUnitId}" deeplinks="{!showDeepLinks}" apilink="{!JSENCODE(etLink)}" emailid="{!localSend.email.id}" emailname="{!localSend.email.name}" emailsubject="{!emailSubjectLine}" emailassetid="{!emailassetid}" preheader="{!preheader}" />
 	                         </apex:outputpanel>                                                                         
                         </apex:pageblocksectionitem>
                         <apex:pageblocksectionitem helptext="{!$Label.et4ae5__msg0051}">
@@ -734,6 +736,7 @@
 
         // Wait till DOM has loaded
         j$(document).ready(function() {
+            checkForTooManyFieldsWarning();
             var sendActionTag = j$("select[id$=sendAction]");
             setTriggerWhenSendWarningMessage(sendActionTag);
 
@@ -1078,9 +1081,10 @@
 	    }
 
         // This method is called from the Email Picker Component when the user clicks on a Email within the Tree
-        function updateSelectedEmail(sSelectedEmailId, sSelectedEmailName, sSelectedEmailSubject, sSelectedEmailAssetId, sSelectedEmailType) {
+        function updateSelectedEmail(sSelectedEmailId, sSelectedEmailName, sSelectedEmailSubject, sSelectedEmailAssetId, sSelectedEmailType, sSelectedEmailPreheader) {
             jQuery('[id$=emailSubject]').val(htmlUnescape(sSelectedEmailSubject));
-            selectEmailJS(sSelectedEmailId, encodeURIComponent(sSelectedEmailName), encodeURIComponent(sSelectedEmailSubject), sSelectedEmailAssetId);
+            jQuery('[id$=emailPreheader]').val(htmlUnescape(sSelectedEmailPreheader));
+            selectEmailJS(sSelectedEmailId, encodeURIComponent(sSelectedEmailName), encodeURIComponent(sSelectedEmailSubject), sSelectedEmailAssetId, encodeURIComponent(sSelectedEmailPreheader));
         }
 
     </script>

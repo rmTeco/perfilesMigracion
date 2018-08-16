@@ -375,6 +375,9 @@
         @isTest
         static void testOrder3()
         {
+            String mockResponse = '{"listaResultado":[{"mensajeResultado": "OK","codigoResultado": "0","numeroSerie": "99543410307677114097"}],"codigoResultado": "OK"}';
+            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S105', mockResponse);
+            
             IFS_S038_updateCycleMock mock = new IFS_S038_updateCycleMock();
         mock.status = 200;
         Test.setMock(HttpCalloutMock.class, mock);
@@ -554,25 +557,21 @@
                 
             Test.stopTest();
         }
-        /*
-        static testmethod void CancelOrderAndRelease_Test (){      
-          Order objOrder = new Order();
-          List<Account> AccList = TestDataFactory.createAccounts(1);
-          objOrder.AccountId = AccList[0].Id;
-          objOrder.Status = 'Draft';
-          objOrder.EffectiveDate = Date.today() - 1 ;
-          objOrder.vlocity_cmt__OriginatingChannel__c = 'WEB';
-          objOrder.Delivery_Method__c = 'Delivery';
-          insert objOrder;
-          
-          List<Order> ordList = new List<Order>();
-          ordList.add(objOrder);
+        
+        @isTest
+        static void CancelOrderAndReleaseBatch_OK(){
+          MockupFactory.generate();
+          String mockResponse = '{"listaResultado":[{"mensajeResultado": "OK","codigoResultado": "0","numeroSerie": "99543410307677114097"}],"codigoResultado": "OK"}';
+            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S105', mockResponse);
+            mockResponse = '{"listaResultado": [],"descripcionResultado": "Liberacion Exitosa","codigoResultado": "OK"}';
+            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S101', mockResponse);
+          mockResponse = '{}';
+            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S326', mockResponse);
             
+          List<Order> orders = [SELECT Id, TrackingStatus__c, PreInvoiceNumber__c FROM Order];
           Test.startTest();
-              taOrderController.CancelOrderAndRelease(ordList);
+            TaOrderController.CancelOrderAndRelease(orders);
           Test.stopTest();
         }
-    */
-      
 
     }

@@ -1,0 +1,32 @@
+<apex:page standardController="WorkTeam__c">
+ <apex:includeLightning />
+
+<div id="FlipcardContainer"></div>
+
+ <script>
+	var recordId = '{!WorkTeam__c.id}'; 
+ 
+	 $Lightning.use("c:workTeamTreeApp", function() {
+	 
+		// Attributes are passed to the new component as a name/value hash
+		var attributes = {
+			recordId: recordId
+		};	 	
+	 
+	 	$Lightning.createComponent("c:treeLightningWorkTeamComponent",
+	 								attributes,
+ 									"FlipcardContainer",							
+	 								function(cmp) {
+ 										$A.eventService.addHandler({ "event" : "c:treeLightningWorkTeamEvent", "handler" : loadSelectedRecord});
+	 								});
+	});
+	
+	var loadSelectedRecord = function(event)
+	{
+	    var selectedId = event.getParam("idSelectedRecord");
+	    console.log('response data = ' + selectedId);
+	    var recrodWindow = window.open('/' + selectedId,selectedId);
+	    recrodWindow.focus();    
+	};	
+ </script>		
+</apex:page>

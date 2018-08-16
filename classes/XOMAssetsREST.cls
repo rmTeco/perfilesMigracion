@@ -243,7 +243,7 @@ global with sharing class XOMAssetsREST  {
         Id serviceAccountId = getIdValueByFieldName( assetObject, 'serviceAccountId');
         String assetReferenceId = (String) assetObject.get('assetReferenceId');
         String assetName = (String) assetObject.get('name');
-        //String hierarchy = (String) assetObject.get('Hierarchy');    
+        //String hierarchy = (String) assetObject.get('Hierarchy'); can't convert from long to string
         //system.debug('hierarchy ' + hierarchy);
 
         if(serviceAccountId == null || assetReferenceId == null)

@@ -1,0 +1,32 @@
+<apex:page sidebar="false" tabStyle="CWB_Tool__tab" showheader="{!$CurrentPage.parameters.open!='modal'}">
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.cwbtool__datatableWithBootstrap,'/datatable/media/css/dataTables.bootstrap.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+    <div class='CWB'>
+        <apex:outputPanel rendered="{!$CurrentPage.parameters.open!='modal'}">
+         <apex:outputPanel layout="none" rendered="{!$CurrentPage.parameters.retUrl=='' || $CurrentPage.parameters.retUrl==null}">
+            <a class="slds-button slds-button--neutral slds-button--default" href="{!$Page.CompareProfile}?org=multi" style="margin-bottom:2px;">
+                <span class="glyphicon glyphicon-step-backward"></span> Back
+            </a>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none" rendered="{!$CurrentPage.parameters.retUrl!='' && $CurrentPage.parameters.retUrl!=null}">
+            <a class="slds-button slds-button--neutral slds-button--default" href="{!$Page.updateMetaData}?Org={!HTMLENCODE($CurrentPage.parameters.org)}&type={!HTMLENCODE($CurrentPage.parameters.type)}" style="margin-bottom:2px;">
+                <span class="glyphicon glyphicon-step-backward"></span> Back
+            </a>
+         
+        </apex:outputPanel>
+       </apex:outputPanel> 
+        <c:lightningspinner />
+        <c:ConnectionComp />
+    </div>
+     <apex:outputPanel rendered="{!$CurrentPage.parameters.open=='modal'}" layout="none">
+       <script>
+       updateIframeheight();
+       function updateIframeheight(){
+         try{
+            parent.iframeLoaded();
+         }catch(e){}
+         }
+       </script>
+     </apex:outputPanel>
+</apex:page>

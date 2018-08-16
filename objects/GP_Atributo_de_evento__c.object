@@ -104,6 +104,16 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <fields>
+        <fullName>Valores_Posibles__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Separe cada valor con un &quot;;&quot; . Ejemplo: valor1;valor2;valor3;</inlineHelpText>
+        <label>Valores Posibles</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>4</visibleLines>
+    </fields>
     <label>GP Atributo de evento</label>
     <nameField>
         <label>Nombre de atributo</label>
@@ -112,5 +122,12 @@
     <pluralLabel>GP Atributos de evento</pluralLabel>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Valores_posibles_obligatorio</fullName>
+        <active>true</active>
+        <errorConditionFormula>if(  ISPICKVAL( Tipo_de_atributo__c , &apos;String&apos;) &amp;&amp; Valores_Posibles__c = null, true, false)</errorConditionFormula>
+        <errorDisplayField>Valores_Posibles__c</errorDisplayField>
+        <errorMessage>El campo &quot;Valores Posibles&quot; es obligatorio cuando el &quot; Tipo de atributo&quot; es String.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

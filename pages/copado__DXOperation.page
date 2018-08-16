@@ -1,0 +1,625 @@
+<!--
+ - Created by ferhatozsavran on 1/22/18.
+ -->
+
+<apex:page id="DXOperation" controller="copado.DXOperationController" extensions="copado.Settings" lightningStylesheets="true" docType="html-5.0" sidebar="false" applyBodyTag="false">
+    <apex:slds />
+    <head>
+        <title>Copado DX</title>
+        <c:WizardUtils />
+        <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}" />
+        <script> var $copado = jQuery.noConflict(); </script>
+        <script type="text/javascript">
+            var __sfdcSessionId = '{!GETSESSIONID()}';
+            var Copado_Licenses = {!CurrentUserLicenses};
+        </script>
+        <script src="../../soap/ajax/32.0/connection.js" type="text/javascript"></script>
+    </head>
+
+    <apex:stylesheet value="{!URLFOR($Resource.copado__jqx,'jqwidgets/styles/jqx.base.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.copado__jqx,'jqwidgets/styles/jqx.energyblue.css')}"/>
+
+    <apex:includeScript value="{!URLFOR($Resource.copado__jqx,'jqwidgets/jqx-all.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.metadataGrid2) }"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__ScratchOrg)}"/>
+
+
+    <body class="slds-scope">
+        <apex:form >
+            <c:ScreenLocker msg="{!$Label.copado__loading}" useJobsManager="true" possibleRunningJobs=",DxCreateScratchOrgJob,,true;,DxLoadMeatadataJob,,true;,DxSourceStatusJob,,true;,DxDeleteScratchOrg,,true;,DxOrgDetails,,true;,DXOrgIdeDetails,,true;,DxListRepositoryBranches,,true;"/>
+            <script>
+                window.addEventListener('copadoJobsManagerFinished', function (evt) {
+                    for(var i=0 ; i < evt.detail.length ; i++ ) {
+                        var jobFinished = evt.detail[i].isFinished;
+                        var jobSuccess = evt.detail[i].isSuccess;
+                        var jobMessage = evt.detail[i].message;
+                        var jobType = evt.detail[i].type;
+                        console.debug("Job Success: ", jobSuccess);
+                        console.debug("Job Finished: ", jobFinished);
+                        console.debug("Job Message: ", jobMessage);
+                        console.debug("Job Type: ", jobType);
+                        jobstatus(jobFinished,jobSuccess,jobMessage,jobType);
+                        if(jobFinished){
+                            setLockScreenMessage('{!JSENCODE($Label.copado__loading)}');
+                        }
+                    }
+                }, false);
+            </script>
+            <apex:actionFunction name="jobstatus" action="{!jobStatusNotification}" reRender="dxOperationErrors,pageblockpanel,branchGridContainer,sectionDetailPanel">
+                <apex:param value="" name="jobFinished"/>
+                <apex:param value="" name="jobSuccess"/>
+                <apex:param value="" name="jobMessage"/>
+                <apex:param value="" name="jobType"/>
+            </apex:actionFunction>
+            <apex:outputPanel layout="block" id="opNavBar">
+                <div class="slds-context-bar" style="padding-top: 5px; height: 50 px;">
+                    <div class="slds-context-bar__primary">
+                        <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover">
+                            <div class="slds-context-bar__icon-action">
+                                <img height="20rem" width="20rem" src="{!URLFOR($Resource.Statics,'img/icons/logo-icon.png')}"/>
+                            </div>
+                            <span class="slds-context-bar__label-action slds-context-bar__app-name">
+                                <apex:commandLink action="{!enableSelectedPanels}" styleClass="slds-context-bar__label-action" title="{!$Label.copado__copado_dx}" style="font-size: 1.125rem;">
+                                    <span class="slds-truncate" title="{!$Label.copado__copado_dx}">{!$Label.copado__copado_dx}</span>
+                                    <apex:param name="actionName" value="main"/>
+                                </apex:commandLink>
+                            </span>
+                        </div>
+                    </div>
+
+                    <nav class="slds-context-bar__secondary" role="navigation">
+                        <ul class="slds-grid">
+                            <apex:repeat value="{!dxOperationMap}" var="dxOp">
+                                <li class="slds-context-bar__item">
+                                    <apex:commandLink rendered="{!OR(AND(selectedOperation != '3',dxOperationMap[dxOp] != 'csous'),AND(selectedOperation == '3',dxOperationMap[dxOp] != 'csous',dxOperationMap[dxOp] != 'lm',dxOperationMap[dxOp] != 'ld'))}" action="{!enableSelectedPanels}" styleClass="slds-context-bar__label-action" title="{!dxOp}" onClick="lockScreen();" onComplete="unlockScreen();" reRender="actionsPanel,dxOperationErrors">
+                                        <span class="slds-truncate" title="{!dxOp}">{!dxOp}</span>
+                                        <apex:param name="actionName" value="{!dxOperationMap[dxOp]}"/>
+                                    </apex:commandLink>
+                                    <apex:commandLink rendered="{!AND(OR(dxOperationMap[dxOp] == 'lm',dxOperationMap[dxOp] == 'ld'),NOT(ISBLANK(usOrgId)),selectedOperation == '3')}" action="{!enableSelectedPanels}" styleClass="slds-context-bar__label-action" title="{!dxOp}" onClick="lockScreen();" onComplete="unlockScreen();" reRender="actionsPanel,dxOperationErrors">
+                                        <span class="slds-truncate" title="{!dxOp}">{!dxOp}</span>
+                                        <apex:param name="actionName" value="{!dxOperationMap[dxOp]}"/>
+                                    </apex:commandLink>
+                                    <apex:outputText value="{!dxOp}" title="{!dxOp}" rendered="{!AND(selectedOperation == '3',OR(dxOperationMap[dxOp] == 'lm',dxOperationMap[dxOp] == 'ld'),ISBLANK(usOrgId))}" styleClass="slds-context-bar__label-action" style="color:gray;"/>
+                                    <apex:commandLink rendered="{!dxOperationMap[dxOp] == 'csous'}" action="{!enableSelectedPanels}" styleClass="slds-context-bar__label-action" title="{!dxOp}" onClick="lockScreen();" onComplete="unlockScreen();" reRender="actionsPanel">
+                                        <span class="slds-truncate" title="{!dxOp}">{!dxOp}</span>
+                                        <apex:param name="actionName" value="{!dxOperationMap[dxOp]}"/>
+                                    </apex:commandLink>
+                                </li>
+                            </apex:repeat>
+                        </ul>
+                    </nav>
+                    <apex:commandLink action="{!ScheduleDxJob}" rendered="{!showSchedule}" styleClass="slds-button slds-button--neutral slds-col--bump-left" style="margin-bottom: 5px;line-height: 1.9em;margin-right: 5px;" reRender="dxOperationErrors,opNavBar">Schedule Copado DX</apex:commandLink>
+                    <apex:outputLink rendered="{!AND(OR(selectedOperationDataId == null,selectedOperationDataId == '-- None --'),usId == null)}" value="{!URLFOR('/')}" styleClass="slds-button slds-button--neutral slds-col--bump-left" style="margin-bottom: 5px;line-height: 1.9em;margin-right: 5px;">{!$Label.copado__go_back}</apex:outputLink>
+                    <apex:outputLink rendered="{!OR(AND(selectedOperationDataId != null,selectedOperationDataId != '-- None --'),usId != null)}" value="{!IF(selectedOperationDataId != null,URLFOR('/' + selectedOperationDataId),IF(usId != null,URLFOR('/' + usId),URLFOR('/')))}" styleClass="slds-button slds-button--neutral slds-col--bump-left" style="margin-bottom: 5px;line-height: 1.9em;margin-right: 5px;">{!$Label.copado__go_record}</apex:outputLink>
+                </div>
+            </apex:outputPanel>
+            <apex:pageMessages id="dxOperationErrors"/>
+            <apex:outputPanel layout="block" id="actionsPanel" style="padding: 10px;">
+
+                <!-- ++++++++++++++++++++ DX OPERATIONS +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="none" rendered="{!AND(selectedActionName == '',!disablePanels)}">
+                    <apex:pageBlock id="pageblockpanel" title="{!$Label.copado__dx_operation}">
+
+                        <apex:pageBlockSection columns="2" rendered="{!!disableOperationPicklist}">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.copado__select_dx_operation}"/>
+                                <apex:selectList value="{!selectedOperation}" multiselect="false" size="1">
+                                    <apex:selectOptions value="{!operationList}"/>
+                                    <apex:actionSupport event="onchange" action="{!resetDom}" onSubmit="lockScreen();" onComplete="unlockScreen();" reRender="sectionOpsPanel,sectionDetailPanel,opNavBar,pageblockpanel"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+
+                        <apex:outputPanel layout="block" id="sectionOpsPanel">
+                            <apex:pageBlockSection columns="2" rendered="{!selectedOperation == '1'}">
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="{!$Label.copado__select_scratch_org}"/>
+                                    <apex:selectList value="{!selectedOperationDataId}" multiselect="false" size="1">
+                                        <apex:selectOptions value="{!orgCredentials}"/>
+                                        <apex:actionSupport event="onchange" action="{!populatePossibleActions}" onSubmit="lockScreen();" onComplete="unlockScreen();" reRender="sectionDetailPanel,opNavBar,pageblockpanel"/>
+                                    </apex:selectList>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                            </apex:pageBlockSection>
+
+                            <apex:pageBlockSection columns="2" rendered="{!selectedOperation == '2'}">
+                                <apex:pageBlockSectionItem >
+                                    <apex:outputLabel value="{!$Label.copado__select_dev_hub_org}"/>
+                                    <apex:selectList value="{!selectedOperationDataId}" multiselect="false" size="1">
+                                        <apex:selectOptions value="{!orgCredentials}"/>
+                                        <apex:actionSupport event="onchange" action="{!populatePossibleActions}" onSubmit="lockScreen();" onComplete="unlockScreen();" reRender="sectionDetailPanel,opNavBar,pageblockpanel"/>
+                                    </apex:selectList>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                            </apex:pageBlockSection>
+
+                            <apex:pageBlockSection columns="2" rendered="{!selectedOperation == '3'}">
+                                <apex:pageBlockSectionItem rendered="{!!disableUserStorySelection}">
+                                    <apex:outputLabel value="{!$Label.copado__user_story}"/>
+                                    <apex:outputPanel layout="block">
+                                        <input type="hidden" name="OT_INPUT_lkid" id="OT_INPUT_lkid" value="{!usId}"/>
+                                        <input type="hidden" name="OT_INPUT_lkold" id="OT_INPUT_lkold" value=""/>
+                                        <input type="hidden" name="OT_INPUT_lktp" id="OT_INPUT_lktp"
+                                               value="{!$ObjectType.User_Story__c.keyPrefix}"/>
+                                        <input type="hidden" name="OT_INPUT_lspf" id="OT_INPUT_lspf" value="0"/>
+                                        <input type="hidden" name="OT_INPUT_lspfsub" id="OT_INPUT_lspfsub" value="0"/>
+                                        <input type="hidden" name="OT_INPUT_mod" id="OT_INPUT_mod" value="0"/>
+                                        <span class="lookupInput" style="margin-left: 0;">
+                                        <input id="OT_INPUT" maxlength="255" name="OT_INPUT"
+                                               onchange="lockScreen();getUserStories($copado(this).val(),getElementByIdCS('OT_INPUT_lkid').value);getElementByIdCS('OT_INPUT_lkid').value='';getElementByIdCS('OT_INPUT_mod').value='1';"
+                                               size="20" tabindex="3" type="text" value="{!usName}"/>
+                                        <a href="javascript:%20openLookup%28%27%2F_ui%2Fcommon%2Fdata%2FLookupPage%3Flkfm%3DeditPage%26lknm%3DOT_INPUT%26lktp%3D%27%20%2B%20getElementByIdCS%28%27OT_INPUT_lktp%27%29.value%2C670%2C%271%27%2C%27%26lksrch%3D%27%20%2B%20escapeUTF%28getElementByIdCS%28%27OT_INPUT%27%29.value.substring%280%2C%2080%29%29%29"
+                                           id="OT_INPUT_lkwgt" onclick="setLastMousePosition(event)" tabindex="3"
+                                           title="{!$Label.User_Story_New_Window}">
+                                            <img src="/img/s.gif" alt="{!$Label.User_Story_New_Window}"
+                                                 class="lookupIcon"
+                                                 onblur="this.className = 'lookupIcon';"
+                                                 onfocus="this.className = 'lookupIconOn';"
+                                                 onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';"
+                                                 onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';"
+                                                 title="{!$Label.User_Story_New_Window}"/>
+                                        </a>
+                                    </span>
+                                    </apex:outputPanel>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem rendered="{!disableUserStorySelection}">
+                                    <apex:outputLabel value="{!$Label.copado__user_story}"/>
+                                    <apex:outputText value="{!usName}"/>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem rendered="{!NOT(ISBLANK(usOrgId))}">
+                                    <apex:outputLabel value="Org Credential"/>
+                                    <apex:outputLink value="{!URLFOR('/apex/' + JSENCODE(namespace) + 'Dxoperation?id=' + usOrgId)}" target="_blank">{!usOrgName}</apex:outputLink>
+                                </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                                <apex:actionFunction name="getUserStories" action="{!populatePossibleActions}" onComplete="unlockScreen();" reRender="sectionDetailPanel,opNavBar,dxOperationErrors,actionsPanel">
+                                    <apex:param value="" name="usName" assignTo="{!usName}"/>
+                                    <apex:param value="" name="usId" assignTo="{!usId}"/>
+                                </apex:actionFunction>
+                            </apex:pageBlockSection>
+                        </apex:outputPanel>
+
+                        <apex:pageBlockSection id="sectionDetailPanel" columns="1">
+                            <apex:outputPanel layout="none" rendered="{!enableActions}">
+                                <apex:outputPanel rendered="{!AND(OR(selectedOperation == '1',selectedOperation == '3') && NOT(ISBLANK(selectedOperationDataId)))}">
+                                    <c:ScratchOrgDisplay orgId="{!selectedOperationDataId}" />
+                                </apex:outputPanel>
+                                <table class="list" width="100%">
+                                    <thead class="rich-table-thead">
+                                    <tr class="headerRow">
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$Label.Operation_Name}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$Label.Description}</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <apex:repeat value="{!dxOperationMap}" var="dxOpDetail">
+                                        <tr class="dataRow odd">
+                                            <td class="dataCell" colspan="1">
+                                                <span>
+                                                    <apex:commandLink style="color:blue; text-decoration:underline" rendered="{!OR(AND(selectedOperation != '3',dxOperationMap[dxOpDetail] != 'csous'),AND(selectedOperation == '3',dxOperationMap[dxOpDetail] != 'csous',dxOperationMap[dxOpDetail] != 'lm',dxOperationMap[dxOpDetail] != 'ld'))}" action="{!enableSelectedPanels}" styleClass="slds-context-bar__label-action" title="{!dxOpDetail}" onClick="lockScreen();" onComplete="unlockScreen();" reRender="actionsPanel,dxOperationErrors">
+                                                        <span class="slds-truncate" title="{!dxOpDetail}">{!dxOpDetail}</span>
+                                                        <apex:param name="actionName" value="{!dxOperationMap[dxOpDetail]}"/>
+                                                    </apex:commandLink>
+                                                    <apex:commandLink style="color:blue; text-decoration:underline" rendered="{!AND(OR(dxOperationMap[dxOpDetail] == 'lm',dxOperationMap[dxOpDetail] == 'ld'),NOT(ISBLANK(usOrgId)),selectedOperation == '3')}" action="{!enableSelectedPanels}" styleClass="slds-context-bar__label-action" title="{!dxOpDetail}" onClick="lockScreen();" onComplete="unlockScreen();" reRender="actionsPanel,dxOperationErrors">
+                                                        <span class="slds-truncate" title="{!dxOpDetail}">{!dxOpDetail}</span>
+                                                        <apex:param name="actionName" value="{!dxOperationMap[dxOpDetail]}"/>
+                                                    </apex:commandLink>
+                                                    <apex:outputText value="{!dxOpDetail}" title="{!dxOpDetail}" rendered="{!AND(selectedOperation == '3',OR(dxOperationMap[dxOpDetail] == 'lm',dxOperationMap[dxOpDetail] == 'ld'),ISBLANK(usOrgId))}" styleClass="slds-context-bar__label-action" style="color:gray;"/>
+                                                    <apex:commandLink style="color:blue; text-decoration:underline" rendered="{!dxOperationMap[dxOpDetail] == 'csous'}" action="{!enableSelectedPanels}" styleClass="slds-context-bar__label-action" title="{!dxOpDetail}" onClick="lockScreen();" onComplete="unlockScreen();" reRender="actionsPanel">
+                                                        <span class="slds-truncate" title="{!dxOpDetail}">{!dxOpDetail}</span>
+                                                        <apex:param name="actionName" value="{!dxOperationMap[dxOpDetail]}"/>
+                                                    </apex:commandLink>
+                                                </span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span>{!dxOperationDetailMap[dxOpDetail]}</span>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /DX OPERATIONS +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ LOAD METADATA +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!AND(selectedActionName == 'lm',!disableLoadMetadataPanel)}">
+                    <c:ScratchOrgMetadata id="lm" parentPageController="{!this}" componentName="ScratchOrgMetadata" showActionButtons="true" showAllTemplateButtons="true" mode="add"/>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /LOAD METADATA +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ OPTIONAL CONFIGURATION +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'ld'}">
+                    <apex:pageBlock id="deploymentpanel" title="Deployment">
+                        <apex:pageBlockButtons id="stepButton" location="top">
+                            <apex:commandButton action="{!executeSteps}" onClick="lockScreen()" onComplete="unlockScreen();" value="{!$Label.copado__deploy}" id="cso" rendered="{!AND(selectedDeploymentId != null, selectedDeploymentId != '-- None --')}" reRender="iframedetail" />
+                        </apex:pageBlockButtons>
+
+                        <apex:pageBlockSection id="loaddatapanel" columns="1">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.copado__source_org}"/>
+                                <apex:outputPanel layout="block">
+                                    <input type="hidden" name="SORG_INPUT_lkid" id="SORG_INPUT_lkid" value="{!sourceOrgId}"/>
+                                    <input type="hidden" name="SORG_INPUT_lkold" id="SORG_INPUT_lkold" value=""/>
+                                    <input type="hidden" name="SORG_INPUT_lktp" id="SORG_INPUT_lktp"
+                                           value="{!$ObjectType.Org__c.keyPrefix}"/>
+                                    <input type="hidden" name="SORG_INPUT_lspf" id="SORG_INPUT_lspf" value="0"/>
+                                    <input type="hidden" name="SORG_INPUT_lspfsub" id="SORG_INPUT_lspfsub" value="0"/>
+                                    <input type="hidden" name="SORG_INPUT_mod" id="SORG_INPUT_mod" value="0"/>
+                                    <span class="lookupInput" style="margin-left: 0;">
+                                        <input id="SORG_INPUT" maxlength="255" name="SORG_INPUT"
+                                               onchange="lockScreen();getDeployment($copado(this).val(),getElementByIdCS('SORG_INPUT_lkid').value);getElementByIdCS('SORG_INPUT_lkid').value='';getElementByIdCS('SORG_INPUT_mod').value='1';"
+                                               size="20" tabindex="3" type="text" value="{!sourceOrgName}"/>
+                                        <a href="javascript:%20openLookup%28%27%2F_ui%2Fcommon%2Fdata%2FLookupPage%3Flkfm%3DeditPage%26lknm%3DSORG_INPUT%26lktp%3D%27%20%2B%20getElementByIdCS%28%27SORG_INPUT_lktp%27%29.value%2C670%2C%271%27%2C%27%26lksrch%3D%27%20%2B%20escapeUTF%28getElementByIdCS%28%27SORG_INPUT%27%29.value.substring%280%2C%2080%29%29%29"
+                                           id="SORG_INPUT_lkwgt" onclick="setLastMousePosition(event)" tabindex="3"
+                                           title="{!$Label.Source_Org_New_Window}">
+                                            <img src="/img/s.gif" alt="{!$Label.Source_Org_New_Window}"
+                                                 class="lookupIcon"
+                                                 onblur="this.className = 'lookupIcon';"
+                                                 onfocus="this.className = 'lookupIconOn';"
+                                                 onmouseout="this.className = 'lookupIcon';this.className = 'lookupIcon';"
+                                                 onmouseover="this.className = 'lookupIconOn';this.className = 'lookupIconOn';"
+                                                 title="{!$Label.Source_Org_New_Window}"/>
+                                        </a>
+                                    </span>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                            <apex:actionFunction name="getDeployment" action="{!populateDeployments}" onComplete="unlockScreen();" reRender="deploymentselectlistpanel">
+                                <apex:param value="" name="sourceOrgName" assignTo="{!sourceOrgName}"/>
+                                <apex:param value="" name="sourceOrgId" assignTo="{!sourceOrgId}"/>
+                            </apex:actionFunction>
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection id="deploymentselectlistpanel" columns="1">
+                            <apex:pageBlockSectionItem rendered="{!AND(deploymentList!=null,deploymentList.size>0)}">
+                                <apex:outputLabel value="{!$Label.copado__select_job}"/>
+                                <apex:selectList value="{!selectedDeploymentId}" multiselect="false" size="1">
+                                    <apex:selectOptions value="{!deploymentList}"/>
+                                    <apex:actionSupport event="onchange" action="{!initDeploymentStep}" onSubmit="lockScreen();" onComplete="unlockScreen();" reRender="deploymentpanel,deploymentselectlistpanel,iframedetail"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection id="iframesection" columns="1">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputPanel layout="block" id="iframedetail">
+                                    <apex:iframe src="{!pageRef}" height="900px" width="100%" scrolling="yes"/>
+                                </apex:outputPanel>
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /OPTIONAL CONFIGURATION +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ MANAGE DEFINITION TEMPLATE +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'mdt'}">
+                    <c:ScratchOrgTemplate parentPageController="{!this}" componentName="ScratchOrgTemplate" showActionButtons="false" showAllTemplateButtons="true" mode="template"/>
+                    <script>
+                        (function(){_config.gridMode == 'dxOperations'})();
+                    </script>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /MANAGE DEFINITION TEMPLATE +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ MANAGE PROJECT TEMPLATE +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'mpt'}">
+                    <c:ScratchOrgMetadata parentPageController="{!this}" componentName="ScratchOrgMetadata" showActionButtons="false" showAllTemplateButtons="true"  mode="template"/>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /MANAGE PROJECT TEMPLATE +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ CREATE SCRATCH ORG FROM DEV HUB +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'cso'}">
+                    <c:ScratchOrgTemplate parentPageController="{!this}" componentName="ScratchOrgTemplate" showActionButtons="true" showAllTemplateButtons="true" mode="new"/>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /CREATE SCRATCH ORG FROM DEV HUB +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ CREATE SCRATCH ORG FROM USER STORY +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'csous'}">
+                    <c:ScratchOrgTemplate parentPageController="{!this}" componentName="ScratchOrgTemplate" showActionButtons="true" showAllTemplateButtons="true" mode="new"/>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /CREATE SCRATCH ORG FROM USER STORY +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ GET SCRATCH ORG STATUS +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'gsos'}">
+                    <c:ScratchOrgStatus orgId="{!selectedOperationDataId}"/>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /GET SCRATCH ORG STATUS +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ COMMIT HISTORY +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'ch'}">
+                    <apex:pageBlock title="{!$Label.copado__dxoperation_commithistory}">
+                        <apex:pageBlockSection id="commithistorypanel" columns="1">
+
+                            <!-- ++++++++++++++++++++++++ Org Credentials Commits ++++++++++++++++++++++++++++++ -->
+                            <apex:outputPanel layout="none" rendered="{!AND(snapshotCommitList != null,snapshotCommitList.size>0)}">
+                                <table class="list" width="100%">
+                                    <thead class="rich-table-thead">
+                                    <tr class="headerRow">
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Git_Org_Commit__c.fields.Commit_Message__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Git_Org_Commit__c.fields.Git_Operation__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Git_Org_Commit__c.fields.Status__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Git_Org_Commit__c.fields.Commit_Date__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Git_Org_Commit__c.fields.View_in_Git__c.Label}</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <apex:repeat value="{!snapshotCommitList}" var="scl">
+                                        <tr class="dataRow odd">
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!scl.copado__Commit_Message__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!scl.copado__Git_Operation__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!scl.copado__Status__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!scl.copado__Commit_Date__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!scl.copado__View_in_Git__c}"/></span>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <!-- ++++++++++++++++++++++++ /Org Credentials Commits ++++++++++++++++++++++++++++++ -->
+
+                            <!-- ++++++++++++++++++++++++ User Story Commits ++++++++++++++++++++++++++++++ -->
+                            <apex:outputPanel layout="none" rendered="{!AND(userStoryCommitList != null,userStoryCommitList.size>0)}">
+                                <table class="list" width="100%">
+                                    <thead class="rich-table-thead">
+                                    <tr class="headerRow">
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.User_Story_Commit__c.fields.Name.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.User_Story_Commit__c.fields.Snapshot_Commit__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.User_Story_Commit__c.fields.View_in_Git__c.Label}</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <apex:repeat value="{!userStoryCommitList}" var="uscl">
+                                        <tr class="dataRow odd">
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!uscl.Name}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!uscl.copado__Snapshot_Commit__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!uscl.copado__View_in_Git__c}"/></span>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <!-- ++++++++++++++++++++++++ /User Story Commits ++++++++++++++++++++++++++++++ -->
+
+                            <apex:outputPanel layout="none" rendered="{!OR(snapshotCommitList.size=0,userStoryCommitList.size=0)}">
+                                {!$Label.copado__nodatatodisplay}
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /COMMIT HISTORY +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ MANAGE ARTIFACTS +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'ma'}">
+                    <c:CopadoHelp sectionText="{!$Label.copado__manage_artifact_help_text}"/>
+                    <apex:pageBlock title="{!$Label.copado__artifacts}">
+
+                        <apex:pageBlockSection columns="2" rendered="{!selectedOperation == '4'}">
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="{!$Label.copado__select_org_credential}"/>
+                                <apex:selectList value="{!selectedOperationDataId}" multiselect="false" size="1">
+                                    <apex:selectOptions value="{!orgCredentials}"/>
+                                    <apex:actionSupport event="onchange" action="{!retrieveArtifacts}" onSubmit="lockScreen();" onComplete="unlockScreen();" reRender="artifactspanel"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection id="artifactspanel" columns="1">
+                            <apex:outputPanel layout="none" rendered="{!AND(artifactList != null,artifactList.size>0)}">
+                                <table class="list" width="100%">
+                                    <thead class="rich-table-thead">
+                                    <tr class="headerRow">
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Artifact__c.fields.Name.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Artifact__c.fields.Org_Credential__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Artifact__c.fields.RecordTypeId.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Artifact__c.fields.Artifact_Repository__c.Label}</div>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <apex:repeat value="{!artifactList}" var="al">
+                                        <tr class="dataRow odd">
+                                            <td class="dataCell" colspan="1">
+                                                <span>
+                                                    <apex:outputlink value="/{!al.Id}" target="_blank">
+                                                        <apex:outputField value="{!al.Name}"/>
+                                                    </apex:outputlink>
+                                                </span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!al.copado__Org_Credential__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!al.RecordTypeId}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!al.copado__Artifact_Repository__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span>
+                                                    <apex:outputLink rendered="{!al.RecordType.Name == 'Git Artifact'}" value="{!URLFOR('/apex/' + JSENCODE(namespace) + 'ArtifactManageMetadata?id=' + al.Id)}" target="_blank" styleClass="slds-button slds-button--neutral slds-col--bump-left">{!$Label.copado__manage_metadata}</apex:outputLink>
+                                                    <apex:outputLink rendered="{!al.RecordType.Name == 'Package Artifact'}" value="{!URLFOR('/apex/' + JSENCODE(namespace) + 'ArtifactPackage?id=' + al.Id)}" target="_blank" styleClass="slds-button slds-button--neutral slds-col--bump-left">{!$Label.copado__manage_package_selection}</apex:outputLink>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!artifactList.size=0}">
+                                {!$Label.copado__nodatatodisplay}
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /MANAGE ARTIFACTS +++++++++++++++++++++++++++ -->
+
+
+
+                <!-- ++++++++++++++++++++ MANAGE SCRATCH ORGS +++++++++++++++++++++++++++ -->
+                <apex:outputPanel layout="block" rendered="{!selectedActionName == 'mso'}">
+                    <c:CopadoHelp sectionText="{!$Label.copado__manage_scratch_org_help}"/>
+                    <apex:pageBlock title="{!$Label.copado__active_scratch_orgs}">
+                        <apex:pageBlockSection id="activescratchorgsspanel" columns="1">
+                            <apex:outputPanel layout="none" rendered="{!AND(activeScratchOrgList != null,activeScratchOrgList.size>0)}">
+                                <table class="list" width="100%">
+                                    <thead class="rich-table-thead">
+                                    <tr class="headerRow">
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.Name.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.Org_Type__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.Username__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.OwnerId.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.Scratch_Org_Expiration_Date__c.Label}</div>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <apex:repeat value="{!activeScratchOrgList}" var="asol">
+                                        <tr class="dataRow odd">
+                                            <td class="dataCell" colspan="1">
+                                                <!--<span><apex:outputField value="{!asol.Name}"/>-->
+                                                <span><apex:outputLink value="{!URLFOR('/apex/' + JSENCODE(namespace) + 'Dxoperation?id=' + asol.Id)}" target="_blank">{!asol.Name}</apex:outputLink></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!asol.copado__Org_Type__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!asol.copado__Username__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!asol.OwnerId}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!asol.copado__Scratch_Org_Expiration_Date__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputLink rendered="{!OR($User.Id == asol.OwnerId,$User.Id == asol.CreatedById)}" value="{!URLFOR('/apex/' + JSENCODE(namespace) + 'ScratchOrgOpen?id=' + asol.Id)}" target="_blank" styleClass="slds-button slds-button--neutral slds-col--bump-left">{!$Label.copado__open_scratch_org}</apex:outputLink></span>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!activeScratchOrgList.size=0}">
+                                {!$Label.copado__nodatatodisplay}
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                    <apex:pageBlock title="{!$Label.copado__deleted_scratch_orgs}">
+                        <apex:pageBlockSection id="deletedscratchorgsspanel" columns="1">
+                            <apex:outputPanel layout="none" rendered="{!AND(deletedScratchOrgList != null,deletedScratchOrgList.size>0)}">
+                                <table class="list" width="100%">
+                                    <thead class="rich-table-thead">
+                                    <tr class="headerRow">
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.Name.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.Org_Type__c.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.OwnerId.Label}</div>
+                                        </th>
+                                        <th class="headerRow" scope="col" colspan="1">
+                                            <div>{!$ObjectType.Org__c.fields.Scratch_Org_Expiration_Date__c.Label}</div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <apex:repeat value="{!deletedScratchOrgList}" var="dsol">
+                                        <tr class="dataRow odd">
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!dsol.Name}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!dsol.copado__Org_Type__c}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!dsol.OwnerId}"/></span>
+                                            </td>
+                                            <td class="dataCell" colspan="1">
+                                                <span><apex:outputField value="{!dsol.copado__Scratch_Org_Expiration_Date__c}"/></span>
+                                            </td>
+                                        </tr>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!deletedScratchOrgList.size=0}">
+                                {!$Label.copado__nodatatodisplay}
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>
+                    </apex:pageBlock>
+                </apex:outputPanel>
+                <!-- ++++++++++++++++++++ /MANAGE SCRATCH ORGS +++++++++++++++++++++++++++ -->
+            </apex:outputPanel>
+
+            <apex:actionFunction action="{!setBranchName}" name="nextStep" onComplete="unlockScreen()" reRender="xxx">
+                <apex:param value="" name="branchName"/>
+            </apex:actionFunction>
+
+        </apex:form>
+    </body>
+</apex:page>

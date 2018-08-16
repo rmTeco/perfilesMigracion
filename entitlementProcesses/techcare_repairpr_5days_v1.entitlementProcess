@@ -9,7 +9,7 @@
         <operation>equals</operation>
         <value>true</value>
     </exitCriteriaFilterItems>
-    <isVersionDefault>true</isVersionDefault>
+    <isVersionDefault>false</isVersionDefault>
     <milestones>
         <milestoneName>TCRepairMile_5Days</milestoneName>
         <minutesToComplete>7200</minutesToComplete>
@@ -25,9 +25,17 @@
             <timeLength>-1</timeLength>
             <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
         </timeTriggers>
+        <timeTriggers>
+            <actions>
+                <name>UpdateNotify</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>0</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
         <useCriteriaStartTime>false</useCriteriaStartTime>
     </milestones>
-    <name>techcare_repairpr_5days_v1</name>
-    <versionMaster>552c000000001VG</versionMaster>
+    <name>TechCare_RepairPr_5Days</name>
+    <versionMaster>5526C0000004CGi</versionMaster>
     <versionNumber>1</versionNumber>
 </EntitlementProcess>

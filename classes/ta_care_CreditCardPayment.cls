@@ -285,20 +285,15 @@ private Map<String, Object> input;
     // Date: June, 27-2018
     // Modified by: Miguel A. Muñoz B.
     // Get values from a Credit Card Payment JSON file
-    private void GetCreditCardPaymentValues(){
-        
+    private void GetCreditCardPaymentValues(){        
         try {
-           // system.debug('paymentDetail => ' +  (Map<String,Object>) this.input.get('PaymentMethod'));
-          //  String paymentDetail = this.input.get('PaymentMethod');
-            //system.debug('paymentDetail' + paymentDetail);
-            
-            //system.debug('Otra linea');            
-            
+        //  String paymentDetail = this.input.get('PaymentMethod');
+            system.debug('dataPayment entrando');
             Map<String,Object> dataPayment = (Map<String,Object>) this.input.get('PaymentMethod');
             
-            //system.debug('dataPayment => ' + dataPayment);
-            
-            List<Object> payments = (List<Object>) dataPayment.get('PaymentMethods');
+            system.debug('dataPayment => ' + dataPayment);
+           
+            Map<String,Object> payments = (Map<String,Object>) dataPayment.get('PaymentMethods');
             
             String IdPaymentCard;
             Decimal PaymentAmount = (Decimal)dataPayment.get('preloadedAmount');
@@ -309,26 +304,19 @@ private Map<String, Object> input;
             String First3DigitsCreditCard;
             String PaymentMethod; 
             String PaymentType = 'Customer Payment';
-            String PaymentBank;
-
-            for(Object fld : payments){    
-           
-                Map<String,Object> data = (Map<String,Object>)fld;
-    
-                //Magic!
-                //system.debug('Valor buscado ' + data.get('Selected'));                  
-                if (data.get('Selected') == true){
-                    IdPaymentCard = (String)data.get('PaymentId');  
-                    CardNumber = (String)data.get('CardNumber__c'); 
-                    ExpirationYear = (String)data.get('ExpirationYear__c');
-                    ExpirationMonth = (String)data.get('ExpirationMonth__c'); 
-                    CreditCardName = (String)data.get('GetCardName');
-                    First3DigitsCreditCard = (String)data.get('First3Digits');
-                    PaymentMethod =  (String)data.get('MethodType__c');  
-                    PaymentBank = (String)data.get('BankEntityName__c');
-                }
-                
+            String PaymentBank;   
+            system.debug('paso1 => ');                        
+            if (!payments.isEmpty()){
+                IdPaymentCard = (String)payments.get('PaymentId');  
+                CardNumber = (String)payments.get('CardNumber__c'); 
+                ExpirationYear = (String)payments.get('ExpirationYear__c');
+                ExpirationMonth = (String)payments.get('ExpirationMonth__c'); 
+                CreditCardName = (String)payments.get('GetCardName');
+                First3DigitsCreditCard = (String)payments.get('First3Digits');
+                PaymentMethod =  (String)payments.get('MethodType__c');  
+                PaymentBank = (String)payments.get('BankEntityName__c');
             }
+            system.debug('paso 2 => ');                                        
              this.output.put('IdPaymentCard', IdPaymentCard );
              this.output.put('PaymentAmount', PaymentAmount );
              this.output.put('CardNumber', CardNumber );

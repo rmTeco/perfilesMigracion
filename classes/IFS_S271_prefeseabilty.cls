@@ -1,5 +1,7 @@
 public class IFS_S271_prefeseabilty {
 
+    private static String guId = null;
+    
     public static Map<String, Object> prefeseabilty(String family, String op, Map<String,Object> dom, Map<String,Object> coor, Map<String,Object> services){
         //familia  operacion  domicilio  coordenadas  servicios
         prefeseabiltyJSON jsonParse = new prefeseabiltyJSON();
@@ -46,6 +48,22 @@ public class IFS_S271_prefeseabilty {
         return responseNode; 
         
     }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        System.debug('Entre en writeLog - pTipo --> ' + pTipo + ' - pDatos --> ' + pDatos);
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S271', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S271', pTipo, guId, '', pDatos);  
+        }
+    }
     
     public static HttpResponse makePostCallout(String body) {
         Http http = new Http();
@@ -69,6 +87,9 @@ public class IFS_S271_prefeseabilty {
         system.debug(request.getBody());
         HttpResponse response = http.send(request);
         system.debug(response);
+
+        writeLog ('REQ', request.getEndpoint());
+        writeLog ('RES', response.getStatusCode() + ';' + response.getBody());
 
         return response;
         

@@ -3,7 +3,7 @@ global with sharing class ta_Sales_NotifyPickupExpiration implements Database.Ba
     global Database.QueryLocator start(Database.BatchableContext BC) {
         /*Expiration date?*/
         //vlocity_cmt__PrimaryContactId__c
-        String query = 'SELECT Id, vlocity_cmt__ExpirationDate__c, Account.vlocity_cmt__ContactPreferences__c, Account.vlocity_cmt__PrimaryContactId__c FROM Order WHERE Delivery_Method_Service__c=\'Retiro\' AND Status=\'Activated\'';
+        String query = 'SELECT Id, vlocity_cmt__ExpirationDate__c, Account.vlocity_cmt__ContactPreferences__c, Account.vlocity_cmt__PrimaryContactId__c FROM Order'; /* WHERE Delivery_Method_Service__c=\'Retiro\' AND Status=\'Activated\'';*/
         return Database.getQueryLocator(query);
     }
 

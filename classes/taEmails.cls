@@ -70,8 +70,7 @@ global with sharing class taEmails implements vlocity_cmt.VlocityOpenInterface{
             {
                 workteamId = 'a4l6C0000000790';
                 //managerId = [SELECT Manager__c FROM WorkTeam__c WHERE Name='EquipoTst' Limit 1].Manager__c;
-               managerId='005c0000004PsJEAA0';
-            }
+            }   managerId='005c0000004PsJEAA0';
 
             String subject = 'Notificación por Ajuste repetitivo - Usuario '+ UserInfo.getName();
             String textBody = 'El usuario '+ UserInfo.getName() +' ha alcanzado el límite máximo preestablecido de ajustes al mismo Cliente ' + 

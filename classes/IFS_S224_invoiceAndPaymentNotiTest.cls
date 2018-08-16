@@ -124,7 +124,7 @@ public class IFS_S224_invoiceAndPaymentNotiTest {
         System.debug('---------- Entre en createAccount()');
         List<Account> lstAcc = new List<Account>();
         Account a = new Account(Name=K_ACCOUNT_NAME, AccountIntegrationId__c=String.valueOf(10000));
-        a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
+		a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
         lstAcc.add(a);
         Account b = new Account(Name='TelecomTest', AccountIntegrationId__c=String.valueOf(10001));
         b.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Billing').getRecordTypeId();
@@ -210,14 +210,14 @@ public class IFS_S224_invoiceAndPaymentNotiTest {
     }
 
 
-    static void createOrder(vlocity_cmt__PriceList__c pTAPriceList, Account pAccount) {
-        Order order = new Order(Name=K_ORDER_NAME, AccountId=pAccount.Id, EffectiveDate=Date.today(),
-                                    Status='Draft', Pricebook2Id =Test.getStandardPricebookId(),
-                                        vlocity_cmt__PriceListId__c=pTAPriceList.Id, Delivery_Method__c='Delivery',
-                                                    vlocity_cmt__OriginatingChannel__c='Agentes');
+	static void createOrder(vlocity_cmt__PriceList__c pTAPriceList, Account pAccount) {
+		Order order = new Order(Name=K_ORDER_NAME, AccountId=pAccount.Id, EffectiveDate=Date.today(),
+									Status='Draft', Pricebook2Id =Test.getStandardPricebookId(),
+										vlocity_cmt__PriceListId__c=pTAPriceList.Id, Delivery_Method__c='Delivery',
+													vlocity_cmt__OriginatingChannel__c='Agentes');
 
-        insert order;
-    }
+		insert order;
+	}
 
 
     static Id getPricebookId () {

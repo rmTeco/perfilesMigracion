@@ -933,6 +933,11 @@
                     <label>Completed</label>
                 </value>
                 <value>
+                    <fullName>Deleted</fullName>
+                    <default>false</default>
+                    <label>Deleted</label>
+                </value>
+                <value>
                     <fullName>Failed</fullName>
                     <default>false</default>
                     <label>Failed</label>
@@ -941,6 +946,11 @@
                     <fullName>New</fullName>
                     <default>false</default>
                     <label>New</label>
+                </value>
+                <value>
+                    <fullName>Paused</fullName>
+                    <default>false</default>
+                    <label>Paused</label>
                 </value>
                 <value>
                     <fullName>Pending Tracking Subscription</fullName>
@@ -1007,7 +1017,7 @@
         <externalId>false</externalId>
         <formula>IF( ISPICKVAL( et4ae5__SendStatus__c , &quot;Scheduled&quot;) &amp;&amp; et4ae5__Scheduled_Date_Time__c &lt;= NOW() , $Label.et4ae5__queuedfp , IF( ISPICKVAL(et4ae5__SendStatus__c , &quot;Pending Tracking Subscription&quot; ) , $Label.et4ae5__completed , TEXT( et4ae5__SendStatus__c ) ) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <inlineHelpText>The Send Status indicates where in the process the send is.</inlineHelpText>
+        <inlineHelpText>This status can differ from the email status in Marketing Cloud.</inlineHelpText>
         <label>Send Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

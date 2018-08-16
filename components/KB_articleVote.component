@@ -1,0 +1,109 @@
+<apex:component controller="KB_articleVoteController">
+
+	<apex:attribute name="articleSelected" type="KB_Article__kav" description="Articulo to show" required="true" />
+
+   <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{!$Label.KB_modal_vote_title}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <b>{!$Label.KB_modal_body_text}</b><br/>
+                	<apex:repeat value="{!items}" var="option">
+                		<input type="radio" name="optionSelected" value="{!option.label}"/>{!option.label}<br/>
+                	</apex:repeat>
+
+                    <b>Sus comentarios</b>
+                    <div>
+                    	<Textarea id="newDesc" style="width: 100%;    height: 100px;"/>
+                	</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="sendMail();">{!$Label.KB_modal_enviar}</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{!$Label.KB_modal_cerrar}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="KbBodyId" >
+		<apex:outputText value="{!articleSelected.KB_Body__c}" escape="false"/>
+
+	    <apex:outputPanel rendered="{!(articleSelected.KB_Attachment__Name__s!=null)}" style="margin-left: 28px;">
+	        <apex:outputText value="{!$Label.KB_Down_Load}"/>
+	        <apex:outputLink value="{!URLFOR($Action.KB_Article__kav.FileFieldDownload, articleSelected.id, ['field'=$ObjectType.KB_Article__kav.fields.KB_Attachment__Name__s.name])}" target="_blank" style="text-decoration: underline;"> {!(articleSelected.KB_Attachment__Name__s)}</apex:outputLink>
+	    </apex:outputPanel>
+	</div>
+	<div  id="starID" >
+        <table id="bodyRatingId">
+            <tr>
+                <td  class="hand">
+                    <a href="#" class="glyphicon glyphicon-thumbs-up" onclick="voteUp();" style="margin-left: 20px;" />
+                </td>
+                <td  class="hand">
+                    <a href="#" class="glyphicon glyphicon-thumbs-down" onclick="voteDown();" data-toggle="modal" data-target="#exampleModal" style="margin-left: 20px;" />
+                </td>
+            </tr>
+        </table>  
+    </div> 
+    <div id="votedID" style="display: none;">
+    	 <h1 id="congratulationsID" class="congratulationsID">{!$Label.KB_thank_you}</h1>
+	</div>   
+	
+	<script >
+		function sendMail(){
+			var comentario=" "; 
+			var option=" ";
+			if(document.getElementById("newDesc")!=null){
+				comentario=document.getElementById("newDesc").value; 
+			}
+			if(document.querySelector('input[name="optionSelected"]:checked')!=null){
+				option = document.querySelector('input[name="optionSelected"]:checked').value;
+			} 
+			var idArt='{!articleSelected.KnowledgeArticleId}';
+			
+			console.log(comentario,option,idArt);
+			KB_articleVoteController.sendMail(comentario,option,idArt,votedownCallback);
+		}
+		sendMailCallback= function(reuslt, event){
+			if(event.status){
+				console.log("mail enviado OK");
+			}
+		}
+
+		
+
+		function voteDown(){
+			var idArt='{!articleSelected.KnowledgeArticleId}';
+			var rating="Down";	
+			console.log(idArt,rating);
+			KB_articleVoteController.changeRating(idArt,rating,votedownCallback);
+		}
+		votedownCallback= function(reuslt, event){
+			if(event.status){
+				document.getElementById("votedID").style.display="block";
+				document.getElementById("starID").style.display="none";
+				console.log("vote down OK");
+			}
+		}
+
+		function voteUp(){
+			var idArt='{!articleSelected.KnowledgeArticleId}';
+			var rating="Up";
+			KB_articleVoteController.changeRating(idArt,rating,voteupCallback);	
+		}
+		
+		voteupCallback= function(reuslt, event){
+			if(event.status){
+				document.getElementById("votedID").style.display="block";
+				document.getElementById("starID").style.display="none";
+				console.log("vote UP OK");
+			}
+		}
+	</script>
+
+</apex:component>

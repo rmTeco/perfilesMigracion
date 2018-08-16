@@ -13,6 +13,7 @@
 @RestResource(urlMapping='/v1/integrationprocedure/obtener/EstadoLinea/*')
 global with sharing class IFS_S495_getServiceStatus {
     private static final Boolean K_DEBUG_ON = true; 
+    private static String guId = null;
 
     @HttpPost
     global static void getData() {
@@ -20,6 +21,9 @@ global with sharing class IFS_S495_getServiceStatus {
         RestResponse res = RestContext.response;
         JSONRequest jrq = null;
         res.addHeader('Content-Type', 'application/json');
+
+        writeLog ('REQ', req.requestBody.toString());
+
         try {
             res.statuscode = 200;
             //-- Procesamiento de parametros
@@ -29,18 +33,44 @@ global with sharing class IFS_S495_getServiceStatus {
             catch (Exception e) {
                 throw new CalloutException(e.getMessage());
             }
+            
             checkContrato(jrq);
-            res.responseBody = Blob.valueOf(JSON.serialize(procesar(jrq))); //<--- Proceso y respondo.
+
+            String respuesta = JSON.serialize(procesar(jrq));
+            res.responseBody = Blob.valueOf(respuesta); //<--- Proceso y respondo.
+        
+            writeLog ('RES', 200 + ';' + respuesta);
+            
         }
         catch (FunctionalException fe) {
             res.statuscode = 417;
-            res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk(fe.codDP, fe.getMessage())));
+            String respuesta = JSON.serialize(getRespuestaNoOk(fe.codDP, fe.getMessage()));
+            res.responseBody = Blob.valueOf(respuesta);
+            writeLog ('RES', res.statuscode + ';' + respuesta);
         }
         catch (CalloutException ce) {
             res.statuscode = 400;
-            res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk(String.valueOf(res.statuscode), ce.getMessage())));
+            String respuesta = JSON.serialize(getRespuestaNoOk('400', ce.getMessage()));
+            res.responseBody = Blob.valueOf(respuesta);
+            writeLog ('RES', res.statuscode + ';' + respuesta);
         }
     }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S495', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S495', pTipo, guId, '', pDatos);  
+        }
+    }
+
 
     /**
      * @Objetivo: Secuencia principal del servicio. Aqui proceso con el request 

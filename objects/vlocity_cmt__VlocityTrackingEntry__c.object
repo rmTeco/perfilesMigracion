@@ -54,6 +54,15 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Criteria__c</fullName>
+        <externalId>false</externalId>
+        <label>Criterios</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
         <fullName>ElapsedTime__c</fullName>
         <externalId>false</externalId>
         <label>ElapsedTime</label>
@@ -114,6 +123,14 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Timestamp__c</fullName>
+        <externalId>false</externalId>
+        <label>Timestamp</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>DateTime</type>
     </fields>
     <fields>
         <fullName>TrackedAction__c</fullName>
@@ -247,24 +264,32 @@
     <label>Vlocity Tracking Entry</label>
     <listViews>
         <fullName>All1</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>vlocity_cmt__VlocityInteractionToken__c</columns>
+        <columns>vlocity_cmt__TrackingService__c</columns>
+        <columns>vlocity_cmt__CustomerInteractionId__c</columns>
+        <columns>vlocity_cmt__CustomerInteractionToken__c</columns>
+        <columns>vlocity_cmt__Timestamp__c</columns>
+        <columns>NAME</columns>
+        <columns>Criteria__c</columns>
+        <columns>TrackedAction__c</columns>
+        <columns>TrackedCard__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>vlocity_cmt__ContextId__c</columns>
+        <columns>vlocity_cmt__Data__c</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
         <columns>vlocity_cmt__TrackingService__c</columns>
         <columns>NAME</columns>
-        <columns>User__c</columns>
-        <columns>TrackingEvent__c</columns>
-        <columns>ElementName__c</columns>
-        <columns>ElementType__c</columns>
-        <columns>ElementStepNumber__c</columns>
-        <columns>ElapsedTime__c</columns>
-        <columns>CREATEDBY_USER</columns>
-        <columns>OmniScriptId__c</columns>
+        <columns>vlocity_cmt__Data__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Vlocity Tracking Entry Name</label>

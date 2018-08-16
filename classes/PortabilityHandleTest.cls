@@ -193,8 +193,8 @@ public class PortabilityHandleTest {
 
         Case ca = [Select Port_Rejection_Reason__c, Status From Case Where Id = :caseObj.Id LIMIT 1];
 
-        //system.assertEquals(ca.Port_Rejection_Reason__c, 'M58');
-        //system.assertEquals(ca.Status, 'Rechazada Pendiente ABD');
+        system.assertEquals(ca.Port_Rejection_Reason__c, 'M58');
+        system.assertEquals(ca.Status, 'Rechazada Pendiente ABD');
     }
 
     @isTest 
@@ -358,8 +358,8 @@ public class PortabilityHandleTest {
 
         Case ca = [Select Port_Rejection_Reason__c, Status From Case Where Id = :caseObj.Id LIMIT 1];
 
-        //system.assertEquals(ca.Port_Rejection_Reason__c, 'M58');
-        //system.assertEquals(ca.Status, 'Rechazada Pendiente ABD');
+        system.assertEquals(ca.Port_Rejection_Reason__c, 'M58');
+        system.assertEquals(ca.Status, 'Rechazada Pendiente ABD');
     }
 
     @isTest 

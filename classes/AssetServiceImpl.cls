@@ -1,9 +1,9 @@
 public class AssetServiceImpl implements IAssetService {
     public Id Suspend(Id accountId, Set<Id> assetIds, SuspensionReason suspensionReason) {
         try {
+            
             fflib_ISObjectUnitOfWork unitOfWork = Application.UnitOfWork.NewInstance();
             OrdersSelector ordersSelector = (OrdersSelector) Application.Selector.NewInstance(Order.SObjectType);
-                        
             Id orderId = OrderService.CreateFromAssets(accountId, assetIds);
             List<Order> orderList = ordersSelector.SelectByIdWithOrderItemsAndProducts(new Set<Id> { orderId });
 

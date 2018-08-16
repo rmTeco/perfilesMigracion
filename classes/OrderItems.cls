@@ -55,7 +55,7 @@ public class OrderItems extends ApplicationDomain {
         if (orderGestion == OrderType.Suspension) {
             if (suspReason == SuspensionReason.Robo.Name())
                 stockMovementCode = 'STCR';
-            else if (suspReason == SuspensionReason.Hurto.Name())
+            else if (suspReason == SuspensionReason.Hurto.Name() || suspReason == SuspensionReason.Administrativa.Name())
                 stockMovementCode = 'STCH';
             else if (suspReason == SuspensionReason.Extravio.Name())
                 stockMovementCode = 'STCE';
@@ -63,7 +63,7 @@ public class OrderItems extends ApplicationDomain {
         else if (orderGestion == OrderType.Resume) {
             if (suspReason == SuspensionReason.Robo.Name())
                 stockMovementCode = 'RTCR';
-            else if (suspReason == SuspensionReason.Hurto.Name())
+            else if (suspReason == SuspensionReason.Hurto.Name() || suspReason == SuspensionReason.Administrativa.Name())
                 stockMovementCode = 'RTCH';
             else if (suspReason == SuspensionReason.Extravio.Name())
                 stockMovementCode = 'RTCE';

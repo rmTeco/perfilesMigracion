@@ -1,0 +1,28 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="taBillingGroupChanges">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+            strOmniScriptSubType="Billing Group Changes"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('taBillingGroupChanges', modules);
+        </script>
+<link rel="stylesheet" href="/resource/ta_slds_os/slds_os.min.css"/>
+<script type="text/ng-template" id="ActionTest.html">
+            <div class='panel panel-default review'>
+                <div class='panel-heading'>
+                   <h1>Confirmación   </h1>
+                </div><hr>
+                <div class='panel-body'>
+                    <label>Los datos se actualizaron correctamente. Su número de gestión es: {{this.bpTree.response.CreatedCase.Case.CaseNumber}}.</label><br><br>
+                    
+                </div>
+            </div>
+    </script>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

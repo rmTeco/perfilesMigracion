@@ -49,4 +49,19 @@ global class LightningLoginFormController {
         Auth.AuthConfiguration authConfig = new Auth.AuthConfiguration(networkId,'');
         return authConfig;
     }
+    
+    @AuraEnabled
+    public static Boolean getSessionId(){
+        String usrid = UserInfo.getUserId();
+        String sessionId = UserInfo.getSessionId();
+        List<AuthSession> session = [SELECT Id, IsCurrent, LoginType, LogoutUrl, ParentId, SessionType, UsersId, UserType FROM AuthSession WHERE UsersId=:usrid AND LoginType='Chatter Communities External User'];
+        if(session.isEmpty()){
+            return false;
+        }
+        else{
+            return true;
+        }
+        //return sessionId;
+    }
+
 }

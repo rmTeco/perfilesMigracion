@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Overall object for capturing the project details.</description>
+    <enableActivities>true</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>Change_Management_Integration__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Change Management Integration</label>
+        <referenceTo>Change_Management_Integration_Credential__c</referenceTo>
+        <relationshipLabel>Projects</relationshipLabel>
+        <relationshipName>Projects</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>External_Id__c</fullName>
+        <externalId>true</externalId>
+        <inlineHelpText>Add here the Id of the record within your external Project Management system.</inlineHelpText>
+        <label>External Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ProjectType__c</fullName>
+        <externalId>false</externalId>
+        <label>Project Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>UserStories</fullName>
+                    <default>false</default>
+                    <label>User Stories</label>
+                </value>
+                <value>
+                    <fullName>Bugfix</fullName>
+                    <default>false</default>
+                    <label>Bugfix</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Sprint__c</fullName>
+        <externalId>false</externalId>
+        <label>Sprint</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>ProjectType__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>812</fullName>
+                    <default>false</default>
+                    <label>Sprint 18</label>
+                </value>
+                <value>
+                    <fullName>770</fullName>
+                    <default>false</default>
+                    <label>Sprint 17</label>
+                </value>
+                <value>
+                    <fullName>858</fullName>
+                    <default>false</default>
+                    <label>Sprint 19</label>
+                </value>
+                <value>
+                    <fullName>866</fullName>
+                    <default>false</default>
+                    <label>Sprint 20</label>
+                </value>
+                <value>
+                    <fullName>867</fullName>
+                    <default>false</default>
+                    <label>Sprint 21</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <valueName>812</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <valueName>770</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <valueName>858</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <valueName>866</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <valueName>867</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Workspace_Id__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>For Rally, the workspace ID is required in addition to the External Project Id.</inlineHelpText>
+        <label>Workspace Id</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Workstream__c</fullName>
+        <externalId>false</externalId>
+        <label>Workstream</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>ProjectType__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Arquitectura</fullName>
+                    <default>false</default>
+                    <label>Arquitectura</label>
+                </value>
+                <value>
+                    <fullName>CARE</fullName>
+                    <default>false</default>
+                    <label>CARE</label>
+                </value>
+                <value>
+                    <fullName>Customer Master</fullName>
+                    <default>false</default>
+                    <label>Customer Master</label>
+                </value>
+                <value>
+                    <fullName>EPC</fullName>
+                    <default>false</default>
+                    <label>EPC</label>
+                </value>
+                <value>
+                    <fullName>Integration Procedure</fullName>
+                    <default>false</default>
+                    <label>Integration Procedure</label>
+                </value>
+                <value>
+                    <fullName>Marketing</fullName>
+                    <default>false</default>
+                    <label>Marketing</label>
+                </value>
+                <value>
+                    <fullName>Mobile App</fullName>
+                    <default>false</default>
+                    <label>Mobile App</label>
+                </value>
+                <value>
+                    <fullName>Sales - CPQ</fullName>
+                    <default>false</default>
+                    <label>Sales - CPQ</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
+                </value>
+                <value>
+                    <fullName>Technical Care</fullName>
+                    <default>false</default>
+                    <label>Technical Care</label>
+                </value>
+                <value>
+                    <fullName>UX/UI Care</fullName>
+                    <default>false</default>
+                    <label>UX/UI Care</label>
+                </value>
+                <value>
+                    <fullName>UX/UI Sales-CPQ</fullName>
+                    <default>false</default>
+                    <label>UX/UI Sales-CPQ</label>
+                </value>
+                <value>
+                    <fullName>UX/UI Technical Care</fullName>
+                    <default>false</default>
+                    <label>UX/UI Technical Care</label>
+                </value>
+                <value>
+                    <fullName>xOM</fullName>
+                    <default>false</default>
+                    <label>xOM</label>
+                </value>
+            </valueSetDefinition>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Arquitectura</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>CARE</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Customer Master</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>EPC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Integration Procedure</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Marketing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Mobile App</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Sales - CPQ</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Security</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>Technical Care</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>UX/UI Care</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>UX/UI Sales-CPQ</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>UX/UI Technical Care</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>UserStories</controllingFieldValue>
+                <controllingFieldValue>Bugfix</controllingFieldValue>
+                <valueName>xOM</valueName>
+            </valueSettings>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>copado__Deployment_Flow__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If working with Copado Change Management, the Project must be linked to a Deployment Flow.</inlineHelpText>
+        <label>Deployment Flow</label>
+        <referenceTo>copado__Deployment_Flow__c</referenceTo>
+        <relationshipLabel>Projects</relationshipLabel>
+        <relationshipName>Projects</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>copado__Description__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Description</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>copado__End_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>End Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>copado__Index_Metadata__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>When this field is checked, Copado will index the metadata selected against the user stories into the User Story Metadata custom object. Indexed metadata can be used for reporting and compliance, and it&apos;s also used by Copado overlap awareness feature.</inlineHelpText>
+        <label>Index Metadata</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Start_Date__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Start Date</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>copado__Status__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Draft</fullName>
+                    <default>true</default>
+                    <label>Draft</label>
+                </value>
+                <value>
+                    <fullName>Planned</fullName>
+                    <default>false</default>
+                    <label>Planned</label>
+                </value>
+                <value>
+                    <fullName>In progress</fullName>
+                    <default>false</default>
+                    <label>In progress</label>
+                </value>
+                <value>
+                    <fullName>Completed</fullName>
+                    <default>false</default>
+                    <label>Completed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <label>Project</label>
+    <listViews>
+        <fullName>Sprint_18</fullName>
+        <columns>NAME</columns>
+        <columns>ProjectType__c</columns>
+        <columns>Workstream__c</columns>
+        <columns>Sprint__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Sprint__c</field>
+            <operation>equals</operation>
+            <value>812</value>
+        </filters>
+        <label>Sprint 18</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sprint_19</fullName>
+        <columns>NAME</columns>
+        <columns>ProjectType__c</columns>
+        <columns>Workstream__c</columns>
+        <columns>Sprint__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Sprint__c</field>
+            <operation>equals</operation>
+            <value>858</value>
+        </filters>
+        <label>Sprint 19</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>all</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Projects</label>
+    </listViews>
+    <nameField>
+        <label>Project Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Projects</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>copado__Start_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__End_Date__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>copado__Deployment_Flow__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>copado__Start_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>copado__End_Date__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>copado__Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>copado__Deployment_Flow__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>copado__Start_Date__c</searchFilterFields>
+        <searchFilterFields>copado__End_Date__c</searchFilterFields>
+        <searchFilterFields>copado__Status__c</searchFilterFields>
+        <searchFilterFields>copado__Deployment_Flow__c</searchFilterFields>
+        <searchResultsAdditionalFields>copado__Start_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>copado__End_Date__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>copado__Status__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>copado__Deployment_Flow__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Sync_External_User_Stories</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Sync External User Stories</masterLabel>
+        <openType>noSidebar</openType>
+        <page>CopadoSyncUserStories</page>
+        <protected>false</protected>
+    </webLinks>
+</CustomObject>

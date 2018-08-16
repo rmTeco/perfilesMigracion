@@ -253,12 +253,6 @@
                     <default>false</default>
                     <label>IRSF</label>
                 </value>
-                <value>
-                    <fullName>Fraude por suscripción</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Fraude por suscripción</label>
-                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>Técnico</controllingFieldValue>
@@ -424,6 +418,7 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Asset__c</columns>
+        <columns>Type__c</columns>
         <columns>Account__c</columns>
         <columns>Subscribe_Date__c</columns>
         <columns>Description__c</columns>
@@ -433,14 +428,21 @@
         <columns>sinister_type__c</columns>
         <columns>RECORDTYPE</columns>
         <columns>CREATEDBY_USER</columns>
+        <columns>Unsubscribe_Reason__c</columns>
+        <columns>Tipo_Fraude__c</columns>
+        <columns>Tipo_Fraude_Subcategoria__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>Description__c</field>
+            <operation>equals</operation>
+            <value>Suspensión</value>
+        </filters>
         <label>Todos</label>
         <language>es</language>
-    </listViews>
-    <listViews>
-        <fullName>All1</fullName>
-        <filterScope>Everything</filterScope>
-        <label>Todos</label>
     </listViews>
     <listViews>
         <fullName>Baja_de_Suscripciones</fullName>

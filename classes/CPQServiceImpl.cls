@@ -9,6 +9,7 @@ public class CPQServiceImpl implements ICPQService {
 
     public Id AssetToOrder(Id accountId, DateTime requestDate, Set<Id> assetIds) {
         try {
+
             Id orderId;
             Map<String, Object> input = this.GenerateAssetToOrderInputJSON(accountId, requestDate, assetIds);
             Map<String, Object> output = new Map<String, Object>();
@@ -18,11 +19,13 @@ public class CPQServiceImpl implements ICPQService {
                 orderId = this.orderId;
             }
             else {
-                cpqApi.InvokeMethod('assetToOrder', input, output, options);
 
+                cpqApi.InvokeMethod('assetToOrder', input, output, options);
+                
                 vlocity_cmt.JSONResult result = (vlocity_cmt.JSONResult) output.get(vlocity_cmt.JSONResult.JSON_KEY_RESULT);
                 Map<String, Object> fields = (Map<String, Object>) result.records[0].fields;
                 orderId = (Id) fields.get('cartId');
+               
             }
 
             return orderId;

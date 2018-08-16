@@ -1,0 +1,52 @@
+<apex:page controller="cwbtool.FieldSchemaController" showHeader="false" standardStylesheets="false" sidebar="false">
+<c:requiredJSAndCSS ></c:requiredJSAndCSS>
+
+
+<div class='CWB'>  
+ <c:lightningScript /> 
+ <c:lightningspinner />
+   <apex:form id="form">
+   <apex:pagemessages ></apex:pagemessages>
+    <apex:actionFunction name="createObjectFieldProfileTemplate" action="{!getObjectFieldPermission}" />
+     <apex:actionFunction name="downloadObjectPermAction" action="{!getOnlyObjectPermission}" /> 
+    <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form" oncomplete="initTab();"/>
+        <apex:outputpanel id="refreshPanel">
+            <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,msgId,form" interval="5" enabled="{!isStart}" oncomplete="initTab();if({!isProcessed}){hideOverLay();}" />
+    </apex:outputpanel>
+    
+   <div class="slds-grid slds-grid--vertical-stretch slds-grid--pull-padded">
+   <apex:outputpanel layout="none" rendered="{!!isPermissionSet}">
+     <div class="slds-col--padded profilesec">
+          <apex:selectList size="1" value="{!setProfileId}" multiselect="true" styleclass="multiselect profileClass" style="margin-right:40px;">
+           <apex:selectOptions value="{!lstProfile}" />
+       </apex:selectList>
+     </div>
+     </apex:outputpanel>
+     <div class="slds-col--padded">
+      <apex:selectList size="1" id="objctIdDetail" value="{!lstSelctedObject}" multiselect="true" styleclass="multiselect objectClass objctIdDetail">
+           <apex:selectOptions value="{!lstObjectOption}" />
+       </apex:selectList>
+     </div>
+     <div class="slds-col--padded">
+     <apex:outputpanel layout="none" rendered="{!!isOls}">
+       <button value='Download' type='button' onclick='downloadObjectFieldPerm();refresh();' class="slds-button slds-button--brand">Download FLS</button>
+      </apex:outputpanel>
+      <apex:outputpanel layout="none" rendered="{!isOls}">
+        <button value='Download' type='button' onclick='downloadObjectPerm();refresh();' class="slds-button slds-button--brand">Download OLS</button>
+     </apex:outputpanel>
+     </div>
+   </div>
+   <script>
+    function downloadObjectFieldPerm() {
+        showOverLay('');
+        createObjectFieldProfileTemplate();
+  }
+  function downloadObjectPerm() {
+        showOverLay('');
+        downloadObjectPermAction();
+  }
+  </script>
+   
+   </apex:form>
+ </div>
+</apex:page>

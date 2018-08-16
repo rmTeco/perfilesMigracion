@@ -373,7 +373,13 @@ global with sharing class taSalesCreateOrderController implements vlocity_cmt.Vl
 
     /// Metodo llamado desde trigger posterior a la creacion de ordenes
     public static void SetDefaultValues(List<Order> orders){
-        vlocity_cmt__BusinessSite__c storeLocation = ta_sales_UserUtils.getStoreLocation(userinfo.getUserId());
+        vlocity_cmt__BusinessSite__c storeLocation;
+        String licenseName = [SELECT Id, Name, UserLicense.Name FROM Profile WHERE Id=:userinfo.getProfileId() LIMIT 1].UserLicense.Name;
+        if(licenseName == 'Customer Community'){
+            storeLocation = [SELECT Id, Name, Channel_Type__c FROM vlocity_cmt__BusinessSite__c WHERE Channel_Type__c = 'E-Commerce' LIMIT 1 ];
+        }else {
+            storeLocation = ta_sales_UserUtils.getStoreLocation(userinfo.getUserId());
+        }
         System.debug('storeLocation: ' + storeLocation);
         String userChannel = storeLocation.Channel_Type__c;
         Id userStoreLocation = storeLocation.Id;

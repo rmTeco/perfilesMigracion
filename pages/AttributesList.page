@@ -1,0 +1,55 @@
+<apex:page sidebar="false" controller="AttributesListController">
+    <apex:form >
+        <apex:pageBlock title="Attributes List" id="attrs_list">
+            <apex:pageBlockTable value="{! assignments }" var="assgn">
+                <apex:column >
+                    <apex:facet name="header">Product Name</apex:facet>
+                    <apex:outputLink value="/{! assgn.product.Id}">{! assgn.product.Name }</apex:outputLink>
+                </apex:column>
+                
+                <apex:column value="{! assgn.attrAssign.vlocity_cmt__AttributeCategoryId__r.Name }">
+                    <apex:facet name="header">Attribute Category</apex:facet>
+                </apex:column>
+                
+                <apex:column value="{! assgn.attrAssign.vlocity_cmt__AttributeId__r.Name }">
+                    <apex:facet name="header">Attribute Name</apex:facet>
+                </apex:column>
+                
+                <apex:column value="{! assgn.attrAssign.vlocity_cmt__AttributeId__r.vlocity_cmt__Description__c }">
+                    <apex:facet name="header">Attribute Description</apex:facet>
+                </apex:column>
+                
+                <apex:column value="{! assgn.attrAssign.vlocity_cmt__ValueDataType__c }">
+                    <apex:facet name="header">Attribute Type</apex:facet>
+                </apex:column>
+                
+                <apex:column value="{! assgn.pickListValues }">
+                    <apex:facet name="header">PickList values</apex:facet>
+                </apex:column>
+           <!--     
+                <apex:column value="{! assgn.product.vlocity_cmt__JSONAttribute__c }">
+                    <apex:facet name="header">JSON</apex:facet>
+                </apex:column>
+            -->    
+                <apex:column value="{! assgn.attrAssign.vlocity_cmt__Value__c }">
+                    <apex:facet name="header">Default value</apex:facet>
+                </apex:column>
+
+                <apex:column value="{! assgn.defaultPLValue }">
+                    <apex:facet name="header">Default Picklist value</apex:facet>
+                </apex:column>
+                
+                <apex:column value="{! assgn.isReadonly }">
+                    <apex:facet name="header">Readonly</apex:facet>
+                </apex:column>
+                
+                <apex:column value="{! assgn.isRequired }">
+                    <apex:facet name="header">Required</apex:facet>
+                </apex:column>
+                
+            </apex:pageBlockTable>
+            
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

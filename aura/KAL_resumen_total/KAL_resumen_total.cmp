@@ -1,0 +1,34 @@
+<aura:component controller="KAL_resumen_productos_controller" implements="forceCommunity:availableForAllPageTypes" access="global" >
+	
+    <aura:attribute name="options" type="List" default="[
+    {'label': '--None--', 'value': 'None'},
+    {'label': 'Regular', 'value': 'Regular'},
+    {'label': 'Express', 'value': 'Express'},
+    ]"/>
+    <aura:attribute name="picklistValue" type="String"/>
+    <aura:attribute name="subtotalValue" type="Integer"/>
+    <aura:attribute name="totalValue" type="Integer"/>
+    <aura:attribute name="envioRegularValue" type="Integer" default="0"/>
+    <aura:attribute name="envioExpressValue" type="Integer" default="14"/>
+    
+    
+    <aura:handler name="init" action="{!c.setSubtotal}" value="{!this}" />
+    <!--Acá está demás hacer el setTotal ya que es idéntico al setSubtotal
+		se podría hacer menos redundante-->
+    <aura:handler name="init" action="{!c.setTotal}" value="{!this}" />
+    
+    <lightning:combobox name="delivery" aura:id="picklistId" label="Status" value="" placeholder="--None--" options="{! v.options }" onchange="{! c.handleChange }"/>
+	
+    <div class="slds-box">
+        <p>Subtotal {!v.subtotalValue}</p>
+        <aura:if isTrue="{!v.picklistValue == 'Regular'}">
+        	<p>Envío {!v.picklistValue} {!v.envioRegularValue}</p>
+        </aura:if>
+        <aura:if isTrue="{!v.picklistValue == 'Express'}">
+        	<p>Envío {!v.picklistValue} {!v.envioExpressValue}</p>
+        </aura:if>
+    </div>
+    <div class="slds-box">
+        <p>Total {!v.totalValue}</p>
+    </div>
+</aura:component>

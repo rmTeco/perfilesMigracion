@@ -1,0 +1,25 @@
+<aura:component controller="assignmentProcessByWorkTeamController" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="workTeamId" type="Id" />
+    <aura:attribute name="vlcActionId" type="Id" />
+    <aura:attribute name="vlcActionName" type="String" />
+    <aura:attribute name="gridColumns" type="List" />
+    <aura:attribute name="gridData" type="Object" />
+    <aura:attribute name="originalData" type="Object" />
+    <aura:attribute name="gridSelectedRows" type="Object" />
+    <div class="slds-m-around_xx-large">
+        <lightning:treeGrid columns="{! v.gridColumns }"
+            data="{! v.gridData }"
+            keyField="parentTeam"
+            selectedRows="{! v.gridSelectedRows }"
+            onrowselection="{! c.getSelectedRow }"
+            aura:id="workTeamTree"
+        />   
+    </div>
+    <div class="slds-m-around_xx-large">
+        <lightning:button variant="brand" label="Guardar" iconName="utility:save" iconPosition="right" onclick="{! c.handleSave }" />        
+    </div>             
+    <div>
+        <lightning:spinner alternativeText="Procesando..." title="Procesando Nodos" aura:id="spnr" variant="brand" size="large" />
+    </div>
+</aura:component>

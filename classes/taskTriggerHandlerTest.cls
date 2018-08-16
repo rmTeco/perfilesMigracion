@@ -19,7 +19,7 @@ public class taskTriggerHandlerTest {
         
         Test.startTest();
         TaskTriggerHandler.initiateBillingIntegrationProcess(listTask);
-    Test.stopTest();
+		Test.stopTest();
         
         Case testCase = [SELECT Id, Status FROM Case WHERE Id =: listTask[0].WhatId LIMIT 1];
         system.debug('testCase = '+testCase);
@@ -42,7 +42,7 @@ public class taskTriggerHandlerTest {
         
         Test.startTest();
         TaskTriggerHandler.repeatedCalls(listTask);
-    Test.stopTest();
+		Test.stopTest();
         
         Case testCase = [SELECT Id, RepeatedCalls__c FROM Case WHERE Id =: listTask[0].WhatId];
         system.assertEquals(1, testCase.RepeatedCalls__c);

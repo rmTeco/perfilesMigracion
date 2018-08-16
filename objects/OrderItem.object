@@ -159,6 +159,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Tangible_Reserved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This flags indicates if the order item has been reserved</description>
+        <externalId>false</externalId>
+        <label>Is Tangible Reserved</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>ListPrice</fullName>
     </fields>
     <fields>
@@ -293,6 +302,16 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>RecurringCharge_w_Tax__c</fullName>
+        <externalId>false</externalId>
+        <label>Recurring Charge w Tax</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>RecurringTotal_w_Tax__c</fullName>
         <externalId>false</externalId>
         <label>Recurring Total w Tax</label>
@@ -343,6 +362,26 @@
     <fields>
         <fullName>UnitPrice</fullName>
         <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Warranty_Applied__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>To be set by warranty order Omniscript and used in pricing calculation formulas.</description>
+        <externalId>false</externalId>
+        <label>Warranty Applied</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Warranty_Discount__c</fullName>
+        <description>To store the warranty discount from pricing variable</description>
+        <externalId>false</externalId>
+        <label>Warranty Discount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
     </fields>
     <fields>
         <fullName>vlocity_cmt__Action__c</fullName>
@@ -396,12 +435,6 @@
                     <fullName>Modify</fullName>
                     <default>false</default>
                     <label>Modify</label>
-                </value>
-                <value>
-                    <fullName>Nominacion</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Nominacion</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -552,7 +585,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Currency</type>
     </fields>
     <fields>
@@ -1018,7 +1051,7 @@
         <relationshipLabel>Order Products</relationshipLabel>
         <relationshipName>OrderProducts</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -1259,46 +1292,6 @@
                     <label>Cancel</label>
                 </value>
                 <value>
-                    <fullName>Suspend-Voluntaria</fullName>
-                    <default>false</default>
-                    <label>Suspend-Voluntaria</label>
-                </value>
-                <value>
-                    <fullName>Suspend-Fraude</fullName>
-                    <default>false</default>
-                    <label>Suspend-Fraude</label>
-                </value>
-                <value>
-                    <fullName>Suspend-Portabilidad</fullName>
-                    <default>false</default>
-                    <label>Suspend-Portabilidad</label>
-                </value>
-                <value>
-                    <fullName>Suspend-Siniestro</fullName>
-                    <default>false</default>
-                    <label>Suspend-Siniestro</label>
-                </value>
-                <value>
-                    <fullName>Resume-Voluntaria</fullName>
-                    <default>false</default>
-                    <label>Resume-Voluntaria</label>
-                </value>
-                <value>
-                    <fullName>Resume-Fraude</fullName>
-                    <default>false</default>
-                    <label>Resume-Fraude</label>
-                </value>
-                <value>
-                    <fullName>Resume-Siniestro</fullName>
-                    <default>false</default>
-                    <label>Resume-Siniestro</label>
-                </value>
-                <value>
-                    <fullName>Resume-Portabilidad</fullName>
-                    <default>false</default>
-                    <label>Resume-Portabilidad</label>
-                </value>
-                <value>
                     <fullName>Full suspend</fullName>
                     <default>false</default>
                     <label>Full suspend</label>
@@ -1317,6 +1310,68 @@
                     <fullName>Conciliate</fullName>
                     <default>false</default>
                     <label>Conciliate</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Fraude</fullName>
+                    <default>false</default>
+                    <label>Suspend-Fraude</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Voluntaria</fullName>
+                    <default>false</default>
+                    <label>Suspend-Voluntaria</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Portabilidad</fullName>
+                    <default>false</default>
+                    <label>Suspend-Portabilidad</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Siniestro</fullName>
+                    <default>false</default>
+                    <label>Suspend-Siniestro</label>
+                </value>
+                <value>
+                    <fullName>Resume-Siniestro</fullName>
+                    <default>false</default>
+                    <label>Resume-Siniestro</label>
+                </value>
+                <value>
+                    <fullName>Resume-Fraude</fullName>
+                    <default>false</default>
+                    <label>Resume-Fraude</label>
+                </value>
+                <value>
+                    <fullName>Resume-Voluntaria</fullName>
+                    <default>false</default>
+                    <label>Resume-Voluntaria</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Robo</fullName>
+                    <default>false</default>
+                    <label>Suspend-Robo</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Hurto</fullName>
+                    <default>false</default>
+                    <label>Suspend-Hurto</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Extravio</fullName>
+                    <default>false</default>
+                    <label>Suspend-Extravio</label>
+                </value>
+                <value>
+                    <fullName>Resume-Portabilidad</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Resume-Portabilidad</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Operador</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Suspend-Operador</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

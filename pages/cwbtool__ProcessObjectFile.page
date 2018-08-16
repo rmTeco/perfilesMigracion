@@ -1,0 +1,335 @@
+<apex:page controller="cwbtool.FieldSchemaController" extensions="cwbtool.CWBSetupCtrl"  showHeader="true" standardStylesheets="false" sidebar="false" applyHtmlTag="true" applyBodyTag="true" docType="html-5.0" 
+tabstyle="CWB_Tool__tab" action="{!validateloadAction}">
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" />
+    <!--<link rel="stylesheet" href="{!URLFOR($Resource.video,'/video/css/prettyPhoto.css')}" />-->
+
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}" />
+    <!--<apex:includeScript value="{!URLFOR($Resource.video,'/video/js/jquery.prettyPhoto.js')}" />-->
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/field.js')}"/>
+   
+   
+  
+    
+    
+    
+    <!-- <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>-->
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/ionic/css/ionicons.min.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.introJs,'/introJs/introjs.min.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+   
+    <style>
+        .slds-input,.CWB .slds-input{
+          width:auto;
+        }
+        .padding{
+          padding :10px;
+        }
+        .green{
+            color:#ffffff;
+            background-color:green; 
+        }
+        .red{
+          color:#ffffff;
+          background-color:red; 
+        }
+        .CWB{
+          font-family: Arial,Helvetica,sans-serif;
+          color: #222;
+        }
+        .CWB a {
+           color: #54698d;
+         }
+         .slds-text-link--reset1{
+          text-decoration: none !important;
+          cursor: default !important;
+         }
+         .slds-form-element__label{
+          font-weight:normal;
+         }
+         .maxWidth{
+          max-width:259px;
+         }
+         .CWB .messageTable{
+          width:auto;
+         }
+         .ionicIcon{ 
+         color: #54698d;
+          font-size: 25px;
+          padding-left: 10px;
+        }
+        .cwbtip{
+            font-size: 80%;
+            color: gray;
+            padding-top: 10px;
+        }
+        
+         .newFlag {
+            background-image: none;
+            margin: 0;
+            margin-left: 5px;
+            padding: 0;
+            position: relative;
+            bottom: 2px;
+            font-weight: bold;
+            color: red;
+            font-size: .8em;
+            background-repeat: no-repeat;
+            background-position: top left;
+        }
+        .devflex{
+           display: inline-flex;
+        }
+        .slds-m-left_mediumcwb{
+           margin-left:7px;
+        }
+        .CWB .slds-checkbox--toggle [type="checkbox"]:checked + .slds-checkbox--faux, .CWB .slds-checkbox--toggle [type="checkbox"]:checked ~ .slds-checkbox--faux {
+          background-color: #1fcaa0;
+     }
+     .slds-button--success {
+	    padding-left: 1rem !important;
+	    padding-right: 1rem !important;
+	    text-align: center !important;
+	    vertical-align: middle !important;
+	    background-color: #4bca81 !important;
+	    border: 1px solid #4bca81 !important;
+	    color: #fff !important;
+	}
+	.CWB .slds-icon{
+	   height: 1.6rem;
+	}
+        
+    </style>
+<div class='CWB'> 
+ <c:lightningScript /> 
+ <c:lightningspinner />
+
+ <apex:form > 
+    <!-- Object Permission Detail -->
+        <apex:actionfunction name="process" action="{!startProcessing}" reRender="scriptId,pset,msg" status="myStatus" oncomplete="start({!iActualSize},{!iCurrentSize},{!isCompleted});"/>
+        <apex:actionfunction name="checkDetailBeforeStartAction" action="{!updateObjectDetail}" reRender="scriptId,msg" status="myStatus" oncomplete="process();"/>
+        <apex:actionFunction name="downloadObject" action="{!downLoadAction}" /> 
+    <!-- End Object Permission Detail -->
+    <!-- Permissionset -->
+    <apex:actionfunction name="updatePermissionDetail" action="{!updatePermissionDetail}" reRender="pset,scriptId,msg" status="myStatus" oncomplete="process();"/>
+    <apex:actionFunction name="downLoadPermissionSetDetail" action="{!downLoadPermissionSetDetail}" /> 
+   <!-- End Permissionset --> 
+   
+     <apex:actionFunction name="downloadObjectUpdateDetailAction" action="{!downloadObjectUpdateDetails}"></apex:actionFunction>
+     <apex:actionFunction name="downLoadPermissionSetAssignmentAction" action="{!downLoadPermissionSetAssignment}"></apex:actionFunction>
+     <apex:actionFunction name="downLoadApexDetailAction" action="{!downLoadApexDetail}"></apex:actionFunction>
+     <apex:actionFunction name="downLoadProfileAction" action="{!downLoadProfile}"></apex:actionFunction>
+     <apex:actionFunction name="downloadLayoutUpdateDetailsAction" action="{!downloadLayoutUpdateDetails}"></apex:actionFunction>
+     <apex:actionFunction name="downloadWorkflowUpdateDetailsAction" action="{!downloadWorkflowUpdateDetails}"></apex:actionFunction>
+     <apex:actionFunction name="downloadCustomFieldUpdateDetailAction" action="{!downloadCustomFieldUpdateDetails}"></apex:actionFunction>
+     <apex:actionFunction name="downloadCustomLabelUpdateDetailAction" action="{!downloadCustomLabelUpdateDetails}"></apex:actionFunction>
+     <apex:actionFunction name="downloadCustomFieldUpdateDetailAction2" action="{!downloadCustomFieldUpdateDetails2}" oncomplete="downloadCustomFieldUpdateDetailAction3();hideOverLay();" reRender="msg">
+            <apex:param name="strFieldJSON" assignTo="{!strFieldJSON}" value=""/>
+            <apex:param name="metadatatypedetail" assignTo="{!metadatatypedetail}" value=""/>
+             <apex:param name="isCustonField" assignTo="{!isCustonField}" value=""/>
+        </apex:actionFunction> 
+        <apex:actionFunction name="downloadCustomFieldUpdateDetailAction3" action="{!downloadCustomFieldUpdateDetails3}">
+            <apex:param name="strFieldJSON" assignTo="{!strFieldJSON}" value=""/>
+        </apex:actionFunction>
+      
+      <apex:actionFunction name="saveDetailAction" action="{!saveDetail}" rerender="setupcontainer,msg" oncomplete="hideOverLay();"></apex:actionFunction>
+      <apex:actionFunction name="displayRemoteSiteResponse" action="{!displayRemoteSiteResponse}" rerender="remoteSite,msg" oncomplete="hideOverLay();">
+            <apex:param name="metadataResponse" assignTo="{!metadataResponse}" value="{!metadataResponse}" />
+        </apex:actionFunction>
+         
+     
+       <apex:actionFunction name="validatePromocodeAction" action="{!validatePromocode}" rerender="msg,lsManagement," oncomplete="hideOverLay();overridePageMessages();initTab();"></apex:actionFunction>
+
+       <apex:actionFunction name="revokeAccessAction" action="{!revokeAccess}" rerender="msg,lsManagement" oncomplete="hideOverLay();initTab();"></apex:actionFunction>
+
+        <apex:actionFunction name="sendRequestAction" action="{!sendRequest}" rerender="msg,lsManagement" oncomplete="hideOverLay();"></apex:actionFunction>
+       
+        <apex:actionFunction name="editConfigurationAction" action="{!editConfiguration}" rerender="msg,ConfigureCmpdetail" oncomplete="hideOverLay();overridePageMessages();initTab();"></apex:actionFunction>
+        <apex:actionFunction name="ValidateInputAction" action="{!ValidateInputKey}" rerender="msg,ConfigureCmpdetail" oncomplete="hideOverLay();overridePageMessages();initTab();"></apex:actionFunction>
+        <apex:actionFunction name="saveUIConfigAction" action="{!saveUIConfig}" rerender="msg,tabcontainer" oncomplete="hideOverLay();overridePageMessages();initTab();"></apex:actionFunction>
+       <apex:actionFunction name="authorizeConfigAction" action="{!authorizeConfigAction}" rerender="msg,tabcontainer" oncomplete="hideOverLay();overridePageMessages();initTab();"></apex:actionFunction>
+       <apex:actionFunction action="{!revokeAdminAccess}" name="revokeAdminAccess" id="revokeAdminAccess" immediate="true" rerender="msg,tabcontainer" oncomplete="hideOverLay();">
+		   <apex:param name="strAccesscode" assignTo="{!strAccesscode}" value=""/>
+		</apex:actionFunction>
+						        
+      <apex:outputPanel layout="none" > 
+      
+       <c:tabs strDomainName="{!strDomainName}" RemoteSiteName="{!RemoteSiteName}" objSetup="{!objSetup}" bMetadataConnectionWarning="{!bMetadataConnectionWarning}" setPermissionSetId="{!setPermissionSetId}"
+       objConnectedOrg="{!objConnectedOrg}" promocode="{!promocode}"
+        objCWBReportModel="{!objCWBReportModel}"
+        objAdminConfig="{!objAdminConfig}" 
+        bCWBAPIConnectionWarning="{!bCWBAPIConnectionWarning}" isSandbox="{!isSandbox}" 
+        isEdit="{!isEdit}"
+         enterKey="{!enterKey}"
+          strKey="{!strKey}"
+        strAccesscode="{!strAccesscode}"
+        admindetail="{!admindetail}"
+        isAdminUser="{!isAdminUser}"
+        includeManagedPackage="{!includeManagedPackage}"
+        id="tabcontainer"></c:tabs> 
+    
+    </apex:outputPanel>
+    
+  <!-- Modal -->
+  <div id="setting" class="slds-modal slds-fade-in-open slds-modal--large" aria-hidden="false" role="dialog" style='display:none;'>
+    <div class="slds-modal__container">
+        <div class="slds-modal__header">
+            <button class="slds-button slds-button--icon-inverse slds-modal__close" ><!-- onclick="closeModal('setting')"> -->
+                <c:svg xlinkHref="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/icons/action-sprite/svg/symbols.svg#close')}" styleClass="slds-button__icon slds-button__icon--large" />
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 class="slds-text-heading--medium">Filter <span class='profilesec'>Profiles/</span>Objects</h2>&nbsp;(<i class="grey-text">changes are applicable for current page only, and will be lost on next reset.</i>)
+        </div>
+        <div class="slds-modal__content slds-p-around--medium" style='height:400px;'>
+            <div class="slds-grid  slds-panel__section">
+               <div class="apexcls slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--3-of-12 slds-form-element__control maxWidth">
+                   <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center" title='Only Applicable For Profile Download'>
+                       <span class="slds-form-element__label m-bottom--">Exclude Apex</span>
+                       <apex:inputcheckbox value="{!isExcludeApex}" styleclass="slds-input" />
+                       <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                   </label>
+               </div>
+               </div>  
+               
+            <div class="slds-grid slds-grid--vertical-stretch slds-grid--pull-padded">
+              <div class="slds-col--padded profilesec">
+                   <apex:selectList value="{!setProfileId}" multiselect="true" styleclass="multiselect profileClass" style="margin-right:40px;">
+                    <apex:selectOptions value="{!lstProfile}" />
+                </apex:selectList>
+              </div>
+              <div class="slds-col--padded">
+               <apex:selectList id="objctIdDetail" value="{!lstSelctedObject}" multiselect="true" styleclass="multiselect objectClass objctIdDetail">
+                    <apex:selectOptions value="{!lstObjectOption}" />
+                </apex:selectList>
+              </div>
+            </div>
+          </div>
+          <div class="slds-modal__footer">
+               <button class="slds-button slds-button--neutral slds-button--brand modalclose">Save &amp; Close</button>
+          </div>
+        
+    </div>
+</div>
+<div id='settingbackdrop' class="slds-backdrop slds-backdrop--open" style='display:none;'></div>
+<!-- Only Object Filter 
+<div id="objectSetting" class="slds-modal slds-fade-in-open slds-modal--large" aria-hidden="false" role="dialog" style='display:none;'>
+    <div class="slds-modal__container">
+        <div class="slds-modal__header">
+            <button class="slds-button slds-button--icon-inverse slds-modal__close" onclick="closeModal('objectSetting')">
+                <c:svg xlinkHref="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/icons/action-sprite/svg/symbols.svg#close')}" styleClass="slds-button__icon slds-button__icon--large" />
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 class="slds-text-heading--medium">Filter Objects</h2>&nbsp;(<i class="grey-text">changes are applicable for current page only, and will be lost on next reset.</i>)
+        </div>
+        <div class="slds-modal__content slds-p-around--medium" style='height:400px;'>
+               
+            <div class="slds-grid slds-grid--vertical-stretch slds-grid--pull-padded">
+              <div class="slds-col--padded">
+               <apex:selectList value="{!lstSelctedObject}" multiselect="true" styleclass="multiselect objectClass">
+                    <apex:selectOptions value="{!lstObjectOption}" />
+                </apex:selectList>
+              </div>
+            </div>
+          </div>
+          <div class="slds-modal__footer">
+               <button class="slds-button slds-button--neutral slds-button--brand modalclose">Save &amp; Close</button>
+          </div>
+        
+    </div>
+</div>
+<div id='objectSettingbackdrop' class="slds-backdrop slds-backdrop--open" style='display:none;'></div>-->
+
+ <!--All External Page Modal -->
+  <div id="remotelocation" class="slds-modal slds-fade-in-open slds-modal--large" aria-hidden="false" role="dialog" style='display:none;'>
+    <div class="slds-modal__container">
+        <div class="slds-modal__header">
+            <button class="slds-button slds-button--icon-inverse slds-modal__close" >
+                <c:svg xlinkHref="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/icons/action-sprite/svg/symbols.svg#close')}" styleClass="slds-button__icon slds-button__icon--large" />
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 class="slds-text-heading--medium hdText"></h2>
+        </div>
+         <div class="slds-modal__content slds-p-around--medium remotecontent" style="height:400px;">
+            
+          </div>
+          <div class="slds-modal__footer">
+               <button class="slds-button slds-button--neutral slds-button--brand modalclose">Close</button>
+          </div>
+        
+    </div>
+</div>
+<div id='remotelocationbackdrop' class="slds-backdrop slds-backdrop--open" style='display:none;'></div>
+ 
+ <!--Video -->
+ <div id="videomodal" class="slds-modal slds-fade-in-open slds-modal1--large" aria-hidden="false" role="dialog" style='display:none;'>
+    <div class="slds-modal__container">
+        <div class="slds-modal__header slds-modal__header--empty">
+            <button class="slds-button slds-button--icon-inverse slds-modal__close">
+                 <c:svg xlinkHref="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/icons/action-sprite/svg/symbols.svg#close')}" styleClass="slds-button__icon slds-button__icon--large" />
+                <span class="slds-assistive-text">Close</span>
+            </button>
+        </div>
+        <div class="slds-modal__content slds-p-around--medium" style="height:400px;">
+           
+        </div>
+       
+    </div>
+</div>
+<div id='videomodalbackdrop' class="slds-backdrop slds-backdrop--open" style='display:none;'></div>
+
+</apex:form>
+    <c:lightingDynamicModal />
+      
+   </div>  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!--<link href="{!URLFOR($Resource.dashboard,'dashboard.css')}" rel="stylesheet" />-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href='//fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css' />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboardlib,'dashboard/LibraryAngularComponents/angular-components/angular-1.2.26.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboardlib,'dashboard/LibraryAngularComponents/angular-components/angular.sanitize.min.js')}" />
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>-->
+     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> -->
+     <script src="{!URLFOR($Resource.dashboard, 'd3.min.js')}" charset="utf-8"></script>
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script> -->
+    <script src="{!URLFOR($Resource.dashboard, 'nv.d3.min.js')}"></script>
+   
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-nvd3/1.0.7/angular-nvd3.min.js"></script> -->
+     <script src="{!URLFOR($Resource.dashboard, 'angular-nvd3.min.js')}"></script>
+     
+    <!--<script src="{!URLFOR($Resource.dashboard, 'nv.d3.js')}" charset="utf-8"></script>-->
+    <!--<script src="{!URLFOR($Resource.dashboardlib, 'dashboard/SfdcAngularChart/js/nv.d3.js')}"></script>-->
+    <!-- <apex:includeScript value="{!URLFOR($Resource.dashboardlib, 'dashboard/SfdcAngularChart/js/angularjs-nvd3-directives.js')}"/>-->
+    <!-- <link rel="stylesheet" href="{!URLFOR($Resource.dashboardlib, 'dashboard/SfdcAngularChart/css/nv.d3.css')}" />-->
+    <link rel="stylesheet" href="{!URLFOR($Resource.dashboard, 'nv.d3.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboard, 'services.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboard, 'controllers.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboard, 'app.js')}" />
+</apex:page>

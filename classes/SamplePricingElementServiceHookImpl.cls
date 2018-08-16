@@ -10,20 +10,23 @@ global with sharing class SamplePricingElementServiceHookImpl implements vlocity
  
    global Boolean invokeMethod(String methodName, Map<String, Object> input, Map<String, Object> output, Map<String, Object> options) {
  
-
        try
        {
-          System.debug('--- SamplePricingElementServiceHookImpl methodName: ' + methodName);
+          //System.debug('--- SamplePricingElementServiceHookImpl methodName: ' + methodName);
           if (methodName.equalsIgnoreCase('priceLineItems.PreInvoke'))
-          {
+          {  
+             //System.debug(input);
+             //System.debug('Input: '+JSON.serialize(input));
+
              priceLineItemsPreInvoke(input, output,options);
+
           }
           return true;
        }
        catch (Exception ex)
        {
-          System.debug('--- Exception: ' + ex.getMessage());
-          System.debug('--- Stack Trace: ' + ex.getStackTraceString());
+          //System.debug('--- Exception: ' + ex.getMessage());
+          //System.debug('--- Stack Trace: ' + ex.getStackTraceString());
           throw ex;
        }
     }
@@ -32,29 +35,37 @@ global with sharing class SamplePricingElementServiceHookImpl implements vlocity
         SObject parent = (SObject)input.get('parent');
         String parentObjName;
         String parentId;
+
         if (parent != null) {
             parentId = String.valueOf(parent.Id);
             //either Quote/Order or Opportunity
             parentObjName = parent.getSObjectType().getDescribe().getName();
         }
+
         List<SObject> itemList = (List<SObject>)input.get('itemList');
         //System.debug('--- priceLineItemsPreInvoke parent: ' + JSON.serialize(parent));
-        //System.debug('--- priceLineItemsPreInvoke itemList: ' + JSON.serialize(itemList));
+        System.debug('--- priceLineItemsPreInvoke itemList: ' + JSON.serialize(itemList));
         
         String cartAction = (String)input.get('cartAction');
-        
+
         // Only execute when cartAction is adding items to the cart
         //Ankit - Commented the if condition as the reprice is required for UpdateCartItem
         //if (cartAction != 'AddCartItem' && cartAction != 'AddCartPromotionItem') return;
-        
+        //https://cs21.salesforce.com/_ui/common/apex/debug/ApexCSIPage#
         // collect the items by product names we want to set external prices for
-        Set<String> prodNames = new Set<String>{'<<Your Set of Products>>'};
+        
+        List<Product2> prodNamesList = [SELECT Name FROM Product2 WHERE Family = 'Maintenance/Service Fees'];
+        Set<String> prodNames = new Set<String>();
+        
+        for(Product2 product : prodNamesList){
+            prodNames.add(product.Name);
+        }
+        
         Map<String, List<SObject>> productNameToItemObjs = new Map<String, List<SObject>>();
         for (SObject item : itemList)
         {
-            string prodName = (String)item.getSObject('PricebookEntry').getSObject('Product2').get('Name');
-            System.debug('ProdName --'+prodName);
-            System.debug('prodNames --' +prodNames);
+            //string prodName = (String)item.getSObject('PricebookEntry').getSObject('Product2').get('Name');
+            string prodName = 'Mano de obra';
             if (prodNames.contains(prodName))
             {
                 List<SObject> itemObjList = productNameToItemObjs.get(prodName);
@@ -69,7 +80,7 @@ global with sharing class SamplePricingElementServiceHookImpl implements vlocity
 
         // simulate external prices
         Type t = Type.forName('vlocity_cmt.SetCartItemExternalPriceService');
-        System.debug(t);
+        //System.debug(t);
         if (t != null)
         {   
             vlocity_cmt.VlocityOpenInterface externalPriceService = (vlocity_cmt.VlocityOpenInterface)t.newInstance();
@@ -90,7 +101,10 @@ global with sharing class SamplePricingElementServiceHookImpl implements vlocity
                         matrixInput.put('parentObjName', parentObjName);
                         matrixInput.put('itemId', String.valueOf(itemObj.Id));
                         
-                        Map<String, Object> matrixOutput = lookupPricesFromMatrix('Device_Pricing_Procedure' , matrixInput);
+                        Map<String, Object> matrixOutput = lookupPricesFromMatrix('RepairPriceProcedure' , matrixInput);
+                        
+                        //System.debug('Matrix Input: '+matrixInput);
+                        //System.debug('Matrix Output: '+matrixOutput);
                         
                         Map<String, Object> fieldVals = new Map<String, Object>();
                         fieldVals.put('value', Decimal.ValueOf((String)matrixOutput.get('MRC')));
@@ -105,7 +119,7 @@ global with sharing class SamplePricingElementServiceHookImpl implements vlocity
                     }
                 }
             }
-        
+
             if (!itemFields.isEmpty())
             {
                 externalPriceServiceInput.put('parent', parent);
@@ -139,16 +153,18 @@ global with sharing class SamplePricingElementServiceHookImpl implements vlocity
         };   
         // invoke the matrix lookup
         matrixService.invokeMethod('calculate', matrixInput, matrixOutput, matrixOptions);
+
+        System.debug(matrixOutput);
         //Parse the calculation procedure response
         List<Object> outList = (List<Object>)matrixOutput.get('output');
-        List<Object> objectList;
+        System.debug('Outlist: '+outList);
+        List<Object> objectList = new List<Object>();
         if (outList != null && !outList.isEmpty()) {
             vlocity_cmt.PricingCalculationService.CalculationProcedureResults calcProcResults = (vlocity_cmt.PricingCalculationService.CalculationProcedureResults)outList[0];
             objectList = calcProcResults.calculationResults;                      
         }
-        Map<String, Object> matrixResult = new Map<String, Object>();                
-        for (Object obj : objectList) {
-                            
+        Map<String, Object> matrixResult = new Map<String, Object>();
+        for (Object obj : objectList) {           
             // This is a row in the calculation procedure output
             Map<String, Object> row = (Map<String, Object>)obj;
            // String incomingMatrix = 'MultiAttribute_Device_Pricing_Matrix';

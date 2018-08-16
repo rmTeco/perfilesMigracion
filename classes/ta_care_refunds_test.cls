@@ -20,7 +20,7 @@ public class ta_care_refunds_test {
         Map<String, Object> resultMap = (Map<String, Object>)resultList[0];
         system.debug('MAPA PARA VER SALDO A VENCER -->'+resultMap);
         system.assertEquals('879.6900',resultMap.get('saldoVencido'));
-        system.assertEquals('0',resultMap.get('saldoAFavor'));
+        system.assertEquals('1425.6900',resultMap.get('saldoAFavor'));
         system.assertEquals('3433.8700',resultMap.get('saldoDeudor'));
         system.assertEquals('546.0000',resultMap.get('saldoAVencer'));
     }

@@ -714,7 +714,7 @@ The financial promotions that are set up may have different application rules de
         <relationshipLabel>Financial Promotions</relationshipLabel>
         <relationshipName>Financial_Promotions</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -726,7 +726,7 @@ The financial promotions that are set up may have different application rules de
         <label>Nombre de Promoción</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -739,7 +739,7 @@ The financial promotions that are set up may have different application rules de
         <label>Gateway de Pagos</label>
         <length>100</length>
         <required>false</required>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -978,7 +978,7 @@ The financial promotions that are set up may have different application rules de
         <externalId>false</externalId>
         <label>Region en Promoción</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1014,6 +1014,7 @@ The financial promotions that are set up may have different application rules de
         <columns>PromotionStatus__c</columns>
         <columns>PromotionType__c</columns>
         <columns>RECORDTYPE</columns>
+        <columns>ChannelPromotion__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
@@ -1021,7 +1022,7 @@ The financial promotions that are set up may have different application rules de
     <nameField>
         <displayFormat>PF-{0000000000}</displayFormat>
         <label>Código</label>
-        <trackHistory>true</trackHistory>
+        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Financial Promotions</pluralLabel>
@@ -2116,10 +2117,6 @@ The financial promotions that are set up may have different application rules de
         </picklistValues>
         <picklistValues>
             <picklist>PaymentMethodPromotion__c</picklist>
-            <values>
-                <fullName>1001</fullName>
-                <default>true</default>
-            </values>
             <values>
                 <fullName>1101</fullName>
                 <default>false</default>

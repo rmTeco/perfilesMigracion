@@ -111,6 +111,17 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Puntos_acumulados_mes_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Puntos acumulados mes 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Socio__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -121,6 +132,17 @@
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Tipo_de_producto__c</fullName>
+        <externalId>false</externalId>
+        <formula>Asset__r.Tipo_de_Producto__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tipo_de_producto</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Total_Puntos_Acumulados__c</fullName>

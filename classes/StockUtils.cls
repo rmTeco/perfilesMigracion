@@ -121,7 +121,7 @@ public with sharing class StockUtils{
         }
     }
 
-    public static void StockQuantityManagement(Map<String, Map<String, Object>> nmus, String orderId, String serviceOperation)
+    public static void StockQuantityManagement(Map<String, Map<String, Object>> nmus, String orderNumber, String serviceOperation)
     {
         System.debug('StockQuantityManagement');
         try{
@@ -129,7 +129,7 @@ public with sharing class StockUtils{
             String serviceRequest = '{"body": {';
             serviceRequest += '"codAplicacion": "SFDC_CRM",';
             serviceRequest += '"codPuntoDeVenta": "0",';
-            serviceRequest += '"idOperacion": "' + orderId + '",';
+            serviceRequest += '"idOperacion": "' + orderNumber + '",';
             serviceRequest += '"operacion": "' + serviceOperation + '",';
             serviceRequest += '"listaNMU": [';
             Integer key = 0;

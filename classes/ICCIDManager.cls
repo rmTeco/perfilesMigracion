@@ -68,6 +68,7 @@ global with sharing class ICCIDManager implements vlocity_cmt.VlocityOpenInterfa
         Boolean nonSimcardsSerialsValidated = true;
         String codPuntoDeVenta;
         String codDeposito;
+        String orderNumber;
         Id orderId;
         try{
             Map<String, Object> order = (Map<String, Object>) options.get('Order');
@@ -77,10 +78,11 @@ global with sharing class ICCIDManager implements vlocity_cmt.VlocityOpenInterfa
             Map<String,String> getPointOfSaleWarehouseResponse = taOrderController.GetPointOfSaleWarehouse(orderId);
             codPuntoDeVenta = getPointOfSaleWarehouseResponse.get('codPuntoDeVenta');
             codDeposito = getPointOfSaleWarehouseResponse.get('codDeposito');
-            Order dbOrder = [SELECT Delivery_Method__c, Gestion__c FROM Order WHERE Id = :orderId LIMIT 1];
+            Order dbOrder = [SELECT Delivery_Method__c, Gestion__c, OrderNumber FROM Order WHERE Id = :orderId LIMIT 1];
             Boolean cambioDeSim = (dbOrder.Gestion__c == 'Cambio de SIM' || dbOrder.Gestion__c == 'Cambio de SIM por siniestro');
             List<OrderItem> orderItems = taOrderController.GetOrderSerials(orderId);
             String deliveryMethod = dbOrder.Delivery_Method__c;
+            orderNumber = dbOrder.OrderNumber;
 
             List<Object> serialList = new List<Object>();
 
@@ -163,7 +165,7 @@ global with sharing class ICCIDManager implements vlocity_cmt.VlocityOpenInterfa
                 }
                 if (nmusMap.size() > 0 && nonSimcardsSerialsValidated && !nmusAlreadyDeReserve)
                 {
-                    taOrderController.ManageReservedNmus('L',nmusMap,codPuntoDeVenta,codDeposito, orderId);
+                    taOrderController.ManageReservedNmus('L',nmusMap, orderNumber);
                     nmusReserveFree = true;
                     nmusAlreadyDeReserve = true;
                 }
@@ -179,7 +181,7 @@ global with sharing class ICCIDManager implements vlocity_cmt.VlocityOpenInterfa
         }
         catch(Exception e){
             System.debug('ICCIDManager:SerialAssingment -> exception: '+e);
-            if (nmusReserveFree) taOrderController.ManageReservedNmus('R',nmusMap,codPuntoDeVenta,codDeposito, orderId);
+            if (nmusReserveFree) taOrderController.ManageReservedNmus('R',nmusMap,orderNumber);
             if (reserveDone)
                 StockMovementException(serialNumbersToMove);
         }

@@ -211,6 +211,24 @@ IF(vlocity_cmt__PartyEntityType__c ==&apos;Household&apos; || vlocity_cmt__Party
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>vlocity_cmt__PartyEntityAddress__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF( vlocity_cmt__PartyEntityType__c == &apos;Household&apos; || vlocity_cmt__PartyEntityType__c == &apos;Group&apos;, vlocity_cmt__HouseholdId__r.vlocity_cmt__Address__c,
+IF( vlocity_cmt__PartyEntityType__c ==&apos;Contact&apos;, vlocity_cmt__ContactId__r.MailingStreet &amp; BR() &amp; 
+IF( ISBLANK(vlocity_cmt__ContactId__r.MailingCity), &quot;&quot;, vlocity_cmt__ContactId__r.MailingCity) &amp; IF(AND(NOT(ISBLANK(vlocity_cmt__ContactId__r.MailingCity)), OR( NOT(ISBLANK(vlocity_cmt__ContactId__r.MailingState)), NOT(ISBLANK(vlocity_cmt__ContactId__r.MailingPostalCode)), NOT(ISBLANK(vlocity_cmt__ContactId__r.MailingCountry)))), &quot;, &quot;, &quot; &quot;) &amp; vlocity_cmt__ContactId__r.MailingState &amp; &quot; &quot; &amp; vlocity_cmt__ContactId__r.MailingPostalCode &amp; BR() &amp; 
+vlocity_cmt__ContactId__r.MailingCountry, 
+IF( vlocity_cmt__PartyEntityType__c ==&apos;Account&apos;, vlocity_cmt__AccountId__r.BillingStreet &amp; BR() &amp; 
+IF( ISBLANK(vlocity_cmt__AccountId__r.BillingCity), &quot;&quot;, vlocity_cmt__AccountId__r.BillingCity) &amp; IF(AND(NOT(ISBLANK(vlocity_cmt__AccountId__r.BillingCity)), OR( NOT(ISBLANK(vlocity_cmt__AccountId__r.BillingState)), NOT(ISBLANK(vlocity_cmt__AccountId__r.BillingPostalCode)), NOT(ISBLANK(vlocity_cmt__AccountId__r.BillingCountry)))), &quot;, &quot;, &quot; &quot;) &amp; vlocity_cmt__AccountId__r.BillingState &amp; &quot; &quot; &amp; vlocity_cmt__AccountId__r.BillingPostalCode &amp; BR() &amp; 
+vlocity_cmt__AccountId__r.BillingCountry, &quot;&quot;)))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Address</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>vlocity_cmt__PartyEntityId__c</fullName>
         <deprecated>false</deprecated>
         <description>This field is used internally to store Ids from different objects. If the party type is contact, this field stores Contact.Id, if it is household, it stores Household__c.Id. Used to provide a link to the source record.</description>
@@ -230,6 +248,19 @@ IF(vlocity_cmt__PartyEntityType__c ==&apos;Household&apos; || vlocity_cmt__Party
         <formula>Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Party Entity Name</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>vlocity_cmt__PartyEntityPhone__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>IF(vlocity_cmt__PartyEntityType__c ==&apos;Contact&apos;,  vlocity_cmt__ContactId__r.Phone,
+   IF(vlocity_cmt__PartyEntityType__c ==&apos;Account&apos;,  vlocity_cmt__AccountId__r.Phone, &quot;&quot;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Phone</label>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>

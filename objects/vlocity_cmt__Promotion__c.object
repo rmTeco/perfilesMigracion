@@ -446,6 +446,11 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>Not Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+                <value>
                     <fullName>Manual Opt-In</fullName>
                     <default>false</default>
                     <label>Manual Opt-In</label>
@@ -455,19 +460,24 @@
                     <default>false</default>
                     <label>Manual Opt-Out</label>
                 </value>
-                <value>
-                    <fullName>Not Applicable</fullName>
-                    <default>false</default>
-                    <label>Not Applicable</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
     <label>Promotion</label>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__IsActive__c</columns>
+        <columns>vlocity_cmt__EnableAutoApplyPromotion__c</columns>
+        <columns>vlocity_cmt__EnableAutoAddProducts__c</columns>
+        <columns>vlocity_cmt__EffectiveStartDate__c</columns>
+        <columns>vlocity_cmt__EffectiveEndDate__c</columns>
+        <columns>vlocity_cmt__PriceListId__c</columns>
+        <columns>vlocity_cmt__IsOrderable__c</columns>
+        <columns>vlocity_cmt__Description__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Promotion Name</label>

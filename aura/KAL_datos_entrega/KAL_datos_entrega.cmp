@@ -1,0 +1,145 @@
+<aura:component   controller="KAL_datosEntradaController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    <ltng:require 
+        styles="{!$Resource.KAL_estilos}" 
+        scripts="{!$Resource.KAL_Autocomplete}"
+    />
+    
+    <aura:registerEvent name="myApplicationEvent" type="c:KAL_datos_entregaEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="init" value="{!this}" action="{!c.getTipoDocumento}" />
+    <aura:handler name="init" value="{!this}" action="{!c.getPlazosEntregaJS}" />
+    <aura:handler name="init" value="{!this}" action="{!c.validateEmail}" />
+    
+    <aura:method name="validarEmail" action="{!c.validateEmail}" access="PUBLIC" />
+    <aura:method name="validarPhone" action="{!c.validatePhone}" access="PUBLIC" />
+    <aura:method name="validarNroDocumento" action="{!c.validarNroDocumento}" access="PUBLIC" />
+    
+    <aura:attribute name="userInfo" type="Map" />
+    <aura:attribute name="dirCompleta" type="string" />  
+    <aura:attribute name="CheckDirCompleta" type="Boolean" default="true"/> 
+        
+    <aura:attribute name="nombre" type="string"/>
+    <aura:attribute name="apellido" type="string" />
+    <aura:attribute name="nroDocumento" type="Integer" /> 
+    <aura:attribute name="tipoDocumento" type="List"/>  
+    <aura:attribute name="idTipoDocumento" type="string" default="DNI" />         
+    <aura:attribute name="mobilePhone" type="string" /> 
+    
+    <!-- Atributos de Email -->
+    <aura:attribute name="Email" type="string" /> 
+    <aura:attribute name="dominios" type="List" default="[]" />
+
+    <aura:attribute name="StandardInicioAM" type="Integer" /> 
+    <aura:attribute name="StandardFinAM" type="Integer" /> 
+    <aura:attribute name="StandardInicioCP" type="Integer" /> 
+    <aura:attribute name="StandardFinCP" type="Integer" /> 
+    <aura:attribute name="RetiroInicioAM" type="Integer" /> 
+    <aura:attribute name="RetiroFinAM" type="Integer" /> 
+    <aura:attribute name="RetiroInicioCP" type="Integer" /> 
+    <aura:attribute name="RetiroFinCP" type="Integer" /> 
+    <!-- KAL_67 -->
+    <aura:attribute name="valorCheckboxADomicilio" type="Boolean" access="global" default="true" />
+    <!-- /KAL_67 -->
+
+    <aura:handler name="change" value="{!v.Email}" action="{!c.validateEmail}" />
+    <aura:handler name="change" value="{!v.nroDocumento}" action="{!c.validarNroDocumento}" />
+    <aura:handler name="change" value="{!v.mobilePhone}" action="{!c.validatePhone}" />  
+        <div class="slds-text-heading_small slds-p-vertical_small">¿Cómo preferís recibir tu compra?</div>                        
+        <div class="slds-grid slds-m-bottom_x-small slds-wrap slds-m-bottom_large">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">                             
+                <span class="slds-radio">
+                    <input type="radio" class= "KAL-Entrega__Tipo--AccDomicilio" id="radio-3" value="radio-3" onchange="{!c.updateValue}" name="options" checked="true"/>
+                    <label class="slds-radio__label" for="radio-3">
+                        <span class="slds-radio_faux"></span>
+                        <span class="slds-form-element__label">A domicilio</span>
+                    </label>                  
+                </span> 
+                 <p> <label>CABA y GBA: De {!v.StandardInicioAM} a {!v.StandardFinAM} dias hábiles</label></p>
+                 <p><label>Interior: De {!v.StandardInicioCP} a {!v.StandardFinCP} dias hábiles</label>  </p>       
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2"> 
+                <span class="slds-radio">
+                    <input type="radio" class= "KAL-Entrega__Tipo--AccSucursal" id="radio-4" value="radio-4" onchange="{!c.updateValue}" name="options" />
+                    <label class="slds-radio__label" for="radio-4">
+                        <span class="slds-radio_faux"></span>
+                        <span class="slds-form-element__label">Por sucursal </span>
+                    </label>                  
+                </span>  
+                 <p><label>CABA y GBA: De {!v.RetiroInicioAM} a {!v.RetiroFinAM} dias hábiles</label></p>
+                 <p><label>Interior: De {!v.RetiroInicioCP} a {!v.RetiroFinCP} dias hábiles</label> </p>                                              
+            </div>
+        </div>        
+
+    <div class="slds-float_left">
+        <ui:inputCheckbox aura:id="checkbox" class="KAL-Entrega__AccDomicilioDeCuenta" label="La dirección de envío es la misma que la dirección de facturación" change="{!c.OnCheck}" value="true"/>
+    </div>
+    <lightning:input label="label" aura:id="deliveryAdress" class="KAL-Entrega__Domicilio" placeholder="A domicilio.." value="{!v.dirCompleta}" disabled="true" />
+    <br />
+    <br />
+    <div class="slds-text-heading_small slds-p-vertical_small">¿Cómo te contactamos?</div>
+    <div class="slds-text-title slds-m-bottom_small">Sólo te contactaremos en caso de que exista algún problema con el envío</div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h6>Teléfono</h6>
+          <!--  <lightning:input aura:id="mobilePhone" placeholder="Ej.: 011 3300 7711"  value="{!v.mobilePhone}"/>  -->
+          <ui:inputPhone aura:id="mobilePhone" size="10" label="" class="field KAL-Entrega__Contacto--Telefono" value="{!v.mobilePhone}" />          
+        </div>
+        <div class="col-sm-6">
+            <h6>Correo electrónico</h6>
+                <div class="slds-size_1-of-1 autocomplete" >
+                    <input class="slds-input slds-p-vertical_xxx-small" id="emailId" type="text" value="{!v.Email}" />
+                </div>
+            <ui:inputEmail aura:id="emailId"  value="{!v.Email}" class="slds-hide"/>
+        </div>
+    </div>  
+    <hr />                    
+    <div class="slds-text-heading_small slds-m-bottom_small">Si no recibieras vos la compra, ¿Quién la recibiría?</div>                                  
+    <div class="slds-text-title slds-m-bottom_small">Se deberá presentar el documento de identidad al recibir la compra</div>
+    
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2">
+  
+            <div class="slds-grid">                                
+                <div class="slds-size_1-of-2 "> 
+                        <lightning:input label="Nombre completo" 
+                                         type="text" 
+                                         class="KAL-Entrega__Autorizado--Nombre"
+                                         maxlength="20" placeholder="Ej.: Ana"  
+                                         width="40%" aura:id="nombreID" value="{!v.nombre}"/>                                                                             
+                </div>
+                <div class="slds-size_1-of-2 slds-grid_vertical-align-end slds-wrap">                                                 
+                        <lightning:input label=". " 
+                                         type="text" 
+                                         class="KAL-Entrega__Autorizado--Apellido" 
+                                         maxlength="20" placeholder="Ej.: Gonzalez" 
+                                         width="60%" aura:id="apellidoID" value="{!v.apellido}"/>            
+                </div>
+            </div>   
+        </div>
+        <div class="slds-col slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-2">
+         
+            <div class="slds-grid"> 
+                                            
+                <div class="slds-size_1-of-2"> 
+                    <lightning:combobox label="Documento de identidad" 
+                                        name="documentType" 
+                                        aura:id="documentTypeID" 
+                                        class="KAL-Entrega__Autorizado--TipoDocumento" 
+                                        placeholder="DNI" 
+                                        value="{!v.idTipoDocumento}"  options="{!v.tipoDocumento}" />
+                </div>
+                <div class="slds-size_1-of-2 slds-grid slds-grid_vertical-align-end slds-wrap">                                  
+                    <lightning:input   label=". " 
+                                       type="text" 
+                                       class="KAL-Entrega__Autorizado--NumeroDocumento" 
+                                       value="{! v.nroDocumento}" 
+                                       minlength="7" maxlength="8" 
+                                       pattern="([^0]\d{6,7})" 
+                                       messageWhenPatternMismatch="Por favor, ingrese solo números y como mínimo 7 caracteres." 
+                                       aura:id="nroDocumentoID" placeholder="Ej.: 25199311" />
+                </div> 
+            </div>
+        </div>
+    </div>      
+        
+</aura:component>

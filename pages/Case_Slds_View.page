@@ -1,0 +1,156 @@
+<apex:page docType="html-5.0" applyHtmlTag="false" showHeader="false" sidebar="false" standardStylesheets="false" Controller="SldsCaseViewCtrl">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:includeScript value="/support/console/34.0/integration.js"/>
+            <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script> -->
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__CardFramework_Assets}"></script>
+            
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+            <apex:slds />
+        </head>
+  
+        <body ng-app="myApp" ng-controller="MainModuleCtrl as mmc" ng-init="mmc.getDataCase('{!$CurrentPage.parameters.id}')">
+            <div class="slds-scope">
+            
+                <div ng-if="caseData == ''" class="slds-spinner_container">
+                  <div role="status" class="slds-spinner slds-spinner--medium slds-spinner--brand">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                  </div>
+                </div>
+                
+                <div class="slds-page-header">
+                  <div class="slds-grid">
+                    <div class="slds-col slds-has-flexi-truncate">
+                      <div class="slds-media slds-no-space slds-grow">
+                        <div class="slds-media__figure">
+                          <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/standard-sprite/svg/symbols.svg#user')}"></use>
+                            <!--<use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#user"></use>-->
+                          </svg>
+                        </div>
+                        <div class="slds-media__body">
+                          <p class="slds-text-title--caps slds-line-height--reset">Case #{{caseData.CaseNumber}}</p>
+                          <h1 class="slds-page-header__title slds-m-right--small slds-align-middle slds-truncate" title="this should match the Record Title">{{caseData.Account.Name}}</h1>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="slds-col slds-no-flex slds-grid slds-align-top">
+                      <button class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive">
+                        <span class="slds-text-not-selected">
+                          <svg class="slds-button__icon--stateful slds-button__icon--left" aria-hidden="true">
+                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
+                            <!--<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#add"></use>-->
+                          </svg>
+                          Create Related Case
+                        </span>
+                        <span class="slds-text-selected">
+                          <svg class="slds-button__icon--stateful slds-button__icon--left" aria-hidden="true">
+                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                            <!--<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#check"></use>-->
+                          </svg>Following</span>
+                        <span class="slds-text-selected-focus">
+                          <svg class="slds-button__icon--stateful slds-button__icon--left" aria-hidden="true">
+                            <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                            <!--<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>-->
+                          </svg>Unfollow</span>
+                      </button>
+                      <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button--neutral">Close Case</button>
+                        <div class="slds-dropdown-trigger slds-dropdown-trigger--click slds-button--last" aria-expanded="false">
+                          <button class="slds-button slds-button--icon-border-filled" aria-haspopup="true" title="More Actions">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                              <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                              <!--<use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down"></use>-->
+                            </svg>
+                            <span class="slds-assistive-text">More Actions</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="slds-docked-form-footer">
+                  <button type="button" class="slds-button slds-button--neutral" ng-click="mmc.getDataCase('{!$CurrentPage.parameters.id}')">Cancel</button>
+                  <button type="button" class="slds-button slds-button--brand" ng-click="mmc.updateCase()">Save</button>
+                </div>
+            </div>
+                
+        </body>
+        
+        <script>
+                (function(){
+                    'use strict';
+
+                    angular
+                        .module('myApp', []);
+                })();
+
+                (function(){
+                    'use strict';
+
+                    angular
+                        .module('myApp')
+                        .controller('MainModuleCtrl', MainModuleCtrl);
+
+                    MainModuleCtrl.$inject = ['$scope'];
+
+                    function MainModuleCtrl($scope) {
+
+                        var ctrl = this;
+                        
+                        $scope.caseData = '';
+                        $scope.caseData2 = '';
+                        
+                        ctrl.getDataCase = getDataCase;
+                        ctrl.updateCase = updateCase;
+                        
+                        function updateCase(){
+                            try{
+                                Visualforce.remoting.Manager.invokeAction(
+                                    "SldsCaseViewCtrl.updateCase",
+                                    angular.toJson($scope.caseData, true),
+                                    function(result, event) {
+                                        $scope.$apply(function(){
+                                            console.log(result);
+                                        });
+                                    },
+                                   {escape: false} // No escaping, please
+                                );
+                            } catch(err){
+                                console.log('error en invoke');
+                                console.log(err);
+                            }
+                        }
+                        
+                        function getDataCase(id){
+                            Visualforce.remoting.Manager.invokeAction(
+                                "SldsCaseViewCtrl.getCase",
+                                "{!$CurrentPage.parameters.id}",
+                                function(result, event) {
+                                    $scope.$apply(function(){
+                                        $scope.caseData = angular.fromJson(result);
+                                    });
+                                },
+                               {escape: false} // No escaping, please
+                            );
+                        }
+
+                        /*Visualforce.remoting.Manager.invokeAction(
+                           "tresHoldController.getJListIos",
+                                function(result, event) {
+                                    $scope.$apply(function(){
+                                        $scope.ios = angular.fromJson(result);
+                                    });
+                                },
+                           {escape: false} // No escaping, please
+                        );*/
+                    }
+
+                 })();
+            </script>
+  </html>
+</apex:page>

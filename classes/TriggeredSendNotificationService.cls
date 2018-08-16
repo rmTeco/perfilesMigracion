@@ -54,15 +54,26 @@ global with sharing class TriggeredSendNotificationService implements vlocity_cm
             if(serviceResponse.success == true){
                 toAddressWrapper.contactAttributes = subscriberAttrs;
                 messageToSend.to = toAddressWrapper;
+
+                Boolean updateMCAPISettings = false;
                 
-                String token = MarketingCloudAPIUtil.getMCAccessToken();
+                MktgCloudAPISettings__c mktgCloudAPISettings = MktgCloudAPISettings__c.getall().values();
+
+                if(!MarketingCloudAPIUtil.isValidMCToken()){
+                    mktgCloudAPISettings = MarketingCloudAPIUtil.getMCAccessToken();
+                    updateMCAPISettings = true;
+                }
+
                 String jsonParams = JSON.serialize(messageToSend);
                 
-                mktgUtilResponse = MarketingCloudAPIUtil.sendMessageWithMC(toAddressWrapper.processName, jsonParams, token);
+                mktgUtilResponse = MarketingCloudAPIUtil.sendMessageWithMC(toAddressWrapper.processName, jsonParams, mktgCloudAPISettings.MCAPIAccessToken__c);
 
                 if('true' == mktgUtilResponse.get('HasErrors')){
                     serviceResponse.success = false;
                     serviceResponse.errorCodeMessageMap.put('00', mktgUtilResponse.get('MessageErrorCode') + ' - ' + mktgUtilResponse.get('MessageErrorStatus'));
+                }
+                if(updateMCAPISettings){
+                    update mktgCloudAPISettings;
                 }
             
             }

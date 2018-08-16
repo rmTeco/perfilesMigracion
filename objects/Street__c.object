@@ -50,7 +50,7 @@
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
@@ -101,20 +101,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>PostalCode__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Postal Code</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Codigo Postal</inlineHelpText>
-        <label>Postal Code</label>
-        <referenceTo>PostalCode__c</referenceTo>
-        <relationshipLabel>Streets</relationshipLabel>
-        <relationshipName>Streets</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Postal_Code__c</fullName>
         <description>Argentina CPA Postal Code</description>
         <externalId>false</externalId>
@@ -123,32 +109,6 @@
         <required>true</required>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>RangeFrom__c</fullName>
-        <description>Street Range From</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Rango de Calle Desde</inlineHelpText>
-        <label>Range From</label>
-        <precision>6</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>RangeTo__c</fullName>
-        <description>Street Range To</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Rango Calle Hasta</inlineHelpText>
-        <label>Range To</label>
-        <precision>6</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -188,32 +148,6 @@
         <unique>true</unique>
     </fields>
     <fields>
-        <fullName>Type__c</fullName>
-        <description>Type</description>
-        <externalId>false</externalId>
-        <inlineHelpText>Tipo</inlineHelpText>
-        <label>Type</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Street</fullName>
-                    <default>false</default>
-                    <label>Street</label>
-                </value>
-                <value>
-                    <fullName>Range</fullName>
-                    <default>false</default>
-                    <label>Range</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>ZONAID__c</fullName>
         <description>Zone ID from CV Callejero where the Street or Range is located</description>
         <externalId>false</externalId>
@@ -235,34 +169,12 @@
         <active>true</active>
         <description>Range Record sub-type</description>
         <label>Range</label>
-        <picklistValues>
-            <picklist>Type__c</picklist>
-            <values>
-                <fullName>Range</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Street</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Street</fullName>
         <active>true</active>
         <description>Street Record Type</description>
         <label>Street</label>
-        <picklistValues>
-            <picklist>Type__c</picklist>
-            <values>
-                <fullName>Range</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Street</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>

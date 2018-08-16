@@ -37,15 +37,14 @@ global with sharing class IFS_S506_getAvailableLoans {
      */
     private static void writeLog (String pTipo, String pDatos) {
         printDebug('Entre en writeLog - pTipo --> ' + pTipo + ' - pDatos --> ' + pDatos);
-        DateTime dt = DateTime.now();
-        String dts = dt.format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'');
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
 
         if (pTipo == 'REQ') {
             guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
-            //-- IFS_LogRecord.record(dts, 'SERVICIO', 'S500', guId, pTipo, pDatos, ''); -- Se habilitara cuando este aprobada la historia.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S506', pTipo, guId, '', pDatos); 
         }
         else {
-            //-- IFS_LogRecord.record(dts, 'SERVICIO', 'S500', guId, pTipo, '', pDatos); -- Se habilitara cuando este aprobada la historia.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S506', pTipo, guId, '', pDatos); 
         }
     }
 

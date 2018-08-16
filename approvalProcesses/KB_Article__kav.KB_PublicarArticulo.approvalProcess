@@ -45,12 +45,18 @@
         <label>Status Published</label>
         <name>KB_StatusPublished</name>
     </approvalStep>
+    <description>Se publicará el artículo sin cambiar la versión del mismo.</description>
     <enableMobileDeviceAccess>false</enableMobileDeviceAccess>
     <entryCriteria>
         <criteriaItems>
             <field>KB_Article__kav.PublishStatus</field>
             <operation>equals</operation>
-            <value>Borrador</value>
+            <value>Draft</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>KB_Article__kav.KB_PublicarNuevaVersion__c</field>
+            <operation>equals</operation>
+            <value>False</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>

@@ -28,6 +28,10 @@
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__GlobalKey__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>vlocity_cmt__Key__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -64,13 +68,17 @@
         <fields>vlocity_cmt__SystemId__c</fields>
         <fields>vlocity_cmt__Implementation__c</fields>
     </miniLayout>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__OrchestrationItemDefinition__c.vlocity_cmt__SystemInterfaceId__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000Lmm7</masterLabel>
+        <masterLabel>00h6C000000RNxn</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

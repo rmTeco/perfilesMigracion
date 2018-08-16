@@ -62,17 +62,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Contacto__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <externalId>false</externalId>
-        <label>Contacto</label>
-        <referenceTo>Contact</referenceTo>
-        <relationshipName>GP_Socios</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Cuenta__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -95,30 +84,6 @@ IF(Socio_padre__c  &lt;&gt; null, Socio_padre__r.idCuentaDiesyochoCaracteres__c 
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Permiso__c</fullName>
-        <externalId>false</externalId>
-        <label>Permiso</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Valor1</fullName>
-                    <default>false</default>
-                    <label>Valor1</label>
-                </value>
-                <value>
-                    <fullName>Valor2</fullName>
-                    <default>false</default>
-                    <label>Valor2</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Saldo_total__c</fullName>
         <externalId>false</externalId>
         <label>Saldo total</label>
@@ -139,35 +104,6 @@ IF(Socio_padre__c  &lt;&gt; null, Socio_padre__r.idCuentaDiesyochoCaracteres__c 
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Tipo_de_socio__c</fullName>
-        <externalId>false</externalId>
-        <label>Tipo de socio</label>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Black</fullName>
-                    <default>false</default>
-                    <label>Black</label>
-                </value>
-                <value>
-                    <fullName>Gold</fullName>
-                    <default>false</default>
-                    <label>Gold</label>
-                </value>
-                <value>
-                    <fullName>VIP</fullName>
-                    <default>false</default>
-                    <label>VIP</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
     </fields>
     <fields>
         <fullName>idCuentaDiesyochoCaracteres__c</fullName>

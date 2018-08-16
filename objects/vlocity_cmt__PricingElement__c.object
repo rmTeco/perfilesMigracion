@@ -274,6 +274,11 @@
                     <label>Simple</label>
                 </value>
                 <value>
+                    <fullName>Attribute-Based</fullName>
+                    <default>false</default>
+                    <label>Attribute-Based</label>
+                </value>
+                <value>
                     <fullName>Matrix-Based</fullName>
                     <default>false</default>
                     <label>Matrix-Based</label>
@@ -609,8 +614,24 @@
     <label>Pricing Element</label>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__PriceListId__c</columns>
+        <columns>vlocity_cmt__IsActive__c</columns>
+        <columns>vlocity_cmt__Amount__c</columns>
+        <columns>vlocity_cmt__CalculationType__c</columns>
+        <columns>vlocity_cmt__Code__c</columns>
+        <columns>vlocity_cmt__DisplayText__c</columns>
+        <columns>vlocity_cmt__IsOverride__c</columns>
+        <columns>vlocity_cmt__PricingMatrixId__c</columns>
+        <columns>vlocity_cmt__PricingVariableId__c</columns>
+        <columns>vlocity_cmt__PricingMatrixBindingData__c</columns>
+        <columns>vlocity_cmt__ProductId__c</columns>
+        <columns>vlocity_cmt__PromotionId__c</columns>
+        <columns>vlocity_cmt__IsReusable__c</columns>
+        <columns>vlocity_cmt__VersionNumber__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Name</label>

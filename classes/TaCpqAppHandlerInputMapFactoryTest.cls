@@ -28,9 +28,8 @@ public class TaCpqAppHandlerInputMapFactoryTest {
     public static Map<String, Object> generateInputMap() {
         Map<String, Object> inputMap = new Map<String, Object>();
 
-        inputMap.put('query', 'a');
         inputMap.put('pagesize', 10);
-        inputMap.put('fields', 'IsActive,Id,Name,UnitPrice,ProductCode,vlocity_cmt__RecurringPrice__c,product2.description,product2.Tipo_de_Bien_de_Uso__c,Product2.Marca__c,Product2.vlocity_cmt__HelpText__c');
+        inputMap.put('fields', 'IsActive,Id,Name,UnitPrice,ProductCode,vlocity_cmt__RecurringPrice__c,product2.description,product2.Tipo_de_Bien_de_Uso__c,Product2.Marca__c,Product2.vlocity_cmt__HelpText__c,Product2.NMU__c,Product2.vlocity_cmt__Type__c,Product2.Family');
 
         Map<String, Object> billingOrderMap = new Map<String, Object>();
         Decimal pickUpStore = 21;

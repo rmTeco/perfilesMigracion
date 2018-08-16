@@ -1,18 +1,18 @@
 @isTest
 public class ProfileTagsHandlerTest {
-  
-  @testSetup static void createDataTest() {
-    List<vlocity_cmt__AttributeAssignment__c> attributeAssignments = new List<vlocity_cmt__AttributeAssignment__c>();
-    vlocity_cmt__AttributeAssignment__c attributeAssignment1 = new vlocity_cmt__AttributeAssignment__c(
-      vlocity_cmt__ObjectId__c = '0016C000008eeAoQAI'
-    );
-    vlocity_cmt__AttributeAssignment__c attributeAssignment2 = new vlocity_cmt__AttributeAssignment__c(
-      vlocity_cmt__ObjectId__c = '0016C000008eeAoQAI'
-    );
-    attributeAssignments.add(attributeAssignment1);
-    attributeAssignments.add(attributeAssignment2);
-    insert attributeAssignments;
-  }
+	
+	@testSetup static void createDataTest() {
+		List<vlocity_cmt__AttributeAssignment__c> attributeAssignments = new List<vlocity_cmt__AttributeAssignment__c>();
+		vlocity_cmt__AttributeAssignment__c attributeAssignment1 = new vlocity_cmt__AttributeAssignment__c(
+			vlocity_cmt__ObjectId__c = '0016C000008eeAoQAI'
+		);
+		vlocity_cmt__AttributeAssignment__c attributeAssignment2 = new vlocity_cmt__AttributeAssignment__c(
+			vlocity_cmt__ObjectId__c = '0016C000008eeAoQAI'
+		);
+		attributeAssignments.add(attributeAssignment1);
+		attributeAssignments.add(attributeAssignment2);
+		insert attributeAssignments;
+	}
 
     @isTest static void GetProfileTagsTest() {
         //GIVEN

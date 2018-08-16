@@ -1,6 +1,8 @@
 @RestResource(urlMapping='/v1/integrationprocedure/asociarTarjeta/*')
 global with sharing class IFS_S465_asociarTarjeta {
 
+    private static String guId = null;
+
     @HttpPost
     global static void getData() {
         FromJSON jsonBody;
@@ -11,6 +13,9 @@ global with sharing class IFS_S465_asociarTarjeta {
         Boolean isPrimary;
         Integer securityCode;
         res.addHeader('Content-Type', 'application/json');
+
+        writeLog ('REQ', req.requestBody.toString());
+
         try {
 
             res.statuscode = 200;
@@ -68,10 +73,6 @@ global with sharing class IFS_S465_asociarTarjeta {
             if (!asociaTarjeta(jsonBody.asociarTarjeta.idCliente, jsonBody.asociarTarjeta.cardHolderName, jsonBody.asociarTarjeta.cardType, jsonBody.asociarTarjeta.expirationMonth, jsonBody.asociarTarjeta.expirationYear,jsonBody.asociarTarjeta.last4Numbers, securityCode, isPrimary,jsonBody.asociarTarjeta.cardNumber)){
                 throw new CalloutException('Error: No pudo asociar la tarjeta');
             }
-            
-
-
-
 
             result.put('resultado','OK');
             res.responseBody = Blob.valueOf(JSON.serialize(result));
@@ -81,7 +82,25 @@ global with sharing class IFS_S465_asociarTarjeta {
             res.statuscode = 417;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('417',e.getMessage())));
         }
+
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
     }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S465', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S465', pTipo, guId, '', pDatos);  
+        }
+    }
+
     private static List<Map<String, String>> getRespuestaNoOk(String pCodigo, String pDescripcion) {
         System.debug('Entre a getRespuestaNoOk()');
         Map<String, String> mapa = new Map<String, String>();

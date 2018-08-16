@@ -1,0 +1,119 @@
+<apex:page controller="cwbtool.DescribeCustomLabelCtrl" sidebar="false" tabStyle="CWB_Tool__tab" showheader="false">
+
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}"/>
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" /> 
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}"/>
+   
+<style>
+  fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+    margin-left:8% !important;
+    width:63%;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+    .bodyDiv{
+ height:400px;
+}
+.Btn-group{
+  width:60% !important;
+}
+.frm{
+  margin:15px;
+}
+.modal {
+    outline:none;
+}
+</style>
+ <apex:pagemessages rendered="{!lstCustomLabel==null || lstCustomLabel.size==0}"/>
+<apex:outputpanel rendered='{!lstCustomLabel!=null && lstCustomLabel.size>0}' layout='none' > 
+<c:actionstatusNew />
+
+<apex:form id="form" styleclass="frm">
+   
+       <apex:selectList value="{!lstSelectedCustomLabel}" multiselect="true" styleclass="multiselect CustomLabelClass" style="margin-right:40px;display:none;"> 
+            <apex:selectOptions value="{!lstCustomLabel}"/>
+       </apex:selectList>
+      <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='Startprocessing();refresh();' data-action='Download Full CustomLabel Detail Action'>Download CustomLabel</span>
+   
+   
+      <apex:actionFunction name="getCustomLabelDetails" action="{!getCustomLabelDetails}" />
+       <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form"/> 
+       
+   <apex:outputpanel id="refreshPanel">  
+      <apex:pagemessages rendered="{!lstCustomLabel==null || lstCustomLabel.size==0}"/>
+      <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,form,msgId" interval="5" enabled="{!isStart}" oncomplete="if({!isProcessed}){hideOverLay();}"/>
+   </apex:outputpanel>
+
+<script>
+var gaDetail='OrgName={!HTMLENCODE($Organization.Name)}_Name={!HTMLENCODE($User.FirstName)}'; 
+function Startprocessing(){
+        showOverLay('{!HTMLENCODE(strStatus)}');
+        getCustomLabelDetails();  
+ }
+
+ $(document).ready(function() {
+    $('.CustomLabelClass').multiselect({
+    nSelectedText  : ' CustomLabels selected', 
+    buttonClass: 'Btn Btn-default', 
+    enableFiltering: true,
+    filterBehavior: 'both',
+   enableCaseInsensitiveFiltering: true,
+    filterPlaceholder: 'Search CustomLabel..',
+   includeSelectAllOption: true,
+selectAllText: 'Select ALL CustomLabel',
+selectAllValue: 'multiselect-all',
+maxHeight:217,
+ buttonWidth: '90%',
+  nonSelectedText: 'You have not selected any CustomLabel',
+  disableIfEmpty:true,
+   onChange: function(element, checked) {
+          if($('.CustomLabelClass').val()==null){
+              $('.containerDivclass').hide();
+              $('#containerMessage').show();
+          }else{
+              $('.containerDivclass').show();
+              $('#containerMessage').hide();
+          }
+       }
+    });
+    
+});
+var timeout;
+  function hideProcessingWindow(){//console.log('call');
+   var timeout= setTimeout(function() {
+        hideOverLay();
+        removeTimeOut(); 
+       }, 5000);
+  }
+  
+  function removeTimeOut(){
+    // console.log('removeTimeOut');
+    clearTimeout(timeout);
+  }
+
+</script>
+
+<apex:pagemessages escape="false" id="msgId"/>
+</apex:form>
+
+
+</apex:outputpanel>
+
+</apex:page>

@@ -28,10 +28,30 @@ public class IFS_S101_reserveOrRelease {
         return responseNode;
     }
     
+    @future 
+    private static void writeLog (String pTipo, String pReq, String pRes, Integer pResStatus, String pUID) {
+        System.debug('Entre en writeLog - pTipo --> ' + pTipo + ' - pReq --> ' + pReq + ' - pRes --> ' + pRes + ' - pResStatus --> ' + pResStatus);
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        String guId = String.isBlank(pUID) ? GuidUtil.NewGuid() : pUID;  
+        if (pTipo == 'REQ') {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S101', pTipo, guId, pReq, '');  
+        }
+        else {
+            String datos = 'status code = ' + pResStatus + ' ; status = ; ';
+            if (pResStatus < 300) {
+                datos += 'request to DPW OK';
+            }
+            else {
+                datos += 'request to DPW FAIL ; request body = ' + (String.isBlank(pReq)?'':pReq) + ' ; Response = ' + pRes;
+            } 
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S101', pTipo, guId, '', datos);  
+        }
+    }
+    
     public static HttpResponse makePostCallout(String body, String idUnicoTransaccion) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        //////////////////////FALTA ASIGNAR EL ENDPOINT CORRECTO, NO HAY MOCK O PATH/////////////////////
         List<EndPointService__c> endPoints = [select Name, EndPoint__c from EndPointService__c where Name = 'IFS_s101' limit 1];
         EndPointService__c endpoint;
         if(endPoints.size()>0){
@@ -41,8 +61,8 @@ public class IFS_S101_reserveOrRelease {
         if(endpoint != null){
             request.setEndpoint(endpoint.EndPoint__c);
         }
+        
         request.setMethod('PUT');
-        //request.setMethod('POST');//Jorge, cambiar antes de migrar
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
         request.setHeader('Authorization', authorizationHeader);
@@ -51,71 +71,24 @@ public class IFS_S101_reserveOrRelease {
         HttpResponse response = http.send(request);
         system.debug(response);
         system.debug(response.getBody());
+
+        writeLog ('REQ', null, null, 0, idUnicoTransaccion);
+        writeLog ('RES', request.getBody(), response.getBody(), response.getStatusCode(), idUnicoTransaccion);
         
-        /* 
-        //Manejo de errores.
-        Boolean hayError = false;
-        
-        if (response.getStatusCode() == 400) {
-            hayError=True;
-            throw new CallOutException('Bad Request. La solicitud contiene sintaxis errónea y no debería repetirse.');
-        }
-        if (response.getStatusCode() == 401) {
-            hayError=True;
-            throw new CallOutException('Unauthorized. Usuario no autorizado. Falló la autenticación.');
-            
-        }
-        if (response.getStatusCode() == 403) {
-            hayError=True;
-            throw new CallOutException('Forbidden. No tiene los privilegios para hacer la solicitud que desea.');
-            
-        }
-        if (response.getStatusCode() == 404) {
-            hayError=True;
-            throw new CallOutException('Recurso no encontrado. El servicio no encuentra el recurso solicitado.');
-            
-        }
-        if (response.getStatusCode() == 405) {
-            hayError=True;
-            throw new CallOutException('Method not allowed. El método solicitado no es soportado por el servicio.');
-            
-        }
-        if (response.getStatusCode() == 408) {
-            hayError=True;
-            throw new CallOutException('Request Timeout. No se obtuvo respuesta de la plataforma servidora.');
-            
-        }
-        if (response.getStatusCode() == 418) {
-            hayError=True;
-            throw new CallOutException('Error controlado. Error funcional o de plataforma que se encuentra especificado.');
-            
-        }
-        
-        if (response.getStatusCode() == 500) {
-            hayError=True;
-            throw new CallOutException('Error no controlado.');
-            
-        }*/
         return response;
-        
     }     
     
     public class NMU {
         String codNMU {get;set;}
         String codDeposito {get;set;}
         Integer cantidad {get;set;}
-        
     }
     
     public class reserveOrReleaseJSON{
-        
         public String operacion {get;set;}
         public String codAplicacion {get;set;}
         public String idOperacion {get;set;}
         public String codPuntoDeVenta {get;set;}
         public List<NMU> listaNMU {get;set;}
-        
-        
-        
     }
 }

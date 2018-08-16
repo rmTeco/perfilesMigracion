@@ -1,0 +1,56 @@
+<aura:component controller="WorkTeamController">
+    <aura:handler name="init" action="{!c.getWorkTeams}" value="{!this}"/>
+    <aura:attribute name="WorkTeams"
+                    type="List"/>
+    <aura:attribute name="KeyName"
+                    type="String"
+                    default=""/>
+    <aura:attribute name="isLoading"
+                    type="Boolean"
+                    default="false"/>
+    
+    <div class="header__c">
+        <h1>Gestión de equipos de trabajo</h1>
+        <div class="button__c slds-max-small-size--6-of-6 slds-size--1-of-6">
+        	<lightning:button variant="brand" label="Nuevo equipo" title="" onclick="{! c.createRecord }" />
+        </div>
+        <div class="input_search slds-max-small-size--6-of-6 slds-size--4-of-6">
+        	<lightning:input name="KeyName" value="{! v.KeyName }" placeholder="Buscar..." label="" />
+        	<span onclick="{! c.getWorkTeams }"><lightning:icon iconName="utility:search" alternativeText="Buscar" variant="success"/></span>
+        </div>
+    </div>
+    
+    <div class="body__c" >
+        <aura:if isTrue="{!v.isLoading}">
+            <div id="spinner_loading" style="height: 100%;">
+              <div role="status" class="slds-spinner slds-spinner_medium">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+              </div>
+            </div>
+        </aura:if> 
+        
+        <div class="slds-grid">
+            <aura:iteration items="{!v.WorkTeams}" var="WorkTeam" indexVar="index">
+                <lightning:card class="slds-col slds-max-small-size--6-of-6 slds-size--2-of-6">
+                    <aura:set attribute="title">
+                        {! WorkTeam.Name }
+                    </aura:set>
+                    <p><strong>Manager: </strong> <span>{! WorkTeam.Manager__r.Name }</span></p>
+                    <p><strong>Equipo supervisor: </strong> <span>{! WorkTeam.Parent_Team__r.Name }</span></p>
+                    <br/>
+                    <p><strong>Personal: </strong><br/><span>{! WorkTeam.AmountOfActiveChildTeams__c } empleados</span></p>
+                    <br/>
+                    <p><strong>Código: </strong><br/><span>{! WorkTeam.Work_Team_Number__c }</span></p>
+                    <lightning:buttonGroup >
+                        <lightning:button variant="brand" label="Ver equipo" title="" onclick="{! c.createRecord }" />
+                        <span onclick="{! c.createRecord }"><lightning:icon iconName="utility:edit_form" alternativeText="Edit" variant="success"/></span>
+                        <span onclick="{! c.createRecord }"><lightning:icon iconName="utility:layers" alternativeText="Copy" variant="success"/></span>
+                        <span onclick="{! c.createRecord }"><lightning:icon iconName="utility:delete" alternativeText="Delete" variant="success"/></span>
+                    </lightning:buttonGroup>
+                </lightning:card>
+            </aura:iteration>
+        </div>
+	</div>
+</aura:component>

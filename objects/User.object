@@ -60,9 +60,38 @@
     <enableFeeds>true</enableFeeds>
     <externalSharingModel>Private</externalSharingModel>
     <fields>
+        <fullName>Dni__c</fullName>
+        <description>Dni of Community Client</description>
+        <externalId>false</externalId>
+        <formula>IF(TEXT(Profile.UserType)=&apos;CspLitePortal&apos;,
+TEXT(Contact.DocumentType__c)+Contact.DocumentNumber__c,&apos;&apos;)</formula>
+        <label>Dni</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ManagerId</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>Receive_Notifications__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Mobile app: used to indicate if the community user wants to receive push notifications.</description>
+        <externalId>false</externalId>
+        <label>Receive Notifications?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Receive_Offer_Notifications__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Mobile app: used to indicate if the community user wants to receive push notifications related with offers.</description>
+        <externalId>false</externalId>
+        <label>Receive Offer Notifications?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>SCP_Certa_GC__Id_delta__c</fullName>
@@ -94,6 +123,47 @@
         <restrictedAdminField>true</restrictedAdminField>
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
+    </fields>
+    <fields>
+        <fullName>copado__API_URL__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <formula>$Api.Partner_Server_URL_290</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>API_URL</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>copado__Hide_Copado_feedback__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>The visibility of the message asking users to rate &amp; feedback Copado on the AppExchange is controlled here.</inlineHelpText>
+        <label>Hide Copado feedback</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Show_Copado_Tips__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Show Copado Tips</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>copado__Work_Manager_Panels__c</fullName>
+        <deprecated>false</deprecated>
+        <description>JSON containing current user panels on the Backlog</description>
+        <externalId>false</externalId>
+        <label>Work Manager Panels</label>
+        <length>131072</length>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
     </fields>
     <fields>
         <fullName>et4ae5__Default_ET_Page__c</fullName>
@@ -176,6 +246,28 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>ltnadptn__Can_Use_Lightning__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This field contains a copy of the value of the user permission PermissionslightningExperienceUser.  If TRUE, this user sees a link in the profile menu to switch to Lightning or back to Classic.  If FALSE, this user cannot navigate to Lightning.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field contains a copy of the value of the user permission PermissionslightningExperienceUser.  If TRUE, this user sees a link in the profile menu to switch to Lightning or back to Classic.  If FALSE, this user cannot navigate to Lightning.</inlineHelpText>
+        <label>Can Use Lightning</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ltnadptn__Using_Lightning__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>If true, this user&apos;s next login or clicks will load Lightning.  If false, the user&apos;s next login or clicks will load Classic.  This is updated using scheduled code, so the values may lag if users have switched to Classic or Lightning from their profile menu recently.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If true, this user&apos;s next login or clicks will load Lightning.  If false, the user&apos;s next login or clicks will load Classic.  This is updated using scheduled code, so the values may lag if users have switched to Classic or Lightning from their profile men</inlineHelpText>
+        <label>Using Lightning?</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>vlocity_cmt__DocuSignEmail__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -212,7 +304,6 @@
             <value>1</value>
         </filters>
         <label>Active Users</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>AdminUsers</fullName>
@@ -225,31 +316,47 @@
         <filterScope>Everything</filterScope>
         <filters>
             <field>CORE.PROFILE.NAME</field>
-            <operation>contains</operation>
-            <value>Admin</value>
+            <operation>equals</operation>
+            <value>System Administrator</value>
         </filters>
-        <label>Usuarios administradores</label>
-        <language>es_MX</language>
+        <label>Admin Users</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>AllUsers</fullName>
+        <columns>CORE.USERS.FIRST_NAME</columns>
+        <columns>CORE.USERS.LAST_NAME</columns>
         <columns>FULL_NAME</columns>
         <columns>CORE.PROFILE.NAME</columns>
-        <columns>CORE.USER_ROLE.NAME</columns>
         <columns>CORE.USERS.ALIAS</columns>
         <columns>CORE.USERS.USERNAME</columns>
         <columns>CORE.USERS.EMAIL</columns>
         <columns>CORE.USERS.LAST_LOGIN</columns>
-        <columns>CORE.USERS.TITLE</columns>
+        <columns>SALES.CONTACT.NAME</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
         <columns>CORE.USERS.ACTIVE</columns>
         <filterScope>Everything</filterScope>
+        <label>All Users</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Inactive_Users</fullName>
+        <columns>CORE.USERS.FIRST_NAME</columns>
+        <columns>CORE.USERS.LAST_NAME</columns>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USERS.EMAIL</columns>
+        <columns>CORE.USERS.LAST_LOGIN</columns>
+        <filterScope>Everything</filterScope>
         <filters>
-            <field>FULL_NAME</field>
-            <operation>contains</operation>
-            <value>Jaramillo</value>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>0</value>
         </filters>
-        <label>nico</label>
-        <language>es_MX</language>
+        <label>Inactive Users</label>
+        <language>en_US</language>
     </listViews>
     <searchLayouts>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>

@@ -1,0 +1,11 @@
+<apex:page standardController="copado__User_Story__c" extensions="copado.ScratchOrgStatusCtrl" lightningStyleSheets="true">
+        <c:WizardUtils />
+        <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}" />
+        <script> 
+            var $copado = jQuery.noConflict(); 
+            var j$ = jQuery.noConflict();
+        </script>
+    <apex:form >
+        <c:ScratchOrgStatus orgId="{!copado__User_Story__c.copado__Org_Credential__c}"/>
+    </apex:form>
+</apex:page>

@@ -1,8 +1,8 @@
 @IsTest
 public class ChangesValidation_test {
-   
+	 
     @testSetup static void setup() {
-       Contact cont = new Contact();
+     	Contact cont = new Contact();
         cont.FirstName = 'Test First Name';
         cont.LastName = 'Test contact';
         cont.DocumentType__c = 'DNI';
@@ -31,7 +31,7 @@ public class ChangesValidation_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         ChangesValidation validations = new ChangesValidation();
         
         Contact cont= [SELECT id,FirstName,LastName,ActivationDate__c,DocumentNumber__c FROM Contact WHERE FirstName = 'Test First Name'];
@@ -40,7 +40,7 @@ public class ChangesValidation_test {
         system.debug('CONTACT ID-->'+input.get('ContactId'));
 
         
-    Test.startTest();
+		Test.startTest();
         validations.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -48,13 +48,13 @@ public class ChangesValidation_test {
     }
     
         @IsTest static void invoke_CompareChangesDNI(){
-          String methodName = 'CompareChangesDNI';
+        	String methodName = 'CompareChangesDNI';
 
-          Map<String, Object> input = new Map<String, Object>();
-          Map<String, Object> outMap = new Map<String, Object>();
-          Map<String, Object> options = new Map<String, Object>();
-    
-          ChangesValidation validations = new ChangesValidation();
+        	Map<String, Object> input = new Map<String, Object>();
+        	Map<String, Object> outMap = new Map<String, Object>();
+        	Map<String, Object> options = new Map<String, Object>();
+		
+        	ChangesValidation validations = new ChangesValidation();
             
             Contact cont= [SELECT id,FirstName,LastName,ActivationDate__c,DocumentNumber__c FROM Contact WHERE FirstName = 'Test First Name'];
             
@@ -67,22 +67,22 @@ public class ChangesValidation_test {
             system.debug('INPUT MAP -->'+input);
             
             Test.startTest();
-          validations.invokeMethod(methodName, input, outMap, options);
-          Test.stopTest();
+        	validations.invokeMethod(methodName, input, outMap, options);
+        	Test.stopTest();
             
             system.assertEquals(true,outMap.get('validationDigits'));
             
         }
     
     @IsTest static void invoke_CountDataChanges(){
-       String methodName = 'CountDataChanges';
+     	String methodName = 'CountDataChanges';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         ChangesValidation validations = new ChangesValidation();
-          
+        	
         Contact cont= [SELECT id,FirstName,LastName,ActivationDate__c,DocumentNumber__c,Birthdate,Gender__c,Email FROM Contact WHERE FirstName = 'Test First Name'];
             
         input.put('ContactId',cont.Id);
@@ -92,8 +92,8 @@ public class ChangesValidation_test {
         clientInformation.put('Gender','Femenino');
         clientInformation.put('Birthdate','04/06/1991');
         clientInformation.put('Email','testNew@gmail.com');
-    
-    input.put('ClientInformation',clientInformation);
+		
+		input.put('ClientInformation',clientInformation);
         Test.startTest();
         validations.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
@@ -107,26 +107,26 @@ public class ChangesValidation_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         ChangesValidation validations = new ChangesValidation();
-    
-    Account acc = [SELECT id,name FROM Account WHERE name='New Test Parent Account'];
-    Case testCase = [SELECT id,AccountId FROM Case WHERE AccountId =: acc.Id];
-    Contact cont = [SELECT id,FirstName FROM Contact WHERE FirstName = 'Test First Name'];
-    
-    input.put('CaseId',testCase.Id);
-    input.put('ContextId',acc.Id);
-    input.put('ContactId',cont.Id);
-    input.put('DigitChanges',false);
-    input.put('CountChanges',3);
-    
-    Test.startTest();
+		
+		Account acc = [SELECT id,name FROM Account WHERE name='New Test Parent Account'];
+		Case testCase = [SELECT id,AccountId FROM Case WHERE AccountId =: acc.Id];
+		Contact cont = [SELECT id,FirstName FROM Contact WHERE FirstName = 'Test First Name'];
+		
+		input.put('CaseId',testCase.Id);
+		input.put('ContextId',acc.Id);
+		input.put('ContactId',cont.Id);
+		input.put('DigitChanges',false);
+		input.put('CountChanges',3);
+		
+		Test.startTest();
         validations.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
         Case updatedCase = [SELECT id,AccountId,Status FROM Case WHERE AccountId =: acc.Id];
         system.assertEquals('Closed',updatedCase.Status);
-    
+		
     }
     
     @IsTest static void invoke_CreateOrUpdateCase_create(){
@@ -135,20 +135,20 @@ public class ChangesValidation_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         ChangesValidation validations = new ChangesValidation();
-    
-    Account acc = [SELECT id,name FROM Account WHERE name='New Test Parent Account'];
-    //Case testCase = [SELECT id,AccountId FROM Case WHERE AccountId =: acc.Id];
-    Contact cont = [SELECT id,FirstName FROM Contact WHERE FirstName = 'Test First Name'];
-    
-    //input.put('CaseId',testCase.Id);
-    input.put('ContextId',acc.Id);
-    input.put('ContactId',cont.Id);
-    input.put('DigitChanges',false);
-    input.put('CountChanges',3);
-    
-    Test.startTest();
+		
+		Account acc = [SELECT id,name FROM Account WHERE name='New Test Parent Account'];
+		//Case testCase = [SELECT id,AccountId FROM Case WHERE AccountId =: acc.Id];
+		Contact cont = [SELECT id,FirstName FROM Contact WHERE FirstName = 'Test First Name'];
+		
+		//input.put('CaseId',testCase.Id);
+		input.put('ContextId',acc.Id);
+		input.put('ContactId',cont.Id);
+		input.put('DigitChanges',false);
+		input.put('CountChanges',3);
+		
+		Test.startTest();
         validations.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -162,7 +162,7 @@ public class ChangesValidation_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         ChangesValidation validations = new ChangesValidation();
         
         Map<String, Object> clientInformation = new Map<String,Object>();

@@ -27,7 +27,21 @@
 @IsTest
 private with sharing class fflib_SObjectSelectorTest 
 {
-	
+	static testMethod void testGetFieldListString()
+	{
+		Testfflib_SObjectSelector selector = new Testfflib_SObjectSelector();
+		List<String> fieldList = selector.getFieldListString().split(',');
+		Set<String> fieldSet = new Set<String>(fieldList);
+		system.assertEquals(4, fieldSet.size());
+		system.assert(fieldSet.contains('Name'));
+		system.assert(fieldSet.contains('Id'));
+		system.assert(fieldSet.contains('AccountNumber'));
+		system.assert(fieldSet.contains('AnnualRevenue'));
+		if(UserInfo.isMultiCurrencyOrganization())
+			system.assert(fieldSet.contains('CurrencyIsoCode'));
+		system.assertEquals('myprefix.Name,myprefix.Id,myprefix.AccountNumber,myprefix.AnnualRevenue', selector.getRelatedFieldListString('myprefix'));
+	}
+
 	static testMethod void testGetSObjectName()
 	{
 		Testfflib_SObjectSelector selector = new Testfflib_SObjectSelector();
@@ -37,10 +51,11 @@ private with sharing class fflib_SObjectSelectorTest
 	
 	static testMethod void testSelectSObjectsById()
 	{
+		Id consumerRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Consumer' AND SobjectType = 'Account' LIMIT 1].Id;
 		// Inserting in reverse order so that we can test the order by of select 
 		List<Account> accountList = new List<Account> {
-			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67),
-			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21) };		
+			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67,RecordTypeId=consumerRecordTypeId),
+			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21,RecordTypeId=consumerRecordTypeId) };		
 		insert accountList;		
 		Set<Id> idSet = new Set<Id>();
 		for(Account item : accountList)
@@ -62,10 +77,11 @@ private with sharing class fflib_SObjectSelectorTest
 
 	static testMethod void testQueryLocatorById()
 	{
+		Id consumerRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Consumer' AND SobjectType = 'Account' LIMIT 1].Id;
 		// Inserting in reverse order so that we can test the order by of select 
 		List<Account> accountList = new List<Account> {
-			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67),
-			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21) };		
+			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67,RecordTypeId=consumerRecordTypeId),
+			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21,RecordTypeId=consumerRecordTypeId) };		
 		insert accountList;		
 		Set<Id> idSet = new Set<Id>();
 		for(Account item : accountList)
@@ -92,9 +108,10 @@ private with sharing class fflib_SObjectSelectorTest
 	
 	static testMethod void testAssertIsAccessible()
 	{
+		Id consumerRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Consumer' AND SobjectType = 'Account' LIMIT 1].Id;
 		List<Account> accountList = new List<Account> {
-			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67),
-			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21) };		
+			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67,RecordTypeId=consumerRecordTypeId),
+			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21,RecordTypeId=consumerRecordTypeId) };		
 		insert accountList;		
 		Set<Id> idSet = new Set<Id>();
 		for(Account item : accountList)
@@ -121,9 +138,10 @@ private with sharing class fflib_SObjectSelectorTest
 
 	static testMethod void testCRUDOff()
 	{
+		Id consumerRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Consumer' AND SobjectType = 'Account' LIMIT 1].Id;
 		List<Account> accountList = new List<Account> {
-			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67),
-			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21) };		
+			new Account(Name='TestAccount2',AccountNumber='A2',AnnualRevenue=12345.67,RecordTypeId=consumerRecordTypeId),
+			new Account(Name='TestAccount1',AccountNumber='A1',AnnualRevenue=76543.21,RecordTypeId=consumerRecordTypeId) };		
 		insert accountList;		
 		Set<Id> idSet = new Set<Id>();
 		for(Account item : accountList)

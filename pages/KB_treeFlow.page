@@ -1,0 +1,191 @@
+<apex:page lightningStylesheets="true" showHeader="true" sidebar="false" controller="KB_treeFlowController" cache="false" tabstyle="Account" docType="html-5.0">
+
+
+	<script>
+    	getArtsCallBack = function(result, e) {
+            if(e.status){
+                var mainDiv = document.getElementById('mainDiv');
+                var arts = result.nodes;
+
+ 				var title = document.createElement('div');
+ 				    title.className = result.tabulation;
+
+ 				var collapseAll = document.createElement('a');
+				var linkText = document.createTextNode("[-]");
+					collapseAll.appendChild(linkText);
+					collapseAll.title = "Collapse";
+					collapseAll.href = "javascript:void(0)";
+					collapseAll.className="linktext";
+				title.appendChild(collapseAll);	   
+
+    			var h4 = document.createElement("a");
+					h4.textContent = result.article.Title;
+					h4.style ="font-weight: bold;"
+				title.appendChild(h4);
+
+				mainDiv.appendChild(title);
+
+		    	for(i= 0 ; i < arts.length; i++){
+		    		var new_art = document.createElement('div');
+		    		
+		    		var collapseArt = document.createElement('a');
+					var linkTextArt = document.createTextNode("[-]");
+					collapseArt.appendChild(linkTextArt);
+					collapseArt.title = "Collapse";
+					collapseArt.href = "javascript:void(0)";
+					collapseArt.className="linktext";
+					new_art.appendChild(collapseArt);	
+
+		    		if(arts[i].article.PublishStatus == "Draft"){
+		    			var draftArt = document.createElement('b');		    			
+						var textDraft = document.createTextNode("(Draft)");
+						draftArt.className="artDraft";
+						draftArt.appendChild(textDraft);
+						new_art.appendChild(draftArt);	
+		    		}
+
+	    			var title = document.createElement('a');
+	    			title.innerHTML=arts[i].article.Title;
+	    			title.href = '../articles/KB_Article/'+arts[i].article.UrlName;
+	    			title.target="_blank";
+		    		
+		    		new_art.appendChild(title);
+		    		new_art.id = arts[i].article.KB_ExternalID__c;
+		    		new_art.setAttribute('data-parentId', arts[i].article.KB_ArticuloPadre__c);
+		    		new_art.className = arts[i].tabulation;
+		    		mainDiv.appendChild(new_art);
+
+		    		var buttonNewArt = document.createElement('input');
+		    		buttonNewArt.value = 'Nuevo';
+		    		buttonNewArt.type = 'button';
+		    		buttonNewArt.className = 'buttonAdd';
+		    		new_art.append(buttonNewArt);
+
+		    		buttonNewArt.onclick =  function (event) {
+		    			createArtDraft(event.target.parentNode);						
+					}
+		    	}
+
+            }else{
+                alert(e.message);
+            }
+        }
+   	</script>
+    
+<style type="text/css">
+        .col1 {width:30%;
+    			margin-top: 0px;
+    			vertical-align:top;!important}
+        .col2 {width:70%; 
+    			margin-top: 0px;
+    			vertical-align:top;!important}
+  
+        .withoutUnderline{text-decoration:none}
+        .tableClassCenter {text-align:center}
+
+        .linktext{margin-right: 5px;}
+
+        .artDraft{
+        	margin-right: 5px;
+        	color: red;
+        }
+
+        .buttonAdd {margin-left: 10px;}
+   		.tab0 {margin-left: 0px;}
+   		.tab1 {margin-left: 25px;}
+   		.tab2 {margin-left: 50px;}
+   		.tab3 {margin-left: 75px;}
+   		.tab4 {margin-left: 100px;}
+   		.tab5 {margin-left: 125px;}
+   		.tab6 {margin-left: 150px;}
+   		.tab7 {margin-left: 175px;}
+   		.tab8 {margin-left: 200px;}
+   		.tab9 {margin-left: 225px;}
+   		.tab10 {margin-left: 250px;}
+    
+</style>
+	<apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+    <apex:includeScript value="/support/console/40.0/integration.js"/>       
+    <apex:form >
+    	<apex:pageBlock >               
+			<apex:panelGrid columns="2" columnClasses="col1, col2" width="100%">      
+	            <apex:pageBlockSection title="Flows" columns="1" collapsible="false"  >
+	                <apex:outputPanel id="treeBlock" layout="block" > 
+	                    <apex:outputLabel value="Status " />
+	                    <apex:selectList value="{!status}" size="1" required="true" title="Status">
+	    					<apex:selectOptions value="{!items}"/>
+	  					</apex:selectList>
+	  					<div align="right" draggable="false" >
+	  						<apex:commandButton action="javascript:void(0)" value="Nuevo" id="theButton" style="margin-right: 5%"/>
+	  					</div>  					
+	  					<apex:pageBlockTable value="{!fatherList}" var="kb" columns="2" id="tableFather" headerClass="tableClassCenter">
+							<apex:column headerValue=""  styleClass="tableClassCenter"> 			                   
+								<apex:commandLink onclick="window.open('/articles/KB_Article/{!kb.UrlName}')" value="ver" id="theCommandLink" styleClass="withoutUnderline"/>
+			         		</apex:column>
+			  				<apex:column headerValue="Title" value="{!kb.Title}" />
+						</apex:pageBlockTable>
+	                </apex:outputPanel>
+	            </apex:pageBlockSection>
+	            <apex:pageBlockSection title="Result" columns="1" collapsible="false"  >
+	                <apex:outputPanel id="treeBlock" layout="block"  > 
+
+	                    <div id="mainDiv"></div>
+	  					
+	                </apex:outputPanel>
+	            </apex:pageBlockSection>         
+	        </apex:panelGrid>  
+        </apex:pageBlock>
+          
+        <script>
+        	KB_treeFlowController.getArts(getArtsCallBack);
+        	function createArtDraft (article) {
+        		var artFather = document.getElementById(article.id);
+        		var newArt = document.createElement('div');
+        		newArt.id = "KB_ExternalID__c";
+		    	newArt.setAttribute('data-parentId', article.id);
+		    	artFather.appendChild(newArt);
+
+        		//var enter=  document.createElement('br');
+        		//newArt.appendChild(enter);
+        		newArt.appendChild(document.createTextNode("Titulo "));
+                var input = document.createElement("input");
+                input.type = "text";
+                input.name = "title";
+                input.id="titleNew";
+                newArt.appendChild(input);
+
+                var buttonNewChild = document.createElement('input');
+		    		buttonNewChild.value = 'Aceptar';
+		    		buttonNewChild.type = 'button';
+		    		buttonNewChild.className = 'buttonAdd';
+		    		newArt.append(buttonNewChild);
+
+		    	buttonNewChild.onclick = function (event) {
+
+		    		insertKBdraft(artFather.id, input.value);
+				}
+
+				var buttonNewArt = document.createElement('input');
+		    		buttonNewArt.value = 'Cancelar';
+		    		buttonNewArt.type = 'button';
+		    		buttonNewArt.className = 'buttonAdd';
+		    		newArt.append(buttonNewArt);
+
+		    	buttonNewArt.onclick =  function (event) {
+		    		cancelDraft(artFather);		
+				}
+			}
+
+			function cancelDraft(article){
+				var artFather = document.getElementById(article.id);
+				artFather.removeChild(artFather.lastChild); 
+			}
+
+   		</script> 
+   		<apex:actionFunction name="insertKBdraft" action="{!insertKnowledge}" immediate="true" reRender=" ">
+   			<apex:param name="KBparentId" value="" assignTo="{!parentId}"/>
+   			<apex:param name="KBtitle" value="" assignTo="{!title}"/>
+   		</apex:actionFunction>
+
+    </apex:form>   
+</apex:page>

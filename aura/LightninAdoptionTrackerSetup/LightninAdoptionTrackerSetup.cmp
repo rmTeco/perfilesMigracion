@@ -1,0 +1,28 @@
+<aura:component implements="force:appHostable" controller="ltnadptn.updateUsingLightningCheckboxController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:attribute name="isAppActive" type="Boolean" default="false"/>
+    
+    <div class="slds-grid slds-grid--horizontal-align-center slds-grid--align-center">
+    <div class="slds-box slds-size--1-of-2 slds-theme--default slds-box slds-m-top--large">
+      <div class="slds-p-bottom--medium">
+        <h1 class="slds-col slds-text-heading--medium ">Lightning Adoption Tracker Setup</h1>
+          <br/>
+          <p>Once Activated, the app updates which users can use Lightning and which users are using Lightning, snapshotted every hour.
+        <div class="slds-col slds-float--right">
+          <div class="slds-form-element">
+            <label class="slds-checkbox--toggle slds-grid">
+       			 <lightning:input type="toggle" name="input2" checked="{!v.isAppActive}" onchange="{!c.toggleAppActivation}" label="Activate App:" />
+            </label>
+          </div>
+        </div>
+              </p>
+
+      </div>
+        <hr/>
+      <div class="slds-text-align--center">
+        <p class="slds-p-bottom--medium">Run Now will immediately start updating which users can use Lightning and which users are using Lightning.</p>
+  			<ui:button label="Run Now" press="{!c.onRunNow}" disabled="{!(v.isAppActive == true) ? false : true }" aura:id="RunNow"/>
+      </div>
+      </div>
+    </div>
+</aura:component>

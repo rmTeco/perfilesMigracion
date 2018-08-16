@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>CARE_EmailNotification</letterhead>
+    <name>CARE - Adjustments</name>
+    <style>formalLetter</style>
+    <subject>Pendiente de aprobación - Inconvenientes con cargos tasados y facturados</subject>
+    <textOnly>Hola, {!Receiving_User.FirstName}
+
+Recibiste este eMail porque tenés el caso Nro {!Case.CaseNumber} pendiente de aprobación.
+
+
+
+Creado por: {!Case.CreatedBy}
+
+
+
+Importe: {!Case.vlocity_cmt__Amount__c}
+
+
+
+Concepto: {!Case.TipoConcepto__c}
+
+
+
+Item: {!Case.TipoItem__c}
+
+
+
+Motivo: {!Case.Motivo__c}
+
+Para ingresar al caso hacé click en el siguiente link:
+{Caso}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

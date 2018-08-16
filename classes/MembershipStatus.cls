@@ -26,17 +26,20 @@ global with sharing class MembershipStatus implements vlocity_cmt.VlocityOpenInt
     public void getMembershipStatus(Map<String, Object> inputMap, Map<String, Object> outMap){
         try{
             String cuenta = (String) inputMap.get('ContextId');
+            Id cuentaId = cuenta;
+            system.debug('cuenta ' + cuenta);
             
             Map<Id,Account> billingAccountsMap = new Map<Id,Account>([select Id, Name 
                                                                       from Account 
-                                                                      where RecordType.developername = 'Billing' and ParentId = :cuenta
+                                                                      where RecordType.developername = 'Billing' and ParentId = :cuentaId
                                                                       order by Name Desc
                                                                      ]);
     
+            system.debug('billingAccountsMap ' + billingAccountsMap);
+            
             List<AggregateResult> pointsXAccount = [select sum(Points__c), Asset__r.accountId from LoyaltyTransaction__c 
                                                     where Asset__r.AccountId IN :billingAccountsMap.keySet()
-                                                    and Status__c = 'Approved'
-                                                    group by Asset__r.accountId
+                                                    and Status__c = 'Approved' group by Asset__r.accountId
                                                    ];
     
             system.debug(pointsXAccount);

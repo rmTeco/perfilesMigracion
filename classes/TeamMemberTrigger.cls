@@ -21,6 +21,8 @@ public class TeamMemberTrigger {
 				usersToAssignmentPermissionSet.put(teamMember.User_member__c,teamMember); //Assignment Permission if Is_Active__c == true
 			}
 		}
+
+		WorkTeamTriggerHelper.addGroupMembers(teamMemberSet);
 		
 		if (!UserRoleAPINameByUserId.keySet().isEmpty()) {
 			method = 'SyncUserRoleByUserRoleAPINameOfTeamMember';

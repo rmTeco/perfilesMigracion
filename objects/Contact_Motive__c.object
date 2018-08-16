@@ -43,6 +43,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
+    <description>El proposito de este objeto es para contener  los distintos motivos de Contactos a ser utilizados para los casos del tipo Tecnico o soporte tecnico</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableChangeDataCapture>false</enableChangeDataCapture>
@@ -54,6 +55,7 @@
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
         <fullName>Channel__c</fullName>
+        <description>Indica el canal por el cual se presenta el incidente</description>
         <externalId>false</externalId>
         <label>Canal</label>
         <length>255</length>
@@ -65,6 +67,7 @@
     <fields>
         <fullName>Configuration__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Indica si el reclamo reportado por el cliente amerita envio de configuracion para cerrar el caso</description>
         <externalId>false</externalId>
         <label>Configuracion</label>
         <trackTrending>false</trackTrending>
@@ -73,6 +76,7 @@
     <fields>
         <fullName>Coverage__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Campo que permite identificar si el motivo del reclamo esta asociado a escenarios donde el cliente no posee cobertura</description>
         <externalId>false</externalId>
         <label>Cobertura</label>
         <trackTrending>false</trackTrending>
@@ -80,6 +84,7 @@
     </fields>
     <fields>
         <fullName>Description__c</fullName>
+        <description>Campo para agregar comentarios  que complementen el entendimiento del reclamo</description>
         <externalId>false</externalId>
         <label>Descripción</label>
         <length>255</length>
@@ -91,6 +96,7 @@
     <fields>
         <fullName>Id_Service__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Indica el producto o servicio afectado ( en el escenario que el mismo exista en una matriz de pproductos definida)</description>
         <externalId>false</externalId>
         <label>Servicio</label>
         <referenceTo>Product2</referenceTo>
@@ -102,6 +108,7 @@
     </fields>
     <fields>
         <fullName>Incident__c</fullName>
+        <description>Campo permite identificar incidente o tipo de incidente asociado a un servicio</description>
         <externalId>false</externalId>
         <label>Incidente</label>
         <length>255</length>
@@ -113,6 +120,7 @@
     <fields>
         <fullName>Inconcistency__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Permite reportar si el reclamo esta asociado a una inconsistencia de categoria en la red</description>
         <externalId>false</externalId>
         <label>Inconcistencia</label>
         <trackTrending>false</trackTrending>
@@ -120,6 +128,7 @@
     </fields>
     <fields>
         <fullName>Is_Active_Text__c</fullName>
+        <description>Campo formula sobre fiel de Is_Active__c</description>
         <externalId>false</externalId>
         <formula>IF( Is_Active__c , &quot;SÍ&quot;, &quot;NO&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -132,6 +141,7 @@
     <fields>
         <fullName>Is_Active__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Indica si  un determinado motivo de contacto para un servicio o producto se encuentra activo</description>
         <externalId>false</externalId>
         <label>Activo</label>
         <trackTrending>false</trackTrending>
@@ -139,6 +149,7 @@
     </fields>
     <fields>
         <fullName>Is_Associable_Text__c</fullName>
+        <description>Campo formula sobre campo Is_Associable__c</description>
         <externalId>false</externalId>
         <formula>IF( Is_Associable__c , &quot;SÍ&quot;, &quot;NO&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -151,6 +162,7 @@
     <fields>
         <fullName>Is_Associable__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Campo que permite determinar  si el reclamo puede o no estar asociado a un incidente conocido</description>
         <externalId>false</externalId>
         <label>Asociable a Incidente</label>
         <trackTrending>false</trackTrending>
@@ -159,6 +171,7 @@
     <fields>
         <fullName>Knowledge_Base__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Indica si el motivo por el cual el cliente se contacta tiene o no asociado un incidente de base de conocimiento</description>
         <externalId>false</externalId>
         <label>Base de Conocimiento</label>
         <trackTrending>false</trackTrending>
@@ -166,6 +179,7 @@
     </fields>
     <fields>
         <fullName>Maximum_Reiterations__c</fullName>
+        <description>Actualmente no se encuetra en uso</description>
         <externalId>false</externalId>
         <label>Máximo de Reiteraciones</label>
         <precision>18</precision>
@@ -178,6 +192,7 @@
     <fields>
         <fullName>Second_Line__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Se usa para identificar a segunda linea de atencion</description>
         <externalId>false</externalId>
         <label>Segunda Linea</label>
         <trackTrending>false</trackTrending>
@@ -186,6 +201,7 @@
     <fields>
         <fullName>Service_Manual__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Actualmente no se encuentra en uso</description>
         <externalId>false</externalId>
         <label>Manual de Servicio</label>
         <trackTrending>false</trackTrending>
@@ -193,6 +209,7 @@
     </fields>
     <fields>
         <fullName>Service_Owner__c</fullName>
+        <description>Campo utilizado para identificar si el servicio afectado es provisto por Telecom o por un tercero</description>
         <externalId>false</externalId>
         <label>Propietario</label>
         <required>false</required>
@@ -217,6 +234,7 @@
     </fields>
     <fields>
         <fullName>Service__c</fullName>
+        <description>Indica el producto o servicio afectado ( en el escenario que el mismo no exista en una matriz de pproductos definida y se deba indicar una descripcion)</description>
         <externalId>false</externalId>
         <label>Servicio</label>
         <length>255</length>
@@ -226,20 +244,6 @@
         <unique>false</unique>
     </fields>
     <label>Motivo de Contacto</label>
-    <listViews>
-        <fullName>ABM_Motivo_de_contacto</fullName>
-        <columns>Channel__c</columns>
-        <columns>Service__c</columns>
-        <columns>Incident__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>Contact_Motive__c.Service_Incident</value>
-        </filters>
-        <label>ABM Motivo de contacto</label>
-        <language>en_US</language>
-    </listViews>
     <listViews>
         <fullName>ABM_Motivos_Contacto</fullName>
         <columns>Id_Service__c</columns>
@@ -275,23 +279,30 @@
         <language>es</language>
     </listViews>
     <listViews>
-        <fullName>ABM_de_Motivos</fullName>
-        <columns>Id_Service__c</columns>
+        <fullName>All_Records</fullName>
         <columns>NAME</columns>
-        <columns>Is_Associable__c</columns>
+        <columns>RECORDTYPE</columns>
         <columns>Is_Active__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>ABM de Motivos</label>
+        <label>All Records</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>all</fullName>
-        <columns>Id_Service__c</columns>
-        <columns>NAME</columns>
-        <columns>Is_Associable__c</columns>
+        <fullName>Asteriscado</fullName>
+        <columns>Channel__c</columns>
+        <columns>Service__c</columns>
+        <columns>Incident__c</columns>
         <columns>Is_Active__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All</label>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Contact_Motive__c.Service_Incident</value>
+        </filters>
+        <label>Asteriscado</label>
         <language>en_US</language>
     </listViews>
     <nameField>

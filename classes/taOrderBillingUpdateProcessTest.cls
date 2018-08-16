@@ -1,86 +1,157 @@
-@isTest
-public class taOrderBillingUpdateProcessTest
-{
-  static testMethod void Test1()
-  {
-    List<Order> lstOrder = new List<Order>();
-    List<Account> AccList = TestDataFactory.createAccounts(1, 'Consumer');
-    vlocity_cmt__BusinessSite__c StoreLocations = new vlocity_cmt__BusinessSite__c(vlocity_cmt__OrganizationId__c=AccList[0].id ,PointOfSaleId__c=1.0, AssociatedWarehouseDefault__c='Default');
-    insert StoreLocations;
-    FinancialPromotions__c Promo1 = new FinancialPromotions__c(Name='Promo1',Creditcard_Type__c='403', Bank_Code__c='1', Instalments__c='1', CFT__c='test');
-    insert Promo1;
-    TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
-    List<Order>OrdList = TestDataFactory.createOrders(2,AccList[0]);
-    OrdList[0].PaymentMethodType__c ='1001';
-    OrdList[0].vlocity_cmt__OriginatingChannel__c ='Presencial Oficina Comercial';
-    OrdList[0].PickUpStoreLocation__c = StoreLocations.id;
-    OrdList[1].vlocity_cmt__OriginatingChannel__c ='Presencial Oficina Comercial';
-    OrdList[1].PickUpStoreLocation__c = StoreLocations.id;
-    update OrdList;
-    List<OrderItem>OIList =TestDataFactory.createOrderItem(2,OrdList[0]);
-    List<OrderItem>OIList1 =TestDataFactory.createOrderItem(2,OrdList[1]);
-    //generateMockupData();
-    Test.startTest();
-      Test.setMock(HttpCalloutMock.class, new IFS121NoLineMockHttpResponseGeneretor());
-      taOrderBillingUpdateProcess.BillUpdateOrder(OrdList[0].Id);
-    Test.stopTest();
-  }
-    static testMethod void Test2()
-    {
-      List<Order> lstOrder = new List<Order>();
-      List<Account> AccList = TestDataFactory.createAccounts(1, 'Consumer');
-      vlocity_cmt__BusinessSite__c StoreLocations = new vlocity_cmt__BusinessSite__c(vlocity_cmt__OrganizationId__c=AccList[0].id ,PointOfSaleId__c=1.0, AssociatedWarehouseDefault__c='Default');
-      insert StoreLocations;
-      StoreLocations.Channel_Type_3__c = 'Agentes';
-      StoreLocations.Channel_Type_2__c = 'Agentes';
-      StoreLocations.Channel_Type__c = 'Agentes';
-      update StoreLocations;
-      FinancialPromotions__c Promo1 = new FinancialPromotions__c(Name='Promo1',Creditcard_Type__c='403', Bank_Code__c='1', Instalments__c='1', CFT__c='test');
-      insert Promo1;
-      TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
-      List<Order>OrdList = TestDataFactory.createOrders(2,AccList[0]);
-      OrdList[0].PaymentMethodType__c ='1001';
-      OrdList[0].vlocity_cmt__OriginatingChannel__c ='Agentes';
-      OrdList[0].OriginStoreLocation__c = StoreLocations.id;
-      OrdList[1].vlocity_cmt__OriginatingChannel__c ='Agentes';
-      OrdList[1].OriginStoreLocation__c = StoreLocations.id;
-      update OrdList;
-      List<OrderItem>OIList =TestDataFactory.createOrderItem(2,OrdList[0]);
-      List<OrderItem>OIList1 =TestDataFactory.createOrderItem(2,OrdList[1]);
-      //generateMockupData();
-      Test.startTest();
-        Test.setMock(HttpCalloutMock.class, new IFS121NoLineMockHttpResponseGeneretor());
-        taOrderBillingUpdateProcess.BillUpdateOrder(OrdList[0].Id);
-      Test.stopTest();
-      }
-      static testMethod void Test3()
-      {
-        List<Order> lstOrder = new List<Order>();
-        List<Account> AccList = TestDataFactory.createAccounts(1, 'Consumer');
-        vlocity_cmt__BusinessSite__c StoreLocations = new vlocity_cmt__BusinessSite__c(vlocity_cmt__OrganizationId__c=AccList[0].id ,PointOfSaleId__c=1.0, AssociatedWarehouseDefault__c='Default');
-        insert StoreLocations;
-        StoreLocations.Channel_Type_3__c = 'Agentes';
-        StoreLocations.Channel_Type_2__c = 'Agentes';
-        StoreLocations.Channel_Type__c = 'Agentes';
-        update StoreLocations;
-        FinancialPromotions__c Promo1 = new FinancialPromotions__c(Name='Promo1',Creditcard_Type__c='403', Bank_Code__c='1', Instalments__c='1', CFT__c='test');
-        insert Promo1;
-        TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
-        List<Order>OrdList = TestDataFactory.createOrders(2,AccList[0]);
-        OrdList[0].PaymentMethodType__c ='1001';
-        OrdList[0].vlocity_cmt__OriginatingChannel__c ='Agentes';
-        OrdList[0].OriginStoreLocation__c = StoreLocations.id;
-        OrdList[0].Delivery_Method__c = 'Store Pick Up';
-        OrdList[1].vlocity_cmt__OriginatingChannel__c ='Agentes';
-        OrdList[1].OriginStoreLocation__c = StoreLocations.id;
-        OrdList[1].Delivery_Method__c = 'Store Pick Up';
-        update OrdList;
-        List<OrderItem>OIList =TestDataFactory.createOrderItem(2,OrdList[0]);
-        List<OrderItem>OIList1 =TestDataFactory.createOrderItem(2,OrdList[1]);
+@isTest(seeAllData = false)
+public class taOrderBillingUpdateProcessTest {
+
+
+
+    static testMethod void TestBillUpdateOrder_Agentes() {
         //generateMockupData();
+        Account acc = new Account(Name = 'Sample Account', AccountNumber = '1234', DocumentType__c = 'DNI', DocumentNumber__c = '12345678');
+        insert acc;
+        vlocity_cmt__BusinessSite__c store = new vlocity_cmt__BusinessSite__c();
+        store.vlocity_cmt__OrganizationId__c = acc.Id;
+        store.Channel_Type_3__c = 'Agentes';
+        store.Channel_Type_2__c = 'Agentes';
+        store.Channel_Type__c = 'Agentes';
+        store.Channel__c = 'Físico';
+        insert store;
+        Id pricebookId = Test.getStandardPricebookId();
+        
+        Order order = new Order(AccountId = acc.Id, Status = 'Draft', EffectiveDate = Date.today(), Pricebook2Id = pricebookId,vlocity_cmt__OriginatingChannel__c ='Call Center',Delivery_Method__c ='Store Pick Up', OriginStoreLocation__c = store.Id);
+        insert order;
+        
+        //Order order = [SELECT Id FROM Order LIMIT 1];
+        
+        Map<String,Object> inputMap = new Map<String,Object>();
+        inputMap.put('BillingOrder', order);
+
         Test.startTest();
-          Test.setMock(HttpCalloutMock.class, new IFS121NoLineMockHttpResponseGeneretor());
-          taOrderBillingUpdateProcess.BillUpdateOrder(OrdList[0].Id);
+        taOrderBillingUpdateProcess.BillUpdateOrder(order.Id);
+		Test.stopTest();
+        
+        Order orderTest = [SELECT OriginStoreLocation__c, Delivery_Method__c,TrackingStatus__c FROM Order where Id =: order.Id];
+        system.assertEquals('Preparar pedido',orderTest.TrackingStatus__c);
+        
+    }
+
+    static testMethod void TestBillUpdateOrder_Agentes_Delivery() {
+        //generateMockupData();
+        Account acc = new Account(Name = 'Sample Account', AccountNumber = '1234', DocumentType__c = 'DNI', DocumentNumber__c = '12345678');
+        insert acc;
+        vlocity_cmt__BusinessSite__c store = new vlocity_cmt__BusinessSite__c();
+        store.vlocity_cmt__OrganizationId__c = acc.Id;
+        store.Channel_Type_3__c = 'Agentes';
+        store.Channel_Type_2__c = 'Agentes';
+        store.Channel_Type__c = 'Agentes';
+        store.Channel__c = 'Físico';
+        insert store;
+        Id pricebookId = Test.getStandardPricebookId();
+        
+        Order order = new Order(AccountId = acc.Id, Status = 'Draft', EffectiveDate = Date.today(), Pricebook2Id = pricebookId,vlocity_cmt__OriginatingChannel__c ='Call Center',Delivery_Method__c ='Delivery', OriginStoreLocation__c = store.Id);
+        insert order;
+        
+        //Order order = [SELECT Id FROM Order LIMIT 1];
+        
+        Map<String,Object> inputMap = new Map<String,Object>();
+        inputMap.put('BillingOrder', order);
+
+        Test.startTest();
+        taOrderBillingUpdateProcess.BillUpdateOrder(order.Id);
+		Test.stopTest();
+        
+        Order orderTest = [SELECT OriginStoreLocation__c, Delivery_Method__c,TrackingStatus__c FROM Order where Id =: order.Id];
+        system.assertEquals('Preparar pedido',orderTest.TrackingStatus__c);
+        
+    }
+
+    static testMethod void TestBillUpdateOrder_Exception() {
+        //generateMockupData();
+        Account acc = new Account(Name = 'Sample Account', AccountNumber = '1234', DocumentType__c = 'DNI', DocumentNumber__c = '12345678');
+        insert acc;
+        vlocity_cmt__BusinessSite__c store = new vlocity_cmt__BusinessSite__c();
+        store.vlocity_cmt__OrganizationId__c = acc.Id;
+        store.Channel_Type_3__c = 'Agentes';
+        store.Channel_Type_2__c = 'Agentes';
+        store.Channel_Type__c = 'Agentes';
+        store.Channel__c = 'Físico';
+        insert store;
+        Id pricebookId = Test.getStandardPricebookId();
+        
+        Order order = new Order(AccountId = acc.Id, Status = 'Draft', EffectiveDate = Date.today(), Pricebook2Id = pricebookId,vlocity_cmt__OriginatingChannel__c ='Call Center',Delivery_Method__c ='Delivery', OriginStoreLocation__c = store.Id, TrackingStatus__c = 'Pendiente de pago');
+        insert order;
+
+        Test.startTest();
+        taOrderBillingUpdateProcess.BillUpdateOrder('123');
+		Test.stopTest();
+        
+        Order orderTest = [SELECT OriginStoreLocation__c, Delivery_Method__c,TrackingStatus__c FROM Order where Id =: order.Id];
+        system.assertEquals('Pendiente de pago',orderTest.TrackingStatus__c);
+        
+    }
+    
+    static testMethod void TestBillUpdateOrder_Oficinas() {
+        Account acc = new Account(Name = 'Sample Account', AccountNumber = '1234', DocumentType__c = 'DNI', DocumentNumber__c = '12345678');
+        insert acc;
+        vlocity_cmt__BusinessSite__c store = new vlocity_cmt__BusinessSite__c();
+        store.vlocity_cmt__OrganizationId__c = acc.Id;
+        store.Channel_Type_3__c = 'Oficinas Comerciales';
+        store.Channel_Type_2__c = 'Oficinas Comerciales';
+        store.Channel_Type__c = 'Oficinas Comerciales';
+        store.Channel__c = 'Físico';
+        insert store;
+        Id pricebookId = Test.getStandardPricebookId();
+        
+        Order order = new Order(AccountId = acc.Id, Status = 'Draft', EffectiveDate = Date.today(), Pricebook2Id = pricebookId,vlocity_cmt__OriginatingChannel__c ='Call Center',Delivery_Method__c ='Store Pick Up', OriginStoreLocation__c = store.Id);
+        insert order;
+        
+        Map<String,Object> inputMap = new Map<String,Object>();
+        inputMap.put('BillingOrder', order);
+
+        Test.startTest();
+        taOrderBillingUpdateProcess.BillUpdateOrder(order.Id);
+		Test.stopTest();
+        
+        Order orderTest = [SELECT OriginStoreLocation__c, Delivery_Method__c,TrackingStatus__c FROM Order where Id =: order.Id];
+        system.assertEquals('Preparar pedido',orderTest.TrackingStatus__c);
+    }
+
+
+
+
+
+   /* static testMethod void TestDeliverStorePickUp() {
+
+        TaOrderBillingUpdateProcess taOrderBillingUpdateProcess = new TaOrderBillingUpdateProcess();
+
+        generateMockupData();
+        
+        Order order = [SELECT Id FROM Order LIMIT 1];
+        
+        Map<String,Object> inputMap = new Map<String,Object>();
+        inputMap.put('BillingOrder', order);
+
+
+        Test.startTest();
+        Test.setMock(HttpCalloutMock.class, new IFS121NoLineMockHttpResponseGeneretor());
+
+         taOrderBillingUpdateProcess.invokeMethod('Del',inputMap,null,null);
+
+        taOrderBillingUpdateProcess.invokeMethod('DeliverStorePickUp',inputMap,null,null);
+        taOrderBillingUpdateProcess.invokeMethod(null,null,null,null);
+
         Test.stopTest();
-      }
+    }
+*/
+
+
+
+
+    public static void generateMockupData() {
+        MockupFactory.generate();
+        
+        List<OrderItem> ordItemList = [SELECT Id FROM OrderItem];
+        for(OrderItem ordItem : ordItemList) {
+            ordItem.vlocity_cmt__SerialNumber__c = ordItem.Id;
+        }
+        update ordItemList;
+    }
 }

@@ -25,7 +25,7 @@
         <field>CM.TARGET_DATE</field>
     </columns>
     <columns>
-        <field>CM.COMPLETION_DATE</field>
+        <field>CLOSED_DATEONLY</field>
     </columns>
     <filter>
         <criteriaItems>
@@ -34,7 +34,7 @@
             <operator>lessThan</operator>
             <value>TODAY</value>
         </criteriaItems>
-        <language>es_MX</language>
+        <language>en_US</language>
     </filter>
     <format>Tabular</format>
     <name>Cases with Milestones Out of Date</name>
@@ -51,8 +51,6 @@
     <showDetails>true</showDetails>
     <showGrandTotal>true</showGrandTotal>
     <showSubTotals>true</showSubTotals>
-    <sortColumn>CASE_NUMBER</sortColumn>
-    <sortOrder>Asc</sortOrder>
     <timeFrameFilter>
         <dateColumn>CREATED_DATEONLY</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

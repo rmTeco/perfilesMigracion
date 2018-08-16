@@ -20,7 +20,7 @@ public with sharing class MembershipStatusTest {
         insert aParent;
         
         Account aBilling = new Account(Name = 'TestMSBilling', RecordTypeId = billingRecordTypeId, ParentId = aParent.Id);
-    insert aBilling;
+		insert aBilling;
         
         List<Account> accs = [SELECT Id, ParentId, Name, RecordType.DeveloperName FROM Account WHERE Name IN ('TestMSConsumer','TestMSBilling')];
         system.debug('accs: ' + accs);
@@ -58,7 +58,7 @@ public with sharing class MembershipStatusTest {
         insert aParent;
         
         Account aBilling = new Account(Name = 'TestMSBilling', RecordTypeId = billingRecordTypeId, ParentId = aParent.Id);
-    insert aBilling;
+		insert aBilling;
         
         List<Account> accs = [SELECT Id, ParentId, Name, RecordType.DeveloperName FROM Account WHERE Name IN ('TestMSConsumer','TestMSBilling')];
         system.debug('accs: ' + accs);

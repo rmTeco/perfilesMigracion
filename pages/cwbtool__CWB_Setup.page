@@ -1,0 +1,291 @@
+<apex:page controller="cwbtool.CWBSetupCtrl" tabStyle="CWB_tool__tab" sidebar="false" action="{!redircetpage}">
+   <apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+    
+    <c:lightningspinner />
+     <style>
+        .slds-input{
+          width:auto;
+        }
+        .padding{
+          padding :10px;
+        }
+        .green{
+            color:#ffffff;
+            background-color:green; 
+        }
+        .red{
+          color:#ffffff;
+          background-color:red; 
+        }
+    </style>
+    <apex:form >
+        <c:settings strDomainName="{!strDomainName}" RemoteSiteName="{!RemoteSiteName}" objSetup="{!objSetup}" 
+         bMetadataConnectionWarning="{!bMetadataConnectionWarning}" 
+         objConnectedOrg="{!objConnectedOrg}" promocode="{!promocode}" 
+         objCWBReportModel="{!objCWBReportModel}" 
+         bCWBAPIConnectionWarning="{!bCWBAPIConnectionWarning}"
+         isSandbox="{!isSandbox }"
+         objAdminConfig="{!objAdminConfig}"
+         >
+         </c:settings>
+         
+        <apex:actionFunction name="displayRemoteSiteResponse" action="{!displayRemoteSiteResponse}" rerender="remoteSite,msgId" oncomplete="hideOverLay();">
+            <apex:param name="metadataResponse" assignTo="{!metadataResponse}" value="{!metadataResponse}" />
+        </apex:actionFunction>
+    </apex:form>
+    <apex:outputpanel rendered="false">
+        <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+        <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/ionic/css/ionicons.min.css')}" />
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/RemoteSite.js')}" />
+        <c:actionstatusNew />
+        <apex:sectionHeader title="CWB Setup" />
+        <apex:pagemessages id="msgId" />
+        <apex:form >
+            <apex:outputpanel id="remoteSite">
+                <apex:pageBlock title="Important Post Install Step" rendered="{!bMetadataConnectionWarning}">
+                    <div style='display:inline-block'>
+                        <div style='float:left;font-size:100px;width:10%;color:cadetblue;'>
+                            <span class="ion-settings" aria-hidden="true"></span>
+                        </div>
+                        <div style='float:left;width:89%;'>
+                            <h1>Important Post Install Step:</h1>
+                            <p>In order to utilize the features of CWB tool you need to permit the tool access to the Salesforce Metadata API by adding a
+                                <a href='{!strDomainName}/0rp/e?EndpointUrl={!strDomainName}&SiteName={!RemoteSiteName}&saveURL={!$Page.CWB_Setup}' style='color: #428bca;text-decoration: underline;'>Remote Site Setting</a> with this Salesforce Server URL <b>{!strDomainName}</b></p>
+                            <p> Click the <b>Create Remote Site Setting</b> button to have the tool perform this step for you.</p>
+                            <br/>
+                            <input id="createremotesitebtn" class='Btn Btn-primary' type="button" onclick=" showOverLay('Please wait..');createRemoteSite('{!strDomainName}','{!$Api.Session_ID}','{!RemoteSiteName}');" value="Create Remote Site Setting" />
+                        </div>
+                    </div>
+                </apex:pageBlock>
+            </apex:outputpanel>
+            <apex:pageBlock >
+                <apex:pageblockbuttons >
+                    <apex:commandbutton action="{!saveDetail}" value="Save" />
+                </apex:pageblockbuttons>
+                <apex:pageblocksection >
+                    <apex:inputfield value="{!objSetup.cwbtool__Batch_Size__c}" />
+                    <apex:inputfield value="{!objSetup.cwbtool__Include_Managed_Package_Detail__c}" />
+                    <apex:inputfield value="{!objSetup.cwbtool__ErrorLog__c}" />
+                </apex:pageblocksection>
+            </apex:pageBlock>
+            <apex:pageBlock id="connId" title="License Management">
+                <apex:pageblockbuttons location="top">
+                    <apex:outputPanel rendered="{!objConnectedOrg==null || objConnectedOrg.id==null}">
+                        <a class="btn" href='/apex/oAuth2'>Connect with Master Licensing Org</a>
+                    </apex:outputPanel>
+                    <apex:commandButton value="Revoke Org Access" action="{!revokeAccess}" rerender="connId,msgId" oncomplete="hideOverLay();" onclick="showOverLay('Please wait..');" rendered="{!objConnectedOrg!=null && objConnectedOrg.id!=null}" />
+                </apex:pageblockbuttons>
+                <apex:pageblocksection rendered="{!objConnectedOrg==null || objConnectedOrg.id==null}" columns="1">
+                    <apex:outputpanel layout="none">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h1><small>Do you have promo code?</small></h1>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class='col-md-4'>
+                                    <apex:inputtext value="{!promocode}" styleclass="form-control" html-placeholder="Enter your promo code"></apex:inputtext>
+                                </div>
+                                <div class='col-md-4'>
+                                    <apex:commandButton value="Validate Promo Code" onclick="showOverLay('Please wait..');" action="{!validatePromocode}" rerender="connId,msgId" oncomplete="hideOverLay();"></apex:commandButton>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputpanel>
+                </apex:pageblocksection>
+                <apex:pageblocksection rendered="{!objConnectedOrg!=null && objConnectedOrg.id!=null}" columns="1">
+                    <apex:outputpanel layout="none">
+                        <apex:variable var="count" value="{!1}" />
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="alert alert-warning" role="alert">
+                                    To avoid license misuse, its good habit to revoke access to license org, once you are done with report downloads
+                                </div>
+                                <div class="card">
+                                    <ul class="list-group">
+                                        <li href="#" class="list-group-item active">
+                                            <h4 class="list-group-item-heading">Authorised license Master Org - '{!objConnectedOrg.OrgName__c}'</h4>
+                                            <p class="list-group-item-text">
+                                                Any report downloads in this organisation will consume licensed quota from authorised master org.
+                                            </p>
+                                        </li>
+                                        <li href="#" class="list-group-item">
+                                            <h4 class="list-group-item-heading">Org ID</h4>
+                                            <p class="list-group-item-text">{!objConnectedOrg.Org_Id__c}</p>
+                                        </li>
+                                        <li href="#" class="list-group-item">
+                                            <h4 class="list-group-item-heading">Org Name</h4>
+                                            <p class="list-group-item-text">{!objConnectedOrg.OrgName__c}</p>
+                                        </li>
+                                        <li href="#" class="list-group-item">
+                                            <h4 class="list-group-item-heading">Name</h4>
+                                            <p class="list-group-item-text">{!objConnectedOrg.Name__c}</p>
+                                        </li>
+                                        <li href="#" class="list-group-item">
+                                            <h4 class="list-group-item-heading">User Name</h4>
+                                            <p class="list-group-item-text">{!objConnectedOrg.UserName__c}</p>
+                                        </li>
+                                        <li href="#" class="list-group-item">
+                                            <h4 class="list-group-item-heading">Email</h4>
+                                            <p class="list-group-item-text">{!objConnectedOrg.Email__c}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="alert" role="alert"></div>
+                                <div class="card">
+                                    <ul class="list-group">
+                                        <apex:outputpanel layout="none" rendered="{!objCWBReportModel.isPublic==null || !objCWBReportModel.isPublic}">
+                                            <li class="list-group-item">
+                                                <div class="progress">
+                                                    <div class="progress-bar progress-bar-danger" style="width:{!objCWBReportModel.usedPercent}%" title="{!objCWBReportModel.usedPercent}% Used">
+                                                        <span class="sr-only">{!objCWBReportModel.usedPercent}% Used</span>
+                                                    </div>
+                                                    <div class="progress-bar progress-bar-success" style="width: {!objCWBReportModel.availablePercent}%" title="{!objCWBReportModel.availablePercent}% Available">
+                                                        <span class="sr-only">{!objCWBReportModel.availablePercent}% Available</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li href="#" class="list-group-item">
+                                                <apex:outputpanel layout="none" rendered="{!!objCWBReportModel.isPublic}">
+                                                    <div class='row' style='margin-bottom:11px;'>
+                                                        <div class="col-md-3">
+                                                            <h4 class="list-group-item-heading">Total Connection</h4>
+                                                            <span class="badge">{!objCWBReportModel.total}</span>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <h4 class="list-group-item-heading">Used Connection</h4>
+                                                            <span class="badge">{!objCWBReportModel.used}</span>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <h4 class="list-group-item-heading">Available Connection</h4>
+                                                            <span class="badge" style='background-color:green'>{!objCWBReportModel.available}</span>
+                                                        </div>
+                                                    </div>
+                                                </apex:outputpanel>
+                                            </li>
+                                        </apex:outputpanel>
+                                        <apex:outputpanel layout="none" rendered="{!objConnectedOrg.cwbtool__PromoCode__c!=null && objConnectedOrg.cwbtool__PromoCode__c!=''}">
+                                            <li href="#" class="list-group-item">
+                                                <div class='row'>
+                                                    <div class="col-md-3">
+                                                        <h4 class="list-group-item-heading">Connection Type</h4> <span class="badge">{!objCWBReportModel.connectionType}</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h4 class="list-group-item-heading">Promo code Type</h4>
+                                                        <span class="badge">{!objCWBReportModel.user_type}</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h4 class="list-group-item-heading">Expiration Date</h4>
+                                                        <span class="badge">
+                                                          {!objCWBReportModel.valid_to}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h4 class="list-group-item-heading">Download</h4>
+                                                        <span class="badge">
+                                                          Unlimited
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <apex:outputpanel layout="none" rendered="{!objCWBReportModel.isPublic==null || !objCWBReportModel.isPublic}">
+                                                <li href="#" class="list-group-item">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Org Id</th>
+                                                                <th>Org Name</th>
+                                                                <th>Created Date</th>
+                                                                <th>Created By</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <apex:repeat value="{!objCWBReportModel.promocodeUsedInOrgs}" var="objPromoDetail">
+                                                                <tr>
+                                                                    <th scope="row">{!count}</th>
+                                                                    <td>{!objPromoDetail.org_id}</td>
+                                                                    <td>{!objPromoDetail.org_name}</td>
+                                                                    <td>{!objPromoDetail.created_date}
+                                                                        <!-- <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                                                       <apex:param value="{!obj.created_date}" />
+                                                                </apex:outputText> -->
+                                                                    </td>
+                                                                    <td>{!objPromoDetail.created_by}</td>
+                                                                </tr>
+                                                                <apex:variable var="count" value="{!count+1}" />
+                                                            </apex:repeat>
+                                                        </tbody>
+                                                    </table>
+                                                </li>
+                                            </apex:outputpanel>
+                                        </apex:outputpanel>
+                                        <apex:outputpanel layout="none" rendered="{!objConnectedOrg.cwbtool__PromoCode__c==null && objConnectedOrg.cwbtool__PromoCode__c==''}">
+                                            <li href="#" class="list-group-item">
+                                                <div class='row'>
+                                                    <div class="col-md-3">
+                                                        <h4 class="list-group-item-heading">Connection Type</h4> <span class="badge">{!objCWBReportModel.connectionType}</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h4 class="list-group-item-heading">Plan Status</h4>
+                                                        <span class="badge">{!objCWBReportModel.planstatus}</span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h4 class="list-group-item-heading">Expiration Date</h4>
+                                                        <span class="badge">
+                                                          {!objCWBReportModel.licence_enddate}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <h4 class="list-group-item-heading">Download</h4>
+                                                        <span class="badge">
+                                                          Unlimited
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li href="#" class="list-group-item">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Connected Org Id</th>
+                                                            <th>Connected Org Name</th>
+                                                            <th>Created Date</th>
+                                                            <th>Created By</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <apex:repeat value="{!objCWBReportModel.lstCWBConnectionDetail}" var="objConnectionDetail">
+                                                            <tr>
+                                                                <th scope="row">{!count}</th>
+                                                                <td>{!objConnectionDetail.child_org_id}</td>
+                                                                <td>{!objConnectionDetail.child_org_name}</td>
+                                                                <td>{!objConnectionDetail.created_date}</td>
+                                                                <td>{!objConnectionDetail.created_by}</td>
+                                                            </tr>
+                                                            <apex:variable var="count" value="{!count+1}" />
+                                                        </apex:repeat>
+                                                    </tbody>
+                                                </table>
+                                            </li>
+                                        </apex:outputpanel>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </apex:outputpanel>
+                </apex:pageblocksection>
+            </apex:pageBlock>
+            <apex:actionFunction name="displayRemoteSiteResponse" action="{!displayRemoteSiteResponse}" rerender="remoteSite,msgId" oncomplete="hideOverLay();">
+                <apex:param name="metadataResponse" assignTo="{!metadataResponse}" value="{!metadataResponse}" />
+            </apex:actionFunction>
+        </apex:form>
+        <script>
+        </script>
+    </apex:outputpanel>
+</apex:page>

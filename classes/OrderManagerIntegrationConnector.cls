@@ -1,5 +1,5 @@
 public class OrderManagerIntegrationConnector {
-    
+	
     private static OrderManagerIntegrationConnector instance = null;
     public string thorSession {get; set;}
 
@@ -16,8 +16,8 @@ public class OrderManagerIntegrationConnector {
         String jsonParams = JSON.serialize(params);
         HttpRequest req = new HttpRequest(); 
         req.setEndpoint(conProp.EndpointLoginUrl__c); 
-        req.setHeader('Content-Type','application/json'); 
-        req.setBody(jsonParams);
+		req.setHeader('Content-Type','application/json'); 
+		req.setBody(jsonParams);
         req.setMethod('POST'); 
         Http http = new Http(); 
         HTTPResponse res = http.send(req);

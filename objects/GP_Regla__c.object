@@ -83,6 +83,18 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Evento_general__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Evento General</label>
+        <referenceTo>GP_Evento_General__c</referenceTo>
+        <relationshipLabel>GP Reglas</relationshipLabel>
+        <relationshipName>GP_Reglas</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Fecha_vencimiento__c</fullName>
         <externalId>false</externalId>
         <label>Fecha de vencimiento</label>
@@ -155,7 +167,6 @@
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
-            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>

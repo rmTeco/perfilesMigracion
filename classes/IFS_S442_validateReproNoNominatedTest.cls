@@ -144,7 +144,9 @@ public class IFS_S442_validateReproNoNominatedTest {
 
     static void createWorkTeamMember (Id pWorkTemaId) {
         System.debug('---------- Entre en createWorkTeamMember()');
-        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId, UserRoleAPIName__c='Test');
+        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId);
+                wtm.UserRoleAPIName__c='Care';
+
         insert wtm;
     }
 

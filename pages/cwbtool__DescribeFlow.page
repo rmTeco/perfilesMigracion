@@ -1,0 +1,115 @@
+<apex:page controller="cwbtool.DescribeFlow" sidebar="false" tabStyle="CWB_Tool__tab" showheader="false">
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+    
+    <style>
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 0px 0px 0px 0px #000;
+        box-shadow: 0px 0px 0px 0px #000;
+        margin-left: 8% !important;
+        width: 63%;
+    }
+    
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: auto;
+        padding: 0 10px;
+        border-bottom: none;
+    }
+    
+    .bodyDiv {
+        height: 400px;
+    }
+    
+    .Btn-group {
+        width: 60% !important;
+    }
+    
+    .frm {
+        margin: 15px;
+    }
+    
+    .modal {
+        outline: none;
+    }
+    </style>
+    <apex:pagemessages rendered="{!lstFlow==null || lstFlow.size==0}" />
+    <apex:outputpanel rendered='{!lstFlow!=null && lstFlow.size>0}' layout='none'>
+        <c:actionstatusNew />
+        <!--  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">Flow</legend>-->
+        <apex:form id="form" styleclass="frm CWB">
+              <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                <span class="slds-form-element__label m-bottom--">Download Only Active Flow</span>
+                <apex:inputCheckbox id="onlyConflicts" value="{!onlyActive}" >
+                    <apex:actionSupport event="onclick"  action="{!getListFlow}" 
+                                rerender="form" status="counterStatus"/>
+                </apex:inputCheckbox>
+                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+            </label>
+            <apex:selectList value="{!lstSelectedFlow}" multiselect="true" styleclass="multiselect FlowClass" style="margin-right:40px;display:none;">
+                <apex:selectOptions value="{!lstFlow}" />
+            </apex:selectList>
+            <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='Startprocessing();refresh();' data-action='Download Flow Detail Action'>Download Flow</span>
+            <apex:actionFunction name="getFlowDetails" action="{!getFlowDetails}" />
+            <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form" />
+            <apex:outputpanel id="refreshPanel">
+                <apex:pagemessages rendered="{!lstFlow==null || lstFlow.size==0}" />
+                <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,msgId,form" interval="5" enabled="{!isStart}" oncomplete="if({!isProcessed}){hideOverLay();}" />
+            </apex:outputpanel>
+           
+            <script>
+            var gaDetail = 'OrgName={!HTMLENCODE($Organization.Name)}_Name={!HTMLENCODE($User.FirstName)}';
+
+            function Startprocessing() {
+                    showOverLay('{!HTMLENCODE(strStatus)}');
+                    getFlowDetails();
+              }
+
+            $(document).ready(function() {
+                $('.FlowClass').multiselect({
+                    nSelectedText  : ' Flow selected', 
+                    buttonClass: 'Btn Btn-default',
+                    enableFiltering: true,
+                    filterBehavior: 'both',
+                    enableCaseInsensitiveFiltering: true,
+                    filterPlaceholder: 'Search Flow..',
+                    includeSelectAllOption: true,
+                    selectAllText: 'Select ALL Flow',
+                    selectAllValue: 'multiselect-all',
+                    maxHeight: 217,
+                    buttonWidth: '90%',
+                    nonSelectedText: 'You have not selected any Flow',
+                    disableIfEmpty: true,
+                    onChange: function(element, checked) {
+                        if ($('.FlowClass').val() == null) {
+                            $('.containerDivclass').hide();
+                            $('#containerMessage').show();
+                        } else {
+                            $('.containerDivclass').show();
+                            $('#containerMessage').hide();
+                        }
+                       
+                    }
+                });
+               
+            });
+            </script>
+            <apex:pagemessages id="msgId" escape="false" />
+        </apex:form>
+        <!-- </fieldset>  -->
+    </apex:outputpanel>
+    <!--<c:AppUpgradeMessage hastoken="{!hasToken}" loogedinUserHave="{!isLoggedInUserHave}"/>-->
+</apex:page>

@@ -1,0 +1,86 @@
+<apex:page controller="cwbtool.oAuthController" sidebar="false" action="{!validateOAuth}" tabStyle="CWB_Tool__tab">
+    <apex:stylesheet value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/css/bootstrap2.css')}" />
+    <apex:sectionHeader subtitle="Connect with your production org" title="CWB License Management"></apex:sectionHeader>
+    
+    <apex:pageMessages rendered="{!!isSandbox}"/>
+    
+    <apex:form styleClass="form-inline" rendered="{!isSandbox}">
+        <apex:pageBlock title="Please select your master org environment">
+            <apex:pageMessages />
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Login With Salesforce" action="{!oAuthAction}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="3">
+                <apex:selectList value="{!strDomain}" multiselect="false" size="1" styleClass="form-control">
+                    <apex:selectOptions value="{!DomainDetail}" />
+                </apex:selectList>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:outputpanel rendered="{!objConnectionDetail!=null}">
+         <ul class="list-group">
+          <li  class="list-group-item">
+        <div class="card">
+          <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Total Connection</th>
+                                <th>Used Connection</th>
+                                <th>Available Connection</th>
+                                <th>Expiration Date</th>
+                                <th>Download</th>
+                                
+                             </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <apex:variable var="total" value="{!0}"></apex:variable>
+                             <apex:variable var="used" value="{!0}"></apex:variable>
+                              <apex:variable value="{!total+(If(objConnectionDetail.total_org_connections==null,0,objConnectionDetail.total_org_connections))}" var="total"></apex:variable>
+                              <apex:variable value="{!used+(If(objConnectionDetail.lstCWBConnectionDetail==null,0,objConnectionDetail.lstCWBConnectionDetail.size))}" var="used"></apex:variable>
+                               <apex:variable value="{!total-used}" var="available"></apex:variable>
+                               
+                                <th scope="row">#</th>
+                                <td>{!total}</td>
+                                <td>{!used}</td>
+                                <td><span class="badge" style='background-color:green'>{!available}</span></td>
+                                <td>{!objConnectionDetail.licence_enddate}</td>
+                                <td>Unlimited</td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                 </div>
+                 </li></ul>
+                  <ul class="list-group">
+          <li  class="list-group-item">
+                  <div class="card">   
+                     <!-- Table -->
+                  <apex:variable var="count" value="{!1}" />
+                  <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Connected Org Id</th>
+                            <th>Connected Org Name</th>
+                            <th>Created Date</th>
+                            <th>Created By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!objConnectionDetail.lstCWBConnectionDetail}" var="objConnectionDe">
+                            <tr>
+                                <th scope="row">{!count}</th>
+                                <td>{!objConnectionDe.child_org_id}</td>
+                                <td>{!objConnectionDe.child_org_name}</td>
+                                <td>{!objConnectionDe.created_date}</td>
+                                <td>{!objConnectionDe.created_by}</td>
+                            </tr>
+                            <apex:variable var="count" value="{!count+1}" />
+                        </apex:repeat>
+                    </tbody>
+                </table>
+                  </div> </li></ul>
+       </apex:outputpanel>        
+    </apex:form>
+</apex:page>

@@ -3,7 +3,7 @@ public class CampaignTriggers {
     //This method makes an update on CampaignMemberStatus including the global values that are set in the Campaign Picklist.
     //These values are going to be used in Marketing Cloud
     public static void updateCampaignMemberStatus() {
-
+        
         List<CampaignMemberStatus> campaignMembStatusesToInsert = new List<CampaignMemberStatus>();
         List<CampaignMemberStatus> campaignMembStatusesToDelete = new List<CampaignMemberStatus>();
         
@@ -28,7 +28,7 @@ public class CampaignTriggers {
                 campaignMembStatusesToInsert.add(cms);
             }
         }
-        
+
         insert campaignMembStatusesToInsert;
         delete campaignMembStatusesToDelete;
     }

@@ -1,4 +1,4 @@
-public class VlocityIntegrationProcedureTestUtility 
+global class VlocityIntegrationProcedureTestUtility 
 {
     // Will Return the Response as a Map
     // The Response here must Be a Map<String, Object>
@@ -10,7 +10,7 @@ public class VlocityIntegrationProcedureTestUtility
     }
     
     // Will Return the Response as a Map
-    public static void mockIntegrationProcedure(String procedureKey, Map<String, Object> response)
+    static void mockIntegrationProcedure(String procedureKey, Map<String, Object> response)
     {
         List<vlocity_cmt__TriggerSetup__c> trig = [Select Id from vlocity_cmt__TriggerSetup__c where Name = 'AllTriggers'];
         

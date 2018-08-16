@@ -410,7 +410,7 @@ global with sharing class LinesManager implements vlocity_cmt.VlocityOpenInterfa
             throw e;
         }
     }
-
+    
     void ValidateLinesQtty(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options)
     {
         System.debug('Validate Lines Qtty');

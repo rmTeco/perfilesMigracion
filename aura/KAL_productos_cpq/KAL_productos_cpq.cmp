@@ -1,0 +1,155 @@
+<aura:component controller="KAL_carritoController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <ltng:require 
+        styles="{!$Resource.KAL_estilos}"
+    />
+    <c:KAL_Navbar />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.items}" action="{!c.cambiarBooleano}" />
+
+    <aura:attribute name="items" type="List" default="[]" />
+    <aura:attribute name="idProd" type="string" default="" />
+    <aura:attribute name="subtotal" type="decimal" default="0" />
+    <aura:attribute name="total" type="decimal" default="0" />
+    <aura:attribute name="IdPBE" type="string" default="" />
+    <aura:attribute name="datosOrden" type="Object" default="" />
+    <!--Agregado por Pablo - Inicio-->
+    <aura:attribute name="disableConfirmar" type="boolean" default="true" />
+    <!-- Tratamiento Spinner -->
+    <aura:attribute name="Spinner" type="boolean" default="true"/>
+    <!--<aura:attribute name="idUltimoEliminado" type="string"/>-->
+
+    <!--<aura:attribute name="flagQuitar" type="Boolean" default="false"/>
+
+    <aura:attribute name="nuevoFlag" type="Boolean" default="true"/>-->
+
+    <aura:attribute name="flagValuesList" type="Boolean[]" default=""/>
+
+    <aura:if isTrue="{!v.Spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner_brand  slds-spinner slds-spinner_large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    <!--Agregado por Pablo - Fin-->
+    
+    <div class="slds-grid slds-wrap slds-p-vertical_small slds-m-horizontal_medium">
+        <div class="slds-size_1-of-1 slds-medium-size_2-of-3 slds-p-around_medium">
+            <aura:renderIf isTrue="{!v.items.length > 0}">
+                <p class="slds-text-heading_large slds-border_bottom borderColor">
+                    Carrito de compras
+                </p>
+                <!--Cambios Pablo-->
+                <aura:iteration items="{!v.items}" var="item">
+                    <div class="{!(item.flagDeshacer? 'slds-hide': '') + ' slds-grid slds-grid_vertical-align-center slds-grid_align-spread slds-p-vertical_small slds-border_bottom borderColor'}">
+                        <lightning:icon class="slds-float_left slds-p-around_small slds-m-left_small" iconName="doctype:image" alternativeText="Imagen del producto"
+                        />
+                        <div class="slds-size_1-of-2">
+                            <!-- <ui:outputText class="{! 'maxLenght KAL-ItemCarrito__Nombre' + _index}" value="{!item.Name}"/> -->
+                            <input class="{! 'outputText slds-size_1-of-1 KAL-ItemCarrito__Nombre' + _index}" value="{!item.Name}" maxlength="200" readonly="true"
+                            />
+                            <div class="plan">{!item.Plan}</div>
+                            <div class="quitarProd">
+                                <!--<lightning:button variant="base" label="Quitar del carrito" name="botonEliminar" value="{!item.IdPBE}" title="Base action" onclick="{! c.eliminarProducto }"/>-->
+                                <button class="{!'slds-button KAL-ItemCarrito__AccQuitar' + _index}" onclick="{! c.eliminarProducto }" data-value="{!item.IdPBE}"> <!-- id="{!_index}" -->
+                                    Quitar del carrito
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Inicio KAL-93 -->
+						<div class="slds-col slds-grid slds-grid-nowrap slds-grid_vertical-align-center">
+							<aura:renderif isTrue="{! item.Cant le 1 }">
+								<button class="KAL-ItemCarrito__Cantidad_AccRestar" disabled="true" >-</button>
+								<aura:set attribute="else">
+									<button class="KAL-ItemCarrito__Cantidad_AccRestar" onclick="{! c.subCantidad }" data-value="{!item.IdItem}" disabled="false" >-</button>
+								</aura:set>
+							</aura:renderif>
+							<ui:outputText class="slds-p-horizontal_x-small KAL-ItemCarrito__Cantidad--Valor"  aura:id="cantidad" value="{!item.Cant}"/>
+                            <button aura:id="botonCantidad" class="KAL-ItemCarrito__Cantidad_AccAgregar"  onclick="{! c.addCantidad }" data-value="{!item.IdItem}">+</button>
+						</div>
+						<!-- Fin KAL-93 -->
+                        <div class="slds-col col-precio">
+                            <ui:outputCurrency class="{!'KAL-ItemCarrito__Precio' + _index}" value="{!item.TotalPrice}" />
+                        </div>
+                    </div>
+                    <div class="{!(item.flagDeshacer? '': 'slds-hide') + ' slds-p-vertical_small slds-border_bottom borderColor'}">
+                        <ui:message class="slds-p-vertical_small centerMobile KAL-ItemCarrito__Quitado--Nombre" title="" severity="info">
+                            Quitaste "{!item.Name}"
+                            <button class="slds-button slds-p-left_xx-small KAL-ItemCarrito__Quitado--AccAgregar" onclick="{! c.handleDeshacer }" data-value="{!item.IdPBE}" id="{!_index}">Volver a agregar</button>
+                        </ui:message>
+                    </div>
+                </aura:iteration>
+                <div class="slds-size_1-of-1 slds-p-top_medium slds-grid">
+                    <ui:button aura:id="button" class="KAL-Carrito__AccTienda" buttonTitle="Agregar más productos" label="Agregar más productos"
+                        press="{!c.volverATiendaPersonal}" />
+                </div>
+
+                <!-- Se muestra si no hay items -->
+                <aura:set attribute="else">
+                    <aura:if isTrue="{!v.Spinner}">
+                        Cargando . . .
+                        <aura:set attribute="else">
+                            <p class="slds-text-heading_large slds-border_bottom borderColor">
+                                Carrito de compras
+                            </p>
+
+                            <div class="slds-p-top_x-large">
+                                <div class="slds-align_absolute-center slds-p-vertical_small">
+                                    <lightning:icon iconName="custom:custom93" alternativeText="Approved" />
+                                </div>
+                                <p class="slds-text-align_center slds-text-heading_medium">
+                                    Tu carrito está vacío
+                                </p>
+                                <p class="slds-text-align_center slds-p-vertical_xx-small">
+                                    ¿Ya viste todos los productos de la tieda?
+                                </p>
+                                <p class="slds-text-align_center">
+                                    ¡Personal tiene la más amplia variedad de productos para que combines como quieras!
+                                </p>
+                            </div>
+                            <div class="slds-size_1-of-1 slds-p-top_medium slds-grid slds-grid_align-center">
+                                <ui:button class="slds-button_brand textWhite KAL-CarritoVacio__AccTienda" aura:id="button2" buttonTitle="Volver" label="Volver" press="{!c.volverATiendaPersonal}"
+                                />
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:set>
+                <!-- Se muestra si no hay items -->
+            </aura:renderIf>
+        </div>
+
+        <!-- RESUMEN DE CARRITO -->
+        <div class="{!(v.disableConfirmar? 'grisado': '') + ' slds-size_1-of-1 slds-medium-size_1-of-3 slds-box borderColor slds-p-around_medium slds-m-top_xx-large'}">
+            <div class="slds-p-vertical_small slds-border_bottom borderColor">
+                <p class="slds-text-heading_small">
+                    Subtotal
+                    <ui:outputCurrency class="slds-float_right KAL-Resumen__Subtotal" value="{!v.subtotal}" />
+                </p>
+            </div>
+            <div class="slds-p-vertical_small slds-border_bottom borderColor">
+                <p class="slds-text-heading_medium">
+                    Total
+                    <ui:outputCurrency class="slds-float_right KAL-Resumen__Total" value="{!v.total}" />
+                </p>
+            </div>
+            <div class="slds-p-vertical_small">
+                <p class="slds-text-heading_small grisado">
+                    Pago con tarjeta en 1 cuota de
+                    <ui:outputCurrency class="KAL-Resumen__Leyenda_Total" value="{!v.total}"
+                    />
+                    <br /> Precio con IVA CFT 0,00% TEA 0,00%
+                </p>
+            </div>
+            <!--Agregado por Pablo - Inicio-->
+            <div class="slds-size_1-of-1 slds-p-top_medium slds-grid slds-grid_align-center">
+                <ui:button class="slds-button_brand textWhite KAL-Carrito__AccCheckout" aura:id="button2" buttonTitle="Completar compra"
+                    label="Completar compra" disabled="{!v.disableConfirmar}" press="{!c.completarCompra}" />
+            </div>
+            <!--Agregado por Pablo - Fin-->
+        </div>
+        
+    </div>
+
+</aura:component>

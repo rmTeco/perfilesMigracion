@@ -632,7 +632,9 @@ public with sharing class IFS_S445_getAvailableOffers_cls {
         try {
             Product2 producto = [SELECT vlocity_cmt__Type__c, vlocity_cmt__SubType__c, Family, vlocity_cmt__JSONAttribute__c, ID_Sistema_Origen__c FROM Product2  WHERE Id = :pProduct2Id];
             if (producto != null) {
-                lstCodOfertaRating.add(producto.ID_Sistema_Origen__c);
+                if (producto.ID_Sistema_Origen__c != null) {
+                    lstCodOfertaRating.add(producto.ID_Sistema_Origen__c);
+                }
                 List<String> jsonAttribute = getFormaPago (producto.vlocity_cmt__JSONAttribute__c);
                 String shortCode = getShortCode(producto.vlocity_cmt__JSONAttribute__c);
                 retorno.put('type', producto.vlocity_cmt__Type__c);

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>This list provides equivalencies between the consumptions details and which categories does them belong to according to the Integration options</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>ConsumptionCategory__c</fullName>
+        <description>Category to which does the type of consumption belongs to</description>
+        <externalId>false</externalId>
+        <label>Consumption Category</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Consumptions Categories Grid</label>
+    <listViews>
+        <fullName>DetailsConsumptionsCategories</fullName>
+        <columns>NAME</columns>
+        <columns>ConsumptionCategory__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>Details</label>
+        <language>en_US</language>
+    </listViews>
+    <visibility>Public</visibility>
+</CustomObject>

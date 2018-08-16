@@ -10,10 +10,7 @@ public class KB_Article_validateCategories {
             for(KB_Article__kav article: articlesList){
                 List <KB_Article__DataCategorySelection> dataCategoriList =[Select DataCategoryName from KB_Article__DataCategorySelection where ParentId =: article.Id];            
                 System.debug('dataCategoriList: ' +dataCategoriList);
-                //if(article.PublishStatus.equalsIgnoreCase('Draft')){
-                    article.KB_AssignedCategory__c =(dataCategoriList.size()>=1);
-                //  article.KB_RunValidations__c=false;
-               // }
+                article.KB_AssignedCategory__c =(dataCategoriList.size()>=1);
                 if(String.isEmpty(article.KB_Body__c)){
                     if(!String.isEmpty(article.KB_ArticleType__c)){
                         String articleType;
@@ -38,6 +35,12 @@ public class KB_Article_validateCategories {
                             article.KB_Body__c=staticR.Body.toString();
                         }
                     }   
+                }
+                try{
+                    List<TopicAssignment> listTopics =[select Id, EntityId from TopicAssignment where EntityId=: article.Id];
+                    article.KB_AssignedTopic__c=(!listTopics.isEmpty()); 
+                }catch(Exception e){
+                    throw e;
                 }
             }
             update articlesList;

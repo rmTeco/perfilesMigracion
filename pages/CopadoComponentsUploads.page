@@ -1,0 +1,49 @@
+<apex:page controller="CopadoComponentsUploadsController"
+           showHeader="true"
+           sidebar="false"
+           lightningStylesheets="true" 
+           applyBodyTag="false" 
+           docType="html-5.0"
+		   readOnly="true" 
+		   cache="false">
+	<apex:sectionHeader title="por Historias de Usuario" subtitle="Componentes Cargados a Copado" />
+	<apex:pageBlock title="">
+		<apex:pageBlockButtons location="top" >
+		<apex:outputPanel id="myButtons">
+		<apex:form >
+				<apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="myPanel,myButtons"/>
+				<apex:commandButton action="{!Previous}" title="Previous" value="<" disabled="{!disablePrevious}" reRender="myPanel,myButtons"/>        
+				<apex:commandButton action="{!Next}" title="Next" value=">" disabled="{!disableNext}" reRender="myPanel,myButtons"/>
+				<apex:commandButton action="{!End}" title="End" value=">>" disabled="{!disableNext}" reRender="myPanel,myButtons"/>        
+		</apex:form>
+		</apex:outputPanel>
+		</apex:pageBlockButtons>
+		<apex:pageBlockSection title="Historias de Usuario" collapsible="false" columns="1">
+			<apex:outputPanel id="myPanel">
+				<apex:pageMessages id="theMessages" />
+				<apex:form >
+					<apex:pageBlockTable value="{!Stories}" var="lstStories" >
+							<apex:column value="{!lstStories.Name}" headerValue="Nombre" />
+							<apex:column value="{!lstStories.copado__User_Story_Title__c}" headerValue="Titulo"/ >
+							<apex:column value="{!lstStories.copado__Status__c}" headerValue="Estatus" />
+							<apex:column headerValue="Componentes">
+								<apex:commandLink value="Ver Componentes" rerender="mySecondPanel" action="{!ObtainCopadoMetadataByUserStory}">   
+									<apex:param name="userStoryId" value="{!lstStories.id}"/>
+								</apex:commandLink>
+							</apex:column>
+							<apex:facet name="footer">Página # {!pageNumber} de {!totalPages}</apex:facet>
+					</apex:pageBlockTable>
+				</apex:form>
+			</apex:outputPanel>
+		</apex:pageBlockSection>
+		<apex:pageBlockSection title="Componentes Cargados" collapsible="false" columns="1">
+			<apex:outputPanel id="mySecondPanel">
+				<apex:pageMessages id="theSecondMessages" />
+				<apex:pageBlockTable value="{!lstAttachments}" var="lstMetadata" align="center">
+						<!-- <apex:column value="{!lstMetadata.copado__Metadata_API_Name__c}" />
+						<apex:column value="{!lstMetadata.Name}" /> -->
+				</apex:pageBlockTable>
+			</apex:outputPanel>		
+		</apex:pageBlockSection>
+	</apex:pageBlock>
+</apex:page>

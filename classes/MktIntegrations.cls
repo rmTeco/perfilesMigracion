@@ -89,8 +89,8 @@ global with sharing class MktIntegrations implements vlocity_cmt.VlocityOpenInte
             Map<String, Object> options2 = new Map<String, Object>();
             vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
 
-            List<Asset> assetsByAccount = [SELECT Id, Accountid, MSISDN__c, Tipo_de_Producto__c FROM Asset WHERE AccountId IN :allAccounts];
-			List<String> statusResponseMsgList = new List<String>();
+            List<Asset> assetsByAccount = [SELECT Id, Accountid, MSISDN__c, Tipo_de_Producto__c, Subscription_Id__c FROM Asset WHERE AccountId IN :allAccounts];
+            List<String> statusResponseMsgList = new List<String>();
             system.debug('assetsByAccount '+ assetsByAccount);
             if (assetsByAccount.isEmpty()) {
                 statusResponseMsgList.add('El cliente no tiene assets para informar a Huawei');
@@ -99,14 +99,14 @@ global with sharing class MktIntegrations implements vlocity_cmt.VlocityOpenInte
                 for(Account a :allAccounts){
                     for(Asset ast : assetsByAccount){
                         if(a.Id == ast.AccountId && ast.Tipo_de_Producto__c == 'Plan Prepago'){
-                            system.debug(ast.MSISDN__c);
-                            input = Generate_RequestS372(ast.MSISDN__c, '1');
+                            system.debug(ast.Subscription_Id__c);
+                            input = Generate_RequestS372(ast.Subscription_Id__c, '1');
                             System.debug('request s372: ' + JSON.serialize(input));
                             integProcService.invokeMethod('IFS_S372', input, output, options2);
                             if (output.isEmpty() == false) {
-                                statusResponseMsgList.add('Fail: ' + ast.MSISDN__c +  ' - ' + ast.AccountId);
+                                statusResponseMsgList.add('Fail: ' + ast.Subscription_Id__c +  ' - ' + ast.AccountId);
                             } else {
-                                statusResponseMsgList.add('Success ' + ast.MSISDN__c +  ' - ' + ast.AccountId);
+                                statusResponseMsgList.add('Success ' + ast.Subscription_Id__c +  ' - ' + ast.AccountId);
                             }
                             System.debug('response s372: ' + output);
                         }
@@ -117,13 +117,13 @@ global with sharing class MktIntegrations implements vlocity_cmt.VlocityOpenInte
                     for(Asset ast : assetsByAccount){
                         if(a.Id == ast.AccountId && ast.Tipo_de_Producto__c == 'Plan Prepago'){
                             system.debug(ast.MSISDN__c);
-                            input = Generate_RequestS372(ast.MSISDN__c, '0');
+                            input = Generate_RequestS372(ast.Subscription_Id__c, '0');
                             System.debug('request s372: ' + JSON.serialize(input));
                             integProcService.invokeMethod('IFS_S372', input, output, options2);
                             if (output.isEmpty() == false) {
-                                statusResponseMsgList.add('Fail: ' + ast.MSISDN__c +  ' - ' + ast.AccountId);
+                                statusResponseMsgList.add('Fail: ' + ast.Subscription_Id__c +  ' - ' + ast.AccountId);
                             } else {
-                                statusResponseMsgList.add('Success ' + ast.MSISDN__c +  ' - ' + ast.AccountId);
+                                statusResponseMsgList.add('Success ' + ast.Subscription_Id__c +  ' - ' + ast.AccountId);
                             }
                             System.debug('response s372: ' + output);
                         }
@@ -159,16 +159,16 @@ global with sharing class MktIntegrations implements vlocity_cmt.VlocityOpenInte
     }
 
     @TestVisible
-    private Map<String, Object> Generate_RequestS372(String accountIntegrationId, String op) {
+    private Map<String, Object> Generate_RequestS372(String subscriptionId, String op) {
         System.debug('Generate_RequestS372');
 
-        System.debug('accountIntegrationId ' + accountIntegrationId + 'op ' + op);
+        System.debug('subscriptionId ' + subscriptionId + 'op ' + op);
 
         Map<String, Object> request = new Map<String, Object>();
         Map<String, Object> body = new Map<String, Object>();
 
         Map<String, Object> codigoAcceso = new Map<String, Object>();
-        codigoAcceso.put('codSuscripcion', accountIntegrationId);
+        codigoAcceso.put('codSuscripcion', subscriptionId);
 
         System.debug('codigoAcceso ' + codigoAcceso);
 

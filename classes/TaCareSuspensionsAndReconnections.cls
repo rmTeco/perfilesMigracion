@@ -39,7 +39,7 @@ global class TaCareSuspensionsAndReconnections implements vlocity_cmt.VlocityOpe
                 }
                 when 'GetNewGuid' {
                     this.GetNewGuid();
-                }                
+                }               
             }
 
             return true;
@@ -58,13 +58,17 @@ global class TaCareSuspensionsAndReconnections implements vlocity_cmt.VlocityOpe
             Set<Id> assetToSuspendIds = new Set<Id>();
 
             if (String.IsNotEmpty(deviceAssetIdToSuspend))
+            {
                 assetToSuspendIds.Add(deviceAssetIdToSuspend);
-            
+            }
             if (String.IsNotEmpty(prepaidAssetIdToSuspend))
+            {
                 assetToSuspendIds.Add(prepaidAssetIdToSuspend);
+            }
 
             Id orderId = AssetService.Suspend(accountId, assetToSuspendIds, this.GetSuspensionReasonType(suspensionReason));
             this.output.put('OrderId', orderId);
+
         }
         catch (Exception ex) {
             throw ex;
@@ -191,11 +195,9 @@ global class TaCareSuspensionsAndReconnections implements vlocity_cmt.VlocityOpe
         List<Case> listChildCases = new List<Case>();
         for(Object ba : billingAccs){
             Map<String, Object> baMap = (Map<String, Object>) ba; 
-            System.debug('baMap: ' + baMap);
             Id assetId =  (Id) baMap.get('AssetId');
             Case myCase = new Case();
             myCase.ParentId = parentId;
-            System.debug('Asset id: ' + assetId);
             myCase.AssetId = assetId;
             myCase.Subject = 'Suspension/Habilitacion por Administrativo';
             myCase.Status = 'En espera de ejecución';
@@ -218,8 +220,7 @@ global class TaCareSuspensionsAndReconnections implements vlocity_cmt.VlocityOpe
             List<Map<String, object>> listClientSuspensions = new List<Map<String, object>>();
             
             Map<String, Object> clientSuspensionsMap;
-            List<transaction_history__c> clientSuspensions = [SELECT Id, Asset__r.AccountId, Asset__c, Asset__r.id, Asset__r.Name, asset__r.imei__c, imei__c FROM transaction_history__c where new_status__c = 'Active' AND Account__c = :accountId AND RecordTypeId = :recordTypeId AND Description__c = 'Suspensión' AND Type__c = 'Siniestro' AND ((asset__r.tipo_de_producto__c = 'dispositivo' and asset__R.Linked_Product_Family__c = 'Movil') OR (imei__c <> null ))];
-            System.debug('clientSuspensions: ' + clientSuspensions);
+            List<transaction_history__c> clientSuspensions = [SELECT Id, Asset__r.AccountId, Asset__c, Asset__r.id, Asset__r.Name, asset__r.imei__c, imei__c, sinister_type__c FROM transaction_history__c where new_status__c = 'Active' AND Account__c = :accountId AND RecordTypeId = :recordTypeId AND Description__c = 'Suspensión' AND Type__c = 'Siniestro' AND ((asset__r.tipo_de_producto__c = 'dispositivo' and asset__R.Linked_Product_Family__c = 'Movil') OR (imei__c <> null ))];
             for(transaction_history__c susp : clientSuspensions){
                 clientSuspensionsMap = new Map<String, String>();
                 If(susp.Asset__c != null){
@@ -232,14 +233,11 @@ global class TaCareSuspensionsAndReconnections implements vlocity_cmt.VlocityOpe
                 else {
                     clientSuspensionsMap.put('TransactionId', (String) susp.Id);
                     clientSuspensionsMap.put('Imei', (String) susp.Imei__c);
+                    clientSuspensionsMap.put('TipoSiniestro', (String) susp.sinister_type__c);
                 }
                 listClientSuspensions.add(clientSuspensionsMap);
             }
             
-            
-            
-            
-            System.debug(listClientSuspensions);
             output.put('listClientSuspensions',listClientSuspensions);
         }
         catch (Exception ex) {
@@ -278,4 +276,5 @@ global class TaCareSuspensionsAndReconnections implements vlocity_cmt.VlocityOpe
         String idUnico = GuidUtil.NewGuid();
         this.output.put('UniqueTransactionID', idUnico);
     }     
+    
 }

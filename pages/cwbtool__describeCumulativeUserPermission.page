@@ -1,0 +1,171 @@
+<apex:page controller="cwbtool.UserPermissionController"  standardStylesheets="false" sidebar="false" tabStyle="CWB_Tool__tab">
+
+<apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+ <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}"/>
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" /> 
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}"/>
+  
+ <script> 
+  
+  
+  function init(){
+   $('.profileClass').multiselect({
+    nSelectedText  : ' Profiles selected', 
+    buttonClass: 'Btn Btn-default', 
+    enableFiltering: true,
+    filterBehavior: 'both',
+   enableCaseInsensitiveFiltering: true,
+    filterPlaceholder: 'Search Profile..',
+   includeSelectAllOption: false,
+selectAllText: 'Select ALL Profile',
+selectAllValue: 'multiselect-all',
+maxHeight:217,
+ buttonWidth: '90%',
+  nonSelectedText: 'You have not selected any Profile',
+  disableIfEmpty:true
+ }); 
+}
+ $(document).ready(function() {
+ init();
+ }); 
+ </script> 
+ <style>
+  .Btn-group{
+     width:60% !important;
+   }
+ </style>
+  <div class='CWB'> 
+   <c:lightningspinner />
+ <apex:form id="frm"> 
+ <apex:pagemessages ></apex:pagemessages>
+ <apex:actionfunction name="getUserProfileDetailAction" action="{!getUserProfileDetail}" reRender="frm" oncomplete="hideOverLay();init();"/>
+ <apex:actionfunction name="downloadAction" action="{!downloadUserPermission}"/>
+ <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form"/> 
+  
+  <apex:outputpanel id="refreshPanel">  
+      <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,form,msgId" interval="5" enabled="{!isStart}" oncomplete="if({!isProcessed}){hideOverLay();}"/>
+   </apex:outputpanel>
+ 
+ 
+ <div class='slds-grid'>
+   <div class="demo-only slds-col" style="height: 845px; max-width: 500px; background: rgb(244, 246, 249); padding: 1rem;">
+    <div class="slds-panel slds-grid slds-grid_vertical slds-nowrap">
+        <div class="slds-form slds-form_stacked slds-grow slds-scrollable_y">
+            <div class="slds-panel__section slds-has-divider--bottom">
+                <div class="slds-media" style='display:block;'>
+                    <div class="slds-media__figure" style='display: flex;'>
+                       <apex:inputfield value="{!objAnalysisSummary.ownerId}" styleclass="slds-input1"></apex:inputfield>
+                           <h2 class="slds-truncate slds-text-heading_small" title=""><button type='button' class="slds-button slds-button--neutral slds-grow" onclick='showOverLay();getUserProfileDetailAction();' >Search</button></h2>
+                        </div>
+                    
+                    <div class="slds-media__body"> 
+                        <apex:outputpanel layout="none" rendered="{!objUser.id!=null}">
+                        <div class="slds-button-group slds-m-top_small" role="group" style="margin-top: 7px;">
+                            <button type='button' onclick='showOverLay();refresh();downloadAction();' class="slds-button slds-button--neutral slds-grow" style='padding-left:.5rem'>Download Cumulative Permission(Profile+PermissionSet)</button>
+                            <!-- <button class="slds-button slds-button--neutral slds-grow">Compare</button> -->
+                            
+                        </div>
+                        </apex:outputpanel>
+                    </div>
+                    
+                </div>
+            </div>
+           <apex:outputpanel layout="none" rendered="{!objUser.id!=null}"> 
+            <div class="slds-panel__section">
+                <h3 class="slds-text-heading_small slds-has-divider--bottom">User Information</h3>
+                <ul>
+                   <li class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label"><b>Profile</b></span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{!objUser.Profile.Name}</span>
+                        </div>
+                    </li>
+                    <li class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Name</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{!objUser.Name}</span>
+                        </div>
+                    </li>
+                    <li class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Email</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{!objUser.Email}</span>
+                        </div>
+                    </li>
+                    <li class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">User Name</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{!objUser.UserName}</span>
+                        </div>
+                    </li>
+                    <li class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">User Id</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{!objUser.Id}</span>
+                        </div>
+                    </li>
+                    
+                    <li class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label">Role</span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static slds-text-longform">
+                              {!objUser.UserRole.Name}
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="slds-panel__section">
+                <h3 class="slds-text-heading_small slds-has-divider--bottom"><b>Assigned Permission Set</b></h3>
+                <ul>
+                <apex:repeat value="{!mapUserPermissionSet}" var="key">
+                  <apex:repeat value="{!mapUserPermissionSet[key]}" var="psName">
+                    <li class="slds-form-element slds-hint-parent slds-has-divider--bottom">
+                        <span class="slds-form-element__label"></span>
+                        <div class="slds-form-element__control">
+                            <span class="slds-form-element__static">{!psName}</span>
+                        </div>
+                    </li>
+                    </apex:repeat>
+                   </apex:repeat> 
+                </ul>
+            </div>
+         </apex:outputpanel>
+        </div>
+    </div>
+  
+</div>
+<div class="demo-only slds-col" style="height: 845px; background: rgb(244, 246, 249); padding: 1rem;">
+<div class="slds-panel slds-grid slds-grid_vertical slds-nowrap">
+    <div class="slds-form slds-form_stacked slds-grow slds-scrollable_y">
+        <div class="slds-panel__section slds-has-divider--bottom">
+            <div class="slds-media" style='display:block;'>
+                <div class="slds-media__figure" style='display: flex;'>
+                    <div class="slds-media__body">
+                    </div>
+                </div>
+            </div>
+            <apex:outputpanel layout="none">
+                <div class="slds-panel__section">
+                    <h3 class="slds-text-heading_small slds-has-divider--bottom">Download Users Permission</h3>
+                    
+                         <!--  <apex:selectList value="{!lstSelectedProfile}" multiselect="true" styleclass="multiselect profileClass" style="margin-right:40px;display:none;"> 
+				            <apex:selectOptions value="{!lstProfile}"/>
+				       </apex:selectList> -->
+				       Coming Soon
+				       <!--  <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='Startprocessing();refresh();' data-action=''>Download</span>
+                        -->
+                </div>
+            </apex:outputpanel>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+ </apex:form>
+ </div>  
+</apex:page>

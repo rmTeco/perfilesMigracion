@@ -55,6 +55,40 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Price_Amount__c</fullName>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__PricingElementId__r.vlocity_cmt__Amount__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Price Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Pricing_Element_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__PricingElementId__r.vlocity_cmt__Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Pricing Element Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pricing_Variable_Code__c</fullName>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__PricingElementId__r.vlocity_cmt__PricingVariableId__r.vlocity_cmt__Code__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Pricing Variable Code</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>vlocity_cmt__BasePriceListId__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <deprecated>false</deprecated>
@@ -280,12 +314,41 @@
         <type>Lookup</type>
     </fields>
     <label>Price List Entry</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__PriceListId__c</columns>
+        <columns>vlocity_cmt__PricingElementId__c</columns>
+        <columns>vlocity_cmt__DisplayText__c</columns>
+        <columns>vlocity_cmt__ProductId__c</columns>
+        <columns>vlocity_cmt__PricingElementGlobalKey__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>vlocity_cmt__DisplayText__c</field>
+            <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>vlocity_cmt__PriceListId__c</field>
+            <operation>equals</operation>
+            <value>Telecom Price List</value>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
     <nameField>
         <label>Reference Number</label>
         <type>Text</type>
     </nameField>
     <pluralLabel>Price List Entries</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>vlocity_cmt__DisplayText__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__PriceListId__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__PricingElementId__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__PricingElementGlobalKey__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__PricingMatrixBindingData__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__ProductId__c</customTabListAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

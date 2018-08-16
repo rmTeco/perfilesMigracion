@@ -2,6 +2,7 @@
 global with sharing class IFS_S474_activacionFOL {
 
     public static final boolean K_DEBUG_ON = false;
+    private static String guId = null;
 
     @HttpPost
     global static void getData() {
@@ -12,7 +13,9 @@ global with sharing class IFS_S474_activacionFOL {
         Map<String, Object> result = new Map<String, Object>();
         res.addHeader('Content-Type', 'application/json');
         String actualizaStat;
-        
+
+        writeLog ('REQ', req.requestBody.toString());
+
         try {
 
             jsonBody = (FromJSON)JSON.deserialize(req.requestBody.toString(),FromJSON.class);
@@ -55,8 +58,25 @@ global with sharing class IFS_S474_activacionFOL {
             res.statuscode = 400;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('400',ce.getMessage())));
         }
+
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
+        
     }
 
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S474', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S474', pTipo, guId, '', pDatos);  
+        }
+    }
 
     private static List<Map<String, String>> getRespuestaNoOk(String pCodigo, String pDescripcion) {
         printDebug('Entre a getRespuestaNoOk()');

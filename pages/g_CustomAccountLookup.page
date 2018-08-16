@@ -1,0 +1,152 @@
+<apex:page controller="g_CustomAccountLookupController"
+    title="Search" 
+    showHeader="true" 
+    sideBar="true" 
+    id="pg">
+ 
+<apex:includeScript value="/support/console/40.0/integration.js"/>
+    
+<script type="text/javascript" src="/soap/ajax/26.0/connection.js"></script> 
+    
+<script type="text/javascript">
+    function ctiMessage() {
+            this.action = 'ObjectSelected',
+            this.id = '',
+            this.interactionId = ''
+    }
+    
+    function refreshPage(objId)
+    {
+        var inConsole = '{!inServiceCloudConsole}';
+        var iD = '{!ixnId}';
+        //console.log("refreshPage for objId="+objId+" and ixnId="+iD);
+        
+        //parent.window.frames['SoftphoneIframe'].postMessage("CustomLookup:"+objId,"*"); 
+
+        //console.log("refresh page inServiceCloudConsole = "+inConsole);
+		
+
+        if(inConsole == "true")
+        {      
+            sforce.console.getFocusedPrimaryTabId(
+                function closeTab1(result) {                        
+                        //console.log("getFocusedPrimaryTabId "+result.id);
+                        sforce.console.closeTab(result.id);
+                        //console.log("closeTab "+result);
+                        sforce.console.openPrimaryTab(null,'/'+objId,true);         
+                }
+            );
+
+            var message = new ctiMessage();
+            
+            message.action = 'ObjectSelected';
+            message.id = objId;
+            message.interactionId = '{!ixnId}';
+            
+            var ctiMessageAsJSON = JSON.stringify(message);
+        
+            sforce.console.fireEvent('CTIEvent', ctiMessageAsJSON, function (result) {
+                //console.log("CTIEvent fired result: " + result);
+            });  
+        }
+        else
+        {
+            if(typeof(Storage) !== "undefined" && window!=null && window.sessionStorage!=null){
+				window.sessionStorage.setItem("Genesys_sfdc_interactionId", iD);
+				window.sessionStorage.setItem("Genesys_sfdc_objectId", objId);
+			}
+        }
+        
+        
+    }
+    
+</script>    
+
+<apex:pageBlock title="Account Search" id="block">
+
+    <apex:form >
+        <apex:outputPanel id="page" layout="block" style="margin:5px;padding:10px;padding-top:2px;">
+            <apex:actionRegion >  
+            
+                 <apex:outputPanel id="top" layout="block" style="margin:5px;padding:10px;padding-top:2px;">
+                    
+                    <apex:outputLabel value="Account Name" style="font-weight:Bold;" for="txtName"/>
+                    	<apex:inputText id="txtName" value="{!Name}" style="padding-left:10px;padding-right:5px;" />
+                    <apex:outputLabel value="Phone" style="font-weight:Bold;padding-left:10px;padding-right:5px;" for="txtPhone"/>
+                    	<apex:inputText id="txtPhone" value="{!Phone}"  style="padding-left:10px;padding-right:5px;" />
+                    
+                    <span style="padding-left:5px">
+                    	<apex:commandButton id="btnGo" value="Search" action="{!Search}" rerender="pnlSearchResults"></apex:commandButton>
+                    </span>
+                  </apex:outputPanel> 
+                
+                <apex:outputPanel id="pnlSearchResults" style="margin:10px;height:350px;overflow-Y:auto;" layout="block">
+                    <apex:pageBlock id="searchResults1" rendered="{!displayAsBusinessAccount}"> 
+                        <apex:pageBlockTable value="{!Account_results}" var="a" id="a1_tblResults" >
+                            <apex:column style="width:70%">
+                                <apex:facet name="header">
+                                    <apex:outputPanel >Business Account Name</apex:outputPanel>
+                                    </apex:facet>
+                                <apex:outputLink value="javascript:window.location.href='/{!a.Id}'" 
+                                    onclick="refreshPage('{!a.Id}');" rendered="{!NOT(ISNULL(a.Id))}">{!a.Name}</apex:outputLink>
+                            </apex:column>
+                            <apex:column style="width:30%">
+                                <apex:facet name="header">
+                                    <apex:outputPanel >Phone</apex:outputPanel>
+                                </apex:facet>
+                                <apex:outputLink value="javascript:window.location.href='/{!a.Id}'" 
+                                    onclick="refreshPage('{!a.Id}');" rendered="{!NOT(ISNULL(a.Id))}">{!a.Phone}</apex:outputLink>
+                            </apex:column>     
+						</apex:pageBlockTable>
+					</apex:pageBlock> 
+					<apex:pageBlock id="searchResults2" rendered="{!Not(isPersonAccountEnabled)}"> 		
+						<apex:pageBlockTable value="{!Account_results}" var="a" id="a2_tblResults">
+                            <apex:column style="width:70%">
+                                <apex:facet name="header">
+                                    <apex:outputPanel >Account Name</apex:outputPanel>
+                                    </apex:facet>
+                                <apex:outputLink value="javascript:window.location.href='/{!a.Id}'" 
+                                    onclick="refreshPage('{!a.Id}');" rendered="{!NOT(ISNULL(a.Id))}">{!a.Name}</apex:outputLink>
+                            </apex:column>
+                            <apex:column style="width:30%">
+                                <apex:facet name="header">
+                                    <apex:outputPanel >Phone</apex:outputPanel>
+                                </apex:facet>
+                                <apex:outputLink value="javascript:window.location.href='/{!a.Id}'" 
+                                    onclick="refreshPage('{!a.Id}');" rendered="{!NOT(ISNULL(a.Id))}">{!a.Phone}</apex:outputLink>
+                            </apex:column>     
+						</apex:pageBlockTable>
+					</apex:pageBlock> 					
+<!-- Commenting out Person account section
+					<apex:pageBlock id="searchResults3" rendered="{!isPersonAccountEnabled}"> 
+						<apex:pageBlockTable value="{!PersonAccount_results}" var="p" id="p_tblResults">
+                            <apex:column style="width:40%">
+                                <apex:facet name="header">
+                                    <apex:outputPanel >Person Account Name</apex:outputPanel>
+                                    </apex:facet>
+                                <apex:outputLink value="javascript:window.location.href='/{!p.Id}'" 
+                                    onclick="refreshPage('{!p.Id}');" rendered="{!NOT(ISNULL(p.Id))}">{!p.Name}</apex:outputLink>
+                            </apex:column>                            
+                            <apex:column style="width:30%">
+                                <apex:facet name="header">
+                                    <apex:outputPanel >Email</apex:outputPanel>
+                                </apex:facet>
+                                <apex:outputLink value="javascript:window.location.href='/{!p.Id}'" 
+                                    onclick="refreshPage('{!p.Id}');" rendered="{!NOT(ISNULL(p.Id))}">{!p.PersonEmail}</apex:outputLink>
+                            </apex:column>   
+                            <apex:column style="width:30%">
+                                <apex:facet name="header">
+                                    <apex:outputPanel >Phone</apex:outputPanel>
+                                </apex:facet>
+                                <apex:outputLink value="javascript:window.location.href='/{!p.Id}'" 
+                                    onclick="refreshPage('{!p.Id}');" rendered="{!NOT(ISNULL(p.Id))}">{!p.Phone}</apex:outputLink>
+                            </apex:column>    
+						</apex:pageBlockTable>						
+                    </apex:pageBlock>
+-->
+                </apex:outputPanel>
+            </apex:actionRegion>
+        </apex:outputPanel>
+    </apex:form>
+</apex:pageblock>
+</apex:page>

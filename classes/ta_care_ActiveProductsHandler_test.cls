@@ -12,6 +12,7 @@ private class ta_care_ActiveProductsHandler_test {
 
         Test.startTest();
         testedClass.invokeMethod(methodName, input, outMap, options);
+        System.debug('outMap '+outMap);
         Test.stopTest();
 
         System.assertNotEquals(empty, outMap);
@@ -30,7 +31,7 @@ private class ta_care_ActiveProductsHandler_test {
         testedClass.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
 
-        //System.assert(outMap.get('CbsNode')!=null);
+        System.assert(outMap.get('CbsNode')!=null);
     }
 
     @IsTest static void invoke_GetActiveProductsMain_InfoteinmentNode(){

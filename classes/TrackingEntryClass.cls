@@ -11,7 +11,9 @@ public with sharing class TrackingEntryClass {
         }
             
         List<Team_Member__c> workTeamUser = [SELECT Work_Team__c, User_member__c FROM Team_Member__c WHERE User_member__c IN :ownersID];
+        system.debug('workTeamUser'+ workTeamUser);
         List<vlocity_cmt__VlocityTrackingEntry__c> trackinListUpdate = new List<vlocity_cmt__VlocityTrackingEntry__c>();
+        system.debug('trackingListUpdate'+ trackinListUpdate);
         
         for(vlocity_cmt__VlocityTrackingEntry__c ta : triggerNew)
         {

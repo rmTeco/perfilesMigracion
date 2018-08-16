@@ -1,10 +1,9 @@
 public class IFS_S121_numerosDisponibles {
-    
+
     public static Map<String,Object> numerosDisponibles(Integer cantidad, String estado, String ciudad, String sufijo, String codOfi, String codVend, Integer codCu,String tipoLin, String idUnicoTransaccion){
         
         numerosDisponiblesJSON jsonParse = new numerosDisponiblesJSON();
         jsonParse.codProvincia = estado;
-        //jsonParse.idReserva = idRes;
         jsonParse.codLocalidad = ciudad;
         if(tipoLin!=null){
             jsonParse.tipoLinea = tipoLin;
@@ -12,11 +11,6 @@ public class IFS_S121_numerosDisponibles {
             jsonParse.tipoLinea = null;
        }
         jsonParse.codTipoVenta = 'NOR';
-        /*if(codTVen!=null){
-            jsonParse.codTipoVenta = codTVen;
-        } else {
-            jsonParse.codTipoVenta = null;
-        }*/
         jsonParse.cantLineas = cantidad;
         if(codCu!=null){
             jsonParse.codCuenta = codCu;
@@ -47,6 +41,30 @@ public class IFS_S121_numerosDisponibles {
         return responseNode;
     }
     
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    @future 
+    private static void writeLog (String pTipo, String pReq, String pRes, Integer pResStatus, String pUID) {
+        System.debug('Entre en writeLog - pTipo --> ' + pTipo + ' - pReq --> ' + pReq + ' - pRes --> ' + pRes + ' - pResStatus --> ' + pResStatus);
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        String guId = String.isBlank(pUID) ? GuidUtil.NewGuid() : pUID;  
+        if (pTipo == 'REQ') {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S121', pTipo, guId, pReq, '');  
+        }
+        else {
+            String datos = 'status code = ' + pResStatus + ' ; status = ; ';
+            if (pResStatus < 300) {
+                datos += 'request to DPW OK';
+            }
+            else {
+                datos += 'request to DPW FAIL ; request body = ' + (String.isBlank(pReq)?'':pReq) + ' ; Response = ' + pRes;
+            } 
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S121', pTipo, guId, '', datos);  
+        }
+    }
+
     public static HttpResponse makePostCallout(String body, String idUnicoTransaccion) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -61,26 +79,23 @@ public class IFS_S121_numerosDisponibles {
             request.setEndpoint(endpoint.EndPoint__c);
         }
 
-        //System.debug('ENDPOINT: ' + endpoint.EndPoint__c);
-
         System.debug('BODY: ' + body);
         
-        //EndPointService__c endpoint = [select Name, EndPoint__c from EndPointService__c where Name = 'IFS_s121'];
-        ///https://prodgonogo.personal.com.ar/movil/numerosDisponibles
-        //request.setEndpoint('https://apit.telecom.com.ar/movil/numerosDisponibles');
+        idUnicoTransaccion = String.isBlank(idUnicoTransaccion) ? GuidUtil.NewGuid() : idUnicoTransaccion;  
+
         String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
         request.setHeader('Authorization', authorizationHeader);
-        //request.setHeader('x-global-transaction-id','1234678');
         request.setHeader('X-Consumer-Transaction-ID', idUnicoTransaccion);
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
-        //request.setHeader('Authorization', tokenType+' '+accessToken);
         request.setBody(body);
         HttpResponse response = http.send(request);
         system.debug('POST response: '+response);
         
+        writeLog ('REQ', null, null, 0, idUnicoTransaccion);
+        writeLog ('RES', request.getBody(), response.getBody(), response.getStatusCode(), idUnicoTransaccion);
+
         return response;
-        
     }     
     
     public class numerosDisponiblesJSON{
@@ -94,7 +109,6 @@ public class IFS_S121_numerosDisponibles {
         public String codVendedor {get;set;}
         public String codOficinaComercial {get;set;}
         public String terminacionLinea {get;set;}
-        
     }
     
 }

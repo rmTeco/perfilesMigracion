@@ -1,0 +1,12 @@
+<apex:page controller="USComp_Extractor" lightningStylesheets="true"> 
+    
+    <apex:pageBlock title="USComp Extractor - Sprint Refresh">
+            <apex:form id="RID">
+ 		<apex:selectList value="{!sprintNameInPage}" multiselect="false" size="1">
+        	<apex:selectOptions value="{!sprintOptions}"/>
+        </apex:selectList>
+        <apex:commandButton value="Refresh Sprint" action="{!extract}" ></apex:commandButton>
+    </apex:form>
+
+    </apex:pageBlock>
+</apex:page>

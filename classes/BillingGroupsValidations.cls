@@ -195,8 +195,8 @@ global with sharing class BillingGroupsValidations implements vlocity_cmt.Vlocit
             }
             
             for(Asset asset: [SELECT Id, Name FROM Asset WHERE Id IN :assetIds]) {
-                asset.AccountId = newAccountId;
-                listChangedAssets.add(asset);
+            	asset.AccountId = newAccountId;
+            	listChangedAssets.add(asset);
             }
 
             update listChangedAssets;

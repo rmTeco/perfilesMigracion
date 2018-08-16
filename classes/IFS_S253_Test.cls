@@ -1,6 +1,6 @@
 @isTest
 public class IFS_S253_Test {
-    @isTest static  void testGetCallout() {
+	@isTest static  void testGetCallout() {
         IFS_S253_Mock mock = new IFS_S253_Mock();
         mock.status = 200;
         Test.setMock(HttpCalloutMock.class, mock);

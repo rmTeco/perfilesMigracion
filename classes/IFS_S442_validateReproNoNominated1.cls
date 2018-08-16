@@ -78,22 +78,22 @@ public class IFS_S442_validateReproNoNominated1 {
     }
 
 
-    static Contact createContact(Account pAccount){
+	static Contact createContact(Account pAccount){
         System.debug('---------- Entre en createContact()');
-        if(pAccount==null) pAccount = createAccount();
+		if(pAccount==null) pAccount = createAccount();
 
-        Contact c = new Contact(FirstName='firstName', LastName='lastName', AccountId=pAccount.Id);
+		Contact c = new Contact(FirstName='firstName', LastName='lastName', AccountId=pAccount.Id);
         c.DocumentType__c = K_TIPO_DOCUMENTO_OK;
         c.DocumentNumber__c = K_NMRO_DOCUMENTO_OK;
-        insert c;
+		insert c;
        System.debug('---------- Sali de createContact()');
-        return c;
-    }
+		return c;
+	}
 
     static Account createAccount() {
         System.debug('---------- Entre en createAccount()');
         Account a = new Account(Name=K_ACCOUNT_NAME, AccountIntegrationId__c=String.valueOf(10000));
-        a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
+		a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
         insert a;
         a = [SELECT Id FROM Account WHERE Name = :K_ACCOUNT_NAME];
         System.debug('---------- Sali de createAccount()');
@@ -110,12 +110,12 @@ public class IFS_S442_validateReproNoNominated1 {
         return [SELECT Id, Name FROM Product2 WHERE Name = 'Test-Plan Prepago Nacional' AND Family = 'Prepaid'];
     }
 
-    static Asset createAssets(Account pAccount){
+	static Asset createAssets(Account pAccount){
         Product2 p = createProduct2();
-        Asset a = new Asset(Name='TestAsset', Product2Id=p.Id, AccountId=pAccount.Id);
-        insert a;
-        return [SELECT Id, Name FROM Asset WHERE Name = 'TestAsset'];
-    }
+		Asset a = new Asset(Name='TestAsset', Product2Id=p.Id, AccountId=pAccount.Id);
+		insert a;
+		return [SELECT Id, Name FROM Asset WHERE Name = 'TestAsset'];
+	}
 
     static vlocity_cmt__BusinessSite__c createStoreLocation () {
         System.debug('---------- Entre en createStoreLocation()');
@@ -156,7 +156,7 @@ public class IFS_S442_validateReproNoNominated1 {
 
     static void createWorkTeamMember (Id pWorkTemaId) {
         System.debug('---------- Entre en createWorkTeamMember()');
-        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId, UserRoleAPIName__c='Test');
+        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId);
         insert wtm;
     }
 

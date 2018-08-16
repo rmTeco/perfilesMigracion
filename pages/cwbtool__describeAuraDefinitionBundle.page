@@ -1,0 +1,124 @@
+<apex:page controller="cwbtool.DescribeAuraDefinitionBundleCtrl" sidebar="false" tabStyle="CWB_Tool__tab" showheader="false">
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/jszip.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/jszip-load.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/jszip-deflate.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/jszip-inflate.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}" />
+    <style>
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 0px 0px 0px 0px #000;
+        box-shadow: 0px 0px 0px 0px #000;
+        margin-left: 8% !important;
+        width: 63%;
+    }
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: auto;
+        padding: 0 10px;
+        border-bottom: none;
+    }
+
+    .bodyDiv {
+        height: 400px;
+    }
+
+    .Btn-group {
+        width: 60% !important;
+    }
+
+    .frm {
+        margin: 15px;
+    }
+
+    .modal {
+        outline: none;
+    }
+    </style>
+    <apex:pagemessages rendered="{!lstAuraDefinitionBundle==null || lstAuraDefinitionBundle.size==0}" />
+    <apex:outputpanel rendered='{!lstAuraDefinitionBundle!=null && lstAuraDefinitionBundle.size>0}' layout='none'>
+        <c:actionstatusNew />
+        <apex:form id="form" styleclass="frm">
+            <apex:selectList value="{!lstSelectedAuraDefinitionBundle}" multiselect="true" styleclass="multiselect AuraDefinitionBundleClass" style="margin-right:40px;display:none;">
+                <apex:selectOptions value="{!lstAuraDefinitionBundle}" />
+            </apex:selectList>
+            
+            <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='Startprocessing();' data-action='Download AuraDefinitionBundle Detail Action'>Download Lightning Component</span>
+            <span id="example212-toggle2" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='Startprocessing2();' data-action='Download AuraDefinitionBundle Detail Action'>View In PDF</span>
+             <span id="example212-toggle3" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='zipDownloadAction();' data-action='Download AuraDefinitionBundle Detail Action'>Zip</span>
+           
+            <apex:actionFunction name="downloadLayoutAction" action="{!downloadLayout}" />
+            <apex:actionFunction name="getAuraDefinitionBundleDetails" action="{!downalodExcel}" rerender="form" oncomplete="if({!isSelectedLengthError}){hideOverLay();}" />
+            <apex:actionFunction name="viewInPDF" action="{!viewPDF}" rerender="form" oncomplete="if({!isSelectedLengthError}){hideOverLay();}" />
+            <apex:actionFunction name="zipDownload" action="{!zipDownload}" rerender="form" oncomplete="if({!isSelectedLengthError}){hideOverLay();}" />
+           
+            <apex:actionPoller action="{!checkAsyncRequest}" interval="5" rerender="form" rendered="{!NOT(ISNULL(AsyncResult))}" oncomplete="showOverLay('{!strStatus}');" />
+            <apex:outputPanel rendered="{!NOT(ISNULL(auraDetail)) || isZipdetailFound}">
+                <apex:actionFunction name="receiveFile" action="{!receiveMetadataZipFile}" rerender="dummypanel" oncomplete="unzip();">
+                    <apex:param name="filename" assignTo="{!strfileName}" value="" />
+                    <apex:param name="filedata" assignTo="{!straurajsonDetail}" value="" />
+                </apex:actionFunction>
+                <apex:actionFunction name="receiveComplete2" action="{!receiveComplete}" rerender="form" oncomplete="hideOverLay();" />
+                <apex:actionFunction name="receiveComplete" action="{!receiveComplete}" rerender="form" oncomplete="hideOverLay();if({!isCompleted && !isErrorFound}){downloadLayoutAction();}" />
+                <c:ReadZipFileAura isZipdownload="{!isZipdownload}" name="unzip" oncomplete="if(more) receiveFile(path, data); else receiveComplete();">{!auraDetail}</c:ReadZipFileAura>
+            </apex:outputPanel>
+            <apex:outputpanel id="dummypanel">
+                <apex:pagemessages rendered="{!isErrorFound}" />
+            </apex:outputpanel>
+            <script>
+            var gaDetail = 'OrgName={!HTMLENCODE($Organization.Name)}_Name={!HTMLENCODE($User.FirstName)}';
+
+            function Startprocessing() {
+                showOverLay('{!HTMLENCODE(strStatus)}');
+                getAuraDefinitionBundleDetails();
+                //downloadLayoutAction();
+            }
+
+            function Startprocessing2() {
+                showOverLay('{!HTMLENCODE(strStatus)}');
+                viewInPDF();
+            }
+             function zipDownloadAction() {
+                showOverLay('{!HTMLENCODE(strStatus)}');
+                zipDownload();
+            }
+
+            $(document).ready(function() {
+                $('.AuraDefinitionBundleClass').multiselect({
+                    nSelectedText: ' Lightning Component Selected',
+                    buttonClass: 'Btn Btn-default',
+                    enableFiltering: true,
+                    filterBehavior: 'both',
+                    enableCaseInsensitiveFiltering: true,
+                    filterPlaceholder: 'Search Lightning Component..',
+                    includeSelectAllOption: {!isLoggedInUserHave && hasToken },
+                    selectAllText: 'Select ALL Lightning Component',
+                    selectAllValue: 'multiselect-all',
+                    maxHeight: 217,
+                    buttonWidth: '90%',
+                    nonSelectedText: 'You have not selected any Lightning Component',
+                    disableIfEmpty: true,
+                    onChange: function(element, checked) {
+
+                    }
+                });
+
+            });
+            </script>
+            <apex:pagemessages id="msgId" escape="false" />
+        </apex:form>
+        <!-- </fieldset>  -->
+    </apex:outputpanel>
+</apex:page>

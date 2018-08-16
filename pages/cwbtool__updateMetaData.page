@@ -1,0 +1,535 @@
+<apex:page controller="cwbtool.UpdateMetaDataController"  tabStyle="CWB_Tool__tab" standardStylesheets="false" sidebar="false" showHeader="true">
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.switch,'/switch/css/highlight.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.switch,'/switch/css/bootstrap-switch.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__switch,'/switch/js/highlight.js')}" />
+    <!--  <apex:includeScript value="{!URLFOR($Resource.switch,'/switch/js/bootstrap-switch.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.switch,'/switch/js/main.js')}" />-->
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}" />
+     <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/ionic/css/ionicons.min.css')}" />
+    
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootboxnew.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__UpdateMetaDataResource,'/app.js')}" />
+    
+      <apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+    
+    <style>
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 0px 0px 0px 0px #000;
+        box-shadow: 0px 0px 0px 0px #000;
+        margin-left: 8% !important;
+        width: 63%;
+    }
+    
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: auto;
+        padding: 0 10px;
+        border-bottom: none;
+    }
+    
+    .bodyDiv {
+        /*height: 100%;*/
+    }
+    
+    .Btn-group {
+        /*width: 60% !important;*/
+    }
+    
+    .frm {
+        margin: 15px;
+    }
+    
+    .modal {
+        outline: none;
+    }
+     .s110{
+         vertical-align: bottom;
+            /*border-top: 1px solid #000000;
+            border-bottom: 1px solid #000000;
+            border-left: 1px solid #000000;
+            border-right: 1px solid #000000;*/
+            font-family: Calibri;
+            font-size: 14px;
+            color: #FFFFFF;
+            font-weight: bold;
+            background-color: #3F62AE;
+          }
+      .s164{
+       vertical-align:Bottom;
+       border-top: 1px solid #000000; 
+       border-bottom: 1px solid #000000; 
+       border-left: 1px solid #000000; 
+       border-right: 1px solid #000000;
+       font-family: Calibri;
+       font-size:14px;
+      color:#FFFFFF;
+      font-weight:bold;
+      background-color:#00B050;
+     } 
+     .s87{
+         border-top: 1px solid #000000; 
+       border-bottom: 1px solid #000000; 
+       border-left: 1px solid #000000; 
+       border-right: 1px solid #000000;
+       font-family: inherit;
+      
+       background-color:#FFFFFF;
+    } 
+   
+   .UpdatedClass{
+        background-color:#d9edf3 !important;
+       /*background-color:red;*/
+   }  
+   .grey-text {
+        color:rgba(154, 148, 148, 0.91);
+    }
+    .CWB .slds-text-heading--label{
+         background-color: #3F62AE;
+        color: #FFFFFF;
+      }
+     .CWB .slds-checkbox--toggle [type="checkbox"]:checked + .slds-checkbox--faux, .CWB .slds-checkbox--toggle [type="checkbox"]:checked ~ .slds-checkbox--faux{
+        background-color:#1fcaa0;
+     }
+    </style>
+ <div class='CWB'>  
+<c:lightningspinner />
+<apex:form id="form" styleclass="frm ">
+    
+    <!--Action Function Detail -->
+      <apex:actionFunction name="getObjectDetails" action="{!getValidationRuleDetails}" oncomplete="hideOverLay();init();" reRender="form" rendered="{!isValidationRule}" />
+        <apex:actionFunction name="getProfileDetails" action="{!getProfileDetails}" oncomplete="hideOverLay();init();" reRender="form" rendered="{!isProfile}" />
+        <apex:actionFunction name="getWorkFlowRuleDetails" action="{!getWorkFlowRuleDetails}" oncomplete="hideOverLay();init();" reRender="form" rendered="{!isWorkFlow}" />
+        
+          <apex:actionFunction name="getOtherOrgMetaDetail" action="{!getOtherOrgMetaDetail}" reRender="msgId,msgId2,form" oncomplete="hideOverLay();" rendered="{!isMultiOrg && !showMetacomponent}"/>
+
+
+    <div class="slds-card slds-card--narrow1">
+    <div class="slds-card__header slds-grid">
+        <div class="slds-media slds-media--center slds-has-flexi-truncate">
+            <div class="slds-media__figure">
+                <c:svg xlinkHref="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/icons/action-sprite/svg/symbols.svg#edit')}" styleClass="slds-icon slds-icon-text-default" />
+            </div>
+            <div class="slds-media__body slds-truncate">
+                <p class="slds-page-header__title slds-truncate slds-align-middle" title="Update Metadata (beta)">Update Metadata ({!strMetaDataName})</p>
+                <p class="slds-text-body--small page-header__info">This feature is beta as of now. We appreciate your patience, and look forward to your feedback.</p>
+                <p class="slds-text-body--small page-header__info">You can only update metadata which is not part of a managed package.</p>
+            </div>
+        </div>
+        <div class="slds-no-flex">
+            <apex:outputPanel rendered="{!isMultiOrg && !showMetacomponent}" layout="none">
+                <a class='slds-button slds-button--neutral slds-col--bump-left' href="{!$Page.createNewConnection}?org=multi&type={!HTMLENCODE($CurrentPage.parameters.type)}&retUrl=metatab" onclick="showOverLay('Please wait...');">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Create New Connection
+                </a>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered='{!lstSelectedObject!=null && lstSelectedObject.size>0 && showMetacomponent}'>
+             <a class='slds-button slds-button--neutral slds-grow showbtn' onclick='showMySelection(this);'>Show Changes</a>
+              <a class='slds-button slds-button--neutral slds-grow Allbtn' style='display:none;' onclick='showAllValue(this);'>Show All</a>
+              <apex:commandLink action="{!updateMetaDetail}" value="Update" reRender="form" styleclass="update slds-button slds-button--neutral slds-button--brand" onclick="showOverLay();" oncomplete="init();hideOverLay();"></apex:commandLink>
+             </apex:outputPanel>
+        </div>
+    </div>
+    <div class="slds-card__body slds-panel">
+        <div class="slds-panel__section slds-has-divider--bottom1">
+            <!-- Org Selection -->
+            <apex:outputPanel rendered="{!isMultiOrg && !showMetacomponent}" layout="none">
+                <div class="slds-form--inline "> 
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="select-01">
+                            <apex:commandLink action="{!refreshOrgDetail}" onclick="showOverLay('Please wait..');" oncomplete="hideOverLay();" rerender="form,msgId">
+                                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                            </apex:commandLink>
+                            Source Org</label>
+                        <div class='slds-select_container'>
+                            <apex:selectList id="SourceOrg" value="{!strSoureOrg}" multiselect="false" size="1" styleclass="slds-select">
+                                <apex:selectOptions value="{!lstExistingConnection}" />
+                            </apex:selectList>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <a id="example21-toggle" class="slds-button slds-button--neutral slds-button--brand compType " style='margin-top:21px;' onclick="showOverLay('{!HTMLENCODE(strMetaDataName)} are loading..');getOtherOrgMetaDetail();" data-action='Get {!strMetaDataName}'>Get {!strMetaDataName}</a>
+                    </div>
+                </div>
+                 <div style='float:left1;'>
+                    <apex:pagemessages id="msgId2" escape="false" />
+                </div>
+            </apex:outputPanel>
+            <!-- End Of Org Selection -->
+            <apex:outputPanel layout="none" rendered='{!lstObject!=null && lstObject.size>0 && showMetacomponent}'>
+                <div class="slds-form--inline slds-p-bottom--large slds-align--absolute-center">
+                    <apex:outputPanel rendered="{!isMultiOrg}" layout="none">
+                        <div class="slds-form-element">
+                            <apex:commandLink action="{!showOrgSelection}" onclick="showOverLay('Please wait...');" styleclass="slds-button slds-button--neutral slds-grow" rerender="form,msgId" oncomplete="hideOverLay();">
+                                <span class="ion-edit" aria-hidden="true"></span>&nbsp;<span>Change Org</span>
+                            </apex:commandLink>
+                        </div>
+                    </apex:outputPanel>
+                    <div class="slds-form-element">
+                        <apex:selectList value="{!lstSelectedObject}" multiselect="true" styleclass="slds-button slds-button--icon-border-filled multiselect ObjectClass" style="margin-right:40px;display:none;">
+                            <apex:selectOptions value="{!lstObject}" />
+                        </apex:selectList>
+                    </div>
+                    <apex:outputPanel rendered="{!isProfile}" layout="none">
+                         <div class="slds-form-element">
+                            <apex:selectList rendered="{!isProfile}" value="{!lstSelectedSObject}" multiselect="true" styleclass="slds-button slds-button--icon-border-filled multiselect ObjectType" style="margin-right:40px;display:none;">
+                                <apex:selectOptions value="{!lstSObject}" />
+                            </apex:selectList>
+                        </div>
+                        <div class="slds-form-element">
+                            <apex:selectList rendered="{!isProfile}" value="{!strSelectedType}" multiselect="false" styleclass="slds-button slds-button--icon-border-filled multiselect ObjectType" style="margin-right:40px;display:none;">
+                                <apex:selectOptions value="{!lstType}" />
+                            </apex:selectList>
+                        </div>
+                    </apex:outputPanel>
+                    <div class="slds-form-element">
+                        <apex:outputPanel rendered="{!isValidationRule}" layout="none">
+                            <a id="example21-toggle" class="slds-button slds-button--neutral slds-button--brand compType ga" style='margin-right:10px;' onclick="getObjectDetails();showOverLay('Please wait..');" data-action='Get ValidationRule'>Get Validation Rules</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!isProfile}">
+                            <a id="example21-toggle" class="slds-button slds-button--neutral slds-button--brand compType ga" style='margin-right:10px;' onclick="getProfileDetails();showOverLay('Please wait..');" data-action='Get Profile'>Get Profile Detail</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!isWorkFlow}">
+                            <a id="example21-toggle" class="slds-button slds-button--neutral slds-button--brand compType ga" style='margin-right:10px;' onclick='getWorkFlowRuleDetails();showOverLay();' data-action='Get WorkflowRule'>Get Workflow Rules</a>
+                        </apex:outputPanel>
+                    </div>
+                    
+                </div>
+                <div style='float:left1;'>
+                  <apex:pagemessages id="msgId" escape="false" />
+                </div>
+                    <!--  <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form"/> -->
+                    
+                    <apex:variable var="objectOldName" value="{!}" />
+                    <apex:variable var="objectName" value="{!}" />
+                    <apex:variable var="count" value="{!0}" />
+                    <apex:outputPanel layout="none" rendered="{!(lstValidationRule!=null &&lstValidationRule.size>0)
+                                                   || (lstWorkflowRuleDetail!=null && lstWorkflowRuleDetail.size>0)
+                                                   || (lstFLS!=null && lstFLS.size>0)}">
+                        <!-- Start Validation Rule -->
+                        <apex:outputpanel rendered="{!isValidationRule}" layout="none">
+                            <table class='slds-table slds-table--bordered slds-table--cell-buffer  slds-no-row-hover'>
+                                <apex:repeat value="{!lstValidationRule}" var="objWrp">
+                                    <apex:variable var="objectOldName" value="{!If(objectOldName!=objectName,objectName,objectOldName)}" />
+                                    <apex:variable var="objectName" value="{!LEFT(objWrp.objRule.fullName,(FIND('.',objWrp.objRule.fullName)-1))}" />
+                                    <apex:outputpanel rendered="{!objectName!=objectOldName}" layout="none">
+                                        <tr class='slds-text-heading--label'>
+                                            <th scope='col' class='slds-truncate'>{!objectName} </th>
+                                            <th scope='col' width='40%'>Content</th>
+                                            <th scope='col'>Description</th>
+                                            <th scope='col' class='slds-cell-shrink'>
+                                                Active
+                                            </th>
+                                        </tr>
+                                    </apex:outputpanel>
+                                    <tr class='rowdetail'>
+                                        <td class="s871">
+                                            {!RIGHT(objWrp.objRule.fullName,(LEN(objWrp.objRule.fullName)-FIND('.',objWrp.objRule.fullName)))}
+                                        </td>
+                                        <td class="s871">
+                                            <!-- <pre>-->
+                                            <pre>{!objWrp.objRule.errorConditionFormula}</pre>
+                                            <!-- </pre>     -->
+                                        </td>
+                                        <td class="s871">
+                                            <apex:inputTextArea value="{!objWrp.objRule.description}" html-data-oldvalue2="{!HTMLENCODE(objWrp.objRule.description)}" styleclass="change" style="height:50px;width:97%;"></apex:inputTextArea>
+                                        </td>
+                                        <td class="s871 s5671">
+                                            <div class="slds-form-element">
+                                                <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                    <apex:inputCheckbox value="{!objWrp.objRule.active}" html-data-on-color="success" html-data-size="mini" id="switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.objRule.active}"></apex:inputCheckbox>
+                                                    <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                </label>
+                                            </div>
+                                            <apex:inputCheckbox style="display:none;" value="{!objWrp.isUpdated}" styleclass="updated"></apex:inputCheckbox>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                        </apex:outputpanel>
+                        <!-- End Validation Rule -->
+                        <!-- Start Apex Trigger -->
+                        <!--  <apex:repeat value="{!lstApexTriggerDetail}" var="objTrigger" rendered="{!isApexTrigger}">
+               
+                <apex:inputText value="{!objTrigger.fullName}"></apex:inputText>
+                <apex:inputText value="{!objTrigger.apiVersion}"></apex:inputText>
+                <apex:inputCheckbox value="{!objTrigger.status}" html-data-size="mini" id="switch-size"></apex:inputCheckbox>
+            </apex:repeat> -->
+                        <!-- End Apex Trigger -->
+                        <!-- Start Profile -->
+                        <apex:outputpanel rendered="{!isProfile}" layout="none">
+                            <apex:variable var="countdetail" value="{!0}"></apex:variable>
+                            <apex:outputpanel rendered="{!SelectedTypeDetail}" layout="none">
+                             
+                                <table class='slds-table slds-table--bordered slds-table--cell-buffer  slds-no-row-hover'>
+                                    <apex:repeat value="{!lstFLS}" var="objWrp1">
+                                       <apex:repeat value="{!objWrp1.lstAllFlsDetail}" var="objWrp11">
+                                              <apex:variable var="objectOldName" value="{!}" />
+                                              <apex:variable var="objectName" value="{!}" />
+                                            <apex:repeat value="{!objWrp11}" var="objWrp">
+                                                <apex:variable var="objectOldName" value="{!If(objectOldName!=objectName,objectName,objectOldName)}" />
+                                                <apex:variable var="objectName" value="{!LEFT(objWrp.objFLS.field,(FIND('.',objWrp.objFLS.field)-1))}" />
+                                              
+                                                <apex:outputpanel rendered="{!objectName!=objectOldName}" layout="none">
+                                                    <thead>
+                                                        <!-- <apex:outputpanel rendered="{!countdetail==0}" layout="none">
+                                                        <tr class='slds-text-heading--label'>
+                                                            <th colspan="3" scope='col'>{!objWrp1.strProfileName}</th>
+                                                        </tr>
+                                                    </apex:outputpanel> -->
+                                                      <tr>
+                                                       <th colspan="3">
+	                                                        <div class="slds-media slds-tile">
+															        <div class="slds-media__body">
+															            <h2 class="tile__title slds-truncate1 slds-text-heading--large">Profile - '{!objWrp1.strProfileName}'
+															            </h2>
+															        </div>
+															 </div>
+														</th>	
+                                                      </tr>
+                                                        <tr class='slds-text-heading--label'>
+                                                           <th scope='col' class='slds-truncate' width='40%;'>
+                                                                '{!objectName}' Fields
+                                                            </th>
+                                                            <th scope='col' class="slds-cell-shrink">
+                                                                <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                   
+                                                                   <input type='checkbox' class="edit" data-childinput="{!objWrp.Id}_edit"></input>
+                                                                   <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                                   <span>Editable</span>
+                                                               </label>
+                                                            </th>
+                                                            <th scope='col' class="slds-cell-shrink" width='5%'>
+                                                                
+                                                                 <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                    
+                                                                   <input type='checkbox' class="edit" data-childinput="{!objWrp.Id}_read"></input>
+                                                                   <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                                   <span>Readable</span>
+                                                               </label>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                </apex:outputpanel>
+                                                <tr class='rowdetail'>
+                                                    
+                                                    <td class="">
+                                                        {!RIGHT(objWrp.objFLS.field,(LEN(objWrp.objFLS.field)-FIND('.',objWrp.objFLS.field)))}
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox value="{!objWrp.objFLS.editable}" id="sswitch-size" styleclass="change chk {!objWrp.Id}_edit" html-data-oldvalue2="{!objWrp.objFLS.editable}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox value="{!objWrp.objFLS.readable}" html-data-on-color="success" html-data-size="mini" id="switch-size" styleclass="change chk {!objWrp.Id}_read" html-data-oldvalue2="{!objWrp.objFLS.readable}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                        <apex:inputCheckbox style="display:none;" value="{!objWrp.isUpdated}" styleclass="updated"></apex:inputCheckbox>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </apex:repeat>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputpanel>
+                            <apex:outputpanel rendered="{!!SelectedTypeDetail}" layout="none">
+                                <table class='slds-table slds-table--bordered slds-table--cell-buffer  slds-no-row-hover'>
+                                    <apex:repeat value="{!lstFLS}" var="objWrp1">
+                                        <thead>
+                                            <!--<apex:outputpanel rendered="{!countdetail==0}" layout="none">
+                                            <tr class="s110">
+                                                <th colspan="7">{!objWrp1.strProfileName}</th>
+                                            </tr>
+                                        </apex:outputpanel>-->
+                                        <tr>
+                                               <th colspan="7">
+					                                <div class="slds-media slds-tile">
+												        <div class="slds-media__body">
+												            <h2 class="tile__title slds-truncate1 slds-text-heading--large">Profile - '{!objWrp1.strProfileName}'
+												            </h2>
+												        </div>
+												 </div>
+											</th>	
+                                              </tr>
+                                            <tr class='slds-text-heading--label'>
+                                                <th scope='col'>Object</th>
+                                                <th scope='col' class='slds-cell-shrink'>allow Create</th>
+                                                <th scope='col' class='slds-cell-shrink'>allow Read</th>
+                                                <th scope='col' class='slds-cell-shrink'>allow Edit</th>
+                                                <th scope='col' class='slds-cell-shrink'>allow Delete</th>
+                                                <th scope='col' class='slds-cell-shrink'>modify All Records</th>
+                                                <th scope='col' class='slds-cell-shrink'>viewAll Records</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:repeat value="{!objWrp1.lstObjectPermissionDetail}" var="objWrp">
+                                                <tr class='rowdetail' title="{!If(!objWrp1.isCustom,'This is standard profile and not allowed to update OLS','')}">
+                                                    <td class="">
+                                                        {!objWrp.ObjPerm.object_x}
+                                                    </td>
+                                                    <td class="s7">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox disabled="{!!objWrp1.isCustom}" value="{!objWrp.ObjPerm.allowCreate}" html-data-on-color="success" html-data-size="mini" id="s1switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.ObjPerm.allowCreate}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox disabled="{!!objWrp1.isCustom}" value="{!objWrp.ObjPerm.allowRead}" html-data-on-color="success" html-data-size="mini" id="s2switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.ObjPerm.allowRead}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox disabled="{!!objWrp1.isCustom}" value="{!objWrp.ObjPerm.allowEdit}" html-data-on-color="success" html-data-size="mini" id="s3switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.ObjPerm.allowEdit}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox disabled="{!!objWrp1.isCustom}" value="{!objWrp.ObjPerm.allowDelete}" html-data-on-color="success" html-data-size="mini" id="s4switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.ObjPerm.allowDelete}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox disabled="{!!objWrp1.isCustom}" value="{!objWrp.ObjPerm.modifyAllRecords}" html-data-on-color="success" html-data-size="mini" id="s5switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.ObjPerm.modifyAllRecords}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td class="">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                                <apex:inputCheckbox disabled="{!!objWrp1.isCustom}" value="{!objWrp.ObjPerm.viewAllRecords}" html-data-on-color="success" html-data-size="mini" id="switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.ObjPerm.viewAllRecords}"></apex:inputCheckbox>
+                                                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                            </label>
+                                                        </div>
+                                                        <apex:inputCheckbox style="display:none;" value="{!objWrp.isUpdated}" styleclass="updated"></apex:inputCheckbox>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody>
+                                    </apex:repeat>
+                                </table>
+                            </apex:outputpanel>
+                            <apex:variable var="countdetail" value="{!countdetail+1}"></apex:variable>
+                        </apex:outputpanel>
+                        <!-- End Profile -->
+                        <!-- Start Workflow -->
+                        <apex:outputpanel rendered="{!isWorkFlow}" layout="none">
+                            <table class='slds-table slds-table--bordered slds-table--cell-buffer  slds-no-row-hover'>
+                                <apex:repeat value="{!lstWorkflowRuleDetail}" var="objWrp">
+                                    <apex:variable var="objectOldName" value="{!If(objectOldName!=objectName,objectName,objectOldName)}" />
+                                    <apex:variable var="objectName" value="{!LEFT(objWrp.objWorkflowRule.fullName,(FIND('.',objWrp.objWorkflowRule.fullName)-1))}" />
+                                    <apex:outputpanel rendered="{!objectName!=objectOldName}" layout="none">
+                                        
+                                        <tr class='slds-text-heading--label'>
+                                            <th scope='col'>
+                                                {!objectName}
+                                            </th>
+                                            <th scope='col' width='40%;'>
+                                                Description
+                                            </th>
+                                            <th scope='col' class='slds-cell-shrink'>
+                                                Active
+                                            </th>
+                                        </tr>
+                                    </apex:outputpanel>
+                                    <tr class='rowdetail'>
+                                        <td class="">
+                                            {!RIGHT(objWrp.objWorkflowRule.fullName,(LEN(objWrp.objWorkflowRule.fullName)-FIND('.',objWrp.objWorkflowRule.fullName)))}
+                                        </td>
+                                        <td class="">
+                                            <apex:inputTextArea value="{!objWrp.objWorkflowRule.description}" html-data-oldvalue2="{!HTMLENCODE(objWrp.objWorkflowRule.description)}" styleclass="change" style="height:50px;width:97%;"></apex:inputTextArea>
+                                        </td>
+                                        <td class="">
+                                             <div class="slds-form-element">
+                                                <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                                                  <apex:inputCheckbox value="{!objWrp.objWorkflowRule.active}" html-data-on-color="success" html-data-size="mini" id="switch-size" styleclass="change chk" html-data-oldvalue2="{!objWrp.objWorkflowRule.active}"></apex:inputCheckbox>
+                                                    <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                                                </label>
+                                            </div>
+                                              <apex:inputCheckbox style="display:none;" value="{!objWrp.isUpdated}" styleclass="updated"></apex:inputCheckbox>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                        </apex:outputpanel>
+                        <!--End Workflow -->
+                       
+                    </apex:outputPanel>
+                <!--</div>-->
+            </apex:outputpanel>
+        </div>
+    </div>
+    <div class="slds-card__footer"></div>
+</div>     
+ 
+
+ 
+
+    <script>
+
+            var gaDetail = 'OrgName={!HTMLENCODE($Organization.Name)}_Name={!HTMLENCODE($User.FirstName)}';
+
+            $(document).ready(function() {
+                 $('.ObjectType').multiselect({enableFiltering: true,includeSelectAllOption: true,filterBehavior: 'both',enableCaseInsensitiveFiltering: true,maxHeight: 217,});
+                $('.ObjectClass').multiselect({
+                    nSelectedText  : ' {!HTMLENCODE(strMetaDataName)} selected', 
+                    buttonClass: 'Btn Btn-default',
+                    enableFiltering: true,
+                    filterBehavior: 'both',
+                    enableCaseInsensitiveFiltering: true,
+                    filterPlaceholder: 'Search {!HTMLENCODE(strMetaDataName)}..',
+                    includeSelectAllOption: true,
+                    selectAllText: 'Select ALL {!HTMLENCODE(strMetaDataName)}',
+                    selectAllValue: 'multiselect-all',
+                    maxHeight: 217,
+                    /*buttonWidth: '90%',*/
+                    nonSelectedText: 'You have not selected any {!HTMLENCODE(strMetaDataName)}',
+                    disableIfEmpty: true,
+                    onChange: function(element, checked) {
+                        if ($('.ObjectClass').val() == null) {
+                            $('.containerDivclass').hide();
+                            $('#containerMessage').show();
+                        } else {
+                            $('.containerDivclass').show();
+                            $('#containerMessage').hide();
+                        }
+                     
+                    }
+                });
+
+              
+
+            });
+            </script>
+           
+        </apex:form>
+        <!-- </fieldset>  -->
+   </div>
+</apex:page>

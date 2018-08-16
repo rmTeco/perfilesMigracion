@@ -24,10 +24,10 @@ public class ta_blackList_batch_test{
         Id batchId = Database.executeBatch(blackListBatch);
         Test.stopTest();
 
-        List<Asset> updatedAssets = [SELECT Name FROM Asset WHERE Blacklist__c = true AND Blacklist_Remove_Date__c = null];
+        List<Asset> updatedAssets = [SELECT Name FROM Asset WHERE Blacklist__c = false AND Blacklist_Remove_Date__c = null];
         List<Asset> noUpdatedAssets = [SELECT Name FROM Asset WHERE Blacklist__c = true AND Blacklist_Remove_Date__c != null];
 
-        //System.assertEquals(1, updatedAssets.size());
-        //System.assertEquals(1, noUpdatedAssets.size());
+        System.assertEquals(1, updatedAssets.size());
+        System.assertEquals(1, noUpdatedAssets.size());
     }
 }

@@ -1,0 +1,181 @@
+<apex:page controller="cwbtool.DescribeObjectCtrl" sidebar="false" tabStyle="CWB_Tool__tab" showheader="false">
+
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}"/>
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" /> 
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}"/>
+   
+<style>
+  fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+    margin-left:8% !important;
+    width:63%;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+    .bodyDiv{
+ height:400px;
+}
+.Btn-group{
+  width:60% !important;
+}
+.frm{
+  margin:15px;
+}
+.modal {
+    outline:none;
+}
+</style>
+ <apex:pagemessages rendered="{!lstObject==null || lstObject.size==0}"/>
+<apex:outputpanel rendered='{!lstObject!=null && lstObject.size>0}' layout='none' > 
+<c:actionstatusNew />
+<!--  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">Object</legend>-->
+
+<apex:form id="form" styleclass="frm CWB">
+   
+           <apex:selectList value="{!lstSelectedObject}" multiselect="true" styleclass="multiselect ObjectClass" style="margin-right:40px;display:none;"> 
+            <apex:selectOptions value="{!lstObject}"/>
+       </apex:selectList>
+      <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='Startprocessing();refresh();' data-action='Download Full Object Detail Action'>Download Object</span>
+   
+      <apex:actionFunction name="getObjectDetails" action="{!getObjectDetails}" />
+       <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form"/> 
+       <apex:actionFunction name="startBatchAction" action="{!startBatch}" reRender="msgId" oncomplete="hideOverLay();"/> 
+       
+   <apex:outputpanel id="refreshPanel">  
+      <apex:pagemessages rendered="{!lstObject==null || lstObject.size==0}"/>
+      <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,msgId,form" interval="5" enabled="{!isStart}" oncomplete="if({!isProcessed}){hideOverLay();}"/>
+   </apex:outputpanel>
+ 
+<c:AppUpgradeMessage hastoken="{!hasToken}" loogedinUserHave="{!isLoggedInUserHave}" isReachedMaximumlimit="{!SelectedComponentReachedTheLimit}" isAlreadySelectedComponent="{!isAlreadySelectedComponent}" type="Object"/>
+
+<script>
+var gaDetail='OrgName={!HTMLENCODE($Organization.Name)}_Name={!HTMLENCODE($User.FirstName)}';
+function Startprocessing(){
+  
+  if({!!SelectedComponentReachedTheLimit} && ({!!hasToken} || {!!isLoggedInUserHave})){
+        /* bootbox.confirm("<font color='green'>{!$Label.cwbtool__free_app_message} </font><br><br>.Are you sure?", function(result) {
+             if(result){
+                showOverLay('{!HTMLENCODE(strStatus)}');
+                getObjectDetails(); 
+             }else{
+                 return;
+             }
+      });*/
+      bootbox.dialog({
+          message: "<font color=''>{!$Label.cwbtool__free_app_message} </font>",
+          title: "Are you Sure?",
+          buttons: {
+            success: {
+              label: "Yes",
+              className: "Btn-success",
+              callback: function() {
+                showOverLay('{!HTMLENCODE(strStatus)}');
+                 getObjectDetails();  
+               }    
+              },
+            main: {
+              label: "No",
+              className: "Btn-default",
+              callback: function() {
+                   return;
+              }
+            }
+         }
+      });
+    }else{
+        showOverLay('{!HTMLENCODE(strStatus)}');
+        getObjectDetails();  
+    }  
+    
+  //showOverLay('{!HTMLENCODE(strStatus)}');
+  //getObjectDetails();
+ }
+
+ $(document).ready(function() {
+    $('.ObjectClass').multiselect({
+   nSelectedText  : ' Objects selected', 
+    buttonClass: 'Btn Btn-default', 
+    enableFiltering: true,
+    filterBehavior: 'both',
+   enableCaseInsensitiveFiltering: true,
+    filterPlaceholder: 'Search Object..',
+   includeSelectAllOption: {!isLoggedInUserHave && hasToken},
+   selectAllText: 'Select ALL Object',
+   selectAllValue: 'multiselect-all',
+  maxHeight:217,
+ buttonWidth: '90%',
+  nonSelectedText: 'You have not selected any Object',
+  disableIfEmpty:true,
+   onChange: function(element, checked) {
+          if($('.ObjectClass').val()==null){
+              $('.containerDivclass').hide();
+              $('#containerMessage').show();
+          }else{
+              $('.containerDivclass').show();
+              $('#containerMessage').hide();
+          }
+          if({!!isLoggedInUserHave} || {!!hasToken}){   
+           disabledEnabled('ObjectClass');
+          }
+        }
+    });
+  
+   if({!!isLoggedInUserHave} || {!!hasToken}){    
+     disabledExisting('ObjectClass'); 
+   } 
+   
+});
+
+</script>
+<!-- {!isResponseErrorFound} -->
+<apex:pagemessages id="msgId" escape="false"/>
+<apex:outputpanel layout="none" rendered="{!!onlyObjectField}">
+  
+  <p> You can get your report asynchronously. Click on Start Batch button . You will be received report in your inbox(<b>{!$User.Email}</b>).</p>
+   <div>
+   Batch Size
+     <apex:selectList id="chooseColor" value="{!batchSize}" size="1">
+            <apex:selectOption itemValue="5" itemLabel="5"/>
+            <apex:selectOption itemValue="10" itemLabel="10"/>
+            <apex:selectOption itemValue="20" itemLabel="20"/>
+            <apex:selectOption itemValue="30" itemLabel="30"/>
+            <apex:selectOption itemValue="50" itemLabel="50"/>
+            <apex:selectOption itemValue="100" itemLabel="100"/>
+            <apex:selectOption itemValue="200" itemLabel="200"/>
+        </apex:selectList>
+        <button type='button' onclick='showOverLay();startBatchAction();' class='Btn Btn-success'>Start Batch</button>
+   </div>
+  <p> Note: Please make sure your org email Deliverability is on. You can find it from <b>Setup->Email Administration->Deliverability</b></p>
+
+</apex:outputpanel>
+
+<apex:outputpanel layout="none" rendered="false">
+  
+  <p>If first two option is not able to download then click <a href='{!$page.downloadReport}'>here</a> to download.</p>
+  
+</apex:outputpanel>
+
+
+</apex:form>
+<!-- </fieldset>  -->
+
+</apex:outputpanel>
+
+</apex:page>

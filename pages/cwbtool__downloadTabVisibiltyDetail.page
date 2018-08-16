@@ -1,0 +1,8 @@
+<apex:page controller="cwbtool.PermissionController" contenttype="application/x-excel#Tab_{!Now()}.xls" readOnly="true">
+
+<c:downloadTabVisibiltyDetail mapPermId="{!mapPermDetail}"  
+  setPermId="{!lstSelectedOption}" mapTabPerm="{!mapTabPerm}"
+  lstSelectedTab="{!lstselectedTabByUser}"/> 
+
+
+</apex:page>

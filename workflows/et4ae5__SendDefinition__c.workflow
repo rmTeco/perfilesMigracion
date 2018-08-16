@@ -159,7 +159,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>       NOT( et4ae5__Split_Send__c )       &amp;&amp;       (       !ISPICKVAL(et4ae5__SendStatus__c,&quot;Failed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Completed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Canceled&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Fail&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Complete&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancel&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancelled&quot;)         &amp;&amp;         !et4ae5__TrackingOnly__c         &amp;&amp;         ISBLANK(et4ae5__BackupWorkflow__c)         &amp;&amp;         NOT         (         IF         (         ISBLANK(et4ae5__Scheduled_Date_Time__c),         (NOW()-(1/2))&lt;et4ae5__Created_Date_Time__c,         (NOW()-(1/2))&lt;et4ae5__Scheduled_Date_Time__c         ||         et4ae5__HasBeenQueued__c         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Pending Tracking Subscription&quot;)         )         )       )</formula>
+        <formula>       NOT( et4ae5__Split_Send__c )       &amp;&amp;       (       !ISPICKVAL(et4ae5__SendStatus__c,&quot;Failed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Completed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Canceled&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Fail&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Complete&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancel&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancelled&quot;)    &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Deleted&quot;)  &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Paused&quot;)    &amp;&amp;         !et4ae5__TrackingOnly__c         &amp;&amp;         ISBLANK(et4ae5__BackupWorkflow__c)         &amp;&amp;         NOT         (         IF         (         ISBLANK(et4ae5__Scheduled_Date_Time__c),         (NOW()-(1/2))&lt;et4ae5__Created_Date_Time__c,         (NOW()-(1/2))&lt;et4ae5__Scheduled_Date_Time__c         ||         et4ae5__HasBeenQueued__c         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Pending Tracking Subscription&quot;)         )         )       )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -169,7 +169,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>!ISPICKVAL(et4ae5__SendStatus__c,&quot;Failed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Completed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Canceled&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Fail&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Complete&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancel&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancelled&quot;)         &amp;&amp;       ! et4ae5__TrackingOnly__c       &amp;&amp;       ISBLANK( et4ae5__BackupWorkflow__c )       &amp;&amp;       (       IF       (       ISBLANK(et4ae5__Scheduled_Date_Time__c) ,       ( NOW()-(1/2) ) &lt;  et4ae5__Created_Date_Time__c ,       ( NOW()-(1/2) ) &lt;  et4ae5__Scheduled_Date_Time__c       )       ||       et4ae5__HasBeenQueued__c       ||       et4ae5__Split_Send__c       )</formula>
+        <formula>!ISPICKVAL(et4ae5__SendStatus__c,&quot;Failed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Completed&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Canceled&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Fail&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Complete&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancel&quot;)         &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Cancelled&quot;)      &amp;&amp;         !ISPICKVAL(et4ae5__SendStatus__c,&quot;Deleted&quot;)     &amp;&amp;       ! et4ae5__TrackingOnly__c       &amp;&amp;       ISBLANK( et4ae5__BackupWorkflow__c )       &amp;&amp;       (       IF       (       ISBLANK(et4ae5__Scheduled_Date_Time__c) ,       ( NOW()-(1/2) ) &lt;  et4ae5__Created_Date_Time__c ,       ( NOW()-(1/2) ) &lt;  et4ae5__Scheduled_Date_Time__c       )       ||       et4ae5__HasBeenQueued__c       ||       et4ae5__Split_Send__c       )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -198,11 +198,6 @@
             <operation>equals</operation>
             <value>Completed</value>
         </criteriaItems>
-        <criteriaItems>
-            <field>et4ae5__SendDefinition__c.et4ae5__ConversationId__c</field>
-            <operation>notContain</operation>
-            <value>v3_</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -212,7 +207,7 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>(et4ae5__Send_Status_View__c = &apos;Fail&apos; ||  et4ae5__Send_Status_View__c = &apos;Failed&apos; ||  et4ae5__Send_Status_View__c = &apos;Error&apos; ||  et4ae5__Send_Status_View__c = &apos;Errored&apos; ||  et4ae5__Send_Status_View__c = &apos;Canceled&apos;) &amp;&amp;  NOT( CONTAINS( et4ae5__ConversationId__c , &quot;v3_&quot;) )</formula>
+        <formula>(et4ae5__Send_Status_View__c = &apos;Fail&apos; ||  et4ae5__Send_Status_View__c = &apos;Failed&apos; ||  et4ae5__Send_Status_View__c = &apos;Error&apos; ||  et4ae5__Send_Status_View__c = &apos;Errored&apos; ||  et4ae5__Send_Status_View__c = &apos;Canceled&apos; ||  et4ae5__Send_Status_View__c = &apos;Deleted&apos; ||  et4ae5__Send_Status_View__c = &apos;Paused&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

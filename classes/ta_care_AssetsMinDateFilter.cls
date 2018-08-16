@@ -26,11 +26,7 @@ global with sharing class ta_care_AssetsMinDateFilter implements vlocity_cmt.Vlo
             }
             result = false;
 
-        } catch(Exception e) {
-            System.debug('ta_care_AssetsMinDateFilter: invokeMethod -> exception: '+e);
-            result = false;
-            outMap.put('error', e.getMessage());
-        }
+        } catch(Exception e) {  System.debug('ta_care_AssetsMinDateFilter: invokeMethod -> exception: '+e); result = false; outMap.put('error', e.getMessage()); }
         return result;
     }
 

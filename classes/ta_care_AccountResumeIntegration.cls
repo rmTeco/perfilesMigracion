@@ -30,6 +30,7 @@ global without sharing class ta_care_AccountResumeIntegration implements vlocity
             }
         }catch(Exception ex) {
             outMap.put('error', ex.getStackTraceString()); 
+            System.debug('ex --> '+ex);
             result = false; 
         } 
         
@@ -148,6 +149,7 @@ global without sharing class ta_care_AccountResumeIntegration implements vlocity
     
     global void GetAccountResumeIntegration3(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
         
+        try{
         inputMap = (Map<string, Object>)inputMap.get('body');
         System.debug('inputMap: ' + inputMap);
 
@@ -156,11 +158,49 @@ global without sharing class ta_care_AccountResumeIntegration implements vlocity
         Map<String,Object> outMapS059 = new Map<String,Object>();
 
         vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
-        
-        if(!Test.isRunningTest()){integProcServ.invokeMethod('IFS_S018',new Map<String,Object>{'body' => inputMap.get('bodyS018')}, outMapS018, options);}
-        if(!Test.isRunningTest()){integProcServ.invokeMethod('IFS_S024',new Map<String,Object>{'body' => inputMap.get('bodyS024')}, outMapS024, options);}
-        if(!Test.isRunningTest()){integProcServ.invokeMethod('IFS_S059',new Map<String,Object>{'body' => inputMap.get('bodyS059')}, outMapS059, options);}
+        Map<String, Object> outResult =  new Map<String, Object>();
+        if(!Test.isRunningTest()){
+            
+            integProcServ.invokeMethod('IFS_S018',new Map<String,Object>{'body' => inputMap.get('bodyS018')}, outMapS018, options);
+            Map<String, Object> resultS018 = (Map<String, Object>)outMapS018.get('IPResult');
+            if(resultS018.get('detalle') == null)
+            {
+                System.debug('outMapS018: '+ String.valueOf(outMapS018));
+                outResult.put('datosBalance', (Map<String, Object>)outMapS018.get('IPResult'));
+            }
+            else
+            {
+                outResult.put('datosBalance', 'Sin datos');
+            }
+            integProcServ.invokeMethod('IFS_S024',new Map<String,Object>{'body' => inputMap.get('bodyS024')}, outMapS024, options);
+            Map<String, Object> resultS024 = (Map<String, Object>)outMapS024.get('IPResult');
+            if(resultS024.get('detalle') == null)
+            {
+                outResult.put('comprobantes', (Map<String, Object>)outMapS024.get('IPResult'));
+            }
+            else
+            {
+                System.debug('outMapS024: '+ String.valueOf(outMapS024));
+                outResult.put('comprobantes', 'Sin datos');
+            }
+            
+            integProcServ.invokeMethod('IFS_S059',new Map<String,Object>{'body' => inputMap.get('bodyS059')}, outMapS059, options);
+            Map<String, Object> resultS059 = (Map<String, Object>)outMapS059.get('IPResult');
+            if(resultS059.get('detalle') == null)
+            {
+                System.debug('outMapS059: '+ String.valueOf(outMapS059));
+                outResult.put('pagos', (Map<String, Object>)outMapS059.get('IPResult'));
+            }
+            else
+            {
+                outResult.put('pagos', 'Sin datos');
+            }
+        }
 
+        System.debug('outMapS018'+outMapS018);
+        System.debug('outMapS024'+outMapS024);
+        System.debug('outMapS059'+outMapS059);
+        
 		if(Test.isRunningTest()){
 			String args = '{"listaInfoFactura":[{"numTotalRegistros":"string","codRazon":"string","rutaFactura":"string","numSuscriptor":"1380001003300004","direccionCliente":"Av. Congreso 3940","nombreActor":"Juan Perez","listaInfoDetalleFactura":[{"codEstadoComprobante":"O","codMoneda":"ARS","importeEnDisputa":"0.0000","importeComprobanteImpago":"500.0000","importeComprobante":"500.0000","codCargo":"string","tipoCargo":"recurrente","codComprobante":"10006200230001"}],"codEstadoComprobante":"O","fechaCierreComprobante":"2018-02-01 00:00:00","fechaVencimientoComprobante":"2018-02-10 00:00:00","fechaEmisionComprobante":"2018-01-02 00:00:00","codMoneda":"ARS","importeEnDisputa":"0.0000","importePendienteImpuestoFactura":"0.0000","importeImpuestoFactura":"230.23000","importeComprobanteImpago":"1050.7800","importeComprobante":"1050.7800","fechaCorteFacturacion":"2018-01-31 00:00:00","fechaInicioFacturacion":"2018-01-01 00:00:00","cicloFacturacion":"20180101","numeroComprobanteLegal":"0001A12345678","numeroComprobante":"10006200230001","codComprobante":"10006200230001","codAccionNegocio":"Orden de Prod","identificadorRecurso":"13800010010","codSuscripcion":"1380001003300004","codCliente":"1380001003300002","idCuenta":"1380001003300001"},{"numTotalRegistros":"string","codRazon":"string","rutaFactura":"string","numSuscriptor":"1380001003300003","direccionCliente":"Av. Congreso 3940","nombreActor":"Juan Perez","listaInfoDetalleFactura":[{"codEstadoComprobante":"O","codMoneda":"ARS","importeEnDisputa":"0.0000","importeComprobanteImpago":"400.0000","importeComprobante":"400.0000","codCargo":"string","tipoCargo":"recurrente","codComprobante":"10006200230041"},{"codEstadoComprobante":"C","codMoneda":"ARS","importeEnDisputa":"0.0000","importeComprobanteImpago":"570.7800","importeComprobante":"570.7800","codCargo":"string","tipoCargo":"recurrente","codComprobante":"10006200230044"}],"codEstadoComprobante":"C","fechaCierreComprobante":"2017-01-01 00:00:00","fechaVencimientoComprobante":"2017-12-10 00:00:00","fechaEmisionComprobante":"2017-12-02 00:00:00","codMoneda":"ARS","importeEnDisputa":"0.0000","importePendienteImpuestoFactura":"0.0000","importeImpuestoFactura":"130.23000","importeComprobanteImpago":"970.7800","importeComprobante":"970.7800","fechaCorteFacturacion":"2017-11-31 00:00:00","fechaInicioFacturacion":"2017-11-01 00:00:00","cicloFacturacion":"20171201","numeroComprobanteLegal":"0001A12344232","numeroComprobante":"10006200230221","codComprobante":"10006200230221","codAccionNegocio":"Orden de Prod","identificadorRecurso":"13800010110","codSuscripcion":"1380001003300014","codCliente":"1380001003300002","idCuenta":"1380001003300001"}]}';
 			Map<String, Object> resultAux = (Map<String, Object>)JSON.deserializeUntyped(args);
@@ -170,12 +210,18 @@ global without sharing class ta_care_AccountResumeIntegration implements vlocity
 			outMapS059.put('IPResult', resultAux);
 			
 		}	
-	
-        Map<String, Object> outResult =  new Map<String, Object>{'datosBalance' => (Map<String, Object>)outMapS018.get('IPResult')};
+       
+        /*Map<String, Object> outResult =  new Map<String, Object>{'datosBalance' => (Map<String, Object>)outMapS018.get('IPResult')};
 		outResult.put('comprobantes', (Map<String, Object>)outMapS024.get('IPResult'));
-		outResult.put('pagos', (Map<String, Object>)outMapS059.get('IPResult'));
+		outResult.put('pagos', (Map<String, Object>)outMapS059.get('IPResult'));*/
         outMap.put('IPResult', outResult);
-        
+            System.debug('outMap --> '+outMap);
+
+        }catch(Exception ex)
+        {
+            System.debug('Ocurrio un error en ta_care_AccountResumeIntegration.GetAccountResumeIntegration3');
+            throw ex;
+        }
     }
     
 /*

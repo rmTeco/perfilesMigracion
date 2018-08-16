@@ -1,0 +1,752 @@
+<apex:page controller="copado.WorkManager" showHeader="true" sidebar="{!$User.UIThemeDisplayed!='Theme3'}" applyHtmlTag="true" cache="false" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true"> 
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+<apex:slds />
+<head>
+  <title>Work Manager | Copado</title>
+  <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery-ui.min.js')}"/>
+  <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+  <style type="text/css">
+        #theHeader{
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            height: 77px;
+        }
+
+        .allP{
+            display: flex;
+            
+        }
+        .panel-div{
+            min-width: 320px; 
+            background: rgb(247, 249, 252); 
+            border: 1px solid #C5C5C5;
+            margin: 5px;
+            min-height: -webkit-fill-available;
+        }
+
+        .close-button{
+        background: 0 0;
+        color: #0070d2 !important;
+        border: 1px solid transparent;
+        outline: 0;
+        }
+
+        .panel-column{
+            max-width: 250px !important;
+        }
+
+        .slds-scope .slds-panel__section{
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+
+        }
+        .sort-disabled{
+            border-top: 0px !important;
+            padding: 0px !important;
+            height: 10px;
+        }
+
+        body{
+            margin: 0px;
+        }
+
+        .slds-scope .slds-m-top--small, .slds-scope .slds-m-top_small {
+            margin-top: 0px !important;
+        }
+
+        .stick-button{
+            right: 10%;
+        }
+        .lookupInput .lookupIcon {
+            top: .1rem !important;
+            margin-left: 0px !important;
+        }
+        .lookupInput .lookupIconOn {
+            top: .1rem !important;
+            margin-left: 0px !important;
+        }    
+         *+.lookupInput {
+            margin-left: 0px !important;
+        }
+        .slds-scope input {
+          line-height: normal !important; 
+        }
+
+        .selectedCheck{
+            background-color: Azure !important;
+        }
+        .stateList{
+            width: 100%;
+        }
+    </style>
+    <script type="text/javascript">
+      var $copado = $copado || jQuery.noConflict();
+    </script>    
+</head>
+<body>
+<apex:outputPanel layout="block" rendered="{!!showWK}">
+  <apex:pageMessage summary="{!$Label.copado__cad_license_restriction}" severity="warning" strength="1"/> 
+</apex:outputPanel>
+
+<apex:outputPanel layout="block" StyleClass="copado-lightning-VF" style="min-width: max-content; min-height: -webkit-fill-available;" rendered="{!showWK}">
+
+<div id="uw" class="slds-scope" >
+     
+
+      <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" >
+      <div class="slds-spinner_container slds-show">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" aria-hidden="false" role="alert" style="position: fixed;">
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+      
+    <div class="slds-page-header" id="theHeader" style="height: 95px; margin-top: 12px;">
+
+        <apex:form style="padding-top: 12px;">          
+          <apex:actionFunction action="{!clearAuxUS}" name="reRenderInput" oncomplete="hideSpinner();"  reRender="panelInput,createPanel"/>
+          <apex:actionFunction action="{!createNewPanel}" name="createNewPanel" rerender="allPanels,headerMessage" oncomplete="updatePanelState();">
+              <apex:param name="newPanelId" value="" />
+              <apex:param name="newPanelName" value="" />
+          </apex:actionFunction>
+          <apex:actionFunction action="{!hidePanel}" name="hidePanel" rerender="allPanels" oncomplete="updatePanelState();">
+              <apex:param name="panelId" value="" />
+              <apex:param name="panelType" value="" />
+          </apex:actionFunction>
+          <apex:actionFunction action="{!toggleColumn}" name="toggleColumnAF" rerender="allPanels" oncomplete="updatePanelState();">
+              <apex:param name="cName" value="" />
+              <apex:param name="panelId" value="" />
+              <apex:param name="panelType" value="" />
+          </apex:actionFunction>
+          <apex:actionFunction action="{!updatePanels}" name="updatePanels" rerender="headerMessage" oncomplete="rrAllP();">
+              <apex:param name="jsonUpdate" value="" />
+              <apex:param name="jsrank" value="" />
+          </apex:actionFunction>
+          <apex:actionFunction action="{!updateRanks}" name="updateRanksAF" rerender="headerMessage" oncomplete="addSortable(); hideSpinner();">
+              <apex:param name="jsrank" value="" />
+          </apex:actionFunction>
+          <apex:actionFunction action="{!savePanelState}" name="updatePanelStateAF" reRender="xxx" oncomplete="addSortable(); hideSpinner();">
+              <apex:param name="jsstate" value="" />
+          </apex:actionFunction>    
+          <apex:actionFunction action="{!refreshState}" name="switchState" reRender="allPanels" oncomplete="addSortable();updatePanelState();hideSpinner();" status="renderLightningSpinner">
+          </apex:actionFunction>   
+          <apex:actionFunction action="{!addNewConfig}" name="addNewConfigAF" reRender="configList" oncomplete=" closeStateModal(); ">
+              <apex:param name="sName" value=""/>
+          </apex:actionFunction>  
+          <apex:actionFunction action="{!removeConfig}" name="removeConfigAF" reRender="allPanels,configList" oncomplete="addSortable();"/>
+          <apex:actionStatus id="renderLightningSpinner" rendered="true" onstart="showSpinner();" onstop="hideSpinner();">
+          </apex:actionStatus>
+          <apex:actionFunction name="rrAllP" rerender="allPanels" oncomplete="addSortable(); hideSpinner();"/>
+        <div class="slds-grid" >
+        
+          <div class="slds-col slds-has-flexi-truncate">
+            <div class="slds-media slds-no-space slds-grow">
+              <div class="slds-media__figure">
+                <span class="slds-icon_container slds-icon-standard-opportunity">
+                  <svg class="slds-icon slds-icon-custom-96" aria-hidden="true" >
+                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/custom-sprite/svg/symbols.svg#custom96')}"></use>
+                  </svg>
+                </span>
+              </div>
+              <div class="slds-media__body">
+                <table>
+                  <tr>
+                    <td style="width: 130px !important;">
+                        <p class="slds-text-body_small slds-line-height_reset" style="padding-bottom: 2px;">
+                          {!$label.WorkManager_Title}
+                        </p>
+                    </td>
+                    <td rowspan="2">
+                      <apex:outputPanel layout="block" id="createState">   
+                            <button style="margin: 5px; margin-bottom: 0px; margin-right: 0px !important;" class="slds-button slds-button_neutral" 
+                            onclick="openStateModal(); return false;">{!$label.WorkManager_NewButton}</button>
+                            <button style="margin: 5px; margin-bottom: 0px; margin-left: 0px !important;" class="slds-button slds-button_neutral" 
+                            onclick="removeConfig(); return false;">{!$label.WorkManager_Button_Remove}</button>                            
+                        </apex:outputPanel>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <p>
+                            <apex:outputPanel layout="block" id="configList">   
+                                 <apex:selectList id="configName" value="{!pTypeSelected}" multiselect="false" size="1" styleClass="stateList" onchange="showSpinner(); switchState($copado(this).val());">
+                                    <apex:selectOptions value="{!availablePanelStates}"/>
+                                </apex:selectList>    
+                            </apex:outputPanel>
+                        </p>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="slds-col slds-no-flex slds-grid slds-align-top">
+            <div class="slds-button-group stick-button" role="group" >
+                <table>
+                  <tr>
+                    <td>
+                <apex:selectList id="relatedObjects" value="{!relString}" multiselect="false" size="1" onchange="showSpinner(); $copado('[id$=\'iField\']').val(''); reRenderInput(); return false;" style="margin-left: 0px; width: 100%;">
+                    <apex:selectOptions value="{!usRelations}"/>
+                </apex:selectList>  
+                    </td>
+                    <td rowspan="2" style="vertical-align: bottom;">
+                      <apex:outputPanel layout="block" id="createPanel">   
+                            <button style="margin-left: 5px;" class="slds-button slds-button_neutral" 
+                            onclick="createNewPanelJS($copado('[id$=\'iField_lkid\']').val(),$copado('[id$=\'relatedObjects\']').val()); return false;">{!$label.WorkManager_Button_AddPanel}</button>
+                        </apex:outputPanel>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <apex:outputPanel layout="block" id="panelInput">          
+                       <apex:inputField value="{!auxUS[relString]}" rendered="{!AND(relString != '', !CONTAINS(relString,'Status__c'))}" style="margin-left: 0px;" id="iField"/>
+                        <apex:selectList value="{!statusSelected}" multiselect="false" size="1" rendered="{!AND(relString != '', CONTAINS(relString,'Status__c') )}" style="margin-left: 0px; width: 100%;">
+                            <apex:selectOptions value="{!usStatus}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                    </td>
+                  </tr>
+                </table>
+            </div>
+          </div>            
+        </div>
+          <apex:outputPanel id="messages" layout="block" ondblclick="$copado(this).hide();">
+            <apex:pageMessages id="headerMessage"/>
+          </apex:outputPanel>          
+        </apex:form> 
+      </div>  
+    </apex:outputPanel>
+
+    <apex:outputPanel id="body" layout="block" styleClass="copado-lightning-container copado-lightning-radius" style="background: none;">
+
+    <apex:outputPanel layout="block" id="allPanelsContainer">   
+
+    <apex:outputPanel layout="block" id="allPanels" styleClass="allP" style="width: 100%; overflow: hidden;">   
+    <apex:repeat value="{!wpList}" var="wp">  
+    <apex:outputPanel layout="block" html-data-id="{!if(wp.recordId != null,wp.recordId,wp.title)}" html-data-ptype="{!wp.ptype}" StyleClass="slds-grid panel-div" rendered="{!!wp.hidden}" style="height: 300px;overflow-y: scroll;">
+      <div class="slds-panel slds-grid slds-grid_vertical slds-nowrap">
+        <div class="slds-form slds-form_stacked slds-grow slds-scrollable_y">
+          <div class="slds-panel__section slds-border_bottom">
+            <div class="slds-media">
+              <div class="slds-media__body">
+                <div class="slds-button-group slds-m-top_small slds-float_left" role="group">
+                    <ul>
+                        <li id="btn-columns">
+                              <div class="slds-dropdown-trigger slds-dropdown-trigger_click" style="display: flex !important;">
+                                <button class="slds-button slds-button_icon " title="Show/Hide Columns" aria-haspopup="true" onclick="$copado(this).parent().toggleClass('slds-is-open');" style="width: 20px; height: 20px;">
+                                  <svg class="slds-button__icon" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                                  </svg>
+                                  <span class="slds-assistive-text">Show More</span>
+                                </button>
+                                <div class="slds-dropdown slds-dropdown_left slds-dropdown_small" style="">
+                                  <ul class="slds-dropdown__list" role="menu">
+                                    <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Work_Manager_Columns}" var="f">
+                                        <li class="{!if(wp.rColumns[f.FieldPath],'slds-dropdown__item slds-is-selected','slds-dropdown__item')}" role="presentation" data-id="{!f.FieldPath}">
+                                          <a href="javascript:void(0);" role="menuitemcheckbox" aria-checked="true" tabindex="0" onclick="toggleColumnJS($copado(this));">
+                                            <span class="slds-truncate" title="Menu Item One">
+                                            <svg class="slds-icon slds-icon_selected slds-icon_x-small slds-icon-text-default slds-m-right_x-small" aria-hidden="true">
+                                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#check')}"></use>
+                                            </svg>{!f.label}
+                                            </span>
+                                          </a>
+                                        </li>
+                                    </apex:repeat>
+                                  </ul>
+                                </div>
+                              </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="slds-button-group slds-m-top_small slds-float_right" role="group" style="padding-right: 2px;">
+                  <button class="close-button" onclick="showSpinner(); hidePanelJS($copado(this));">&#10006;</button>
+                </div>              
+                <h2 class="slds-truncate slds-text-heading_small handle_panel " style="text-align: center; line-height: unset">
+                  <a onclick="sforce.one.editRecord('{!wp.recordId}'); return false;">{!$ObjectType.User_Story__c.Fields[wp.pType].Label}: {!wp.title}</a>
+                </h2>
+                <input class="searchInput slds-input" value="Search..." style="width: 100%; height: 24px !important; min-height: 0px;" />
+              </div>
+            </div>
+          </div>
+          <div class="slds-panel__section">
+            <table class="slds-table slds-table_bordered">
+              <thead>
+                <tr class="slds-text-title_caps">
+                  <th scope="col">
+                    <div class="slds-truncate" title="Move"></div>
+                  </th>     
+                  <th scope="col" class="slds-text-align_right">
+                    <div class="slds-truncate" title="select">
+                        <input onchange="selectAll($copado(this));" type="checkbox" class="checkbox-container slds-checkbox slds-checkbox_faux"/>
+                    </div>
+                  </th>
+                      <th scope="col">
+                    <div class="slds-truncate" title="Move"></div>
+                  </th>  
+                  <th scope="col">
+                    <div class="slds-truncate" title="{!$label.WorkManager_TableHeader_Name}">{!$label.WorkManager_TableHeader_Name}</div>
+                  </th>
+                      <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Work_Manager_Columns}" var="ch">
+                        <th scope="col" style="{!if(!wp.rColumns[ch.FieldPath],'display: none;','')}" data-col="{!ch.FieldPath}">
+                          <div class="slds-truncate" title="{!ch.label}">{!ch.label}</div>
+                        </th>
+                      </apex:repeat>
+                </tr>
+              </thead>
+              <tbody class="connectedSortable" style="overflow-y: scroll;">
+                    <tr class="sort-disabled">
+                      <td style="display: none;"></td>
+                      <!-- <td/><td/><td/> -->
+                      <!-- <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Work_Manager_Columns}" var="cb"> -->
+                      <!-- <td class="sort-disabled" style="{!if(!wp.rColumns[cb.FieldPath],'display: none;','')} ">
+                          <input class="searchInput" value="Type To Filter" style="width: 100%;" />
+                      </td> -->
+                <!--       <td class="sort-disabled">
+                          <input class="searchInput" value="Type To Filter" style="width: 100%;" />
+                      </td>  -->                     
+                      <!-- </apex:repeat> -->
+                    </tr>
+                <apex:repeat value="{!wp.usList}" var="u">  
+                    <tr data-usid="{!u.us.Id}"> 
+                      <td data-label="Account Name">
+                        <div class=" slds-truncate row_handle" style="cursor:pointer;" title="" >&#9776;</div>
+                      </td>     
+                        <td class="slds-text-align_right" role="gridcell">
+                            <input type="checkbox" name="options" id="checkbox-{!u.us.Id}-{!wp.recordId}"  value="on" onclick="$copado(this).closest('tr').toggleClass('selectedCheck');"/>
+                        </td>
+                        <td scope="row">
+                        <div class="slds-truncate"><a target="_blank" href="/{!u.us.Id}">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#new_window')}"></use>
+                            </svg></a>
+                        </div>
+                        </td>
+                        <td scope="row">
+                            <div class="slds-truncate"><a href="/{!u.us.Id}/e?saveURL=apex/{!ns}WorkManager">{!u.us.Name}</a></div>
+                        </td>
+                      <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Work_Manager_Columns}" var="cb">
+                          <td style="{!if(!wp.rColumns[cb.FieldPath],'display: none;','')}" data-col="{!cb.FieldPath}">
+                            <div class="slds-truncate panel-column" title="{!u.us[cb.FieldPath]}">
+                                <apex:outputField value="{!u.us[cb.FieldPath]}" />
+                            </div>
+                          </td>
+                      </apex:repeat>
+                    </tr>
+                </apex:repeat>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </apex:outputPanel>
+    </apex:repeat>
+    </apex:outputPanel>
+  </apex:outputPanel>
+  </apex:outputPanel>
+
+  <apex:outputPanel layout="block" id="sModal" style="display: none;">
+      <div >
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <header class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick="closeStateModal(); return false;">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#close')}"></use>
+                    </svg>
+                <span class="slds-assistive-text"></span>
+              </button>
+              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!$label.WorkManager_Config_Header}</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="text-align: center;">
+              <p>
+                  <label for="textConfiguration">{!$label.WorkManager_Config_Label_Name}</label>
+                  <input type="text" name="fname" id="textConfiguration"/>
+              </p>
+            </div>
+              <footer class="slds-modal__footer">
+                  <button class="slds-button slds-button_brand" onclick="addNewConfig($copado('#textConfiguration').val()); return false;">{!$label.WorkManager_Config_Button_Save}</button>
+              </footer>                          
+          </div>
+        </section>
+      </div>
+      <div class="slds-backdrop slds-backdrop_open" id="USbackdrop"></div>
+  </apex:outputPanel>
+</div>  
+</apex:outputPanel>
+
+<script type="text/javascript">
+    $copado( document ).ready(function() {
+      addSortable();
+      applyClassic();
+      //Added to Save State if never configured
+      updatePanelState();
+      //Remove Spinner
+      $copado('.slds-spinner_container').removeClass('slds-show');
+      $copado('.slds-spinner_container').addClass('slds-hide');        
+      bindFilterLogic();
+    });    
+
+    function hidePanelJS(a){
+      if(a){
+        var b = a.closest('.panel-div').data('id');
+        var c = a.closest('.panel-div').data('ptype');
+        console.info('hidePanelJS:::',b,c);
+        hidePanel(b,c);
+      }
+    }
+    
+    function createNewPanelJS(lkid, lkold){
+        //This means nothing has been selected
+        console.info('createNewPanelJS:::',lkid,lkold);
+        if (lkid === "000000000000000" || lkid === "") {
+            alert('{!$Label.WorkManager_Alert_NoRecord}');
+        } else if (lkold !== undefined){
+            showSpinner();
+            createNewPanel(lkid,lkold);
+            return false;
+        } else {
+          alert('Please select proper data');
+        }
+    }
+
+
+    //fixed bug US-0001702 When I roll over a user name, the information window is opened in another location, not beside the user name.
+     $copado('a[id^="lookup"]').hover(
+       function() {
+        var l = $copado(this).offset();
+        var aId = $copado(this).attr('id');
+		var checkExist = setInterval(function() {
+   		if ($copado('div[id="'+aId+'Hover"]').is(":visible")) {
+      			$copado('div[id="'+aId+'Hover"]').offset(l);
+       			clearInterval(checkExist);
+   			}
+		}, 10); // check every 100ms
+                 
+      }, function() {
+       		 var l = $copado(this).offset();
+             var aId = $copado(this).attr('id');
+      }
+		);
+    
+      
+
+     
+    
+
+    function removeConfig(){
+        if($copado('[id$="configName"]').val() == 'Default'){
+          alert('{!$Label.WorkManager_Alert_NoDelDefault}');
+        }else{
+          if (confirm('{!$Label.WorkManager_Alert_AreYouSure}') == true) {
+              removeConfigAF();
+          }          
+        }
+
+    }
+
+    function addNewConfig(sName){
+      if(sName !== '' && sName !== undefined){
+        addNewConfigAF(sName);
+      }
+    }    
+
+    function openStateModal(){
+      $copado('[id$="sModal"]').show();
+
+      //only alphaNumeric for ConfigName
+        $copado('#textConfiguration').keypress(function (e) {
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            if ((regex.test(str) && e.charCode != 229 && !e.charCode != 221) || e.charCode == 32) {
+                return true;
+            }
+            e.preventDefault();
+            return false;
+        });
+        $copado('#textConfiguration').focus();
+
+    }
+    function closeStateModal(){
+      $copado('[id$="sModal"]').hide();
+      updatePanelState();
+      $copado('#textConfiguration').val("");
+    }        
+
+    function updateRanksJS(){      
+        var getRanks =   updateRanks();
+        setTimeout(function(){ 
+            updateRanksAF(getRanks); 
+          }, 
+        100);
+    }
+
+    function updateRanks(){     
+        var jsonData = {    
+            logIds : [],
+            burnerIds : [],
+            sprintWithOrder : [],
+        };
+        $copado('.panel-div[data-id="Backlog"] tbody tr:not(.sort-disabled)').each(function() {
+            jsonData.logIds.push($copado(this).data('usid'));
+        });
+        $copado('.panel-div[data-id="Backburner"] tbody tr:not(.sort-disabled)').each(function() {
+            jsonData.burnerIds.push($copado(this).data('usid'));
+        });
+        $copado('.panel-div[data-ptype$="Sprint__c"]').each(function() {
+            var sprintWithOrder = {
+                sId : '',
+                usIds : []
+            } 
+            sprintWithOrder.sId = $copado(this).data('id');
+            $copado(this).find('tbody tr:not(.sort-disabled)').each(function() {
+                sprintWithOrder.usIds.push($copado(this).data('usid'));
+            });
+            jsonData.sprintWithOrder.push(sprintWithOrder);
+        });
+        console.info('updateRanks:::',jsonData);
+        return JSON.stringify(jsonData);        
+    }
+
+    function selectAll(ch){
+        var allch = ch.closest('table').find('input:visible');
+        var alltr = ch.closest('table').find('tbody tr:not(.sort-disabled):visible');
+            if (ch.prop("checked")) {
+              allch.prop("checked", true);
+              alltr.addClass('selectedCheck');
+            }else{
+              allch.prop("checked", false);
+              alltr.removeClass('selectedCheck');
+            }      
+      }
+
+    function applyClassic(){
+      if({!($User.UIThemeDisplayed!='Theme3')} == false){
+          $copado('#theHeader').css('position', 'unset');
+          $copado('[id$="allPanelsContainer"]').css('margin-top', '0px');
+
+      }else{
+          $copado('[id$="allPanelsContainer"]').css('margin-top', '107px');
+          $copado('#theHeader').css('width','calc(100% - 24px)');  
+      }      
+    }
+
+    function updatePanelState(){
+
+        var panelData = {    
+            pName : '', //to be filled by controller property
+            pWrappers : []
+        };
+        var visiblePanels = $copado('.panel-div');
+
+        visiblePanels.each(function() {
+            console.log('updatePanelState:::visiblePanels',$copado(this));
+            var pWrappers = {
+                pId : '',
+                pType : '',
+                columns : []
+            };
+            pWrappers.pId = $copado(this).data('id');
+            pWrappers.pType = $copado(this).data('ptype');
+            console.log('updatePanelState:::visiblePanels',pWrappers.pId,pWrappers.pType);
+            var varVisibleCols = $copado(this).find('.slds-is-selected');
+            console.log('updatePanelState:::visiblePanels',varVisibleCols);
+            varVisibleCols.each(function() {
+              console.log('updatePanelState:::visiblePanels:::varVisibleCols',$copado(this));
+              if($copado(this).data('id')){
+                var c = $copado(this).data('id');    
+                pWrappers.columns.push(c);   
+              }
+            });
+            panelData.pWrappers.push(pWrappers);
+        });
+        console.info('updatePanelState:::',panelData);
+        var myJSON = JSON.stringify(panelData);
+        updatePanelStateAF(myJSON);
+    }
+
+     function addSortable(){
+        //Sortable for Panels
+        $copado(function() {
+            $copado( ".allP" ).sortable({
+                axis: "x",
+                cursor: "move",
+                opacity: 0.5,
+                placeholder: "sortable-placeholder",
+                handle: ".handle_panel",
+                helper: "clone",
+                scroll: true,
+                update:function(event, ui) {
+                  showSpinner();
+                  updatePanelState();
+                }
+            }).disableSelection();
+        });
+        //Sortable for Rows
+        $copado(function() {
+            $copado( ".connectedSortable" ).sortable({
+            connectWith: ".connectedSortable",
+            containment: ".allP",
+            cursor: '-webkit-grabbing',
+            handle: ".row_handle",
+            items: ">*:not(.sort-disabled)",
+            scroll: true,
+            helper: function(e, item){
+                if(!item.hasClass('selectedCheck')){
+                   item.addClass('selectedCheck').siblings().removeClass('selectedCheck');
+                }
+                var elements = item.parent().children('.selectedCheck').clone();
+                item.data('multidrag', elements).siblings('.selectedCheck').remove();
+
+                var helper = $copado('<tr/>');
+                var rhelper = helper.append(elements);
+                rhelper.css('width', '5px').css('height', '5px').css('display', 'block');
+                return rhelper;
+            },
+            start: function( event, ui ) { 
+              $copado(ui.item).addClass("draggedItems");
+            },
+            change: function(event, ui) {
+                ui.placeholder.css({visibility: 'visible'});
+            },
+            update:function(event, ui) {
+                //If is being moved from one panel to another
+                if(ui.sender){
+                    var elements = ui.item.data('multidrag');
+                    var jsonData = {    
+                        sId : '',
+                        tId : '',
+                        stype : '',
+                        ttype : '',
+                        usIds : []
+                    };
+                    var s =  $copado(ui.sender).closest('.panel-div');
+                    var t =  $copado(event.target).closest('.panel-div');
+                    var sourceId = s.data('id');
+                    var targetId = t.data('id');
+                    var pS = s.closest('.panel-div').data('ptype');
+                    var pT = t.closest('.panel-div').data('ptype');
+                    jsonData.sId = sourceId;
+                    jsonData.tId = targetId;
+                    jsonData.stype = pS;
+                    jsonData.ttype = pT;
+                    for (i = 0; i < elements.length; i++) { 
+                        jsonData.usIds.push($copado(elements[i]).data('usid'));
+                    }
+                    var myJSON = JSON.stringify(jsonData);
+                    showSpinner();
+                    console.log('addSortable:::update',myJSON);
+                    setTimeout(function(){ 
+                      var getRanks = updateRanks();
+                      console.log('addSortable:::update-getRanks',getRanks);
+                      updatePanels(myJSON,getRanks); }
+                    , 1000);
+                    
+                }else{
+                    var b = $copado(this).closest('.panel-div').data('id');
+                    var c = $copado(this).closest('.panel-div').data('ptype');
+                    var a = $copado(event)[0].target;
+                    var ajs = $copado(a).closest('.panel-div').data('id');
+                    if(b == ajs && (b == 'Backlog' || b == 'Backburner' || c.includes("Sprint__c") )){
+                        showSpinner();
+                        var getRanks =   updateRanks();
+                        setTimeout(function(){ updateRanksAF(getRanks); }, 100);
+                    }            
+                }
+            },
+            receive: function(event, ui) {
+                var sourceList = ui.sender;
+                var targetList = $copado(this);
+            },
+            stop: function(e, ui){
+                var elements = ui.item.data('multidrag');
+                elements.removeClass('selectedCheck');
+                $copado(':checkbox').prop('checked', false);
+                elements.find('input').prop('checked', false);
+                ui.item.after(elements).remove(); 
+
+            }}).disableSelection();
+        });
+        applyClassic();
+        bindFilterLogic();
+     }
+     /*
+     To avoid focus on first input
+      */
+    function setFocusOnLoad() {}
+
+    function showSpinner(){
+      $copado('.slds-spinner_container').removeClass('slds-hide');
+      $copado('.slds-spinner_container').addClass('slds-show');  
+      var winWidth = $copado(document).width();
+      var winHeight = $copado(document).height();
+      $copado('.slds-spinner_container').css({ 'width': winWidth,'height': winHeight});
+    }
+     
+    function hideSpinner(){                 
+        $copado('.slds-spinner_container').removeClass('slds-show');
+        $copado('.slds-spinner_container').addClass('slds-hide');    
+    }
+
+    function toggleColumnJS(col){
+      
+      var a = col.parent().data('id');
+      col.parent().toggleClass("slds-is-selected");
+      var b = col.closest('.panel-div');
+      var thtd = b.find($copado('[data-col="'+a+'"]')).toggle();;
+      var c = col.closest('.panel-div').data('ptype');
+      console.log('toggleColumnJS:::'+col,a,b,c);
+      updatePanelState();
+    }
+
+    function bindFilterLogic(){
+      $copado(".searchInput").keyup(function () {
+          //split the current value of searchInput
+          var data = this.value.split(" ");
+          //create a jquery object of the rows
+          var jo = $copado(this).closest('.panel-div').find('tbody tr:not(.sort-disabled)');
+          if (this.value == "") {
+              jo.show();
+              return;
+          }
+          //hide all the rows
+          jo.hide();
+
+          //Recusively filter the jquery object to get results.
+          jo.filter(function (i, v) {
+              var $t = $copado(this);
+              for (var d = 0; d < data.length; ++d) {
+                  if ($t.is(":contains('" + data[d] + "')")) {
+                      return true;
+                  }
+              }
+              return false;
+          })
+          //show the rows that match.
+          .show();
+      }).focus(function () {
+          this.value = "";
+          $copado(this).css({
+              "color": "black"
+          });
+          $copado(this).unbind('focus');
+      }).css({
+          "color": "#C0C0C0"
+      });
+    }
+
+    //Override to ignore case
+    jQuery.expr[':'].contains = function(a, i, m) {
+      return jQuery(a).text().toUpperCase()
+          .indexOf(m[3].toUpperCase()) >= 0;
+    };
+
+</script>
+</body>
+</html>
+</apex:page>

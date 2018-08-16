@@ -1,0 +1,23 @@
+<apex:page controller="POCTreeController" >
+
+  <h1>Congratulations</h1>
+  This is your new Page: POCTest
+<script>
+                                                function callGetWTeams(){
+                                                var data = new Array();
+                                                var json = {"ids" : data};
+                                                data.push("a4l6C000000Gu8ZQAS");
+                                                    Visualforce.remoting.Manager.invokeAction(
+                                                                '{!$RemoteAction.POCTreeController.checkNodes}',json, 'NullificationException', 
+                                                                function(result, event){
+                                                                    if (event.status) {
+                                                                        console.log(result);
+                                                                    }
+                                                                }, 
+                                                                {escape: false}
+                                                            );
+
+                                                }
+                                            </script>
+                                            <input type="button" onclick="callGetWTeams();" value="Test" />
+</apex:page>

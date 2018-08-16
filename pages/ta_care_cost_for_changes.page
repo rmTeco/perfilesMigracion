@@ -1,0 +1,71 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0" controller="BillingGroupCloseCaseController">
+    {!algo}
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="CostforChanges">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+            strOmniScriptSubType="Cost For Changes"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('CostforChanges', modules);
+            
+            myModule.controller('addLineItemsToOrdersController', addLineItemsToOrdersController);
+            addLineItemsToOrdersController.$inject = ['$scope'];
+
+            function addLineItemsToOrdersController($scope) {
+                this.addLineItemsToOrders = addLineItemsToOrders;
+                
+                function addLineItemsToOrders(bpTree) {
+                    var method = 'BillingGroupCloseCaseController.addLineItemToOrder';
+                    var orders = bpTree.response.Orders; 
+                    var priceBookId = bpTree.response.PriceBookId;
+
+                    for (var i = 0; i < orders.length; i++) {
+                        var order = orders[i];
+                        var orderId = order.OrderId;
+                        var productCode = order.ProductCode;
+                        
+                        Visualforce.remoting.Manager.invokeAction(
+                            method,
+                            orderId,
+                            priceBookId,
+                            productCode,
+                            function(result, event) {
+                                console.info('result', result);
+                                console.info('OrderId', result.result.records[0].actions.addtocart.remote.params.cartId);
+                                console.info('UnitPrice', result.result.records[0].fields.UnitPrice.value);
+                                console.info('OneTimeCharge', result.result.records[0].fields.vlocity_cmt__OneTimeCharge__c.value);
+                                console.info('OrderItemId', result.result.records[0].fields.Id.value);
+
+                                var orderIdCallBack = result.result.records[0].actions.addtocart.remote.params.cartId;
+                                var unitPrice = result.result.records[0].fields.UnitPrice.value;
+                                var oneTimeCharge = result.result.records[0].fields.vlocity_cmt__OneTimeCharge__c.value;
+                                var orderItemId = result.result.records[0].fields.Id.value;
+
+                                var orderInstance = orders.find(function(order) {
+                                    return order.OrderId == orderIdCallBack;
+                                });
+
+                                var orderItems = [];
+                                orderItems.push({"OrderItemId": orderItemId});
+
+                                orderInstance.UnitPrice = unitPrice;
+                                orderInstance.OneTimeCharge = oneTimeCharge;
+                                orderInstance.OrderItems = orderItems;
+
+                                $scope.$apply();  
+                            },
+                            {escape: false} // No escaping, please
+                        );
+                    }
+                }
+            }
+        </script>
+    <link rel="stylesheet" href="/resource/ta_slds_os/slds_os.min.css"/>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

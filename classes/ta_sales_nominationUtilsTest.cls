@@ -16,7 +16,7 @@ public with sharing class ta_sales_nominationUtilsTest {
         insert priceList;
         
         Id pricebookId = Test.getStandardPricebookId();
-        Order ord = new Order(AccountId = acc.Id, Status = 'Draft', EffectiveDate = Date.today(), Pricebook2Id = pricebookId);
+        Order ord = new Order(AccountId = acc.Id, Status = 'Draft', EffectiveDate = Date.today(), Pricebook2Id = pricebookId, vlocity_cmt__OriginatingChannel__c ='Agentes',Delivery_Method__c ='Presencial');
         system.debug(ord);
         insert ord;
         

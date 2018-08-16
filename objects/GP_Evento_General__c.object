@@ -61,13 +61,37 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Descripci_n_del_evento__c</fullName>
+        <fullName>Descripcion_del_evento__c</fullName>
         <externalId>false</externalId>
         <label>Descripción del evento</label>
         <length>32768</length>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>7</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Frecuencia_del_evento__c</fullName>
+        <externalId>false</externalId>
+        <label>Frecuencia del evento</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Diaria</fullName>
+                    <default>false</default>
+                    <label>Diaria</label>
+                </value>
+                <value>
+                    <fullName>Semanal</fullName>
+                    <default>false</default>
+                    <label>Semanal</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <label>GP Evento General</label>
     <listViews>

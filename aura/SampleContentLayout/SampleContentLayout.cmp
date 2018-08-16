@@ -1,0 +1,15 @@
+<aura:component implements="forceCommunity:layout" description="Sample Content Layout - 2 Columns" access="global">
+    <aura:attribute name="column1" type="Aura.Component[]" required="false"></aura:attribute>
+    <aura:attribute name="column2" type="Aura.Component[]" required="false"></aura:attribute>
+
+    <div class="container">
+        <div class="contentPanel">
+            <div class="left">
+                {!v.column1}
+            </div>
+            <div class="right">
+                {!v.column2}
+            </div>
+        </div>
+    </div>
+</aura:component>

@@ -28,7 +28,7 @@
             <name>vlocity_cmt__AssetRefIdForQLIUpdate</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>false</active>
+        <active>true</active>
         <formula>$Setup.vlocity_cmt__RunTriggerAndWorkFlow__c.vlocity_cmt__AllowWorkflow__c &amp;&amp; ( LOWER(vlocity_cmt__ProvisioningStatus__c) == &apos;new&apos; || LOWER(vlocity_cmt__ProvisioningStatus__c) == &apos;pendinginsert&apos;)</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>

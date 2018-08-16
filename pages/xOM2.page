@@ -1,0 +1,146 @@
+<apex:page showHeader="true" sidebar="true" controller="xOMReproPostImportReportController" tabStyle="XOMBatchLineJob__c">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script src="{!URLFOR($Resource.jquery_vfFloatingHeaders)}"></script>
+    
+    <apex:sectionHeader title="Repro Post Import Report" subtitle="Imported and processed repro lines" />
+    <script>
+        $(document).ready(function() {
+            $('.floatingHeaderTable').vfFloatingHeaders();
+        });
+        <link href="/salesforce/assets/styles/salesforce-lightning-design-system.min.css" rel="stylesheet" type="text/css">
+
+    function highlightElem(elem){  
+        $('tr').removeClass('ui-state-active');
+        $(elem).parent().addClass('ui-state-active');  
+     } 
+
+
+    function toggleHighLight(thisEle){ ele = thisEle;
+        var elem = thisEle.parentNode.parentNode;
+
+        if(elem.style.backgroundColor == '')
+            elem.style.backgroundColor = '#F5F507';
+        else
+            elem.style.backgroundColor = '';
+    }
+
+
+
+
+
+
+    </script>
+    <style type="text/css">
+    
+   
+    .Hder
+        {
+            position:sticky;
+           top:0px;
+        }  
+     
+    
+        .tableContainer
+        {
+            height:290px; 
+            width: 100%;
+            overflow: auto;
+         
+        }  
+
+         .tableContainer2
+        {
+            height:190px; 
+            width: 100%;
+            overflow: auto;
+        }      
+        .floatingStyle 
+        { 
+            width:100%;
+            color:#CCC;
+            background:#333;
+            padding:8px;
+         }
+
+        .apexp .detailList .list .headerRow th {
+        white-space: normal;
+        } 
+
+        tr:nth-child(even) {background-color: #f2f2f2;}
+        
+        .ui-state-active{
+        border: 1px solid #fbd850;
+        background: #ffffff;
+        font-weight: bold;
+        color: #eb8f00;
+        }
+        
+         .highlight
+        {
+            background-color: #C1C01A;
+        /* I think outputText users 
+        }
+        
+    </style>
+  <apex:form >
+   <apex:inlineEditSupport event="onclick"/>
+        <apex:pageBlock id="thePageBlock" title="Repro lines">
+            <apex:pageBlockButtons location="top">               
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection id="resumenSection" title="Resumen " columns="17"> 
+            <apex:outputPanel onClick="this.style.backgroundColor='#7FFFD4'" styleClass="tableContainer" layout="block">    
+                
+                    <apex:pageBlockTable onRowClick="this.style.backgroundColor='#7FFFD4'"  value="{!reproLines}" var="reproLine" styleClass="floatingStyle !important"  >
+                        <apex:column headerValue="Lote Id" headerClass="Hder" onClick="highlightElem(this)" value="{!reproLine.loteId}"/>
+                        <apex:outputLabel styleClass="highlight" />
+                        <apex:column headerValue="Wholesale Account" headerClass="Hder">
+                            <apex:outputLink value="/{!reproLine.wholesaleAccount}" target="_blank">{!reproLine.wholesaleAccount}</apex:outputLink>
+                        </apex:column>
+                        <apex:column headerValue="# Total Lineas" headerClass="Hder"   value="{!reproLine.totalLineas}" onmouseover="this.style.backgroundColor='#7FFFD4'"/>
+                        <apex:column headerValue="# Ordenes Creadas" headerClass="Hder" value="{!reproLine.ordenesCreadas}"   />
+                        <apex:column headerValue="Fecha de inicio de Lote" headerClass="Hder" value="{!reproLine.initTimestamp}"/>
+                        <apex:column headerValue="# Ordenes c/Productos" headerClass="Hder" value="{!reproLine.ordenesConProductos}"/>
+                        <apex:column headerValue="# Ordenes Descompuestas" headerClass="Hder" value="{!reproLine.ordenesDescompuestas}"/>
+                        <apex:column headerValue="# Ordenes Activadas"  headerClass="Hder" value="{!reproLine.ordenesActivadas}"/>
+                        <apex:column headerValue="# Ordenes Fallidas"  headerClass="Hder" value="{!reproLine.ordenesFallidas}"/>
+                        <apex:column headerValue="% Ordenes Creadas" headerClass="Hder" value="{!FLOOR(reproLine.ordenesCreadas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes c/Productos" headerClass="Hder" value="{!FLOOR(reproLine.ordenesConProductos / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes Descompuestas" headerClass="Hder" value="{!FLOOR(reproLine.ordenesDescompuestas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes Activadas"  headerClass="Hder" value="{!FLOOR(reproLine.ordenesActivadas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="% Ordenes Fallidas"  headerClass="Hder" value="{!FLOOR(reproLine.ordenesFallidas / reproLine.totalLineas * 100)}%"/>
+                        <apex:column headerValue="Fecha de fin de Lote" headerClass="Hder" value="{!reproLine.endTimestamp}" onClick="this.style.backgroundColor='#7FFFD4'"/>
+                        <apex:column headerValue="Acción" headerClass="Hder"  onClick="toggleHighLight(this)" >
+                        <apex:outputLabel styleClass="highlight" />
+                      
+                            <apex:commandButton value="Ver Detalle"  style="toggleHighLight(this)" action="{!getLoteDetail}"  reRender="thePageBlock">
+                                <apex:param assignTo="{!selectedLoteId}" name="selectedLoteId"  value="{!reproLine.loteId}" />
+                            </apex:commandButton>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:outputPanel>
+                
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="loteDetailSection" title="Detalle de Lote:  {!selectedLoteId}" rendered="{!selectedLoteId!=NULL}" columns="1">
+                <apex:outputPanel styleClass="tableContainer2" layout="block">
+                <apex:pageBlockTable value="{!reproLinesLoteDetail.listOfLines}" var="loteLineDetail" width="100%">
+                    <apex:column headerValue="Orchetration Plan">
+                        <apex:outputLink value="/apex/vlocity_cmt__OrchestrationPlanViewCommon?id={!loteLineDetail.orchPlanId}" target="_blank">{!loteLineDetail.orchPlanId}</apex:outputLink>
+                    </apex:column>
+                    <apex:column headerValue="registro" value="{!loteLineDetail.registro}"/>
+                    <apex:column headerValue="Status Orden" value="{!loteLineDetail.statusOrden}"/>
+                    <apex:column headerValue="Orden Creada" value="{!loteLineDetail.ordenCreada}"/>
+                    <apex:column headerValue="Productos Añadidos" value="{!loteLineDetail.productosAdded}"/>
+                    <apex:column headerValue="Orden Descompuesta" value="{!loteLineDetail.ordenDescompuesta}"/>
+                    <apex:column headerValue="Orden Activada" value="{!loteLineDetail.ordenActivada}"/>
+                    <apex:column headerValue="Orden Fallida" value="{!loteLineDetail.ordenFallida}"/>
+                    <apex:column headerValue="Mensaje" value="{!loteLineDetail.mensaje}"/>
+                </apex:pageBlockTable>
+            </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+
+   
+
+</apex:page>

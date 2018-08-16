@@ -2,9 +2,41 @@ public class MarketingCloudAPIUtil {
     
     public static Boolean skipAPICall = false;
     
-    public static String getMCAccessToken()
+    public static MktgCloudAPISettings__c getMCAccessToken()
     {
         String token = '';
+        
+         List<MktgCloudAPISettings__c> mktgCloudAPISettings = MktgCloudAPISettings__c.getall().values();
+               
+        Map<String, String> params = new Map<String, String>();
+        params.put('clientId', mktgCloudAPISettings.get(0).ClientId__c);
+        params.put('clientSecret', mktgCloudAPISettings.get(0).ClientSecret__c );
+        
+        String jsonParams = JSON.serialize(params);
+        
+        Http h = new Http();
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(mktgCloudAPISettings.get(0).MktgAuthURL__c); 
+        req.setHeader('Content-Type','application/json'); 
+        req.setBody(jsonParams);
+        req.setMethod('POST'); 
+        
+        HTTPResponse res = h.send(req);
+        String responseBody = res.getBody();
+        
+        token = ((Map<String, String>) JSON.deserialize(responseBody, Map<String, String>.class)).get('accessToken');
+        
+        Decimal expiresIn = Decimal.valueOf(((Map<String, String>) JSON.deserialize(responseBody, Map<String, String>.class)).get('expiresIn'));
+        
+        mktgCloudAPISettings.get(0).MCAPIAccessToken__c = token;
+        mktgCloudAPISettings.get(0).tokenCreationDate__c = Datetime.now();
+        mktgCloudAPISettings.get(0).tokenDuration__c = expiresIn;
+        
+        return mktgCloudAPISettings.get(0);
+    }
+
+    public static Boolean isValidMCToken(){
+        Boolean isValidToken = true;
         List<MktgCloudAPISettings__c> mktgCloudAPISettings = MktgCloudAPISettings__c.getall().values();
         
         Decimal tokenDuration = mktgCloudAPISettings.get(0).tokenDuration__c;
@@ -14,43 +46,11 @@ public class MarketingCloudAPIUtil {
             diffInSecs = Decimal.valueOf(Datetime.now().getTime() - tokenCreationDate.getTime()) / 1000;
         }
         
-        if(!skipAPICall || tokenDuration == null || diffInSecs == 0 || diffInSecs >= tokenDuration || mktgCloudAPISettings.get(0).MCAPIAccessToken__c == null){
-            
-            Map<String, String> params = new Map<String, String>();
-            params.put('clientId', mktgCloudAPISettings.get(0).ClientId__c);
-            params.put('clientSecret', mktgCloudAPISettings.get(0).ClientSecret__c );
-            
-            String jsonParams = JSON.serialize(params);
-            
-            Http h = new Http();
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint(mktgCloudAPISettings.get(0).MktgAuthURL__c); 
-            req.setHeader('Content-Type','application/json'); 
-            req.setBody(jsonParams);
-            req.setMethod('POST'); 
-            
-            HTTPResponse res = h.send(req);
-            String responseBody = res.getBody();
-            
-            token = ((Map<String, String>) JSON.deserialize(responseBody, Map<String, String>.class)).get('accessToken');
-            
-            Decimal expiresIn = Decimal.valueOf(((Map<String, String>) JSON.deserialize(responseBody, Map<String, String>.class)).get('expiresIn'));
-            
-            /*mktgCloudAPISettings.get(0).MCAPIAccessToken__c = token;
-            mktgCloudAPISettings.get(0).tokenCreationDate__c = Datetime.now();
-            mktgCloudAPISettings.get(0).tokenDuration__c = expiresIn;
-            
-            //AsyncMktgAPISettingsUpdate asyncMktgSettingsUpdateJob = new AsyncMktgAPISettingsUpdate(mktgCloudAPISettings.get(0));
-            
-            //ID jobID = System.enqueueJob(asyncMktgSettingsUpdateJob);
-            
-            //updateMktgCloudAPISettings(token, Datetime.now(), expiresIn);
-            */
-            
-        } else {
-            token = mktgCloudAPISettings.get(0).MCAPIAccessToken__c;
-        }
-        return token;
+        if(tokenDuration == null || diffInSecs == 0 || diffInSecs >= tokenDuration || mktgCloudAPISettings.get(0).MCAPIAccessToken__c == null){ 
+            isValidToken = false;
+        } 
+
+        return isValidToken;
     }
     
     @future
@@ -67,27 +67,27 @@ public class MarketingCloudAPIUtil {
         
         String MCId = '';
         
-        //if(!skipAPICall){
-            Map<String, String> bodyParams = new Map<String, String>();
-            
-            bodyParams.put('name', campaign.Name);
-            bodyParams.put('description', campaign.descriptionMC);
-            bodyParams.put('campaignCode', campaign.campaignId);
-            bodyParams.put('favorite', 'false');
-            
-            String reqBody = JSON.serialize(bodyParams);
-            
-            Http h = new Http();
-            HttpRequest r = new HttpRequest();
-            r.setEndpoint('https://www.exacttargetapis.com/hub/v1/campaigns');  
-            r.setMethod('POST');
-            r.setHeader('Content-type','application/json');
-            r.setHeader('Authorization', 'Bearer '+accessToken);
-            r.setBody(reqBody);    
-            HttpResponse res = h.send(r);
-            
-            MCId = ((Map<String, String>) JSON.deserialize(res.getBody(), Map<String, String>.class)).get('id');		
-       // }
+        
+        Map<String, String> bodyParams = new Map<String, String>();
+        
+        bodyParams.put('name', campaign.Name);
+        bodyParams.put('description', campaign.descriptionMC);
+        bodyParams.put('campaignCode', campaign.campaignId);
+        bodyParams.put('favorite', 'false');
+        
+        String reqBody = JSON.serialize(bodyParams);
+        
+        Http h = new Http();
+        HttpRequest r = new HttpRequest();
+        r.setEndpoint('https://www.exacttargetapis.com/hub/v1/campaigns');  
+        r.setMethod('POST');
+        r.setHeader('Content-type','application/json');
+        r.setHeader('Authorization', 'Bearer '+accessToken);
+        r.setBody(reqBody);    
+        HttpResponse res = h.send(r);
+        
+        MCId = ((Map<String, String>) JSON.deserialize(res.getBody(), Map<String, String>.class)).get('id');		
+
         
         return MCId;
     }

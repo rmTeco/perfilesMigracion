@@ -32,21 +32,19 @@
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
+        <fullName>Marketing - Segment Name</fullName>
+        <active>false</active>
+        <formula>true</formula>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
         <fullName>UpdateAccountIntegrationIdWithFormula</fullName>
         <actions>
             <name>Update_AccountIntegration_Id</name>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>Account.AccountIntegrationFormula__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.AccountIntegrationFormula__c</field>
-            <operation>notEqual</operation>
-            <value>0</value>
-        </criteriaItems>
+        <formula>AND( NOT( ISNULL( AccountIntegrationFormula__c )), NOT( ISBLANK( AccountIntegrationFormula__c )))</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
 </Workflow>

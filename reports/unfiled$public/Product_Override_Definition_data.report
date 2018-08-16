@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>vlocity_cmt__OverrideDefinition__c$vlocity_cmt__OverrideType__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__OverrideDefinition__c$vlocity_cmt__IsExclude__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__OverrideDefinition__c$vlocity_cmt__ProductId__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__OverrideDefinition__c$Overrding_PCI_Child_Prod__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__OverrideDefinition__c$Overriden_PCI_Child_Prod__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Product Override Definition data</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Product_Override_Def__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>vlocity_cmt__OverrideDefinition__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

@@ -89,15 +89,14 @@ global with sharing class taSalesDATests implements vlocity_cmt.VlocityOpenInter
     */   
         Boolean result = false;
         try{
-            System.debug('orderId-' +  orderId);
             Order annulOrder = [SELECT Id, Status,StatusCode, TrackingStatus__c FROM Order WHERE Id = :orderId];
             
-            annulOrder.Status = 'Activated';
+            // annulOrder.Status = 'Activated';
             /* Se compenta hasta que funcione
             vlocity_cmt.SimpleDecompositionController.decomposeOrder(annulOrder.Id);
             vlocity_cmt.SimpleDecompositionController.startOrchestrationPlan(annulOrder.Id);
             */
-             System.debug('oldOrderId-' +  oldOrderId);
+
             Order oldOrder = [SELECT Status,StatusCode, TrackingStatus__c FROM Order WHERE Id = :oldOrderId];
             oldOrder.Status = 'Cancelled';
             oldOrder.TrackingStatus__c = 'Pendiente de Anulacion';
@@ -158,7 +157,6 @@ global with sharing class taSalesDATests implements vlocity_cmt.VlocityOpenInter
         // order.Account.AccountIntegrationId__c
 
         //Obtengo datos del Payment Adjustment
-        System.debug('IdOrder - '+ OrderId);
         vlocity_cmt__PaymentAdjustment__c padj = [SELECT 
         vlocity_cmt__PaymentMethodId__r.vlocity_cmt__ExpirationMonth__c, 
         vlocity_cmt__PaymentMethodId__r.vlocity_cmt__ExpirationYear__c,

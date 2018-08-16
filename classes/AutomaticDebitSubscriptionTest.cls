@@ -1,30 +1,30 @@
 @isTest
 private class AutomaticDebitSubscriptionTest {
-    
-    @isTest static void CreateTasksDebitActionAdhesion(){
-        //GIVEN
-        String methodName = 'CreateTasks';
+	
+	@isTest static void CreateTasksDebitActionAdhesion(){
+		//GIVEN
+		String methodName = 'CreateTasks';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-        
-        //debitAction
-        Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
-        String SelectedAutomaticDebitAction = 'Adhesion';
-        AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
-        
-        //BillingAccounts
-        List<Object> BillingAccounts = new List<Object>();
-        Account billingAccount = new Account();
-        billingAccount.Name = 'TestName';
-        insert billingAccount;
-        
-        Map<String,Object> billingAccountMap = new Map<String, Object>();
-        billingAccountMap.put('Name', billingAccount.Name);
-        billingAccountMap.put('Id', billingAccount.Id);
-        billingAccountMap.put('isSelected', true);
-        
+		
+		//debitAction
+		Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
+		String SelectedAutomaticDebitAction = 'Adhesion';
+		AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
+		
+		//BillingAccounts
+		List<Object> BillingAccounts = new List<Object>();
+		Account billingAccount = new Account();
+		billingAccount.Name = 'TestName';
+		insert billingAccount;
+		
+		Map<String,Object> billingAccountMap = new Map<String, Object>();
+		billingAccountMap.put('Name', billingAccount.Name);
+		billingAccountMap.put('Id', billingAccount.Id);
+		billingAccountMap.put('isSelected', true);
+		
         BillingAccounts.add(billingAccountMap);
         
         
@@ -45,15 +45,15 @@ private class AutomaticDebitSubscriptionTest {
         PaymentMethodsMap.put('Selected', true);
         
         Map<String,Object> paymentsMap = new Map<String,Object>();
-        paymentsMap.put('PaymentMethods', PaymentMethodsMap);
+		paymentsMap.put('PaymentMethods', PaymentMethodsMap);
         
         //Case
         Case caseObj = new Case(
-        AccountId = billingAccount.Id,
-        Status = 'Nueva',
-        Origin = 'Telefónico');
-        insert caseObj;
-        
+	    AccountId = billingAccount.Id,
+	    Status = 'Nueva',
+	    Origin = 'Telefónico');
+	    insert caseObj;
+		
         input.put('DRId_Case', caseObj.Id);
         input.put('PaymentMethod', paymentsMap);
         input.put('AutomaticDebitAction', AutomaticDebitAction);
@@ -64,7 +64,7 @@ private class AutomaticDebitSubscriptionTest {
         String Subject = 'Débito automático: ' + billingAccount.Id;
         
         //WHEN
-        Test.startTest();
+		Test.startTest();
         Boolean result = AutomaticDebitSubscription.invokeMethod(methodName, input, outMap, options);
         List<Task> taskList = [SELECT Id FROM Task WHERE Subject = :Subject AND Status = 'Not Started' AND WhatId = :caseObj.Id];
         Test.stopTest();
@@ -72,32 +72,32 @@ private class AutomaticDebitSubscriptionTest {
         //THEN
         System.assertEquals(false, result);
         System.assertEquals(1, taskList.size());
-    }
-    
-    @isTest static void CreateTasksDebitActionUpdate(){
-        //GIVEN
-        String methodName = 'CreateTasks';
+	}
+	
+	@isTest static void CreateTasksDebitActionUpdate(){
+		//GIVEN
+		String methodName = 'CreateTasks';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-        
-        //debitAction
-        Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
-        String SelectedAutomaticDebitAction = 'Update';
-        AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
-        
-        //BillingAccounts
-        List<Object> BillingAccounts = new List<Object>();
-        Account billingAccount = new Account();
-        billingAccount.Name = 'TestName';
-        insert billingAccount;
-        
-        Map<String,Object> billingAccountMap = new Map<String, Object>();
-        billingAccountMap.put('Name', billingAccount.Name);
-        billingAccountMap.put('Id', billingAccount.Id);
-        billingAccountMap.put('isSelected', true);
-        
+		
+		//debitAction
+		Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
+		String SelectedAutomaticDebitAction = 'Update';
+		AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
+		
+		//BillingAccounts
+		List<Object> BillingAccounts = new List<Object>();
+		Account billingAccount = new Account();
+		billingAccount.Name = 'TestName';
+		insert billingAccount;
+		
+		Map<String,Object> billingAccountMap = new Map<String, Object>();
+		billingAccountMap.put('Name', billingAccount.Name);
+		billingAccountMap.put('Id', billingAccount.Id);
+		billingAccountMap.put('isSelected', true);
+		
         BillingAccounts.add(billingAccountMap);
         
         
@@ -118,15 +118,15 @@ private class AutomaticDebitSubscriptionTest {
         PaymentMethodsMap.put('Selected', true);
         
         Map<String,Object> paymentsMap = new Map<String,Object>();
-        paymentsMap.put('PaymentMethods', PaymentMethodsMap);
+		paymentsMap.put('PaymentMethods', PaymentMethodsMap);
         
         //Case
         Case caseObj = new Case(
-        AccountId = billingAccount.Id,
-        Status = 'Nueva',
-        Origin = 'Telefónico');
-        insert caseObj;
-        
+	    AccountId = billingAccount.Id,
+	    Status = 'Nueva',
+	    Origin = 'Telefónico');
+	    insert caseObj;
+		
         input.put('DRId_Case', caseObj.Id);
         input.put('PaymentMethod', paymentsMap);
         input.put('AutomaticDebitAction', AutomaticDebitAction);
@@ -138,7 +138,7 @@ private class AutomaticDebitSubscriptionTest {
         String Subject = 'Débito automático: ' + billingAccount.Id;
         
         //WHEN
-        Test.startTest();
+		Test.startTest();
         Boolean result = AutomaticDebitSubscription.invokeMethod(methodName, input, outMap, options);
         List<Task> taskList = [SELECT Id FROM Task WHERE Subject = :Subject AND Status = 'Not Started' AND WhatId = :caseObj.Id];
         Test.stopTest();
@@ -146,32 +146,32 @@ private class AutomaticDebitSubscriptionTest {
         //THEN
         System.assertEquals(false, result);
         System.assertEquals(1, taskList.size());
-    }
-    
-    @isTest static void CreateTasksDebitActionStop(){
-        //GIVEN
-        String methodName = 'CreateTasks';
+	}
+	
+	@isTest static void CreateTasksDebitActionStop(){
+		//GIVEN
+		String methodName = 'CreateTasks';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();        
-        
-        //debitAction
-        Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
-        String SelectedAutomaticDebitAction = 'Stop';
-        AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
-        
-        //BillingAccounts
-        List<Object> BillingAccounts = new List<Object>();
-        Account billingAccount = new Account();
-        billingAccount.Name = 'TestName';
-        insert billingAccount;
-        
-        Map<String,Object> billingAccountMap = new Map<String, Object>();
-        billingAccountMap.put('Name', billingAccount.Name);
-        billingAccountMap.put('Id', billingAccount.Id);
-        billingAccountMap.put('isSelected', true);
-        
+		
+		//debitAction
+		Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
+		String SelectedAutomaticDebitAction = 'Stop';
+		AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
+		
+		//BillingAccounts
+		List<Object> BillingAccounts = new List<Object>();
+		Account billingAccount = new Account();
+		billingAccount.Name = 'TestName';
+		insert billingAccount;
+		
+		Map<String,Object> billingAccountMap = new Map<String, Object>();
+		billingAccountMap.put('Name', billingAccount.Name);
+		billingAccountMap.put('Id', billingAccount.Id);
+		billingAccountMap.put('isSelected', true);
+		
         
         
         //PaymentMethods
@@ -191,20 +191,20 @@ private class AutomaticDebitSubscriptionTest {
         PaymentMethodsMap.put('Selected', true);
         
         Map<String,Object> paymentsMap = new Map<String,Object>();
-        paymentsMap.put('PaymentMethods', PaymentMethodsMap);
-        
-        
-        //BillingAccounts (...complete)
-        billingAccountMap.put('AutoPaymentMethodIdFormula', PaymentMethods.Id);
+		paymentsMap.put('PaymentMethods', PaymentMethodsMap);
+		
+		
+		//BillingAccounts (...complete)
+		billingAccountMap.put('AutoPaymentMethodIdFormula', PaymentMethods.Id);
         BillingAccounts.add(billingAccountMap);
         
         //Case
         Case caseObj = new Case(
-        AccountId = billingAccount.Id,
-        Status = 'Nueva',
-        Origin = 'Telefónico');
-        insert caseObj;
-        
+	    AccountId = billingAccount.Id,
+	    Status = 'Nueva',
+	    Origin = 'Telefónico');
+	    insert caseObj;
+		
         input.put('DRId_Case', caseObj.Id);
         input.put('PaymentMethod', paymentsMap);
         input.put('AutomaticDebitAction', AutomaticDebitAction);
@@ -216,7 +216,7 @@ private class AutomaticDebitSubscriptionTest {
         String Subject = 'Débito automático: ' + billingAccount.Id;
         
         //WHEN
-        Test.startTest();
+		Test.startTest();
         Boolean result = AutomaticDebitSubscription.invokeMethod(methodName, input, outMap, options);
         List<Task> taskList = [SELECT Id FROM Task WHERE Subject = :Subject AND Status = 'Not Started' AND WhatId = :caseObj.Id];
         Test.stopTest();
@@ -224,32 +224,32 @@ private class AutomaticDebitSubscriptionTest {
         //THEN
         System.assertEquals(false, result);
         System.assertEquals(1, taskList.size());
-    }
-    
-    @isTest static void CreateTasksDebitActionDelete(){
-        //GIVEN
-        String methodName = 'CreateTasks';
+	}
+	
+	@isTest static void CreateTasksDebitActionDelete(){
+		//GIVEN
+		String methodName = 'CreateTasks';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();        
-        
-        //debitAction
-        Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
-        String SelectedAutomaticDebitAction = 'Delete';
-        AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
-        
-        //BillingAccounts
-        List<Object> BillingAccounts = new List<Object>();
-        Account billingAccount = new Account();
-        billingAccount.Name = 'TestName';
-        insert billingAccount;
-        
-        Map<String,Object> billingAccountMap = new Map<String, Object>();
-        billingAccountMap.put('Name', billingAccount.Name);
-        billingAccountMap.put('Id', billingAccount.Id);
-        billingAccountMap.put('isSelected', true);
-        
+		
+		//debitAction
+		Map<String,Object> AutomaticDebitAction = new Map<String,Object>();
+		String SelectedAutomaticDebitAction = 'Delete';
+		AutomaticDebitAction.put('SelectedAutomaticDebitAction', SelectedAutomaticDebitAction);
+		
+		//BillingAccounts
+		List<Object> BillingAccounts = new List<Object>();
+		Account billingAccount = new Account();
+		billingAccount.Name = 'TestName';
+		insert billingAccount;
+		
+		Map<String,Object> billingAccountMap = new Map<String, Object>();
+		billingAccountMap.put('Name', billingAccount.Name);
+		billingAccountMap.put('Id', billingAccount.Id);
+		billingAccountMap.put('isSelected', true);
+		
         
         
         //PaymentMethods
@@ -269,20 +269,20 @@ private class AutomaticDebitSubscriptionTest {
         PaymentMethodsMap.put('Selected', true);
         
         Map<String,Object> paymentsMap = new Map<String,Object>();
-        paymentsMap.put('PaymentMethods', PaymentMethodsMap);
-        
-        
-        //BillingAccounts (...complete)
-        billingAccountMap.put('AutoPaymentMethodIdFormula', PaymentMethods.Id);
+		paymentsMap.put('PaymentMethods', PaymentMethodsMap);
+		
+		
+		//BillingAccounts (...complete)
+		billingAccountMap.put('AutoPaymentMethodIdFormula', PaymentMethods.Id);
         BillingAccounts.add(billingAccountMap);
         
         //Case
         Case caseObj = new Case(
-        AccountId = billingAccount.Id,
-        Status = 'Nueva',
-        Origin = 'Telefónico');
-        insert caseObj;
-        
+	    AccountId = billingAccount.Id,
+	    Status = 'Nueva',
+	    Origin = 'Telefónico');
+	    insert caseObj;
+		
         input.put('DRId_Case', caseObj.Id);
         input.put('PaymentMethod', paymentsMap);
         input.put('AutomaticDebitAction', AutomaticDebitAction);
@@ -294,7 +294,7 @@ private class AutomaticDebitSubscriptionTest {
         String Subject = 'Débito automático: ' + billingAccount.Id;
         
         //WHEN
-        Test.startTest();
+		Test.startTest();
         Boolean result = AutomaticDebitSubscription.invokeMethod(methodName, input, outMap, options);
         List<Task> taskList = [SELECT Id FROM Task WHERE Subject = :Subject AND Status = 'Not Started' AND WhatId = :caseObj.Id];
         Test.stopTest();
@@ -302,56 +302,56 @@ private class AutomaticDebitSubscriptionTest {
         //THEN
         System.assertEquals(false, result);
         System.assertEquals(1, taskList.size());
-    }
-    
-    @isTest static void getPaymentMethodsOneObject(){
-        //GIVEN
-        Map<String,Object> paymentsMap = new Map<String,Object>();
-        Map<String,Object> PaymentMethods = new Map<String,Object>();
-        
-        paymentsMap.put('PaymentMethods', PaymentMethods);
-        
-        //WHEN
-        Test.startTest();
+	}
+	
+	@isTest static void getPaymentMethodsOneObject(){
+		//GIVEN
+		Map<String,Object> paymentsMap = new Map<String,Object>();
+		Map<String,Object> PaymentMethods = new Map<String,Object>();
+		
+		paymentsMap.put('PaymentMethods', PaymentMethods);
+		
+		//WHEN
+		Test.startTest();
         List<Object> result = AutomaticDebitSubscription.getPaymentMethods(paymentsMap);
         Test.stopTest();
         
         //THEN
         System.assertEquals(1, result.size());
-    }
-    
-    @isTest static void getPaymentMethodsListObject(){
-        //GIVEN
-        Map<String,Object> paymentsMap = new Map<String,Object>();
-        List<Object> PaymentMethods = new List<Object>();
-        Map<String,Object> PaymentMethods1 = new Map<String,Object>();
-        Map<String,Object> PaymentMethods2 = new Map<String,Object>();
-        
-        PaymentMethods.add(PaymentMethods1);
-        PaymentMethods.add(PaymentMethods2);
-        paymentsMap.put('PaymentMethods', PaymentMethods);
-        
-        //WHEN
-        Test.startTest();
+	}
+	
+	@isTest static void getPaymentMethodsListObject(){
+		//GIVEN
+		Map<String,Object> paymentsMap = new Map<String,Object>();
+		List<Object> PaymentMethods = new List<Object>();
+		Map<String,Object> PaymentMethods1 = new Map<String,Object>();
+		Map<String,Object> PaymentMethods2 = new Map<String,Object>();
+		
+		PaymentMethods.add(PaymentMethods1);
+		PaymentMethods.add(PaymentMethods2);
+		paymentsMap.put('PaymentMethods', PaymentMethods);
+		
+		//WHEN
+		Test.startTest();
         List<Object> result = AutomaticDebitSubscription.getPaymentMethods(paymentsMap);
         Test.stopTest();
         
         //THEN
         System.assertEquals(2, result.size());
-    }
-    
-    @isTest static void getPaymentMethodsNullObject(){
-        //GIVEN
-        Map<String,Object> paymentsMap = new Map<String,Object>();
-        paymentsMap.put('PaymentMethods', null);
-        
-        //WHEN
-        Test.startTest();
+	}
+	
+	@isTest static void getPaymentMethodsNullObject(){
+		//GIVEN
+		Map<String,Object> paymentsMap = new Map<String,Object>();
+		paymentsMap.put('PaymentMethods', null);
+		
+		//WHEN
+		Test.startTest();
         List<Object> result = AutomaticDebitSubscription.getPaymentMethods(paymentsMap);
         Test.stopTest();
         
         //THEN
         System.assertEquals(null, result);
-    }
-    
+	}
+	
 }

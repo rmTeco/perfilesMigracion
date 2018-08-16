@@ -1,0 +1,183 @@
+<apex:page controller="g_CustomLookupController"
+  title="Search" 
+  showHeader="true" 
+  sideBar="true" 
+  id="pg">
+  
+    <apex:includeScript value="/support/console/40.0/integration.js"/>
+  
+  
+    <script type="text/javascript"
+        src="/soap/ajax/26.0/connection.js"></script> 
+        
+   <script type="text/javascript">
+
+      
+    function ctiMessage() {
+            this.action = 'ObjectSelected',
+            this.id = '',
+            this.interactionId = ''
+    }
+
+    function refreshPage(objId)
+    {
+        var inConsole = '{!inServiceCloudConsole}';
+        var iD = '{!ixnId}';
+        //console.log("refreshPage for objId="+objId+" and ixnId="+iD);
+        
+        //parent.window.frames['SoftphoneIframe'].postMessage("CustomLookup:"+objId,"*"); 
+
+        //console.log("refresh page inServiceCloudConsole = "+inConsole);
+		
+
+        if(inConsole == "true")
+        {      
+            sforce.console.getFocusedPrimaryTabId(
+                function closeTab1(result) {                        
+                        //console.log("getFocusedPrimaryTabId "+result.id);
+                        sforce.console.closeTab(result.id);
+                        //console.log("closeTab "+result);
+                        sforce.console.openPrimaryTab(null,'/'+objId,true);         
+                }
+            );
+
+            var message = new ctiMessage();
+            
+            message.action = 'ObjectSelected';
+            message.id = objId;
+            message.interactionId = '{!ixnId}';
+            
+            var ctiMessageAsJSON = JSON.stringify(message);
+        
+            sforce.console.fireEvent('CTIEvent', ctiMessageAsJSON, function (result) {
+                //console.log("CTIEvent fired result: " + result);
+            });  
+        }
+        else
+        {
+            if(typeof(Storage) !== "undefined" && window!=null && window.sessionStorage!=null){
+				window.sessionStorage.setItem("Genesys_sfdc_interactionId", iD);
+				window.sessionStorage.setItem("Genesys_sfdc_objectId", objId);
+			}
+        }
+        
+        
+    }
+   </script>    
+      <apex:pageBlock title="Search" id="block">    
+  <apex:form >
+  <apex:outputPanel id="page" layout="block" style="margin:5px;padding:10px;padding-top:2px;">
+              
+            <apex:actionRegion >  
+                  <apex:outputPanel id="top" layout="block" style="margin:5px;padding:10px;padding-top:2px;">
+                    <apex:outputLabel value="Phone Number" style="font-weight:Bold;padding-right:10px;" for="txtSearch"/>
+                    <apex:inputText id="txtSearch" value="{!searchString}" />
+                    <apex:outputLabel value="First Name" style="font-weight:Bold;padding-right:10px;" for="txtFirstName"/>
+                    <apex:inputText id="txtFirstName" value="{!firstName}" />
+                    <apex:outputLabel value="Last Name" style="font-weight:Bold;padding-right:10px;" for="txtLastName"/>
+                    <apex:inputText id="txtLastName" value="{!lastName}" />
+                    <apex:outputLabel value="Email" style="font-weight:Bold;padding-right:10px;" for="txtEmail"/>
+                    <apex:inputText id="txtEmail" value="{!email}" />
+                      <span style="padding-left:5px"><apex:commandButton id="btnGo" value="Search" action="{!Search}" rerender="pnlSearchResults"></apex:commandButton></span>
+                  </apex:outputPanel>
+
+                <apex:outputPanel id="pnlSearchResults" style="margin:10px;height:350px;overflow-Y:auto;" layout="block">
+                    <apex:pageBlock id="searchResultsA"> 
+                      <apex:pageBlockTable value="{!account_results}" var="a" id="a_tblResults">
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Account Name</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!a.Id}'" onclick="refreshPage('{!a.Id}');" rendered="{!NOT(ISNULL(a.Id))}">{!a.Name}</apex:outputLink>
+                        </apex:column>                        
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Phone</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!a.Id}'" onclick="refreshPage('{!a.Id}');" rendered="{!NOT(ISNULL(a.Id))}">{!a.Phone}</apex:outputLink>
+                        </apex:column>                          
+                      </apex:pageBlockTable>
+                    </apex:pageBlock>  
+                    <apex:pageBlock id="searchResultsC">  
+                      <apex:pageBlockTable value="{!contact_results}" var="c" id="c_tblResults">
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Contact Phone</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!c.Id}'" onclick="refreshPage('{!c.Id}');" rendered="{!NOT(ISNULL(c.Id))}">{!c.Phone}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Contact First Name</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!c.Id}'" onclick="refreshPage('{!c.Id}');" rendered="{!NOT(ISNULL(c.Id))}">{!c.FirstName}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Contact Last Name</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!c.Id}'" onclick="refreshPage('{!c.Id}');" rendered="{!NOT(ISNULL(c.Id))}">{!c.LastName}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Contact Address</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!c.Id}'" onclick="refreshPage('{!c.Id}');" rendered="{!NOT(ISNULL(c.Id))}">{!c.MailingStreet}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Contact Email</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!c.Id}'" onclick="refreshPage('{!c.Id}');" rendered="{!NOT(ISNULL(c.Id))}">{!c.Email}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Account</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!c.Id}'" onclick="refreshPage('{!c.Id}');" rendered="{!NOT(ISNULL(c.Id))}">{!c.Account.Name}</apex:outputLink>
+                        </apex:column>
+                      </apex:pageBlockTable>    
+                    </apex:pageBlock>  
+                    <apex:pageBlock id="searchResultsL">
+                      <apex:pageBlockTable value="{!lead_results}" var="l" id="l_tblResults">
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Lead Phone</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!l.Id}'" onclick="refreshPage('{!l.Id}');" rendered="{!NOT(ISNULL(l.Id))}">{!l.Phone}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Lead First Name</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!l.Id}'" onclick="refreshPage('{!l.Id}');" rendered="{!NOT(ISNULL(l.Id))}">{!l.FirstName}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Lead Last Name</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!l.Id}'" onclick="refreshPage('{!l.Id}');" rendered="{!NOT(ISNULL(l.Id))}">{!l.LastName}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Lead Address</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!l.Id}'" onclick="refreshPage('{!l.Id}');" rendered="{!NOT(ISNULL(l.Id))}">{!l.Street}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                          <apex:facet name="header">
+                            <apex:outputPanel >Lead Email</apex:outputPanel>
+                          </apex:facet>
+<apex:outputLink value="javascript:window.location.href='/{!l.Id}'" onclick="refreshPage('{!l.Id}');" rendered="{!NOT(ISNULL(l.Id))}">{!l.Email}</apex:outputLink>
+                        </apex:column>
+                      </apex:pageBlockTable>
+                                                              
+                    </apex:pageBlock>
+                </apex:outputPanel>
+            </apex:actionRegion>
+
+    
+  </apex:outputPanel>
+  </apex:form>
+      </apex:pageblock>
+</apex:page>

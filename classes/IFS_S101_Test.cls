@@ -13,7 +13,7 @@ private class IFS_S101_Test {
         RecursoList.put('test',Recurso);
         Test.setMock(HttpCalloutMock.class, mock);
         
-        Map<String,Object> MapResponse = IFS_S101_reserveOrRelease.reserveOrRelease('operacion1', 'codApp1', 'idOperacion1', 'codPDV1', RecursoList);
+        Map<String,Object> MapResponse = IFS_S101_reserveOrRelease.reserveOrRelease('operacion1', 'codApp1', 'idOperacion1', 'codPDV1', 'd188-c082-0b69-2a1d-e77', RecursoList);
         
         Map<String,Object> MapReview = new map<String,Object>();
         

@@ -2,6 +2,7 @@
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>vlocity_cmt__Clone_Product</customButtons>
     <customButtons>vlocity_cmt__Export</customButtons>
+    <customButtons>vlocity_cmt__XOMSynchronizeCatalog</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -20,11 +21,83 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>vlocity_cmt__IsNotAssetizable__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>vlocity_cmt__TrackAsAgreement__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Tipo_de_Bien_de_Uso__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Marca__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SIM_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>icon__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ImageId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Tangible__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__HelpText__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PrefaRequired__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TA_Custom_Description__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>FAN_IntegrationKey__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Codigo_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Nombre_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Codigo_Movimiento_Inventario__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SourceOrgProductId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Alicuota__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NMU__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -44,26 +117,144 @@
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__SubType__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__EffectiveDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__EndDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__IsOrderable__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__SpecificationType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>StockKeepingUnit</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LastModifiedById</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CreatedById</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>JSON Attribute</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__JSONAttribute__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Additional Information</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Active_Text__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ClassId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__IsConfigurable__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DisplayUrl</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExternalDataSourceId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__HeaderData__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__IsLocationDependent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ObjectTypeId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__StandardPremium__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ProductTemplateProductId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>QuantityUnitOfMeasure</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__Scope__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__TimeToLive__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__VendorAccountId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__Modification__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExternalId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__GlobalKey__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Fields</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>CreatedById</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>LastModifiedById</field>
-            </layoutItems>
-        </layoutColumns>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
@@ -81,20 +272,6 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Order Management</label>
-        <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__Scope__c</field>
-            </layoutItems>
-        </layoutColumns>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
@@ -102,6 +279,35 @@
         <layoutColumns/>
         <layoutColumns/>
         <style>CustomLinks</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Category Data</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__CategoryData__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Attachment</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>400</height>
+                <page>vlocity_cmt__ProductAttachmentList</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>false</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
@@ -141,11 +347,27 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__DestinationProductId__c</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
         <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__SourceProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__SourceProductId__c</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
         <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__DestinationProductId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__PromotionApplicableProduct__c.vlocity_cmt__ContextOfferId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__PromotionId__c</fields>
+        <fields>vlocity_cmt__OfferId__c</fields>
+        <fields>vlocity_cmt__IsActive__c</fields>
+        <fields>vlocity_cmt__EffectiveFromDate__c</fields>
+        <relatedList>vlocity_cmt__PromotionItem__c.vlocity_cmt__ProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedStandardPriceList</relatedList>
@@ -168,22 +390,39 @@
         <relatedList>vlocity_cmt__ProductEligibility__c.vlocity_cmt__Product2Id__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>ASSET.NAME</fields>
+        <fields>ASSET.INSTALL_DATE</fields>
+        <fields>ASSET.QUANTITY</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>ASSET.STATUS</fields>
+        <fields>vlocity_cmt__OneTimeTotal__c</fields>
+        <fields>vlocity_cmt__RecurringTotal__c</fields>
+        <fields>vlocity_cmt__PricebookEntryId__c</fields>
+        <relatedList>RelatedAssetList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>vlocity_cmt__DefaultQuantity__c</fields>
         <fields>vlocity_cmt__RelationshipType__c</fields>
         <fields>vlocity_cmt__RelatedProductId__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
         <relatedList>vlocity_cmt__ProductRelationship__c.vlocity_cmt__Product2Id__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__CatalogProductRelationship__c.vlocity_cmt__Product2Id__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__ParentProductId__c</fields>
+        <fields>vlocity_cmt__MinMaxDefaultQty__c</fields>
+        <relatedList>vlocity_cmt__ProductChildItem__c.vlocity_cmt__ChildProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>vlocity_cmt__ChildLineNumber__c</fields>
         <fields>vlocity_cmt__ChildProductId__c</fields>
-        <fields>vlocity_cmt__Quantity__c</fields>
-        <fields>vlocity_cmt__MinQuantity__c</fields>
-        <fields>vlocity_cmt__MaxQuantity__c</fields>
+        <fields>vlocity_cmt__MinMaxDefaultQty__c</fields>
+        <fields>Price_Included__c</fields>
         <relatedList>vlocity_cmt__ProductChildItem__c.vlocity_cmt__ParentProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -191,7 +430,49 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Is_Associable__c</fields>
+        <fields>Is_Active__c</fields>
         <relatedList>Contact_Motive__c.Id_Service__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__PriceListId__c</fields>
+        <fields>vlocity_cmt__ProductId__c</fields>
+        <fields>vlocity_cmt__PromotionId__c</fields>
+        <fields>vlocity_cmt__PromotionItemId__c</fields>
+        <fields>vlocity_cmt__TimePlanId__c</fields>
+        <fields>vlocity_cmt__TimePolicyId__c</fields>
+        <relatedList>vlocity_cmt__PriceListEntry__c.vlocity_cmt__OfferId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__DisplayText__c</fields>
+        <fields>vlocity_cmt__PriceListId__c</fields>
+        <fields>vlocity_cmt__OfferId__c</fields>
+        <fields>vlocity_cmt__PricingElementId__c</fields>
+        <fields>vlocity_cmt__PromotionId__c</fields>
+        <fields>vlocity_cmt__PromotionItemId__c</fields>
+        <fields>vlocity_cmt__TimePlanId__c</fields>
+        <fields>vlocity_cmt__TimePolicyId__c</fields>
+        <relatedList>vlocity_cmt__PriceListEntry__c.vlocity_cmt__ProductId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>PE.ENTITLEMENT_TEMPLATE</fields>
+        <relatedList>RelatedProductEntitlementTemplateList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.STATUS</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <relatedList>Campaign.associated_offersand_products__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>FinancialPromotion__c.ProductPromotion__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.Product2__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
@@ -199,7 +480,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h36000002Pn41</masterLabel>
+        <masterLabel>00h6C000000RNxc</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

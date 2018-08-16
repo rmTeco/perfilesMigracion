@@ -14,11 +14,30 @@ TEXT(NOW()), &quot;-&quot;, &quot;&quot;), &quot;:&quot;, &quot;&quot;), &quot; 
         <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
+    <fieldUpdates>
+        <fullName>KB_BorrarVotosAP</fullName>
+        <description>Se setea en True el campo de borrar votos, para ejecutar el process builder que realiza el delete ante un cambio de versión.</description>
+        <field>KB_BorrarVotos__c</field>
+        <literalValue>1</literalValue>
+        <name>KB_BorrarVotosAP</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+        <reevaluateOnChange>true</reevaluateOnChange>
+    </fieldUpdates>
     <knowledgePublishes>
         <fullName>KB_ArticlePublish</fullName>
         <action>Publish</action>
-        <description>Publico el artículo</description>
+        <description>Publico el artículo sin cambiar la versión.</description>
         <label>Publish Article</label>
+        <language>en_US</language>
+        <protected>false</protected>
+    </knowledgePublishes>
+    <knowledgePublishes>
+        <fullName>KB_ArticlePublishNew</fullName>
+        <action>PublishAsNew</action>
+        <description>Publico el artículo con una nueva versión</description>
+        <label>Publish Article as New</label>
         <language>en_US</language>
         <protected>false</protected>
     </knowledgePublishes>

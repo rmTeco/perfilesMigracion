@@ -1,0 +1,65 @@
+<aura:component controller="OSCompareController" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- START ATT -->
+    <aura:attribute name="OSNames" type="List" />
+    <aura:attribute name="OSNamesUnique" type="List" />
+    <aura:attribute name="OSElementsOrigin" type="List" />
+    <aura:attribute name="OSElementsTarget" type="List" />
+    <aura:attribute name="OriginVersions" type="List" />
+    <aura:attribute name="TargetVersions" type="List" />
+    <aura:attribute name="TargetOrgVersions" type="List" />
+    <aura:attribute name="Origin" type="Object" />
+    <aura:attribute name="Target" type="Object" />
+    <aura:attribute name="isTargetOrg" type="Boolean" Default="false" />
+    <!-- END ATT -->
+    <div id="Container">
+        <div class="Container">
+            <div class="slds-form-element" style="padding-bottom: 10px;">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-size_1-of-4">
+                        <lightning:select aura:id="Name" name="Name" label="Select an OS" onchange="{!c.selectedName}">
+                            <option value="none">choose one...</option>
+                            <aura:iteration var="os" items="{!v.OSNamesUnique}" indexVar="{!index}" >
+                                <option value="{!os}">{!os}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-size_1-of-4">
+                        <lightning:select aura:id="selectTargetOS" name="selectItem" label="Select lower version to compare">
+                            <option value="">choose one...</option>
+                            <aura:iteration var="targetOS" items="{!v.TargetVersions}" indexVar="index" >
+                                <option value="{!targetOS.Id}">{!targetOS.vlocity_cmt__Version__c}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-size_1-of-4">
+                        <lightning:select aura:id="origin" name="selectItem" label="Select higher version to compare">
+                            <option value="">choose one...</option>
+                            <aura:iteration var="origin" items="{!v.OriginVersions}" indexVar="index" >
+                                <option value="{!origin.Id}">{!origin.vlocity_cmt__Version__c}</option>
+                            </aura:iteration>
+                        </lightning:select>
+                    </div>
+                    <div class="slds-size_1-of-4">
+                        <div class="slds-text-align_center slds-m-around_x-small" style="padding-top: 12px;">
+                            <div class="slds-button-group" role="group">
+                                <button class="slds-button slds-button_brand" onclick="{!c.compare}">Compare</button>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Left" style="margin-top:10px;">
+            <c:OSItem OSElements="{!v.OSElementsTarget}" />
+        </div>
+        <div class="Right" style="margin-top:10px;">
+            <c:OSItem OSElements="{!v.OSElementsOrigin}" />
+        </div>
+        <div aura:id="spinner" role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand slds-hide">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:component>

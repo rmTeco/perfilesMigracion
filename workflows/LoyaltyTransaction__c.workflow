@@ -27,7 +27,10 @@
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <formula>AND( 				ISPICKVAL(Status__c,&apos;Reverted&apos;) 				,INCLUDES(LoyaltyAccount__r.vlocity_cmt__ContactPreferences__c, &apos;eMail&apos;) 	)</formula>
+        <formula>AND(
+				ISPICKVAL(Status__c,&apos;Reverted&apos;)
+				,INCLUDES(LoyaltyAccount__r.vlocity_cmt__ContactPreferences__c, &apos;eMail&apos;)
+	)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

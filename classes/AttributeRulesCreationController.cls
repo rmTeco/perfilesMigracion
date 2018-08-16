@@ -37,7 +37,7 @@ public class AttributeRulesCreationController {
 		}
     }
 
-   	private void restart(){
+   	public void restart(){
    		//Restart default values after Saving
    		record = new AttributesRules__c();
  		record.object__c = accountString;

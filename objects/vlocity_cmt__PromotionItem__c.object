@@ -117,6 +117,11 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>Add/Update</fullName>
+                    <default>false</default>
+                    <label>Add/Update</label>
+                </value>
+                <value>
                     <fullName>Add</fullName>
                     <default>false</default>
                     <label>Add</label>
@@ -130,11 +135,6 @@
                     <fullName>Delete</fullName>
                     <default>false</default>
                     <label>Delete</label>
-                </value>
-                <value>
-                    <fullName>Add/Update</fullName>
-                    <default>false</default>
-                    <label>Add/Update</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -364,8 +364,19 @@
     <label>Promotion Item</label>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
+        <columns>vlocity_cmt__PromotionId__c</columns>
+        <columns>vlocity_cmt__ProductId__c</columns>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__ActionType__c</columns>
+        <columns>vlocity_cmt__IsActive__c</columns>
+        <columns>vlocity_cmt__ContextProductId__c</columns>
+        <columns>vlocity_cmt__ContextEntityFilterId__c</columns>
+        <columns>vlocity_cmt__EffectiveFromDate__c</columns>
+        <columns>vlocity_cmt__EffectiveUntilDate__c</columns>
+        <columns>vlocity_cmt__OfferId__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Promotion Item Name</label>

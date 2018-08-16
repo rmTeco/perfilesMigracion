@@ -1,22 +1,9 @@
-            <div class="card card-xs">
-              <div class="card-header">
-                <h4 class="card-title">Artículo Contenido Libre</h4>
-              </div>
-              <div class="card-body">
-				<h4 class="back">Ver el detalle de mi promoción</h4>
-                      <p><div id="rn_AnswerText">
-<p>Verás todas tus promociones activas en la sección central de tu factura, donde podrás ver el <em class="rn_Highlight">producto</em> sobre el que aplica, la vigencia total, tipo de descuento y tiempo restante de la misma.</p>
-<p><img alt="Image" src="https://cablevisionfibertel.custhelp.com/euf/assets/PortalPublico/Imagenes/InfodelServicio/Factura/promo%20desc.png" style="width:100%;"></p>
-<p><span style="FONT-SIZE: 12pt; FONT-WEIGHT: bold">Conceptos del mes:</span><br>
-<span>En esta sección encontrarás las promociones o descuentos asignados a tu servicio, con su respectivo valor.</span><br>
-<br>
-<span style="FONT-WEIGHT: bold">Promoción:</span><br>
-<span>Indica el mes en curso de la promoción, en este ejemplo, mes&nbsp;dos de los&nbsp;cuatro correspondientes.</span><br>
-<br>
-<span style="FONT-WEIGHT: bold">Descuento:</span><br>
-<span>Indica el porcentaje de descuento que se realizará sobre los servicios especificados en la promoción.</span></p>		</div></p>
-				<br>
-                <h4>Si necesitas más ayuda, hacé click en el <a href="https://cablevisionfibertel.custhelp.com/" style="font-style: italic; text-decoration: underline;" target="_blank"><span style="color: #0000ff; font-weight: bold;">siguiente enlace</span>.</a>
-				</h4>
-              </div>
-            </div>
+<div class="card">
+	<div class="card-header">
+		<h3>Título de contenido</h3>
+	</div>
+  <div class="card-body">
+	<h4>Subtítulo</h4>
+	  <p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+	</div>
+</div>

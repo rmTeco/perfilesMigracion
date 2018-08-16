@@ -239,7 +239,7 @@ global with sharing class ta_techCare_technical_service_controller{
                 OrderItem ordit = [SELECT Id, vlocity_cmt__OneTimeCharge__c FROM OrderItem WHERE Id = :result];
                 ordit.IsBillable__c = !warranty;
                 if(warranty){
-                    ordit.vlocity_cmt__EffectiveOneTimeTotal__c = 0;
+                    ordit.vlocity_cmt__EffectiveOneTimeTotal__c = 0.01;
                     ordit.vlocity_cmt__OneTimeDiscountPrice__c = ordit.vlocity_cmt__OneTimeCharge__c;
                 }
                 update ordit;

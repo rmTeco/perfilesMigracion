@@ -11,25 +11,28 @@
 		is like so : aura:attribute name="step_json" type="json" set json 
         in helper of parent application/component on initialization.<br/>
 
-		Field definitions :<br/>
+        <b>Field definitions :</b><br/>
  
 		title       - header of component<br/>
 		body        - Content of modal on each page.<br/>
-
-		json template :<br/>
-
-		{<br/>
-            "entries" : [<br/>
-            	{ <br/>
-            		"title" : "TITLE",<br/>
-                    "body" : "Content in HTML"<br/>
-        		}, <br/>
-                {<br/>
-                    "title" : "TITLE",<br/>
-                    "body"  : "Content in HTML"<br/>
-                }<br/>
-    		]	<br/>		
-      	}
+        
+        <b>JSON template :</b><pre>
+{
+    "entries" : [
+        {
+            "title" : "TITLE",
+            "body"  : "Content in HTML"
+        },
+        {
+            "title" : "TITLE",
+            "body"  : "Content in HTML"
+        }
+    ]
+}</pre>
+        <p><b>Style considerations:</b></p>
+        <ul>
+            <li>The component modal window can be styled using the .modal1, .modal-dialog1, .modal-content1, .modal-header1, .modal-body1 and .modal-footer1 classes</li>
+        </ul>
     </aura:description>
     <aura:example name="step_modal" ref="et4ae5:step_modal" label="Label">
 		This is using no values and must be passed a JSON value!

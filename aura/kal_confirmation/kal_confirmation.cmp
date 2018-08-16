@@ -1,0 +1,60 @@
+<aura:component  implements="forceCommunity:availableForAllPageTypes" controller="Kal_ConfirmationData" access="global" >
+<aura:handler name="init" value="{!this}"  action="{!c.doInit}"/>
+<aura:handler event="c:KAL_datos_entregaEvent" action="{!c.handleEvent}"/>
+<aura:attribute name="persistentTipoEntrega" type="String" default="Standard"/> 
+<aura:attribute name="persistentPrecioEntrega" type="Double" default="0.00"/>
+<aura:attribute name="items" type="List" default="[]" />
+<aura:attribute name="subtotal" type="decimal" default="0" />
+<aura:attribute name="total" type="decimal" default="0" />
+<aura:attribute name="resumenCuotaDefault" type="Boolean" />
+<aura:attribute name="resumenCuotaSeleccionado" type="Boolean" />
+<aura:handler event="c:KAL_datos_entregaEvent" action="{!c.handleEvent}"/>
+<aura:attribute name="numeroCuota" type="String"/>
+<aura:attribute name="montoCuota" type="Double" />
+    <h2 class="slds-panel__header-title slds-text-heading_large">Resumen</h2>                    
+        <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-box borderColor slds-p-around_medium slds-m-top_medium">            
+            <p class="slds-text-heading_medium slds-border_bottom borderColor">
+                Orden de Compra <a  href="https://desa01-desa01.cs63.force.com/clientes/s/carrito" class="slds-float_right slds-text-heading_small" style="color:#969492;">Modificar</a>
+            </p>
+            <div class="slds-align_absolute-center" style="text-align: center; width: 8rem; background-color: rgb(255, 255, 255);">    
+            </div>                            
+            <aura:iteration items="{!v.items}" var="item" >
+            <div class="slds-p-vertical_small slds-border_bottom borderColor">                
+                <p class="slds-text-heading_small">
+                    {!item.Name}<ui:outputCurrency class="slds-float_right" value="{!item.TotalPrice}"/>
+                </p>
+                <small class="text-muted">
+                    Cantidad  {!item.Cant}
+                </small>               
+            </div>
+            </aura:iteration>    
+            <div class="slds-p-vertical_small slds-border_bottom borderColor">
+                <p class="slds-text-heading_small">
+                    Subtotal <ui:outputCurrency class="slds-float_right KAL-Resumen__Subtotal" value="{!v.subtotal}"/>
+                </p>
+                <p class="slds-text-heading_small">Envio <ui:outputCurrency class="slds-float_right" value="{!v.persistentPrecioEntrega}"/>
+                </p>
+            </div>
+            <div class="slds-p-vertical_small slds-border_bottom borderColor">
+                <p class="slds-text-heading_medium">
+                    Total <ui:outputCurrency class="slds-float_right KAL-Resumen__Total" value="{!v.total}"/>
+                </p>
+            </div>                    
+            <div class="slds-p-vertical_small">
+                <aura:if isTrue="{!v.resumenCuotaDefault}">
+                    <p class="slds-text-heading_small grisado">
+                        Pago con tarjeta en 1 cuota de  <ui:outputCurrency class="KAL-Resumen__Leyenda--Total" value="{!v.total}"/>
+                        <br />
+                        Precio con IVA CFT 0,00% TEA 0,00%
+                    </p>
+                </aura:if>
+                <aura:if isTrue="{!v.resumenCuotaSeleccionado}">
+                    <p class="slds-text-heading_small grisado">
+                        Pago con tarjeta en {!v.numeroCuota} cuotas de  <ui:outputCurrency class="KAL-Resumen__Leyenda--Total" value="{!v.montoCuota}"/>
+                        <br />
+                        Precio con IVA CFT 0,00% TEA 0,00%
+                    </p>
+                </aura:if>
+            </div>
+        </div>        
+</aura:component>

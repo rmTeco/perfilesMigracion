@@ -1,0 +1,19 @@
+<apex:page controller="cwbtool.ProjectXmlController" standardStylesheets="false" readOnly="true" applyBodyTag="false" applyHtmlTag="false" contentType="text/xml#package.xml" showHeader="false" sidebar="false" cache="false" >
+   <apex:outputtext value="{!strXML}" escape="false" /> 
+
+
+ <!--  <apex:outputtext value='<?xml version="1.0" encoding="UTF-8" ?>' escape='false'/>
+
+<Package xmlns="http://soap.sforce.com/2006/04/metadata" target="_blank">
+<apex:repeat value="{!mapSelectedComponent}" var="key" >
+    <types>
+      <name>{!key}</name>
+    <apex:repeat value="{!mapSelectedComponent[key]}" var="objMember"> 
+        <members>{!objMember.ComponentName}</members>
+    </apex:repeat>
+    </types>
+</apex:repeat>
+</Package>-->
+
+
+</apex:page>

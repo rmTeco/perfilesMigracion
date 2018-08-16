@@ -157,9 +157,9 @@ global with sharing class IFS_S492_getContactAccountsAndServicesV2 {
         try {
             List<Asset> lstAsset = new List<Asset>();
             if(Test.isRunningTest()){
-                lstAsset = [SELECT Id, MSISDN__c, Product2Id, vlocity_cmt__JSONAttribute__c  FROM Asset WHERE AccountId = :pId AND MSISDN__c != null];
+                lstAsset = [SELECT Id, MSISDN__c, Product2Id, vlocity_cmt__JSONAttribute__c FROM Asset WHERE AccountId = :pId AND MSISDN__c != null];
             } else {
-                lstAsset = [SELECT Id, MSISDN__c, Product2Id, vlocity_cmt__JSONAttribute__c  FROM Asset WHERE AccountId = :pId AND Tipo_de_Producto__c LIKE 'Plan%' AND MSISDN__c != null];
+                lstAsset = [SELECT Id, MSISDN__c, Product2Id, vlocity_cmt__JSONAttribute__c FROM Asset WHERE AccountId = :pId AND Tipo_de_Producto__c LIKE 'Plan%' AND MSISDN__c != null];
             }
             if (lstAsset == null || lstAsset.isEmpty()) {
                 throw new FunctionalException('No se encontro Assets para el AccountId : ' + pId);

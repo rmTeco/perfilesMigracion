@@ -1106,7 +1106,7 @@ public with sharing class Gp_AdapterTest {
         GP_Condicional_logico__c condicional = new GP_Condicional_logico__c();
         condicional.Operador__c = '>';
         condicional.Regla__c = regla.id;
-        condicional.Valor_entero__c = 2000;
+        condicional.Valor_entero__c = 20;
         condicional.Variable_a_comparar__c = 'Monto';
         condicional.Variable_contra_la_que_se_compara__c = 'Monto';
 
@@ -1195,7 +1195,7 @@ public with sharing class Gp_AdapterTest {
         GP_Condicional_logico__c condicional = new GP_Condicional_logico__c();
         condicional.Operador__c = '<';
         condicional.Regla__c = regla.id;
-        condicional.Valor_entero__c = 20;
+        condicional.Valor_entero__c = 249;
         condicional.Variable_a_comparar__c = 'Monto';
         condicional.Variable_contra_la_que_se_compara__c = 'Monto';
 
@@ -1239,8 +1239,7 @@ public with sharing class Gp_AdapterTest {
         
         System.assertEquals(1, [select id from gp_socio__c].size());
         
-        system.debug([select id, puntos__c from GP_Saldo_por_vencimiento__c]);
-
+        
         System.assertEquals(115,[select id, puntos__c from GP_Saldo_por_vencimiento__c where socio__r.id_gp__c =: cuenta.id+'0'].puntos__c);
         System.assertEquals(115, [select id, saldo_total__c from GP_Socio__c where id_gp__c =: cuenta.id+'0'].saldo_total__c);
         System.assertEquals(1, [select id from GP_Historia_transaccion__c].size());
@@ -1506,10 +1505,12 @@ public with sharing class Gp_AdapterTest {
         
         System.assertEquals(1, [select id from gp_socio__c].size());
         
-        System.assertEquals(cuenta.id+'0', [select id, id_gp__c from gp_socio__c].id_gp__c);
-         
         system.debug([select id, puntos__c from GP_Saldo_por_vencimiento__c]);
 
+        System.assertEquals(115,[select id, puntos__c from GP_Saldo_por_vencimiento__c where socio__r.id_gp__c =: cuenta.id+'0'].puntos__c);
+        System.assertEquals(115, [select id, saldo_total__c from GP_Socio__c where id_gp__c =: cuenta.id+'0'].saldo_total__c);
+        System.assertEquals(1, [select id from GP_Historia_transaccion__c].size());
+        System.assertEquals(regla.id,[select id, Generado_por__c from GP_Historia_transaccion__c where socio__r.id_gp__c =: cuenta.id+'0'].Generado_por__c);  
     }
     
     static testMethod void prueboLaReglaConAtributosIntegerDistinto(){

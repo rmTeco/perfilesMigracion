@@ -1,0 +1,120 @@
+<apex:page controller="cwbtool.DescribeFolderPermission" sidebar="false" tabStyle="CWB_Tool__tab" showheader="false">
+
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}"/>
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" /> 
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+    
+      
+<style>
+  fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+    margin-left:8% !important;
+    width:63%;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+    .bodyDiv{
+ height:400px;
+}
+.Btn-group{
+  width:60% !important;
+}
+.frm{
+  margin:15px;
+}
+.modal {
+    outline:none;
+}
+</style>
+<script>
+ $(document).ready(function() {
+   init();
+ });
+ 
+  function init(){
+  $('.folderClass').multiselect({
+             nSelectedText  : 'Folder selected', 
+             buttonClass: 'Btn Btn-default',
+             enableFiltering: true,
+             filterBehavior: 'both',
+             enableCaseInsensitiveFiltering: true,
+             filterPlaceholder: 'Search Folder',
+             includeSelectAllOption: true,
+             selectAllText: 'Select ALL Folder',
+             selectAllValue: 'multiselect-all',
+             maxHeight: 217,
+             /*buttonWidth: '90%',*/
+             nonSelectedText: 'Please Select Folder',
+             disableIfEmpty: true  
+         });
+  }
+</script>
+
+<div class='CWB'>  
+<c:lightningspinner />
+  <apex:form id="form" styleclass="frm ">
+     <apex:actionFunction name="DownloadFolderPSAction" action="{!getFolderPermissionDetails}" />
+     <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form" oncomplete="init();"/> 
+     
+     <apex:pagemessages />
+     
+     <div class="slds-form--inline slds-p-bottom--large slds-align--absolute-center">
+         <div class="slds-form-element">
+           <div class='slds-select_container'>
+	         <apex:selectList id="foldertype" value="{!strSelectedFolder}" size="1" styleclass="slds-select">
+	           <apex:selectOption itemValue="" itemLabel="Please Select Folder Type"/>
+	            <apex:selectOption itemValue="DocumentFolder" itemLabel="Document"/>
+	            <apex:selectOption itemValue="DashboardFolder" itemLabel="Dashboard"/>
+	            <apex:selectOption itemValue="EmailFolder" itemLabel="EmailTemplate"/>
+	            <apex:selectOption itemValue="ReportFolder" itemLabel="Report"/>
+	            <apex:actionSupport event="onchange" 
+                                action="{!getFolderName}"  
+                                onsubmit="showOverLay();"
+                                rerender="form" oncomplete="hideOverLay();init();"/>
+	        </apex:selectList> 
+	       </div> 
+       </div>  
+         <div class="slds-form-element">
+			 <apex:selectList value="{!lstFolder}" multiselect="true" styleclass="slds-button slds-button--icon-border-filled multiselect folderClass" style="margin-right:40px;display:none;">
+			     <apex:selectOptions value="{!lstFolderOption}" />
+			 </apex:selectList>
+			 </div>
+	    <apex:outputpanel layout="none" rendered='{!lstFolderOption.size>0}'>		 
+	     <div class="slds-form-element">
+	        <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='showOverLay();DownloadFolderPSAction();refresh();' data-action='Download Folder PS Action'>Download Folder Permission</span>
+	     </div>
+	    </apex:outputpanel> 
+        <apex:outputpanel id="refreshPanel">  
+	      <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,msgId,form" interval="5" enabled="{!isStart}" oncomplete="if({!isProcessed}){hideOverLay();init()}"/>
+	   </apex:outputpanel>
+     </div>
+  
+  </apex:form>
+
+</div>
+
+
+
+
+
+
+
+
+</apex:page>

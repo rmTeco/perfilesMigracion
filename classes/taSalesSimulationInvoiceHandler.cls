@@ -254,7 +254,11 @@ global with sharing class taSalesSimulationInvoiceHandler implements vlocity_cmt
                 vlocity_cmt__PrimaryContactId__r.Phone,
                 vlocity_cmt__PrimaryContactId__r.MobilePhone,
                 vlocity_cmt__PrimaryContactId__r.OtherPhone,
-                vlocity_cmt__PrimaryContactId__r.Email
+                vlocity_cmt__PrimaryContactId__r.Email,
+                BillingStateCode,
+                BillingCity,
+                BillingStreet,
+                BillingPostalCode
             FROM Account
             WHERE Id = :accountId
         ];
@@ -317,7 +321,51 @@ global with sharing class taSalesSimulationInvoiceHandler implements vlocity_cmt
         cuenta.put('infoCuenta', infoCuenta);
         body.put('cuenta', cuenta);
 
-        System.debug('7');
+        Map<String, Object> listaDireccion = new Map<String, Object>();
+        // "listaDireccion": {
+        //     "idDireccion": "1234567833",
+        //     "provincia": "Capital",
+        //     "localidad": "Buenos Aires",
+        //     "municipio": "Villa Pueyrredon",
+        //     "barrio": "Santa Rosa",
+        //     "calle": "Avenida;La Plata",
+        //     "descripcionTipo": "1234;edificio;;2;A;;",
+        //     "entreCalles": "San Martin y Tucuman",
+        //     "descripcionZona": ";",
+        //     "descripcion": "",
+        //     "sector": ";;;",
+        //     "comentario": "Domicilio Cliente",
+        //     "sucursalCasilla": ";",
+        //     "codigoPostal": "1431"
+        // }
+        listaDireccion.put('idDireccion', account.AccountIntegrationId__c); // obligatorio
+        listaDireccion.put('provincia', account.BillingStateCode); // obligatorio
+
+        List<Location__c> locations = [SELECT 
+                                            Id,
+                                            Name
+                                        FROM Location__c
+                                        WHERE LocationCode__c = :account.BillingCity];
+        if(locations.size() > 0){
+            listaDireccion.put('localidad', locations.get(0).Name); // obligatorio
+        }
+        // listaDireccion.put('municipio', 'Villa Pueyrredon');
+        // listaDireccion.put('barrio', 'Santa Rosa');
+        if(!String.isEmpty(account.BillingStreet)){
+            listaDireccion.put('calle', ';' + account.BillingStreet);
+        }
+        // listaDireccion.put('descripcionTipo', '1234;edificio;;2;A;;');
+        // listaDireccion.put('entreCalles', 'San Martin y Tucuman');
+        // listaDireccion.put('descripcionZona', ';');
+        // listaDireccion.put('descripcion', '');
+        // listaDireccion.put('sector', ';;;');
+        // listaDireccion.put('comentario', 'Domicilio Cliente');
+        // listaDireccion.put('sucursalCasilla', ';');
+        if(!String.isEmpty(account.BillingPostalCode)){
+            listaDireccion.put('codigoPostal', account.BillingPostalCode);
+        }
+        body.put('listaDireccion', listaDireccion);
+
         request.put('body', body);
 
         Map<String, Object> params = new Map<String, Object>();
@@ -342,6 +390,7 @@ global with sharing class taSalesSimulationInvoiceHandler implements vlocity_cmt
         Map<String, Object> output = new Map<String, Object>();
         Map<String, Object> options2 = new Map<String, Object>();
         vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
+        system.debug(input);
         integProcService.invokeMethod('IFS_S013', input, output, options2);
         System.debug('response s013: ' + JSON.serialize(output));
         Map<String, Object> response = (Map<String, Object>)output.get('IPResult');
@@ -426,10 +475,10 @@ global with sharing class taSalesSimulationInvoiceHandler implements vlocity_cmt
             FROM Order 
             WHERE Id = :orderId
         ];
-        // System.debug('1');
+         System.debug('1');
         List<OrderItem> orderItems = taOrderController.GetOrderItemsBillable(orderId);
-        // System.debug('orderItemsBillable: ' + JSON.serialize(orderItems));
-        // System.debug('2');
+         System.debug('orderItemsBillable: ' + JSON.serialize(orderItems));
+         System.debug('2');
 
         Map<String, Object> request = new Map<String, Object>();
         Map<String, Object> calculoImpuestosPeticion = new Map<String, Object>();

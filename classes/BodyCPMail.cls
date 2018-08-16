@@ -102,7 +102,7 @@ global with sharing class BodyCPMail implements vlocity_cmt.VlocityOpenInterface
                 
                 /*loop de customer*/
                 for(Account baccount : bAccountDetailList){
-                    newDescription = newDescription + '\t Nombre: ' + baccount.Name + '\n';
+                    newDescription = newDescription + ' Nombre: ' + baccount.Name + ' ';
                     //newDescription = newDescription + '\t Número: ' + baccount.AccountNumber + '\n\n';
                 }
             }
@@ -113,7 +113,7 @@ global with sharing class BodyCPMail implements vlocity_cmt.VlocityOpenInterface
         
                 /*loop de business*/
                 for(Account caccount : cAccountDetailList){
-                    newDescription = newDescription + '\t Nombre: ' + caccount.Name + '\n';
+                    newDescription = newDescription + ' Nombre: ' + caccount.Name + '';
                     //newDescription = newDescription + '\t Número: ' + caccount.AccountNumber + '\n\n';
                 }      
             }
@@ -124,6 +124,7 @@ global with sharing class BodyCPMail implements vlocity_cmt.VlocityOpenInterface
                 c.description = newDescription;
                 update c;
             }
+            outMap.put('CaseUpdated', c);
         }catch(Exception e){
             System.debug('BodyCPMail:GetEmailBody -> exception: ' + e.getMessage());
         }

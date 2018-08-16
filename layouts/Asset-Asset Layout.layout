@@ -8,6 +8,10 @@
         <label>Asset Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__Action__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
@@ -34,6 +38,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SerialNumber</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>imei__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -65,11 +73,35 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>MSISDN__c</field>
+                <field>vlocity_cmt__PriceListId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>ICCID__c</field>
+                <field>vlocity_cmt__PricebookEntryId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__EffectiveOneTimeTotal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__EffectiveQuantity__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__OneTimeCharge__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__OneTimeDiscountPrice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SubTipo_de_Producto__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MSISDN__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -77,15 +109,51 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>vlocity_cmt__PricebookEntryId__c</field>
+                <field>Total_Destruction__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Invalid_Warranty__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Blacklist__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Blacklist_Remove_Date__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>assetModel__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Asset_Brand__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Product_Object_Type__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Tangible__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Rehab_Date_Time__c</field>
+                <field>Codigo_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Nombre_Sistema_Origen__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -93,14 +161,66 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Activation_Datetime__c</field>
+                <field>ICCID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Rehab_Date_Time__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Migrated__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>PortOut__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EffectiveOneTimeTotal_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>EffectiveRecurringTotal_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OneTimeTotal_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OneTimeCalculatedPrice_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>OneTimeCharge_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecurringTotal_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecurringCalculatedPrice_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecurringCharge_w_Tax__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Alicuota__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ConnectDate__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__DisconnectDate__c</field>
             </layoutItems>
-        </layoutColumns>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Status</field>
@@ -120,6 +240,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>PurchaseDate</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__SequenceNumber__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -163,6 +287,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Activation_Datetime__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>vlocity_cmt__AssetReferenceId__c</field>
             </layoutItems>
             <layoutItems>
@@ -171,7 +299,39 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>imei__c</field>
+                <field>vlocity_cmt__OneTimeManualDiscount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__RecurringManualDiscount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__RecurringDiscountPrice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__RecurringCalculatedPrice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__RecurringCharge__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__OneTimeTotal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__OneTimeCalculatedPrice__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__RecurringTotal__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>StockKeepingUnit</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -199,6 +359,14 @@
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ProductDescription</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ProductCode</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -222,15 +390,6 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>JSONAttribute</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
         <label>Asset Attributes</label>
         <layoutColumns>
             <layoutItems>
@@ -238,7 +397,7 @@
                 <field>AssetLevel</field>
             </layoutItems>
             <layoutItems>
-                <height>200</height>
+                <height>400</height>
                 <page>vlocity_cmt__AssetAttributes</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
@@ -248,32 +407,17 @@
         <style>OneColumn</style>
     </layoutSections>
     <relatedLists>
-        <fields>Product2</fields>
-        <fields>Quantity</fields>
-        <fields>UnitPrice</fields>
-        <fields>ListPrice</fields>
-        <fields>TotalPrice</fields>
-        <fields>ODER_ITEM.START_DATE</fields>
-        <fields>ODER_ITEM.END_DATE</fields>
-        <fields>QUOTE_LI</fields>
-        <fields>OriginalOrderItem</fields>
-        <relatedList>OrderItem.vlocity_cmt__AssetId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NAME</fields>
-        <fields>vlocity_cmt__AssetReferenceId__c</fields>
-        <fields>vlocity_cmt__Product2Id__c</fields>
-        <relatedList>vlocity_cmt__ContractLineItem__c.vlocity_cmt__AssetId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ASSET.NAME</fields>
-        <fields>ASSET.SERIAL_NUMBER</fields>
-        <fields>ASSET.INSTALL_DATE</fields>
-        <fields>ASSET.QUANTITY</fields>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>CONTACT.NAME</fields>
-        <fields>ASSET.STATUS</fields>
-        <relatedList>ChildAssets</relatedList>
+        <fields>vlocity_cmt__BillingAccountId__c</fields>
+        <fields>vlocity_cmt__PricingVariableID__c</fields>
+        <fields>vlocity_cmt__PricingVariableCode__c</fields>
+        <fields>vlocity_cmt__AdjustmentPricingVariableId__c</fields>
+        <fields>vlocity_cmt__AppliesTo__c</fields>
+        <fields>vlocity_cmt__AccountAppliedPromotionId__c</fields>
+        <fields>vlocity_cmt__EffectiveStartDate__c</fields>
+        <fields>vlocity_cmt__EffectiveEndDate__c</fields>
+        <fields>vlocity_cmt__PriceListEntryId__c</fields>
+        <relatedList>vlocity_cmt__AccountPriceAdjustment__c.vlocity_cmt__AssetId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Name</fields>
@@ -284,12 +428,26 @@
         <relatedList>Primary Assets</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>Name</fields>
-        <fields>RelatedAsset</fields>
-        <fields>RelationshipType</fields>
-        <fields>FromDate</fields>
-        <fields>ToDate</fields>
-        <relatedList>Related Assets</relatedList>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__AssetPricingAdjustmentReferenceId__c</fields>
+        <fields>vlocity_cmt__PromotionId__c</fields>
+        <fields>vlocity_cmt__ProvisioningStatus__c</fields>
+        <relatedList>vlocity_cmt__AssetPricingAdjustment__c.vlocity_cmt__AssetId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__AppliedAction__c</fields>
+        <fields>vlocity_cmt__AppliedPromotionId__c</fields>
+        <fields>vlocity_cmt__AssetReferenceId__c</fields>
+        <relatedList>vlocity_cmt__AccountAppliedPromotionItem__c.vlocity_cmt__AssetId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__AccountAppliedPromotion__c.vlocity_cmt__AssetId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>LoyaltyTransaction__c.Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>CASES.CASE_NUMBER</fields>
@@ -312,6 +470,16 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>ASSET.NAME</fields>
+        <fields>ASSET.SERIAL_NUMBER</fields>
+        <fields>ASSET.INSTALL_DATE</fields>
+        <fields>ASSET.QUANTITY</fields>
+        <fields>ACCOUNT.NAME</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>ASSET.STATUS</fields>
+        <relatedList>ChildAssets</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
@@ -327,6 +495,23 @@
         <relatedList>RelatedNoteList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>ENTITLEMENT.NAME</fields>
+        <fields>ENTITLEMENT.STARTDATE</fields>
+        <fields>ENTITLEMENT.ENDDATE</fields>
+        <fields>ENTITLEMENT.STATUS</fields>
+        <fields>SLA.NAME</fields>
+        <fields>ENTITLEMENT.STATUSINDICATOR</fields>
+        <fields>ENTITLEMENT.TYPE</fields>
+        <relatedList>RelatedEntitlementList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.PRIORITY</fields>
+        <relatedList>Case.Protection__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <fields>Case__c</fields>
         <fields>OWNER.FIRST_NAME</fields>
@@ -334,11 +519,16 @@
         <relatedList>Transaction_History__c.Asset__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>ENTITLEMENT.NAME</fields>
-        <fields>ENTITLEMENT.STARTDATE</fields>
-        <fields>ENTITLEMENT.ENDDATE</fields>
-        <fields>ENTITLEMENT.STATUS</fields>
-        <relatedList>RelatedEntitlementList</relatedList>
+        <fields>NAME</fields>
+        <relatedList>GP_Lista_de_Asset__c.Asset__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.Parent__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.RootAsset__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <relatedObjects>ContactId</relatedObjects>

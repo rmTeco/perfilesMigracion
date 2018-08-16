@@ -12,6 +12,10 @@
         <label>Product Information</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ParentClassId__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
@@ -33,6 +37,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>PrefaRequired__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>TA_Custom_Description__c</field>
             </layoutItems>
             <layoutItems>
@@ -41,11 +49,31 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>vlocity_cmt__ParentClassId__c</field>
+                <field>Tangible__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Codigo_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__AttributeRules__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ClassId__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SourceOrgProductId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Alicuota__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -79,11 +107,31 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>vlocity_cmt__SubType__c</field>
+                <field>Codigo_Movimiento_Inventario__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>StockKeepingUnit</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Nombre_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Active_Text__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SCP_Certa_GC__Categoria__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SCP_Certa_GC__productoGeneradoPorDelta__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -109,10 +157,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__ChangeDetectorImplementation__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>PrefaRequired__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -170,10 +214,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>vlocity_cmt__ProductTemplateProductId__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>CanUseQuantitySchedule</field>
             </layoutItems>
             <layoutItems>
@@ -202,6 +242,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>vlocity_cmt__SubType__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>vlocity_cmt__TimeToLive__c</field>
             </layoutItems>
             <layoutItems>
@@ -215,14 +259,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__IsNotAssetizable__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ID_Sistema_Origen__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Codigo_Sistema_Origen__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -261,15 +297,6 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>JsonAttr</label>
-        <layoutColumns/>
-        <layoutColumns/>
-        <style>TwoColumnsLeftToRight</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
@@ -282,11 +309,56 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
-        <label>Product Attributes</label>
+        <label>New Section</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>vlocity_cmt__ProductSegmentsPage</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>New Section</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>vlocity_cmt__TelcoProductAttributes</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>JSON Attribute</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__JSONAttribute__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Attributes</label>
         <layoutColumns>
             <layoutItems>
                 <height>500</height>
-                <page>vlocity_cmt__TelcoProductAttributes</page>
+                <page>vlocity_cmt__ProductAttributes</page>
                 <showLabel>false</showLabel>
                 <showScrollbars>true</showScrollbars>
                 <width>100%</width>
@@ -311,34 +383,14 @@
         <style>OneColumn</style>
     </layoutSections>
     <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__OrchestrationScenario__c.vlocity_cmt__Product2Id__c</relatedList>
+        <relatedList>RelatedPricebookEntryList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>vlocity_cmt__IsActive__c</fields>
-        <fields>vlocity_cmt__ProductId__c</fields>
-        <fields>CREATED_DATE</fields>
-        <relatedList>vlocity_cmt__PriceListEntry__c.vlocity_cmt__OfferId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__PriceListEntry__c.vlocity_cmt__ProductId__c</relatedList>
+        <relatedList>vlocity_cmt__ProductRelationship__c.vlocity_cmt__RelatedProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedStandardPriceList</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__SourceProductId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__DestinationProductId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>vlocity_cmt__CatalogProductRelationship__c.vlocity_cmt__Product2Id__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -362,9 +414,6 @@
         <fields>vlocity_cmt__DefaultQuantity__c</fields>
         <fields>vlocity_cmt__RelationshipType__c</fields>
         <fields>vlocity_cmt__RelatedProductId__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
         <relatedList>vlocity_cmt__ProductRelationship__c.vlocity_cmt__Product2Id__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -373,7 +422,6 @@
         <fields>vlocity_cmt__MinMaxDefaultQty__c</fields>
         <fields>LAST_UPDATE</fields>
         <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
         <relatedList>vlocity_cmt__ProductChildItem__c.vlocity_cmt__ChildProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -382,19 +430,36 @@
         <fields>vlocity_cmt__ChildProductId__c</fields>
         <fields>vlocity_cmt__MinMaxDefaultQty__c</fields>
         <fields>Price_Included__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
         <relatedList>vlocity_cmt__ProductChildItem__c.vlocity_cmt__ParentProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__PricingElement__c.vlocity_cmt__ProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Is_Associable__c</fields>
-        <fields>Is_Active__c</fields>
-        <relatedList>Contact_Motive__c.Id_Service__c</relatedList>
+        <fields>vlocity_cmt__ProductHierarchyPath__c</fields>
+        <fields>vlocity_cmt__OverriddenAttributeAssignmentId__c</fields>
+        <fields>vlocity_cmt__OverridingAttributeAssignmentId__c</fields>
+        <fields>vlocity_cmt__OverridingProductChildItemId__c</fields>
+        <fields>vlocity_cmt__OverriddenProductChildItemId__c</fields>
+        <fields>vlocity_cmt__PromotionItemId__c</fields>
+        <relatedList>vlocity_cmt__OverrideDefinition__c.vlocity_cmt__ProductId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__OrchestrationScenario__c.vlocity_cmt__Product2Id__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__DestinationProductId__c</fields>
+        <fields>vlocity_cmt__MappingsData__c</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
+        <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__SourceProductId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__DestinationProductId__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>
@@ -402,7 +467,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000LsDL</masterLabel>
+        <masterLabel>00h6C000000Ehic</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

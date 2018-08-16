@@ -27,7 +27,7 @@
     </alerts>
     <alerts>
         <fullName>TestEmailAlert</fullName>
-        <ccEmails>jfgarciagonzalez@vurpix.com.fan.sit</ccEmails>
+        <ccEmails>lino.acosta@accenture.com</ccEmails>
         <description>TestEmailAlert</description>
         <protected>false</protected>
         <recipients>
@@ -43,7 +43,7 @@
         <description>TestEmailAlert2</description>
         <protected>false</protected>
         <recipients>
-            <recipient>jfgarciagonzalez@vurpix.com.fan</recipient>
+            <recipient>lino.acosta@accenture.com</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -112,26 +112,6 @@
         <field>Status</field>
         <literalValue>En autorización</literalValue>
         <name>Change_Status</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_Aprobada</fullName>
-        <description>Cambia el estado de la gestiÃ³n a &quot;En espera de ejecuciÃ³n&quot;</description>
-        <field>Status</field>
-        <literalValue>En espera de ejecución</literalValue>
-        <name>Change_Status_Aprobada</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Status_AprobadaRevisor</fullName>
-        <description>Cambia el estado del caso a Aprobada revisor</description>
-        <field>Status</field>
-        <literalValue>Aprobada revisor</literalValue>
-        <name>Change_Status_AprobadaRevisor</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -472,7 +452,7 @@
     </tasks>
     <tasks>
         <fullName>TestForApprovalProcess</fullName>
-        <assignedTo>jfgarciagonzalez@vurpix.com.fan</assignedTo>
+        <assignedTo>lino.acosta@accenture.com</assignedTo>
         <assignedToType>user</assignedToType>
         <dueDateOffset>45</dueDateOffset>
         <notifyAssignee>false</notifyAssignee>

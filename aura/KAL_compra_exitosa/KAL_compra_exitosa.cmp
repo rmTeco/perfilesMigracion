@@ -1,0 +1,80 @@
+<aura:component controller="KAL_compraExitosaController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+	<aura:handler name="init" value="{!this}" action="{!c.getProducts}" />
+    <aura:handler name="init" value="{!this}" action="{!c.getOrden}" />
+        
+  <!-->  <aura:attribute name="direccion" type="string"/> -->
+    <aura:attribute name="email" type="string"/> 
+    <aura:attribute name="nroOrden" type="string"/> 
+    <aura:attribute name="productos" type="List" default="[]" />   
+   
+	<div class="slds-grid slds-wrap">        
+        
+        <div class="slds-size_1-of-1 slds-medium-size_3-of-3 slds-p-around_medium">
+            <div aura:id="deliveryData" >
+                  <h2 class="slds-panel__header-title slds-text-heading_large">Completar compra</h2> 
+                   <hr style="border-color: #00040a;"/>                   
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-box borderColor slds-m-top_medium slds-m-bottom_large" style="background-color: rgba(22, 173, 64, 0.15); border-color: #16ad40">
+                 
+                    <h2 class="slds-panel__header-title slds-text-heading_large slds-m-bottom_large" style="color: #16ad40;" >¡Ya es tuyo!</h2>
+                      
+                    <div class="slds-size_1-of-2"> 
+                        <p class="slds-text-heading_small">  
+                           <div class="slds-text-heading_small KAL-Exito__Orden--Numero"> 
+                             Orden n° :  {!v.nroOrden} 
+                           </div>  
+                        </p>
+                    </div>  
+                    <hr style="border-color: #16ad40;"/>
+                    <aura:iteration items="{!v.productos}" var="producto" >
+                        <div class="slds-p-vertical_small ">                
+                            <p class="slds-text-heading_small">
+                                <div class="slds-text-heading_small KAL-Exito__Item--Nombre">
+                                    {!producto.Name}
+                                </div>
+                            </p>                            
+                            <p class="slds-text-heading_small">
+                                <div class="slds-text-heading_small KAL-Exito__Item--Cantidad">
+                                    Cantidad: {!producto.Cant}     
+                                </div>                       
+                            </p>                           
+                            <p class="slds-text-heading_small">
+                               Precio: <ui:outputCurrency class="{!'KAL-Exito__Item--Precio'}" value="{!producto.TotalPrice}" />                                 
+                            </p>               
+                        </div>
+                    </aura:iteration>    
+                    <hr style="border-color: #16ad40;"/> 
+                    <!-->    <p class="slds-text-heading_small">
+                            Entrega a domicilio ({!v.direccion});  
+                        </p> -->
+                </div>
+                <h2 class="slds-panel__header-title slds-text-heading_medium"> <b>Próximos pasos </b></h2> 
+                <p class="slds-panel__header-title slds-text-heading_small slds-m-bottom_x-large" >Te enviaremos un correo a nombre de <b class="KAL-Exito__Email"> {!v.email} </b> cuando tu compra este en camino</p>
+
+
+                <div align="center">          
+                    <ui:button class="slds-button_brand textWhite KAL-Exito__AccTienda" aura:id="button2" buttonTitle="Regresar a la tienda" label="Regresar a la tienda" disabled="" press="{!c.volverATiendaPersonal}" />               
+                </div>
+
+            </div>             
+            <div aura:id="payment" class="slds-is-collapsed">
+                                                 
+
+                 <h2 class="slds-panel__header-title slds-text-heading_large">Pago</h2>                    
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-box borderColor slds-p-around_medium slds-m-top_medium">
+                <!-->    <c:KAL_Pago /> -->
+
+                    
+                </div>
+            </div> 
+        </div>        
+     <!--   <div aura:id="resumen" class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-around_medium">
+
+        	<c:kal_confirmation /> 
+        </div>  -->
+    </div>
+
+
+
+
+
+</aura:component>

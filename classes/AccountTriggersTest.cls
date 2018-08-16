@@ -137,7 +137,7 @@ public class AccountTriggersTest {
         String account = 'Account';
         String contact = 'Contact';
         String socioClub = 'Socio Club';
- 
+
         String userId = UserInfo.getUserId();
         Id userProfileId = Id.valueOf(UserInfo.getProfileId());
         Profile userProfile = [SELECT Name FROM Profile WHERE Id = :userProfileId];
@@ -162,7 +162,7 @@ public class AccountTriggersTest {
         Contact contact1 = new Contact(LastName='Contact1', Attributes__c=vip);
         //Attribute__c autocompletes with VIP (Contact Trigger)
         Database.Insert(contact1);
-        
+
         Id devRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Billing').getRecordTypeId();
         Account account1 = new Account(Name='current1', Attributes__c = jubilado, RecordTypeId = devRecordTypeId, vlocity_cmt__PrimaryContactId__c = Null);
         Account account2 = new Account(Name='current2', Attributes__c = jubilado, RecordTypeId = devRecordTypeId, vlocity_cmt__PrimaryContactId__c = contact1.Id);
@@ -172,7 +172,7 @@ public class AccountTriggersTest {
         listAcc.add(account1);
         listAcc.add(account2);
         insert account1;
-        
+
         for(Account acc : listAcc){
             acc.Attributes__c = estrategico;
         }
@@ -209,7 +209,7 @@ public class AccountTriggersTest {
         String account = 'Account';
         String contact = 'Contact';
         String socioClub = 'Socio Club';
-        
+
         String userId = UserInfo.getUserId();
         Id userProfileId = Id.valueOf(UserInfo.getProfileId());
         Profile userProfile = [SELECT Name FROM Profile WHERE Id = :userProfileId];
@@ -222,7 +222,7 @@ public class AccountTriggersTest {
         AttributesWeighing__c att1 = new AttributesWeighing__c(Name = '01', Object__c = account, Attribute__c = socioClub, Weighing__c = 6);
         AttributesWeighing__c aw6 = new AttributesWeighing__c(Name = 'aw6', Attribute__c = estrategico, Object__c = contact, Weighing__c = 7);
         AttributesByProfile__c ab1 = new AttributesByProfile__c(AccountAttributes__c = (jubilado + '; ' + estrategico + '; ' + menor + '; ' + socioClub), ContactAttributes__c = (vip + '; ' + estrategico + ';' + prensa), SetupOwnerId = userProfile.Id);
-        
+
         Test.startTest();
 
         Database.Insert(aw1);

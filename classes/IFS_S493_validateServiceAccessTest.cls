@@ -35,25 +35,6 @@ public class IFS_S493_validateServiceAccessTest {
 
 
    @isTest static void testResponseStatus417_ERROR_CONTACT () {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         Test.startTest();
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
@@ -77,7 +58,6 @@ public class IFS_S493_validateServiceAccessTest {
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
         Test.startTest();
-
         req.requestURI = '/v1/integrationprocedure/validateServiceAccess/contacto/obtener/' + contact.Id;  
         req.params.put('numeroLinea', K_MSISDN_NOK);
         req.httpMethod = 'GET';
@@ -314,7 +294,7 @@ public class IFS_S493_validateServiceAccessTest {
 
     static void createWorkTeamMember (Id pWorkTemaId) {
         System.debug('---------- Entre en createWorkTeamMember()');
-        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId);
+        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId, Is_Active__c = TRUE);
         insert wtm;
     }
 

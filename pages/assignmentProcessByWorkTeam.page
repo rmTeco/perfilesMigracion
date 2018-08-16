@@ -1,0 +1,242 @@
+<apex:page controller="assignmentProcessByWorkTeamController"
+           showHeader="true"
+           sidebar="false"
+           lightningStylesheets="true" 
+           applyBodyTag="false" 
+           docType="html-5.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+<link rel="stylesheet" href="{!URLFOR($Resource.JQueryUILib, 'jquery-ui-1.12.1.custom/jquery-ui.css')}" />
+
+        <apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+        <apex:includeScript value="{!URLFOR($Resource.JQueryUILib, 'jquery-ui-1.12.1.custom/jquery-ui.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jstree, 'jstree/dist/jstree.js')}"></apex:includeScript>
+        <script>
+            localStorage.removeItem('jstree');
+
+            var Data = [];
+
+            Visualforce.remoting.Manager.invokeAction(
+                '{!$RemoteAction.assignmentProcessByWorkTeamController.getAllWorkTeams}', null,
+                function(result, event){
+                    if (event.status) {
+                        Data = JSON.parse(result);
+                        window.configObject = {
+                            "core": {
+                                "animation": 0,
+                                    "check_callback": true,
+                                        "themes": { "stripes": true },
+                                'data': Data
+                            },
+                            "types": {
+                                "#": {
+                                    "max_children": 1,
+                                        "max_depth": 4,
+                                            "valid_children": ["root"]
+                                },
+                                "root": {
+                                    "icon": "/static/3.3.5/assets/images/tree_icon.png",
+                                        "valid_children": ["default"]
+                                },
+                                "default": {
+                                    "valid_children": ["default", "file"]
+                                },
+                                "file": {
+                                    "icon": "glyphicon glyphicon-file",
+                                        "valid_children": []
+                                }
+                            },
+                            "checkbox": {
+                                "keep_selected_style": false
+                            },
+                            "plugins": [
+                                "contextmenu", "dnd", "search",
+                                "state", "types", "wholerow", "checkbox"
+                            ]
+                        }
+                    } else if (event.type === 'exception') {
+                        console.log(event);
+                    } else {
+                        console.log(event);
+                    }
+
+                    const saveState = ()=>{
+                        let tree = $('#jstree_demo').jstree(true);
+                        let state = tree.get_selected();
+                        let initialList = tree.settings.core.data;
+                        let finalList = initialList.map( item => {
+                            item.state = {};
+                            item.state.selected = state.includes(item.id);
+                            return item;
+                        });
+                        return true;
+                    }
+                }, 
+                {escape: false}
+            );
+            
+            const saveState = ()=>{
+                debugger
+                let tree = jQuery('#jstree_demo').jstree(true);
+                let state = tree.get_selected();
+                let initialList = tree.settings.core.data;
+                let finalList = initialList.map( item => {
+                    item.state = {};
+                    item.state.selected = state.includes(item.id);
+                    return item;
+                });
+                console.log(finalList);
+            }
+
+            const CreateComponent = () => {
+                jQuery('#jstree_demo').jstree('destroy').empty();
+                window.tree = jQuery('#jstree_demo').jstree(window.configObject);
+            };               
+
+      jQuery( function() {
+        jQuery( "#customPermissionInputId" ).autocomplete({
+          source: function(request, response) {
+                  Visualforce.remoting.Manager.invokeAction( '{!$RemoteAction.assignmentProcessByWorkTeamController.populateCustomPermissionByName}',
+                request.term,
+                function(result, event){
+                    if (event.status) {
+                        response(result);
+                    } else {
+                        alert(event.message);
+                    }
+                });
+            },
+            select:function( event, ui ){
+                    // Call class method by passing this value using action function            
+                    callGetPermSetMethod(ui.item.label);
+            }
+        });
+    });
+
+      function callGetAllWorkTeams(){
+        Visualforce.remoting.Manager.invokeAction( '{!$RemoteAction.assignmentProcessByWorkTeamController.getAllWorkTeams}',
+                request.term,
+                function(result, event){
+                    if (event.status) {
+                        response(result);
+                    } else {
+                        alert(event.message);
+                    }
+                });
+      }
+
+        </script>
+         <body class="slds-scope" style="background: white;"> 
+            <apex:slds />
+            <div class="slds-scope">       
+                <apex:form styleClass="slds-form slds-form_stacked" id="processForm">
+                    <apex:pageBlock title="" mode="maindetail" id="blockProcess">
+                        <apex:pageBlockSection id="sectionProcess" title="Información de los Procesos" collapsible="false" columns="1" dir="LTR"  >
+                            <apex:outputPanel id="panelProcess" >
+                                <div id="divProcess" class="sample-form">
+                                    <!-- <h3>Buscar Funcionalidad</h3> -->
+                                    <!--<c:Typeahead searchBoxId="acctSearchBox" object="vlocity_cmt__VlocityAction__c" primaryField="vlocity_cmt__DisplayLabel__c"
+                                            placeholder="Ingrese Funcionalidad a Buscar..." minSearchLength="3" filterClause="vlocity_cmt__IsActive__c = true"
+                                            destinationForSelectedId="vlcActionId" destinationForSelectedValue="vlcActionName" stealFocus="false" /> -->
+
+                                     <div class="slds-grid slds-wrap slds-grid--pull-padded">       
+
+                                        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--4-of-6 slds-large-size--6-of-12">
+                                          
+                                          <div class="slds-form-element">
+                                            <input type="text" id="customPermissionInputId" class="slds-input" placeholder="Custom Permission" />
+                                          </div>
+                                        </div>
+                                        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--2-of-6 slds-large-size--4-of-12">
+                                            <apex:outputPanel id="permissionSetsPanel" styleclass="slds-form-element slds-size--2-of-2">
+                                            <div class="slds-select_container">
+                                              <apex:selectList id="selectedPermissionSetName" value="{!selectedPermissionSetName}" styleclass="slds-select selectedPermClass" size="1">
+                                                  <apex:selectOptions value="{!permissionSetOptionsList}"></apex:selectOptions>
+                                              </apex:selectList>
+                                          </div>
+                                            </apex:outputPanel>
+                                        </div>
+
+                                       </div> 
+
+                                            <apex:actionRegion >
+                                                <apex:actionFunction name="callGetPermSetMethod" action="{!getPermissionSetsRef}" reRender="permissionSetsPanel">
+                                                    <apex:param name="customPermissionName" value=""/>
+                                                </apex:actionFunction>
+                                            </apex:actionRegion>
+
+                                            
+                                    <input type="hidden" id="vlcActionId" value="{!vlcActionId}" />
+                                </div>
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>               
+                        <apex:pageBlockSection id="sectionTeam" title="Información de los Equipos" collapsible="false" columns="1" dir="LTR">
+                            <apex:outputPanel id="panelTeam" >  
+                                <div id="divTeam" class="sample-form">
+                                    <h3>Asignar a:</h3>
+
+                                        <div class="slds-grid slds-wrap slds-grid--pull-padded">       
+
+                                            <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--4-of-6 slds-large-size--9-of-12">
+                                              
+                                                <div class="slds-form-element">
+
+                                                    <c:Typeahead searchBoxId="acctSearchBoxWT" object="WorkTeam__c" primaryField="Name"
+                                                            searchScope="NAME" placeholder="Ingrese Equipo de Trabajo a Buscar..." minSearchLength="3" filterClause="Is_Active__c = true AND WorkteamLevel__c != null" 
+                                                            destinationForSelectedId="workTeamId" destinationForSelectedValue="workTeamName" stealFocus="false"  />  
+                                                    <input type="hidden" id="workTeamId" value="{!workTeamId}" />                             
+                                                    <apex:inputHidden id="workTeamName" value="{!workTeamName}" />
+
+                                                </div>
+
+                                                <div class="slds-form-element">
+                                                    <!--
+                                                    <input type="button" onclick="callGetWTeams(); CreateComponent(); return false;" class="slds-button slds-button--brand" title="Filtrar" value="Filtrar" reRender="myButtons, myTableResult, myMessages, dataTableResult, componentPanel" status="renderMeStatus"  />
+                                                    -->
+
+                                                     <apex:commandButton styleClass="slds-button slds-button--brand" title="Filtrar" value="Filtrar" reRender="myButtons, myTableResult, myMessages, dataTableResult, componentPanel" status="renderMeStatus"  onclick="CreateComponent(); return false;"/>
+                                                    
+                                                </div>
+
+                                            <script>
+                                                function callGetWTeams(){
+                                                    var permissionSetName = document.getElementsByClassName('selectedPermClass')[0].value;
+                                                    console.log(permissionSetName);
+
+                                                    Visualforce.remoting.Manager.invokeAction(
+                                                                '{!$RemoteAction.assignmentProcessByWorkTeamController.getAllWorkTeams}',permissionSetName, 
+                                                                function(result, event){
+                                                                    if (event.status) {
+                                                                        console.log(result);
+                                                                    }
+                                                                }, 
+                                                                {escape: true}
+                                                            );
+
+                                                }
+                                            </script>
+
+                    
+
+
+
+                                            </div>       
+                                            
+                                        </div>
+                                </div>
+                            </apex:outputPanel>                     
+                            <apex:outputPanel id="componentPanel" >
+                                <div id="lightningComponent" style="max-width: 1128px" />
+                            </apex:outputPanel>
+                        </apex:pageBlockSection>             
+                    </apex:pageBlock>      
+
+                    <div id="jstree_demo"></div>
+
+
+                    <button class="slds-button slds-button--brand">
+                        Guardar
+                    </button>            
+                </apex:form> 
+            </div>
+        </body>    
+</apex:page>

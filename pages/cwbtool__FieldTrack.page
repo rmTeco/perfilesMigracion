@@ -1,0 +1,108 @@
+<apex:page extensions="cwbtool.FieldTrackCtrl" standardController="cwbtool__FieldTrack__c" tabStyle="cwbtool__FieldTrack__c" >
+    <head>
+        <style>
+            .CustomRequiredDiv{
+              background-color:#c00;
+              position: absolute;
+              left:-4px;
+              width:3px;
+              height:125%; 
+              top:-2px;
+            }
+            .errorM4 .msgIcon, .errorSmall {
+                background-image: url(/img/samples/flag_red.gif) !important;
+            }
+            
+            .myCustomMessage .message {
+                background: none  !important;
+                border: none !important;
+            }
+        </style>
+        
+        <apex:stylesheet value="{!URLFOR($Resource.cwbtool__FieldTrackSupport,'jquery.auto-complete.css')}" />
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__FieldTrackSupport,'/jQuery113.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__FieldTrackSupport,'jquery.auto-complete.js')}" />
+    </head>
+    
+    <apex:form >
+        <apex:actionFunction name="updating" rerender="panel,pageMsgTop" status="waitStatus" action="{!updating}" >
+            <apex:param name="objectLabel" value="" assignTo="{!ObjectLabel}" />
+        </apex:actionFunction>
+        <apex:sectionHeader title="Field Track" subtitle="{!if(record.Id!=NULL,record.Name,'New Field Track')}" />
+        <apex:pagemessages id="pageMsgTop2" rendered="{!!hasFieldTrackViewPermission}"/>
+        <apex:pageBlock rendered="{!hasFieldTrackViewPermission}">
+
+            <apex:pagemessages id="pageMsgTop" />
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!onSave}" rerender="pageMsgTop,errorMsg"
+                                        disabled="{!not(($ObjectType.cwbtool__FieldTrack__c.updateable && record.Id!=NULL )||($ObjectType.cwbtool__FieldTrack__c.createable && record.Id == NULL) )}"/>
+                <apex:commandButton value="Cancel" action="{!onCancel}" rerender="pageMsgTop"  />
+                <apex:commandButton value="Save and Analyze" action="{!onSaveAndAnalyze}" rerender="pageMsgTop"
+                            disabled="{!not($ObjectType.cwbtool__FieldAnalysis__c.deletable && $ObjectType.cwbtool__FieldAnalysis__c.createable)}"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:outputPanel >
+                    <b>Give your Field Track a name </b>&nbsp; &nbsp;
+                    <apex:outputPanel styleClass="requiredInput">
+                        <div class="CustomRequiredDiv" />
+                        <apex:inputText value="{!record.name}" />
+                    </apex:outputPanel>
+                    <br/><br/>(e.g. 'All Accounts','Contacts','CampaignMembers of Campaign ',etc)
+                    <br/>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Object Details" columns="1" collapsible="false">
+                <apex:outputPanel >
+                    <b>Select Object you want to analyze</b> &nbsp; &nbsp;
+                    <apex:outputPanel styleClass="requiredInput">
+                        <input id="hero-demo" type="text"
+                                placeholder = "Enter Object Label ..." style = "width:25%; max-width:600px; outline:0" 
+                                onblur= "updating($('#hero-demo').val());" value="{!objectLabel}">
+                        </input>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <apex:outputPanel id="panel">
+                    <b>You can also analyze a subset of your records by adding a SOQL filter below </b> tell me more...
+                    <b> <br/> To analyze all records, leave this blank</b> 
+                    <br/> <br/> 
+                    <apex:pageBlockSectionItem >
+                        <apex:outputPanel id="queryPanel" style="text-align:top" >
+                            <b>SELECT</b> ( all fields ) <b> FROM </b> {!record.ObjectName__c} <b> WHERE </b>
+                            &nbsp; <apex:inputText value="{!record.cwbtool__Filter__c}" >
+                                <apex:actionSupport status="waitStatus" rerender="panel,pageMsgTop" action="{!updating}" event="onchange" />
+                            </apex:inputText>
+                        </apex:outputPanel>&nbsp; &nbsp;
+                    </apex:pageBlockSectionItem>
+                </apex:outputPanel>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:outputpanel id="waitPanel">
+            <apex:actionstatus id="waitStatus">
+                <apex:facet name="start">
+                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;
+                           height: 100%;opacity:0.65;width:100%;">
+                        <div class="waitingHolder" style="width: 91px;">
+                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                            <span class="waitingDescription">Working...</span>
+                        </div>
+                    </div>
+                </apex:facet>
+            </apex:actionstatus>
+        </apex:outputpanel>
+    </apex:form>
+    <script>
+        $(function(){
+            $('#hero-demo').autoComplete({
+                minChars: 1,
+                source: function(term, suggest){
+                    term = term.toLowerCase();
+                    var choices = {!AllSobjectsLabel};
+                    var suggestions = [];
+                    for (i=0;i<choices.length;i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+                }
+            });
+        });
+    </script>
+</apex:page>

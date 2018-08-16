@@ -55,6 +55,28 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Overrding_PCI_Child_Prod__c</fullName>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__OverridingProductChildItemId__r.vlocity_cmt__ChildProductId__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Overrding PCI Child Prod</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Overriden_PCI_Child_Prod__c</fullName>
+        <externalId>false</externalId>
+        <formula>vlocity_cmt__OverriddenProductChildItemId__r.vlocity_cmt__ChildProductId__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Overriden PCI Child Prod</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>vlocity_cmt__CompiledAttributeOverrideId__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <deprecated>false</deprecated>
@@ -176,6 +198,11 @@
         <valueSet>
             <valueSetDefinition>
                 <sorted>false</sorted>
+                <value>
+                    <fullName>Pricing</fullName>
+                    <default>false</default>
+                    <label>Pricing</label>
+                </value>
                 <value>
                     <fullName>Product Definition</fullName>
                     <default>false</default>

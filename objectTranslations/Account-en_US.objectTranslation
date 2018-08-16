@@ -9,7 +9,7 @@
         <name>SegmentListExport</name>
     </fieldSets>
     <fields>
-        <label><!-- Account Integration Formula --></label>
+        <label><!-- Account Integration Id --></label>
         <name>AccountIntegrationFormula__c</name>
     </fields>
     <fields>
@@ -87,8 +87,16 @@
         <name>Club_SubscriptionDate__c</name>
     </fields>
     <fields>
-        <label><!-- Contact Integration Id --></label>
-        <name>ContactIntegrationId__c</name>
+        <label><!-- Club_SubscriptionStatus --></label>
+        <name>Club_SubscriptionStatus__c</name>
+        <picklistValues>
+            <masterLabel>Confirmada</masterLabel>
+            <translation><!-- Confirmada --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Pendiente</masterLabel>
+            <translation><!-- Pendiente --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <help><!-- Contact Preference Phone --></help>
@@ -145,8 +153,9 @@
         <name>Fraud__c</name>
     </fields>
     <fields>
-        <label><!-- Hard of hearing --></label>
-        <name>HardOfHearing__c</name>
+        <label><!-- GP Tabla Temporaria --></label>
+        <name>GP_Tabla_Temporaria__c</name>
+        <relationshipLabel><!-- Accounts --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- HuaweiNotice S015 --></label>
@@ -175,10 +184,6 @@
             <masterLabel>Voz (SUR)</masterLabel>
             <translation><!-- Voz (SUR) --></translation>
         </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Influencer --></label>
-        <name>Influencer__c</name>
     </fields>
     <fields>
         <label><!-- Last Modified Email Date --></label>
@@ -242,10 +247,6 @@
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Not Sighted --></label>
-        <name>NotSighted__c</name>
-    </fields>
-    <fields>
         <label><!-- Personal Club Category --></label>
         <name>PersonalClubCategory__c</name>
         <picklistValues>
@@ -270,20 +271,12 @@
         <name>PhoneValidated__c</name>
     </fields>
     <fields>
-        <label><!-- Press --></label>
-        <name>Press__c</name>
-    </fields>
-    <fields>
         <label><!-- PrimaryContactName --></label>
         <name>PrimaryContactName__c</name>
     </fields>
     <fields>
         <label><!-- Purchase Financing --></label>
         <name>Purchase_Financing__c</name>
-    </fields>
-    <fields>
-        <label><!-- Retired --></label>
-        <name>Retired__c</name>
     </fields>
     <fields>
         <label><!-- Brand Opportunities --></label>
@@ -1111,10 +1104,6 @@
         <name>SocialPlan__c</name>
     </fields>
     <fields>
-        <label><!-- Strategic --></label>
-        <name>Strategic__c</name>
-    </fields>
-    <fields>
         <label><!-- TaxCondition --></label>
         <name>TaxCondition__c</name>
         <picklistValues>
@@ -1125,14 +1114,6 @@
             <masterLabel>RS</masterLabel>
             <translation><!-- RS --></translation>
         </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Group Employee --></label>
-        <name>TelecomEmployee__c</name>
-    </fields>
-    <fields>
-        <label><!-- Group ex-Employee --></label>
-        <name>TelecomExEmployee__c</name>
     </fields>
     <fields>
         <label><!-- Unnamed Customer --></label>
@@ -1155,10 +1136,6 @@
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- VIP --></label>
-        <name>VIP__c</name>
-    </fields>
-    <fields>
         <help><!-- Validated Billing Address --></help>
         <label><!-- Validated Billing Address --></label>
         <name>ValidatedBillingAddress__c</name>
@@ -1167,6 +1144,18 @@
         <help><!-- Validated Shipping Address --></help>
         <label><!-- Validated Shipping Address --></label>
         <name>ValidatedShippingAddress__c</name>
+    </fields>
+    <fields>
+        <label><!-- Active --></label>
+        <name>ltnadptn__Active__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- Account Payment Type --></label>
@@ -1216,10 +1205,6 @@
     <fields>
         <label><!-- Bill Delivery Method --></label>
         <name>vlocity_cmt__BillDeliveryMethod__c</name>
-        <picklistValues>
-            <masterLabel>Electronic Statements Online</masterLabel>
-            <translation><!-- Electronic Statements Online --></translation>
-        </picklistValues>
         <picklistValues>
             <masterLabel>Paper Billing</masterLabel>
             <translation><!-- Paper Billing --></translation>
@@ -1497,6 +1482,10 @@
         <name>Internal_Channel</name>
     </recordTypes>
     <recordTypes>
+        <label><!-- Migracion --></label>
+        <name>Migracion</name>
+    </recordTypes>
+    <recordTypes>
         <label><!-- MobilePhoneAccount --></label>
         <name>MobilePhoneAccount</name>
     </recordTypes>
@@ -1511,11 +1500,6 @@
         <name>Partner</name>
     </recordTypes>
     <recordTypes>
-        <description><!-- Utilizado para los perfiles que deban crear cuentas usadas para SCP --></description>
-        <label><!-- SCP --></label>
-        <name>SCP</name>
-    </recordTypes>
-    <recordTypes>
         <description><!-- Use service accounts to add an additional service location to a business account, consumer account or service aggregator account. --></description>
         <label><!-- Service --></label>
         <name>Service</name>
@@ -1526,8 +1510,8 @@
         <name>ServiceAggregator</name>
     </recordTypes>
     <validationRules>
-        <errorMessage><!-- Invalid attributes combination --></errorMessage>
-        <name>Attributes_Validation</name>
+        <errorMessage><!-- No se puede editar el registro --></errorMessage>
+        <name>EditRestrict</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- Las cuentas de tipo gestión deben tener una cuenta principal asociada. --></errorMessage>

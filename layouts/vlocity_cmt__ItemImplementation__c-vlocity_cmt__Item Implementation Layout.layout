@@ -24,6 +24,10 @@
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__ThorImplementation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__GlobalKey__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -59,13 +63,37 @@
     <miniLayout>
         <fields>vlocity_cmt__Implementation__c</fields>
     </miniLayout>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__AsyncResponseVlocityDataRaptorBundleId__c</fields>
+        <fields>vlocity_cmt__AttributesEncodingStyle__c</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
+        <fields>vlocity_cmt__EventConditionData__c</fields>
+        <fields>vlocity_cmt__ErrorQueueId__c</fields>
+        <fields>vlocity_cmt__OrchestrationPlanDefinitionId__c</fields>
+        <fields>vlocity_cmt__OrderItemsNodeName__c</fields>
+        <fields>vlocity_cmt__ProcessAfter__c</fields>
+        <fields>vlocity_cmt__QueueType__c</fields>
+        <relatedList>vlocity_cmt__OrchestrationItemDefinition__c.vlocity_cmt__itemImplementationId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__Account__c</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
+        <fields>vlocity_cmt__ErrorQueueId__c</fields>
+        <fields>vlocity_cmt__EventConditionData__c</fields>
+        <fields>vlocity_cmt__ExecutionLog__c</fields>
+        <fields>vlocity_cmt__OrchestrationItemDefinitionId__c</fields>
+        <fields>vlocity_cmt__OrchestrationItemType__c</fields>
+        <relatedList>vlocity_cmt__OrchestrationItem__c.vlocity_cmt__ItemImplementationId__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000LmlX</masterLabel>
+        <masterLabel>00h6C000000RNxE</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -15,6 +15,30 @@
             .noMostrar{
                 display: none;
             }
+            /* Tooltip container */
+            .tooltip {
+                position: relative;
+                display: inline-block;
+                border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+            }
+            /* Tooltip text */
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 120px;
+                background-color: black;
+                color: #fff;
+                text-align: center;
+                padding: 5px 0;
+                border-radius: 6px;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                top: -10px;
+                left: 110%;
+            }
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+            }
         </style>
         <script type="text/javascript">
             if (!modalUpdate) {
@@ -56,6 +80,7 @@
             var selectField = '';
             var intField = '';
             var boolField = '';
+            var stringField = '';
             var buttonUpd = '';
             var buttonIns = '';
             var table = '';
@@ -67,6 +92,7 @@
             $(document).ready(function(){
                 initIdElems1();
                 initIdElems2();
+                acomodarPicklistEvento();
 
                 varSectItemINP = $('.SectionItemInput')[0];
                 insertTitle();
@@ -86,6 +112,12 @@
                     IdCond = document.getElementById(IdCondicion);
                 }
             }
+            function acomodarPicklistEvento(){
+                var spanChild = document.getElementById('spanAux');
+                var div = document.getElementById('idSelectList1');
+                $(div).append(spanChild);
+                $(spanChild).removeClass('noMostrar');
+            }
             function openDataTable(){
                 if (!nombreRegla){
                     nombreRegla = '{!regla.Name}';
@@ -98,9 +130,6 @@
                 modalFechaVTO = document.getElementById('modalFechaVTO');
                 buttonUpd = document.getElementById('divButtonUpd');
                 buttonIns = document.getElementById('divButtonIns');
-                selectField = document.getElementById('spanSelectValor');
-                intField = document.getElementById('spanIntValor');
-                boolField = document.getElementById('spanBoolValor');
                 
                 table = $('.listaCondiciones').dataTable({
                     "paging": true,
@@ -122,6 +151,7 @@
                         "zeroRecords": "No se encontraron condiciones"
                     }
                 });
+                initValoresCond();
             }
             function fieldChange(data, nombreId, eventoId) {
                 if(data.id == nombreId) {
@@ -130,8 +160,6 @@
                 if(data.id == eventoId) {
                     eventoRegla = data.value;
                 }
-                initPicklist();
-
                 if( $(".nombreRegla").val() == '' || $(".tipoEvento").val() == ''){
                     $(".botonCondicion").addClass('noMostrar');
                     $(".cartelCondicion").removeClass('noMostrar');
@@ -139,9 +167,11 @@
                     $(".cartelCondicion").addClass('noMostrar');
                     $(".botonCondicion").removeClass('noMostrar');
                 }
+                validarEvento();
+                //initPicklist();
             }
             function update(id) {
-                validateFields();
+                validateFields(false);
                 //IdCond = document.getElementById('j_id0:formulario:IdCond');
                 if (nombreRegla && eventoRegla) {
                     if(id) {
@@ -154,7 +184,6 @@
                     $(buttonIns).addClass('noMostrar');
                     $(buttonUpd).removeClass('noMostrar');
                     getCond();
-                    //rerenderPick();
                     openModal('condUPD');
                 } else {
                     return;
@@ -172,53 +201,104 @@
                 }
             }
             function insert() {
-                validateFields();
+                validateFields(false);
                 inicializarCond();
                 $(buttonUpd).addClass('noMostrar');
                 $(buttonIns).removeClass('noMostrar');
                 openModal('condUPD');
             }
-            function validateFields() {
+            function validateFields(flag) {
                 if (!nombreRegla) {
                     nombreRegla = '{!regla.Name}';
                 }
                 if (!eventoRegla) {
                     eventoRegla = '{!regla.Tipo_de_evento__c}';
                 }
-            }
-            function refreshVarSelect(SOptId, selectedVarId) {
-                var SOptDOM = document.getElementById(SOptId);
-                selectedVar = document.getElementById(selectedVarId);
-                selectedVar.value = SOptDOM.value;
-                refreshPicklists();
+                if(flag) {
+                    validarEvento();
+                }
             }
             function fieldType() {
+                var pickOper2 = $('.pickOper2');
+                pickOper2.prop('disabled', false);
                 var pickElem = $('.valorContraElQueSeCompara')[0];
                 var options = $('.valorContraElQueSeCompara option');
                 var selOption = '';
-
+                selectedVar = $('.selectedVar').val();
                 if (options.length > 1) {
                     selOption = options[1].value;
                 }
+
+                var json = $('.tipoDeAtributo').val();
+                var optionsAtributo = '';
+                var valores = [];
+                if(json) {
+                    optionsAtributo = JSON.parse(json);
+                    if (selectedVar != '') {
+                        if (optionsAtributo[selectedVar]['valoresPosibles']) {
+                            valores = optionsAtributo[selectedVar]['valoresPosibles'];
+                        }
+                        if (optionsAtributo[selectedVar]['tipo']) {
+                            selOption = optionsAtributo[selectedVar]['tipo'];
+                        }
+                    }
+                }
+                addValidation(false);
                 
-                if (selOption == 'integer') {
-                    acomodarCampos(pickElem.id, 'contenedor');
+                if (selOption == 'integer' || selOption == 'Number') {
+                    acomodarCampos('spanEspacioValor', 'contenedor');
+                    selectField = '';
+                    
                     acomodarCampos('spanBoolValor', 'contenedor');
+                    boolField = false;
                     
-                    acomodarCampos('spanIntValor', 'spanEspacioValor');
-                    //LOCALtipoValorAUX = selOption;
-                } else if (selOption == 'bool') {
-                    acomodarCampos(pickElem.id, 'contenedor');
+                    acomodarCampos('spanStringValor', 'contenedor');
+                    stringField = '';
+                    
+                    acomodarCampos('spanIntValor', 'contenedorMostrar');
+                } else if (selOption == 'bool' || selOption =='Boolean') {
+                    pickOper2.prop('disabled', 'disabled');
+                    pickOper2.val('=');
+                    acomodarCampos('spanEspacioValor', 'contenedor');
+                    selectField = '';
+                    
                     acomodarCampos('spanIntValor', 'contenedor');
+                    intField = null;
                     
-                    acomodarCampos('spanBoolValor', 'spanEspacioValor');
-                    //LOCALtipoValorAUX = selOption;
+                    acomodarCampos('spanStringValor', 'contenedor');
+                    stringField = '';
+                    
+                    acomodarCampos('spanBoolValor', 'contenedorMostrar');
+                } else if (selOption == 'string' || selOption == 'String') {
+                    acomodarCampos('spanEspacioValor', 'contenedor');
+                    selectField = '';
+                    
+                    acomodarCampos('spanIntValor', 'contenedor');
+                    intField = null;
+                    
+                    acomodarCampos('spanBoolValor', 'contenedor');
+                    boolField = false;
+
+                    if(json) {
+                        showTooltip(valores);
+                        addValidation(true, valores);
+                    } else {
+                        showTooltip(false);
+                        addValidation(false);
+                    }
+                    
+                    acomodarCampos('spanStringValor', 'contenedorMostrar');
                 } else {
                     acomodarCampos('spanBoolValor', 'contenedor');
-                    acomodarCampos('spanIntValor', 'contenedor');
+                    boolField = false;
                     
-                    acomodarCampos(pickElem.id, 'spanEspacioValor');
-                    //LOCALtipoValorAUX = '';
+                    acomodarCampos('spanIntValor', 'contenedor');
+                    intField = null;
+                    
+                    acomodarCampos('spanStringValor', 'contenedor');
+                    stringField = '';
+                    
+                    acomodarCampos('spanEspacioValor', 'contenedorMostrar');
                 }
             }
             function acomodarCampos(child, parentTo) {
@@ -227,6 +307,79 @@
                 
                 parentElem.append(childElem);
             }
+            function showTooltip(valores) {
+                var elemento = $('#spanStringValor');
+                var tooltipText = $('#tooltiptext');
+                if(valores) {
+                    tooltipText.empty();
+                    tooltipText.append('<p>Posibles valores: </b></p>');
+                    valores.forEach(function (item,index) {
+                        tooltipText.append('<p>' + item + '</b></p>');
+                    });
+                    elemento.addClass('tooltip');
+                } else {
+                    elemento.removeClass('tooltip');
+                    tooltipText.empty();
+                }
+            }
+            function addValidation(flag, valores) {
+                var valorString = $('.Valor_string__c');
+                if (flag){
+                    validate(valores, $('.Valor_string__c')[0].value);
+                    valorString.change(function() {
+                        validate(valores, this.value);
+                    });
+                } else {
+                    disableBtns(false);
+                    valorString.change(
+                        setAuxValores('Valor_string__c','auxValorString')
+                    );
+                }
+            }
+            function validate(valores, value) {
+                setAuxValores('Valor_string__c','auxValorString');
+                if(!valores.includes(value)) {
+                    disableBtns(true);
+                } else {
+                    disableBtns(false);
+                }
+            }
+            function disableBtns(flag) {
+                var insButton = $('.insertBtn');
+                var updButton = $('.updateBtn');
+                insButton.prop('disabled', flag);
+                updButton.prop('disabled', flag);
+                if (flag) {
+                    insButton.addClass('slds-button');
+                    updButton.addClass('slds-button');
+                } else {
+                    insButton.removeClass('slds-button');
+                    updButton.removeClass('slds-button');
+                }
+                showError(flag);
+            }
+            function showError(flag) {
+                var child = 'spanError';
+                var parentMostrar = $('.auxValorEntero').parent()[0];
+                if(!parentMostrar.id) {
+                    parentMostrar.id = 'showErrorColumnId';
+                }
+                var parentOcultar = 'contenedor';
+                //Mostrar Error
+                if(flag) {
+                    //muestro
+                    acomodarCampos(child,parentMostrar.id);
+                } else {
+                    //no muestro
+                    acomodarCampos(child,parentOcultar);
+                }
+            }
+            function initValCond(auxVar,auxValEntero,auxValBooleano,auxValString) {
+                selectField = document.getElementById(auxVar);
+                intField = document.getElementById(auxValEntero);
+                boolField = document.getElementById(auxValBooleano);
+                stringField = document.getElementById(auxValString);
+            }
             function setAuxVar(selected, aux) {
                 //Seteo Variable auxiliar para Picklists Dependientes
                 if (aux) {
@@ -234,12 +387,19 @@
                     auxVarAComparar.value = selected;
                 }
             }
+            /**
             function setAuxValores(selected, aux) {
                 //Seteo Variables auxiliares
                 if (aux) {
                     var elem = document.getElementById(aux);
                     elem.value = selected;
                 }
+            }
+            */
+            function setAuxValores(field1, fieldAux) {
+                //Seteo Variables auxiliares
+                var campo = $('.' + field1);
+                var auxiliar = $('.' + fieldAux).val( campo.val() );
             }
             function insertTitle() {
                 var firstChild = varSectItemINP;
@@ -326,20 +486,34 @@
     </head>
     <body>
         <apex:form id="formulario">
-            <apex:actionFunction name="initPicklist" action="{!getPicklists}" rerender="varOptionsId, pickOper, pickValor"/>
-            <apex:actionFunction name="refreshPicklists" action="{!getPicklists}" rerender="pickOper, pickValor" oncomplete="fieldType();" />
-            <apex:actionFunction name="getCond" action="{!getCondicional}" rerender="varOptionsId, auxVarAComparar, pickOper, pickValor, auxValorEntero, auxValorBooleano, valEntero, valBooleano" oncomplete="fieldType();" />
+            <apex:actionFunction name="initPicklist" action="{!getPicklists}" rerender="varOptionsId, auxVarAComparar, pickOper,pickOper2, pickValor"/>
+            <apex:actionFunction name="refreshPicklists" action="{!getPicklists}" oncomplete="rerenderPick();" />
+            <apex:actionFunction name="getCond" action="{!getCondicional}" reRender="varOptionsId, auxVarAComparar, pickOper, pickOper2, pickValor, auxTipoDeAtributo, auxValorEntero, auxValorBooleano, valEntero, valString, valBooleano" oncomplete="rerenderPick();" />
             <apex:actionFunction name="deleteCond" action="{!deleteCond}" rerender="divTable" oncomplete="openDataTable()" />
-            <apex:actionFunction name="rerenderPick" action="{!doNothing}" reRender="auxVarAComparar, pickOper, pickValor" oncomplete="fieldType();" />
-            <apex:actionFunction name="inicializarCond" action="{!initCondicion}" reRender="varOptionsId, auxVarAComparar, pickOper, pickValor"/>
+            <!-- <apex:actionFunction name="rerenderPick" action="{!doNothing}" reRender="varOptionsId, auxVarAComparar, pickOper, pickOper2, pickValor" oncomplete="fieldType();" /> -->
+            <apex:actionFunction name="rerenderPick" action="{!doNothing}" reRender="varOptionsId, auxVarAComparar, pickOper, pickOper2, pickValor, auxTipoDeAtributo, auxValorEntero, auxValorBooleano, valEntero, valString, valBooleano" oncomplete="fieldType();" />
+            <apex:actionFunction name="inicializarCond" action="{!initCondicion}" reRender="varOptionsId, auxVarAComparar, pickOper,pickOper2, pickValor"/>
+            <apex:actionFunction name="validarEvento" action="{!validarTipoEvento}" oncomplete="initPicklist()" reRender="varOptionsId, auxVarAComparar, pickOper,pickOper2, pickValor"/>
             <apex:inputHidden value="{!IdCond}" id="IdCond"/>
             <apex:inputHidden value="{!selectedVar}" id="selectedVarId"/>
 
             <apex:actionFunction action="{!doNothing}" name="initIdElems1" oncomplete="initElems('','{!$Component.IdCond}')"/>
             
+            <span class="noMostrar" id="spanAux">
+                <div class="requiredBlock"></div>
+                <apex:selectList size="1" styleClass="tipoEvento" value="{!tipoEventoVar}" onchange="fieldChange(this,'','{!$Component.evento}')" id="evento" label="Evento" required="true">
+                    <apex:selectOptions value="{!listTipoEvento}"/>
+                </apex:selectList>
+                
+            </span>
             <apex:pageBlock >
                 <apex:pageBlockSection columns="2" title="Editor de Reglas" collapsible="false">
-                    <apex:inputField styleClass="tipoEvento" value="{!regla.Tipo_de_evento__c}" id="evento" label="Evento" onchange="fieldChange(this,'','{!$Component.evento}')" required="true"/>
+                    <!--<apex:inputField styleClass="tipoEvento" value="{!regla.Tipo_de_evento__c}" id="evento" label="Evento" onchange="fieldChange(this,'','{!$Component.evento}')" required="true"/>-->
+                     
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel >Evento</apex:outputLabel>
+                        <div class="requiredInput" id="idSelectList1"></div>
+                    </apex:pageBlockSectionItem>
                     <apex:inputField value="{!regla.Vigencia_desde__c}" label="Vigente desde" style="width:90px;"/>
                     <apex:inputField styleClass="nombreRegla" value="{!regla.Name}" id="nombre" label="Número de regla" onchange="fieldChange(this,'{!$Component.nombre}','')" required="true"/>
                     <apex:inputField value="{!regla.Vigencia_hasta__c}" label="Vigente hasta" style="width:90px;"/>
@@ -371,13 +545,14 @@
                             <apex:column value="{!lc.Variable_a_comparar__c}" headerValue="Variable"/>
                             <apex:column value="{!lc.Operador__c}" headerValue="Operador"/>
                             <apex:column headerValue="Valor" id="columnaValor">
-                                <apex:outputField value="{!lc.Valor_contra_el_que_se_compara__c}" rendered="{!lc.Valor_entero__c == null && lc.Valor_Booleano__c == false}"/>
-                                <apex:outputField value="{!lc.Valor_entero__c}" rendered="{!lc.Valor_entero__c != null && lc.Valor_Booleano__c == false}"/>
-                                <apex:outputField value="{!lc.Valor_Booleano__c}" rendered="{!lc.Valor_entero__c == null && lc.Valor_Booleano__c == true}"/>
+                                <apex:outputField value="{!lc.Valor_contra_el_que_se_compara__c}" rendered="{!lc.Valor_entero__c == null && lc.Valor_Booleano__c == false && lc.Valor_string__c == null && lc.Valor_contra_el_que_se_compara__c != null}"/>
+                                <apex:outputField value="{!lc.Valor_entero__c}" rendered="{!lc.Valor_entero__c != null && lc.Valor_Booleano__c == false && lc.Valor_string__c == null && lc.Valor_contra_el_que_se_compara__c == null}"/>
+                                <apex:outputField value="{!lc.Valor_Booleano__c}" rendered="{!lc.Valor_entero__c == null && lc.Valor_Booleano__c == true && lc.Valor_string__c == null && lc.Valor_contra_el_que_se_compara__c == null}"/>
+                                <apex:outputField value="{!lc.Valor_string__c}" rendered="{!lc.Valor_entero__c == null && lc.Valor_Booleano__c == false && lc.Valor_string__c != null && lc.Valor_contra_el_que_se_compara__c == null}"/>
                             </apex:column>
                         </apex:dataTable>
 
-                        <apex:outputPanel styleClass="cartelCondicion {!IF(regla.Name == null || regla.Tipo_de_evento__c == null, '', 'noMostrar')}"  >
+                        <apex:outputPanel styleClass="cartelCondicion {!IF(regla.Name == null || (regla.Tipo_de_evento__c == null && regla.Evento_general__c == null), '', 'noMostrar')}"  >
                             <div class="slds-notify_container">
                                 <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
                                     <span class="slds-assistive-text">Error</span>
@@ -391,7 +566,7 @@
                             </div>
                         </apex:outputPanel>
 
-                        <apex:outputPanel styleClass="botonCondicion {!IF(regla.Name != '' && regla.Tipo_de_evento__c != '','','noMostrar')}" >
+                        <apex:outputPanel styleClass="botonCondicion {!IF(regla.Name != '' && (regla.Tipo_de_evento__c != '' || regla.Evento_general__c != null ),'','noMostrar')}" >
                             <apex:commandButton id="botonCrearCondicion" 
                                                 value="Crear nueva condición" 
                                                 styleClass="slds-align--absolute-center"
@@ -438,33 +613,51 @@
                 <div class="slds-modal__container slds-p-around--none" style="margin:15% auto; height:auto; max-width:60rem; width:75%;">
                     
                     <apex:pageBlock >
+                        <apex:actionFunction name="initValoresCond" action="{!doNothing}" oncomplete="initValCond('{!$Component.auxVarAComparar}','{!$Component.auxValorEntero}','{!$Component.auxValorBooleano}','{!$Component.auxValorString}');"/>
                         <apex:pageBlockSection columns="3" title="Editor de Condiciones" collapsible="false" id="modalEdit">
                             <apex:outputText >Variable</apex:outputText>
                             <apex:outputText >Operador</apex:outputText>
                             <apex:outputText >Valor</apex:outputText>
                             
-                            <apex:selectList size="1" value="{!selectedVar}" onchange="refreshPicklists();setAuxVar(this.value,'{!$Component.auxVarAComparar}');rerenderPick();" id="varOptionsId">
+                            <apex:selectList size="1" value="{!selectedVar}" styleClass="selectedVar" onchange="refreshPicklists();setAuxVar(this.value,'{!$Component.auxVarAComparar}');" id="varOptionsId">
                                 <apex:selectOptions value="{!varACompararList}"/>
                             </apex:selectList>
-                            <apex:pageBlockSectionItem >
+                            
+                            <apex:pageBlockSectionItem rendered="{! !esEventoGeneral}">
                                 <apex:inputField value="{!GP_Condicional_logico.Operador__c}" id="pickOper"/>
                             </apex:pageBlockSectionItem>
-                            <span id="spanEspacioValor">
-                                <apex:pageBlockSectionItem >
-                                    <apex:inputField styleClass="valorContraElQueSeCompara" value="{!GP_Condicional_logico.Valor_contra_el_que_se_compara__c}" id="pickValor"/>
-                                </apex:pageBlockSectionItem>
-                            </span>
-                            <apex:inputField value="{!GP_Condicional_logico.Variable_a_comparar__c}" styleClass="noMostrar" label="" id="auxVarAComparar"/>
-                            <apex:inputField value="{!GP_Condicional_logico.Valor_entero__c}" styleClass="noMostrar" label="" id="auxValorEntero"/>
-                            <apex:inputField value="{!GP_Condicional_logico.Valor_Booleano__c}" styleClass="noMostrar" label="" id="auxValorBooleano"/>
+                            <apex:pageBlockSectionItem rendered="{!esEventoGeneral}">
+                                <apex:selectList size="1" value="{!selOperadorGeneral}" styleClass="pickOper2" id="pickOper2">
+                                    <apex:selectOptions value="{!pickOperadorGeneral}"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+                            <div id="contenedorMostrar">
+                            </div>
+                            <!-- <apex:input value="{!tipoAtributoAux}" styleClass="noMostrar tipoAtributoAux" label="" id="auxTipoAtributo"/> -->
+                            <apex:input value="{!JSONesAtributoEvento}" styleClass="noMostrar tipoDeAtributo" label="" id="auxTipoDeAtributo"/>
+                            <apex:inputField value="{!GP_Condicional_logico.Variable_a_comparar__c}" styleClass="noMostrar auxVarAComparar" label="" id="auxVarAComparar"/>
+                            <apex:inputField value="{!GP_Condicional_logico.Valor_entero__c}" styleClass="noMostrar auxValorEntero" label="" id="auxValorEntero"/>
+                            <apex:inputField value="{!GP_Condicional_logico.Valor_Booleano__c}" styleClass="noMostrar auxValorBooleano" label="" id="auxValorBooleano"/>
+                            <apex:inputField value="{!GP_Condicional_logico.Valor_string__c}" styleClass="noMostrar auxValorString" label="" id="auxValorString"/>
                         </apex:pageBlockSection>
                         <span id="contenedor" class="noMostrar">
+                            <span id="spanEspacioValor">
+                                <apex:inputField styleClass="valorContraElQueSeCompara" value="{!GP_Condicional_logico.Valor_contra_el_que_se_compara__c}" label="" id="pickValor"/>
+                            </span>
                             <span id="spanIntValor">
-                                <apex:inputField styleClass="Valor_entero__c" value="{!GP_Condicional_logico.Valor_entero__c}" onchange="setAuxValores(this.value,'{!$Component.auxValorEntero}')" label="" id="valEntero"/>
+                                <!-- <apex:inputField styleClass="Valor_entero__c" value="{!GP_Condicional_logico.Valor_entero__c}" onchange="setAuxValores(this.value,'{!$Component.auxValorEntero}')" label="" id="valEntero"/> -->
+                                <apex:inputField styleClass="Valor_entero__c" value="{!GP_Condicional_logico.Valor_entero__c}" onchange="setAuxValores('Valor_entero__c','auxValorEntero')" label="" id="valEntero"/>
                             </span>
                             <span id="spanBoolValor">
-                                <apex:inputField styleClass="Valor_booleano__c" value="{!GP_Condicional_logico.Valor_Booleano__c}" onchange="setAuxValores(this.value,'{!$Component.auxValorBooleano}')" label="" id="valBooleano"/>
+                                <apex:inputField styleClass="Valor_booleano__c" value="{!GP_Condicional_logico.Valor_Booleano__c}" onchange="setAuxValores('Valor_booleano__c','auxValorBooleano')" label="" id="valBooleano"/>
                             </span>
+                            <span id="spanStringValor">
+                                <apex:inputField styleClass="Valor_string__c" value="{!GP_Condicional_logico.Valor_string__c}" label="" id="valString"/>
+                                <span class="tooltiptext" id="tooltiptext"></span>
+                            </span>
+                            <div id="spanError">
+                                <p class="slds-text-color--error">Ingrese un valor permitido</p>
+                            </div>
                         </span>
                         <!--  <apex:input value="{!tipoValorAUX}" styleClass="noMostrar tipoValorAUX"/>  -->
                         <div class="slds-grid slds-grid--align-center">
@@ -473,27 +666,27 @@
                             <div id="divButtonUpd">
                                 <apex:commandButton value="Guardar"
                                                     id="updateBtn"
-                                                    styleClass="slds-m-around--medium" 
+                                                    styleClass="slds-m-around--medium updateBtn" 
                                                     action="{!saveCondicional}" 
                                                     oncomplete="openDataTable(); cerrarModal('condUPD');" 
-                                                    rerender="divTable"/>
+                                                    rerender="divTable, varOptionsId, pickOper, pickOper2, pickValor, valString, valBooleano, valEntero"/>
                             </div>
                             <!-- BOTON INSERT -->
                             <div id="divButtonIns">
                                 <apex:commandButton value="Guardar"
                                                     id="insertBtn" 
-                                                    styleClass="slds-m-around--medium" 
+                                                    styleClass="slds-m-around--medium insertBtn" 
                                                     action="{!insertarCondicion}" 
                                                     oncomplete="openDataTable(); cerrarModal('condUPD');"
-                                                    rerender="divTable"/>
+                                                    rerender="divTable, varOptionsId, pickOper, pickOper2, pickValor, valString, valBooleano, valEntero"/>
                             </div>
                             <!-- BOTON CANCEL -->
                             <apex:commandButton value="Cancelar" 
                                                 styleClass="slds-m-around--medium" 
-                                                action="{!inicializarVariables}"
+                                                action="{!initCondicion}"
                                                 onclick="cerrarModal('condUPD')" 
                                                 oncomplete="openDataTable()" 
-                                                rerender="divTable, varOptionsId, pickOper, pickValor"/>
+                                                rerender="divTable, varOptionsId, pickOper, pickOper2, pickValor, valString, valBooleano, valEntero"/>
                         </div>
                         
                     </apex:pageBlock>

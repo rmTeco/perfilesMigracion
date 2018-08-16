@@ -54,6 +54,15 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override updated by Lightning App Builder during activation.</comment>
+        <content>Servicios</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override updated by Lightning App Builder during activation.</comment>
         <content>AccountView</content>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
         <type>Visualforce</type>
@@ -203,7 +212,7 @@
 						TEXT( Parent.CustomerIntegrationId__c )  &amp;  TEXT( BillingIntegrationId__c ) , 
 						&apos;&apos;))</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Account Integration Formula</label>
+        <label>Account Integration Id</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>Text</type>
@@ -394,16 +403,30 @@ Defines if the account is a Club Personal member</description>
         <type>DateTime</type>
     </fields>
     <fields>
-        <fullName>ContactIntegrationId__c</fullName>
-        <externalId>true</externalId>
-        <label>Contact Integration Id</label>
-        <precision>11</precision>
+        <fullName>Club_SubscriptionStatus__c</fullName>
+        <description>Club Personal subscription status</description>
+        <externalId>false</externalId>
+        <label>Club_SubscriptionStatus</label>
         <required>false</required>
-        <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>Number</type>
-        <unique>true</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pendiente</fullName>
+                    <default>false</default>
+                    <label>Pendiente</label>
+                </value>
+                <value>
+                    <fullName>Confirmada</fullName>
+                    <default>false</default>
+                    <label>Confirmada</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>ContactPreferencePhone__c</fullName>
@@ -468,7 +491,7 @@ Defines if the account is a Club Personal member</description>
     </fields>
     <fields>
         <fullName>CustomerIntegrationId__c</fullName>
-        <externalId>false</externalId>
+        <externalId>true</externalId>
         <label>Customer Integration Id</label>
         <precision>11</precision>
         <required>false</required>
@@ -554,15 +577,17 @@ Defines if the account is a Club Personal member</description>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>HardOfHearing__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint13
-Indicates if the account contact has audition problems</description>
+        <fullName>GP_Tabla_Temporaria__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Hard of hearing</label>
+        <label>GP Tabla Temporaria</label>
+        <referenceTo>GP_Tabla_Temporaria__c</referenceTo>
+        <relationshipLabel>Accounts</relationshipLabel>
+        <relationshipName>Accounts</relationshipName>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>HuaweiNotice_S015__c</fullName>
@@ -628,17 +653,6 @@ Indicates if the account contact has audition problems</description>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Influencer__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint13
-Indicates if the accounts contact is an influencer.</description>
-        <externalId>false</externalId>
-        <label>Influencer</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>IsCustomerPortal</fullName>
@@ -761,17 +775,6 @@ Indicates if the Age of the primary contact of the account is less than 18</desc
         <trackHistory>false</trackHistory>
     </fields>
     <fields>
-        <fullName>NotSighted__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint13
-Indicates if the accounts contact is not sighted.</description>
-        <externalId>false</externalId>
-        <label>Not Sighted</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>NumberOfEmployees</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -803,6 +806,7 @@ Indicates if the accounts contact is not sighted.</description>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
         <valueSet>
+            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
@@ -819,6 +823,12 @@ Indicates if the accounts contact is not sighted.</description>
                     <fullName>TRIAL</fullName>
                     <default>false</default>
                     <label>TRIAL</label>
+                </value>
+                <value>
+                    <fullName>Classic:Premium/Black:TRIAL</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Classic:Premium/Black:TRIAL</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -851,17 +861,6 @@ Indicates if the accounts contact is not sighted.</description>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Press__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint08 
-Indicates if the account belongs to press</description>
-        <externalId>false</externalId>
-        <label>Press</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>PrimaryContactName__c</fullName>
         <externalId>false</externalId>
         <label>PrimaryContactName</label>
@@ -887,17 +886,6 @@ Indicates if the account belongs to press</description>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <type>Picklist</type>
-    </fields>
-    <fields>
-        <fullName>Retired__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint08
-Indicates if the accounts contact is retired.</description>
-        <externalId>false</externalId>
-        <label>Retired</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>SCP_Certa_GC__Brand_Opportunities__c</fullName>
@@ -1038,7 +1026,7 @@ TEXT(SCP_Certa_GC__CUIT__c))</formula>
         <required>false</required>
         <scale>0</scale>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Number</type>
         <unique>false</unique>
     </fields>
@@ -2560,17 +2548,6 @@ Indicates if the account receives a social plan.</description>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Strategic__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint13
-Indicates if the accounts contact is strategic.</description>
-        <externalId>false</externalId>
-        <label>Strategic</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>TaxCondition__c</fullName>
         <description>Este campo se debe eliminar</description>
         <externalId>false</externalId>
@@ -2595,28 +2572,6 @@ Indicates if the accounts contact is strategic.</description>
                 </value>
             </valueSetDefinition>
         </valueSet>
-    </fields>
-    <fields>
-        <fullName>TelecomEmployee__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint08
-Indicates if the account belongs to a Telecom employee</description>
-        <externalId>false</externalId>
-        <label>Group Employee</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
-        <fullName>TelecomExEmployee__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint08
-Indicates if the account belongs to a Telecom ex-employee</description>
-        <externalId>false</externalId>
-        <label>Group ex-Employee</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>TickerSymbol</fullName>
@@ -2670,17 +2625,6 @@ Indicates if the account belongs to a Telecom ex-employee</description>
         </valueSet>
     </fields>
     <fields>
-        <fullName>VIP__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>#MarketingTeam #Sprint08
-Indicates if the account is VIP.</description>
-        <externalId>false</externalId>
-        <label>VIP</label>
-        <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
-        <type>Checkbox</type>
-    </fields>
-    <fields>
         <fullName>ValidatedBillingAddress__c</fullName>
         <defaultValue>true</defaultValue>
         <description>Validated Billing Address</description>
@@ -2706,6 +2650,31 @@ Indicates if the account is VIP.</description>
         <fullName>Website</fullName>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>ltnadptn__Active__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <label>Active</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>vlocity_cmt__AccountPaymentType__c</fullName>
@@ -2840,11 +2809,6 @@ Indicates if the account is VIP.</description>
                     <label>Paper Billing</label>
                 </value>
                 <value>
-                    <fullName>Electronic Statements Online</fullName>
-                    <default>false</default>
-                    <label>Electronic Statements Online</label>
-                </value>
-                <value>
                     <fullName>eMail</fullName>
                     <default>false</default>
                     <label>eMail</label>
@@ -2889,7 +2853,7 @@ Indicates if the account is VIP.</description>
         <label>Billing eMail Address</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Email</type>
         <unique>false</unique>
     </fields>
@@ -3388,69 +3352,43 @@ Indicates if the account is VIP.</description>
         </valueSet>
     </fields>
     <listViews>
-        <fullName>All</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.SITE</columns>
-        <columns>ACCOUNT.CREATED_DATE</columns>
-        <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
-        <columns>ACCOUNT.RECORDTYPE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>DocumentNumber__c</columns>
-        <columns>SCP_Certa_GC__CUIT__c</columns>
-        <columns>CuitNumber__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
         <fullName>AllAccounts</fullName>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.ADDRESS1_STATE</columns>
+        <columns>ACCOUNT.PHONE1</columns>
+        <columns>CORE.USERS.ALIAS</columns>
         <columns>vlocity_cmt__Active__c</columns>
         <columns>ACCOUNT.RECORDTYPE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>DocumentNumber__c</columns>
-        <columns>SCP_Certa_GC__CUIT_Formula__c</columns>
-        <columns>SCP_Certa_GC__CUIT__c</columns>
+        <columns>PARENT_NAME</columns>
+        <columns>ACCOUNT.CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>equals</operation>
-            <value>Andres Care</value>
-        </filters>
-        <label>Prueba Care</label>
+        <label>All Accounts</label>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Clientes_repro</fullName>
+        <fullName>Consumers</fullName>
         <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
+        <columns>BillingIntegrationId__c</columns>
+        <columns>AccountIntegrationId__c</columns>
+        <columns>CustomerIntegrationId__c</columns>
+        <columns>ACCOUNT.ACCOUNT_NUMBER</columns>
+        <columns>vlocity_cmt__PrimaryContactId__c</columns>
+        <columns>ACCOUNT.ADDRESS1_STATE</columns>
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.TYPE</columns>
+        <columns>AccountIntegrationFormula__c</columns>
         <columns>CORE.USERS.ALIAS</columns>
+        <columns>vlocity_cmt__Active__c</columns>
+        <columns>ACCOUNT.RECORDTYPE</columns>
+        <columns>PARENT_NAME</columns>
+        <columns>ACCOUNT.CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>Repro hhCdk</value>
+            <field>ACCOUNT.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account.vlocity_cmt__Consumer</value>
         </filters>
-        <label>Clientes repro</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>MyAccounts</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>vlocity_cmt__PrimaryContactId__c</columns>
-        <filterScope>Mine</filterScope>
-        <label>My Accounts</label>
+        <label>Consumers</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -3458,7 +3396,6 @@ Indicates if the account is VIP.</description>
         <columns>ACCOUNT.NAME</columns>
         <columns>ACCOUNT.ADDRESS1_STATE</columns>
         <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.CREATED_DATE</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
         <filterScope>Everything</filterScope>
@@ -3471,21 +3408,16 @@ Indicates if the account is VIP.</description>
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Repro</fullName>
+        <fullName>Ruben_QA_Automation_Accounts</fullName>
         <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
         <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.TYPE</columns>
         <columns>CORE.USERS.ALIAS</columns>
-        <columns>ACCOUNT.RECORDTYPE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>Wholesale</value>
-        </filters>
-        <label>Wholesale</label>
-        <language>es_MX</language>
+        <filterScope>Mine</filterScope>
+        <label>Ruben QA Automation Accounts</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>SCP_Certa_GC__Mis_cuentas_SCP</fullName>
@@ -3500,8 +3432,9 @@ Indicates if the account is VIP.</description>
         <language>es</language>
     </listViews>
     <listViews>
-        <fullName>Tech</fullName>
+        <fullName>ale</fullName>
         <columns>ACCOUNT.NAME</columns>
+        <columns>ACCOUNT.SITE</columns>
         <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
         <columns>ACCOUNT.PHONE1</columns>
         <columns>ACCOUNT.TYPE</columns>
@@ -3510,123 +3443,10 @@ Indicates if the account is VIP.</description>
         <filters>
             <field>ACCOUNT.NAME</field>
             <operation>contains</operation>
-            <value>Tech</value>
+            <value>luciano</value>
         </filters>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>equals</operation>
-            <value>marco polo</value>
-        </filters>
-        <label>Tech</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Todas_las_cuentas</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.SITE</columns>
-        <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>ACCOUNT.RECORDTYPE</columns>
-        <filterScope>Everything</filterScope>
-        <label>Todas las cuentas</label>
+        <label>ale</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Todas_las_cuentas2</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>ArjonaArjona ArjonaArjonaArjona</value>
-        </filters>
-        <label>Filtro Vic</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Vista_Marketing1</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.SITE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>PersonalClubCategory__c</columns>
-        <columns>PersonalClubPoints__c</columns>
-        <columns>vlocity_cmt__PrimaryContactId__c</columns>
-        <columns>ACCOUNT.IS_PARNTER</columns>
-        <columns>ACCOUNT.RECORDTYPE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>Marketing</value>
-        </filters>
-        <label>Vista Marketing</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Vista_Tech3</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>ACCOUNT.ADDRESS2_COUNTRY_CODE</columns>
-        <columns>PARENT_NAME</columns>
-        <columns>DocumentNumber__c</columns>
-        <columns>ACCOUNT.CREATED_DATE</columns>
-        <columns>ACCOUNT.LAST_UPDATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>Tech</value>
-        </filters>
-        <label>Vista Tech</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>cuenta_integrada_de_flor</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ACCOUNT.SITE</columns>
-        <columns>ACCOUNT.ADDRESS1_STATE_CODE</columns>
-        <columns>ACCOUNT.PHONE1</columns>
-        <columns>ACCOUNT.TYPE</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>NominaC</value>
-        </filters>
-        <label>cuenta integrada de flor</label>
-        <language>es</language>
-    </listViews>
-    <listViews>
-        <fullName>vista_de_flor</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>Attribute__c</columns>
-        <columns>Attributes__c</columns>
-        <columns>vlocity_cmt__Active__c</columns>
-        <columns>ACCOUNT.RECORDTYPE</columns>
-        <columns>PARENT_NAME</columns>
-        <columns>PersonalClubPoints__c</columns>
-        <columns>PersonalClubCategory__c</columns>
-        <columns>DocumentNumber__c</columns>
-        <columns>ClubMember__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>vlocity_cmt__Active__c</field>
-            <operation>equals</operation>
-            <value>Yes</value>
-        </filters>
-        <label>vista de flor</label>
-        <language>es</language>
     </listViews>
     <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
@@ -3635,6 +3455,630 @@ Indicates if the account is VIP.</description>
         <active>true</active>
         <description>Record type to register the internal divisions of TECO.</description>
         <label>Internal Channel</label>
+        <picklistValues>
+            <picklist>AccountSource</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Attributes__c</picklist>
+            <values>
+                <fullName>Socio Club</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DocumentType__c</picklist>
+            <values>
+                <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Industry</picklist>
+            <values>
+                <fullName>Agriculture</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Apparel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Biotechnology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Chemicals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Communications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Construction</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Consulting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Education</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Electronics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Energy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Engineering</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Entertainment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environmental</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Food %26 Beverage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Government</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Healthcare</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hospitality</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Machinery</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Manufacturing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not For Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Recreation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Retail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Shipping</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Telecommunications</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transportation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Utilities</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>NPS__c</picklist>
+            <values>
+                <fullName>0-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Ownership</picklist>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Private</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Public</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Subsidiary</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Rating</picklist>
+            <values>
+                <fullName>Cold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hot</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Warm</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SegmentLevel1__c</picklist>
+            <values>
+                <fullName>Alta reciente</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Black</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hogar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Línea Prepago</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Percanta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prepago Línea</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sólo Móvil</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SegmentLevel2__c</picklist>
+            <values>
+                <fullName>Altas Recientes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Black</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Black Conexion Total Libre 2XL</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Default</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Empleado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marcanta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Masivo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Regular A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOHO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sólo Movil</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>Customer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__AccountPaymentType__c</picklist>
+            <values>
+                <fullName>Postpaid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Prepaid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__AutoPaymentAmount__c</picklist>
+            <values>
+                <fullName>Full Balance</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Minimum Due</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
+            <values>
+                <fullName>Paper Billing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>eMail</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__BillFrequency__c</picklist>
+            <values>
+                <fullName>Monthly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quarterly</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Weekly</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__ContactPreferences__c</picklist>
+            <values>
+                <fullName>Phone</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__CustomerValue__c</picklist>
+            <values>
+                <fullName>Bronze</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Diamond</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Platinum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silver</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__LegalForm__c</picklist>
+            <values>
+                <fullName>Corporation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>LLP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not for Profit</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Partnership</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sole Proprietorship</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__SLA__c</picklist>
+            <values>
+                <fullName>Bronze</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Platinum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silver</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__Status__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__vCustomerPriority__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>vlocity_cmt__vSLA__c</picklist>
+            <values>
+                <fullName>Bronze</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Gold</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Platinum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Silver</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Migracion</fullName>
+        <active>true</active>
+        <label>Migracion</label>
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
@@ -3721,6 +4165,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4601,11 +5056,7 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Black</fullName>
@@ -4663,6 +5114,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -4679,7 +5134,15 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>PyME</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Regular A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4710,6 +5173,14 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Competitor</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cuenta Cliente Cabecera</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cuenta de Gestion</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4761,6 +5232,17 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>vlocity_cmt__AccountPaymentType__c</picklist>
             <values>
                 <fullName>Postpaid</fullName>
@@ -4795,10 +5277,6 @@ Indicates if the account is VIP.</description>
         </picklistValues>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
-            <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
@@ -4911,7 +5389,7 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__Status__c</picklist>
             <values>
                 <fullName>Active</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -4957,70 +5435,18 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>AccountSource</picklist>
             <values>
-                <fullName>Advertisement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Employee Referral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>External Referral</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Public Relations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seminar - Internal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seminar - Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Trade Show</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Web</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Attributes__c</picklist>
             <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Test</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5041,6 +5467,17 @@ Indicates if the account is VIP.</description>
             <values>
                 <fullName>21</fullName>
                 <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -5276,10 +5713,6 @@ Indicates if the account is VIP.</description>
                 <fullName>Premium%2FBlack</fullName>
                 <default>false</default>
             </values>
-            <values>
-                <fullName>TRIAL</fullName>
-                <default>false</default>
-            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Rating</picklist>
@@ -5297,633 +5730,9 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>SCP_Certa_GC__Categoria__c</picklist>
-            <values>
-                <fullName>DG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ET</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ST</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TT</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Micro_Industry__c</picklist>
-            <values>
-                <fullName>Agro%2C Pesca y Forestación</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agua y Saneamientos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Alimentos y Bebidas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Almacenamiento</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Alquiler de bienes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotor de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotor de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores y Camiones</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aéreo de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aéreo de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Banca</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Call Centers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Centros Comerciales</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Combustibles y Lubricantes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Construccion</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Contenido Multimedia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cooperativa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Defensa y Seguridad Pública</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Desarrollo de Sistemas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Droguerías</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Educacion</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Electricas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Esparcimiento Cultural y Deportivo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ferroviario de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ferroviario de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fluvial %2F Marítimo de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fluvial %2F Marítimo de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gastronomía</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Municipal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Nacional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Provincial</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Grupo Telefonica</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hardware Tecnológico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotelería</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Alimentos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Automotriz y Autopartes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Ligera y Manufacturas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Metalurgica y Pesada</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Química</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Textil y Calzado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inmobiliario</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Instituciones financieras no bancarias</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Laboratorios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medios de Pago</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mensajería y Paquetería</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mineria</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Organizaciones No Gubernamentales %28ONGs%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Administracion publica</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Comercios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Industria</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Servicios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Petroleo y Gas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Residuos y Reciclaje</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seguridad Privada</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seguros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Profesionales y Consultoría</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Software</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Supermercados</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telcos e Internet</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Textil y Calzado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tienda Departamental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Todos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Turismo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__PicklistSegmento__c</picklist>
-            <values>
-                <fullName>Negocio Corporativo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Wholesale</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Region_WH__c</picklist>
-            <values>
-                <fullName>Grandes Operadores</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Interior</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Internacional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telefonía</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Region_delta__c</picklist>
-            <values>
-                <fullName>Gobierno</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pymes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Sector__c</picklist>
-            <values>
-                <fullName>Privado</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Público</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Segmento_Vertical__c</picklist>
-            <values>
-                <fullName>Administración Pública%2C Defensa y Seguridad Social</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agricultura%2C Ganadería%2C Caza y Silvicultura</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Asociaciones e Instituciones</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores - Autopartistas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores - Concesionarios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores - Industria Automotriz</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Construcción</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consultoras</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Educación</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Entretenimiento</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Explotación de Minas y Canteras</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Extranjero</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Municipal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Nacional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Provincial</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Alimenticia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Química</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industrias - Otro</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Logística</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Manufactura</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medios de Comunicación</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Petróleo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Agua</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Correos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Energía</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - GAS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Transporte</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Retail</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud - Clínicas%2C Sanatorios y Hospitales</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud - Laboratorios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud - Medicina Prepaga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seguros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios - Otro</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Financieros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Financieros - Banca</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Financieros - Tarjetas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Inmobiliarios%2C Empresariales y de Alquiler</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios de Hotelería y Restaurantes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios-Otros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Siderurgia %2F Metalurgia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tecnología</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telecomunicaciones</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transporte</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Turismo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Sub_region_delta__c</picklist>
-            <values>
-                <fullName>Financias</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno amba 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno amba 2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno litoral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno mediterraneo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privado litoral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privado mediterraneo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -5982,6 +5791,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -5994,11 +5807,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6024,23 +5837,7 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>Type</picklist>
             <values>
-                <fullName>Analyst</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Competitor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Customer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Integrator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Investor</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6048,19 +5845,7 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Press</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reseller</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6076,6 +5861,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6115,10 +5911,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -6146,1333 +5938,6 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__ContactPreferences__c</picklist>
             <values>
                 <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>SMS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__CustomerValue__c</picklist>
-            <values>
-                <fullName>Bronze</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Diamond</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Platinum</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Silver</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__LegalForm__c</picklist>
-            <values>
-                <fullName>Corporation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LLC</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>LLP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not for Profit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Partnership</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sole Proprietorship</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__SLA__c</picklist>
-            <values>
-                <fullName>Bronze</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Platinum</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Silver</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__vCustomerPriority__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medium</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__vSLA__c</picklist>
-            <values>
-                <fullName>Bronze</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Platinum</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Silver</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>SCP</fullName>
-        <active>true</active>
-        <description>Utilizado para los perfiles que deban crear cuentas usadas para SCP</description>
-        <label>SCP</label>
-        <picklistValues>
-            <picklist>AccountSource</picklist>
-            <values>
-                <fullName>Advertisement</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Employee Referral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>External Referral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Public Relations</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seminar - Internal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seminar - Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Trade Show</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Web</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Word of mouth</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Attributes__c</picklist>
-            <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Socio Club</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Test</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Billing_Day__c</picklist>
-            <values>
-                <fullName>01</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>07</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>14</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>21</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>DocumentType__c</picklist>
-            <values>
-                <fullName>CUIT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>DNI</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Incident_Type_Affected_By__c</picklist>
-            <values>
-                <fullName>Internet %28SNM%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Móvil %28CRM%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Voz %28SUR%29</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Industry</picklist>
-            <values>
-                <fullName>Agriculture</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Apparel</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Banking</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Biotechnology</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Chemicals</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Communications</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Construction</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consulting</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Education</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Electronics</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Energy</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Engineering</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Entertainment</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Environmental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Finance</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Food %26 Beverage</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Government</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Healthcare</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hospitality</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Insurance</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Machinery</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Manufacturing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Media</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Not For Profit</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Recreation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Retail</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Shipping</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Technology</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telecommunications</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transportation</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Utilities</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>NPS__c</picklist>
-            <values>
-                <fullName>0-DETRACTORS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1-DETRACTORS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>10-PROMOTERS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2-DETRACTORS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3-DETRACTORS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>4-DETRACTORS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>5-DETRACTORS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>6-DETRACTORS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>7-PASSIVES</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>8-PASSIVES</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>9-PROMOTERS</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Ownership</picklist>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Private</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Public</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Subsidiary</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>PersonalClubCategory__c</picklist>
-            <values>
-                <fullName>Classic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Premium%2FBlack</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TRIAL</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Rating</picklist>
-            <values>
-                <fullName>Cold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hot</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Warm</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Categoria__c</picklist>
-            <values>
-                <fullName>DG</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>EO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ET</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>FT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>IT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>MO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>OP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PI</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PO</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>PT</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RP</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>ST</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TT</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Micro_Industry__c</picklist>
-            <values>
-                <fullName>Agro%2C Pesca y Forestación</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agua y Saneamientos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Alimentos y Bebidas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Almacenamiento</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Alquiler de bienes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotor de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotor de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores y Camiones</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aéreo de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Aéreo de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Banca</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Call Centers</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Centros Comerciales</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Combustibles y Lubricantes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Construccion</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Contenido Multimedia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cooperativa</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Defensa y Seguridad Pública</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Desarrollo de Sistemas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Droguerías</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Educacion</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Electricas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Esparcimiento Cultural y Deportivo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ferroviario de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Ferroviario de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fluvial %2F Marítimo de Carga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Fluvial %2F Marítimo de Pasajeros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gastronomía</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Municipal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Nacional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Provincial</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Grupo Telefonica</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hardware Tecnológico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hotelería</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Alimentos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Automotriz y Autopartes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Ligera y Manufacturas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Metalurgica y Pesada</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Química</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Textil y Calzado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inmobiliario</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Instituciones financieras no bancarias</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Laboratorios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medios de Pago</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mensajería y Paquetería</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mineria</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Organizaciones No Gubernamentales %28ONGs%29</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Administracion publica</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Comercios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Industria</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Otros Servicios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Petroleo y Gas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Residuos y Reciclaje</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seguridad Privada</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seguros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Profesionales y Consultoría</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Software</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Supermercados</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telcos e Internet</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Textil y Calzado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tienda Departamental</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Todos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Turismo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__PicklistSegmento__c</picklist>
-            <values>
-                <fullName>Negocio Corporativo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Wholesale</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Region_WH__c</picklist>
-            <values>
-                <fullName>Grandes Operadores</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Interior</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Internacional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telefonía</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Region_delta__c</picklist>
-            <values>
-                <fullName>Gobierno</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pymes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Sector__c</picklist>
-            <values>
-                <fullName>Privado</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Público</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Segmento_Vertical__c</picklist>
-            <values>
-                <fullName>Administración Pública%2C Defensa y Seguridad Social</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Agricultura%2C Ganadería%2C Caza y Silvicultura</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Asociaciones e Instituciones</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores - Autopartistas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores - Concesionarios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Automotores - Industria Automotriz</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Construcción</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Consultoras</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Educación</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Entretenimiento</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Explotación de Minas y Canteras</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Extranjero</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Municipal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Nacional</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno Provincial</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Alimenticia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria Química</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industrias - Otro</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Logística</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Manufactura</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Medios de Comunicación</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Petróleo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Agua</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Correos</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Energía</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - GAS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prestadores Servicios Públicos - Transporte</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Retail</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud - Clínicas%2C Sanatorios y Hospitales</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud - Laboratorios</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Salud - Medicina Prepaga</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Seguros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios - Otro</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Financieros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Financieros - Banca</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Financieros - Tarjetas</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios Inmobiliarios%2C Empresariales y de Alquiler</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios de Hotelería y Restaurantes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios-Otros</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Siderurgia %2F Metalurgia</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Tecnología</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Telecomunicaciones</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Transporte</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Turismo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SCP_Certa_GC__Sub_region_delta__c</picklist>
-            <values>
-                <fullName>Financias</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno amba 1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno amba 2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno litoral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gobierno mediterraneo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Industria</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privado litoral</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Privado mediterraneo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Servicios</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SegmentLevel1__c</picklist>
-            <values>
-                <fullName>Alta reciente</fullName>
-                <default>true</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Black</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Hogar</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Línea Prepago</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Percanta</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Premium%2FBlack</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prepago Línea</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sólo Móvil</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>SegmentLevel2__c</picklist>
-            <values>
-                <fullName>Altas Recientes</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Black</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Black Conexion Total Libre 2XL</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Default</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Empleado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Gold</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Marcanta</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Masivo</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Regular A</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Sólo Movil</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>TV</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>TaxCondition__c</picklist>
-            <values>
-                <fullName>CF</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>RS</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Type</picklist>
-            <values>
-                <fullName>Analyst</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Competitor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Customer</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Integrator</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Investor</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Other</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Partner</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Press</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prospect</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Reseller</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>UserLevel__c</picklist>
-            <values>
-                <fullName>High</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Low</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Mid</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__AccountPaymentType__c</picklist>
-            <values>
-                <fullName>Postpaid</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Prepaid</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__Active__c</picklist>
-            <values>
-                <fullName>No</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Yes</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__AutoPaymentAmount__c</picklist>
-            <values>
-                <fullName>Full Balance</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Minimum Due</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
-            <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Paper Billing</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__BillFrequency__c</picklist>
-            <values>
-                <fullName>Monthly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Quarterly</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Weekly</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>vlocity_cmt__ContactPreferences__c</picklist>
-            <values>
-                <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>SMS</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7606,19 +6071,63 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>Attributes__c</picklist>
             <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DocumentType__c</picklist>
+            <values>
+                <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7754,6 +6263,53 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NPS__c</picklist>
+            <values>
+                <fullName>0-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -7769,6 +6325,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Subsidiary</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7791,10 +6358,6 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7853,6 +6416,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -7865,11 +6432,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7878,6 +6445,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7893,6 +6471,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7932,10 +6536,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -7963,10 +6563,6 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__ContactPreferences__c</picklist>
             <values>
                 <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8100,19 +6696,63 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>Attributes__c</picklist>
             <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DocumentType__c</picklist>
+            <values>
+                <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8248,6 +6888,53 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NPS__c</picklist>
+            <values>
+                <fullName>0-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -8263,6 +6950,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Subsidiary</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8285,10 +6983,6 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8347,6 +7041,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -8359,11 +7057,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8372,6 +7070,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8387,6 +7096,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8426,10 +7161,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -8457,10 +7188,6 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__ContactPreferences__c</picklist>
             <values>
                 <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8598,22 +7325,63 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
                 <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
             <picklist>DocumentType__c</picklist>
             <values>
                 <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8815,6 +7583,21 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TRIAL</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Cold</fullName>
@@ -8833,11 +7616,7 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Black</fullName>
@@ -8895,6 +7674,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -8907,11 +7690,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8920,6 +7703,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8935,6 +7729,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8974,10 +7794,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -9008,7 +7824,7 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>eMail</fullName>
+                <fullName>SMS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9146,16 +7962,46 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Menor</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Socio Club</fullName>
                 <default>false</default>
+            </values>
+            <values>
+                <fullName>Test</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
             </values>
         </picklistValues>
         <picklistValues>
@@ -9166,6 +8012,21 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9367,6 +8228,21 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TRIAL</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Rating</picklist>
             <values>
                 <fullName>Cold</fullName>
@@ -9386,10 +8262,6 @@ Indicates if the account is VIP.</description>
             <values>
                 <fullName>Alta reciente</fullName>
                 <default>true</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
-                <default>false</default>
             </values>
             <values>
                 <fullName>Black</fullName>
@@ -9447,6 +8319,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -9459,11 +8335,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9472,6 +8348,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9487,6 +8374,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9526,10 +8439,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -9560,7 +8469,7 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>eMail</fullName>
+                <fullName>SMS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9693,19 +8602,63 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>Attributes__c</picklist>
             <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DocumentType__c</picklist>
+            <values>
+                <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9841,6 +8794,53 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NPS__c</picklist>
+            <values>
+                <fullName>0-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -9856,6 +8856,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Subsidiary</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9878,10 +8889,6 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9940,6 +8947,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -9952,11 +8963,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -9965,6 +8976,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9980,6 +9002,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10019,10 +9067,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -10050,10 +9094,6 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__ContactPreferences__c</picklist>
             <values>
                 <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10187,19 +9227,63 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>Attributes__c</picklist>
             <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DocumentType__c</picklist>
+            <values>
+                <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10335,6 +9419,53 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NPS__c</picklist>
+            <values>
+                <fullName>0-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -10350,6 +9481,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Subsidiary</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10372,10 +9514,6 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10434,6 +9572,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -10446,11 +9588,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10459,6 +9601,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10474,6 +9627,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10513,10 +9692,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -10544,10 +9719,6 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__ContactPreferences__c</picklist>
             <values>
                 <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10681,19 +9852,63 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>Attributes__c</picklist>
             <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DocumentType__c</picklist>
+            <values>
+                <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10829,6 +10044,53 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NPS__c</picklist>
+            <values>
+                <fullName>0-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -10844,6 +10106,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Subsidiary</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10866,10 +10139,6 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10928,6 +10197,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -10940,11 +10213,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10953,6 +10226,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10968,6 +10252,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11007,10 +10317,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -11038,10 +10344,6 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__ContactPreferences__c</picklist>
             <values>
                 <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11175,19 +10477,63 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>Attributes__c</picklist>
             <values>
-                <fullName>Estratégico</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Jubilado</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Menor</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Socio Club</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Billing_Day__c</picklist>
+            <values>
+                <fullName>01</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>07</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>14</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>21</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Club_SubscriptionStatus__c</picklist>
+            <values>
+                <fullName>Confirmada</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pendiente</fullName>
+                <default>true</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>DocumentType__c</picklist>
+            <values>
+                <fullName>CUIT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DNI</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Incident_Type_Affected_By__c</picklist>
+            <values>
+                <fullName>Internet %28SNM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Móvil %28CRM%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Voz %28SUR%29</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11323,6 +10669,53 @@ Indicates if the account is VIP.</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>NPS__c</picklist>
+            <values>
+                <fullName>0-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>1-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>10-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>5-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>6-DETRACTORS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>7-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>8-PASSIVES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>9-PROMOTERS</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Ownership</picklist>
             <values>
                 <fullName>Other</fullName>
@@ -11338,6 +10731,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Subsidiary</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>PersonalClubCategory__c</picklist>
+            <values>
+                <fullName>Classic</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Premium%2FBlack</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11360,10 +10764,6 @@ Indicates if the account is VIP.</description>
             <picklist>SegmentLevel1__c</picklist>
             <values>
                 <fullName>Alta reciente</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Altas Recientes</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11422,6 +10822,10 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Empresas</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Gold</fullName>
                 <default>false</default>
             </values>
@@ -11434,11 +10838,11 @@ Indicates if the account is VIP.</description>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Menor</fullName>
+                <fullName>Regular A</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regular A</fullName>
+                <fullName>SOHO</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11447,6 +10851,17 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>TV</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TaxCondition__c</picklist>
+            <values>
+                <fullName>CF</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RS</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11462,6 +10877,32 @@ Indicates if the account is VIP.</description>
             </values>
             <values>
                 <fullName>Prospect</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>UserLevel__c</picklist>
+            <values>
+                <fullName>High</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mid</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ltnadptn__Active__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11501,10 +10942,6 @@ Indicates if the account is VIP.</description>
         <picklistValues>
             <picklist>vlocity_cmt__BillDeliveryMethod__c</picklist>
             <values>
-                <fullName>Electronic Statements Online</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Paper Billing</fullName>
                 <default>false</default>
             </values>
@@ -11532,10 +10969,6 @@ Indicates if the account is VIP.</description>
             <picklist>vlocity_cmt__ContactPreferences__c</picklist>
             <values>
                 <fullName>Phone</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>eMail</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11655,7 +11088,6 @@ Indicates if the account is VIP.</description>
         <customTabListAdditionalFields>ACCOUNT.ADDRESS1_CITY</customTabListAdditionalFields>
         <customTabListAdditionalFields>ACCOUNT.PHONE1</customTabListAdditionalFields>
         <customTabListAdditionalFields>DocumentNumber__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>DocumentType__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.NAME</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>ACCOUNT.SITE</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>CORE.USERS.ALIAS</lookupDialogsAdditionalFields>
@@ -11666,31 +11098,20 @@ Indicates if the account is VIP.</description>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.TYPE</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.PHONE1</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ContactPreferencePhone__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>vlocity_cmt__Status__c</searchFilterFields>
         <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.SITE</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ACCOUNT.PHONE1</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>CORE.USERS.ALIAS</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__Active__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
     <validationRules>
-        <fullName>Attributes_Validation</fullName>
+        <fullName>EditRestrict</fullName>
         <active>true</active>
-        <errorConditionFormula>OR(Press__c &amp;&amp; SocialPlan__c,
-Press__c &amp;&amp; TelecomEmployee__c,
-Retired__c &amp;&amp; SocialPlan__c,
-Retired__c &amp;&amp; TelecomEmployee__c,
-Retired__c &amp;&amp; Minor__c,
-Retired__c &amp;&amp; Strategic__c,
-SocialPlan__c &amp;&amp; TelecomEmployee__c,
-SocialPlan__c &amp;&amp; Minor__c,
-SocialPlan__c &amp;&amp; Strategic__c,
-TelecomExEmployee__c &amp;&amp; TelecomEmployee__c,
-TelecomExEmployee__c &amp;&amp; Minor__c,
-TelecomExEmployee__c &amp;&amp; Strategic__c,
-TelecomEmployee__c &amp;&amp; Minor__c,
-TelecomEmployee__c &amp;&amp; Strategic__c,
-Strategic__c &amp;&amp; Influencer__c)</errorConditionFormula>
-        <errorMessage>Invalid attributes combination</errorMessage>
+        <description>Evita editar cuenta desde cualquier vista</description>
+        <errorConditionFormula>$Profile.Name &lt;&gt; &apos;System Administrator&apos;</errorConditionFormula>
+        <errorMessage>No se puede editar el registro</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SCP_Certa_GC__CuentaGestion_DebeTener_CPrincipal</fullName>

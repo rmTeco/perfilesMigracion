@@ -19,7 +19,7 @@
                 function SearchClientController($scope, $http) {
                     
                     var scc = this;
-                    
+                    console.info('antes del init en la vfp Elvis');
                     scc.init = init;
                     scc.setTabActive = setTabActive;
                     scc.updateContactEmail = updateContactEmail;
@@ -32,6 +32,7 @@
                     }
                     
                     function setTabActive(tabName) {
+                         console.info('settab vfp Elvis');
                         scc.tabActive = tabName;
                     }
 
@@ -40,12 +41,14 @@
                             "taClientSearchController.UpdateContact", contactId, emailUpdated,
                                     function(result, event) {
                                         console.info('ContactSearcher.UpdateContact: ', result, event);
+                                         console.info('updatecontemail Elvis');
                                     },
                             {escape: false} // No escaping, please
                         );
                     }
 
                     function _setDefaultTab(searchResult) {
+                     console.info('setdefaulttab Elvis');
                         scc.tabActive = 'activeClientes';
                         angular.forEach(searchResult, function(value, key) {
                             if (value.length) {

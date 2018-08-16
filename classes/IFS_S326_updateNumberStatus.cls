@@ -1,5 +1,7 @@
 public class IFS_S326_updateNumberStatus {
 
+    private static String guId = null;
+    
     public static Map<String,Object> updateNumberStatus(Map<String,Object> listaNumerosMotivos){
         
         NumerosMotivosJson jsonParse = new NumerosMotivosJson();
@@ -21,10 +23,34 @@ public class IFS_S326_updateNumberStatus {
         responseNode.put('httpStatusCode',(String.valueOf(response.getStatusCode())));
         return responseNode;
     }
-    
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pReq, String pRes, Integer pResStatus) {
+        System.debug('Entre en writeLog - pTipo --> ' + pTipo + ' - pReq --> ' + pReq + ' - pRes --> ' + pRes + ' - pResStatus --> ' + pResStatus);
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = String.isBlank(guId) ? GuidUtil.NewGuid() : guId;  
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S326', pTipo, guId, pReq, '');  
+        }
+        else {
+            String datos = 'status code = ' + pResStatus + ' ; status = ; ';
+            if (pResStatus < 300) {
+                datos += 'request to DPW OK';
+            }
+            else {
+                datos += 'request to DPW FAIL ; request body = ' + (String.isBlank(pReq)?'':pReq) + ' ; Response = ' + pRes;
+            } 
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S326', pTipo, guId, '', datos);  
+        }
+    }
+
     public static HttpResponse makePostCallout(String body) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
+        String guId = null;
         
         List<EndPointService__c> endPoints = [select Name, EndPoint__c from EndPointService__c where Name = 'IFS_s326' limit 1];
         EndPointService__c endpoint;
@@ -36,62 +62,19 @@ public class IFS_S326_updateNumberStatus {
             request.setEndpoint(endpoint.EndPoint__c);
         }
         
-        //request.setEndpoint('https://prodgonogo.personal.com.ar/lineas/estado');
         request.setMethod('POST');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
         request.setHeader('Authorization', authorizationHeader);
         request.setBody(body);
         system.debug(request.getBody());
+
         HttpResponse response = http.send(request);
         system.debug(response);
         
-        /*
-        //Manejo de errores.
-        Boolean hayError = false;
-        
-        
-        if (response.getStatusCode() == 400) {
-            hayError=True;
-            throw new CallOutException('Bad Request. La solicitud contiene sintaxis errónea y no debería repetirse.');
-        }
-        if (response.getStatusCode() == 401) {
-            hayError=True;
-            throw new CallOutException('Unauthorized. Usuario no autorizado. Falló la autenticación.');
-            
-        }
-        if (response.getStatusCode() == 403) {
-            hayError=True;
-            throw new CallOutException('Forbidden. No tiene los privilegios para hacer la solicitud que desea.');
-            
-        }
-        if (response.getStatusCode() == 404) {
-            hayError=True;
-            throw new CallOutException('Recurso no encontrado. El servicio no encuentra el recurso solicitado.');
-            
-        }
-        if (response.getStatusCode() == 405) {
-            hayError=True;
-            throw new CallOutException('Method not allowed. El método solicitado no es soportado por el servicio.');
-            
-        }
-        if (response.getStatusCode() == 408) {
-            hayError=True;
-            throw new CallOutException('Request Timeout. No se obtuvo respuesta de la plataforma servidora.');
-            
-        }
-        if (response.getStatusCode() == 418) {
-            hayError=True;
-            throw new CallOutException('Error controlado. Error funcional o de plataforma que se encuentra especificado.');
-            
-        }
-        
-        if (response.getStatusCode() == 500) {
-            hayError=True;
-            throw new CallOutException('Error no controlado.');
-            
-        }*/
-        
+        writeLog ('REQ', null, null, 0);
+        writeLog ('RES', request.getBody(), response.getBody(), response.getStatusCode());
+
         return response;
         
     }     

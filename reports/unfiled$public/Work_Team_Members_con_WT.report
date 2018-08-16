@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>CUST_NAME</field>
+    </columns>
+    <columns>
+        <field>Team_Member__c.User_member__c</field>
+    </columns>
+    <columns>
+        <field>Team_Member__c.Is_Active__c</field>
+    </columns>
+    <columns>
+        <field>Team_Member__c.MemberUsername__c</field>
+    </columns>
+    <columns>
+        <field>Team_Member__c.MemberUserprofile__c</field>
+    </columns>
+    <columns>
+        <field>Team_Member__c.MemberUserrole__c</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Work Team Members con WT</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>CustomEntityCustomEntity$WorkTeam__c$Team_Member__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>CUST_CREATED_DATE</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

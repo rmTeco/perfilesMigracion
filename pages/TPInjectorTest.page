@@ -1,0 +1,40 @@
+<apex:page >
+<script type="text/javascript" src="//resourcesuat.telecom.com.ar/components/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="//resourcesuat.telecom.com.ar/components/tpinjector/v1/tpinjector.js"></script> 
+
+<script type="text/javascript"> 
+        window._tpi_loginCallback = function () {
+            location.reload();
+        }
+        // Se ejecuta al finalizar el proceso de logout 
+        window._tpi_logoutCallback = function () {
+            location.reload();
+        }
+        window.statusChangeCallback = function (data) {
+            var options = null; if (data.status == "connected") {
+                options = TECO.getTpinjectorConfig();
+            }
+            _tpi_init(options);
+        }
+        window.tecoAsyncInit = function () {
+            TECO.init({
+                client_id: "3MVG9hq7jmfCuKfcsmJYo8fCXEw1ChHrYLei.6D5_iYIMPpOZO9Bfziw7FQlNeawnUWvhDm34KGtkh.skXvms", userVars: true, debug: 'a'
+                //(a)all, (i)info, (w)warning, (e)error, (d)debug 
+            });
+            TECO.getLoginStatus(statusChangeCallback);
+        };
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return; js = d.createElement(s);
+            js.id = id;
+            js.src = "https://loginuat.telecom.com.ar/v1/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'teco-auth-sdk')); 
+</script>
+
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

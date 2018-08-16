@@ -2,6 +2,7 @@
 global with sharing class IFS_S437_activateNominatedService {
 
     private static final String K_TYPE_OF_JOB = 'Nominatividad';
+    private static String guId = null;
 
     @HttpPost
     global static void getPost() {
@@ -12,6 +13,9 @@ global with sharing class IFS_S437_activateNominatedService {
         RestResponse res = RestContext.response;
         RestRequest req = RestContext.request;
         res.addHeader('Content-Type', 'application/json');
+
+        writeLog ('REQ', req.requestBody.toString());
+
         try {
             res.statuscode = 200;
             try {
@@ -31,8 +35,8 @@ global with sharing class IFS_S437_activateNominatedService {
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaOk()));
         }
         catch (FunctionalException fe) {
-            res.statuscode = 401;
-            res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('418',fe.getMessage())));
+            res.statuscode = 417;
+            res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('417',fe.getMessage())));
         }
         catch (CalloutException ce) {
             res.statuscode = 404;
@@ -42,7 +46,25 @@ global with sharing class IFS_S437_activateNominatedService {
             res.statuscode = 500;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('500',e.getMessage())));
         }
+
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
+
     }    
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S437', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S437', pTipo, guId, '', pDatos);  
+        }
+    }
 
     private static Map<String, Object> getRespuestaOk() {
         System.debug('Entre a getRespuestaOk()');

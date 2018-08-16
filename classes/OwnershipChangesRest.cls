@@ -54,7 +54,7 @@ global with sharing class OwnershipChangesRest {
 				// This method must be called after addOrderLineRest invoke
 				Set<String> orderItemIdSet = new Set<String>();
 				getOrderItemId(orderId, assetId, orderItemIdSet);
-
+				system.debug('OrderSet: ' + orderItemIdSet);
 				if (orderItemIdSet != null && orderItemIdSet.isEmpty() == false) {
 					List<String> orderItemIdList = new List<String>(orderItemIdSet);
 					orderResp = new OrderResponse(orderItemIdList.get(0), assetId, orderId, 'OK');

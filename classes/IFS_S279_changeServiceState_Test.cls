@@ -1,6 +1,6 @@
 @isTest
 public class IFS_S279_changeServiceState_Test {
-    @isTest static  void testGetCallout() {
+	@isTest static  void testGetCallout() {
         IFS_S279_changeServiceStateMock mock = new IFS_S279_changeServiceStateMock();
         mock.status = 200;
         Test.setMock(HttpCalloutMock.class, mock);

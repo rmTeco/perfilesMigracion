@@ -57,10 +57,10 @@
         <fullName>Account__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
-        <label>Account</label>
+        <label>Wholesale Account</label>
         <referenceTo>Account</referenceTo>
         <relationshipLabel>Batch Line Jobs</relationshipLabel>
-        <relationshipName>Batch_Line_Jobs</relationshipName>
+        <relationshipName>XOMBatchLineJobs</relationshipName>
         <required>false</required>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -169,19 +169,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>OrderDecomposedCount__c</fullName>
-        <externalId>false</externalId>
-        <formula>IF(OrderDecomposed__c, 1, 0)</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Order Decomposed Count</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>OrderDecomposed__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Flag that says if the Order record for this job/line has been processed.</description>
@@ -247,6 +234,15 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Successfully_Processed__c</fullName>
+        <externalId>false</externalId>
+        <formula>ISPICKVAL(Order__r.vlocity_cmt__FulfilmentStatus__c, &apos;Activated&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Successfully Processed</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Type__c</fullName>
         <description>Type of job to be done for this line.</description>
         <externalId>false</externalId>
@@ -286,6 +282,11 @@
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Type__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

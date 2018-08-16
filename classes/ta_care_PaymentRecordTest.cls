@@ -7,10 +7,10 @@ public class ta_care_PaymentRecordTest {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         ta_care_PaymentRecord paymentList = new ta_care_PaymentRecord();
         
-    Test.startTest();
+		Test.startTest();
         paymentList.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -23,7 +23,7 @@ public class ta_care_PaymentRecordTest {
         String codMedioPago = (String)payment.get('codMedioPago');
         system.debug('codMedioPago = '+codMedioPago);
         
-    system.assertEquals('Tarjeta de crédito', codMedioPago);
+		system.assertEquals('Tarjeta de crédito', codMedioPago);
     }
     
 }

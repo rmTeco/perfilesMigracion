@@ -8,6 +8,8 @@ public with sharing class GP_datosTransaccion {
     public String tipoEvento {get;set;}
     public Integer numeroDeOrden {get;set;}
     public Date vencimiento {get;set;}
+    
+    public string idGp {get;set;}
 
     public GP_datosTransaccion(String unaReglaId, String unTitularID, String unSuscriptorID, Double datoPuntos, String unaOperacion, String unTipoEvento, Integer unNumeroDeOrden, Date unVencimiento){
         constructor(unaReglaId, unTitularID, unSuscriptorID, datoPuntos, unaOperacion, unTipoEvento, unNumeroDeOrden, unVencimiento);
@@ -51,5 +53,11 @@ public with sharing class GP_datosTransaccion {
         tipoEvento = unTipoEvento;
         numeroDeOrden = unNumeroDeOrden;
         vencimiento = unVencimiento;
+        
+        if( String.isBlank(suscriptorID) || suscriptorID == '0'){
+            idGp = unTitularID+'0';
+        }else{
+            idGp = suscriptorID+unTitularID; 
+        }
     }
 }

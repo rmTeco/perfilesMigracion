@@ -9,7 +9,7 @@
         <operation>equals</operation>
         <value>true</value>
     </exitCriteriaFilterItems>
-    <isVersionDefault>true</isVersionDefault>
+    <isVersionDefault>false</isVersionDefault>
     <milestones>
         <criteriaBooleanFilter>1 AND 2 AND (3 OR 4)</criteriaBooleanFilter>
         <milestoneCriteriaFilterItems>
@@ -34,9 +34,21 @@
         </milestoneCriteriaFilterItems>
         <milestoneName>Data Service 72 hs</milestoneName>
         <minutesToComplete>4320</minutesToComplete>
+        <successActions>
+            <name>CloseCase</name>
+            <type>FieldUpdate</type>
+        </successActions>
+        <timeTriggers>
+            <actions>
+                <name>CloseCase</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
         <useCriteriaStartTime>false</useCriteriaStartTime>
     </milestones>
-    <name>servicio de voz y datos_v7</name>
-    <versionMaster>552c000000001U3</versionMaster>
-    <versionNumber>1</versionNumber>
+    <name>Servicio de Voz y Datos</name>
+    <versionMaster>5526C0000004CFf</versionMaster>
+    <versionNumber>7</versionNumber>
 </EntitlementProcess>

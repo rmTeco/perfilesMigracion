@@ -248,6 +248,7 @@ global with sharing class SaleManager implements vlocity_cmt.VlocityOpenInterfac
                 billingOrder = (Map<String, Object>) options.get('BillingOrder');
             }
             String billingOrderGestion = (String) billingOrder.get('Gestion__c');
+            String billingOrderNumber = (String) billingOrder.get('OrderNumber');
 
             Map<String, List<OrderItem>> itemsByProductName = new Map<String, List<OrderItem>>();
             Map<String, Object> plan = new Map<String, Object>();
@@ -331,7 +332,7 @@ global with sharing class SaleManager implements vlocity_cmt.VlocityOpenInterfac
             System.debug('nmus.keySet().size() = '+nmus.keySet().size());
             
             if (nmus.keySet().size() > 0){
-                StockUtils.StockQuantityManagement(nmus, orderId, 'R');
+                StockUtils.StockQuantityManagement(nmus, billingOrderNumber, 'R');
 
             }
           

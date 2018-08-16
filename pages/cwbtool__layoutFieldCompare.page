@@ -1,0 +1,216 @@
+<apex:page controller="cwbtool.LayoutFieldComparatorController" standardStylesheets="false" sidebar="false" applyHtmlTag="true" applyBodyTag="true" docType="html-5.0" 
+tabstyle="CWB_Tool__tab">
+   <c:requiredJSAndCSS ></c:requiredJSAndCSS>
+  <style>
+    .red{
+      background-color:#c23934;
+      color:#FFF;
+    }
+  
+  </style>
+    <div class='CWB'>
+        <c:lightningScript ></c:lightningScript>
+        <c:actionstatusNew />
+        <apex:form id="form" styleclass="frm1">
+            <apex:pagemessages ></apex:pagemessages>
+            <apex:actionFunction name="refreshOrgConnection" action="{!refreshOrgDetail}" oncomplete="initTab();init();getActiveConnection();" rerender="form,msgId" />
+            <apex:actionFunction name="getActiveConnection" action="{!getActiveConnection}" oncomplete="hideOverLay();initTab();init();" rerender="form,msgId" />
+            <apex:actionFunction name="retrieveLayoutList" action="{!retrieveLayoutList}" oncomplete="hideOverLay();initTab();init();" rerender="form,msgId" />
+            <apex:actionFunction name="doCompareLayoutField" action="{!doCompareLayoutFieldAndView}" rerender="form" oncomplete="hideOverLay();initTab();init();" />
+            <apex:actionFunction name="doCompareLayoutFieldAnddownload" action="{!doCompareLayoutFieldAnddownload}"/>
+            <div class="slds-box slds-theme--shade" role="banner">
+                <div class="slds-grid slds-wrap1 slds-form--inline1" style='max-width:80rem;'>
+                    <!-- <div class="slds-form-element">
+                        <div class="slds-media slds-media--center slds-no-space slds-grow">
+                            <div class="slds-media__figure">
+                            </div>
+                            <div class="slds-media__body">
+                                <p class="slds-text-heading--label">Layout Field Comparison</p>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="slds-form-element" style='width:32%;'>
+                        <div class='slds-form--inline'>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="select-01">
+                                    <a href='javascript:void(0);' onclick="refreshOrgConnection();">
+                                        <span class="ion-refresh" aria-hidden="true"></span>
+                                    </a> Source Org</label>
+                                
+                                    <div class="slds-select_container1">
+                                        <apex:selectList id="sourceOrg" value="{!strSourceOrg}" multiselect="false" size="1" styleclass="slds-select multiselect profileClass">
+                                            <apex:selectOptions value="{!lstActiveConnection}" />
+                                        </apex:selectList>
+                                    </div>
+                               
+                            </div>
+                           <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="select-01">
+                                <a href='javascript:void(0);' onclick="refreshOrgConnection();">
+                                        <span class="ion-refresh" aria-hidden="true"></span>
+                                    </a> Target Org</label>
+                            
+                                <div class="slds-select_container1">
+                                    <apex:selectList id="TargetOrg" value="{!strtargetOrg}" multiselect="false" size="1" styleclass="slds-select multiselect profileClass">
+                                        <apex:selectOptions value="{!lstActiveConnection}" />
+                                    </apex:selectList>
+                                </div>
+                            
+                        </div>
+                              
+                              <div class='class="slds-form-element"'>
+                               <div class="slds-button-group" role="group">
+			                      <apex:outputpanel layout="none" rendered='{!lstActiveConnection.size>0}'> 
+			                        <button type='button' onclick='showOverLay();retrieveLayoutList();' class="slds-button slds-button--brand slds-not-selected" style='margin-top:19px;' aria-live="assertive">
+			                            Retrieve Layout
+			                        </button>
+			                       </apex:outputpanel> 
+			                       
+			                        <button type='button' urlparam="{!$Page.createNewConnection}?open=modal" class="slds-button slds-button--neutral connectionmodal" style='margin-top:19px;' aria-live="assertive" actiondetail='Create New Connection '>
+			                            Create New Connection
+			                        </button>
+			                         
+			                    </div>
+		                        </div> 
+		                        
+                        </div> 
+                   </div>
+              <apex:outputpanel layout="none" rendered='{!lstSourceComponentName.size>0}'>     
+                <div class="slds-form-element" style='width:60%;margin-left:5%;'>
+                    <fieldset class="slds-form-element" style='margin-right:10px;'>
+                        <legend class="slds-form-element__legend slds-form-element__label">Source Org Layout</legend>
+                        <div class="slds-form-element__control">
+                            <apex:selectList id="metaid" value="{!strSourceSelectedComponent}"  multiselect="false" size="1" styleclass="slds-select multiselect profileClass">
+                                <apex:selectOptions value="{!lstSourceComponentName}" />
+                            </apex:selectList>
+                        </div>
+                    </fieldset>
+                    <fieldset class="slds-form-element">
+                        <legend class="slds-form-element__legend slds-form-element__label">Target Org Layout</legend>
+                        <div class="slds-form-element__control">
+                            <apex:selectList id="tagetcmpname" value="{!lstTargetSelectedComponent}" multiselect="true" size="1" styleclass="slds-select multiselect profileClass">
+                                <apex:selectOptions value="{!lstTargetComponentName}" />
+                            </apex:selectList>
+                        </div>
+                        
+                    </fieldset>
+                    <fieldset class="slds-form-element">
+                    <button type='button' onclick='showOverLay();doCompareLayoutField();' class="slds-button slds-button--neutral" style='margin-top:19px;' aria-live="assertive" actiondetail='Compare '>
+			             Compare&amp;View
+			          </button>
+			           <button type='button' onclick='showOverLay();hideProcessingWindow();doCompareLayoutFieldAnddownload();' class="slds-button slds-button--neutral" style='margin-top:19px;' aria-live="assertive" actiondetail='Compare '>
+			                Compare&amp;download
+			          </button>
+			          <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+		                                <span class="slds-form-element__label m-bottom--">Show Only DIFFERENCE</span>
+		                                <apex:inputCheckbox id="onlyConflicts" value="{!onlyConflict}" />
+		                                <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+		                            </label> 
+			        </fieldset>                
+                </div>
+               </apex:outputpanel>
+                <!--  <div class="slds-form-element">
+                    <div class="slds-button-group" role="group">
+                        <button type='button' onclick='zipDownloadAction();' class="slds-button slds-button--brand slds-not-selected" style='margin-top:19px;' aria-live="assertive" actiondetail='Download Zip '>
+                            <span class="slds-text-not-selected">
+                         <span class='ion-ios-plus-empty'></span>Download Zip</span>
+                        </button>
+                        <button type='button' urlparam="{!$Page.createNewConnection}?open=modal" class="slds-button slds-button--neutral connectionmodal" style='margin-top:19px;' aria-live="assertive" actiondetail='Create New Connection '>
+                            <span class="slds-text-not-selected">
+                         <span class='ion-ios-plus-empty'></span>Create New Connection</span>
+                        </button>
+                    </div>
+                </div>--> 
+           
+            </div>
+            
+          </div>
+          <apex:outputpanel layout="block" styleclass="slds-box" rendered='{!lstComparedLayout.size>0}'>
+          
+          <div class="slds-grid slds-wrap">
+          <div class="col slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-2">
+          <apex:variable value="{!0}" var="count"></apex:variable>
+           <div class="slds-tabs--default"> 
+            <ul class="slds-tabs--default__nav" role="tablist">
+            <apex:repeat value="{!lstComparedLayout}" var="key1"> 
+                <li class="slds-tabs--default__item slds-text-heading--label {!if(count==0,'slds-active','')}" title="layout" role="presentation">
+                    <a class="slds-tabs--default__link tabsl " href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-{!count}" 
+                       id="tab-scoped-{!count}__item" data-container='tab-scoped-{!count}'>
+                        {!HtmlEncode(key1)}</a>
+                </li>
+                <apex:variable value="{!count+1}" var="count"></apex:variable>
+            </apex:repeat>
+             </ul>
+              <apex:variable value="{!0}" var="count"></apex:variable>
+             <apex:repeat value="{!lstDiffDetail}" var="obj"> 
+              <div id="tab-scoped-{!count}" class="slds-tabs--default__content {!if(count==0,'slds-show','slds-hide')} " role="tabpanel" aria-labelledby="tab-scoped-{!count}__item">
+                   <table class="slds-table slds-no-row-hover slds-table--bordered slds-table--cell-buffer" style='width:auto !important;border-right: 1px solid #d8dde6;border-left: 1px solid #d8dde6;'>
+                      <tr>
+                         <td></td>
+                         <td >Source Org</td>
+                         <td style='border-right:1px solid gray;'><b>{!HtmlEncode(obj.sourceOrg)}</b></td>
+                         <td>Target Org</td>
+                         <td><b>{!HtmlEncode(obj.targetOrg)}</b></td>
+                         <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                         <td>Source Layout</td>
+                         <td style='border-right:1px solid gray;'>{!HtmlEncode(obj.sourceLayoutName)}</td>
+                         <td>Target Layout</td>
+                         <td>{!Htmlencode(obj.targetLayoutName)}</td>
+                         <td></td>
+                      </tr>
+                      <tr>
+                         <td>Field</td>
+                         <td colspan='2' style='border-right:1px solid gray;'>Source Behaviour</td>
+                         <td colspan='2'>Target Behaviour</td>
+                         <td>Match</td>
+                      </tr>
+                   <apex:repeat value="{!obj.lst}" var="objLayout">
+                      <apex:outputpanel layout="none" rendered="{!!onlyConflict || !objLayout.isMatchFound }">
+                      <tr >
+                         <td class="{!if(!objLayout.isMatchFound,'red','')}">{!objLayout.fieldName}</td>
+                         <td colspan='2' style='border-right:1px solid gray;'>{!objLayout.sourceBehaviour}</td>
+                         <td colspan='2'>{!objLayout.targetBehaviour}</td>
+                         <td>{!objLayout.isMatchFound}
+                         <i class='ion ion-md-checkmark-circle'></i></td>
+                      </tr>
+                      </apex:outputpanel>
+                   </apex:repeat>
+                   </table>
+                </div>
+                <apex:variable value="{!count+1}" var="count"></apex:variable>
+              </apex:repeat>  
+    </div></div></div></apex:outputpanel>
+    <script>
+    function zipDownloadAction() {
+        showOverLay('{!HTMLENCODE(strStatus)}');
+        zipDownload();
+    }
+
+    function DownloadZipFile(metadata) {
+        hideOverLay();
+        window.location = "data:application/zip;base64," + metadata;
+    }
+
+    function refreshOrgDetailFromModal() {
+        refreshOrgConnection();
+    }
+    var timeout;
+  function hideProcessingWindow(){//console.log('call');
+   var timeout= setTimeout(function() {
+        hideOverLay();
+        removeTimeOut(); 
+       }, 5000);
+  }
+  
+  function removeTimeOut(){
+    // console.log('removeTimeOut');
+    clearTimeout(timeout);
+  }
+    </script>
+    </apex:form>
+    <c:ConnectionModalComp id="connectId"/>
+    </div>
+</apex:page>

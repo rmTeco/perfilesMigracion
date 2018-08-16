@@ -1,0 +1,35 @@
+<apex:page controller="cwbtool.PermissionController" showHeader="false" standardStylesheets="false" sidebar="false">
+<c:requiredJSAndCSS ></c:requiredJSAndCSS>
+<apex:pagemessages rendered="{!lstOption==null || lstOption.size==0}"/>
+
+<apex:outputpanel rendered='{!lstOption!=null && lstOption.size>0}' layout='block' styleclass='CWB' > 
+<c:actionstatusNew />
+<c:lightningScript ></c:lightningScript>
+<apex:pagemessages id="msgId"></apex:pagemessages>
+<apex:form id="form" styleclass="frm">
+    <apex:actionfunction name="downloadTabPerm" action="{!downloadTabVisibilityDetail}" ></apex:actionfunction>
+    <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form" oncomplete="initTab();"/>
+     <apex:outputpanel id="refreshPanel">
+            <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,msgId,form" interval="5" enabled="{!isStart}" oncomplete="initTab();if({!isProcessed}){hideOverLay();}" />
+    </apex:outputpanel>
+    
+    <div class="slds-grid slds-grid--vertical-stretch slds-grid--pull-padded">
+      <div class="slds-col--padded profilesec">
+     <span class="slds-badge">{!metaDataType}</span>
+      <apex:selectList value="{!lstSelectedOption}" multiselect="true" styleclass="multiselect profileClass" style="margin-right:40px;display:none;"> 
+            <apex:selectOptions value="{!lstOption}"/>
+       </apex:selectList>
+       </div>
+        <div class="slds-col--padded">
+        <apex:selectList value="{!lstSelectedTab}" multiselect="true" styleclass="multiselect profileClass" style="margin-right:40px;display:none;"> 
+            <apex:selectOptions value="{!lstTabOption}"/>
+       </apex:selectList>
+      </div>
+       <div class="slds-col--padded">
+        <button value='Download' type='button' onclick="showOverLay('Please Wait..');downloadTabPerm();refresh();" class="slds-button slds-button--brand">Download Tab Visibilty</button>
+      </div>
+</div>
+</apex:form>
+</apex:outputpanel>
+
+</apex:page>

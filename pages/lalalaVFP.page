@@ -1,0 +1,134 @@
+<apex:page showHeader="false" sidebar="false">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+
+    <h2>TEST JSTREE</h2>
+        <div id="jstree_demo"></div>
+
+
+        <button onclick="saveState()">
+            Guardar 5
+        </button>
+
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>-->
+        <!--<script src="/jstree/dist/jstree.js"></script>-->
+        <apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jstree, 'jstree/dist/jstree.min.js')}"></apex:includeScript>
+        <script>
+
+            window.getItems = (id = null) => {
+                    switch (id) {
+                        case 'a4l6C00000006rkQAA':
+                            return [
+                                {
+                                    "id": "root-node-2-1",
+                                    "text": "Node 2-1",
+                                    "parent": "a4l6C00000006rkQAA",
+                                    "children": true
+                                },
+                                {
+                                    "id": "root-node-2-2",
+                                    "text": "Node 2-2",
+                                    "parent": "root-node-2-1",
+                                    "children": true
+                                },
+                                {
+                                    "id": "root-node-2-3",
+                                    "text": "Node 2-3",
+                                    "parent": "root-node-2",
+                                    "children": true
+                                }
+                            ]
+                            break;
+                        case 'root-node-3':
+                            return [
+                                {
+                                    "id": "root-node-3-1",
+                                    "text": "Node 3 1",
+                                    "parent": "a4l6C00000006rkQAA",
+                                    "children": true
+                                },
+                                {
+                                    "id": "root-node-3-2",
+                                    "text": "Node 3 2",
+                                    "parent": "root-node-3",
+                                    "children": true
+                                },
+                                {
+                                    "id": "root-node-3-3",
+                                    "text": "Node 3 3",
+                                    "parent": "root-node-3",
+                                    "children": true,
+                                    "state": {
+                                        "selected": true
+                                    }
+                                }
+                            ]
+                            break;
+                        case '#':
+                            return [
+                                {
+                                "text":"Buenos Aires",
+                                "state":{
+                                    "selected":true
+                                    },
+                                "parent":"#",
+                                "id":"a4l6C00000006rkQAA",
+                                "children":true
+                                }
+                            ]
+                            break;
+                        default:
+                            return [];
+                            break;
+                    }
+
+                }
+
+            window.configObject = {
+                        "core": {
+                            "animation": 0,
+                                "check_callback": true,
+                                    "themes": { "stripes": true },
+                            'data': function(node, cb){
+
+                                let tmpdata = window.getItems(node.id);
+                                return cb(tmpdata);
+                            }
+                        },
+                        "types": {
+                            "#": {
+                                "max_children": 1,
+                                    "max_depth": 4,
+                                        "valid_children": ["root"]
+                            },
+                            "root": {
+                                "icon": "/static/3.3.5/assets/images/tree_icon.png",
+                                    "valid_children": ["default"]
+                            },
+                            "default": {
+                                "valid_children": ["default", "file"]
+                            },
+                            "file": {
+                                "icon": "glyphicon glyphicon-file",
+                                    "valid_children": []
+                            }
+                        },
+                        "checkbox": {
+                            "keep_selected_style": false
+                        },
+                        "plugins": [
+                            "contextmenu", "dnd", "search",
+                            "state", "types", "wholerow", "checkbox"
+                        ]
+                    }
+
+            window.tree = $('#jstree_demo').jstree(window.configObject);
+
+            const saveState = ()=>{
+                console.log($('#jstree_demo').jstree(true).get_state().core.selected);
+            }
+
+        </script>
+
+</apex:page>

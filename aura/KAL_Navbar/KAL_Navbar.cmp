@@ -1,0 +1,27 @@
+<aura:component controller="KAL_PagoController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="maxCantCuotas" type="Integer" default="1"/>
+    <aura:handler name="init" value="{! this }" action="{! c.obtenerPromosFinancieras }"/>
+    <div id="KAL_Navbar">
+        <div class="slds-grid slds-grid_reverse navbarColor">
+        	<p class="slds-text-heading_small slds-p-around_x-small KAL_Navbar--Envio">
+               
+                <div class="iconLock" >
+                    <lightning:icon iconName="utility:lock" size="small"  title="Sitio Seguro"/>
+                        Sitio Seguro
+                </div>
+     
+                    <lightning:icon iconName="utility:einstein" size="small" class="iconEinstein"/>
+                    Pago hasta en {! v.maxCantCuotas } 
+                    <aura:renderif isTrue="{! v.maxCantCuotas lt 2 }">
+                        cuota
+                        <aura:set attribute="else">
+                            cuotas
+                        </aura:set>
+                    </aura:renderif>
+                    <lightning:icon iconName="utility:world" size="small" class="iconWorld" />
+
+                    Envío gratis
+                </p>
+            </div>
+        </div>
+    </aura:component>

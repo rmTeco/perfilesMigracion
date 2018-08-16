@@ -1,0 +1,6 @@
+<apex:page controller="cwbtool.FieldSchemaController"  contenttype="application/x-excel#{!strType}updateDetail_{!Now()}.xls" readOnly="true">
+     <c:VFC_ComponentUpdateDetail lstComponentDetail="{!lstObjectUpdatedDetails}" Type="{!strType}" rendered="{!!isCustonField}"/> 
+     <c:VFC_CustomFieldUpdateDetail lstComponentDetail="{!lstObjectUpdatedDetails}" Type="{!strType}"  rendered="{!isCustonField}"/> 
+     
+     
+ </apex:page>

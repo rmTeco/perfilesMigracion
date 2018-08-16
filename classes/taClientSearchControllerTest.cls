@@ -21,11 +21,11 @@ public with sharing class taClientSearchControllerTest {
 
         testAcc.DocumentNumber__c = '12345678';
         testAcc.DocumentType__c = 'DNI';
-        //update testAcc;
+        update testAcc;
 
         Test.startTest();
         taClientSearchController csc = new taClientSearchController();
-
+        
         //Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         String resp = taClientSearchController.CheckClientInBlackList(testAcc.Id, testAcc.DocumentType__c, testAcc.DocumentNumber__c);
         Test.stopTest();
@@ -63,7 +63,7 @@ public with sharing class taClientSearchControllerTest {
         Account testAcc = TestDataFactory.createAccounts(1, 'Consumer')[0];
 
         TestDataFactory.createPriceList('Telecom Price List');
-        //TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
+        TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
 
         Test.startTest();
         taClientSearchController csc = new taClientSearchController();
@@ -77,7 +77,7 @@ public with sharing class taClientSearchControllerTest {
 
     static testmethod void CreateOrderTest_Excep(){
         TestDataFactory.createPriceList('Telecom Price List');
-        //TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
+        TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
 
         Test.startTest();
         taClientSearchController csc = new taClientSearchController();
@@ -101,9 +101,9 @@ public with sharing class taClientSearchControllerTest {
 
         System.assertEquals(true, updatedAcc.Dunning__c);
     }
-
+    
      @IsTest static void CheckAccountsStatus_test (){
-        //TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
+        TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
         List<Account> account = TestDataFactory.createAccounts(1, 'Consumer');
         //Contact contact = TestDataFactory.createContacts(1, account[0])[0];
         //Order order = TestDataFactory.createOrders(1, account[0])[0];
@@ -118,7 +118,7 @@ public with sharing class taClientSearchControllerTest {
         Map<String,Object> inputMap = new Map<String,Object>();
         Map<String,Object> outMap = new Map<String,Object>();
         Map<String,Object> options = new Map<String,Object>();
-        //TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
+        TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
         List<Account> account = TestDataFactory.createAccounts(1, 'Consumer');
         Contact contact = TestDataFactory.createContacts(1, account[0])[0];
         contact.DocumentNumber__c = '34242234233';
@@ -127,7 +127,7 @@ public with sharing class taClientSearchControllerTest {
         account[0].vlocity_cmt__PrimaryContactId__c = contact.Id;
         update contact;
         update account;
-
+        
         String ContactSearch = '{"Name":"adasd"}';
         String DocumentTypeSearch = 'DNI';
         String DocumentInputSearch = '34242234233';
@@ -137,7 +137,7 @@ public with sharing class taClientSearchControllerTest {
         options.put('DocumentTypeSearch',DocumentTypeSearch);
         options.put('DocumentInputSearch',DocumentInputSearch);
         options.put('GenderSearch',GenderSearch);
-
+        
         vlocity_cmt__DRBundle__c dr = new vlocity_cmt__DRBundle__c();
         dr.Name = 'ta-sales-DR-SearchContact';
         dr.vlocity_cmt__CheckFieldLevelSecurity__c = false;
@@ -152,9 +152,9 @@ public with sharing class taClientSearchControllerTest {
         dr.vlocity_cmt__Type__c = 'Extract';
         dr.vlocity_cmt__UseAssignmentRules__c = false;
         insert dr;
-
-
-
+        
+        
+        
         String dataJson = '{"GenderSearch":"' + GenderSearch + '", "DocumentTypeSearch":"' + DocumentTypeSearch + '", "DocumentInputSearch":"' + DocumentInputSearch + '"}';
         vlocity_cmt.DRProcessResult result = vlocity_cmt.DRGlobal.processObjectsJSON(dataJson, 'ta-sales-DR-SearchContact');
         System.debug(result);

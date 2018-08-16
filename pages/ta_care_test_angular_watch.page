@@ -1,0 +1,39 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="TestAngularController">
+        
+        <div ng-controller="LaMenteCtrl as lmCtrl" ng-init="lmCtrl.init()">
+            <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+                strOmniScriptSubType="TestAngularController"
+                strOmniScriptLang="English"
+                previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+                verticalMode="{!$CurrentPage.parameters.verticalMode}"
+                strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+                scriptLayout="lightning"/>
+        </div>
+            
+        
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('TestAngularController', modules);
+
+            myModule.controller('LaMenteCtrl', ['$scope', function($scope) {
+                var ec = this; 
+
+                ec.init = init;
+
+                function init() {
+                    console.info("LA MENTE");
+                    $scope.$watch("", function(newVal, oldVal) {
+                        console.info("bptree lino: ", newVal, " - ", oldVal);
+                    });
+                }
+               
+            }]);
+            
+
+            
+        </script>
+
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

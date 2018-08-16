@@ -21,7 +21,7 @@ public class IFS_S445_getAvailableOffersTest {
         Account account = getAccount('Consumer');
 
         jsonObj.idCliente = string.valueof(account.CustomerIntegrationId__c);
-        jsonObj.choiceId.nroLinea = K_MSISDN_OK;
+        //jsonObj.choiceId.nroLinea = K_MSISDN_OK;
         jsonObj.codCanal = K_CANAL_OK;
         //jsonObj.tipo = K_TIPO_OK;
         //jsonObj.subTipo = K_SUBTIPO_OK;

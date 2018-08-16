@@ -122,7 +122,7 @@
     </fieldSets>
     <fields>
         <fullName>AccountId</fullName>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -132,6 +132,18 @@
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Alicuota__c</fullName>
+        <description>Overall Tax Rate applicable to the Product</description>
+        <externalId>false</externalId>
+        <label>Alicuota</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>AssetId__c</fullName>
@@ -172,7 +184,7 @@
         <externalId>false</externalId>
         <label>Blacklist Remove Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Date</type>
     </fields>
     <fields>
@@ -181,7 +193,7 @@
         <description>Indicates if an Asset is on blacklist.</description>
         <externalId>false</externalId>
         <label>Blacklist de Suscripciones</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -196,8 +208,20 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ContactId</fullName>
+        <fullName>Codigo_Sistema_Origen__c</fullName>
+        <description>Product Code in the External Source System</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Product Code in the External Source Catalog System, to be used by Catalog Synchronization tools</inlineHelpText>
+        <label>Codigo Sistema Origen</label>
+        <length>50</length>
+        <required>false</required>
         <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ContactId</fullName>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -228,9 +252,23 @@
         <fullName>ICCID__c</fullName>
         <externalId>false</externalId>
         <label>ICCID</label>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
-        <type>TextArea</type>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ID_Sistema_Origen__c</fullName>
+        <description>Product ID in the External Source Catalog System</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Product ID in the External Source Catalog System, for reference in Catalog Synchronization tools.</inlineHelpText>
+        <label>ID Sistema Origen</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>InstallDate</fullName>
@@ -302,7 +340,7 @@
     </fields>
     <fields>
         <fullName>Name</fullName>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
     </fields>
     <fields>
         <fullName>Network_Status__c</fullName>
@@ -327,6 +365,18 @@
                 </value>
             </valueSetDefinition>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Nombre_Sistema_Origen__c</fullName>
+        <description>Product Name in the External Source Catalog System</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Product Name in the External Source Catalog System</inlineHelpText>
+        <label>Nombre Sistema Origen</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>OneTimeCalculatedPrice_w_Tax__c</fullName>
@@ -421,6 +471,16 @@
         <type>Currency</type>
     </fields>
     <fields>
+        <fullName>RecurringCharge_w_Tax__c</fullName>
+        <externalId>false</externalId>
+        <label>Recurring Charge w Tax</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Currency</type>
+    </fields>
+    <fields>
         <fullName>RecurringTotal_w_Tax__c</fullName>
         <externalId>false</externalId>
         <label>Recurring Total w Tax</label>
@@ -432,6 +492,7 @@
     </fields>
     <fields>
         <fullName>Rehab_Date_Time__c</fullName>
+        <description>Como usuario OM, debo ser capaz de ver el cambio en la assetizacion del campo Estado y Subestado (administrativo, siniestro, portout) para las Rehabilitación para una linea móvil Prepaga con la fecha- hora real de la rehabilitación.</description>
         <externalId>false</externalId>
         <label>Rehab Date Time</label>
         <required>false</required>
@@ -446,6 +507,37 @@
     <fields>
         <fullName>SerialNumber</fullName>
         <trackHistory>false</trackHistory>
+    </fields>
+    <fields>
+        <fullName>Sistema_Origen__c</fullName>
+        <description>Name of the Source Catalog System</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of the Source Catalog System, used for Catalog synchronization</inlineHelpText>
+        <label>Sistema Origen</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Huawei</fullName>
+                    <default>false</default>
+                    <label>Huawei</label>
+                </value>
+                <value>
+                    <fullName>Infotainment</fullName>
+                    <default>false</default>
+                    <label>Infotainment</label>
+                </value>
+                <value>
+                    <fullName>SAP</fullName>
+                    <default>false</default>
+                    <label>SAP</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Status</fullName>
@@ -523,29 +615,29 @@
                     <label>Línea suspendida por Dorma</label>
                 </value>
                 <value>
-                    <fullName>Suspend-Operador</fullName>
+                    <fullName>Suspend-Siniestro</fullName>
                     <default>false</default>
-                    <label>Suspend-Operador</label>
+                    <label>Suspend-Siniestro</label>
                 </value>
                 <value>
-                    <fullName>Resume-Operador</fullName>
+                    <fullName>Suspend-Fraude</fullName>
                     <default>false</default>
-                    <label>Resume-Operador</label>
+                    <label>Suspend-Fraude</label>
                 </value>
                 <value>
-                    <fullName>Baja-PortOut</fullName>
+                    <fullName>Suspend-Voluntaria</fullName>
                     <default>false</default>
-                    <label>Baja-PortOut</label>
+                    <label>Suspend-Voluntaria</label>
                 </value>
                 <value>
-                    <fullName>Baja-Baja</fullName>
+                    <fullName>Mora-Parcial</fullName>
                     <default>false</default>
-                    <label>Baja-Baja</label>
+                    <label>Mora-Parcial</label>
                 </value>
                 <value>
-                    <fullName>Siniestro/Extravio</fullName>
+                    <fullName>Mora-Total</fullName>
                     <default>false</default>
-                    <label>Siniestro/Extravio</label>
+                    <label>Mora-Total</label>
                 </value>
                 <value>
                     <fullName>Administrativo</fullName>
@@ -553,19 +645,74 @@
                     <label>Administrativo</label>
                 </value>
                 <value>
-                    <fullName>Suspend-PortOut</fullName>
-                    <default>false</default>
-                    <label>Suspend-PortOut</label>
-                </value>
-                <value>
                     <fullName>PortOut</fullName>
                     <default>false</default>
                     <label>PortOut</label>
                 </value>
                 <value>
+                    <fullName>Resume-Cliente</fullName>
+                    <default>false</default>
+                    <label>Resume-Cliente</label>
+                </value>
+                <value>
+                    <fullName>Resume-Operador</fullName>
+                    <default>false</default>
+                    <label>Resume-Operador</label>
+                </value>
+                <value>
+                    <fullName>Resume-Extravio</fullName>
+                    <default>false</default>
+                    <label>Resume-Extravio</label>
+                </value>
+                <value>
+                    <fullName>Siniestro/Extravio</fullName>
+                    <default>false</default>
+                    <label>Siniestro/Extravio</label>
+                </value>
+                <value>
+                    <fullName>Suspend-PortOut</fullName>
+                    <default>false</default>
+                    <label>Suspend-PortOut</label>
+                </value>
+                <value>
                     <fullName>Conciliate</fullName>
                     <default>false</default>
                     <label>Conciliate</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Robo</fullName>
+                    <default>false</default>
+                    <label>Suspend-Robo</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Hurto</fullName>
+                    <default>false</default>
+                    <label>Suspend-Hurto</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Extravio</fullName>
+                    <default>false</default>
+                    <label>Suspend-Extravio</label>
+                </value>
+                <value>
+                    <fullName>Robo</fullName>
+                    <default>false</default>
+                    <label>Robo</label>
+                </value>
+                <value>
+                    <fullName>Hurto</fullName>
+                    <default>false</default>
+                    <label>Hurto</label>
+                </value>
+                <value>
+                    <fullName>Extravio</fullName>
+                    <default>false</default>
+                    <label>Extravio</label>
+                </value>
+                <value>
+                    <fullName>Suspend-Portabilidad</fullName>
+                    <default>false</default>
+                    <label>Suspend-Portabilidad</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -582,11 +729,21 @@
     </fields>
     <fields>
         <fullName>Suspend_Date_Time__c</fullName>
+        <description>Como usuario OM, debo ser capaz de ver assetizado el campo Subestado para las suspensiones por Siniestro/Extravío, Fraude y Portabilidad para una linea movil Prepaga con la fecha- hora real de la suspensión.</description>
         <externalId>false</externalId>
         <label>Suspend Date Time</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Tangible__c</fullName>
+        <externalId>false</externalId>
+        <formula>Product2.Tangible__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tangible</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Tipo_de_Producto__c</fullName>
@@ -722,7 +879,7 @@
         <relationshipLabel>Billing Assets</relationshipLabel>
         <relationshipName>BillingAccountAssets</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Lookup</type>
     </fields>
     <fields>
@@ -880,7 +1037,7 @@
         <label>Line Number</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -997,7 +1154,7 @@
         <label>ParentItemId</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -1175,7 +1332,7 @@
         <label>RootItemId</label>
         <length>255</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -1218,142 +1375,6 @@
         <trackHistory>false</trackHistory>
         <type>Lookup</type>
     </fields>
-    <listViews>
-        <fullName>AllAssets</fullName>
-        <columns>ASSET.NAME</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ASSET.CREATED_DATE</columns>
-        <columns>ASSET.SERIAL_NUMBER</columns>
-        <columns>ASSET.INSTALL_DATE</columns>
-        <columns>CONTACT.NAME</columns>
-        <columns>PRODUCT2.NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>equals</operation>
-            <value>Wholesale Chip TA</value>
-        </filters>
-        <label>Todos los activos</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Analisis_Asset</fullName>
-        <columns>MSISDN__c</columns>
-        <columns>vlocity_cmt__LineNumber__c</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>ASSET.NAME</columns>
-        <columns>PRODUCT2.NAME</columns>
-        <columns>ASSET.QUANTITY</columns>
-        <columns>ASSET.ROOT_ASSET</columns>
-        <columns>vlocity_cmt__RootItemId__c</columns>
-        <columns>vlocity_cmt__JSONAttribute__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>startsWith</operation>
-            <value>Arjonaesel</value>
-        </filters>
-        <filters>
-            <field>MSISDN__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <label>Analisis Asset</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Prueba_Victor</fullName>
-        <booleanFilter>1 OR 2 OR 3 OR 4</booleanFilter>
-        <columns>ASSET.STATUS</columns>
-        <columns>ASSET.NAME</columns>
-        <columns>MSISDN__c</columns>
-        <columns>ASSET.SERIAL_NUMBER</columns>
-        <columns>ASSET.INSTALL_DATE</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.NAME</columns>
-        <columns>PRODUCT2.NAME</columns>
-        <columns>ASSET.CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>vlocity_cmt__ParentItemId__c</field>
-            <operation>equals</operation>
-            <value>02ic0000003X9c4AAC</value>
-        </filters>
-        <filters>
-            <field>AssetId__c</field>
-            <operation>equals</operation>
-            <value>02ic0000003X9c4AAC</value>
-        </filters>
-        <filters>
-            <field>vlocity_cmt__ParentItemId__c</field>
-            <operation>equals</operation>
-            <value>02ic0000003X9cC</value>
-        </filters>
-        <filters>
-            <field>vlocity_cmt__ParentItemId__c</field>
-            <operation>equals</operation>
-            <value>02ic0000003X9cD</value>
-        </filters>
-        <label>Todos los assets de un padre</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Prueba_Victor1</fullName>
-        <columns>ASSET.STATUS</columns>
-        <columns>ASSET.NAME</columns>
-        <columns>ASSET.SERIAL_NUMBER</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>MSISDN__c</columns>
-        <columns>ASSET.INSTALL_DATE</columns>
-        <columns>CONTACT.NAME</columns>
-        <columns>PRODUCT2.NAME</columns>
-        <columns>ASSET.CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>Valeria Tech</value>
-        </filters>
-        <label>Prueba Victor</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Todos_los_activos2</fullName>
-        <columns>ASSET.NAME</columns>
-        <columns>ASSET.SERIAL_NUMBER</columns>
-        <columns>ASSET.INSTALL_DATE</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.NAME</columns>
-        <columns>PRODUCT2.NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>equals</operation>
-            <value>Andres Care</value>
-        </filters>
-        <label>Todos los activos2</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Whole</fullName>
-        <columns>ASSET.CREATED_DATE</columns>
-        <columns>MSISDN__c</columns>
-        <columns>imei__c</columns>
-        <columns>vlocity_cmt__RootItemId__c</columns>
-        <columns>ASSET.NAME</columns>
-        <columns>ASSET.SERIAL_NUMBER</columns>
-        <columns>ASSET.INSTALL_DATE</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.NAME</columns>
-        <columns>PRODUCT2.NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ACCOUNT.NAME</field>
-            <operation>equals</operation>
-            <value>Wholesale Chip TA</value>
-        </filters>
-        <label>Wholesale Chip TA</label>
-        <language>es_MX</language>
-    </listViews>
     <searchLayouts>
         <customTabListAdditionalFields>ASSET.NAME</customTabListAdditionalFields>
         <customTabListAdditionalFields>ASSET.SERIAL_NUMBER</customTabListAdditionalFields>
@@ -1371,16 +1392,22 @@
         <lookupPhoneDialogsAdditionalFields>ASSET.INSTALL_DATE</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>ACCOUNT.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>CONTACT.NAME</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>MSISDN__c</searchFilterFields>
         <searchResultsAdditionalFields>ASSET.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>MSISDN__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ASSET.SERIAL_NUMBER</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>ASSET.INSTALL_DATE</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>ACCOUNT.NAME</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>CONTACT.NAME</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ASSET.CREATED_DATE</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__ActivationDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__DisconnectDate__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>ASSET.STATUS</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Sub_Status__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>vlocity_cmt__Asset_Activation_Date_Rule</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Validation Rule for Asset Activation Date. It should not be in the past.</description>
         <errorConditionFormula>OR (vlocity_cmt__ActivationDate__c&lt;TODAY())</errorConditionFormula>
         <errorDisplayField>vlocity_cmt__ActivationDate__c</errorDisplayField>

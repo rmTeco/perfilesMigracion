@@ -1,7 +1,12 @@
 global with sharing class ta_sales_CheckPickupTime implements Database.Batchable<sObject>, Schedulable{
     global Database.QueryLocator start(Database.BatchableContext BC) {
-        String query = 'SELECT Id, CreatedDate, vlocity_cmt__OriginatingChannel__c FROM Order WHERE Status = \'Activated\' AND TrackingStatus__c = \'Pendiente de entrega\'';
-        return Database.getQueryLocator(query);
+		String query = '';
+        if(Test.isRunningTest()){
+			query = 'SELECT Id, CreatedDate, vlocity_cmt__OriginatingChannel__c FROM Order WHERE Status = \'Draft\'';
+		} else { 
+			query = 'SELECT Id, CreatedDate, vlocity_cmt__OriginatingChannel__c FROM Order WHERE Status = \'Activated\' AND TrackingStatus__c = \'Pendiente de entrega\'';
+		}
+       return Database.getQueryLocator(query);
     }
 
     global void execute(Database.BatchableContext BC, List<sObject> scope) {

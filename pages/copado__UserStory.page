@@ -1,0 +1,488 @@
+<apex:page standardController="copado__User_Story__c" extensions="copado.UserStoryExt,copado.Settings" showHeader="{!$User.UIThemeDisplayed=='Theme3'}" standardStylesheets="true" sidebar="{!$User.UIThemeDisplayed=='Theme3'}" applyHtmlTag="{!$User.UIThemeDisplayed=='Theme3'}" applyBodyTag="false" docType="html-5.0" lightningStylesheets="true">
+  <apex:slds />
+  <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en">
+  <head>
+    <title>User Story {!copado__User_Story__c.Name} | Copado</title>
+    <style type="text/css">
+          .slds-screenlocker div{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%);
+                padding-top: 15px;
+                padding: 30px;
+                background-color: transparent;
+                z-index: 9999;
+            }
+            #screenLockerLightning{
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                z-index: 10000;
+                background-color: rgba(33,33,33,0.2);
+            }
+            #screenLockerLightningText {
+                font-size: 14pt;
+                font-weight: bold;
+            }
+            #screenLockerLightningFrame {
+                text-align: center;
+                border: 1px solid black;
+                background-color: rgba(255, 255, 255, 0.75);
+                border-radius: 10px;
+            }
+        </style>
+    <c:GAnalytics />
+    <script type="text/javascript">
+            function ToggleDropdown() {
+              var toggleButton = document.getElementById('toggleButton');
+              var pathWrapper = document.getElementById('pathWrapper');
+              var pathContent1 = document.getElementById('path-content-1');
+              toggleButton.classList.toggle("slds-flip_vertical");
+              pathWrapper.classList.toggle("slds-is-expanded");
+              pathContent1.classList.toggle("slds-show");
+              pathContent1.classList.toggle("slds-hide");
+            }
+        </script>
+    <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.copado__pullRequest)}" />
+    <script>
+            ga('send', 'pageview', {
+              'page': '/UserStory',
+              'title': 'User Story'
+            });
+            var $copado = jQuery.noConflict();
+            var gitRepo = "{!JSENCODE(flowDetails.flow.copado__Git_Repository__c)}"
+            var commitCount = "{!commitCount}"
+
+            var pullBase = gitRepo ? "{!JSENCODE(flowDetails.flow.Git_Repository__r.copado__Pull_Request_Base_URL__c)}" : null;
+            var pullType = gitRepo ? "{!JSENCODE(flowDetails.flow.Git_Repository__r.copado__Git_Provider__c)}" : null;
+            console.log('pull items',pullBase,pullType)
+            var readyFunc = function(){
+              var pullButton = $copado('<input id="customPullButton" type="button" class="btn" value="{!JSENCODE($Label.copado__create_pull_request)}" onclick="getPullRequest();"/>');
+              if(pullType != null && pullBase != null && pullBase != '' && "{!copado__User_Story__c.Id}" != null && "{!copado__User_Story__c.Id}" != '' && commitCount > 0 ){
+                pullButton.appendTo($copado('[Id^=topButtonRow]'));
+              }
+              if('{!JSENCODE(IF(scaAccess,'true','false'))}' == 'false'){
+                $copado( "input[name$='run_static_code_analysis']" ).remove();
+              }
+            }
+            document.onreadystatechange = function(){
+                 if(document.readyState === 'complete'){
+                    readyFunc();
+                 }
+            }
+
+            var getPullRequest = function() {
+              if(pullBase != null && pullBase != '' ){
+                //var win = window.open(pullBase.replace('tree/','compare/{!JSENCODE(targetBranch)}...feature/{!JSENCODE(copado__User_Story__c.Name)}?expand=1'));
+                var config = {};
+                config.type = pullType;
+                config.url = pullBase;
+                config.base = '{!JSENCODE(targetBranch)}';
+                config.compare = 'feature/{!JSENCODE(copado__User_Story__c.Name)}';
+                var pullRequest = new PullRequest(config);
+                var win = window.open(pullRequest.URL);
+                if (win) {
+                    //Browser has allowed it to be opened
+                    win.focus();
+                } else {
+                    //Browser has blocked it
+                    alert('{!JSENCODE($Label.copado__popup_blocker_message)}');
+                }
+              }else{
+                alert('Related repository must have a pull request base url');
+              }
+            }
+        </script>
+  </head>
+
+  <body>
+
+  <div class="copado-lightning-VF">
+    <apex:pageMessages id="pmessage" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+
+    <c:ComplianceScanResult sId="{!copado__User_Story__c.Id}" apiName="User_Story__c"  rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+    <apex:outputPanel layout="block" styleClass="slds-scope copado-lightning-container" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+      <apex:form id="jobsManagerForm">
+        <div class="slds-page-header">
+          <apex:outputPanel layout="block" id="pageMessages">
+            <apex:pagemessages id="msg"/>
+            <c:ComplianceScanResult sId="{!copado__User_Story__c.Id}" apiName="User_Story__c"/>
+          </apex:outputPanel>
+
+          <c:JobsManager matchingKeys="GIT-{!flowDetails.flow.copado__Git_Repository__c}-{!targetBranch}"></c:JobsManager>
+          <apex:actionFunction name="renderFlow" rerender="apexDetail" />
+          <apex:actionFunction name="rerenderHeaderFields" rerender="headerFields" oncomplete="rerenderheaderOnSave();"/>
+          <!--<apex:actionPoller action="{!waitForDeployment}" id="thePoller" reRender="apexDetail,thePoller,msg" interval="10" enabled="{!IsPollerEnabled}" oncomplete="checkScreenLockerStatus({!IsPollerEnabled},{!showHideMsg});"/>-->
+
+          <div class="slds-grid">
+            <div class="slds-col slds-has-flexi-truncate">
+              <div class="slds-media">
+                <div class="slds-media__figure">
+                              <span class="slds-icon_container slds-icon-custom-custom55" title="Description of icon when needed">
+                                <svg class="slds-icon" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/custom-sprite/svg/symbols.svg#custom55')}"></use>
+                                </svg>
+                              </span>
+                </div>
+                <div class="slds-media__body">
+                  <p class="slds-text-heading--label slds-line-height--reset">{!$ObjectType.copado__User_Story__c.Label}</p>
+                  <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.copado__User_Story__c.Label}"><Apex:outputField value="{!copado__User_Story__c.Name}"/></h1>
+                </div>
+              </div>
+            </div>
+            <!-- ACTION BUTTONS -->
+            <div class="slds-col slds-no-flex slds-grid slds-align-top ">
+              <div class="slds-button-group" role="group">
+
+              </div>
+            </div>
+            <!-- / ACTION BUTTONS -->
+          </div>
+          <div class="slds-grid">
+            <div class="slds-col slds-align-middle">
+              <p class="slds-text-body_small"></p>
+            </div>
+          </div>
+          <apex:outputField value="{!copado__User_Story__c.copado__Project__c}" rendered="false"/><!-- NR to avoid vf NS issues -->
+          <apex:outputField value="{!copado__User_Story__c.Project__r.Name}" rendered="false"/><!-- NR to avoid vf NS issues -->
+          <apex:outputField value="{!copado__User_Story__c.copado__Sprint__c}" rendered="false"/><!-- NR to avoid vf NS issues -->
+          <apex:outputField value="{!copado__User_Story__c.copado__Release__c}" rendered="false"/><!-- NR to avoid vf NS issues -->
+          <apex:outputField value="{!copado__User_Story__c.copado__Org_Credential__c}" rendered="false"/><!-- NR to avoid vf NS issues -->
+          <apex:outputField value="{!copado__User_Story__c.copado__Environment__c}" rendered="false"/><!-- NR to avoid vf NS issues -->
+          <apex:outputField value="{!copado__User_Story__c.Environment__r.Name}" rendered="false"/><!-- NR to avoid vf NS issues -->
+          <apex:outputPanel layout="block" style="background: white;" id="headerFields">
+            <ul class="slds-grid slds-page-header__detail-row">
+              <apex:variable value="{!1}" var="rowNum"/>
+              <apex:repeat value="{!$ObjectType.copado__User_Story__c.FieldSets.copado__Copado_Header_Fields}" var="f">
+                <apex:outputPanel layout="block" rendered="{!rowNum < 8}">
+                  <li class="slds-page-header__detail-block slds-truncate" style="padding-right: 2em; padding-left: 2em;">
+                    <c:LightningReadyOutputFields dividerBottom="false" SObject="{!copado__User_Story__c}" Field="{!f}"></c:LightningReadyOutputFields>
+                  </li>
+                </apex:outputPanel>
+                <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+              </apex:repeat>
+            </ul>
+          </apex:outputPanel>
+        </div>
+      </apex:form>
+    </apex:outputPanel>
+
+    <div id="screenLockerLightning" class="slds-screenlocker" style="display: none;">
+      <div id="screenLockerLightningFrame">
+        <img style="width: 100px;" src="{!URLFOR($Resource.SLDS,'/assets/images/spinners/slds_spinner_brand.gif')}" />
+        <p id="screenLockerLightningText">{!JSENCODE($Label.LOADING)}</p>
+        <br /><br />
+        <a href="#" id="btnHideMsg" style="display: none;" onclick="unlockScreen();setLockMessage(true, '{!JSENCODE($Label.US_VALIDATION_INLINE_EDIT)}',overridePageMessages); return false;">{!$Label.HIDE_MESSAGE}</a>
+      </div>
+    </div>
+
+    <apex:outputPanel layout="block" styleClass="copado-lightning-container copado-lightning-radius">
+      <div class="copado-lightning-chatter">
+        <chatter:feedWithFollowers entityId="{!copado__User_Story__c.Id}" rendered="{!AND($User.UIThemeDisplayed == 'Theme4d',isChatterEnabled)}" />
+      </div>
+      <apex:form id="f" styleClass="copado-lightning-container" style="padding-top:12px;">
+
+        <div class="slds-scope">
+          <apex:outputPanel id="flowPanel" >
+            <div class="slds-m-vertical_x-small">
+              <div id="pathWrapper" class="{!IF(OR(userStoriesAhead.size!=0,userStoriesBehind.size!=0),'slds-path-coach','')}">
+
+                <!-- SLDS-Grid -->
+                <apex:outputPanel id="headerGrid" layout="block" styleClass="slds-grid" rendered="{!AND(hasActiveDeploymentFlow,showOptions)}">
+
+                  <!-- Toggle Button -->
+                  <apex:outputPanel rendered="{!OR(userStoriesAhead.size!=0,userStoriesBehind.size!=0)}" layout="none">
+                    <button id="toggleButton" class="slds-button slds-button_icon slds-button_icon-border-filled slds-path__trigger slds-no-flex slds-m-horizontal_small" title="{!$Label.Toggle_User_Stories_Ahead_and_Behind}" onclick="ToggleDropdown(this);return false;">
+                      <svg class="slds-button__icon" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#chevrondown')}"></use>
+                      </svg>
+                      <span class="slds-assistive-text">{!$Label.copado__toggle_user_stories_ahead_and_behind}"</span>
+                    </button>
+                  </apex:outputPanel>
+                  <!-- // Toggle Button -->
+                  <!-- Deployment Flow Steps -->
+
+                  <apex:outputPanel id="flowSteps" layout="block" styleClass="slds-tabs--path" html-role="application">
+                    <ul class="slds-tabs--path__nav" role="tablist">
+                      <apex:variable value="0" var="stepIndex"/>
+                      <apex:repeat value="{!visualFlowSteps}" var="step">
+                        <li class="slds-tabs--path__item {!step.style}" role="presentation">
+                          <a class="slds-tabs--path__link" id="path-{!stepIndex}" aria-controls="path-content-{!stepIndex}" aria-selected="{!IF(step.style == 'slds-is-current',true, false)}" tabindex="{!IF(step.style == 'slds-is-current',0,-1)}" role="tab" href="javascript:void(0);" aria-live="assertive">
+                                        <span class="slds-path__stage">
+                                          <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+                                            <use xlink:href="{!IF(contains(step.style, 'slds-is-complete'), URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#check'),'')}" />
+                                          </svg>
+                                          <span class="slds-assistive-text">{!IF(step.style == 'slds-is-current','Current Stage:',IF(step.style == 'slds-is-current','Stage Complete',''))}</span>
+                                        </span>
+                            <span class="slds-path__title">
+                                          <img style="width: 20px;display: none;" alt="spinner" id="miniSpinner" src="{!URLFOR($Resource.SLDS,'/assets/images/spinners/slds_spinner_inverse.gif')}" />&nbsp;{!step.environment}
+                                {!IF(AND(step.style='slds-is-current',flowDetails.isCBMFlow,OR(userStoriesAhead.size!=0,userStoriesBehind.size!=0)),userStoriesAheadBehindTitle,'')}
+                                        </span>
+                          </a>
+                        </li>
+                        <apex:variable var="stepIndex" value="{!VALUE(stepIndex) + 1}"/>
+                      </apex:repeat>
+                    </ul>
+                  </apex:outputPanel>
+
+                  <!-- // Deployment Flow Steps -->
+
+                  <!-- Validate Deployment Button -->
+
+                  <apex:outputPanel rendered="{!AND(NOT(ISBLANK(userStory.copado__Metadata_Types_in_Selection__c)),visualFlowSteps.size > 1)}" layout="none">
+                    <apex:actionFunction name="validate" action="{!validateUserStory}" reRender="apexDetail,screenLockerLightning,thePoller,pmessage,msg" oncomplete="dValidate();"/>
+                    <apex:actionFunction name="dValidate" action="{!deployValidatedUserStory}" rerender="flowStepRender" oncomplete="checkScreenLockerStatus({!IsPollerEnabled},{!showHideMsg})"/>
+                    <apex:outputLink id="btn_validate" value="#" styleClass="slds-button slds-button_brand slds-path__mark-complete slds-no-flex slds-m-horizontal_small">
+                        {!JSENCODE($Label.US_VALIDATE)}&nbsp;
+                      <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/utility-sprite/svg/symbols.svg#forward')}"></use>
+                      </svg>
+                    </apex:outputLink>
+                  </apex:outputPanel>
+
+                  <!-- // Validate Deployment Button -->
+                </apex:outputPanel>
+                <!-- // SLDS-GRID -->
+
+                <apex:outputPanel rendered="{!OR(userStoriesAhead.size!=0,userStoriesBehind.size!=0)}" layout="none">
+                  <div id="path-content-1" aria-labelledby="path-1" class="slds-tabs_path__content slds-hide" role="tabpanel">
+                    <div class="slds-grid slds-grid_align-spread">
+                      <div class="slds-coach__keys slds-size_1-of-2 slds-m-left_x-large">
+
+                        <!-- User Stories Ahead Header -->
+                        <div class="slds-grid slds-grid_align-spread">
+                          <h2 class="slds-text-title_caps slds-p-bottom_small">User Stories Ahead</h2>
+                        </div>
+                        <!-- // User Stories Ahead Header -->
+
+                        <!-- User Stories Ahead Table -->
+                        <dl class="slds-list_horizontal slds-wrap">
+                          <apex:repeat value="{!userStoriesAhead}" var="userStoryAhead">
+                            <dt class="slds-coach__item slds-item_label slds-text-color_weak">
+                              <apex:outputLink value="/{!userStoryAhead.Id}"><apex:outputField value="{!userStoryAhead.Name}"/></apex:outputLink>
+                            </dt>
+                            <dd class="slds-coach__value slds-item_detail">
+                              <apex:outputField value="{!userStoryAhead.copado__User_Story_Title__c}"/>
+                            </dd>
+                          </apex:repeat>
+                          <apex:outputPanel rendered="{!userStoriesAhead.size=0}" layout="none">
+                            <dt class="slds-coach__item slds-item_label slds-text-color_weak">
+                            </dt>
+                            <dd class="slds-coach__value slds-item_detail">
+                            </dd>
+                          </apex:outputPanel>
+                        </dl>
+                        <!-- // User Stories Ahead Table -->
+
+                      </div>
+                      <div class="slds-coach__guidance slds-size_1-of-2 slds-m-left_x-large">
+
+                        <!-- User Stories Behind Header -->
+                        <div class="slds-grid slds-grid_align-spread">
+                          <h2 class="slds-text-title_caps slds-p-bottom_small">User Stories Behind</h2>
+                          <!--<span class="slds-text-body_small">
+                            <button class="slds-button slds-button_reset">Back-Promote</button>
+                          </span>-->
+                        </div>
+                        <!-- // User Stories Behind Header -->
+
+                        <!-- User Stories Behind Table -->
+                        <dl class="slds-list_horizontal slds-wrap">
+                          <apex:repeat value="{!userStoriesBehind}" var="userStoryBehind" rendered="{!AND(NOT(ISNULL(userStory.copado__Org_Credential__c)),NOT(CONTAINS(userStory.Org_Credential__r.copado__Org_Type__c,'Scratch Org')))}">
+                            <dt class="slds-coach__item slds-item_label slds-text-color_weak">
+                              <apex:outputLink value="{!URLFOR($Action.copado__User_Story__c.View, userStoryBehind.Id)}">{!userStoryBehind.Name}</apex:outputLink>
+                            </dt>
+                            <dd class="slds-coach__value slds-item_detail">
+                              <apex:outputField value="{!userStoryBehind.copado__User_Story_Title__c}"/>
+                            </dd>
+                          </apex:repeat>
+                          <apex:outputPanel rendered="{!userStoriesBehind.size=0}" layout="none">
+                            <dt class="slds-coach__item slds-item_label slds-text-color_weak">
+                            </dt>
+                            <dd class="slds-coach__value slds-item_detail">
+                            </dd>
+                          </apex:outputPanel>
+                        </dl>
+                        <!-- // User Stories Behind Table -->
+
+                      </div>
+                    </div>
+                  </div>
+                </apex:outputPanel>
+              </div>
+            </div>
+          </apex:outputPanel>
+
+        </div>
+
+        <c:JobsManager matchingKeys="GIT-{!flowDetails.flow.copado__Git_Repository__c}-{!targetBranch}" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"></c:JobsManager>
+        <apex:actionFunction name="renderFlow" rerender="apexDetail" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}" />
+        <apex:actionFunction name="rerenderHeaderFields" rerender="headerFields" oncomplete="rerenderheaderOnSave();" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}"/>
+        <apex:actionPoller action="{!waitForDeployment}" id="thePoller" reRender="apexDetail,thePoller,pmessage,msg" interval="10" enabled="{!IsPollerEnabled}" oncomplete="checkScreenLockerStatus({!IsPollerEnabled},{!showHideMsg});"/>
+
+
+        <apex:outputPanel layout="block" styleClass="copado-lightning-container">
+          <apex:outputPanel id="apexDetail" layout="block">
+            <apex:outputPanel layout="none" rendered="{!$User.UIThemeDisplayed != 'Theme4d'}">
+              <apex:detail subject="{!copado__User_Story__c.Id}" relatedList="true" title="true" showChatter="true" inlineEdit="true"  rendered="{!AND(showOptions,!showError)}" reRender="pmessage,msg" onComplete="readyFunc();" />
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!$User.UIThemeDisplayed == 'Theme4d'}">
+              <apex:detail subject="{!copado__User_Story__c.Id}" relatedList="true" title="true" showChatter="false" inlineEdit="true" rendered="{!AND(showOptions,!showError)}" reRender="pmessage,msg" onComplete="readyFunc();" />
+            </apex:outputPanel>
+          </apex:outputPanel>
+        </apex:outputPanel>
+
+      </apex:form>
+    </apex:outputPanel>
+
+    <script type="text/javascript">
+            $copado( document ).ready(function() {
+                copadoStreamingService.ns = '{!JSENCODE(namespace)}';
+                copadoStreamingService.init();
+                var isPollerRunning = {!enablePoller};
+                var showHideMsg = {!showHideMsg};
+                console.info('ready func',isPollerRunning);
+                if(isPollerRunning === true){
+                  checkScreenLockerStatus(isPollerRunning,showHideMsg);
+                  $copado('[id$=screenLockerLightning]').show();
+                  toggleInlineEdit(false);
+                  $copado('#miniSpinner').show();
+                  $copado('[Id$="btn_validate"]').unbind('click');
+                  $copado('[Id$="btn_validate"]').attr('disabled',true);
+                }
+                if({!AND($User.UIThemeDisplayed == 'Theme4d',isChatterEnabled)}){
+                  toggleInlineEdit(false);
+                }
+                $copado('[Id$="btn_validate"]').bind('click',initValidation);
+                try {
+                  if( (typeof sforce != 'undefined') && sforce && (!!sforce.one) ) {
+                    $copado('.panelSlide').addClass('copado-lightning-border');
+                    var mTitle = $copado('.pbTitle')[0];
+                    if(mTitle){
+                      mTitle.remove();
+                    }
+                    rerenderheaderOnSave();
+                  }
+                } catch (e) {
+                  console.error(e);
+                }
+            });
+
+            function rerenderheaderOnSave(){
+              var a = $copado( "input[name='inlineEditSave']" );
+              a.on( "click", function() {
+                setTimeout(function(){rerenderHeaderFields();},3000);
+              });
+            }
+
+            var unlockScreen = function(){
+                $copado('[id$=screenLockerLightning]').hide();
+                toggleInlineEdit(false);
+            }
+            var checkScreenLockerStatus = function(enabled ,showHideMsg){
+              console.log('checkScreenLockerStatus:::enabled',enabled);
+              if(!enabled){
+                $copado('[id$=screenLockerLightning]').hide();
+                console.log('checkScreenLockerStatus:::hasError',hasError);
+                $copado('#miniSpinner').hide();
+
+                toggleInlineEdit(true);
+
+                $copado('[Id$="btn_validate"]').attr('disabled',false);
+                $copado('[Id$="btn_validate"]').bind('click',initValidation);
+                renderFlow();
+              }else {
+                console.log('checkScreenLockerStatus::::enabled',enabled);
+                if(showHideMsg){
+                  $copado('#btnHideMsg').show();
+                  $copado('#screenLockerLightningText').text('{!JSENCODE($Label.copado__us_validation_inprogress)}');
+                  setLockMessage(true, '{!JSENCODE($Label.copado__us_validation_inline_edit)}',overridePageMessages);
+                }else{
+                  $copado('#screenLockerLightningText').text('{!JSENCODE($Label.copado__us_validation_initializing)}');
+                }
+                $copado('#miniSpinner').show();
+                toggleInlineEdit(false);
+              }
+            }
+            var toggleInlineEdit = function(disable){
+              if({!AND($User.UIThemeDisplayed == 'Theme4d',isChatterEnabled)}){
+                window.sfdcPage.hasRun= false;
+              } else {
+                window.sfdcPage.hasRun= disable;
+              }
+            }
+            var initValidation = function(){
+              $copado('#miniSpinner').show();
+              $copado('#screenLockerLightningText').text('{!JSENCODE($Label.copado__loading)}');
+              $copado('[Id$="btn_validate"]').unbind('click');
+              $copado('[Id$="btn_validate"]').attr('disabled',true);
+              $copado('[id$=screenLockerLightning]').show();
+              toggleInlineEdit(false);
+              validate();
+
+              return false;
+            }
+
+            var userStoryDeferredChanges = {
+              obj: new sforce.SObject('{!JSENCODE(namespace)}'+'User_Story__c'),
+              receivedFromPages: {'userStorySelectedMetadata': 0, 'apexTestResult': 0}
+            }
+
+            window.addEventListener("message", function(event) {
+              if(event.data.from in userStoryDeferredChanges.receivedFromPages) {
+
+                // mark this particular msg as received in one of the valid sources of events
+                userStoryDeferredChanges.receivedFromPages[event.data.from] = event.data.hasChanges?2:1;
+
+                // collect the fields changed in the object
+                if(event.data.change) {
+                  $copado.extend(userStoryDeferredChanges.obj, event.data.change);
+                }
+
+                var v1=userStoryDeferredChanges.receivedFromPages['userStorySelectedMetadata'], v2=userStoryDeferredChanges.receivedFromPages['apexTestResult'];
+                var allPagesFinished = v1>0 && v2>0,  thereAreChanges = v1>1||v2>1;
+                console.debug("got message", "allPagesFinished?",allPagesFinished, "thereAreChanges?",thereAreChanges, v1, v2,  event.data.change);
+                if(allPagesFinished && thereAreChanges ) {
+                  updateAndDoReload(userStoryDeferredChanges.obj);
+                }
+              }
+            }, false);
+
+            var updateAndDoReload = function(usObj){
+                  usObj.Id = "{!copado__User_Story__c.Id}";
+                  result = sforce.connection.update([usObj]);
+                    console.warn('User Story updated.', usObj, result);
+                  if (!result[0].getBoolean("success")) {
+                      console.error('User Story could not be updated.', result);
+                  }
+                  var t = confirm('The User Story has successfully updated by Copado. Would you like to refresh the page to see ?'); // Replace this with a custom label for v10.
+                  if(t) {
+                    window.location.href = window.location.href;
+                  }
+            }
+
+            function overridePageMessages(){
+
+              textureEffect = 'slds-theme--alert-texture';
+
+              j$('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);
+              j$('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);
+              j$('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);
+              j$('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);
+
+              j$('.errorM3').removeClass('errorM3');
+              j$('.confirmM3').removeClass('confirmM3');
+              j$('.infoM3').removeClass('infoM3');
+              j$('.warningM3').removeClass('warningM3');
+            }
+        </script>
+  </div>
+  </body>
+  </html>
+</apex:page>

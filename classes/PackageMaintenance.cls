@@ -7,7 +7,6 @@ public with sharing class PackageMaintenance {
         Map<String, List<vlocity_cmt__OmniScript__c>> osMap = new Map<String, List<vlocity_cmt__OmniScript__c>>();
         List<vlocity_cmt__OmniScript__c> surplusList = new List<vlocity_cmt__OmniScript__c>();
 
-        //
         try {
             // This has to return the Map of String,List<vlocity_cmt__OmniScript__c>
             osMap = PackageMaintenance.processOmniscriptsToMap(osVersionsLimit);
@@ -54,44 +53,31 @@ public with sharing class PackageMaintenance {
 
         for (vlocity_cmt__OmniScript__c os : osFullList) {
 
-
             // if it's the firstRun then we add the OS to the List and set the OS Name, and change firstRun
             if(firstRun) {
-                //if(debug) { System.debug('firstRun: ' + firstRun); }
                 osToMapList.add(os);
-                //if(debug) { System.debug('firstRun - osToMapList: ' + osToMapList); }
                 osName = os.Name;
-                //if(debug) { System.debug('firstRun - osName: ' + osName); }
                 firstRun = false;
 
             // if its not the first run but we are looping through the same OS Name, we still adding them to the list
             } else if(!firstRun && osName == os.Name) {
-                //if(debug) { System.debug('!firstRun && osName == os.Name'); }
                 osToMapList.add(os);
-                //if(debug) { System.debug('!firstRun && osName == os.Name - osToMapList: ' + osToMapList); }
 
             // if its not the first run but the os name changed, means that we need to add the handled list so far
             // to the map, reset the list, add the new os to it and set the new os name
             } else if(!firstRun && osName != os.Name) {
-                //if(debug) { System.debug('!firstRun && osName != os.Name'); }
                 // Add preexisting list to the map with the last stored in list OS Name
                 // Only adding the lists that are bigger that the limit
-                //if(debug) { System.debug('!firstRun && osName != os.Name - osToMapList: ' + osToMapList); }
                 if(osToMapList.size() > osVersionsLimit) {
                     osMap.put(osName, osToMapList);
                 }
-                //if(debug) { System.debug('!firstRun && osName != os.Name - osMap: ' + osMap); }
 
                 // reset the list to store the different os name
                 osToMapList = new List<vlocity_cmt__OmniScript__c>();
-                //if(debug) { System.debug('!firstRun && osName != os.Name - osToMapList RESET: ' + osToMapList); }
 
                 // store the new os to the clean list
                 osToMapList.add(os);
-
-                //if(debug) { System.debug('!firstRun && osName != os.Name - osName PRE : ' + osToMapList); }
                 osName = os.Name;
-                //if(debug) { System.debug('!firstRun && osName != os.Name - osName POST: ' + osToMapList); }
             }
             // last list of OSs need to be stored too:
             if(osToMapList.size() > osVersionsLimit) {

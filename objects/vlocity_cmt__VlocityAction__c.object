@@ -54,6 +54,19 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>ApplicablePermissionSet__c</fullName>
+        <description>Used in the security data model to indicate the API name of the permission set that must be added to a user to enable this vlocity action.</description>
+        <externalId>false</externalId>
+        <label>Applicable Permission Set</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Permission_Sets</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>vlocity_cmt__ActionIcon__c</fullName>
         <deprecated>false</deprecated>
         <externalId>false</externalId>
@@ -120,6 +133,21 @@
                     <fullName>Contract</fullName>
                     <default>false</default>
                     <label>Contract</label>
+                </value>
+                <value>
+                    <fullName>Symptom__c</fullName>
+                    <default>false</default>
+                    <label>Symptom__c</label>
+                </value>
+                <value>
+                    <fullName>Motive__c</fullName>
+                    <default>false</default>
+                    <label>Motive__c</label>
+                </value>
+                <value>
+                    <fullName>Service__c</fullName>
+                    <default>false</default>
+                    <label>Service__c</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -317,6 +345,11 @@
                     <default>false</default>
                     <label>Role</label>
                 </value>
+                <value>
+                    <fullName>CommunityUrl</fullName>
+                    <default>false</default>
+                    <label>CommunityUrl</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -426,13 +459,23 @@
     <label>Vlocity Action</label>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
+        <columns>vlocity_cmt__IsActive__c</columns>
         <columns>NAME</columns>
         <columns>vlocity_cmt__DisplayLabel__c</columns>
-        <columns>vlocity_cmt__UrlParameters__c</columns>
+        <columns>vlocity_cmt__AdditionalFilter__c</columns>
+        <columns>ApplicablePermissionSet__c</columns>
+        <columns>vlocity_cmt__InvokeClassName__c</columns>
+        <columns>vlocity_cmt__OpenURLMode__c</columns>
+        <columns>vlocity_cmt__DisplaySequence__c</columns>
+        <columns>vlocity_cmt__InvokeMethodName__c</columns>
+        <columns>LAST_UPDATE</columns>
         <columns>vlocity_cmt__URL__c</columns>
+        <columns>vlocity_cmt__ValidationClassName__c</columns>
+        <columns>vlocity_cmt__UrlParameters__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>OWNER.FIRST_NAME</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Vlocity Actions Name</label>

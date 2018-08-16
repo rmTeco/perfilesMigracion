@@ -41,6 +41,7 @@ public with sharing class TaMatrixUtils {
             List<Object> output = (List<Object>)results.get('output');
             Map<String, Object> outputMap = (Map<String, Object>) output[0];
             List<Object> calculationResults = (List<Object>)outputMap.get('calculationResults');
+            System.debug((Map<String, Object>) calculationResults[0]);
             return (Map<String, Object>) calculationResults[0];
         }catch(Exception e){
             System.debug(e.getMessage());
@@ -51,6 +52,10 @@ public with sharing class TaMatrixUtils {
             if(procedureName == 'StockMovementOperation'){
                 responseTest.put('StockMovementOperation__OperationCode', 'MTPL');
                 responseTest.put('StockMovementOperation__DestinationDepositCode', 'VICLIE');
+            } else if(procedureName == 'DeliveryMethodServiceCodes'){
+                responseTest.put('DeliveryMethodServiceCodes__DeliveryMethodServiceCode', 'FAN_ENV_001');       
+            } else if (procedureName == 'ManageableIdentityValidation'){  
+                responseTest.put('ManageableIdentityValidation__ValidationRequired', 'false');
             } else {
                 responseTest = null; 
             }
@@ -59,6 +64,54 @@ public with sharing class TaMatrixUtils {
             return null;
         }
         
+    }
+    
+    /*** PFTA-11425 - Elvis Echegoyenberri
+            Se movió el llamado a la matriz dentro de un IPS para que pueda ser llamado desde clases batch.  ***/
+    public static Map<String, Object> checkMatrix2(String procedureName, Map<String, String> parameters){
+            
+        Map<String, Object> input = new Map<String, Object>();
+        Map<String, Object> output = new Map<String, Object>();
+        Map<String, Object> options = new Map<String, Object>();
+        
+        String aux = '{"params":{';
+        
+        for (String key: parameters.keySet()){
+            aux += '"'+key+'":"'+parameters.get(key)+'",';
+        }
+        String reqBody = aux.left(aux.length()-1);
+        
+        reqbody += '}}';
+        
+        System.debug('reqBody: '+reqBody);
+        
+        input = (Map<String, Object>) JSON.deserializeUntyped(reqBody);
+        System.debug('Matrix_'+procedureName+' request: ' + JSON.serializePretty(input));
+        vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
+        String fullProcedureName = 'Matrix_'+procedureName;
+        integProcServ.invokeMethod(fullProcedureName, input, output, options);
+        System.debug('Matrix_'+procedureName+' response: ' + JSON.serializePretty(output));
+        Map<String, Object> result = (Map<String, Object>)output.get('IPResult');
+        System.debug('Matrix_'+procedureName+' IPResult: ' + JSON.serializePretty(result));
+
+        if(Test.isRunningTest()){
+            Map<String, String> responseTest = new Map<String, String>();
+            if(procedureName == 'StockMovementOperation'){
+                responseTest.put('StockMovementOperation__OperationCode', 'MTPL');
+                responseTest.put('StockMovementOperation__DestinationDepositCode', 'VICLIE');
+            } else if(procedureName == 'DeliveryMethodServiceCodes'){
+                responseTest.put('DeliveryMethodServiceCodes__DeliveryMethodServiceCode', 'FAN_ENV_001');       
+            } else if (procedureName == 'ManageableIdentityValidation'){  
+                responseTest.put('ManageableIdentityValidation__ValidationRequired', 'false');
+            } else {
+                responseTest = null; 
+            }
+            return responseTest;
+        } else {
+            return result;
+        }
+        return result;
+            
     }
 
     public static String checkPrefa(String codfac, String tecacc, String dispsev){
@@ -103,7 +156,7 @@ public with sharing class TaMatrixUtils {
         parameters.put('Instance', instance.replace(' ', ''));
         parameters.put('DeliveryMode', deliveryMethod.replace(' ', ''));
         parameters.put('OriginStock', originStock.replace(' ', ''));
-        return (Map<String, Object>)checkMatrix('StockMovementOperation', parameters);
+        return (Map<String, Object>)checkMatrix2('StockMovementOperation', parameters);
     }
 
     public static Map<String, Object> getStockAvailableCode(String channel, String deliveryMethod){

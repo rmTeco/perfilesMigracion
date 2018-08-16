@@ -1,0 +1,90 @@
+<aura:component  controller="KAL_PagoController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <aura:attribute name="ListDeBancosTarjetaDocumento" type="String" default=""/>
+    <aura:attribute name="OpcionesBancos" type="List" default="[]"/>
+    <aura:attribute name="OpcionesTarjetas" type="List" default="[]"/>
+    <aura:attribute name="OpcionesCoutas" type="List" default="[]"/>
+
+    <aura:attribute name="nroTarjeta"  type="Integer"/>
+    <aura:attribute name="nombreCompleto" type="string"/>
+    <aura:attribute name="fechaVencimiento" type="date"/>
+    <aura:attribute name="fechaMin" type="date"/>
+    <aura:attribute name="fechaMax" type="date"/>
+    
+    <aura:handler name="init" value="{! this }" action="{! c.obtenerBancos }"/>
+    <aura:handler name="init" value="{! this }" action="{! c.obtenerTerms}"/>
+    <aura:registerEvent name="myApplicationEvent" type="c:KAL_datos_entregaEvent"/>                     
+
+   <div class="slds-p-vertical_medium slds-p-horizontal_medium">
+        <lightning:combobox aura:id="bancoSeleccionado" name="picklistBanco" label="Banco"  placeholder="" options="{! v.OpcionesBancos }" onchange="{! c.seleccionoUnBancoYMuestroLasTarjetas }"/>
+        <lightning:combobox class="slds-p-vertical_small" name="picklistEntidad" label="Entidad" placeholder=""  options="{! v.OpcionesTarjetas }" onchange="{! c.seleccionoUnaTarjetaYMuestroLasCuotas }"/>
+        <lightning:combobox aura:id="selectCuotas" name="picklistCuotas" label="Cuotas" placeholder=""  options="{! v.OpcionesCoutas }" onchange="{! c.handleChangeCuota }"/>
+    </div>
+    <!--KAl 88-->
+   <div style="background-color:#d4e1f7;" class="slds-p-vertical_medium slds-p-horizontal_medium">
+        
+            <lightning:input    label="Número de tarjeta" 
+                                type="Number" 
+                                class="KAL-Pago__OtraTarjeta--Numero" 
+                                value="{! v.nroTarjeta}" 
+                                minlength="15" maxlength="18" 
+                                aura:id="nroTarjetaID" placeholder="Ej.: 1111 2222 3333 4444" 
+                                required="true"/>
+        
+            <lightning:input   label="Nombre completo " 
+                                type="text" 
+                                class="KAL-Pago__OtraTarjeta--Nombre slds-p-vertical_small" 
+                                value="{! v.nombreCompleto}" 
+                                minlength="7" maxlength="8"                        
+                                aura:id="nombreCompletoID" placeholder="Como figura en la tarjeta" 
+                                required="true"/>
+                    
+                    
+            <lightning:input   label="Fecha de vencimiento " 
+                                type="date" 
+                                class="KAL-Pago__OtraTarjeta--Vencimiento" 
+                                value="{! v.fechaVencimiento}" 
+                                aura:id="fechaVencimientoID" placeholder="Ej.: 01/22"
+                                min="fechaMin" max="fechaMax" 
+                                readonly="true"
+                                required="true"/>
+                    
+                        
+            <lightning:input   label="Codigo de seguridad" 
+                                type="text" 
+                                class="KAL-Pago__OtraTarjeta--CodigoSeguridad slds-p-vertical_small" 
+                                value="{! v.nroDocumento}" 
+                                minlength="3" maxlength="4"
+                                aura:id="codigoSeguridadID" 
+                                required="true"/>
+                        
+                    
+            <lightning:input   label="DNI del dueño de la tarjeta " 
+                                type="text" 
+                                class="KAL-Pago__OtraTarjeta--DNI" 
+                                value="{! v.dni}" 
+                                minlength="7" maxlength="8"
+                                aura:id="DniID" placeholder="Ej.: 25199133" 
+                                required="true"/>
+        
+    </div>
+
+    <!-- Fin KAL 88-->
+
+    <!-- Código para footer términos y condiciones - Inicio -->
+    <aura:attribute name="urlTerms" type="String"/>
+    <br />
+    <div style="background-color:#F5F5DC; height:200px;" class="slds-box">
+        <div class="slds-form-element slds-p-vertical_medium slds-p-horizontal_medium">
+            <div class="slds-form-element__control">
+                    <span class="slds-form-element__label">Al comprar por la tienda personal se aceptan los <a  title="Ver términos y condiciones" style="color:#1a1aff;" target="_blank" href="{!v.urlTerms}">Términos y condiciones</a></span>          
+                <hr />
+                <div class="slds-is-static slds-float_right">                                                            
+                    <ui:button class="slds-button_brand textWhite" aura:id="button2" buttonTitle="" label="Finalizar compra"
+                               press="{!c.redirigirConfirmacion}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Código para footer términos y condiciones - Fin -->
+</aura:component>

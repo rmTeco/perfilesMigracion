@@ -1,0 +1,30 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="NewOmniScript">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="Care"
+            strOmniScriptSubType="TestCommunity"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('NewOmniScript', modules);
+        </script>
+<script type="text/ng-template" id="ActionTest.html">
+            <div class='panel panel-default review'>
+                <div class='panel-heading'>
+                   Your Application has been submitted successfully.   
+                </div>
+                <div class='panel-body'>
+                    <label>Your Application Number is: {{this.bpTree.response.Paso.Cuenta}}.</label><br><br>
+                    <label>In Order to Finalize the Enrollment Process Please Click in the Button Below: </label><br><br>
+                    <button id="PaymentButton" type="button" onclick=OpenPayment()>Pay Now</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="SendEmail" type="button" onclick=SendPaymentEmail()>Send Email For Payment</button>
+                </div>
+                
+            </div>
+    </script>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

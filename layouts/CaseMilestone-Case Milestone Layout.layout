@@ -4,7 +4,7 @@
         <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
-        <label>Campos</label>
+        <label>Fields</label>
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -46,6 +46,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>TargetResponseInDays</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>TimeRemainingInMins</field>
             </layoutItems>
             <layoutItems>
@@ -54,11 +58,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>TimeRemainingInDays</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>TimeSinceTargetInDays</field>
+                <field>TimeSinceTargetInHrs</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -1,12 +1,18 @@
 @RestResource(urlMapping='/v1/integrationprocedure/validateServiceAccess/contacto/obtener/*')
 global with sharing class IFS_S493_validateServiceAccess {
 
+
+    private static String guId = null;
+
     @HttpGet
     global static void getData() {
         RestRequest req = RestContext.request;
         RestResponse res = RestContext.response;
         Map<String, Object> result = new Map<String, Object>();
         res.addHeader('Content-Type', 'application/json');
+
+        writeLog ('REQ', req.requestBody.toString());
+
         try {
             res.statuscode = 200;
             //-- Procesamiento de parametros
@@ -31,6 +37,23 @@ global with sharing class IFS_S493_validateServiceAccess {
         catch (CalloutException ce) {
             res.statuscode = 400;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('400', ce.getMessage())));
+        }
+
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
+    }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S493', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S493', pTipo, guId, '', pDatos);  
         }
     }
 

@@ -9,6 +9,11 @@
                 width:100%;
                 word-break: break-all;
             }
+            .modal {
+                z-index: 100; /* Sit on top */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
         </style>
         <script>
             var tipoEvento = ''; 
@@ -16,10 +21,14 @@
             var descEvento = '';
             var eventoId = '';
             var editModeRowId = '';
+            if (!modalAtributos) {
+                var modalAtributos = '';
+            }
             
             $(document).ready( function(){
                 initInputElems();
                 setAttribute();
+                modalAtributos = document.getElementById('modalAtributos');
             });
             function initElems(idEventoId,idTipoEvento,idFrecEvento,idDescEvento,idEditModeRowId) {
                 eventoId = document.getElementById(idEventoId);
@@ -72,6 +81,10 @@
             function setAttribute() {
                 $('.textAreaClass').attr("maxlength","255");
             }
+            
+            function showAttr() {
+                modalAtributos.classList.add('slds-fade-in-open');
+            }
         </script>
         
         <apex:slds />
@@ -89,6 +102,7 @@
             <apex:actionFunction action="{!deleteRecord}" name="deleteRecord" reRender="tableId" />
             <apex:actionFunction action="{!updateRecord}" name="updateRecord" reRender="tableId"/>
             <apex:actionFunction action="{!conseguirInitEventos}" name="initListEvento" reRender="tableId"/>
+            <!-- <apex:actionFunction action="{!conseguirAtributos}" name="getAtributos" oncomplete="showAttr();" reRender="Atributos"/> -->
             
             <apex:actionFunction action="{!doNothing}" name="initInputElems" oncomplete="initElems('{!$Component.eventoId}','{!$Component.tipoEvento}','{!$Component.frecEvento}','{!$Component.descEvento}','{!$Component.editModeRowId}')"/>
             <apex:actionFunction action="{!doNothing}" name="reRenderTable" reRender="tableId" ONcomplete="setAttribute();"/>
@@ -171,8 +185,39 @@
                         <apex:inputField value="{!evento.Frecuencia_permitida__c}" onchange="frecEvento.value = this.value" rendered="{!evento.Id == editModeRowId}" />
                         
                     </apex:column>
+                    
+                    <!--
+                    <apex:column headerValue="Atributos" width="5%">
+                        <apex:outputPanel rendered="{!evento.Id == editModeRowId}">
+                            <div class="slds-grid slds-grid--align-center">
+                                <span class="slds-p-around--xx-small">
+                                    <span class="slds-icon_container slds-icon-action-edit-relationship slds-icon_container--circle slds-align--absolute-center" onClick="getAtributos()" style="cursor:pointer;">
+                                        <svg aria-hidden="true" class="slds-icon slds-icon--x-small">
+                                            <use href="{!URLFOR($Asset.SLDS, '/assets/icons/action-sprite/svg/symbols.svg#edit_relationship')}"></use>
+                                        </svg>
+                                    </span>
+                                </span>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:column>
+                    -->
                 </apex:pageBlockTable>
             </apex:pageBlock>
+            
+            <!-- Modal para editar atributos 
+            <div id="modalAtributos" class="slds-modal modal">
+                <div class="slds-modal__container slds-p-around--none" style="margin:15% auto; height:auto; max-width:60rem; width:75%;">
+                    <apex:pageBlock title="Atributos">
+                        <apex:pageBlockTable value="{!listaAtributos}" var="atributo" styleClass="slds-size--1-of-1" id="attrTable">
+                            <apex:column value="{!atributo.GP_Evento_General__c}" />
+                            <apex:column value="{!atributo.Nombre_API__c}"/>
+                            <apex:column value="{!atributo.Tipo_de_atributo__c}"/>
+                        </apex:pageBlockTable>
+                    </apex:pageBlock>
+                </div>
+            </div>
+            -->
+            
         </apex:form>
     </body>
 </apex:page>

@@ -1,6 +1,8 @@
 @RestResource(urlMapping='/v1/integrationprocedure/validateMaxLinesXDoc/*')
 global with sharing class IFS_S443_validateMaxLinesXDoc {
 
+    private static String guId = null;
+
     @HttpPost
     global static void getData() {
         FromJSON jsonBody;
@@ -8,6 +10,9 @@ global with sharing class IFS_S443_validateMaxLinesXDoc {
         RestRequest req = RestContext.request;
         res.addHeader('Content-Type', 'application/json');
         system.debug('Inico de getData');
+
+        writeLog ('REQ', req.requestBody.toString());
+         
         try {
             try {
                 jsonBody = (fromJSON)JSON.deserialize(req.requestBody.toString(),FromJSON.class);
@@ -21,10 +26,8 @@ global with sharing class IFS_S443_validateMaxLinesXDoc {
             String numeroDocumento = jsonBody.validateMaxLinesXDoc.numeroDocumento;
             String tipoDocumento = ((jsonBody.validateMaxLinesXDoc.tipoDocumento == null) ? '' : jsonBody.validateMaxLinesXDoc.tipoDocumento);
 
-
             res.statuscode = 200;
             res.responseBody = Blob.valueOf(JSON.serialize(getDatos(numeroDocumento,tipoDocumento,'')));
-            
         }
         catch (CalloutException ce) {
             res.statuscode = 404;
@@ -34,8 +37,25 @@ global with sharing class IFS_S443_validateMaxLinesXDoc {
             res.statuscode = 404;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('417',e.getMessage())));
         }
-
+        
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
     }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S443', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S443', pTipo, guId, '', pDatos);  
+        }
+    }
+
 
     private static Map<String,Object> getDatos (String pnumeroDocumento, String ptipoDocumento, String pgenero) {
         

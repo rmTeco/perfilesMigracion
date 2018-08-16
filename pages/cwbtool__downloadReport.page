@@ -1,0 +1,36 @@
+<apex:page controller="cwbtool.DescribeObjectCtrl" sidebar="false" showHeader="false">
+   <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}" />
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/xml2Json.js')}" />
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/xmltojson2.js')}" />
+    
+    <c:downloadReport />
+    <c:actionstatusNew />
+    <apex:form id="form">
+        <!-- <input type='button' onclick="retrieve('','{!$Api.Session_ID}',['Account'])" value='Download'></input>-->
+        <apex:actionFunction name="downloadObjectDetailAction2" action="{!downloadObjectDetails2}" rerender="form" oncomplete="downloadObjectDetailAction2();init();hideOverLay();">
+            <apex:param name="strObjectJson" assignTo="{!strObjectJson}" value="" />
+        </apex:actionFunction>
+        <apex:actionFunction name="downloadObjectDetailAction" action="{!downloadObjectDetails}" />
+        <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form" oncomplete="init();"/> 
+        <apex:pagemessages id="msgId"/> 
+        <apex:selectList value="{!lstSelectedObject}" multiselect="true" styleclass="multiselect ObjectClass" style="margin-right:40px;display:none;">
+            <apex:selectOptions value="{!lstObject}" />
+        </apex:selectList>
+        <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick="retrieve('{!$Api.Session_ID}');" data-action='Download Full Object Detail Action'>Download Object</span>
+      
+      <apex:outputpanel id="refreshPanel">  
+      <apex:pagemessages rendered="{!lstObject==null || lstObject.size==0}"/>
+      <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,msgId,form1" interval="5" enabled="{!isStart}" oncomplete="if({!isProcessed}){hideOverLay();}"/>
+   </apex:outputpanel>
+      
+      <apex:inputHidden value="{!strObjectJson}" id="jsonId"/>
+
+    </apex:form>
+</apex:page>

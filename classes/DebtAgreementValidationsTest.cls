@@ -3,9 +3,9 @@ private class DebtAgreementValidationsTest {
 
     @isTest static void validateNegativeBalanceOptionsEmpty() {
         //GIVEN
-    String methodName = 'validateNegativeBalance';
-    
-    Map<String, Object> input = new Map<String, Object>();
+		String methodName = 'validateNegativeBalance';
+		
+		Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
         
@@ -35,9 +35,9 @@ private class DebtAgreementValidationsTest {
     
     @isTest static void validateNegativeBalanceOptionsNotEmptyWithInfoBalanceListEmpty() {
         //GIVEN
-    String methodName = 'validateNegativeBalance';
-    
-    Map<String, Object> input = new Map<String, Object>();
+		String methodName = 'validateNegativeBalance';
+		
+		Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
         
@@ -73,9 +73,9 @@ private class DebtAgreementValidationsTest {
     
     @isTest static void validateNegativeBalanceOptionsNotEmptyWithInfoBalanceListNotEmpty() {
         //GIVEN
-    String methodName = 'validateNegativeBalance';
-    
-    Map<String, Object> input = new Map<String, Object>();
+		String methodName = 'validateNegativeBalance';
+		
+		Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
         
@@ -137,13 +137,13 @@ private class DebtAgreementValidationsTest {
        System.assertEquals(false, result.isEmpty());
        System.assertEquals(billingAccounts.size(), result.size());
        for(Integer i = 0; i < billingAccounts.size(); i++){
-           Map<String,Object> oResult = (Map<String,Object>) result.get(i);
-           Map<String,Object> oBillingAccount = (Map<String,Object>) billingAccounts.get(i);
-           System.assertEquals(oBillingAccount.get('Name'), oResult.get('Name'));
-           System.assertEquals(oBillingAccount.get('AccountIntegrationId'), oResult.get('AccountIntegrationId'));
-           System.assertEquals(oBillingAccount.get('BillingStreet'), oResult.get('BillingStreet'));
-           System.assertEquals(oBillingAccount.get('AutoPaymentMethodIdFormula'), oResult.get('AutoPaymentMethodIdFormula'));
-           System.assertEquals(oBillingAccount.get('Assets'), oResult.get('Assets'));
+       		Map<String,Object> oResult = (Map<String,Object>) result.get(i);
+       		Map<String,Object> oBillingAccount = (Map<String,Object>) billingAccounts.get(i);
+       		System.assertEquals(oBillingAccount.get('Name'), oResult.get('Name'));
+       		System.assertEquals(oBillingAccount.get('AccountIntegrationId'), oResult.get('AccountIntegrationId'));
+       		System.assertEquals(oBillingAccount.get('BillingStreet'), oResult.get('BillingStreet'));
+       		System.assertEquals(oBillingAccount.get('AutoPaymentMethodIdFormula'), oResult.get('AutoPaymentMethodIdFormula'));
+       		System.assertEquals(oBillingAccount.get('Assets'), oResult.get('Assets'));
        }
        
     }

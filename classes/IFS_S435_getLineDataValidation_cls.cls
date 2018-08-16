@@ -1,3 +1,11 @@
+/**
+ * Obtener información de una línea que solicitó la portación numérica que permitirá evaluar 
+ * si está en condiciones de continuar con la transacción.
+ * 
+ * @Author: Alejandro Salord (Certa Consulting).
+ * @Version: 
+ * @see: 
+ */
 public with sharing class IFS_S435_getLineDataValidation_cls {
     
     public static ResultObj getLineDataValidation(String pJsonInput){
@@ -15,7 +23,7 @@ public with sharing class IFS_S435_getLineDataValidation_cls {
             return resultObject;
         }
         catch (FunctionalException fe) {
-        	resultObject = new ResultObj(417, Blob.valueOf(JSON.serialize(getRespuestaNoOk('417',fe.getMessage()))));
+        	resultObject = new ResultObj(417, Blob.valueOf(JSON.serialize(getRespuestaNoOk(fe.codDP,fe.getMessage()))));
         	return resultObject;
         }
         catch (CalloutException ce) {
@@ -47,20 +55,15 @@ public with sharing class IFS_S435_getLineDataValidation_cls {
         Boolean caseFound = false;
 
         //-- Obtengo el Asset principal - Se supone que es el equivalente a lo que llaman Contrato.
-        try {
-            asset = getAssetByMsisdn (pJson.getLineDataValidation.nroLinea);
-            System.debug('Asset Status: ' + asset.Status);
-            if (asset.Status != 'SUSPENDED') {
-                suspSiniestro = 'OK';
-            }
-            else {
-                //-- Solo si la suspención fue por siniestro
-                suspSiniestro = (asset.Sub_Status__c == 'SINIESTRO') ? 'NOK' : 'OK';
-            }
+        asset = getAssetByMsisdn (pJson.getLineDataValidation.nroLinea);
+        System.debug('Asset Status: ' + asset.Status);
+        if (asset.Status != 'SUSPENDED') {
+            suspSiniestro = 'OK';
         }
-        catch (Exception e) {
-            System.debug('Error al obtener los datos del Asset. Error: ' + e.getMessage());
-        }   
+        else {
+            //-- Solo si la suspención fue por siniestro
+            suspSiniestro = (asset.Sub_Status__c == 'SINIESTRO') ? 'NOK' : 'OK';
+        }
 
         if (suspSiniestro == 'NOK') {
             System.debug('Como esta suspendido por Siniestro, voy a buscar el Case de suspencion');
@@ -105,8 +108,9 @@ public with sharing class IFS_S435_getLineDataValidation_cls {
             String jsonAttribute = getJsonRootAsset (asset.vlocity_cmt__RootItemId__c);
             codMercado = getMercado (jsonAttribute);
 
-            if((reqMercado.equalsIgnoreCase('Pospago') || reqMercado.equalsIgnoreCase('Hibrido')) && 
-                (codMercado.equalsIgnoreCase('Pospago') || codMercado.equalsIgnoreCase('Hibrido'))) {
+            if((reqMercado.equalsIgnoreCase('Pospago') && codMercado.equalsIgnoreCase('Pospago')) || 
+                (reqMercado.equalsIgnoreCase('Hibrido') && codMercado.equalsIgnoreCase('Hibrido'))) {
+                    
                 reqMercado = 'OK';
                 codMercado = 'OK';
             }
@@ -227,10 +231,6 @@ public with sharing class IFS_S435_getLineDataValidation_cls {
     private static Asset getAssetByMsisdn (String pMsisdn) {
         System.debug('Entre en getAssetByMsisdn');
 
-        if (String.isBlank(pMsisdn)) {
-            throw new FunctionalException('El Msisdn vino vacio o nulo. ');
-        }
-
         try {
             Asset asset = [SELECT AccountId, Status, vlocity_cmt__JSONAttribute__c, Sub_Status__c, AssetId__c, vlocity_cmt__RootItemId__c FROM Asset WHERE MSISDN__c = :pMsisdn LIMIT 1];
             if (asset == null) {
@@ -239,7 +239,10 @@ public with sharing class IFS_S435_getLineDataValidation_cls {
             return asset;
         }
         catch (Exception e) {
-            throw new FunctionalException(e.getMessage());
+            System.debug('----- Error: ' + e.getMessage());
+            FunctionalException fe = new FunctionalException('Numero de Linea inexistente [ ' + pMsisdn + ' ]');
+            fe.codDP = '435-01';
+            throw fe;
         }
     }
 
@@ -468,12 +471,12 @@ public with sharing class IFS_S435_getLineDataValidation_cls {
 
     //---- Clases para soportar el intercambio de parametros ----//
     /**
-     * @Objetivo: Para saber que codigo mandar debo poder
-     *            diferenciar una excepcion funcional de
-     *            otro tipo de excepciones.
+     * Objetivo: Para saber que codigo mandar debo poder
+     *           diferenciar una excepcion funcional de
+     *           otro tipo de excepciones.
      */
     private class FunctionalException extends Exception {
-
+        public String codDP {set;get;} {codDP = '417';}
     }
 
     /**

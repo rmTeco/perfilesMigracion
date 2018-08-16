@@ -1,0 +1,62 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <head>
+        <apex:includeScript value="/soap/ajax/33.0/connection.js" />
+        <apex:includeScript value="/support/console/34.0/integration.js"/>
+        <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+        <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script> -->
+        <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+        <apex:slds />
+    </head>
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="tatechCareMassiveIncidentCreateChildCase">
+        <vlocity_cmt:BusinessProcessComponent strOmniScriptType="TechCare"
+            strOmniScriptSubType="Massive Event - Create Child Case"
+            strOmniScriptLang="English"
+            previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+            verticalMode="{!$CurrentPage.parameters.verticalMode}"
+            strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+            scriptLayout="lightning"/>
+
+        <script type="text/javascript">
+            var modules = ['vlocity-business-process'];
+            var myModule = angular.module('tatechCareMassiveIncidentCreateChildCase', modules);
+
+            myModule
+                .controller('TSModuleCtrl', function TSModuleCtrl($scope) {
+                var mmc = this;
+
+                mmc.openPrimaryTab = openPrimaryTab;
+                mmc.openSuccess = openSuccess;
+                mmc.init = init;
+                
+                function init() {
+                    $scope.caseNumber = $scope.bpTree.response.Case.CaseNumber;
+                    $scope.label = $scope.caseNumber;
+                }
+
+                function openPrimaryTab() {
+                    //Open a new primary tab with the salesforce.com home page in it
+                    var url = '/' + $scope.bpTree.response.Case.Id;
+                    var optName = 'Case: ' + $scope.caseNumber;
+                    sforce.console.openPrimaryTab(null, url, true, caseNumber, openSuccess, optName);
+                }
+
+                var openSuccess = function openSuccess(result) {
+                    //Report whether opening the new tab was successful
+                    if (result.success == true) {
+                        alert('Primary tab successfully opened');
+                    } else {
+                        alert('Primary tab cannot be opened');
+                    }
+                }
+            });
+        </script>
+        <link rel="stylesheet" href="/resource/ta_slds_os/slds_os.min.css"/>
+
+        <style>
+        #CaseCreatedConfirmationStep_prevBtn {
+            display: none;
+        }
+        </style>
+    </div>
+    <vlocity_cmt:VFActionFunction /> 
+</apex:page>

@@ -116,9 +116,12 @@ global with sharing class ta_care_ifs018 {
 	
 	Private String getPositiveBalance (Map<String, Object> balanceMap){
 		String result;
+		/* PFTA-11626
+		
+		
 		String saldoPorTipoBalance = (String)balanceMap.get('saldoPorTipoBalance');
         Decimal saldo = Decimal.valueOf(saldoPorTipoBalance);
-		if(saldo == 0){
+		if(saldo == 0){ */
 			Decimal sum = 0;
 			Map <String, Object> balMap = (Map <String, Object>)balanceMap.get('listaDeBalances');
 			List<Object> balanceList = VlocityOpenInterfaceHelper.getListObjectsFromMap(balMap, 'balance');
@@ -130,9 +133,9 @@ global with sharing class ta_care_ifs018 {
 				}
 			}
 			result = string.valueof(sum);
-		}else {
+		/* }else {
 			result = '0';
-		}
+		} */
 		return result;
 	}
 	

@@ -13,7 +13,6 @@
     <customButtons>vlocity_cmt__PickFrameContract</customButtons>
     <customButtons>TA_CPQ</customButtons>
     <customButtons>Aprobar_Orden</customButtons>
-    <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
         <customLabel>false</customLabel>
@@ -274,12 +273,20 @@
                 <field>SubGestion__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Delivery_Date_Time__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Conciliador_Time_Based_Workflow__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Delivery_Tracking_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Delivery_Transaction_ID__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Operador_Logistico__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

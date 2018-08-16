@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>EnviarMail</fullName>
-        <description>Enviar mail</description>
-        <protected>false</protected>
-        <recipients>
-            <field>Email1__c</field>
-            <type>email</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>unfiled$public/PlazoPorVencer</template>
-    </alerts>
-    <alerts>
         <fullName>EnviarMailDetallesPickup</fullName>
         <description>Enviar Mail Detalles Pickup</description>
         <protected>false</protected>
@@ -89,29 +78,6 @@
             <field>Crossobject__c.Picklist1__c</field>
             <operation>equals</operation>
             <value>Vencimiento de plazo de permanencia</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Send Email</fullName>
-        <actions>
-            <name>EnviarMail</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>MarkEmailForDeletion</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Crossobject__c.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Email to send</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Crossobject__c.MarkForDeletion__c</field>
-            <operation>equals</operation>
-            <value>False</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

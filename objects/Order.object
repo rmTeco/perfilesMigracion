@@ -230,14 +230,6 @@
         <type>Date</type>
     </fields>
     <fields>
-        <fullName>Delivery_Date_Time__c</fullName>
-        <externalId>false</externalId>
-        <label>Delivery Date Time</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>DateTime</type>
-    </fields>
-    <fields>
         <fullName>Delivery_Method_Service__c</fullName>
         <externalId>false</externalId>
         <label>Delivery Method Service</label>
@@ -261,32 +253,54 @@
             <restricted>true</restricted>
             <valueSetName>Delivery_Methods</valueSetName>
             <valueSettings>
-                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
+                <controllingFieldValue>USSD</controllingFieldValue>
                 <controllingFieldValue>IVR</controllingFieldValue>
+                <controllingFieldValue>Agentes</controllingFieldValue>
+                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
                 <controllingFieldValue>SMS</controllingFieldValue>
                 <controllingFieldValue>Social Media</controllingFieldValue>
-                <controllingFieldValue>Agentes</controllingFieldValue>
-                <controllingFieldValue>USSD</controllingFieldValue>
                 <valueName>Presencial</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>APP</controllingFieldValue>
+                <controllingFieldValue>Agentes</controllingFieldValue>
                 <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
                 <controllingFieldValue>E-Commerce</controllingFieldValue>
-                <controllingFieldValue>APP</controllingFieldValue>
                 <controllingFieldValue>WEB</controllingFieldValue>
                 <controllingFieldValue>Call Center</controllingFieldValue>
-                <controllingFieldValue>Agentes</controllingFieldValue>
                 <valueName>Store Pick Up</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Agentes</controllingFieldValue>
                 <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
                 <controllingFieldValue>E-Commerce</controllingFieldValue>
                 <controllingFieldValue>WEB</controllingFieldValue>
                 <controllingFieldValue>Call Center</controllingFieldValue>
-                <controllingFieldValue>Agentes</controllingFieldValue>
                 <valueName>Delivery</valueName>
             </valueSettings>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>Delivery_Tracking_ID__c</fullName>
+        <description>Track &amp; trace</description>
+        <externalId>false</externalId>
+        <label>Delivery Tracking ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Delivery_Transaction_ID__c</fullName>
+        <description>MEC Correlation ID</description>
+        <externalId>false</externalId>
+        <label>Delivery Transaction ID</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Description</fullName>
@@ -487,24 +501,6 @@
                     <default>false</default>
                     <label>Reseteo de Cuota</label>
                 </value>
-                <value>
-                    <fullName>Cambio de tiularidad</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Cambio de tiularidad</label>
-                </value>
-                <value>
-                    <fullName>Dormant</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Dormant</label>
-                </value>
-                <value>
-                    <fullName>SimcardChange</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>SimcardChange</label>
-                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -545,6 +541,17 @@
         <summaryOperation>sum</summaryOperation>
         <trackHistory>false</trackHistory>
         <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Operador_Logistico__c</fullName>
+        <description>Mail</description>
+        <externalId>false</externalId>
+        <label>Operador Logistico</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Operation_Code__c</fullName>
@@ -1070,6 +1077,16 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
                     <default>false</default>
                     <label>Terminal sin ST</label>
                 </value>
+                <value>
+                    <fullName>Cliente Nuevo</fullName>
+                    <default>false</default>
+                    <label>Cliente Nuevo</label>
+                </value>
+                <value>
+                    <fullName>Cliente Existente</fullName>
+                    <default>false</default>
+                    <label>Cliente Existente</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>Cambio en Garantia</controllingFieldValue>
@@ -1086,6 +1103,14 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             <valueSettings>
                 <controllingFieldValue>Cambio en Garantia</controllingFieldValue>
                 <valueName>Terminal sin ST</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Nominacion</controllingFieldValue>
+                <valueName>Cliente Nuevo</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Nominacion</controllingFieldValue>
+                <valueName>Cliente Existente</valueName>
             </valueSettings>
         </valueSet>
     </fields>
@@ -1112,7 +1137,6 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
         <valueSet>
-            <restricted>true</restricted>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
@@ -1319,6 +1343,11 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
                     <fullName>SINIESTRO</fullName>
                     <default>false</default>
                     <label>SINIESTRO</label>
+                </value>
+                <value>
+                    <fullName>Despachado</fullName>
+                    <default>false</default>
+                    <label>Despachado</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -2282,11 +2311,6 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <columns>CONTRACT.CONTRACT_NUMBER</columns>
         <columns>vlocity_cmt__Pricebook__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>ORDERS.STATUS_CODE</field>
-            <operation>equals</operation>
-            <value>D</value>
-        </filters>
         <label>All Draft Orders</label>
         <language>en_US</language>
     </listViews>
@@ -2295,6 +2319,8 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <columns>ORDER.NAME</columns>
         <columns>ORDERS.ORDER_NUMBER</columns>
         <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>Gestion__c</columns>
+        <columns>SubGestion__c</columns>
         <columns>ORDERS.TOTAL_AMOUNT</columns>
         <columns>ORDERS.EFFECTIVE_DATE</columns>
         <columns>ORDERS.STATUS</columns>
@@ -2303,48 +2329,13 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <columns>CREATEDBY_USER.ALIAS</columns>
         <columns>ORDERS.CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATEDBY_USER.ALIAS</field>
+            <operation>equals</operation>
+            <value>rcace</value>
+        </filters>
         <label>All Orders</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>AllOrdersOMNOMI</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>contains</operation>
-            <value>Nominacion</value>
-        </filters>
-        <label>Ordenes- Nominatividad- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>AllOrdersOMREPRO</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>SALES.ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>wholesale</value>
-        </filters>
-        <label>Ordenes- Alta repro- OM</label>
-        <language>es_MX</language>
     </listViews>
     <listViews>
         <fullName>AllOrders_telus</fullName>
@@ -2367,255 +2358,37 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>All_Orders_VICTOR_OM_con_planes_no_cerra</fullName>
+        <fullName>Lino_Acosta_orders</fullName>
         <columns>ORDERS.ORDER_NUMBER</columns>
         <columns>SALES.ACCOUNT.NAME</columns>
         <columns>ORDERS.TOTAL_AMOUNT</columns>
         <columns>ORDERS.EFFECTIVE_DATE</columns>
         <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>SALES.ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>&quot; OM&quot;</value>
-        </filters>
-        <filters>
-            <field>ORDERS.STATUS</field>
-            <operation>notEqual</operation>
-            <value>Activated</value>
-        </filters>
-        <filters>
-            <field>vlocity_cmt__OrchestrationPlanId__c</field>
-            <operation>contains</operation>
-            <value>Plan</value>
-        </filters>
-        <label>All Orders VICTOR OM con planes no cerra</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_Alta_OM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.CREATED_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>equals</operation>
-            <value>Cambio de titularidad</value>
-        </filters>
-        <label>Ordenes- Alta- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_Cambio_de_SIM_OM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>contains</operation>
-            <value>Cambio de SIM</value>
-        </filters>
-        <label>Ordenes- Cambio de SIM- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_Cambio_de_SIM_OM1</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>contains</operation>
-            <value>Cambio de SIM</value>
-        </filters>
-        <label>Ordenes- Cambio de SIM- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_Cambio_de_titularidad_OM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>contains</operation>
-            <value>Cambio de titularidad</value>
-        </filters>
-        <label>Ordenes- Cambio de titularidad- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_Compra_de_pack_OM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.CREATED_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>equals</operation>
-            <value>Alta producto genérico</value>
-        </filters>
-        <label>Ordenes- Compra de pack- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_FYF_OM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.CREATED_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>equals</operation>
-            <value>Numero Gratis</value>
-        </filters>
-        <label>Ordenes- FYF- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_Sales</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ORDERS.ORDER_NUMBER</field>
-            <operation>equals</operation>
-            <value>00014815</value>
-        </filters>
-        <label>Ordenes- Sales</label>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_Venta_OM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.CREATED_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>equals</operation>
-            <value>Venta</value>
-        </filters>
-        <label>Ordenes- Venta- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Ordenes_de_baja_cuentas_OM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>SALES.ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>&quot; OM&quot;</value>
-        </filters>
-        <filters>
-            <field>Gestion__c</field>
-            <operation>equals</operation>
-            <value>Desconexión</value>
-        </filters>
-        <label>Ordenes- Baja- OM</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>Prueba3</fullName>
-        <columns>ORDERS.STATUS</columns>
-        <columns>vlocity_cmt__ValidationStatus__c</columns>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>SALES.ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>Bum Bum</value>
-        </filters>
-        <label>Prueba3</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>RubenOM</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>vlocity_cmt__RequestDate__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>SALES.ACCOUNT.NAME</field>
             <operation>equals</operation>
-            <value>RubenOM</value>
+            <value>Lino Acosta</value>
         </filters>
+        <label>Lino Acosta orders</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Ruben_QA_Automation_Orders</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>ORDERS.TOTAL_AMOUNT</columns>
+        <columns>ORDERS.EFFECTIVE_DATE</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <filterScope>Mine</filterScope>
         <filters>
-            <field>ORDERS.STATUS</field>
+            <field>SALES.ACCOUNT.NAME</field>
             <operation>equals</operation>
-            <value>Activated</value>
+            <value>Xappia QA Automation</value>
         </filters>
-        <label>RubenOM-Activated</label>
+        <label>Ruben QA Automation Orders</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -2651,48 +2424,6 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         </filters>
         <label>Suspension orders</label>
         <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>Vista_SALES_Completados</fullName>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>ORDERS.STATUS</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <columns>ORDERS.LAST_UPDATE</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>SALES.ACCOUNT.NAME</field>
-            <operation>contains</operation>
-            <value>&quot; Sales&quot;</value>
-        </filters>
-        <filters>
-            <field>ORDERS.STATUS</field>
-            <operation>equals</operation>
-            <value>Activated</value>
-        </filters>
-        <filters>
-            <field>vlocity_cmt__OrchestrationPlanId__c</field>
-            <operation>contains</operation>
-            <value>Plan</value>
-        </filters>
-        <label>Vista SALES Completados</label>
-        <language>es_MX</language>
-    </listViews>
-    <listViews>
-        <fullName>prueba4</fullName>
-        <columns>ORDERS.STATUS</columns>
-        <columns>ORDERS.ORDER_NUMBER</columns>
-        <columns>SALES.ACCOUNT.NAME</columns>
-        <columns>ORDERS.TOTAL_AMOUNT</columns>
-        <columns>ORDERS.EFFECTIVE_DATE</columns>
-        <columns>CONTRACT.CONTRACT_NUMBER</columns>
-        <filterScope>Everything</filterScope>
-        <label>prueba4</label>
-        <language>es_MX</language>
     </listViews>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
@@ -3097,7 +2828,7 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Orden de ST</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Terminal sin ST</fullName>
@@ -3128,10 +2859,6 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Cancelada - Validacion Rechazada</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Cerrada Exitosa - Reclamo</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3256,6 +2983,10 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Recargado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SINIESTRO</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3558,6 +3289,10 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
                 <default>false</default>
             </values>
             <values>
+                <fullName>Cambio de Terminal</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cambio de número</fullName>
                 <default>false</default>
             </values>
@@ -3571,6 +3306,10 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Compra de Pack</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Conciliador</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3829,6 +3568,14 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <picklistValues>
             <picklist>SubGestion__c</picklist>
             <values>
+                <fullName>Cliente Existente</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cliente Nuevo</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Fallas reiteradas</fullName>
                 <default>false</default>
             </values>
@@ -3838,7 +3585,7 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Orden de ST</fullName>
-                <default>false</default>
+                <default>true</default>
             </values>
             <values>
                 <fullName>Terminal sin ST</fullName>
@@ -4005,6 +3752,10 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Recargado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SINIESTRO</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4315,55 +4066,6 @@ var res = sforce.apex.execute(&quot;XOMGenerateOrderItemsWithDelta&quot;,&quot;G
 alert(res);</url>
     </webLinks>
     <webLinks>
-        <fullName>Generate_Delta_Decompose</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>Generate Delta &amp; Decompose</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
-
-var namespace_prefix = &apos;&apos;; 
-var result = sforce.connection.describeGlobal(); 
-var TOKEN_OBJ = &quot;Party__c&quot;; 
-var sobjects = result.getArray(&quot;sobjects&quot;); 
-
-for(var i=0; i&lt;sobjects.length; i++) { 
-var sobjName = sobjects[i].name; 
-var str = sobjName.split(&quot;__&quot;); 
-
-//if there are 3 values there is a namespace 
-if (str.length == 3) { 
-//Is it one of ours? 
-var sobj = str[1].valueOf() +&apos;__c&apos;; 
-if(sobj == TOKEN_OBJ) { 
-namespace_prefix = str[0].valueOf(); 
-break; 
-} 
-} 
-} 
-
-var simpleDecompControllerNamespace = &apos;&apos;; 
-var simpleDecompPageNamespace = &apos;&apos;; 
-if(namespace_prefix != &quot;&quot;) { 
-simpleDecompControllerNamespace = namespace_prefix + &apos;.&apos;; 
-simpleDecompPageNamespace = namespace_prefix + &apos;__&apos;; 
-} 
-var res = sforce.apex.execute(&quot;XOMGenerateOrderItemsWithDelta&quot;,&quot;GenerateDelta&quot;,{orderId: &apos;{!Order.Id}&apos;}); 
-if(res != &apos;OK&apos;)
-   alert(res); 
-
-var result = sforce.apex.execute(simpleDecompControllerNamespace+&quot;SimpleDecompositionController&quot;,&quot;decompose&quot;, {orderId: &apos;{!Order.Id}&apos;}); 
-if(result == &apos;OK&apos;) { 
-// trim ID because we&apos;re sending Order IDs to thor in 15-length 
-window.location.href = &apos;/apex/&apos; + simpleDecompPageNamespace + &apos;XOMViewOrderDecomposition?id={!LEFT(Order.Id, 15)}&apos;; 
-} else { 
-alert(result); 
-}</url>
-    </webLinks>
-    <webLinks>
         <fullName>RechazarOrden</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
@@ -4433,93 +4135,6 @@ namespace_prefix = str[0].valueOf();
 } 
 var target_url = &apos;/apex/taSalesCreateOrder?orderId={!Order.Id}&amp;CloneOrder=true&amp;operationCode=VTLNCE&amp;accountId={!Order.vlocity_cmt__AccountId__c}&apos;; 
 window.location.href = target_url;</url>
-    </webLinks>
-    <webLinks>
-        <fullName>TA_Submit_Order</fullName>
-        <availability>online</availability>
-        <description>Submit Order button with extended timeout</description>
-        <displayType>button</displayType>
-        <linkType>javascript</linkType>
-        <masterLabel>TA Submit Order</masterLabel>
-        <openType>onClickJavaScript</openType>
-        <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
-{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
-
-var namespace_prefix = &apos;&apos;;
-var result = sforce.connection.describeGlobal();
-var TOKEN_OBJ = &quot;Party__c&quot;;
-var sobjects = result.getArray(&quot;sobjects&quot;);
-
-for(var i=0; i&lt;sobjects.length; i++) {
-var sobjName = sobjects[i].name;
-var str = sobjName.split(&quot;__&quot;);
-
-//if there are 3 values there is a namespace
-if (str.length == 3) {
-//Is it one of ours?
-var sobj = str[1].valueOf() +&apos;__c&apos;;
-if(sobj == TOKEN_OBJ) {
-namespace_prefix = str[0].valueOf();
-break;
-}
-}
-}
-
-var simpleDecompControllerNamespace = &apos;&apos;;
-var simpleDecompPageNamespace = &apos;&apos;;
-if(namespace_prefix != &quot;&quot;) {
-simpleDecompControllerNamespace = namespace_prefix + &apos;.&apos;;
-simpleDecompPageNamespace = namespace_prefix + &apos;__&apos;;
-}
-
-function displayResult( result )
-{
-console.log(&apos;decomposition result:&apos;, result);
-var deserializedResult = JSON.parse(result);
-
-if(deserializedResult.isOk === true &amp;&amp; deserializedResult.isOff === true) {
-parent.location.href = &apos;/apex/&apos; + simpleDecompPageNamespace +&apos;OrchestrationPlanViewCommon?id=&apos; + deserializedResult.planId;
-}
-else if(deserializedResult.isOk === true &amp;&amp; deserializedResult.isOff !== true)
-{
-parent.location.href = parent.location.origin+&apos;/&apos;+deserializedResult.planId;
-}
-else
-{
-alert(deserializedResult.errorMsg);
-}
-}
-
-function errorHandler( error )
-{
-// Handle errors.
-alert(error);
-}
-
-console.log(&apos;executing call to SimpleDecompositionController&apos;);
-
-var result = sforce.apex.execute(simpleDecompControllerNamespace+&quot;SimpleDecompositionController&quot;,&quot;decomposeAndCreatePlanEx&quot;, {orderId: &apos;{!Order.Id}&apos;},
-        {onSuccess: displayResult, onFailure: errorHandler, timeout: 300000});
-
-console.log(&apos;executed call to SimpleDecompositionController&apos;);
-
-/*
-console.log(&apos;decomposition result:&apos;, result);
-var deserializedResult = JSON.parse(result);
-
-if(deserializedResult.isOk === true &amp;&amp; deserializedResult.isOff === true) {
-parent.location.href = &apos;/apex/&apos; + simpleDecompPageNamespace +&apos;OrchestrationPlanViewCommon?id=&apos; + deserializedResult.planId;
-}
-else if(deserializedResult.isOk === true &amp;&amp; deserializedResult.isOff !== true)
-{
-parent.location.href = parent.location.origin+&apos;/&apos;+deserializedResult.planId;
-}
-else
-{
-alert(deserializedResult.errorMsg);
-}
-*/</url>
     </webLinks>
     <webLinks>
         <fullName>getStatusConciliacion</fullName>

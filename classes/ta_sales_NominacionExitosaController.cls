@@ -20,6 +20,6 @@ public class ta_sales_NominacionExitosaController {
             Id storeId = loadedCro.Order__r.PickUpStoreLocation__c;
             store = [SELECT Id, Name, vlocity_cmt__StreetAddress__c, vlocity_cmt__State__c, vlocity_cmt__City__c, vlocity_cmt__Country__c, vlocity_cmt__PostalCode__c, vlocity_cmt__OperatingHoursId__r.HoraEntrada__c, vlocity_cmt__OperatingHoursId__r.HoraSalida__c, PostOfficeHours__c, PostOfficePhone__c FROM vlocity_cmt__BusinessSite__c WHERE Id = :storeId];
             horas = 'Horario de ' + store.vlocity_cmt__OperatingHoursId__r.HoraEntrada__c + 'hs a ' + store.vlocity_cmt__OperatingHoursId__r.HoraSalida__c + 'hs';
-        }catch(Exception e){}
+        }catch(Exception e){System.debug('ERROR: '+e.getMessage());}
     }
 }

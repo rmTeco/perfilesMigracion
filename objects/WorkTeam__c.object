@@ -206,27 +206,63 @@ Used to control the synchronization between this 2 objects.</description>
         <type>Number</type>
         <unique>false</unique>
     </fields>
+    <fields>
+        <fullName>borrar__c</fullName>
+        <externalId>false</externalId>
+        <label>borrar</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>view</fullName>
+                    <default>false</default>
+                    <label>view</label>
+                </value>
+                <value>
+                    <fullName>create</fullName>
+                    <default>false</default>
+                    <label>create</label>
+                </value>
+                <value>
+                    <fullName>edit</fullName>
+                    <default>false</default>
+                    <label>edit</label>
+                </value>
+                <value>
+                    <fullName>delete</fullName>
+                    <default>false</default>
+                    <label>delete</label>
+                </value>
+                <value>
+                    <fullName>view all</fullName>
+                    <default>false</default>
+                    <label>view all</label>
+                </value>
+                <value>
+                    <fullName>modifiy all</fullName>
+                    <default>false</default>
+                    <label>modifiy all</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>6</visibleLines>
+    </fields>
     <label>Work Team</label>
     <listViews>
-        <fullName>All1</fullName>
-        <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
-    <listViews>
-        <fullName>buscar_equipo</fullName>
+        <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Team_Name__c</columns>
         <columns>Parent_Team__c</columns>
+        <columns>AmountOfActiveChildTeams__c</columns>
         <columns>Manager__c</columns>
         <columns>Work_Place__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Team_Name__c</field>
-            <operation>contains</operation>
-            <value>Age</value>
-        </filters>
-        <label>buscar equipo</label>
+        <label>All</label>
         <language>en_US</language>
     </listViews>
     <nameField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Envia email para notificar cuando un usuario supera el monto maximo permitido para su perfil de ajustes desdoblados</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>CARE_EmailNotification</letterhead>
+    <name>Send Email when max adjustment amount is reached</name>
+    <style>freeForm</style>
+    <subject>Notificación por ajuste repetitivo - Usuario {!Case.OwnerFullName}</subject>
+    <textOnly>El usuario {!Case.OwnerFullName} ha alcanzado el límite máximo preestablecido de ajustes al mismo Cliente {!Case.Account}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

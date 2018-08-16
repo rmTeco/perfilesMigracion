@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>Email_alert_test</fullName>
-        <description>Email alert test</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>dabudin@teco.com.ar</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Calidad</template>
-    </alerts>
-    <alerts>
         <fullName>SalesAlertApprovalADV</fullName>
         <description>rejection and return Approval ADV</description>
         <protected>false</protected>
@@ -30,6 +19,16 @@
         <field>TrackingStatus__c</field>
         <literalValue>FAILED</literalValue>
         <name>updateTrackingStatusToError</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
+        <fullName>updateTrackingStatusToFAILE</fullName>
+        <description>Modificar TrackingStatus__c  a FAIL</description>
+        <field>TrackingStatus__c</field>
+        <literalValue>FAILED</literalValue>
+        <name>updateTrackingStatusToFAILE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>

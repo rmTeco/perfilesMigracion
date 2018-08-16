@@ -1,0 +1,426 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" controller="KB_KnowledgeInterfaceController" cache="false"  action="{!search}" docType="html-5.0">
+    
+<style type="text/css">
+
+        .col1 { width:25%;
+                margin-top: 0px;
+                vertical-align:top;!important}
+        .col2 {
+            width:75%;
+            padding-right: 15px;
+            vertical-align:top;!important
+        }
+        .img {display: block;
+               margin: 0; }
+       #columnTree #idCards{
+            width:100%;
+            margin-top: 5px;
+            margin-bottom: 0px;
+            padding-left: 40px;
+            font-size: 13px;
+            border-left: 0px;
+            padding-bottom: 0px;
+            padding: 0px;
+            margin: 0px;
+
+        }
+        #columnTree #ulTree{
+            width: 100%;
+            margin-bottom: 5px;
+            border-left: 0px;
+            padding-bottom: 0px;
+            padding-right: 20px;
+            padding-left: 17px;
+            padding-top: 0px;
+            margin-top: 0px;
+        }
+
+        .pbBody .card-md {
+            height: auto;
+        }
+        .pagination .page-item.last, .pagination .page-item.first {
+            display: none;
+        }
+        .pbBody .carousel-control {
+            width: 5%;
+        }
+        .pbBody .carousel-control.right {
+            background-image: none;
+        }
+
+        .pbBody .carousel-control.left {
+            background-image: none;
+        }
+
+        #idCards .card .card-header .card-toggle{
+            background-image:none;
+        }
+
+        #showBody .card {
+            height: auto;
+        }
+        #showBody .card-xs {
+            height: auto;
+        }
+        #showBody .card-xs .card-footer {
+            display: '';
+        }
+
+        #idButton {
+            margin-bottom: 15px;
+        }
+        .navbar-default .nav-item.dropdown{
+            list-style-type: none;            
+        }
+        .navbar-default .nav-item>a {
+            color: #fff;
+        }
+        @media (min-width: 768px){
+            .navbar-default .nav-item>a {
+                    margin-top: 5px;
+            }
+        }
+        .pbBody .panel-body .checker{
+          font-size: 13px;  
+        }
+
+        #divResultList .pbBody .card-flipper-xs .card-footer, .pbBody .card-flipper-xs .card .card-footer, .pbBody .card-xs .card-footer {
+            display:inline;
+            height: 16px;
+            padding-top: 0px;
+            left: 0px;
+            bottom: 30px;
+            border-top: 0px ;
+        }
+        #showBody .hand{
+            font-size: 38px;
+            margin-left: 18px;
+        }
+
+        #congratulationsID {
+            margin-left: 28px; 
+            margin-top: -5px;
+        }
+
+        .glyphicon-refresh-animate {
+            -animation: spin .7s infinite linear;
+            -webkit-animation: spin2 .7s infinite linear;
+        }
+
+        @-webkit-keyframes spin2 {
+            from { -webkit-transform: rotate(0deg);}
+            to { -webkit-transform: rotate(360deg);}
+        }
+
+        @keyframes spin {
+            from { transform: scale(1) rotate(0deg);}
+            to { transform: scale(1) rotate(360deg);}
+        }
+
+        #loadButton {
+           display: none; 
+        }
+
+</style>
+    
+<link rel="stylesheet" type="text/css" href="https://resources.personal.com.ar/styles/v1/css/tpstyle.css"/>
+<link rel="stylesheet" type="text/css" href="https://www.personal.com.ar/css/customs/custom.home2.css"/>
+<link rel="stylesheet" type="text/css" href="https://resources.personal.com.ar/components/jquery/owl/owl.carousel.css"/>
+
+<apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+<apex:includeScript value="{!URLFOR($Resource.KB_Pagination)}"/>
+<apex:includeScript value="{!URLFOR($Resource.KB_bootstrap_4_0,'/js/bootstrap.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.KB_bootstrap_4_0,'/css/bootstrap.min.css')}"/>
+<script type="text/javascript">  
+    // Activate Carousel
+$('#carousel-example-generic').carousel({
+  interval: 2000,
+  ride:true
+});
+</script>
+<apex:includeScript value="/support/console/40.0/integration.js"/>
+    <div id="knowledgeDiv">
+        <apex:form >                                    
+            <apex:pageBlock >
+                <div class="bs-component">
+                    <div class="navbar navbar-default">
+                        <div class="navbar-collapse collapse navbar-responsive-collapse ">   
+                            <form class="navbar-form navbar-left">
+                                <apex:inputText id="buscarId"  value="{!searchText}"  html-placeholder="{!$Label.KB_Enter_Article_For_Search}" styleClass="form-control col-lg-8" onkeyup="searching();" style="margin-top: 3px;"  />
+
+                            </form>
+                            <li class="nav-item dropdown navbar-right">
+
+                                <a  href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <apex:outputLabel value="{!orderBy}" id="orderValue"/> 
+                                </a >
+                            
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" onclick="CallSearchAsc()" >{!$Label.KB_Titulo_A_Z}</a>
+                                    <a class="dropdown-item" onclick="CallSearchDesc()" >{!$Label.KB_Titulo_Z_A}</a>
+                                    <a class="dropdown-item" onclick="CallSearchModifyDate()">{!$Label.KB_Ultima_modificacion}</a>
+                                    <a class="dropdown-item" onclick="CallSearchMostViewed()">{!$Label.KB_Most_viewed}</a>
+                                    <a class="dropdown-item" onclick="CallSearchMostVoted()" >{!$Label.KB_most_voted}</a>
+                                </div>
+                            </li>
+                            <apex:actionFunction name="CallSearchAsc" action="{!searchInput}" reRender=" knowledgeResult, orderValue">
+                                <apex:param name="orderBy" value="{!$Label.KB_Titulo_A_Z}"/>
+                            </apex:actionFunction>
+                            <apex:actionFunction name="CallSearchDesc" action="{!searchInput}" reRender=" knowledgeResult, orderValue">
+                                <apex:param name="orderBy" value="{!$Label.KB_Titulo_Z_A}"/>
+                            </apex:actionFunction>
+                            <apex:actionFunction name="CallSearchModifyDate" action="{!searchInput}" reRender=" knowledgeResult, orderValue">
+                                <apex:param name="orderBy" value="{!$Label.KB_Ultima_modificacion}"/>
+                            </apex:actionFunction> 
+                            <apex:actionFunction name="CallSearchMostViewed" action="{!searchInput}" reRender=" knowledgeResult, orderValue">
+                                <apex:param name="orderBy" value="{!$Label.KB_Most_viewed}"/>
+                            </apex:actionFunction>
+                            <apex:actionFunction name="CallSearchMostVoted" action="{!searchInput}" reRender=" knowledgeResult, orderValue">
+                                <apex:param name="orderBy" value="{!$Label.KB_most_voted}"/>
+                            </apex:actionFunction>
+                                                                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Banner HTML-->
+                <div id="idBanner" class="card card-md card-banner">
+                    <div class="card-body">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+                            </ol>                  
+                            <div class="carousel-inner" role="listbox">
+                                <div class="carousel-item active" >
+                                    <apex:outputText value="{!body1}" escape="false"/>
+                                </div>
+                                <div class="carousel-item">
+                                    <apex:outputText value="{!body2}" escape="false"/>
+                                </div>
+                            </div>
+                            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                            </a>
+                            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <table cellspacing="0" cellpadding="0" border="0px" style="width:100%" >
+                    <tr id="columnTree">    
+                        <td class="col1"> 
+                            <apex:outputPanel id="treeBlock" layout="block" style="overflow:auto;height:100%" > 
+                                <apex:variable var="index" value="{!0}"  />
+                                <div class="panel-group" id="accordionCategorias">
+                                    <apex:repeat value="{!wrap.children}" var="parent" id="knowledge">
+                                        <ul id="ulTree">                       
+                                            <apex:repeat value="{!parent.children}" var="firstChild">
+                                                <apex:variable var="index" value="{!index + 1}" />                                   
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                       <div class="panel-title">
+                                                            <table cellspacing="0" cellpadding="0" border="0px" style="width:100%">
+                                                                <tr>    
+                                                                    <td style="width:20px"> 
+                                                                       <apex:inputCheckbox value="{!firstChild.selected}" >
+                                                                            <apex:actionSupport event="onchange" immediate="true" action="{!searchInput}"  oncomplete="estrellita();" rerender="treeBlock, knowledgeResult, idPagination">
+                                                                                <apex:param name="selected" value="{!firstChild.unique}"/>
+                                                                                <apex:param name="selectedCategory" value="{!firstChild.uniqueCategoryGroup}"/>
+                                                                            </apex:actionSupport> 
+
+                                                                        </apex:inputCheckbox>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a data-toggle="collapse"  href="#collapseOne-{!index}" data-target="#collapseOne-{!index}" aria-expanded="false" style="text-align:left;!important" class="collapsed">{!firstChild.name}</a>
+                                                                    </td>
+                                                                </tr>      
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div id="collapseOne-{!index}" class="panel-collapse collapse" aria-expanded="true" >
+                                                        <div class="panel-body">
+                                                            <apex:repeat value="{!firstChild.children}" var="secondChildren" >
+                                                                <table cellspacing="0" cellpadding="0" border="0px" style="width:100%">
+                                                                    <tr>    
+                                                                        <td> 
+                                                                            <label class="checker">{!secondChildren.name}</label>
+                                                                        </td>
+                                                                        <td>
+                                                                            <apex:inputCheckbox value="{!secondChildren.selected}" styleClass="checker pull-right" style="margin-bottom:5px">
+                                                                                <apex:actionSupport event="onchange" immediate="true" action="{!searchInput}" rerender=" treeBlock, knowledgeResult, idPagination">
+                                                                                    <apex:param name="selected" value="{!secondChildren.unique}"/>
+                                                                                    <apex:param name="selectedCategory" value="{!secondChildren.uniqueCategoryGroup}"/>
+                                                                                </apex:actionSupport>                                                                            
+                                                                            </apex:inputCheckbox>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>                                            
+                                                            </apex:repeat>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </apex:repeat>
+                                        </ul>                                
+                                    </apex:repeat> 
+                                </div>      
+                            </apex:outputPanel>
+                        </td>
+                        <td class="col2">
+                            <button id="loadButton" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate "></span>{!$Label.KB_Loading}</button>
+
+                            <div id="divResultList" >
+                                <apex:panelGrid id="knowledgeResult" columns="1" width="100%"  >
+                                    <apex:outputPanel layout="block" style="width:100%" >
+                                       
+                                        <apex:repeat value="{!listOfSuggest}" var="knowledge"  >
+                                            <apex:param name="KnowledgeArticleId" value="{!knowledge.KnowledgeArticleId}"/>
+                                            <ul id="idCards">
+                                                <div class="card-flip-container">
+                                                    <div class="card-flipper card-flipper-xs">
+                                                        <div class="card card-front">
+                                                            <div class="card-header">
+                                                                <div class="card-title"> <apex:outputText styleClass="glyphicon glyphicon-pushpin" style="color:#00b4c5;" value=" " rendered="{!knowledge.KB_ArticuloDestacado__c  }"  /> <apex:outputText styleClass="hidden-xs" style="color:#00b4c5;" value="{!$Label.KB_new}" rendered="{!knowledge.KB_ArticuloNuevo__c} "  /><apex:outputText styleClass="hidden-xs" style="color:#00b4c5;" value="{!$Label.KB_actualizado} " rendered="{!knowledge.KB_ArticuloActualizado__c }"  />                                                                   
+                                                                    {!knowledge.Title}</div>
+                                                                <div class="card-toggle ">
+                                                                    <span class="hidden-xs">
+                                                                        <a class="glyphicon glyphicon-new-window" href="/apex/KB_KnowledgeView?id={!knowledge.KnowledgeArticleId}" target="_blank"/>    
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <ul class="list-group">
+                                                                    <li class="list-group-item-full">
+                                                                        <apex:commandLink action="{!viewKnowledgeBody}" value="{!knowledge.summary}" oncomplete="showKBbody();" reRender="voteComponent ">
+                                                                             <apex:param name="KnowledgeArticleId" value="{!knowledge.KnowledgeArticleId}"/>
+                                                                        </apex:commandLink>                                                                                               
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="card-footer" id="footerKB">                      
+                                                                <table id="starRatingId" style="margin-left: 18px;">
+                                                                    <tr>
+                                                                        <td style="width: 10%;">
+                                                                            <a>
+                                                                                <span class="glyphicon glyphicon-thumbs-up" />
+                                                                                <span>{!mapIdScoreUp[knowledge.KnowledgeArticleId]}</span>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td style="width: 10%;">
+                                                                            <a>
+                                                                                <span class="glyphicon glyphicon-thumbs-down" />
+                                                                                <span>{!mapIdScoreDown[knowledge.KnowledgeArticleId]}</span>
+                                                                            </a>
+                                                                        </td>
+                                                                        <td style="width: 40%;">
+                                                                            <h5>
+                                                                                <apex:outputText styleClass="text-info" value=" {0} {1}" >
+                                                                                   <apex:param value="{!mapIdVote[knowledge.KnowledgeArticleId]}"/>
+                                                                                   <apex:param value="{! If(mapIdVote[knowledge.KnowledgeArticleId]==1 ,$Label.KB_Voto,$Label.KB_Votos)}"/>
+                                                                                </apex:outputText>                    
+                                                                            </h5>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ul>
+                                        </apex:repeat>
+                                    </apex:outputPanel>
+                                </apex:panelGrid> 
+                                <apex:outputPanel id="idPagination" layout="block" style="width:100%" >
+                                    <nav aria-label="Page navigation" >
+                                        <ul class="pagination" id="pagination"></ul>
+                                    </nav>
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            var obj = $('#pagination').twbsPagination({
+                                                totalPages: {!noOfPages},
+                                                visiblePages: 10,
+                                                prev:'<<',
+                                                next:'>>',
+                                                onPageClick: function (event, page) {
+                                                    CallApexMethod(page);
+                                                }
+                                            });
+                                        });
+                                    </script>
+                                    <apex:actionFunction name="CallApexMethod" action="{!changePage}" reRender="knowledgeResult">
+                                        <apex:param name="pageNumber" value="page"/>
+                                    </apex:actionFunction>
+                                </apex:outputPanel>
+                            </div>
+                            <div id="showBody" style="display: none;" >
+
+                                <div class="col-lg-12" > 
+                                    <ul class="list-unstyled"> 
+                                        <li class="pull-right">
+                                            <a href="javascript:void(0)" onclick="showResultList();">{!$Label.KB_Volver}</a>
+                                        </li>                                   
+                                    </ul>                           
+                                </div>
+                                <c:KB_articleVote articleSelected="{!articleSelected}" id="voteComponent"/>
+                                <div id="idButton">
+                                    <apex:commandButton styleClass="btn btn-lg btn-primary" oncomplete="showResultList();" value="{!$Label.KB_Volver}" reRender="knowledgeResult" />
+                                </div>
+                                <br />
+                                
+                            
+                            </div>
+                        </td>
+                    </tr>
+                </table>  
+            </apex:pageBlock>
+            <script type="text/javascript">
+                var searchingTimeout = null;
+                function searching(){
+                    document.getElementById("idBanner").style.display = "none";
+                    document.getElementById("divResultList").style.display = "none";
+                    document.getElementById("loadButton").style.display = "inline";                
+                    var delayInMilliseconds = 1000; //1000 = 1 second
+                    if (searchingTimeout != null) {
+                        clearTimeout(searchingTimeout);
+                    }
+
+                    searchingTimeout = setTimeout(function() {
+                    //your code to be executed after 1 second        
+                            doSearch();
+                        }, delayInMilliseconds);
+                    
+                }
+
+                function showResult(){
+
+                    var delayInMilliseconds = 350; //1000 = 1 second
+                    if (searchingTimeout != null) {
+                        clearTimeout(searchingTimeout);
+                    }
+
+                    searchingTimeout = setTimeout(function() {
+                    //your code to be executed after 1 second        
+                        document.getElementById("loadButton").style.display = "none";
+                        document.getElementById("divResultList").style.display = "inline";
+
+                    }, delayInMilliseconds);
+                
+                }
+
+                function showKBbody(){
+                    document.getElementById("divResultList").style.display = "none";
+                    document.getElementById("showBody").style.display = "";
+                }
+
+                function showResultList(){
+                    document.getElementById("showBody").style.display = "none";
+                    document.getElementById("divResultList").style.display = "";
+                }
+            </script>
+            <apex:actionFunction name="doSearch" action="{!searchInput}" reRender="idPagination, knowledgeResult" immediate="false"  oncomplete="showResult();"> 
+            </apex:actionFunction>
+        </apex:form>
+    </div>
+</apex:page>

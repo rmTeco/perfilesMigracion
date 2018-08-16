@@ -20,15 +20,15 @@ public class ta_sales_DetallesDePickupControllerTest {
         insert order;        
         
         vlocity_cmt__BusinessSite__c site = new vlocity_cmt__BusinessSite__c (
-          vlocity_cmt__City__c = 'Tigre',
-          PointOfSaleId__c = 1, 
-          vlocity_cmt__StreetAddress__c = 'Test',
-          PointOfSaleAddressNumber__c = '1',
-          vlocity_cmt__OrganizationId__c = account.Id,
-          PointOfSaleType__c  = 'LE',
-          vlocity_cmt__State__c = '',
-          vlocity_cmt__Country__c = '');
-    insert site;
+        	vlocity_cmt__City__c = 'Tigre',
+        	PointOfSaleId__c = 1, 
+        	vlocity_cmt__StreetAddress__c = 'Test',
+        	PointOfSaleAddressNumber__c = '1',
+        	vlocity_cmt__OrganizationId__c = account.Id,
+        	PointOfSaleType__c  = 'LE',
+        	vlocity_cmt__State__c = '',
+        	vlocity_cmt__Country__c = '');
+		insert site;
         
         order.PickUpStoreLocation__c = site.Id;
         update order;

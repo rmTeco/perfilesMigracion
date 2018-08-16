@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>EmailBody__c</fullName>
+        <defaultValue>&apos;El usuario &apos;+ $User.Username  +&apos; ha alcanzado el límite máximo preestablecido de ajustes al mismo Cliente&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>EmailBody</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>EmailSubject__c</fullName>
+        <defaultValue>&apos;Notificación por Ajuste repetitivo - Usuario &apos; +  $User.Username</defaultValue>
+        <externalId>false</externalId>
+        <label>EmailSubject</label>
+        <length>150</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>ToManagerEmailTemplate</label>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -20,15 +20,15 @@ private class SamplePricingElementServiceHookImplTest {
             insert Ord ;
            List<OrderItem>OI = TestDataFactory.createOrderItem(2,Ord);
            List<Product2>ProdList = [select id,name,ProductCode from product2];
-           ProdList[0].Name='<<Your Set of Products>>';
+           ProdList[0].Name='Mano de obra';
            upsert ProdList;
            
            
         vlocity_cmt__CalculationProcedure__c testCalcProcedure = new vlocity_cmt__CalculationProcedure__c ();
-        testCalcProcedure.Name ='Device_Pricing_Procedure';
+        testCalcProcedure.Name ='Repair_Pricing_Procedure';
         insert testCalcProcedure;
          
-          vlocity_cmt__CalculationProcedureVersion__c testCalcVersion = new vlocity_cmt__CalculationProcedureVersion__c(vlocity_cmt__IsEnabled__c   = true,Name='Device_Pricing_Procedure V1 V1 ',
+          vlocity_cmt__CalculationProcedureVersion__c testCalcVersion = new vlocity_cmt__CalculationProcedureVersion__c(vlocity_cmt__IsEnabled__c   = true,Name='Repair_Pricing_Procedure V1 V1 ',
                                                                                                                      vlocity_cmt__CalculationProcedureId__c =testCalcProcedure.Id
                                                                                                                      ,vlocity_cmt__Priority__c =1
                                                                                                                      ,vlocity_cmt__VersionNumber__c =1);
@@ -66,7 +66,7 @@ private class SamplePricingElementServiceHookImplTest {
         
         
         calcSICMatrixRowList.add(new vlocity_cmt__CalculationMatrixRow__c(vlocity_cmt__CalculationMatrixVersionId__c=testMatrixVersion.Id, 
-                                                                          vlocity_cmt__InputData__c='{"Characteristic Value":"Presupuesto;Mid End","Characteristic Name":"Tipo Reparacion;Gama Reparacion","Reference External Id":"FAN_REP_0003","Reference Product Name":"<<Your Set of Products>>"}', 
+                                                                          vlocity_cmt__InputData__c='{"Characteristic Value":"Presupuesto;Mid End","Characteristic Name":"Tipo Reparacion;Gama Reparacion","Reference External Id":"FAN_REP_0003","Reference Product Name":"Mano de obra"}', 
                                                                           vlocity_cmt__OutputData__c='{"NRC":"192","MRC":"0"}'
                                                                          ));
         
@@ -88,11 +88,10 @@ private class SamplePricingElementServiceHookImplTest {
 
            inputMap.put('parent',OrdObj); // order
            inputMap.put('itemList',OIObj) ;//OI
-          inputMap.put('cartAction','AddCartItem');
-          Test.startTest();
+           inputMap.put('cartAction','AddCartItem');
+          
           SamplePricingElementServiceHookImpl PSI = new SamplePricingElementServiceHookImpl();
           PSI.invokeMethod('priceLineItems.PreInvoke',inputMap,outMap,options);
-      	  Test.stopTest();
       }
       
  }

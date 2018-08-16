@@ -19,6 +19,18 @@
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__SerialNumber__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__AccountId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__BillingAccountId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ServiceAccountId__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -32,6 +44,22 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__LineNumber__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RecordTypeId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__ProvisioningStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__QualificationExpirationDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -49,13 +77,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__JSONAttribute__c</field>
-            </layoutItems>
-            <layoutItems>
-                <height>200</height>
-                <page>vlocity_cmt__XOMInventoryItemAttributes</page>
-                <showLabel>false</showLabel>
-                <showScrollbars>true</showScrollbars>
-                <width>100%</width>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -76,6 +97,34 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>false</editHeading>
+        <label>Attributes</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>300</height>
+                <page>vlocity_cmt__XOMInventoryItemAttributes</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__InventoryItemDecompositionRelationship__c.vlocity_cmt__SourceInventoryItemId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__InventoryItemDecompositionRelationship__c.vlocity_cmt__DestinationInventoryItemId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__FulfilmentRequestLine__c.vlocity_cmt__InventoryItemId__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>vlocity_cmt__ServicePoint__c.vlocity_cmt__MeterId__c</relatedList>
@@ -84,13 +133,17 @@
         <fields>ASSET.NAME</fields>
         <relatedList>Asset.vlocity_cmt__InventoryItemId__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.InventoryItemId__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000Lmim</masterLabel>
+        <masterLabel>00h6C000000RNuf</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

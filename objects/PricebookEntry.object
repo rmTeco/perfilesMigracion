@@ -173,6 +173,39 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <listViews>
+        <fullName>FANProductLine</fullName>
+        <columns>PRODUCT.NAME</columns>
+        <columns>PRODUCT.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT.DEFAULT_PRICE</columns>
+        <columns>PRODUCT.ACTIVE</columns>
+        <columns>PRODUCT2.FAMILY_ENUM</columns>
+        <columns>PRODUCT2.RECORD_TYPE</columns>
+        <filterScope>Queue</filterScope>
+        <filters>
+            <field>PRODUCT.CUSTOMER_PRODUCT_ID</field>
+            <operation>contains</operation>
+            <value>FAN</value>
+        </filters>
+        <label>FAN Product Line</label>
+        <language>en_US</language>
+        <queue>TA Price Book</queue>
+    </listViews>
+    <listViews>
+        <fullName>TAPricebook</fullName>
+        <columns>PRODUCT.NAME</columns>
+        <columns>PRODUCT.CUSTOMER_PRODUCT_ID</columns>
+        <columns>PRODUCT2.DESCRIPTION</columns>
+        <columns>PRODUCT.ACTIVE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>PRICEBOOK.NAME</field>
+            <operation>equals</operation>
+            <value>TA Price Book</value>
+        </filters>
+        <label>TA - Offers</label>
+        <language>en_US</language>
+    </listViews>
     <searchLayouts>
         <searchResultsAdditionalFields>PRODUCT.NAME</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>PRODUCT.CUSTOMER_PRODUCT_ID</searchResultsAdditionalFields>

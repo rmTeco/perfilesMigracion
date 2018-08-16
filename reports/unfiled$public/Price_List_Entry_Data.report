@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>vlocity_cmt__PriceListEntry__c$Id</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__PriceListEntry__c$vlocity_cmt__ProductId__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__PriceListEntry__c$Pricing_Element_Code__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__PriceListEntry__c$Pricing_Variable_Code__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__PriceListEntry__c$vlocity_cmt__EffectiveFromDate__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__PriceListEntry__c$vlocity_cmt__EffectiveUntilDate__c</field>
+    </columns>
+    <filter>
+        <criteriaItems>
+            <column>vlocity_cmt__PriceListEntry__c$vlocity_cmt__PriceListId__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>Telecom Price List</value>
+        </criteriaItems>
+        <criteriaItems>
+            <column>vlocity_cmt__PriceListEntry__c$vlocity_cmt__IsActive__c</column>
+            <isUnlocked>true</isUnlocked>
+            <operator>equals</operator>
+            <value>1</value>
+        </criteriaItems>
+        <language>en_US</language>
+    </filter>
+    <format>Tabular</format>
+    <name>Price List Entry Data</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Price_List_Entry_Data__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <sortColumn>vlocity_cmt__PriceListEntry__c$Pricing_Element_Code__c</sortColumn>
+    <sortOrder>Asc</sortOrder>
+    <timeFrameFilter>
+        <dateColumn>vlocity_cmt__PriceListEntry__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

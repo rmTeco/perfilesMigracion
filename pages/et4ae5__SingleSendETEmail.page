@@ -408,7 +408,7 @@
 	    }
 
         // This method is called from the Email Picker Component when the user clicks on a Email within the Tree
-        function updateSelectedEmail(sSelectedEmailId, sSelectedEmailName, sSelectedEmailSubject, sSelectedEmailAssetId, sSelectedEmailType) {
+        function updateSelectedEmail(sSelectedEmailId, sSelectedEmailName, sSelectedEmailSubject, sSelectedEmailAssetId, sSelectedEmailType, sSelectedEmailPreheader) {
             jQuery('[id$=subjectline]').val(htmlUnescape(sSelectedEmailSubject));
             selectEmailJS(sSelectedEmailId, encodeURIComponent(sSelectedEmailName), encodeURIComponent(sSelectedEmailSubject), sSelectedEmailAssetId);
         }

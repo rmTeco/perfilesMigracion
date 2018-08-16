@@ -1,6 +1,6 @@
 public class attributesLandingController {
 
-	 public String record {get;set;}
+	  public String record {get;set;}
     public List<SelectOption> objectsList{get;set;}
     public List<attributesWeighing__c> weighingList {get;set;}
     public List<attributesRules__c> rulesList {get;set;}
@@ -30,7 +30,7 @@ public class attributesLandingController {
     //***************************
     // Attributes Weighing Block
     //***************************
-    private void fillWeighingList(){
+    public void fillWeighingList(){
     	weighingList = new List<attributesWeighing__c>();
     	weighingList = AttributesWeighingController.fillAttributesList(record);
     }
@@ -42,7 +42,7 @@ public class attributesLandingController {
     //***************************
     // Attributes Rules Block
     //***************************
-	private void fillRulesList(){
+    public void fillRulesList(){
     	rulesList = new List<attributesRules__c>();
     	rulesList = [SELECT Id, Name, Object__c,attribute1__c, attribute2__c FROM attributesRules__c
     				  WHERE object__c = :record ORDER BY attribute1__c];
@@ -54,13 +54,13 @@ public class attributesLandingController {
 
     public void DeleteRule(){
       	// if for any reason we are missing the reference 
-      	if (SelectedRuleId == null) {
+      	if (selectedRuleId == null) {
         	return;
       	}
       	// find the rule record within the collection
       	attributesRules__c tobeDeleted = null;
         for(attributesRules__c rule : rulesList){
-        	if(rule.Id == SelectedRuleId) {
+        	if(rule.Id == selectedRuleId) {
           		tobeDeleted = rule;
         		break;
         	}
@@ -75,7 +75,7 @@ public class attributesLandingController {
 	  //***************************
     // Attributes Profiles Block
     //***************************
-	  private void fillProfilesList(){
+	  public void fillProfilesList(){
       profilesList = new List<attributesByProfile__c>();
     	profilesList = [SELECT Id, SetupOwnerId, AccountAttributes__c, ContactAttributes__c 
                         FROM AttributesByProfile__c ORDER BY SetupOwnerId];

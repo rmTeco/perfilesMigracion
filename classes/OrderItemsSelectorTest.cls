@@ -54,4 +54,5 @@ public class OrderItemsSelectorTest {
         system.assertEquals(orderItemQueryList[0].vlocity_cmt__AssetId__r.AccountId,resultList[0].vlocity_cmt__AssetId__r.AccountId);
         
     }
+
 }

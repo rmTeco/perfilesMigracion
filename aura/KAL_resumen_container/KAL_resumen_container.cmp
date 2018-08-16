@@ -1,0 +1,52 @@
+<aura:component   controller="KAL_datosEntradaController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+<!--<aura:handler name="init" value="{!this}" action="{!c.doInit}" />a-->
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+<aura:attribute name="Spinner" type="boolean" />
+<aura:attribute name="cuota"  type="decimal" default="0" />
+<aura:attribute name="montoCuota" type="decimal" default="0" />
+<aura:attribute name="direccionConNumero"  type="String" />
+<aura:attribute name="provincia"  type="String" />
+<aura:attribute name="city"  type="String" />
+<aura:attribute name="codPostal"  type="String" />
+<aura:attribute name="checkboxDomicilo"  type="Boolean" default="true"/>
+
+	<div class="slds-grid slds-wrap">        
+        
+        <div class="slds-size_1-of-1 slds-medium-size_2-of-3 slds-p-around_medium">
+            <div aura:id="deliveryData" >
+                  <h2 class="slds-panel__header-title slds-text-heading_large">Completar Compra</h2>                    
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-box borderColor slds-p-around_medium slds-m-top_medium">
+                    <c:KAL_datos_entrega  valorCheckboxADomicilio="{!v.checkboxDomicilo}" aura:id="datosEnt" />
+                    <hr />                
+                        <div align="right">          
+                            <ui:button class="slds-button_brand textWhite KAL-Entrega__AccConfirmar" aura:id="button2" buttonTitle="Completar a pago" label="Continuar a pago" disabled="" press="{!c.navigateToPayment}" />               
+                        </div>    
+                </div>
+            </div>            
+            <div aura:id="payment" class="slds-is-collapsed">
+            <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container slds-is-fixed">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-fixed" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>                        
+            </aura:if>                                          
+
+                 <h2 class="slds-panel__header-title slds-text-heading_large">Pago</h2>                    
+                <div class="slds-size_1-of-1 slds-medium-size_1-of-1 slds-box borderColor slds-p-around_medium slds-m-top_medium">
+                    <c:KAL_Pago />
+
+                    
+                </div>
+            </div>
+        </div>        
+        <div aura:id="resumen" class="slds-size_1-of-1 slds-medium-size_1-of-3 slds-p-around_medium">
+
+        	<c:kal_confirmation /> 
+        </div>
+    </div>
+<footer class="container-fluid text-center">	
+</footer>
+</aura:component>

@@ -1,0 +1,122 @@
+<aura:component >
+    <!-- ATT -->
+    <aura:attribute name="Elements" type="List" />
+    <aura:attribute name="OSName" type="String" default="text" />
+    <!-- ATT -->
+    <aura:iteration var="osElement1" items="{!v.Elements}" indexVar="index1">
+        <aura:if isTrue="{!and(empty(osElement1.parentElementId), or(osElement1.elementType == 'Remote Action', osElement1.elementType == 'DataRaptor Extract Action', osElement1.elementType == 'DataRaptor Post Action', osElement1.elementType == 'Integration Procedure Action'))}">
+            <div class="demo-only">
+                <ul class="slds-has-dividers_around-space">
+                    <li class="slds-item" style="padding-top:2px;">
+                        <nav role="navigation" aria-label="Breadcrumbs">
+                            <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!v.OSName}</a></li>
+                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement1.elementName}<b> ( {!osElement1.elementType} )</b></a></li>
+                            </ol>
+                        </nav>
+                        <article class="slds-tile slds-tile_board">
+                            <h3 class="slds-text-heading_medium slds-truncate" title="Description Parent">
+                            </h3>
+                            <b>Status: </b> {!if(osElement1.elementStatus, 'Active', 'Inactive')}
+                            <div class="slds-tile__detail">
+                                <aura:if isTrue="{!osElement1.elementType == 'DataRaptor Extract Action' || osElement1.elementType == 'DataRaptor Post Action'}">
+                                    <h2 style=" font-weight:bold;">Objects</h2>
+                                    <aura:iteration var="item" items="{!osElement1.elementDR}" indexVar="index1">
+                                        <p style="padding-left: 10px;">{!item.objectName}</p>
+                                    </aura:iteration>
+                                </aura:if>
+                                <aura:if isTrue="{!osElement1.elementType == 'Remote Action'}">
+                                    <h2 style=" font-weight:bold;">Class</h2>
+                                    <p style="padding-left: 10px;">{!osElement1.className} 
+                                        <a target="_blank" style="padding-left: 10px;"  href="{!'/packaging/dependencyPage.apexp?id=' + osElement1.classId}">View Apex Dependencies</a>
+                                    </p>
+                                </aura:if>
+                            </div>
+                        </article>
+                        <aura:iteration var="osElement2" items="{!v.Elements}" indexVar="index2">
+                            <aura:if isTrue="{!and(osElement2.parentElementId == osElement1.elementId, or(osElement2.elementType == 'Remote Action', 
+                                             osElement2.elementType == 'DataRaptor Extract Action', osElement2.elementType == 'DataRaptor Post Action', 
+                                             osElement2.elementType == 'Integration Procedure Action'))}">
+                                <div class="demo-only" style="width:99%;margin-left:5px;background:#fafaf9;">
+                                    <ul class="slds-has-dividers_around-space">
+                                        <li class="slds-item">
+                                            <nav role="navigation" aria-label="Breadcrumbs">
+                                                <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!v.OSName}</a></li>
+                                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement1.elementName}</a></li>
+                                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement2.elementName} <b> ( {!osElement2.elementType} )</b></a></li>
+                                                </ol>
+                                            </nav>
+                                            <article class="slds-tile slds-tile_board">
+                                                <h3 class="slds-text-heading_medium slds-truncate" title="Description Child 1">
+                                                </h3>
+                                                <div class="slds-tile__detail">
+                                                    <p class="slds-truncate" title="{!osElement2.elementStatus}">Status: <b>{!osElement2.elementStatus}</b></p>
+                                                    <p class="slds-truncate" title="{!osElement2.elementType}">Type: <b>{!osElement2.elementType}</b></p>
+                                                    <aura:if isTrue="{!osElement2.elementType == 'DataRaptor Extract Action' || osElement2.elementType == 'DataRaptor Post Action'}">
+                                                        <h2 style=" font-weight:bold;">Objects</h2>
+                                                        <aura:iteration var="item" items="{!osElement2.elementDR}" indexVar="index1">
+                                                            <p style="padding-left: 10px;">{!item.objectName}</p>
+                                                        </aura:iteration>
+                                                    </aura:if>
+                                                    <aura:if isTrue="{!osElement2.elementType == 'Remote Action'}">
+                                                        <h2 style=" font-weight:bold;">Class</h2>
+                                                        <p style="padding-left: 10px;">{!osElement2.className} 
+                                                            <a target="_blank" style="padding-left: 10px;"  href="{!'/packaging/dependencyPage.apexp?id=' + osElement2.classId}">View Apex Dependencies</a>
+                                                        </p>
+                                                    </aura:if>
+                                                </div>
+                                            </article>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <aura:iteration var="osElement3" items="{!v.Elements}" indexVar="index3">
+                                    <aura:if isTrue="{!and(osElement3.parentElementId == osElement2.elementId, or(osElement3.elementType == 'Remote Action', 
+                                             osElement3.elementType == 'DataRaptor Extract Action', osElement3.elementType == 'DataRaptor Post Action', 
+                                             osElement3.elementType == 'Integration Procedure Action'))}">
+                                        <div class="demo-only" style="width: 98%;margin-left:13px; background:#f3f2f2;'">
+                                            <ul class="slds-has-dividers_around-space">
+                                                <li class="slds-item">
+                                                    <nav role="navigation" aria-label="Breadcrumbs">
+                                                        <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                                                        <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!v.OSName}</a></li>
+                                                        <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement1.elementName}</a></li>
+                                                        <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement2.elementName}</a></li>
+                                                        <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement3.elementName} <b> ( {!osElement3.elementType} )</b></a></li>
+                                                        </ol>
+                                                    </nav>
+                                                    <article class="slds-tile slds-tile_board">
+                                                        <h3 class="slds-text-heading_medium slds-truncate" title="Description Child 2">
+                                                        </h3>
+                                                        <b>Status: </b> {!if(osElement3.elementStatus, 'Active', 'Inactive')}
+                                                        <div class="slds-tile__detail">
+                                                            <p class="slds-truncate" title="{!osElement3.elementStatus}">Status: <b>{!osElement3.elementStatus}</b></p>
+                                                            <p class="slds-truncate" title="{!osElement3.elementType}">Type: <b>{!osElement3.elementType}</b></p>
+                                                            <aura:if isTrue="{!osElement3.elementType == 'DataRaptor Extract Action' || osElement3.elementType == 'DataRaptor Post Action'}">
+                                                                <h2 style="font-weight:bold;">Objects</h2> 
+                                                                <aura:iteration var="item" items="{!osElement3.elementDR}" indexVar="index1">
+                                                                    <p style="padding-left: 10px;">{!item.objectName}</p>
+                                                                    <p style="padding-left: 10px;">{!item.fieldName}</p>
+                                                                </aura:iteration>
+                                                            </aura:if>
+                                                            <aura:if isTrue="{!osElement3.elementType == 'Remote Action'}">
+                                                                <h2 style=" font-weight:bold;">Class</h2>
+                                                                <p style="padding-left: 10px;">{!osElement3.className} 
+                                                                    <a target="_blank" style="padding-left: 10px;"  href="{!'/packaging/dependencyPage.apexp?id=' + osElement3.classId}">View Apex Dependencies</a>
+                                                                </p>
+                                                            </aura:if>
+                                                        </div>
+                                                    </article>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </aura:if>
+                                </aura:iteration>
+                            </aura:if>
+                        </aura:iteration>
+                    </li>
+                </ul>
+            </div>
+        </aura:if>
+    </aura:iteration>
+</aura:component>

@@ -274,9 +274,11 @@ public class OrderTriggerHandler {
 
     //filtering conciliations
     for (Order o : lstOrders) {
-      if ((o.Gestion__c).equals('Conciliate')){
-        conciliations.put(o.Id, o);
-      }
+        if(o.Gestion__c != null) {
+            if ((o.Gestion__c).equals('Conciliate')){
+                conciliations.put(o.Id, o);
+            }
+        }
     }
 
     //getting cases related to conciliations

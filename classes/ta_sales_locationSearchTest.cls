@@ -1,41 +1,46 @@
+/*-------------------------------------------------------------------------------------------------------------------------------------------------------
+	Author=>		Jeisson Rojas(JARN)
+	Description=>	Controller Asset New Hierarchy
+	<Date>					<Author>				<Change Description>
+	06/06/2018				Jeisson Rojas(JARN)		Update Test Class.
+     --------------------------------------------------------------------------------------------------------------------------------------------------------*/
 @isTest
-public with sharing class ta_sales_locationSearchTest {
-	public static testmethod void unitTest1(){
+public with sharing class ta_sales_locationSearchTest
+{
+	@isTest static void unitTest1()
+	{
+		String strg;
+		Location__c objLocation = TestDataFactory.createLocations();
+		TestDataFactory.createStreet(strg);
 		Map<String, Object> outMap = new Map<String, Object>();
-		insert new Location__c(Name = 'TestLoc', StateCode__c = '12');
 		Map<String, Object> inputMap = new Map<String, Object>();
-		Map<String, Object> accountData = new Map<String, Object>();
-		accountData.put('State', '123');
-		inputMap.put('AccountData', accountData);
-
+		Map<String, Object> options = new Map<String, Object>();
+		List<Schema.PicklistEntry> stringListEntries = new List<Schema.PicklistEntry>();
+		options.put('LocationId',objLocation.Id);
+		ta_sales_locationSearch salesLocation = new ta_sales_locationSearch();
 		Test.startTest();
-		ta_sales_locationSearch tsl = new ta_sales_locationSearch();
-		tsl.invokeMethod('PopulateLocations', null, outMap, null);
-		tsl.invokeMethod('PopulateLocationsTypeAHead', inputMap, outMap, null);
-		tsl.invokeMethod('PopulateLocationsTypeAHead', null, null, null);
+			salesLocation.invokeMethod('PopulateLocations', inputMap, outMap, options);
+			salesLocation.invokeMethod('PopulateLocationsTypeAHeadbyOptions', inputMap, outMap, options);
+			salesLocation.invokeMethod('validateAdressRange', inputMap, outMap, options);
+			salesLocation.invokeMethod('PopulateStateLocationsPickupAvailable', inputMap, outMap, options);
+			salesLocation.invokeMethod('PopulateCityLocationsPickupAvailable', inputMap, outMap, options);
+			salesLocation.invokeMethod('PopulateLocationsNewTypeAHead', inputMap, outMap, options);
+			salesLocation.invokeMethod('PopulateStreetsTypeAHead', inputMap, outMap, options);
+			//salesLocation.invokeMethod('PopulateLocationsTypeAHead', inputMap, outMap, options);
+			//stringListEntries.sortPicklistEntryListByLabel(stringListEntries);
 		Test.stopTest();
 	}
-
-	public static testmethod void unitTest2(){
-		MockupFactory.generate();
+	@isTest static void unitTest2()
+	{
 		Map<String, Object> outMap = new Map<String, Object>();
-		insert new Location__c(Name = 'TestLoc', StateCode__c = '12');
 		Map<String, Object> inputMap = new Map<String, Object>();
-		Map<String, Object> accountData = new Map<String, Object>();
-		accountData.put('State', '123');
-		inputMap.put('AccountData', accountData);
-
-		Account acct = [SELECT Id FROM Account where AccountNumber = '1234' LIMIT 1];
-		List<Location__c> cityPicklistValues = [SELECT Name, LocationCode__c, StateCode__c, DepartmentCode__c FROM Location__c WHERE DepartmentCode__c != NULL ORDER BY Name];
-
-		vlocity_cmt__BusinessSite__c businessSite = new vlocity_cmt__BusinessSite__c(vlocity_cmt__OrganizationId__c=acct.Id, PointOfSaleStorePickupEnabled__c=true, vlocity_cmt__City__c=cityPicklistValues[0].LocationCode__c, vlocity_cmt__State__c=cityPicklistValues[0].StateCode__c);
-		insert businessSite;
-
+		Map<String, Object> options = new Map<String, Object>();
+		Map<String, object> mapState = new Map<String, object>();
+		mapState.put('State','B');
+		inputMap.put('AccountData', mapState);
+		ta_sales_locationSearch salesLocation = new ta_sales_locationSearch();
 		Test.startTest();
-		ta_sales_locationSearch tsl = new ta_sales_locationSearch();
-		tsl.invokeMethod('PopulateStateLocationsPickupAvailable', inputMap, outMap, null);
-		tsl.invokeMethod('PopulateCityLocationsPickupAvailable', inputMap, outMap, null);
+			salesLocation.invokeMethod('PopulateLocationsTypeAHead', inputMap, outMap, options);
 		Test.stopTest();
-
 	}
 }

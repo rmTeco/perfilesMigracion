@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>GP Atributo de evento</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>GP Atributos de evento</value>
+    </caseValues>
+    <fields>
+        <label><!-- GP Evento General --></label>
+        <name>GP_Evento_General__c</name>
+        <relationshipLabel><!-- GP Atributos de evento --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Nombre de API --></label>
+        <name>Nombre_API__c</name>
+    </fields>
+    <fields>
+        <label><!-- Tipo de atributo --></label>
+        <name>Tipo_de_atributo__c</name>
+        <picklistValues>
+            <masterLabel>Boolean</masterLabel>
+            <translation><!-- Boolean --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Number</masterLabel>
+            <translation><!-- Number --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>String</masterLabel>
+            <translation><!-- String --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- Separe cada valor con un &quot;;&quot; . Ejemplo: valor1;valor2;valor3; --></help>
+        <label><!-- Valores Posibles --></label>
+        <name>Valores_Posibles__c</name>
+    </fields>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- El campo &quot;Valores Posibles&quot; es obligatorio cuando el &quot; Tipo de atributo&quot; es String. --></errorMessage>
+        <name>Valores_posibles_obligatorio</name>
+    </validationRules>
+</CustomObjectTranslation>

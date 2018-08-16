@@ -17,7 +17,108 @@ global with sharing class ta_care_querySOSRefillsHelper implements vlocity_cmt.V
         return result;
     }
     
-   
+    global void GetRefillSOSHistory(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
+        //Map<String,Object> input = new Map<String,Object>();
+        //Map<String,Object> options = new Map<String,Object>();
+        //Map<String,Object> outputMap = new Map<String,Object>();
+        Map<String, Object> mapSOS;
+        List<Object> listSOS = new List<Object>();
+
+        Map<String, Object> response = new Map<String, Object>();
+        
+        Map<string, string> estados = new Map<string, string>();
+        estados.put('O', 'Abierto');
+        estados.put('C', 'Cerrado');
+
+        try
+        {
+            String codSuscripcion = String.valueOf(inputMap.get('codSuscriptor'));
+            String jsonString = '{"body":{"codigoAcceso":{"codSuscripcion":"'+codSuscripcion+'"}}}';
+
+            System.debug('Request S440: '+jsonString);
+            Map<String, Object> input = (Map<String, Object>)JSON.deserializeUntyped(jsonString);
+
+            vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
+            integProcServ.invokeMethod('IFS_S440', input, outMap, options);
+            System.debug('Response S440: '+outMap);
+
+            Map<String, Object> result = (Map<String, Object>)outMap.get('IPResult');
+
+            System.debug('IPResult: '+result);
+
+            if(result.get('detalle') == null)
+            { 
+                List<Object> listaDetallePrestamo = (List<Object>)result.get('listaDetallePrestamo');
+                List<Object> listaDetalleReembolso = (List<Object>)result.get('listaDetalleReembolso');
+
+                if(listaDetallePrestamo == null)
+                {
+                    //throw new FuncException('No se pudo obtener el detalle del prestamo.');
+                    mapSOS = new Map<String, Object>();
+                    mapSOS.put('codError', '201');
+                    mapSOS.put('descError', 'Ocurrio un error al intentar obtener el historial.');
+                    listSOS.add(mapSOS);
+                }
+                else
+                { 
+                    if(listaDetalleReembolso == null)
+                    {
+                        //throw new FuncException('No se pudo obtener el detalle del prestamo.');
+                        mapSOS = new Map<String, Object>();
+                        mapSOS.put('codError', '201');
+                        mapSOS.put('descError', 'Ocurrio un error al intentar obtener el historial.');
+                        listSOS.add(mapSOS);
+                    }
+                    else
+                    {
+                        for(Object objPrestamo : listaDetallePrestamo)
+                        {   
+                            mapSOS = new Map<String, Object>();
+                            Map<String, Object> prestamoMap = (Map<String, Object>)objPrestamo;
+
+                            
+                            mapSOS.put('estado', estados.get(String.valueOf(prestamoMap.get('estadoPrestamoAdq')) == '' ? 'Sin datos' : String.valueOf(prestamoMap.get('estadoPrestamoAdq'))));
+                            mapSOS.put('fechaAltaProductoAdq', String.valueOf(prestamoMap.get('fechaAltaProductoAdq')) == '' ? 'Sin datos' : String.valueOf(prestamoMap.get('fechaAltaProductoAdq')));
+                            mapSOS.put('montoPrestamo', String.valueOf(prestamoMap.get('montoPrestamo')) == '' ? 'Sin datos' : String.valueOf(prestamoMap.get('montoPrestamo')));
+                            mapSOS.put('fechaVtoPagoPrestamo', 'Hola soy un hardcode');
+
+                            for(Object objReembolso : listaDetalleReembolso)
+                            {
+                                Map<String, Object> reembolsoMap = (Map<String, Object>)objReembolso;
+                                if (prestamoMap.get('fechaAltaProductoAdq').equals(reembolsoMap.get('fechaAltaProductoAdq')))
+                                {
+                                    mapSOS.put('fechaPago', String.valueOf(reembolsoMap.get('fechaPago')) == '' ? 'Sin datos' : String.valueOf(reembolsoMap.get('fechaPago')));
+                                    break;
+                                }
+                                else
+                                {
+                                    mapSOS.put('fechaPago', String.valueOf(prestamoMap.get('fechaPago')) == '' ? 'Sin datos' : String.valueOf(prestamoMap.get('fechaPago')));
+                                }
+                            }
+                            listSOS.add(mapSOS);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                mapSOS = new Map<String, Object>();
+                mapSOS.put('codError', '201');
+                mapSOS.put('descError', 'No hay registros en los ultimos 5 dias.');
+                listSOS.add(mapSOS);
+            }
+                        
+            response.put('listaDetallePrestamo', listSOS);
+            outMap.put('IPResult', response);
+            System.debug('outMap: '+outMap);        
+        }
+        catch(Exception ex)
+        {
+            System.debug('Error: '+ ex.getMessage());
+            throw ex;
+        }
+    }
+   /*
     global void GetRefillSOSHistory(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
         
         map<string, string> estados = new map<string, string>();
@@ -29,16 +130,16 @@ global with sharing class ta_care_querySOSRefillsHelper implements vlocity_cmt.V
         
          // ***** *****  BUG  PFTA-10332 *********************** ////////////
         Map<String, Object> bodyNewMap = (Map<String,Object>) inputMap.get('body');
-        String codSubcript = (String) inputMap.get('codSuscript');  
-        System.debug('result new_' + codSubcript);
-        Map<String, Object> codAcces = (Map<String,Object>) bodyNewMap.get('codigoAcceso');
+        /* Nuevo */ //String codSubcript = (String) inputMap.get('codSuscript');  
+        /* Nuevo */ //System.debug('result new_' + codSubcript);
+        /* Nuevo */ //Map<String, Object> codAcces = (Map<String,Object>) bodyNewMap.get('codigoAcceso');
         
-        codAcces.put('identificadorRecurso', codSubcript);
+        /* Nuevo */ //codAcces.put('identificadorRecurso', codSubcript);
         
-        bodyNewMap.put('codigoAcceso',codAcces);
+        /* Nuevo */ //bodyNewMap.put('codigoAcceso',codAcces);
         //bodyNewMap.put('fechaDesde', Date.today() - 3 );
        //bodyNewMap.put('fechaHasta', Date.today());
-        
+    /*    
         inputMap.put('body',bodyNewMap );
         System.debug('New Data' + inputMap);
         //*******************  --------  **************** ///////
@@ -52,12 +153,12 @@ global with sharing class ta_care_querySOSRefillsHelper implements vlocity_cmt.V
         Map<String, Object> resultChild2  = (Map<String, Object>) result.get('result');
         System.debug('result init-- ' + result );
         if(resultChild2 != null && resultChild2.get('detalle') != null){
-            
             Map<String, Object> objectNewResult = new Map<String, Object>();
             result.put('codError', '201');
             result.put('descError', 'msg');
             objectNewResult.put('listaDetallePrestamo', result);
             outMap.put('IPResult',objectNewResult);
+            
         }else{
             List<Object> refillsSOS = (List<Object>)result.get('listaDetallePrestamo');
             List<Object> Payments = (List<Object>)result.get('listaDetalleReembolso');
@@ -76,8 +177,40 @@ global with sharing class ta_care_querySOSRefillsHelper implements vlocity_cmt.V
             }
             result.put('listaDetallePrestamo', refillsSOS2);
             outMap.put('IPResult', result);
-            System.debug(outMap);
-        }        
+            
+        } 
+        System.debug('outMap -->'+outMap);
+    }
+    */
+    
+    global void GetRefillSOSHistory2(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
+        System.debug('GetRefillSOSHistory2');
+        Try{
+        	// Vlocity Integration Procedure Obj
+        	vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
+        	System.debug('inputMap --> ' + inputMap);
+        	if(!Test.isRunningTest()){
+             	integProcServ.invokeMethod('IFS_S440', inputMap, outMap, options);        
+        	}
+        	System.debug('outMap -->'+outMap);
+            /*Map<String, Object> result = (Map<String, Object>)outMap.get('IPResult');
+        	Map<String, Object> resultChild2  = (Map<String, Object>) result.get('result');
+            System.debug('resultChild2 --> ' + resultChild2 );
+            if(resultChild2 != null && resultChild2.get('detalle') != null){
+                system.debug('PRIMERO');
+            	Map<String, Object> objectNewResult = new Map<String, Object>();
+           	 	result.put('codError', '201');
+            	result.put('descError', 'msg');
+            	objectNewResult.put('listaDetallePrestamo', result);
+            	outMap.put('IPResult',objectNewResult);
+            }*/
+            
+        }
+        catch(Exception ex)
+        {
+            System.debug('Error: '+ ex.getMessage());
+            throw ex;
+        }
     }
     
     global void getPacksHistoryDetail(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {

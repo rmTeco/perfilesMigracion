@@ -1,0 +1,58 @@
+<apex:page showHeader="true" sidebar="false" controller="CatalogViewController" docType="html-5.0" >
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ng="http://angularjs.org" ng-app="ctlgView"> 
+        <head>
+            <script type="text/javascript" src="{!URLFOR($Resource.VizJS)}"></script>
+            <script type="text/javascript" src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script>
+            var app = angular.module('ctlgView', ["vlocity", "ngSanitize"]);
+            
+            app.config(['remoteActionsProvider', function(remoteActionsProvider) {
+                remoteActionsProvider.setRemoteActions({
+                    getGraph: {action: "{!$RemoteAction.CatalogViewController.getGraphForProduct}", config: {escape: false}}
+                });
+            }]);
+            
+            var name = "productId";
+            var url = location.href;
+            
+            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+            var regexS = "[\\?&]"+name+"=([^&#]*)";
+            var regex = new RegExp( regexS );
+            var results = regex.exec( url );
+            var p = results == null ? null : results[1];
+
+            app.controller ('myController', function ($scope, remoteActions) {
+                $scope.init = function () {
+                        if (p) remoteActions.getGraph(p).then(function(graph){
+                        console.log('RECEIVED GRAPH='+graph);
+                        document.getElementById('output').innerHTML = Viz(graph);});
+                        
+                        else
+                               remoteActions.getGraph('{!productId}').then(function(graph){
+                                console.log('{!productId}');
+                                console.log('RECEIVED GRAPH='+graph);
+                                document.getElementById('output').innerHTML = Viz(graph);
+                            });
+                    
+                };           
+                $scope.init();
+            });
+            </script>
+        </head>
+        
+        <body ng-controller="myController">
+            <apex:form >
+                <span style="font-color:black;font-size=10px;">Choose a product for visualization</span>
+                <br />
+                <apex:selectList id="productId_a" value="{!productId}" size="1">
+                    <apex:selectOptions value="{!products}"/>
+                </apex:selectList>
+                
+                <apex:commandButton value="Go"/>
+            </apex:form>
+            <br />
+            <div id="output" />
+        </body>
+        <span style="font-color:grey;font-size:8px;">v2.4.0</span>
+    </html>
+</apex:page>

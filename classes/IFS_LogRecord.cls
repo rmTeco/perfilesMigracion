@@ -22,7 +22,7 @@ global with sharing class  IFS_LogRecord
         System.debug('--------------idUnico          : ' + idUnico );
         System.debug('--------------reqRes           : ' + reqRes );
         System.debug('--------------params           : ' + params );
-        System.debug('--------------infoAdicional    : ' + infoAdicional );
+        System.debug('--------------infoAdicional    : ' + infoAdicional ); 
 
         IntegrationLog__c logRec = new IntegrationLog__c();
         logRec.Adittional_Info__c = infoAdicional;
@@ -30,17 +30,17 @@ global with sharing class  IFS_LogRecord
         logRec.Log_Type__c = tipoLog;
         logRec.Origin__c = origen;
         logRec.Paramts__c = params;
-        logRec.Timestamp__c = timestamp;
+        logRec.Timestamp__c = timestamp; 
         logRec.Transaction_ID__c = idUnico;
 
-        Savepoint sp = Database.setSavepoint();
+        //Savepoint sp = Database.setSavepoint();  
+         System.debug('--------------Antes de insert ' );
         try{
             insert logRec;
         } catch (Exception e) {
-            Database.rollback(sp);
-            throw(e);
+            throw(e);    
         }
-
+        System.debug('--------------AL FINAL ' );
     }
     
 }

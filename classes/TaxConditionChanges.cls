@@ -25,6 +25,7 @@ global with sharing class TaxConditionChanges implements vlocity_cmt.VlocityOpen
         try {
             String taxConditionToModify = GetTaxConditionToModify(inputMap);
             //System.debug('taxConditionToModify: ' + taxConditionToModify);
+            system.debug('inputMap = '+ inputMap);
             Map<String, Object> consumerAccount = GetAccountByRecordType(inputMap, 'Consumer');
             Map<String, Object> businessAccount = GetAccountByRecordType(inputMap, 'Business');
 
@@ -72,9 +73,11 @@ global with sharing class TaxConditionChanges implements vlocity_cmt.VlocityOpen
 
     private Map<String, Object> GetAccountByRecordType(Map<String, Object> inputMap, String recordType) {
         try {
+            
             Map<String, Object> contact = (Map<String, Object>)inputMap.get('Contact');
 
             System.debug('contact: ' + contact);
+            System.debug('recordType: ' + recordType);
 
             Map<String, Object> accountByRecordType = (Map<String, Object>)contact.get(recordType);
 
@@ -130,6 +133,7 @@ global with sharing class TaxConditionChanges implements vlocity_cmt.VlocityOpen
             String query = ' SELECT ' + String.join(fieldNames, ', ') + ' FROM ' + describeResult.getName() + ' WHERE ' + ' id = :accountId ' + ' LIMIT 1 ';    
             
             Account objAccount = Database.query(query);
+            System.debug('objAccount: ' + objAccount);
             Account objNewAccount = objAccount.clone(false, false, false, false);
 
             Id recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get(accountType).getRecordTypeId();
@@ -151,6 +155,8 @@ global with sharing class TaxConditionChanges implements vlocity_cmt.VlocityOpen
             System.debug('objNewAccount: ' + objNewAccount);
 
             insert objNewAccount;
+            
+            System.debug('objNewAccount.Id: ' + objNewAccount.Id);
 
             outMap.put('NewAccountId', objNewAccount.Id);
 

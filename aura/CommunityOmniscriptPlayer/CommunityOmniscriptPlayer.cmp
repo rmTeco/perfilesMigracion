@@ -1,0 +1,26 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes"  access='GLOBAL' >
+    <aura:attribute name="height" type="String" access='global'/> 
+    <aura:attribute name="width" type="String" access='global'/>
+    <aura:attribute name="isOmniScriptValid" type="Boolean" default="true" /> 
+    <aura:attribute name="isPreview" type="Boolean" default="false" />
+
+    <aura:attribute name="extraParams" type="Object" access="public" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   
+    <aura:if isTrue="{!v.isPreview}">
+        <div class="omni-script preview-block" style="{!'max-height:' + v.height + '; min-height: 100px;'}">
+            <h5>Your OmniScript Will Appear Here At Runtime</h5>
+        </div>
+        <aura:set attribute="else">  
+            <aura:if isTrue="{!v.isOmniScriptValid}"> 
+                <div class="omni-script" id="frame">
+                    {!v.body}
+                </div>
+            </aura:if>
+            <aura:if isTrue="{!v.isOmniScriptValid == false}"> 
+                <ui:message title="Loading Error" severity="error" closable="false">OmniScript Does Not Exist</ui:message>
+            </aura:if>
+        </aura:set>  
+    </aura:if>
+</aura:component>

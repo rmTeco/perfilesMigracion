@@ -8,13 +8,22 @@ public class MktgMCCampaignUpdate {
     }
     
     @future(callout=true) static void updateMCCampaigns(List <String> serializedCampaigns){
-        String accessToken = MarketingCloudAPIUtil.getMCAccessToken();
+
+        MktgCloudAPISettings__c mktgCloudAPISettings = MktgCloudAPISettings__c.getall().values();
+        Boolean updateMCAPISettings = false;
+
+        if(!MarketingCloudAPIUtil.isValidMCToken()){
+            mktgCloudAPISettings = MarketingCloudAPIUtil.getMCAccessToken();
+            updateMCAPISettings = true;
+        }
         
         for(String camp : serializedCampaigns){
             MarketingCloudAPIUtil.CampaignWrapper currentCampaign = (MarketingCloudAPIUtil.CampaignWrapper) JSON.deserialize(camp, MarketingCloudAPIUtil.CampaignWrapper.class);
             if( null != currentCampaign.marketingCloudId ) { 
-                MarketingCloudAPIUtil.updateCampaign(accessToken, currentCampaign, currentCampaign.marketingCloudId);
+                MarketingCloudAPIUtil.updateCampaign(mktgCloudAPISettings.MCAPIAccessToken__c, currentCampaign, currentCampaign.marketingCloudId);
             }
         }
+
+        if(updateMCAPISettings){ update mktgCloudAPISettings;}
     }
 }

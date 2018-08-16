@@ -1,0 +1,14 @@
+<apex:page controller="ltnadptn.updateUsingLightningCheckboxController">
+    <apex:includeLightning />
+    <div id="lightning"/>
+    <script>
+        $Lightning.use("ltnadptn:LightningAdoptionTrackerSetup", function() {
+            $Lightning.createComponent("ltnadptn:LightninAdoptionTrackerSetup",
+                                       { },
+                                       "lightning", 
+                                       function(cmp) {
+                                           //do some stuff
+                                           });
+            });
+    </script>
+</apex:page>

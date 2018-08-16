@@ -120,6 +120,14 @@
             <restricted>true</restricted>
             <valueSetName>ChannelType2</valueSetName>
             <valueSettings>
+                <controllingFieldValue>Retails Nacionales</controllingFieldValue>
+                <valueName>Retails Nacionales</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SMS</controllingFieldValue>
+                <valueName>SMS</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>SnapChat</controllingFieldValue>
                 <controllingFieldValue>Telegram</controllingFieldValue>
                 <controllingFieldValue>Twitter</controllingFieldValue>
@@ -198,14 +206,6 @@
                 <controllingFieldValue>Ejecutivos</controllingFieldValue>
                 <valueName>Ejecutivos</valueName>
             </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Retails Nacionales</controllingFieldValue>
-                <valueName>Retails Nacionales</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>SMS</controllingFieldValue>
-                <valueName>SMS</valueName>
-            </valueSettings>
         </valueSet>
     </fields>
     <fields>
@@ -236,35 +236,9 @@
             <restricted>true</restricted>
             <valueSetName>ChannelType</valueSetName>
             <valueSettings>
-                <controllingFieldValue>IVR</controllingFieldValue>
-                <valueName>IVR</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Web</controllingFieldValue>
-                <valueName>Web</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Mail</controllingFieldValue>
-                <controllingFieldValue>Redes Sociales</controllingFieldValue>
-                <controllingFieldValue>Chat</controllingFieldValue>
-                <controllingFieldValue>E-Commerce</controllingFieldValue>
-                <controllingFieldValue>USSD</controllingFieldValue>
-                <valueName>Social Media</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>OC</controllingFieldValue>
-                <controllingFieldValue>OC TP</controllingFieldValue>
-                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
-                <controllingFieldValue>Totem</controllingFieldValue>
-                <valueName>Oficinas Comerciales</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Retails Nacionales</controllingFieldValue>
-                <valueName>Retails</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>SMS</controllingFieldValue>
-                <valueName>SMS</valueName>
+                <controllingFieldValue>Ventas</controllingFieldValue>
+                <controllingFieldValue>Caring</controllingFieldValue>
+                <valueName>Call Center</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Totem</controllingFieldValue>
@@ -272,30 +246,23 @@
                 <valueName>Agentes</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Totem</controllingFieldValue>
+                <controllingFieldValue>OC</controllingFieldValue>
+                <controllingFieldValue>OC TP</controllingFieldValue>
+                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
+                <valueName>Oficinas Comerciales</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IVR</controllingFieldValue>
+                <valueName>IVR</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Administración de Ventas</controllingFieldValue>
                 <valueName>Administración de Ventas</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>APP</controllingFieldValue>
-                <valueName>APP</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Caring</controllingFieldValue>
-                <controllingFieldValue>Ventas</controllingFieldValue>
-                <valueName>Call Center</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Cooperativas</controllingFieldValue>
                 <valueName>Cooperativas</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>E-Commerce</controllingFieldValue>
-                <valueName>E-Commerce</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>E-Commerce</controllingFieldValue>
-                <controllingFieldValue>USSD</controllingFieldValue>
-                <valueName>USSD</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Ejecutivos</controllingFieldValue>
@@ -306,8 +273,41 @@
                 <valueName>Emprendimientos</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>E-Commerce</controllingFieldValue>
+                <valueName>E-Commerce</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Commerce</controllingFieldValue>
+                <controllingFieldValue>Chat</controllingFieldValue>
+                <controllingFieldValue>Mail</controllingFieldValue>
+                <controllingFieldValue>Redes Sociales</controllingFieldValue>
+                <controllingFieldValue>USSD</controllingFieldValue>
+                <valueName>Social Media</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>E-Commerce</controllingFieldValue>
+                <controllingFieldValue>USSD</controllingFieldValue>
+                <valueName>USSD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>APP</controllingFieldValue>
+                <valueName>APP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>SMS</controllingFieldValue>
+                <valueName>SMS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Web</controllingFieldValue>
+                <valueName>Web</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>ISP</controllingFieldValue>
                 <valueName>Mayorista</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Retails Nacionales</controllingFieldValue>
+                <valueName>Retails</valueName>
             </valueSettings>
         </valueSet>
     </fields>
@@ -472,27 +472,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Level_of_the_Stand__c</fullName>
-        <description>Used to indicate the location of the stand in a point of sales.</description>
-        <externalId>false</externalId>
-        <label>Level of the Stand</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Dentro</fullName>
-                    <default>false</default>
-                    <label>Dentro</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Location__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Location</description>
@@ -538,42 +517,6 @@
                     <fullName>Telecom</fullName>
                     <default>false</default>
                     <label>Telecom</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>Order__c</fullName>
-        <description>PFTA-8823 - Used to sort the technical services</description>
-        <externalId>false</externalId>
-        <label>Order</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>0</fullName>
-                    <default>false</default>
-                    <label>0</label>
-                </value>
-                <value>
-                    <fullName>1</fullName>
-                    <default>false</default>
-                    <label>1</label>
-                </value>
-                <value>
-                    <fullName>2</fullName>
-                    <default>false</default>
-                    <label>2</label>
-                </value>
-                <value>
-                    <fullName>3</fullName>
-                    <default>false</default>
-                    <label>3</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -954,6 +897,18 @@ It is depending of the region assigned to the store location.</description>
                 <valueName>AMBA</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>LITO</controllingFieldValue>
+                <valueName>Litoral Sur</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>LITO</controllingFieldValue>
+                <valueName>Litoral Norte</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>LITO</controllingFieldValue>
+                <valueName>Litoral Centro</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>MEDI</controllingFieldValue>
                 <valueName>Noroeste Andina</valueName>
             </valueSettings>
@@ -976,18 +931,6 @@ It is depending of the region assigned to the store location.</description>
             <valueSettings>
                 <controllingFieldValue>SUR</controllingFieldValue>
                 <valueName>Patagonia</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>LITO</controllingFieldValue>
-                <valueName>Litoral Sur</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>LITO</controllingFieldValue>
-                <valueName>Litoral Norte</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>LITO</controllingFieldValue>
-                <valueName>Litoral Centro</valueName>
             </valueSettings>
         </valueSet>
     </fields>
@@ -1275,7 +1218,6 @@ It is depending of the region assigned to the store location.</description>
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>AssociatedWarehouseId__c</columns>
-        <columns>RECORDTYPE</columns>
         <columns>PointOfSaleAddressNumber__c</columns>
         <columns>PointOfSaleChannel__c</columns>
         <columns>PointOfSaleDescription__c</columns>
@@ -1289,21 +1231,29 @@ It is depending of the region assigned to the store location.</description>
         <columns>PointOfSaleId__c</columns>
         <columns>PostOfficeCode__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>vlocity_cmt__City__c</field>
+            <operation>contains</operation>
+            <value>B</value>
+        </filters>
         <label>All</label>
-        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Call_Center</fullName>
         <columns>NAME</columns>
-        <columns>PointOfSaleAddressNumber__c</columns>
-        <columns>AssociatedWarehouseId__c</columns>
-        <columns>AssociatedWarehouseDefault__c</columns>
-        <columns>BillingMode__c</columns>
         <columns>Channel__c</columns>
-        <columns>Channel_Type__c</columns>
-        <columns>Channel_Type_2__c</columns>
         <columns>Channel_Type_3__c</columns>
-        <columns>vlocity_cmt__City__c</columns>
+        <columns>vlocity_cmt__OrganizationId__c</columns>
+        <columns>AssociatedWarehouseId__c</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>PointOfSaleAddressNumber__c</columns>
+        <columns>vlocity_cmt__State__c</columns>
+        <columns>Status__c</columns>
+        <columns>Region__c</columns>
+        <columns>Has_technical_service__c</columns>
+        <columns>vlocity_cmt__OperatingHoursId__c</columns>
+        <columns>Cluster__c</columns>
+        <columns>Technical_service_level__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -1311,10 +1261,144 @@ It is depending of the region assigned to the store location.</description>
             <value>vlocity_cmt__BusinessSite__c.Call_Center</value>
         </filters>
         <label>Call Center</label>
-        <language>es_MX</language>
+        <language>en_US</language>
     </listViews>
     <listViews>
-        <fullName>Talleres_de_ST</fullName>
+        <fullName>Digital</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>PointOfSaleAddressNumber__c</columns>
+        <columns>Region__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>vlocity_cmt__BusinessSite__c.Digital</value>
+        </filters>
+        <label>Digital</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Punto_de_venta_AG</fullName>
+        <columns>NAME</columns>
+        <columns>Channel__c</columns>
+        <columns>Channel_Type_3__c</columns>
+        <columns>vlocity_cmt__OrganizationId__c</columns>
+        <columns>AssociatedWarehouseId__c</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>PointOfSaleAddressNumber__c</columns>
+        <columns>vlocity_cmt__State__c</columns>
+        <columns>Status__c</columns>
+        <columns>Region__c</columns>
+        <columns>Has_technical_service__c</columns>
+        <columns>vlocity_cmt__OperatingHoursId__c</columns>
+        <columns>Cluster__c</columns>
+        <columns>Technical_service_level__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>vlocity_cmt__BusinessSite__c.Punto_de_venta_AG</value>
+        </filters>
+        <label>Punto de venta AG</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Punto_de_venta_GGCC</fullName>
+        <columns>NAME</columns>
+        <columns>Channel__c</columns>
+        <columns>Channel_Type_3__c</columns>
+        <columns>vlocity_cmt__OrganizationId__c</columns>
+        <columns>AssociatedWarehouseId__c</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>PointOfSaleAddressNumber__c</columns>
+        <columns>vlocity_cmt__State__c</columns>
+        <columns>Status__c</columns>
+        <columns>Region__c</columns>
+        <columns>Has_technical_service__c</columns>
+        <columns>vlocity_cmt__OperatingHoursId__c</columns>
+        <columns>Cluster__c</columns>
+        <columns>Technical_service_level__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>vlocity_cmt__BusinessSite__c.Punto_de_venta_GGCC</value>
+        </filters>
+        <label>Punto de venta GGCC</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Punto_de_venta_OC</fullName>
+        <columns>NAME</columns>
+        <columns>Channel__c</columns>
+        <columns>Channel_Type_3__c</columns>
+        <columns>vlocity_cmt__OrganizationId__c</columns>
+        <columns>AssociatedWarehouseId__c</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>PointOfSaleAddressNumber__c</columns>
+        <columns>vlocity_cmt__State__c</columns>
+        <columns>Status__c</columns>
+        <columns>Region__c</columns>
+        <columns>Has_technical_service__c</columns>
+        <columns>vlocity_cmt__OperatingHoursId__c</columns>
+        <columns>Cluster__c</columns>
+        <columns>Technical_service_level__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>vlocity_cmt__BusinessSite__c.Punto_de_venta_OC</value>
+        </filters>
+        <label>Punto de venta OC</label>
+        <language>es</language>
+    </listViews>
+    <listViews>
+        <fullName>Punto_de_venta_VIP</fullName>
+        <columns>NAME</columns>
+        <columns>Channel__c</columns>
+        <columns>Channel_Type_3__c</columns>
+        <columns>vlocity_cmt__OrganizationId__c</columns>
+        <columns>AssociatedWarehouseId__c</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>PointOfSaleAddressNumber__c</columns>
+        <columns>vlocity_cmt__State__c</columns>
+        <columns>Status__c</columns>
+        <columns>Region__c</columns>
+        <columns>Has_technical_service__c</columns>
+        <columns>vlocity_cmt__OperatingHoursId__c</columns>
+        <columns>Cluster__c</columns>
+        <columns>Technical_service_level__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>vlocity_cmt__BusinessSite__c.Punto_de_venta_VIP</value>
+        </filters>
+        <label>Punto de venta VIP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Sucursales_de_Correo</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__OrganizationId__c</columns>
+        <columns>vlocity_cmt__StreetAddress__c</columns>
+        <columns>PointOfSaleAddressNumber__c</columns>
+        <columns>vlocity_cmt__State__c</columns>
+        <columns>Region__c</columns>
+        <columns>vlocity_cmt__OperatingHoursId__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>vlocity_cmt__BusinessSite__c.Sucursales_de_Correo</value>
+        </filters>
+        <label>Sucursales de Correo</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Taller_de_ST</fullName>
         <columns>NAME</columns>
         <columns>vlocity_cmt__StreetAddress__c</columns>
         <columns>PointOfSaleAddressNumber__c</columns>
@@ -1325,12 +1409,12 @@ It is depending of the region assigned to the store location.</description>
             <operation>equals</operation>
             <value>vlocity_cmt__BusinessSite__c.Taller_de_ST</value>
         </filters>
-        <label>Talleres de ST</label>
+        <label>Taller de ST</label>
         <language>en_US</language>
     </listViews>
     <nameField>
         <label>Name</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Text</type>
     </nameField>
     <pluralLabel>Store Locations</pluralLabel>
@@ -1681,13 +1765,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Personal</fullName>
@@ -1695,25 +1772,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Telecom</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2311,13 +2369,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Personal</fullName>
@@ -2325,25 +2376,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Telecom</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2785,13 +2817,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Homologado</fullName>
@@ -2799,25 +2824,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Informado</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3419,13 +3425,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Homologado</fullName>
@@ -3441,25 +3440,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Telecom</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4061,13 +4041,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Personal</fullName>
@@ -4075,25 +4048,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Telecom</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4499,13 +4453,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Homologado</fullName>
@@ -4521,25 +4468,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Telecom</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5141,13 +5069,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Homologado</fullName>
@@ -5163,25 +5084,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Telecom</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5799,13 +5701,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Level_of_the_Stand__c</picklist>
-            <values>
-                <fullName>Dentro</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Momento_PDV__c</picklist>
             <values>
                 <fullName>Homologado</fullName>
@@ -5821,25 +5716,6 @@ It is depending of the region assigned to the store location.</description>
             </values>
             <values>
                 <fullName>Telecom</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Order__c</picklist>
-            <values>
-                <fullName>0</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>1</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>2</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6115,7 +5991,45 @@ It is depending of the region assigned to the store location.</description>
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>vlocity_cmt__OrganizationId__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Cluster__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Status__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>vlocity_cmt__OperatingHoursId__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Region__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Channel__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Channel_Type_3__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>RECORDTYPE</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Ownership__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Channel__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Cluster__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Status__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__OperatingHoursId__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__State__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ownership__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>vlocity_cmt__OrganizationId__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Region__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Channel_Type__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>vlocity_cmt__OrganizationId__c</searchFilterFields>
+        <searchFilterFields>Channel__c</searchFilterFields>
+        <searchFilterFields>Cluster__c</searchFilterFields>
+        <searchFilterFields>vlocity_cmt__OperatingHoursId__c</searchFilterFields>
+        <searchFilterFields>Region__c</searchFilterFields>
+        <searchFilterFields>Channel_Type__c</searchFilterFields>
+        <searchFilterFields>RECORDTYPE</searchFilterFields>
+        <searchFilterFields>Ownership__c</searchFilterFields>
+        <searchFilterFields>Status__c</searchFilterFields>
+        <searchResultsAdditionalFields>vlocity_cmt__OrganizationId__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Cluster__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Channel__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Channel_Type_3__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Has_technical_service__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Region__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__City__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ownership__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>vlocity_cmt__OperatingHoursId__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

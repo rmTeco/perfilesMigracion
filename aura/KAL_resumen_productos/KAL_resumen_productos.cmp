@@ -1,0 +1,39 @@
+<aura:component controller="KAL_resumen_productos_controller" implements="forceCommunity:availableForAllPageTypes" access="global">
+	
+    <aura:handler name="init" action="{!c.setProducts}" value="{!this}" />
+    
+    <aura:attribute name="products" type="Map" />
+    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+        <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="Id Producto">Id Producto</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Nombre Producto">Nombre Producto</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Precio Producto">Precio</div>
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <!--<aura:iteration items="{!v.products}" var="product">-->
+                <tr>
+                    <td data-label="Product Id">
+                        <div class="slds-truncate" title="Id">{!v.products.Id}</div>
+                    </td>
+                    <td data-label="Product Name">
+                        <div class="slds-truncate" title="Name">{!v.products.Name}</div>
+                    </td>
+                    <td data-label="Product Name">
+                        <div class="slds-truncate" title="Name">{!v.products.Precio}</div>
+                    </td>
+                </tr>
+            <!--</aura:iteration>-->
+        </tbody>
+        
+</table>
+    
+</aura:component>

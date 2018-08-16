@@ -9,6 +9,8 @@ public class LinesManagerInputMapFactoryTest {
         Map<String, Object> Account = new Map<String, Object>();
        	Account.put('BillingState', 'SomeRandomValue');
         Account.put('BillingCity', 'SomeRandomValues');
+       	Account.put('ShippingProvince', 'SomeRandomValue');
+        Account.put('ShippingLocalidad', 'SomeRandomValues');
         Map<String, Object> LineAssignment = new Map<String, Object>();
         Map<String, Object> SearchBlock = new Map<String, Object>();
         SearchBlock.put('SelectProvincia', 'SomeRandomValue');

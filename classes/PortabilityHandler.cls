@@ -95,23 +95,35 @@ public class PortabilityHandler {
             //Case ca = [Select (Select CommentBody From CaseComments) From Case Where Id = '5006C000001AUBS' LIMIT 1]
 
             //Process Case
-            for(Id caseId: cases) { 
-                caseObj = [Select Port_Market__c, Port_Rejection_Reason__c, Status, Subarea__c, ExternalCaseId__c, (Select CommentBody From CaseComments) From Case Where Id = :caseId LIMIT 1];
-                lineNos = new List<String>();
-                for (CaseComment com: caseObj.CaseComments){
+            List<Case> caseList = [Select Id, Port_Market__c, Port_Rejection_Reason__c, Status, Subarea__c, ExternalCaseId__c, (Select CommentBody From CaseComments) From Case Where Id IN:cases];
+            Map<Id,List<String>> mapListLines = new Map<Id,List<String>>();
+            lineNos = new List<String>();
+            for (case caseOb : caseList){
+                List<String> lineNosAux = new List<String>();
+                for (CaseComment com: caseOb.CaseComments){
                     lineNos.add(com.CommentBody);
+                    lineNosAux.add(com.CommentBody);
                 }
-                System.debug('lineNos: '+lineNos);
-                
-                if (caseObj.Subarea__c == 'APSI'){
-                    //Validate Asset State in the CRM
-                    lines = [SELECT vlocity_cmt__ActivationDate__c, Product2.vlocity_cmt__Type__c, MSISDN__c FROM Asset WHERE MSISDN__c in :lineNos AND Status = 'Active'];
+                mapListLines.put(caseOb.Id,lineNosAux);
+            }
+            lines = [SELECT vlocity_cmt__ActivationDate__c, Product2.vlocity_cmt__Type__c, MSISDN__c FROM Asset WHERE MSISDN__c in :lineNos AND Status = 'Active'];
+            Map<String,Asset> mapLines = new Map<String,Asset>();
+            for (Asset lineAux : lines){
+                mapLines.put(lineAux.MSISDN__c, lineAux);
+            }
+            
+            for(Case caseOb: CaseList) { 
 
-                    System.debug('lines: '+lines);
-
+                if (caseOb.Subarea__c == 'APSI'){
+                    List<Asset> linesAux = new List<Asset>();
+                    List<String> lineNosAux = new List<String>();
+                    for (CaseComment com: caseOb.CaseComments){
+                        linesAux.add(mapLines.get(com.CommentBody));
+                    }
+                    lineNosAux = mapListLines.get(caseOb.Id);
                     //create a mapping to count quantity of lines of each market family
                     markets = new Map<String,Integer>();
-                    for (Asset lineObj: lines){
+                    for (Asset lineObj: linesAux){
                         auxMarket = lineObj.Product2.vlocity_cmt__Type__c;
                         System.debug('auxMarket: '+auxMarket);
                         if(auxMarket == 'Plan Pospago' || auxMarket == 'Plan Hibrido')
@@ -130,90 +142,90 @@ public class PortabilityHandler {
                     System.debug('markets: '+markets);
 
                     //If some of the lines are not in the CRM reject the request with the corresponding reason code
-                    if (lines.size() != lineNos.size()){
-                        System.debug('reject: lines.size()='+ lines.size()+ '!= lineNos.size()=' +lineNos.size());
-                        caseObj.Port_Rejection_Reason__c = PortOutReject_NonTPLines;
+                    if (linesAux.size() != lineNosAux.size()){
+                        System.debug('reject: linesAux.size()='+ linesAux.size()+ '!= lineNosAux.size()=' +lineNosAux.size());
+                        caseOb.Port_Rejection_Reason__c = PortOutReject_NonTPLines;
                     }
                     else{
                         //Product2: 'Plan Prepago', 'Plan Pospago', 'Plan Hibrido'
                         //Every lines has to belong to the same market segment
-                        linesize = lines.size();
+                        linesize = linesAux.size();
 
-                        if(caseObj.Port_Market__c == 'PRE'){
+                        if(caseOb.Port_Market__c == 'PRE'){
                             //Prepaid validations
-                            System.debug('Case Port Market='+caseObj.Port_Market__c);
+                            System.debug('Case Port Market='+caseOb.Port_Market__c);
                             System.debug('markets.containsKey(POS) =' + markets.containsKey('POS'));
-                            System.debug('lines[0].vlocity_cmt__ActivationDate__c =' +lines[0].vlocity_cmt__ActivationDate__c);
+                            System.debug('lines[0].vlocity_cmt__ActivationDate__c =' +linesAux[0].vlocity_cmt__ActivationDate__c);
                             System.debug('date.today().addDays(iStayLimitDays) ='+ date.today().addDays(iStayLimitDays));
                             
                             if (lineNos.size() > 1){
                                 //Prepaid port request could only have 1 line
-                                caseObj.Port_Rejection_Reason__c = PortOutReject_PREDontMeet;
+                                caseOb.Port_Rejection_Reason__c = PortOutReject_PREDontMeet;
                                 System.debug('reject: lineNos.size()='+ lineNos.size()+' > 1');
                             }
-                            else if(lines[0].vlocity_cmt__ActivationDate__c > date.today().addDays(iStayLimitDays)){
+                            else if(linesAux[0].vlocity_cmt__ActivationDate__c > date.today().addDays(iStayLimitDays)){
                                 //if the activation date is more recent than iStayLimitDays days as today, reject the request
-                                caseObj.Port_Rejection_Reason__c = PortOutReject_StayLimit;
-                                System.debug('reject: lines[0].vlocity_cmt__ActivationDate__c='+lines[0].vlocity_cmt__ActivationDate__c+ '< date.today().addDays(iStayLimitDays)='+date.today().addDays(iStayLimitDays));
+                                caseOb.Port_Rejection_Reason__c = PortOutReject_StayLimit;
+                                System.debug('reject: linesAux[0].vlocity_cmt__ActivationDate__c='+linesAux[0].vlocity_cmt__ActivationDate__c+ '< date.today().addDays(iStayLimitDays)='+date.today().addDays(iStayLimitDays));
                             }
                             else if(markets.containsKey('POS')){
-                                //A PRE request doesn't has to have POS lines in the list
-                                caseObj.Port_Rejection_Reason__c = PortOutReject_PREbutPos;
+                                //A PRE request doesn't has to have POS linesAux in the list
+                                caseOb.Port_Rejection_Reason__c = PortOutReject_PREbutPos;
                                 System.debug('reject: markets.get(POS)='+markets.get('POS')+ ' != null) ');
                             }
                             else{
-                                montoRecarga = consultarMonto(lines[0].MSISDN__c, dtFrom, dtToday);
+                                montoRecarga = consultarMonto(linesAux[0].MSISDN__c, dtFrom, dtToday);
                                 if (montoRecarga < montominimo){
-                                    caseObj.Port_Rejection_Reason__c = PortOutReject_PREDontMeet;
+                                    caseOb.Port_Rejection_Reason__c = PortOutReject_PREDontMeet;
                                     System.debug('reject: montoRecarga ='+montoRecarga+ '< montominimo='+montominimo);
                                 }
 
                             }
 
                         }//end If PRE line
-                        else if(caseObj.Port_Market__c == 'POS'){
-                            System.debug('Case Port Market='+caseObj.Port_Market__c);
+                        else if(caseOb.Port_Market__c == 'POS'){
+                            System.debug('Case Port Market='+caseOb.Port_Market__c);
                             System.debug('markets.containsKey(PRE) =' + markets.containsKey('PRE'));
  
                             if(markets.containsKey('PRE')){
                                 //A POS request doesn't has to have PRE lines in the list
-                                caseObj.Port_Rejection_Reason__c = PortOutReject_POSbutPre;
+                                caseOb.Port_Rejection_Reason__c = PortOutReject_POSbutPre;
                                 System.debug('reject: markets.get(PRE)='+markets.get('PRE')+ ' != null) ');
                             } 
                         }
                     } //end id 
                         String aceptada;
 
-                        if (caseObj.Port_Rejection_Reason__c != null){
+                        if (caseOb.Port_Rejection_Reason__c != null){
                             aceptada = 'false';
-                            caseObj.Status = 'Rechazada Pendiente ABD';
+                            caseOb.Status = 'Rechazada Pendiente ABD';
                         }        
                         else{
                             aceptada = 'true';
-                            caseObj.Status = 'Aprobada Pendiente de Portación';
+                            caseOb.Status = 'Aprobada Pendiente de Portación';
                             //List<Asset> auxAssets = new List<Asset>();
-                            for (Asset lineObj: lines)
+                            for (Asset lineObj: linesAux)
                                 lineObj.PortOut__c = true;
                             //update lines;
-                            assetProcess.addAll(lines);
+                            assetProcess.addAll(linesAux);
                             
                         }
                     
 
-                    //update caseObj;
-                    casesProcess.add(caseObj);
-                    String noSol = caseObj.ExternalCaseId__c;
+                    //update caseOb;
+                    casesProcess.add(caseOb);
+                    String noSol = caseOb.ExternalCaseId__c;
                     String codInteraccion = 'ID1';
-                    String codCausa = caseObj.Port_Rejection_Reason__c;
+                    String codCausa = caseOb.Port_Rejection_Reason__c;
 
                     //invoke IF005
                     Integer resultBDO = informBDO(noSol,aceptada, codCausa, codInteraccion, '1', 'Luis');
                     System.debug('resultBDO='+resultBDO);
 
                 }//end if
-                else if (caseObj.Subarea__c == 'RESI'){
-                    caseObj.Status = 'Rechazada Pendiente ABD';
-                    casesProcess.add(caseObj);
+                else if (caseOb.Subarea__c == 'RESI'){
+                    caseOb.Status = 'Rechazada Pendiente ABD';
+                    casesProcess.add(caseOb);
                 }
  
                 
@@ -377,14 +389,13 @@ public class PortabilityHandler {
     @future
     public static void UpdatePortabilityCases(List<Id> cases){
         String methodName = 'UpdatePortabilityCases';
-        Case caseObj;
         List<Case> casesProcess = new List<Case>();
 
         try{
 
             //Process Cases
-            for(Id caseId: cases) { 
-                caseObj = [Select Origin, Area__c, Subarea__c, Status From Case Where Id = :caseId LIMIT 1];
+            List<Case> caseList = [Select Origin, Area__c, Subarea__c, Status From Case Where Id IN :cases];
+            for(Case caseObj: caseList) { 
                 if (caseObj.Origin == 'ALEX' && caseObj.Area__c == 'AREC' && caseObj.Subarea__c == 'NULL'){
                     //The ABD accept our reject and cancell the port out
                     caseObj.Status = 'Rechazada';

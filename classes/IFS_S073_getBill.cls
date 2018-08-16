@@ -1,10 +1,11 @@
 global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInterface {
-    public IFS_S073_getBill () {
-        //invokeMethod('getBill', null, null, null); -- Solo para hacer pruebas.
-    }
 
+    private static String guId = null;
+    
     global Boolean invokeMethod(String methodName, Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
         Boolean result = true;
+
+
         try {
             if (methodName.equals('getBill')){
                Map<String, Object> m = getBill(inputMap, outMap, options);
@@ -17,32 +18,48 @@ global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInt
             result = false;  
         } 
         catch(Exception e) {
-            System.debug('IFS_S073_getBill_prueba:invokeMethod -> exception: ' + e.getStackTraceString());
+            System.debug('IFS_S073_getBill.invokeMethod -> exception: ' + e.getStackTraceString());
             result = false;
         }
+
+
         return result;
     }    
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pReq, String pRes, Integer pResStatus) {
+        System.debug('Entre en writeLog - pTipo --> ' + pTipo + ' - pReq --> ' + pReq + ' - pRes --> ' + pRes + ' - pResStatus --> ' + pResStatus);
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = String.isBlank(guId) ? GuidUtil.NewGuid() : guId;  
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S073', pTipo, guId, '', '');  
+        }
+        else {
+            String datos = 'status code = ' + pResStatus + ' ; status = ; ';
+            if (pResStatus < 300) {
+                datos += 'request to DPW OK';
+            }
+            else {
+                datos += 'request to DPW FAIL ; request body = ' + (String.isBlank(pReq)?'':pReq) + ' ; Response = ' + pRes;
+            } 
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S073', pTipo, guId, '', datos);  
+        }
+    }
+
 
     /**
      * @Objetivo: Recibe un request y devuelve un mapa de bits.
      */
     private Map<String, Object> getBill (Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
-
-        if (inputMap == null || inputMap.isEmpty()) {
-            //-- Si el inputMap viene nulo o vacio asumo que es una corrida de prueba.
-            
-            System.debug('InputMap vino vacio se genera inputMap con datos de prueba.');
-            inputMap = new Map<String, Object>();
-            inputMap.put('database', 'facturaciclica');
-            inputMap.put('usuario', 'DESARROLLO');
-            inputMap.put('password', 'DESARROLLO');
-            inputMap.put('nroCuenta', '0000017607');
-            inputMap.put('fechaEmision', '2017-11-30 00:00:00'); 
-        }
-
         System.debug('InputMap recibido --> ' +  inputMap);
 
         try {
+            if (inputMap == null || inputMap.isEmpty()) {
+                throw new CalloutException('El inputMap vino vacio o nulo.');
+            }
             String body = JSON.serialize(inputMap);
             if (outMap == null) {
                 outMap = new Map<String, Object>();
@@ -53,6 +70,7 @@ global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInt
                 return (Map<String, Object>)JSON.deserializeUntyped(response.getBody());
             }
             else {
+                HttpResponse response = makeCallout(body);
                 if (inputMap != null && inputMap.containsKey('Request')) {
                     Map<String, Object> request = (Map<String, Object>)inputMap.get('Request');
                     if (!request.containsKey('database')) {
@@ -89,6 +107,7 @@ global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInt
         HttpRequest request = new HttpRequest();
         EndPointService__c endpoint;
 
+
         try {
             List<EndPointService__c> endPoints = [SELECT Name, EndPoint__c FROM EndPointService__c WHERE Name = 'IFS_s073' LIMIT 1];
             if (endPoints != null && !endPoints.isEmpty()) {
@@ -104,9 +123,19 @@ global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInt
             request.setMethod('POST');
             request.setEndpoint(endpoint.endpoint__c);
             request.setBody(body);
-            //String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
-            //request.setHeader('Authorization', authorizationHeader);
-            return http.send(request);
+            if (!Test.isRunningTest()) {
+                String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
+                request.setHeader('Authorization', authorizationHeader);
+                HttpResponse response = http.send(request);
+
+                writeLog ('REQ', null, null, 0);
+                writeLog ('RES', request.getBody(), response.getBody(), response.getStatusCode());
+                
+                return response;
+            }
+            else {
+                return null;
+            }                
         }
         catch (Exception e) {
             throw new CalloutException(e);

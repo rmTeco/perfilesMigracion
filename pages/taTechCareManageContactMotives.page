@@ -1,0 +1,227 @@
+<apex:page docType="html-5.0" lightningStylesheets="true" controller="ta_techCare_contactMOtive_controller">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <head>
+            <apex:includeScript value="/soap/ajax/33.0/connection.js" />
+            <apex:slds />
+            <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script>
+            <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+        </head>
+        
+        <body>
+            <apex:form id="form1">
+                <div class="slds-scope slds-m-top_large" style="text-align: left;width: 100%;">
+                    <!-- SPINNER -->
+                    <apex:actionStatus id="spinner">
+                        <apex:facet name="start">
+                            <div class="slds-spinner_container" style="position: absolute;">
+                                <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                                    <span class="slds-assistive-text">Loading</span>
+                                    <div class="slds-spinner__dot-a"></div>
+                                    <div class="slds-spinner__dot-b"></div>
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>
+
+                    <!-- NEW INCIDENT -->
+                    <div id="newIncidentForm" style="display: none;">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </button>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Nuevo Incidente</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-form-element slds-m-bottom_small">
+                                        <label class="slds-form-element__label" for="input-unique-id">Nombre del incidente:</label>
+                                        <div class="slds-form-element__control">
+                                        <apex:input id="newIncidentName" value="{!newIncident}" styleClass="slds-input"/>
+                                      </div>
+                                    </div>
+
+                                    <apex:selectRadio value="{!serviceOptionNewInc}" layout="pageDirection">
+                                        <apex:selectOption itemValue="1" itemLabel=" Servicio seleccionado"/>
+                                        <apex:selectOption itemValue="2" itemLabel=" Todos los servicios del canal"/>
+                                        <apex:selectOption itemValue="3" itemLabel=" Todos los servicios de todos los canales"/>
+                                    </apex:selectRadio>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button onclick="$('#newIncidentForm').hide(); return false" class="slds-button slds-button_neutral">Cancelar</button>
+                                    <apex:commandButton action="{!createIncident}" styleClass="slds-button slds-button_brand" value="Guardar" id="theButton"/>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </div>
+
+                    <!-- SERVICE EDIT FORM -->
+                    <div id="editServiceForm" style="display: none;">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </button>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modificar Servicio</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-form-element slds-m-bottom_small">
+                                        <label class="slds-form-element__label" for="input-unique-id">Nombre del servicio:</label>
+                                        <div class="slds-form-element__control">
+                                        <apex:input id="modifiedServiceName" value="{!newService}" styleClass="slds-input"/>
+                                      </div>
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button onclick="$('#editServiceForm').hide(); return false" class="slds-button slds-button_neutral">Cancelar</button>
+                                    <apex:commandButton action="{!editService}" styleClass="slds-button slds-button_brand" value="Guardar" id="theButton2"/>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </div>
+
+                    <!-- INCIDENT EDIT FORM -->
+                    <div id="editIncidentForm" style="display: none;">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                                        <span class="slds-assistive-text">Cerrar</span>
+                                    </button>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Modificar Incidente</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <div class="slds-form-element slds-m-bottom_small">
+                                        <label class="slds-form-element__label" for="input-unique-id">Nombre del incidente:</label>
+                                        <div class="slds-form-element__control">
+                                        <apex:input id="modifiedIncidentName" value="{!editedIncident}" styleClass="slds-input"/>
+                                      </div>
+                                    </div>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button onclick="$('#editIncidentForm').hide(); return false" class="slds-button slds-button_neutral">Cancelar</button>
+                                    <apex:commandButton action="{!editIncident}" styleClass="slds-button slds-button_brand" value="Guardar" id="theButton3"/>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </div>
+
+                    <div class="slds-box slds-size_1-of-3" style="margin: auto; margin-bottom: 15px">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control slds-size_1-of-1 slds-m-bottom_small">
+                                <!-- CHANNEL LABEL -->
+                                <div class="slds-clearfix">
+                                    <div class="slds-clearfix">
+                                        <div class="slds-float_left">
+                                            <label class="slds-form-element__label" for="select-01">Canal</label>
+                                        </div>
+                                        <!-- <div class="slds-float_right">
+                                            <button class="slds-button slds-button_icon-brand">
+                                                <span class="slds-icon_container slds-icon__svg--default">
+                                                    <svg aria-hidden="true" class="slds-icon slds-icon-text-default" style='height: 15px; width: 15px'>
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                
+                                <!-- CHANNEL LIST -->
+                                <div class="slds-select_container">
+                                    <apex:selectList styleClass="slds-select" value="{!selectedChannel}" size="1">
+                                        <apex:selectOptions value="{!channelList}"/>
+                                        <apex:actionSupport status="spinner" event="onchange" action="{!refreshServices}" reRender="SelectService2, SelectIncident" />
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control slds-size_1-of-1 slds-m-bottom_small">
+                                <!-- SERVICE LABEL -->
+                                <div class="slds-clearfix">
+                                    <div class="slds-clearfix">
+                                        <div class="slds-float_left">
+                                            <label class="slds-form-element__label" for="SelectService2">Servicio</label>
+                                        </div>
+
+                                        <!-- EDIT SERVICE BUTTON -->
+                                        <div class="slds-float_right">
+                                            <button onclick="$('#editServiceForm').show(); return false" class="slds-button">
+                                                <span class="slds-icon_container slds-icon__svg--default slds-align_absolute-center">
+                                                    <svg aria-hidden="true" class="slds-icon slds-icon-text-default" style='height: 15px; width: 15px'>
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- SERVICE LIST -->
+                                <div class="slds-select_container">
+                                    <apex:selectList styleClass="slds-select" id="SelectService2" value="{!selectedService}" size="1">
+                                        <apex:selectOptions value="{!serviceList}"/>
+                                        <apex:actionSupport status="spinner" event="onchange" action="{!refreshIncidents}" reRender="SelectIncident,modifiedServiceName" />
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control slds-size_1-of-1">
+                                <!-- INCIDENT LABEL -->
+                                <div class="slds-clearfix">
+                                    <div class="slds-clearfix">
+                                        <div class="slds-float_left">
+                                            <label class="slds-form-element__label" for="SelectIncident">Incidente</label>
+                                        </div>
+                                        <!-- NEW INCIDENT BUTTON -->
+                                        <div class="slds-float_right">
+                                            <button onclick="$('#newIncidentForm').show(); return false" class="slds-button">
+                                                <span class="slds-icon_container slds-icon__svg--default slds-align_absolute-center">
+                                                    <svg aria-hidden="true" class="slds-icon slds-icon-text-default" style='height: 15px; width: 15px'>
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#add')}"></use>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <!-- EDIT INCIDENT BUTTON -->
+                                        <div class="slds-float_right">
+                                            <button onclick="$('#editIncidentForm').show(); return false" class="slds-button">
+                                                <span class="slds-icon_container slds-icon__svg--default slds-align_absolute-center">
+                                                    <svg aria-hidden="true" class="slds-icon slds-icon-text-default" style='height: 15px; width: 15px'>
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#edit')}"></use>
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- INCIDENT LIST -->
+                                <div class="slds-select_container">
+                                    <apex:selectList styleClass="slds-select" id="SelectIncident" value="{!selectedIncident}" size="1">
+                                        <apex:selectOptions value="{!incidentList}"/>
+                                        <apex:actionSupport status="spinner" event="onchange" action="{!refreshIncidents}" reRender="modifiedIncidentName" />
+                                    </apex:selectList>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <div style='margin-top: 15px'>
+                            <apex:outputText rendered="{!error != null}" styleClass="slds-text-color_error" value="{!error}" escape="false"/>
+                            <apex:outputText rendered="{!success != null}" styleClass="slds-text-color_default" value="{!success}" escape="false"/>
+                        </div>
+                    </div>
+                </div>
+            </apex:form>
+        </body>
+    </html>
+</apex:page>

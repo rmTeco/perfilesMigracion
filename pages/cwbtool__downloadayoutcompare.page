@@ -1,0 +1,4 @@
+<apex:page controller="cwbtool.LayoutFieldComparatorController" contenttype="application/x-excel#layoutcompareDetail_{!TODAY()}.xls" readOnly="true">
+  <c:downloadayoutcompare lstComparedLayout="{!lstComparedLayout}" lstDiffDetail="{!lstDiffDetail}"
+  onlyMismatch="{!onlyConflict}"></c:downloadayoutcompare>
+</apex:page>

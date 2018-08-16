@@ -18,7 +18,9 @@ global with sharing class ta_care_MarksManagement implements vlocity_cmt.Vlocity
             if(methodName.equals('updateClientAttributeAssignments')){
                 updateClientAttributeAssignments(input,outMap,options);
             }
-            
+            if(methodName.equals('setFraudAndValidAssetForContextIdAndAccountID')){
+                setFraudAndValidAssetForContextIdAndAccountID(input,outMap,options);
+            }
         }
         catch(Exception e)
         {
@@ -124,7 +126,7 @@ global with sharing class ta_care_MarksManagement implements vlocity_cmt.Vlocity
 		setAccountsId.add(contextID);
 		System.debug('setAccountsId cargada ' + setAccountsId);
 		List<vlocity_cmt__AttributeAssignment__c> marks = [SELECT id,name,vlocity_cmt__RemovedFlag__c,vlocity_cmt__AddDate__c,vlocity_cmt__RemoveDate__c,isParentMark__c,vlocity_cmt__ObjectId__c
-															,vlocity_cmt__ObjectLink__c,vlocity_cmt__AttributeId__c,vlocity_cmt__AttributeCategoryId__c FROM vlocity_cmt__AttributeAssignment__c
+															,vlocity_cmt__ObjectLink__c,vlocity_cmt__AttributeId__c,vlocity_cmt__AttributeCategoryId__c,vlocity_cmt__Data__c FROM vlocity_cmt__AttributeAssignment__c
 															WHERE isParentMark__c = true AND vlocity_cmt__ObjectId__c in: setAccountsId AND vlocity_cmt__AttributeId__c =: markID];
 	    System.debug('marks ' + marks);
 		List<vlocity_cmt__AttributeAssignment__c> attAssigToUpdate = new List<vlocity_cmt__AttributeAssignment__c>();
@@ -162,10 +164,42 @@ global with sharing class ta_care_MarksManagement implements vlocity_cmt.Vlocity
 				attAssigToUpdate.add(attAssig);
 			}			
 		}
+        system.debug('attAssigToUpdate-->'+attAssigToUpdate);
 		update attAssigToUpdate;
 	}
 	catch(Exception e){
 		
 	}
 }
+
+    void setFraudAndValidAssetForContextIdAndAccountID (Map<String, Object> input, Map<String, Object> outMap, Map<String,Object> options){
+        try{
+            System.debug('ENTRO EN setFraudAndValidAssetForContextIdAndAccountID ');
+            System.debug('accountId 1 : ' + options.get('accountId'));
+            ID accountID = (ID)options.get('accountId');
+            Integer numberArray = (Integer)options.get('numberArray');
+            System.debug('numberArray: ' + numberArray);
+            
+            if(numberArray > 1){
+                List<Object> inputList = (List<Object>)options.get('BillingAccounts');
+                for(Object t : inputList){
+                    Map<String, Object> t1 = (Map<String, Object>)t;
+                    if(t1.get('AccountId') == accountID){
+                        outMap.put('CountValidAssets', t1.get('ActiveAssets') == false ? 0:1);
+                        outMap.put('BillingAccounts', t1);
+                    }
+                }  
+            }else {
+                Map<String, Object> account = (Map<String, Object>)options.get('BillingAccounts');
+                outMap.put('CountValidAssets', account.get('ActiveAssets') == false ? 0:1);
+            }
+            
+            outMap.put('AccountIdExist',true);
+            
+        }
+        catch(Exception e){
+           System.debug('Error =' + e); 
+           outMap.put('AccountIdExist',false);
+        }
+    }
 }

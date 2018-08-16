@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>Stores all the exceptions thrown by code</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <fields>
+        <fullName>cwbtool__ErrorType__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Type of exception, such as DmlException, ListException, MathException, and so on.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Type of exception, such as DmlException, ListException, MathException, and so on.</inlineHelpText>
+        <label>Error Type</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>cwbtool__LineNumber__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Line Number from where the exception was thrown.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Line Number from where the exception was thrown.</inlineHelpText>
+        <label>Line Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>cwbtool__Message__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Error Message that displays for the user.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Error Message that displays for the user.</inlineHelpText>
+        <label>Message</label>
+        <length>1000</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>cwbtool__StackTrace__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Detailed stack trace showing additional error information</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Detailed stack trace showing additional error information</inlineHelpText>
+        <label>Stack Trace</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <label>Error Log</label>
+    <listViews>
+        <fullName>cwbtool__All</fullName>
+        <columns>NAME</columns>
+        <columns>cwbtool__ErrorType__c</columns>
+        <columns>cwbtool__LineNumber__c</columns>
+        <columns>cwbtool__Message__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>EL-{00000000}</displayFormat>
+        <label>Error Log ID</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Error Logs</pluralLabel>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>cwbtool__ErrorType__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>cwbtool__LineNumber__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>cwbtool__Message__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>cwbtool__StackTrace__c</lookupDialogsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -186,7 +186,23 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>AccountIntegrationId__c</field>
+                <field>Billing_Address__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Migrated__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Shipping_Address__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Club_SubscriptionStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Club_SubscriptionDate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -200,7 +216,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>vlocity_cmt__vSLA__c</field>
+                <field>SegmentLevel1__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>SegmentLevel2__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -450,10 +470,13 @@
     <relatedLists>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>
+        <fields>Gestion__c</fields>
         <fields>ORDERS.EFFECTIVE_DATE</fields>
-        <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>ORDERS.TOTAL_AMOUNT</fields>
         <fields>ORDERS.LAST_UPDATE</fields>
+        <fields>vlocity_cmt__OrderTotal__c</fields>
+        <fields>ACTIVATEDBY_USER.ALIAS</fields>
+        <fields>vlocity_cmt__RequestDate__c</fields>
         <relatedList>RelatedOrderList</relatedList>
         <sortField>ORDERS.ORDER_NUMBER</sortField>
         <sortOrder>Desc</sortOrder>
@@ -468,6 +491,14 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Cluster__c</fields>
+        <fields>Status__c</fields>
+        <fields>vlocity_cmt__OperatingHoursId__c</fields>
+        <fields>Region__c</fields>
+        <fields>Channel__c</fields>
+        <fields>Channel_Type_3__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Ownership__c</fields>
         <relatedList>vlocity_cmt__BusinessSite__c.vlocity_cmt__OrganizationId__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -547,7 +578,31 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>GP_Consumer_Account__c.Consumer_Account__c</relatedList>
+        <relatedList>GP_Socio__c.Cuenta__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.AssetProvidedBy__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.AssetServicedBy__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.BillingAccount__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.Service_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>GP_Aviso_Vencimiento__c.Cuenta__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -556,7 +611,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000LpIX</masterLabel>
+        <masterLabel>00h6C000000Ehh0</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>2</sizeY>
         <summaryLayoutItems>

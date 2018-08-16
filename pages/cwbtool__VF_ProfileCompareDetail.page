@@ -1,0 +1,15 @@
+<apex:page controller="cwbtool.ProfileComparatorController" contentType="{!strContentType}" showHeader="{!previewOnly}" sidebar="false" standardStylesheets="false" tabStyle="CWB_Tool__tab">
+<apex:outputPanel rendered="{!previewOnly}">
+    <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}"/> 
+</apex:outputPanel>
+ <!-- <c:VFC_ProfileComparisondownload lstFullProfileDetail="{!lstFullProfileDetail}"/>-->
+ <apex:form rendered="{!previewOnly}">
+  <c:actionstatusNew ></c:actionstatusNew>
+     <apex:commandlink styleclass="Btn Btn-info btn-add1" onclick="showOverLay('Please wait...')" action="{!backToStartingPage}"  style="margin-left:0%!important;text-decoration:none;">
+      <span class="glyphicon glyphicon-step-backward"></span>
+      Back
+   </apex:commandlink>
+  </apex:form>
+  <c:VFC_ProfileComparisonPreview lstFullProfileDetail="{!lstFullProfileDetail}" rendered="{!previewOnly}"  isMultiOrg="{!isMultiOrg}" sourceOrg="{!objORGDetail.strSourceOrgName}" targetOrg="{!objORGDetail.strTargetOrgName}"/>
+ <c:VFC_ProfileComparisondownload lstFullProfileDetail="{!lstFullProfileDetail}" rendered="{!!previewOnly}" isMultiOrg="{!isMultiOrg}" sourceOrg="{!objORGDetail.strSourceOrgName}" targetOrg="{!objORGDetail.strTargetOrgName}"/>
+</apex:page>

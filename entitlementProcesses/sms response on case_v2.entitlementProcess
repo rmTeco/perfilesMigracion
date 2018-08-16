@@ -8,9 +8,9 @@
     <exitCriteriaFilterItems>
         <field>Case.Status</field>
         <operation>equals</operation>
-        <value>Closed, Resuelto, No Resuelto, Cancelada, Devolución con falla, Devolución destrucción total, Devolución</value>
+        <value>Closed, Resuelto, No Resuelto, Cancelada, Devolución con falla, Devolución Destrucción total, Devolución</value>
     </exitCriteriaFilterItems>
-    <isVersionDefault>true</isVersionDefault>
+    <isVersionDefault>false</isVersionDefault>
     <milestones>
         <businessHours>Default</businessHours>
         <milestoneCriteriaFilterItems>
@@ -21,12 +21,20 @@
         <milestoneName>SMS Response Milestone</milestoneName>
         <minutesToComplete>1440</minutesToComplete>
         <timeTriggers>
+            <actions>
+                <name>CaseCloseOnViolation</name>
+                <type>FieldUpdate</type>
+            </actions>
+            <actions>
+                <name>Update_Resolution_Comment_on_non_SMS</name>
+                <type>FieldUpdate</type>
+            </actions>
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
         </timeTriggers>
         <useCriteriaStartTime>false</useCriteriaStartTime>
     </milestones>
-    <name>sms response on case_v2</name>
-    <versionMaster>552c0000000015J</versionMaster>
-    <versionNumber>1</versionNumber>
+    <name>SMS Response on Case</name>
+    <versionMaster>5526C0000004CF1</versionMaster>
+    <versionNumber>2</versionNumber>
 </EntitlementProcess>

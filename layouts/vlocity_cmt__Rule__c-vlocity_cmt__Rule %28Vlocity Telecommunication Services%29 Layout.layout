@@ -37,13 +37,17 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>vlocity_cmt__FailureMessage__c</field>
+                <field>vlocity_cmt__Type__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__FailureMessage__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -68,10 +72,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__RuleType__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>vlocity_cmt__Type__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -107,15 +107,57 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__ActionTaken__c</fields>
+        <fields>vlocity_cmt__ContextActionId__c</fields>
+        <fields>vlocity_cmt__Sequence__c</fields>
+        <fields>vlocity_cmt__EntityFilterId__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <relatedList>vlocity_cmt__RuleFilter__c.vlocity_cmt__RuleId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__CalculationProcedureId__c</fields>
+        <fields>vlocity_cmt__EntityFilterId__c</fields>
+        <fields>vlocity_cmt__Index__c</fields>
+        <fields>vlocity_cmt__OfferingProcedureId__c</fields>
+        <fields>vlocity_cmt__ProductConfigurationProcedureId__c</fields>
+        <fields>vlocity_cmt__ProductRelationshipId__c</fields>
+        <fields>vlocity_cmt__ProductConfigurationProcedureProductId__c</fields>
+        <fields>vlocity_cmt__ProductRelationshipParentId__c</fields>
+        <fields>LAST_UPDATE</fields>
         <relatedList>vlocity_cmt__RuleAction__c.vlocity_cmt__RuleId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__EntityFilterId__c</fields>
+        <fields>vlocity_cmt__FieldName__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>vlocity_cmt__ObjectPath__c</fields>
+        <fields>vlocity_cmt__ObjectIdentifier__c</fields>
+        <fields>vlocity_cmt__Type__c</fields>
         <relatedList>vlocity_cmt__RuleVariable__c.vlocity_cmt__RuleId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <relatedList>vlocity_cmt__RuleFilter__c.vlocity_cmt__RuleId__c</relatedList>
+        <fields>vlocity_cmt__HeaderId__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>vlocity_cmt__ObjectId__c</fields>
+        <fields>OBJECT_ID</fields>
+        <fields>vlocity_cmt__RuleType__c</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <relatedList>vlocity_cmt__RuleAssignment__c.vlocity_cmt__RuleId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__IsActive__c</fields>
+        <fields>vlocity_cmt__EffectiveEndDate__c</fields>
+        <fields>vlocity_cmt__EffectiveStartDate__c</fields>
+        <fields>vlocity_cmt__HeaderId__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <fields>vlocity_cmt__Object__c</fields>
+        <relatedList>vlocity_cmt__ObjectRuleAssignment__c.vlocity_cmt__RuleId__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -123,7 +165,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000Lmjx</masterLabel>
+        <masterLabel>00h6C000000RNvl</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

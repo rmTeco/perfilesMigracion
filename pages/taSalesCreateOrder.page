@@ -41,17 +41,18 @@
                         coc.activeMessageBlacklist = false;
                         coc.close = close;
                         
-                        //init();
+                        // init();
                         checkAccountStatusAndRedirect();
 
                         function init () {
+                            console.info("INIT");
                             var accountId = "{!$CurrentPage.parameters.accountId}";
                             var contactId = "{!$CurrentPage.parameters.contactId}";
                             var newBilling = "{!$CurrentPage.parameters.newBilling}";
                             var operationCode = "{!$CurrentPage.parameters.operationCode}";
                             var orderId = "{!$CurrentPage.parameters.orderId}"; //Joshua - PFTA-6973
                             var cloneOrder = "{!$CurrentPage.parameters.CloneOrder}";
-                            
+                            console.info("accountId: "+accountId+" contactId: "+contactId+" newBilling: "+newBilling+" operationCode: "+operationCode+" orderId: "+orderId+" cloneOrder: "+cloneOrder);
                             var method = '';
                             var methodParam = '';
                             

@@ -79,7 +79,7 @@ global with sharing class TransformParam implements vlocity_cmt.VlocityOpenInter
         for (Object obj : plistPagoEfectivo){
             Map<String,Object> mapa = (Map<String,Object>)obj;
             Decimal value = (Decimal)mapa.get('montoRecarga');
-            // System.debug('Value montoRecarga: ' + value);
+            System.debug('Value montoRecarga: ' + value);
             mapa.put('montoRecarga',formatPlaces(value, 2));
         }
 

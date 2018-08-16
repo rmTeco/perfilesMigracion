@@ -3,6 +3,7 @@ global with sharing class PasswordResetHandler implements vlocity_cmt.VlocityOpe
     global PasswordResetHandler() {}
     global Boolean invokeMethod(String methodName, Map<String, Object> input, Map<String, Object> outMap, Map<String, Object> options) {
         System.debug('holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa como estas');
+        
         Boolean result = true;
         try
         {

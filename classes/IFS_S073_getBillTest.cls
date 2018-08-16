@@ -28,7 +28,7 @@ global with sharing class IFS_S073_getBillTest {
         Map<String, Object> outMap = new Map<String, Object>();
         Test.startTest();
         IFS_S073_getBill s073 = new IFS_S073_getBill();
-        Boolean result = s073.invokeMethod('getBill', inputMap, outMap, null);
+        Boolean result = s073.invokeMethod('getBill', inputMap, null, null);
         System.assertEquals(false, result); 
         Test.stopTest();
      }
@@ -50,7 +50,6 @@ global with sharing class IFS_S073_getBillTest {
     }
 
 
-
      static Map<String, Object>  getInputParam () {
         System.debug('----- getInputParam()');
 
@@ -62,21 +61,4 @@ global with sharing class IFS_S073_getBillTest {
         inputMap.put('fechaEmision', '2017-11-30 00:00:00');
         return inputMap;
      }
-    
-    @isTest static void testOkInputNUll () {
-        Map<String, Object> fieldsMap = getInputParam();
-        Map<String, Object> inputMap = new Map<String, Object>();
-        Map<String, Object> outMap = new Map<String, Object>();
-        Test.startTest();
-        IFS_S073_getBill s073 = new IFS_S073_getBill();
-        Boolean result = s073.invokeMethod('getBill', inputMap, outMap, null);
-        Test.stopTest();
-    }
-    
-    @isTest static void testMakeCallout () {
-        String body = '';
-        Test.startTest();
-        HttpResponse result = IFS_S073_getBill.makeCallout(body);
-        Test.stopTest();
-    }
 }

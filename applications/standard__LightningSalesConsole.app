@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Account_Record_Page2</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+        <pageOrSobjectType>Account</pageOrSobjectType>
+    </actionOverrides>
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
@@ -18,39 +27,120 @@
     <tabs>standard-Feed</tabs>
     <tabs>standard-CollaborationGroup</tabs>
     <tabs>standard-File</tabs>
-    <tabs>TS_Symptom__c</tabs>
+    <tabs>Contact_Motive__c</tabs>
+    <tabs>Location__c</tabs>
+    <tabs>Case_Resolution_Time__c</tabs>
+    <tabs>Case_Channel_Configuration__c</tabs>
+    <tabs>vlocity_cmt__ObjectClass__c</tabs>
+    <tabs>vlocity_cmt__ObjectLayout__c</tabs>
+    <tabs>vlocity_cmt__AttributeAssignment__c</tabs>
+    <tabs>vlocity_cmt__BusinessSite__c</tabs>
+    <tabs>vlocity_cmt__PromotionItem__c</tabs>
+    <tabs>vlocity_cmt__PricingElement__c</tabs>
+    <tabs>vlocity_cmt__DecompositionRelationship__c</tabs>
+    <tabs>vlocity_cmt__PriceList__c</tabs>
+    <tabs>vlocity_cmt__PriceListEntry__c</tabs>
+    <tabs>vlocity_cmt__Datastore__c</tabs>
+    <tabs>Crossobject__c</tabs>
     <tabs>vlocity_cmt__VlocityTrackingEntry__c</tabs>
     <tabs>Transaction_History__c</tabs>
-    <tabs>AttributesConfiguration</tabs>
-    <tabs>WorkTeam__c</tabs>
-    <tabs>vlocity_cmt__SyncDeltaObject__c</tabs>
-    <tabs>Team_Member__c</tabs>
+    <tabs>ReglasGestorPuntos</tabs>
+    <tabs>FinancialPromotion__c</tabs>
+    <tabs>GP_Atributo_de_una_transaccion__c</tabs>
+    <tabs>GP_Socio__c</tabs>
+    <tabs>Work_Team_Permission__c</tabs>
     <tabs>vlocity_cmt__InboundRESTInterface__c</tabs>
-    <tabs>Repro_Reporter</tabs>
-    <tabs>Permissions_by_Work_Team</tabs>
+    <tabs>DRAsset__c</tabs>
+    <tabs>Work_Team_Management</tabs>
+    <tabs>Address2__c</tabs>
+    <tabs>ManageMyWorkTeams</tabs>
+    <tabs>ManageCrossTeamMembers</tabs>
+    <tabs>vlocity_cmt__SyncDeltaObject__c</tabs>
+    <tabs>Mantenimiento_de_Eventos</tabs>
+    <tabs>GP_Evento_General__c</tabs>
+    <tabs>Permissions_by_workteam</tabs>
+    <tabs>DebugInfo__c</tabs>
+    <tabs>UI_ReproReporter</tabs>
+    <tabs>vlocity_cmt__OrchestrationItemDefinition__c</tabs>
+    <tabs>vlocity_cmt__VlocityUITemplate__c</tabs>
+    <tabs>vlocity_cmt__ApplicationTemplate__c</tabs>
+    <tabs>Diagnostic_Tools</tabs>
+    <tabs>Copado_Uploaded_Components</tabs>
+    <tabs>IntegrationLog__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>LightningSalesConsole_UtilityBar</utilityBar>
     <workspaceConfig>
         <mappings>
-            <tab>AttributesConfiguration</tab>
+            <tab>Address2__c</tab>
         </mappings>
         <mappings>
-            <tab>Permissions_by_Work_Team</tab>
+            <tab>Case_Channel_Configuration__c</tab>
         </mappings>
         <mappings>
-            <tab>Repro_Reporter</tab>
+            <tab>Case_Resolution_Time__c</tab>
         </mappings>
         <mappings>
-            <tab>TS_Symptom__c</tab>
+            <tab>Contact_Motive__c</tab>
         </mappings>
         <mappings>
-            <tab>Team_Member__c</tab>
+            <tab>Copado_Uploaded_Components</tab>
+        </mappings>
+        <mappings>
+            <tab>Crossobject__c</tab>
+        </mappings>
+        <mappings>
+            <tab>DRAsset__c</tab>
+        </mappings>
+        <mappings>
+            <tab>DebugInfo__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Diagnostic_Tools</tab>
+        </mappings>
+        <mappings>
+            <tab>FinancialPromotion__c</tab>
+        </mappings>
+        <mappings>
+            <tab>GP_Atributo_de_una_transaccion__c</tab>
+        </mappings>
+        <mappings>
+            <tab>GP_Evento_General__c</tab>
+        </mappings>
+        <mappings>
+            <tab>GP_Socio__c</tab>
+        </mappings>
+        <mappings>
+            <tab>IntegrationLog__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Location__c</tab>
+        </mappings>
+        <mappings>
+            <tab>ManageCrossTeamMembers</tab>
+        </mappings>
+        <mappings>
+            <tab>ManageMyWorkTeams</tab>
+        </mappings>
+        <mappings>
+            <tab>Mantenimiento_de_Eventos</tab>
+        </mappings>
+        <mappings>
+            <tab>Permissions_by_workteam</tab>
+        </mappings>
+        <mappings>
+            <tab>ReglasGestorPuntos</tab>
         </mappings>
         <mappings>
             <tab>Transaction_History__c</tab>
         </mappings>
         <mappings>
-            <tab>WorkTeam__c</tab>
+            <tab>UI_ReproReporter</tab>
+        </mappings>
+        <mappings>
+            <tab>Work_Team_Management</tab>
+        </mappings>
+        <mappings>
+            <tab>Work_Team_Permission__c</tab>
         </mappings>
         <mappings>
             <tab>standard-Account</tab>
@@ -92,13 +182,52 @@
             <tab>standard-report</tab>
         </mappings>
         <mappings>
+            <tab>vlocity_cmt__ApplicationTemplate__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__AttributeAssignment__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__BusinessSite__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__Datastore__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__DecompositionRelationship__c</tab>
+        </mappings>
+        <mappings>
             <tab>vlocity_cmt__InboundRESTInterface__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__ObjectClass__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__ObjectLayout__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__OrchestrationItemDefinition__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__PriceListEntry__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__PriceList__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__PricingElement__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__PromotionItem__c</tab>
         </mappings>
         <mappings>
             <tab>vlocity_cmt__SyncDeltaObject__c</tab>
         </mappings>
         <mappings>
             <tab>vlocity_cmt__VlocityTrackingEntry__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__VlocityUITemplate__c</tab>
         </mappings>
     </workspaceConfig>
 </CustomApplication>

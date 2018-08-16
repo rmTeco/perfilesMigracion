@@ -1,0 +1,37 @@
+<apex:page showHeader="true" standardStylesheets="false" sidebar="false" title="CWB Dashboard">
+
+    <head>
+          <link href="{!URLFOR($Resource.dashboard,'dashboard.css')}" rel="stylesheet"/>
+          <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+          <link href='//fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css' />
+        
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboardlib,'dashboard/LibraryAngularComponents/angular-components/angular-1.2.26.min.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboardlib,'dashboard/LibraryAngularComponents/angular-components/angular.sanitize.min.js')}" />
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>-->
+        <script src="{!URLFOR($Resource.dashboard, 'd3.min.js')}" charset="utf-8"></script>
+        <!-- <script src="{!URLFOR($Resource.dashboard, 'nv.d3.js')}" charset="utf-8"></script>-->
+        <script src="{!URLFOR($Resource.dashboard, 'nv.d3.min.js')}"></script> 
+      
+        <link rel="stylesheet" href="{!URLFOR($Resource.dashboard, 'nv.d3.css')}" />
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboard, 'services.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboard, 'controllers.js')}" />
+        <apex:includeScript value="{!URLFOR($Resource.cwbtool__dashboard, 'app.js')}" />
+           <apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+           
+        <style>
+        text {
+            font: 12px sans-serif;
+        }
+        
+        svg {
+            display: block;
+        }
+        </style>
+    </head>
+
+     <body class='CWB' ng-app="dashboardChartApp" ng-controller="dashboardController">
+       <div class='with-3d-shadow with-transitions'>
+            <c:dashboard2 shownewwindowlink="false"/>
+         </div>
+    </body>
+</apex:page>

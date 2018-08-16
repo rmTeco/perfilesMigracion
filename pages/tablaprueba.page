@@ -1,0 +1,72 @@
+<apex:page controller="xOMReproPostImportReportController">
+    <script src="{!URLFOR($Resource.jQuery)}"></script>
+    <script src="{!URLFOR($Resource.StickHeader)}"></script>
+    <script type="text/javascript">
+        $.noConflict();
+        jQuery(document).ready(function() {
+            stickHeader('recordsTable', 'headerClass');
+            stickHeader('anotherRecordsTable', 'anotherHeaderClass');
+        });
+    </script>
+
+    <style type="text/css">
+      
+    .apexp .detailList .list .headerRow th {
+    white-space: normal;
+}
+
+
+    </style>
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!reproLines}" var="reproline" id="recordsTable">
+            <apex:column headerValue="Name" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.loteId}"/>
+            </apex:column>
+            <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+                        <apex:column headerValue="Phone" headerClass="headerClass">
+                <apex:outputText value="{!reproLine.totalLineas}" />
+            </apex:column>
+
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!reproLines}" var="reproLine" id="anotherRecordsTable">
+            <apex:column headerValue="Name" headerClass="anotherHeaderClass">
+                <apex:outputText value="{!reproLine.ordenesCreadas}"/>
+            </apex:column>
+            <apex:column headerValue="Id" headerClass="anotherHeaderClass">
+                <apex:outputText value="{!reproLine.ordenesConProductos}" />
+            </apex:column>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+
+</apex:page>

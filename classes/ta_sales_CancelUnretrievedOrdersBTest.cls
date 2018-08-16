@@ -9,7 +9,8 @@ private class ta_sales_CancelUnretrievedOrdersBTest {
 		insert timeout;
 		
 		List<Account> AccList = TestDataFactory.createAccounts(1, 'Consumer');
-		vlocity_cmt__BusinessSite__c StoreLocations = new vlocity_cmt__BusinessSite__c(vlocity_cmt__OrganizationId__c=AccList[0].id ,PointOfSaleId__c=1.0, AssociatedWarehouseDefault__c='Default', Channel_Type__c='Agentes' ,Channel_Type_3__c='Agentes' ,Channel_Type_2__c='Agentes' ,Channel__c='Físico');
+		Id idRecordType = Schema.SObjectType.vlocity_cmt__BusinessSite__c.getRecordTypeInfosByName().get('Punto de venta OC').getRecordTypeId();
+		vlocity_cmt__BusinessSite__c StoreLocations = new vlocity_cmt__BusinessSite__c(RecordTypeId = idRecordType, vlocity_cmt__OrganizationId__c=AccList[0].id ,PointOfSaleId__c=1.0, AssociatedWarehouseDefault__c='Default', Channel_Type__c='Agentes' ,Channel_Type_3__c='Agentes' ,Channel_Type_2__c='Agentes' ,Channel__c='Físico');
 		insert StoreLocations;
 		TestDataFactory.createPaymentMethodTypes();
 		TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);

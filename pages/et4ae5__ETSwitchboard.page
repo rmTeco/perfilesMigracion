@@ -12,7 +12,38 @@
         }
         else {
             // Classic view - call the initialize method in the controller.
+            if (!{!tokenWebserviceAvailable}) {
+                createRemoteSite();
+            }
             initializeJS();
+        }
+
+        function createRemoteSite() { 
+            var binding = new XMLHttpRequest();
+            var request = 
+                '<?xml version="1.0" encoding="utf-8"?>' + 
+                '<env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">'+
+                    '<env:Header>' + 
+                        '<urn:SessionHeader xmlns:urn="http://soap.sforce.com/2006/04/metadata">' + 
+                            '<urn:sessionId>{!$Api.Session_ID}</urn:sessionId>' + 
+                        '</urn:SessionHeader>' + 
+                    '</env:Header>' + 
+                    '<env:Body>' +
+                        '<upsertMetadata xmlns="http://soap.sforce.com/2006/04/metadata">' + 
+                            '<metadata xsi:type="RemoteSiteSetting">' + 
+                                '<fullName>ET4AE5_MCC_TokenService</fullName>' + 
+                                '<description>Remote Site setting to make callouts</description>' + 
+                                '<disableProtocolSecurity>false</disableProtocolSecurity>' + 
+                                '<isActive>true</isActive>' + 
+                                '<url>https://{!JSENCODE(tokenWebServiceEndpoint)}</url>' +
+                            '</metadata>' +
+                        '</upsertMetadata>' +
+                    '</env:Body>' + 
+                '</env:Envelope>'; 
+            binding.open('POST', 'https://{!JSENCODE(host)}/services/Soap/m/31.0');
+            binding.setRequestHeader('SOAPAction','""');
+            binding.setRequestHeader('Content-Type', 'text/xml');
+            binding.send(request); 
         }
     </script>
 </apex:page>

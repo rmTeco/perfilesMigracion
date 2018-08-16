@@ -91,6 +91,13 @@
                         else
                             window.location.href = "/apex/businessUnitHold";
                     }
+                    // Email regex validation was moved to the server-side to avoid inequivalent validation results    
+                    else if (res.emailError) {
+                        //Set the error for email
+                        component.find("editSupportTicketRecipient").set("v.errors",[{message : $A.get("$Label.et4ae5.msg0236")}]);
+                        //Throw the message
+                        helper.bc_throwEventMessage(component, $A.get("$Label.et4ae5.msg0225"), $A.get("$Label.et4ae5.srySmtgWrng"), "error");
+                    }
                     else {
                         helper.bc_throwEventMessage(component, res.message, res.messageTitle, "error");
                     }

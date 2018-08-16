@@ -156,7 +156,7 @@ public class IFS_S195_validateCPDataTest {
         
         vlocity_cmt__BusinessSite__c storeLocation = new vlocity_cmt__BusinessSite__c(Name='Barrio Norte', 
             vlocity_cmt__OrganizationId__c=orgAcc.Id, Status__c='Activo', Type__c='POS', Channel__c='Físico',
-             Channel_Type__c='Oficinas Comerciales', Channel_Type_2__c='Oficinas Comerciales', Channel_Type_3__c='Oficinas Comerciales',
+             Channel_Type__c='Agentes', Channel_Type_2__c='Agentes', Channel_Type_3__c='Agentes',
              Region__c='AMBA');
 
         insert storeLocation;     
@@ -186,7 +186,9 @@ public class IFS_S195_validateCPDataTest {
 
     static void createWorkTeamMember (Id pWorkTemaId) {
         System.debug('---------- Entre en createWorkTeamMember()');
-        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId, UserRoleAPIName__c='Test');
+        Team_Member__c wtm = new Team_Member__c(User_member__c=UserInfo.getUserId(), Work_Team__c=pWorkTemaId);
+                wtm.UserRoleAPIName__c='Care';
+
         insert wtm;
     }
 

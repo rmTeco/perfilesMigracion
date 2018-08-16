@@ -24,7 +24,39 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Tangible__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ID_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Codigo_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Nombre_Sistema_Origen__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Codigo_Movimiento_Inventario__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>SourceOrgProductId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Alicuota__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>NMU__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -139,10 +171,14 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__DestinationProductId__c</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
         <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__SourceProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__SourceProductId__c</fields>
+        <fields>vlocity_cmt__ConditionData__c</fields>
         <relatedList>vlocity_cmt__DecompositionRelationship__c.vlocity_cmt__DestinationProductId__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -154,9 +190,6 @@
         <fields>vlocity_cmt__DefaultQuantity__c</fields>
         <fields>vlocity_cmt__RelationshipType__c</fields>
         <fields>vlocity_cmt__RelatedProductId__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
         <relatedList>vlocity_cmt__ProductRelationship__c.vlocity_cmt__Product2Id__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -170,6 +203,20 @@
     </relatedLists>
     <relatedLists>
         <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CAMPAIGN.NAME</fields>
+        <fields>CAMPAIGN.STATUS</fields>
+        <fields>CAMPAIGN.START_DATE</fields>
+        <relatedList>Campaign.associated_offersand_products__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>FinancialPromotion__c.ProductPromotion__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>DRAsset__c.Product2__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>true</showHighlightsPanel>

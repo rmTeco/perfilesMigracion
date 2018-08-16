@@ -4,13 +4,13 @@ public class GP_AtributoValorDeUnEventoTest {
     static testMethod void crearUnAtributoValor(){
         GP_AtributoValorDeUnEvento nuevoAtributo;
         
+        nuevoAtributo = new GP_AtributoValorDeUnEvento('a','String', 'string');
+        nuevoAtributo = new GP_AtributoValorDeUnEvento('a','Boolean', true);
+        nuevoAtributo = new GP_AtributoValorDeUnEvento('a','Integer', 20);
+        
         try{
             Boolean un;
             Integer dos;
-        
-            nuevoAtributo = new GP_AtributoValorDeUnEvento('a','String', 'string');
-            nuevoAtributo = new GP_AtributoValorDeUnEvento('a','Boolean', true);
-            nuevoAtributo = new GP_AtributoValorDeUnEvento('a','Integer', 20);
             
             nuevoAtributo = new GP_AtributoValorDeUnEvento('a','String', '');
             nuevoAtributo = new GP_AtributoValorDeUnEvento('a','Boolean', un);
@@ -26,7 +26,7 @@ public class GP_AtributoValorDeUnEventoTest {
         
         try{
             Boolean uno = null;
-            nuevoAtributo = new GP_AtributoValorDeUnEvento('a','Boolean', true);
+            nuevoAtributo = new GP_AtributoValorDeUnEvento('a','Integer', 20);
             nuevoAtributo.validarValor(uno);
         }catch(GP_APIException e){
             
@@ -40,12 +40,5 @@ public class GP_AtributoValorDeUnEventoTest {
             
         }
         
-         try{
-            String uno = null;
-            nuevoAtributo = new GP_AtributoValorDeUnEvento('a','String', '20');
-            nuevoAtributo.validarValor(uno);
-        }catch(GP_APIException e){
-            
-        }
     }
 }

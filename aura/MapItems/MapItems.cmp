@@ -1,0 +1,125 @@
+<aura:component controller="Components" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- START ATT -->
+    <aura:attribute name="OSNames" type="List" />
+    <aura:attribute name="OSSelectedName" type="String" />
+    <aura:attribute name="IPSelectedName" type="String" />
+    <aura:attribute name="OSNamesUnique" type="List" />
+    <aura:attribute name="OSIPUnique" type="List" />
+    <aura:attribute name="OSElementsOrigin" type="List" />
+    <aura:attribute name="OSVersions" type="List" />
+    <aura:attribute name="IPVersions" type="List" />
+    <aura:attribute name="OSElement" type="Object" />
+    <aura:attribute name="IPElement" type="Object" />
+    <aura:attribute name="isProcedure" type="Boolean" default="false" />
+    <aura:attribute name="showMsg" type="Boolean" Default="true" />
+    <aura:attribute name="msg" type="String" Default="Here will be shown Omniscript Elements once you have chosen OS Name and Version" />
+    <!-- END ATT -->
+    <div class="slds-page-header">
+        <div class="slds-media">
+        <div class="slds-media__body">
+        <h1 class="slds-page-header__title slds-truncate slds-align-middle slds-text-heading_large" title="Vlocity Tools">Vlocity Tools</h1>
+        <p class="slds-text-body_small slds-line-height_reset">Tools to identify Objects used in OS and IP</p>
+        </div>
+        </div>
+    </div>
+    <div class="slds-tabs_default">
+    <ul class="slds-tabs_default__nav" role="tablist">
+        <li id="OS" aura:id="OS" class="slds-tabs_default__item slds-is-active" title="OS" role="presentation">
+            <a class="slds-tabs_default__link" onclick="{!c.showHideTab}" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-default-1" id="tab_OS">Omniscript</a>
+        </li>
+        <li id="IP" aura:id="IP" class="slds-tabs_default__item" title="IP" role="presentation">
+            <a class="slds-tabs_default__link" onclick="{!c.showHideTab}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-2" id="tab_IP">Integration Procedure</a>
+        </li>
+        <li id="OSComparator" aura:id="OSComparator" class="slds-tabs_default__item" title="OSComparator" role="presentation">
+            <a class="slds-tabs_default__link" onclick="{!c.showHideTab}" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-default-3" id="tab_OSComparator">OS Comparator</a>
+        </li>
+    </ul>
+    <div aura:id="OS_Section" class="demo-only demo-only--sizing slds-grid slds-wrap">
+        <div class="slds-size_1-of-3">
+            <div class="slds-text-align_center slds-m-around_x-small">
+                <lightning:select aura:id="OSName" name="Name" label="Select an OmniScript" onchange="{!c.selectedName}">
+                    <option value="none">choose one...</option>
+                    <aura:iteration var="os" items="{!v.OSNamesUnique}" indexVar="{!index}" >
+                        <option value="{!os}">{!os}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+        </div>
+        <div class="slds-size_1-of-3">
+            <div class="slds-text-align_center slds-m-around_x-small">
+                <lightning:select aura:id="originOS" name="selectItem" label="Select version" >
+                    <option value="none">choose one...</option>
+                    <aura:iteration var="origin" items="{!v.OSVersions}" indexVar="index" >
+                        <option value="{!origin.Id}">{!origin.vlocity_cmt__Version__c}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+        </div>
+        <div class="slds-size_1-of-3" style="margin-top:22px;">
+            <div class="slds-text-align_center slds-m-around_x-small">
+                <div class="slds-button-group" role="group">
+                    <button class="slds-button slds-button_neutral" onclick="{!c.selectedOrigin}">View</button>
+                    <button class="slds-button slds-button_destructive" onclick="{!c.clear}">Clear</button>
+                </div> 
+            </div>
+        </div>
+        <div class="slds-size_2-of-2">
+            <div class="slds-text-align_left slds-m-around_x-small">
+                <c:Items Elements="{!v.OSElement}" OSName="{#v.OSSelectedName}" />
+                <div class="slds-box slds-text-align_center" style="{!'display:' + if(v.showMsg, ';', 'none;')}">
+                    <p>{!v.msg}</p>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div aura:id="IP_Section" id="tab-default-2" class="demo-only demo-only--sizing slds-grid slds-wrap slds-hide" role="tabpanel" aria-labelledby="tab-default-2__item">
+        <div class="slds-size_1-of-3">
+            <div class="slds-text-align_center slds-m-around_x-small">
+                <lightning:select aura:id="IPName" name="Name" label="Select an Integration Procedure" onchange="{!c.selectedName}">
+                    <option value="none">choose one...</option>
+                    <aura:iteration var="ip" items="{!v.OSIPUnique}" indexVar="{!index}" >
+                        <option value="{!ip}">{!ip}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+        </div>
+        <div class="slds-size_1-of-3">
+            <div class="slds-text-align_center slds-m-around_x-small">
+                <lightning:select aura:id="originIP" name="selectItem" label="Select version">
+                    <option value="none">choose one...</option>
+                    <aura:iteration var="origin" items="{!v.IPVersions}" indexVar="index" >
+                        <option value="{!origin.Id}">{!origin.vlocity_cmt__Version__c}</option>
+                    </aura:iteration>
+                </lightning:select>
+            </div>
+        </div>
+        <div class="slds-size_1-of-3" style="margin-top:22px;">
+                <div class="slds-text-align_center slds-m-around_x-small">
+                    <div class="slds-button-group" role="group">
+                        <button class="slds-button slds-button_neutral" onclick="{!c.selectedOrigin}">View</button>
+                        <button class="slds-button slds-button_destructive" onclick="{!c.clear}">Clear</button>
+                    </div>
+                </div>
+            </div>
+        <div class="slds-size_2-of-2">
+            <div class="slds-text-align_left slds-m-around_x-small">
+                <c:Items Elements="{!v.IPElement}" OSName="{#v.IPSelectedName}" />
+                <div class="slds-box slds-text-align_center" style="{!'display:' + if(v.showMsg, ';', 'none;')}">
+                    <p>{!v.msg}</p>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div aura:id="OSComparator_Section" id="tab-default-3" class="slds-tabs_default__content slds-hide" role="tabpanel" aria-labelledby="tab-default-3__item">
+        <c:OSList />
+    </div>
+    </div>
+    <div aura:id="spinner" class="demo-only slds-hide" style="height: 6rem;">
+        <div role="status" class="slds-spinner slds-spinner_medium">
+            <span class="slds-assistive-text">Loading</span>
+            <div class="slds-spinner__dot-a"></div>
+            <div class="slds-spinner__dot-b"></div>
+        </div>
+    </div>
+</aura:component>

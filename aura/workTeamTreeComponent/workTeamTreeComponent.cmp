@@ -1,0 +1,20 @@
+<aura:component controller="TreeWorkTeamController" implements="flexipage:availableForRecordHome,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <!-- 
+        /**
+         */
+	-->
+    <aura:attribute name="recordId" type="Id" access="global" />
+    <aura:attribute name="items" type="Object" access="global" />
+	<aura:attribute name="callback" type="String" description="Call this to communcate results to parent" access="global" />    
+
+  	<aura:registerEvent name="onSelectEvent" type="c:treeLightningWorkTeamEvent" />
+    	
+	<div class="slds-text-title_caps">
+        Jerarquía de Equipos de Trabajo              
+    </div>    	
+    	
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div>
+        <lightning:tree items="{!v.items}" onselect="{!c.handleSelect}" class="changeMe"/>
+    </div>
+</aura:component>

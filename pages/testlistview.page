@@ -1,0 +1,14 @@
+<apex:page recordSetVar="cases" standardController="Case">
+<style type="text/css">
+    input.btn { display: none; }
+</style>
+
+    <apex:enhancedList type="Case" height="300" rowsPerPage="10" ListId="00B6C000000NiYf" />
+    <apex:outputText value="{!listViewOptions}" id="theValue2"/><br/>
+    <apex:repeat var="test" value="{!listViewOptions}">
+    <apex:outputText value="{!test}" id="theValue"/><br/>
+
+    
+    </apex:repeat>
+
+</apex:page>

@@ -67,17 +67,26 @@
         <description>Checkbox que indica si el artículo fue actualizado en los últimos 7 días.</description>
         <externalId>false</externalId>
         <formula>AND( (LastPublishedDate &lt;&gt; FirstPublishedDate), 
-((NOW() - LastPublishedDate) &lt;= 7) )</formula>
+			((NOW() - LastPublishedDate) &lt;= 7) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Artículo Actualizado</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>KB_ArticuloDestacado__c</fullName>
-        <defaultValue>false</defaultValue>
-        <description>Si el campo se encuentra tildado, el artículo será destacado y aparecerá primero en las búsquedas.</description>
+        <fullName>KB_ArticuloDestacadoHasta__c</fullName>
+        <description>Se indica la fecha en la cual el artículo deja de ser destacado.</description>
         <externalId>false</externalId>
+        <inlineHelpText>En caso de no querer destacar el artículo, se debe dejar la fecha en blanco.</inlineHelpText>
+        <label>Artículo destacado hasta</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>KB_ArticuloDestacado__c</fullName>
+        <externalId>false</externalId>
+        <formula>(TODAY() &lt; KB_ArticuloDestacadoHasta__c)</formula>
         <label>Artículo Destacado</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
@@ -87,11 +96,22 @@
         <description>Checkbox que indica si el artículo fue creado en los últimos 7 días.</description>
         <externalId>false</externalId>
         <formula>AND( (FirstPublishedDate = LastPublishedDate), 
-((NOW() - FirstPublishedDate) &lt;= 7) )</formula>
+			((NOW() - FirstPublishedDate) &lt;= 7) )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Artículo Nuevo</label>
         <trackHistory>false</trackHistory>
         <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KB_ArticuloPadre__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Si el artículo corresponde a un flujo, se indica el External ID del artículo padre.</inlineHelpText>
+        <label>Artículo padre</label>
+        <length>19</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>KB_AssignedCategory__c</fullName>
@@ -129,6 +149,24 @@
         <visibleLines>20</visibleLines>
     </fields>
     <fields>
+        <fullName>KB_BorrarVotos__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Campo utilizado en el proceso de aprobación para identificar si se necesitan borrar los votos o no. Este campo accionará el process builder que realiza el delete.</description>
+        <externalId>false</externalId>
+        <label>Borrar votos?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KB_EsUnFlujo__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Marcar esta opción si el artículo pertenece a un flujo.</inlineHelpText>
+        <label>Es un flujo</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>KB_ExternalID__c</fullName>
         <description>Campo &quot;Read Only&quot; Generado automáticamente al guardar un registro. Se utiliza en la vinculación de Base de Conocimiento y OmniScripts.</description>
         <externalId>false</externalId>
@@ -140,12 +178,21 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>KB_PublicarNuevaVersion__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Campo para definir si se quiere publicar una nueva versión del artículo ó se sobreescribe la versión actual.</description>
+        <externalId>false</externalId>
+        <label>Publicar como nueva versión?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>KB_ValidationsMessage__c</fullName>
         <externalId>false</externalId>
-        <formula>&apos;Para publicar el artículo: &apos; 
-+ IF(ISBLANK(Summary),IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta completar el resumen del artículo.&apos;,&apos;&apos;) 
-+ IF(!KB_AssignedCategory__c,IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta categorizar el artículo.&apos;,&apos;&apos;) 
-+ IF(!KB_AssignedTopic__c,IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta asignarle al menos un tema al artículo.&apos;,&apos;&apos;) 
+        <formula>&apos;Para publicar el artículo: &apos;   + BR() 
++ IF(ISBLANK(Summary),IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta completar el resumen del artículo.&apos;+BR(),&apos;&apos;)  
++ IF(!KB_AssignedCategory__c,IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta categorizar el artículo.&apos;+BR(),&apos;&apos;) 
++ IF(!KB_AssignedTopic__c,IMAGE(&apos;/img/msg_icons/warning16.png&apos;,&apos;&apos;)+&apos; Falta asignarle al menos un tema al artículo.&apos;+BR(),&apos;&apos;)
 + IF(!ISBLANK(Summary) &amp;&amp; KB_AssignedCategory__c &amp;&amp; KB_AssignedTopic__c,IMAGE(&apos;/img/msg_icons/confirm16.png&apos;,&apos;&apos;)+ &apos; Enviar para aprobación.&apos;,&apos;&apos;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Validaciones</label>
@@ -154,21 +201,32 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <gender>Masculine</gender>
+    <fields>
+        <fullName>KB_ValoracionPromedio__c</fullName>
+        <description>Se guardará el promedio de valoración del artículo.</description>
+        <externalId>false</externalId>
+        <label>Valoración Promedio</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
     <label>Contenido</label>
     <pluralLabel>Contenidos</pluralLabel>
     <validationRules>
         <fullName>KB_LimiteCaracteresResumen</fullName>
         <active>true</active>
         <description>Límite de caracteres para el resumen</description>
-        <errorConditionFormula>LEN(Summary) &gt; 500</errorConditionFormula>
-        <errorMessage>Se ha excedido el límite de caracteres para el Resumen (500 caracteres)</errorMessage>
+        <errorConditionFormula>LEN(Summary) &gt; 300</errorConditionFormula>
+        <errorMessage>Se ha excedido el límite de caracteres para el Resumen (300 caracteres)</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>KB_LimiteCaracteresTitulo</fullName>
         <active>true</active>
         <description>Límite de caracteres para el título</description>
-        <errorConditionFormula>LEN(Title) &gt; 150</errorConditionFormula>
-        <errorMessage>Se ha excedido el límite de caracteres para el Título (150 caracteres)</errorMessage>
+        <errorConditionFormula>LEN(Title) &gt; 100</errorConditionFormula>
+        <errorMessage>Se ha excedido el límite de caracteres para el Título (100 caracteres)</errorMessage>
     </validationRules>
 </CustomObject>

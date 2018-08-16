@@ -2,13 +2,21 @@
 private class IFS_S094_Test {
     
     @isTest static  void testGetCallout() {
+        EndPointService__c endpointTest = new EndPointService__c();
+        endpointTest.EndPoint__c='URLTEST';
+        endpointTest.Name='IFS_s094';
+        insert endpointTest;
+        
         IFS_S094_getSerializedByWarehouseMock mock = new IFS_S094_getSerializedByWarehouseMock();
         mock.status = 200;
+        
+        Test.startTest();
         Test.setMock(HttpCalloutMock.class, mock);
         Map<String,Object> MapResponse = IFS_S094_getSerializedByWarehouse.getSerializedByWarehouse('DNI', '28294321', 'M', '1994/01/02');
         Map<String,Object> MapReview = new map<String,Object>();
         Map<String,Object> MapAux = new map<String,Object>();
         
+
         
         MapAux.put('NMU','nmu001');
         MapAux.put('numeroSerie','ser001');
@@ -25,6 +33,7 @@ private class IFS_S094_Test {
         
 
         system.assertEquals(MapReview.keySet(), MapResponse.keySet());
+        Test.stopTest();
         //for(String Cons : MapReview.keySet()){
           //  system.assertEquals(MapReview.get(Cons), MapResponse.get(Cons));
         //}

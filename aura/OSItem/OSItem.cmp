@@ -1,0 +1,107 @@
+<aura:component >
+    <!-- ATT -->
+    <aura:attribute name="OSElements" type="List" />
+    <aura:attribute name="jsonLeft" type="String" default="left" />
+    <aura:attribute name="jsonRight" type="String" default="right" />
+    <!-- ATT -->
+    <aura:dependency resource="markup://c:Modal" type="COMPONENT" />
+
+    <aura:iteration var="osElement1" items="{!v.OSElements}" indexVar="index1">
+        <aura:if isTrue="{!empty(osElement1.vlocity_cmt__ParentElementId__c)}">
+            <div class="demo-only" style="{!osElement1.colorStyle + 'width:100%;background:#fff;margin-bottom:2px;' + osElement1.different + osElement1.doNotExist + osElement1.deleted}">
+                <ul class="slds-has-dividers_around-space">
+                    <li class="slds-item" style="padding-top:2px;">
+                        <article class="slds-tile slds-tile_board">
+                            <div style="text-align:right;float: right;">
+                                <button class="{!'slds-button slds-button_outline-brand' + if(osElement1.showButton, '', ' slds-hide')}" value="{!index1}" onclick="{!c.showpopover}">View Differences</button>
+                            </div>
+                            <nav role="navigation" aria-label="Breadcrumbs">
+                                    <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                                    <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement1.Name}<b> ( {!osElement1.vlocity_cmt__Type__c} )</b></a></li>
+                                </ol>
+                            </nav>
+                            <div class="slds-tile__detail">
+                                <p class="slds-truncate">Version: {!osElement1.vlocity_cmt__OmniScriptId__r.vlocity_cmt__Version__c}</p>
+                                <p class="slds-truncate"><b>Status</b>: {!if(osElement1.vlocity_cmt__Active__c, 'Active', 'Inactive')}</p>
+                                <p class="slds-truncate" title="{!osElement1.CreatedDate}">Created Date: {!osElement1.CreatedDate}</p>
+                                <p class="slds-truncate" title="{!osElement1.CreatedBy.Name}">Created By: {!osElement1.CreatedBy.Name}</p>
+                                <section style="margin-top:7px;z-index:0;width:100%;" class="slds-popover slds-popover_large slds-nubbin_top-left" role="dialog" aria-label="Dialog Title" aria-describedby="dialog-body-id-45">
+                                    <div class="slds-popover__body" id="dialog-body-id-4111">
+                                        <p><pre>{!osElement1.vlocity_cmt__PropertySet__c}</pre></p>
+                                    </div>
+                                </section>
+                            </div>
+                        </article>
+                        <aura:iteration var="osElement2" items="{!v.OSElements}" indexVar="index2">
+                            <aura:if isTrue="{!osElement2.vlocity_cmt__ParentElementId__c == osElement1.Id}">
+                                <div class="demo-only" style="{!'width:99%;margin-left:5px;background:#fafaf9;' + osElement2.different + osElement2.doNotExist + osElement2.deleted}">
+                                    <ul class="slds-has-dividers_around-space">
+                                        <li class="slds-item">
+                                            <article class="slds-tile slds-tile_board">
+                                                <div style="text-align:right;float: right;">
+                                                    <button class="{!'slds-button slds-button_outline-brand' + if(osElement2.showButton, '', ' slds-hide')}" value="{!index2}" onclick="{!c.showpopover}">View Differences</button>
+                                                </div>
+                                                <nav role="navigation" aria-label="Breadcrumbs">
+                                                        <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                                                        <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement1.Name}</a></li>
+                                                        <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement2.Name}<b> ( {!osElement2.vlocity_cmt__Type__c} )</b></a></li>
+                                                    </ol>
+                                                </nav>
+                                                <div class="slds-tile__detail">
+                                                    <p class="slds-truncate">Version: {!osElement2.vlocity_cmt__OmniScriptId__r.vlocity_cmt__Version__c}</p>
+                                                    <p class="slds-truncate"><b>Status</b>: {!if(osElement2.vlocity_cmt__Active__c, 'Active', 'Inactive')}</p>
+                                                    <p class="slds-truncate" title="{!osElement2.CreatedDate}">Created Date: {!osElement2.CreatedDate}</p>
+                                                    <p class="slds-truncate" title="{!osElement2.CreatedBy.Name}">Created By: {!osElement2.CreatedBy.Name}</p>
+                                                    <section style="margin-top:7px;z-index:0;width:100%;" class="slds-popover slds-popover_large slds-nubbin_top-left" role="dialog" aria-label="Dialog Title" aria-describedby="dialog-body-id-45">
+                                                        <div class="slds-popover__body" id="dialog-body-id-41">
+                                                            <p><pre>{!osElement2.vlocity_cmt__PropertySet__c}</pre></p>
+                                                        </div>
+                                                    </section>
+                                                </div>
+                                            </article>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <aura:iteration var="osElement3" items="{!v.OSElements}" indexVar="index3">
+                                    <aura:if isTrue="{!osElement3.vlocity_cmt__ParentElementId__c == osElement2.Id}">
+                                        <div class="demo-only" style="{!'width: 98%;margin-left:13px; background:#f3f2f2;' + osElement3.different + osElement3.doNotExist + osElement3.deleted}">
+                                            <ul class="slds-has-dividers_around-space">
+                                                <li class="slds-item">
+                                                    <article class="slds-tile slds-tile_board">
+                                                        <div style="text-align:right;float: right;">
+                                                            <button class="{!'slds-button slds-button_outline-brand' + if(osElement3.showButton, '', ' slds-hide')}" value="{!index3}" onclick="{!c.showpopover}">View Differences</button>
+                                                        </div>
+                                                        <nav role="navigation" aria-label="Breadcrumbs">
+                                                                <ol class="slds-breadcrumb slds-list_horizontal slds-wrap">
+                                                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement1.Name}</a></li>
+                                                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement2.Name}</a></li>
+                                                                <li class="slds-breadcrumb__item slds-text-title_caps"><a href="javascript:void(0);">{!osElement3.Name}<b> ( {!osElement3.vlocity_cmt__Type__c} )</b></a></li>
+                                                            </ol>
+                                                        </nav>
+                                                        <div class="slds-tile__detail">
+                                                            <p class="slds-truncate">Version: {!osElement3.vlocity_cmt__OmniScriptId__r.vlocity_cmt__Version__c}</p>
+                                                            <p class="slds-truncate"><b>Status</b>: {!if(osElement3.vlocity_cmt__Active__c, 'Active', 'Inactive')}</p>
+                                                            <p class="slds-truncate" title="{!osElement3.CreatedDate}">Created Date: {!osElement3.CreatedDate}</p>
+                                                            <p class="slds-truncate" title="{!osElement3.CreatedBy.Name}">Created By: {!osElement3.CreatedBy.Name}</p>
+                                                            <section style="margin-top:7px;z-index:0;width:100%;" class="slds-popover slds-popover_large slds-nubbin_top-left" role="dialog" aria-label="Dialog Title" aria-describedby="dialog-body-id-45">
+                                                                <div class="slds-popover__body" id="dialog-body-id-41">
+                                                                    <p><pre>{!osElement3.vlocity_cmt__PropertySet__c}</pre></p>
+                                                                </div>
+                                                            </section>
+                                                        </div>
+                                                    </article>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </aura:if>
+                                </aura:iteration>
+                                
+                            </aura:if>
+                        </aura:iteration>
+                    </li>
+                </ul>
+            </div>
+        </aura:if>
+    </aura:iteration>
+    {!v.body}
+</aura:component>

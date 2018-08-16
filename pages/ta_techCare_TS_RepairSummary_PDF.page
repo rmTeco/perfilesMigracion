@@ -149,10 +149,18 @@
                             <tr>
                                 <td COLSPAN="1">
                                     <div><b>Garantía</b></div>
-                                </td>
+                                    </td>
                                 <td COLSPAN="3">
                                     <div class="slds-truncate">{!saleWarranty}</div>
                                 </td>  
+                                
+                                <td COLSPAN="1">
+                                    <div><b>Cambio en Garantía</b></div>
+                                    </td>
+                                    <td COLSPAN="3">
+                                    <div class="slds-truncate">{!IF ((tsCase.Status="Envío en curso" && tsCase.Asset.Invalid_Warranty__c = "Válida"),"Si","No")}</div>
+                                    </td>
+                                 
                                 <td COLSPAN="3">
                                     <div><b>Fecha de Compra</b></div>
                                 </td>

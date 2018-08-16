@@ -1,0 +1,101 @@
+<!--
+ - Created by ferhatozsavran on 2/19/18.
+ -->
+
+<apex:page id="EditUserStoryMetadataSelection" standardController="copado__User_Story__c"
+           extensions="copado.Settings,copado.JsRemotingController" showHeader="false"
+           sidebar="false" standardStyleSheets="true" lightningStylesheets="true">
+    <link rel="stylesheet" href="{!URLFOR($Resource.jqx,'jqwidgets/styles/jqx.base.css')}"/>
+    <c:WizardUtils id="cmpWizardUtilities"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}"/>
+    <script type="text/javascript">
+            var __sfdcSessionId = '{!GETSESSIONID()}';
+            var $copado = $copado || jQuery.noConflict();
+            var Copado_Licenses = {!CurrentUserLicenses}; <!---->
+    </script>
+    <script src="/soap/ajax/36.0/connection.js"></script>
+    <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__jqx,'jqwidgets/jqx-all.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.statusManager) }" />
+    <apex:includeScript value="{!URLFOR($Resource.utilsV2) }"/>
+    <apex:includeScript value="{!URLFOR($Resource.JsRemoting) }"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics, 'js/Cometd.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics, 'js/json2.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics, 'js/jquery.cometd.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copadoStreamingService) }" />
+
+    <apex:includeScript value="{!URLFOR($Resource.metadataGrid2) }" />
+    <apex:includeScript value="{!URLFOR($Resource.UserStoryTestClasses) }" />
+
+    <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}"/>
+    <apex:form >
+        <apex:sectionHeader title="{!copado__User_Story__c.Name}" subtitle="Test Class selector" />
+        <c:ScreenLocker msg="{!$Label.copado__loading}" />
+        <apex:pageBlock >
+            <apex:pageblockButtons location="top">
+                <apex:commandButton id="btnSave" value="{!$Label.site.save}"  onclick="return usTestClasses.save();" rerender="pb" />
+                <apex:commandButton id="btnCancel" value="{!$Label.site.cancel}"  onclick="return usTestClasses.cancel();" rerender="pb" />
+            </apex:pageblockButtons>
+            <apex:outputPanel layout="none" >
+                <apex:commandLink style="display:none;" value="{!$Label.copado__cache_refreshed_now}"  onclick="return usTestClasses.refreshCache();" rerender="opDummy" id="removeCache"/>
+                <div id="metadataGrid2">
+                    <div class='mg2_tabs'>
+                        <ul style="margin-left: 20px;">
+                            <li>Metadata Selection</li>
+                            <li>Selected Metadata</li>
+                        </ul>
+                        <div>
+                            <div class="mg2_scaleFilterFrame" style="padding: 5px; display: none;">
+                            </div>
+                        </div>
+                        <div><!-- empty div, needed as content for the two tabs --></div>
+                    </div>
+                    <div class="mg2_jqxgrid" >
+                        <center><img src="/img/loading.gif" /><i><span id="retry-label">{!$Label.copado__loading}</span></i></center>
+                    </div>
+                </div>
+            </apex:outputPanel>
+        </apex:pageBlock>
+
+
+        <script type="text/javascript">
+        copadoStreamingService.ns = '{!namespace}';
+        copadoStreamingService.init();
+        statusManager.ns = '{!namespace}';
+        statusManager.herokuServer = '{!herokuServer}';
+        statusManager.urlParameters = '{!urlParameters}';
+        statusManager.sessionId = __sfdcSessionId;
+        statusManager.parentId = '{!JSENCODE(copado__User_Story__c.copado__Org_Credential__c)}';
+        statusManager.waitTimeout = 10000;
+
+        var copadoApp = {};
+        var _config = {
+            gridMode: 'testClasses',
+            data:{
+                id: '{!JSENCODE(copado__User_Story__c.Id)}',
+                orgId: '{!JSENCODE(copado__User_Story__c.copado__Org_Credential__c)}',
+                envId: '{!JSENCODE(copado__User_Story__c.copado__Org_Credential__c)}'
+            },
+            server: {
+              metadataUrl: '{!JSENCODE(urlBase)}testClasses/__ORGID__{!JSENCODE(urlParameters)}',
+              typesUrl: '{!JSENCODE(urlBase)}gitTypes{!JSENCODE(urlParameters)}'
+            },
+            ns: '{!JSENCODE(namespace)}',
+            attachmentName: 'Test Classes',
+            isScalable: false
+        }
+        statusManager.initFunction = function(){
+            usTestClasses.init(_config,false,{!scalableGrid});
+        };
+
+          setTimeout(function(){
+              statusManager.initialise();
+          },2000);
+          var body = document.getElementsByTagName('body')[0];
+          body.addEventListener("beforeunload", function(){
+              copadoStreamingService.unload();
+          });
+
+        </script>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,8 @@
+<apex:page controller="cwbtool.DescribeAuraDefinitionBundleCtrl" renderAs="{!strrenderAs}" contenttype="{!strcontentType}"  readonly="true" tabStyle="CWB_Tool__tab" 
+applyHtmlTag="false" showHeader="false"> 
+      
+       <!-- <c:VFC_FullAuraDefinitionBundleDetail  rendered="{!strcontentType!='html'}" mapFullAuraDefinitionBundleDetail="{!mapAuraDefinitionBundleDetail}" /> --> 
+    
+    <c:VFC_FullAuraDefinitionBundleDetailDoc isPDF="{!strrenderAs=='PDF'}"  mapFullAuraDefinitionBundleDetail="{!mapAuraDefinitionBundleDetail}" /> 
+   
+</apex:page>

@@ -40,6 +40,22 @@
                 <behavior>Edit</behavior>
                 <field>OwnerId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__IsActive__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__EffectiveFromDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__EffectiveUntilDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__RootObjectClassId__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -76,12 +92,44 @@
         <fields>vlocity_cmt__ObjectApiName__c</fields>
     </miniLayout>
     <relatedLists>
+        <fields>PRODUCT2.NAME</fields>
+        <fields>PRODUCT2.CUSTOMER_PRODUCT_ID</fields>
+        <fields>PRODUCT2.DESCRIPTION</fields>
+        <fields>vlocity_cmt__CategoryData__c</fields>
+        <fields>vlocity_cmt__IsConfigurable__c</fields>
+        <fields>PRODUCT2.EXTERNAL_ID</fields>
+        <fields>FAN_IntegrationKey__c</fields>
+        <fields>vlocity_cmt__IsOrderable__c</fields>
+        <fields>vlocity_cmt__SpecificationType__c</fields>
+        <fields>vlocity_cmt__Status__c</fields>
+        <relatedList>Product2.vlocity_cmt__ObjectTypeId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__IsActive__c</fields>
+        <fields>vlocity_cmt__Mode__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>vlocity_cmt__RecordTypeName__c</fields>
+        <fields>vlocity_cmt__RootObjectClassId__c</fields>
+        <relatedList>vlocity_cmt__ObjectClass__c.vlocity_cmt__ParentObjectClassId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>vlocity_cmt__IsActive__c</fields>
+        <fields>vlocity_cmt__ObjectType__c</fields>
+        <fields>vlocity_cmt__AttributeId__c</fields>
         <relatedList>vlocity_cmt__ObjectFieldAttribute__c.vlocity_cmt__ObjectClassId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>vlocity_cmt__IsActive__c</fields>
+        <fields>vlocity_cmt__IsDefault__c</fields>
+        <fields>vlocity_cmt__SubclassId__c</fields>
         <relatedList>vlocity_cmt__ObjectLayout__c.vlocity_cmt__ObjectClassId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>vlocity_cmt__AttributeBinding__c.vlocity_cmt__ObjectClassId__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -89,7 +137,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00hc0000000Lmir</masterLabel>
+        <masterLabel>00h6C000000RNuk</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

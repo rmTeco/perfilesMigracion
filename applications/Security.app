@@ -10,5 +10,9 @@
     <tabs>ManageMyWorkTeams</tabs>
     <tabs>ManageCrossTeamMembers</tabs>
     <tabs>Permissions_by_workteam</tabs>
-    <tabs>Permissions_by_Work_Team</tabs>
+    <tabs>Funcionalidad__c</tabs>
+    <tabs>Historias_de_Usuario__c</tabs>
+    <tabs>standard-report</tabs>
+    <tabs>Funcionalidad_Perfil__c</tabs>
+    <tabs>USComp_Extractor</tabs>
 </CustomApplication>

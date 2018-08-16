@@ -10,9 +10,9 @@ public class MarketingCloudAPIUtilTest {
         
         Test.setMock(HttpCalloutMock.class, new MktgCloudCalloutMock()); 
         
-        String token = MarketingCloudAPIUtil.getMCAccessToken();
+        mktgCloudAPISettings = MarketingCloudAPIUtil.getMCAccessToken();
         
-        System.assertEquals(token, '1234567');
+        System.assertEquals(mktgCloudAPISettings.MCAPIAccessToken__c, '1234567');
         
         Test.stopTest();
     }

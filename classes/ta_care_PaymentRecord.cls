@@ -85,8 +85,11 @@ global without sharing class ta_care_PaymentRecord implements vlocity_cmt.Vlocit
 			outMapS059.put('IPResult', resultAux);
 			
 		}	
+		
+        System.debug('linea 89 ');
         
         Map<String, Object> outResult =  new Map<String, Object>();
+        System.debug('linea 92 ');
         Map<String, Object> resultS059 = (Map<String, Object>)outMapS059.get('IPResult');
         System.debug('resultS059 : '+resultS059);
         Map<String, Object> paymentsMap = (Map<String, Object>)resultS059.get('listaInfoPagos');

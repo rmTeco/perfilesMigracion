@@ -12,11 +12,15 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
     //-- Defaults --
     private static final boolean K_DEBUG_ON = true;               //-- Enable / Disable Class Debug Mode.
     private static final String  K_COD_MONEDA = 'ARS';            //-- No tengo claro si se obtiene, Huawei espera este codigo.
-    private static final String  K_GESTION = 'Numero Gratis';     //-- Gestion.
+    private static final String  K_GESTION = 'Numero Gratis';     //-- Gestion, valor a setear en la Orden.
     private static final String  K_TIPO_JOB = 'Job Request';      //-- Type of job in the CrossObject__c Table.
     private static final String  K_ORDER_TEMPLATE_NAME = 'Friends&Family Order Template'; //-- Template Name.
     private static DateTime fo = DateTime.now(); //-- Fecha de la orden.
     private static final Integer K_DECIMAL_PLACES = 4; //-- Cantidad de lugares decimales para el precio.
+    //-- Tratamiento de Saldo Insuficiente --//
+    private static final String K_SALDO_INSUFICIENTE = 'DP-011923'; //-- Codigo de error acordado con DP.
+    private static final String K_COD_SALDO_INSUFICIENTE_RES = '454-01';  //-- Codigo de error que devuelvo.
+    private static final String K_MENSAJE_SALDO_INSUFICIENTE = 'Saldo Insuficiente';  //-- Mensaje de Error.
 
     public ResultObj changeFriendsAndFamily(String jsonInput) {
         printDebug('Entre a changeFriendsAndFamily()');
@@ -39,7 +43,7 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
 
         }
         catch (FunctionalException fe) {
-        	resultObject = new ResultObj(417, JSON.serialize(getRespuestaNoOk('417',fe.getMessage())));
+        	resultObject = new ResultObj(417, JSON.serialize(getRespuestaNoOk(fe.codDP,fe.getMessage())));
             printDebug('Retorna: ' + resultObject);
         	return resultObject;
         }
@@ -468,11 +472,6 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
         printDebug('Entre a getAccountIdBySubscriptorId()');
         String accountId = null;
         
-        if (String.isBlank(pSubscritorId)) {
-            printDebug(' ---- El pSubscritorId vino vacio');
-            throw new CalloutException('El pSubscritorId vino vacio');
-        }
-
         try {
             Asset asset = [SELECT AccountId, vlocity_cmt__RootItemId__c FROM Asset WHERE Subscription_Id__c = :pSubscritorId];
             if (asset != null) {
@@ -482,12 +481,11 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
                 return respuesta;
             }
             else {
-                throw new FunctionalException('Error al obtener el AccountId del SubscriptionId: ' + pSubscritorId);
+                throw new FunctionalException('Asset vacio.');
             }
         }
         catch (Exception e) {
-            printDebug(' ---- Error al obtener el AccountId del subscriptionId: ' + pSubscritorId + '. Error: ' + e.getMessage());
-            throw new FunctionalException('Error al obtener el AccountId del subscriptionId: ' + pSubscritorId + '. Error: ' + e.getMessage());
+            throw new FunctionalException('Id de suscriptor no encontrado [  ' + pSubscritorId + ' ]. - Error: ' + e.getMessage());
         }    
     }
 
@@ -497,11 +495,6 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
     private Map<String, Object> getAccountIdByMSISDN (String pNroLinea) {
         printDebug('Entre a getAccountIdByMSISDN()');
 
-        if (String.isBlank(pNroLinea)) {
-            printDebug(' ---- El pNroLinea vino vacio');
-            throw new CalloutException('El pNroLinea vino vacio');
-        }
-        
         try {
             Asset asset = [SELECT AccountId, vlocity_cmt__RootItemId__c FROM Asset WHERE MSISDN__c = :pNroLinea];
             if (asset != null) {
@@ -511,12 +504,11 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
                 return respuesta;
             }
             else {
-                throw new FunctionalException('Error al obtener el AccountId del MSISDN: ' + pNroLinea);
+                throw new FunctionalException('Asset vacio.');
             }
         }
         catch (Exception e) {
-            printDebug(' --- Error al obtener el AccountId del MSISDN: ' + pNroLinea + '. Error: ' + e.getMessage());
-            throw new FunctionalException('Error al obtener el AccountId del MSISDN: ' + pNroLinea + '. Error: ' + e.getMessage());
+            throw new FunctionalException('Linea no encontrada [ ' + pNroLinea + ' ] - Error: ' + e.getMessage());
         }    
     }
 
@@ -808,13 +800,14 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
             String codCargoValue = getJSONValue (prod.vlocity_cmt__JSONAttribute__c, 'FAN_ATTCAT_000042', 'FAN_ATT_000084');
             codCargo.put('codCargo', codCargoValue);
 
-            for (Integer i=0; i<pJsonBody.lstOfertas.size(); i++) {
+            Integer secuenciaProd=1;
+            for (Integer i=0; i<pJsonBody.lstOfertas.size(); i++) { //-- Puede venir mas de una baja. Por ej: Baja de VOZ y SMS.
                 OfertaClass oferta = pJsonBody.lstOfertas.get(i);
                 if (oferta.codOperacion != 'B') {
                     continue; //-- codOperacion != 'B' skip.
                 }
                 Map<String, Object> infoDeducTarifasMap = new Map<String, Object>();
-                infoDeducTarifasMap.put('secuenciaProductoAdquirido', String.valueOf(i+1));
+                infoDeducTarifasMap.put('secuenciaProductoAdquirido', String.valueOf(secuenciaProd++));
                 infoDeducTarifasMap.put('codCargo', codCargoValue);
                 DateTime fo = DateTime.now();
                 infoDeducTarifasMap.put('fechaVenta', fo.format('yyyy-MM-dd hh:mm:ss'));
@@ -851,16 +844,38 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
                 throw new FunctionalException('Fallo al instanciar el servicio de integracion: IntegrationProcedureService');
             }
 
-            integProcService.invokeMethod(pServiceName, inMap, outMap, optMap);
+            Object resp = integProcService.invokeMethod(pServiceName, inMap, outMap, optMap);
             try {
+
+                System.debug('resp --> ' + resp );
+                System.debug('outMap --> ' + JSON.serialize(outMap));
+
                 Map<String, Object> response = (Map<String, Object>)outMap.get('IPResult');
                 printDebug('IPResult (Map<String, Object>) --> ' + response);
                 if (response.containsKey('codigo')) {
-                    throw new CalloutException((String)response.get('codigo') + ' - ' + (String)response.get('mensaje'));
+                    String codigo = (String)response.get('codigo');
+
+                    /*
+                     * Fecha: 25/07/2018.
+                     * A solicitud del Scrum de Sales se hace un tratamiento especial para el caso que 
+                     * Huawei devuelva Saldo Insuficiente. Para ello se acordó con MDW-DP enviar un codigo
+                     * especial para ese caso de negocio que yo cargo en la constante K_SALDO_INSUFICIENTE
+                     * y devuelvo el mensaje cargado en la constante K_MENSAJE_SALDO_INSUFICIENTE y el codigo
+                     * de error K_COD_SALDO_INSUFICIENTE_RES.
+                     */   
+
+                    if (codigo == K_SALDO_INSUFICIENTE) {
+                        FunctionalException fe = new FunctionalException(K_MENSAJE_SALDO_INSUFICIENTE);
+                        fe.codDP = K_COD_SALDO_INSUFICIENTE_RES;
+                        throw fe;
+                    }
+                    else {
+                        throw new FunctionalException((String)response.get('codigo') + ' - ' + (String)response.get('mensaje'));
+                    }    
                 }
             }
-            catch (CalloutException ce) {
-                throw ce;
+            catch (FunctionalException fex) {
+                throw fex;
             } 
             catch (TypeException te) {
                 Object response = (Object)outMap.get('IPResult');
@@ -909,12 +924,12 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
 
     private class OfertaClass {
         public String codOperacion;
-        public String ofertaId;
+        public String ofertaId; //<-- Este campo en realidad contiene el AssetReferenceId, se cambio por consejo de VL, se respeto el nombre para no cambiar el contrato.
         List<LineaClass> lstLineas;
     }
 
     private class LineaClass {
-        public String assetId;
+        public String assetId;  //<-- Este campo en realidad contiene el AssetReferenceId, se cambio por consejo de VL, se respeto el nombre para no cambiar el contrato.
         public String priceBookEntryId;
         public String nroLinea;
         public String tipoLinea;
@@ -943,7 +958,7 @@ public with sharing class IFS_S454_changeFriendsAndFamily_cls {
      *           otro tipo de excepciones.
      */
     private class FunctionalException extends Exception {
-
+        public String codDP {set;get;} {codDP = '417';}
     }
 
     ///-- Funciones de Libreria --//

@@ -1,0 +1,3 @@
+<apex:page controller="cwbtool.DescribeApprovalProcessCtrl"  contenttype="application/x-excel#ApprovalProcessDetail_{!Now()}.xls" readOnly="true">
+     <c:VFC_ApprovalProcess mapFullApprovalProcessDetail="{!mapFullApprovalProcessDetail}" onlyActive="{!onlyActive}"/>  
+ </apex:page>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>email calification articles</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>KB_Template_email_HTML</name>
+    <style>none</style>
+    <subject>Telecom-KB Feedback negativo {!KB_article.Title}</subject>
+    <textOnly>{!KB_article.Title} Ver el detalle de mi promoción
+
+
+Titulo: {!KB_article.Title}  Opción seleccionada: {!option}  Comentario: {!comentario}
+
+
+Conceptos del mes:
+En esta sección encontrarás las promociones o descuentos asignados a tu servicio, con su respectivo valor.
+
+Promoción:
+Indica el mes en curso de la promoción, en este ejemplo, mes dos de los cuatro correspondientes.
+
+Descuento:
+Indica el porcentaje de descuento que se realizará sobre los servicios especificados en la promoción.
+
+
+Si necesitas más ayuda, hacé click en el siguiente enlace.</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

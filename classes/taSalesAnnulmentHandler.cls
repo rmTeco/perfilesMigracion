@@ -184,18 +184,22 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
     {
         try
         {
-            List<OrderItem> orderItems = taOrderController.GetOrderSerials(orderId);
-            Order originOrder = [Select id, OriginStoreLocation__r.AssociatedWarehouseId__c from Order where id = : orderId];
-
-            Map<String,Object> serialNumbersToMove = new Map<String,Object>();
-            for(OrderItem item : orderItems){
-                if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard'))
-                {
-                    taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACION, INSTANCE_ANULAR_VENTA, item.FromStock__c, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+            Order originOrder = [Select id, OriginStoreLocation__r.AssociatedWarehouseId__c, TrackingStatus__c from Order where id = : orderId];
+            if (originOrder.TrackingStatus__c == 'Entregado')
+            {
+                List<OrderItem> orderItems = taOrderController.GetOrderSerials(orderId);
+                Map<String,Object> serialNumbersToMove = new Map<String,Object>();
+                for(OrderItem item : orderItems){
+                    if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard'))
+                    {
+                        taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACION, INSTANCE_ANULAR_VENTA, item.FromStock__c, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    }
                 }
+                if (serialNumbersToMove.KeySet().size() > 0)
+                    taOrderController.MoveSerialsStock(serialNumbersToMove);
             }
-            if (serialNumbersToMove.KeySet().size() > 0)
-                taOrderController.MoveSerialsStock(serialNumbersToMove);
+            else
+                taOrderController.AnulaStockReserved(orderId);
         }
         catch(Exception e)
         {
@@ -226,28 +230,28 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
     {
         try
         {
-            List<OrderItem> orderItems = taOrderController.GetCEGOrderSerials(orderId);
-
-            Map<String,Object> serialNumbersToMove = new Map<String,Object>();
-
-            Order originOrder = [Select id, OriginStoreLocation__r.AssociatedWarehouseId__c from Order where id = : orderId];
-            
-            for(OrderItem item : orderItems){
-                if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard') && (item.vlocity_cmt__Action__c == 'Disconnect'))
-                {
-                    taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACIONCEG, INSTANCE_ANULAR_DEVOLUCION, null, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
-                }
-                if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard') && (item.vlocity_cmt__Action__c == 'Add'))
-                {
-                    taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACION, INSTANCE_ANULAR_VENTA, item.FromStock__c, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
-                }
-            }
-
-            if (serialNumbersToMove.KeySet().size() > 0)
+            Order originOrder = [Select id, OriginStoreLocation__r.AssociatedWarehouseId__c, TrackingStatus__c from Order where id = : orderId];
+            if (originOrder.TrackingStatus__c == 'Entregado')
             {
-                taOrderController.MoveSerialsStock(serialNumbersToMove);
+                List<OrderItem> orderItems = taOrderController.GetCEGOrderSerials(orderId);
+                Map<String,Object> serialNumbersToMove = new Map<String,Object>();
+                for(OrderItem item : orderItems){
+                    if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard') && (item.vlocity_cmt__Action__c == 'Disconnect'))
+                    {
+                        taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACIONCEG, INSTANCE_ANULAR_DEVOLUCION, null, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    }
+                    if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard') && (item.vlocity_cmt__Action__c == 'Add'))
+                    {
+                        taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACION, INSTANCE_ANULAR_VENTA, item.FromStock__c, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    }
+                }
+                if (serialNumbersToMove.KeySet().size() > 0)
+                {
+                    taOrderController.MoveSerialsStock(serialNumbersToMove);
+                }
             }
-
+            else
+                taOrderController.AnulaStockReserved(orderId);
         }
         catch(Exception e)
         {
@@ -821,13 +825,14 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
             Boolean StoreLocationValidation;
             Boolean permiso = ta_sales_UserUtils.checkUserHasCustomPermissionAccess('OVStoreLocation', UserInfo.getUserId());
             String orderId = String.valueOf(options.get('OrderId'));
-            Order ord = [Select Id, Delivery_Method__c From Order Where Id = :orderId];
+            Order ord = [Select OrderNumber,Id, Delivery_Method__c From Order Where Id = :orderId];
             if(ord.Delivery_Method__c == 'Store Pick Up'){
                 StoreLocationValidation = permiso;
             }else{
                 StoreLocationValidation = true;
             }
             outMap.put('StoreLocationValidation', StoreLocationValidation);
+            outMap.put('OrderNumber', ord.OrderNumber);
     }
     
     //PFTA-8082
@@ -995,98 +1000,87 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
                                                         FROM vlocity_cmt__BusinessSite__c
                                                         WHERE Id = :order.OriginStoreLocation__c];
             system.debug('orderStore.chanel 3 =====> '+orderStore.Channel_Type_3__c);
-            vlocity_cmt__BusinessSite__c userStore = [SELECT Id, Name, Channel__c, Channel_Type__c, Channel_Type_2__c, Channel_Type_3__c
-                                                        FROM vlocity_cmt__BusinessSite__c
-                                                    WHERE Id = :[SELECT Id, Work_Place__c
-                                                                    FROM WorkTeam__c
-                                                                    WHERE Is_Active__c = true AND Id = :[SELECT Id, Work_Team__c
-                                                                                    FROM Team_Member__c
-                                                                                WHERE Is_Active__c = true AND User_member__c = :UserInfo.getUserId()].Work_Team__c
-                                                                    ].Work_Place__c];
-
+            vlocity_cmt__BusinessSite__c userStore = ta_sales_UserUtils.getStoreLocation(UserInfo.getUserId());
             system.debug('userStore =====> '+userStore);
 
             Integer annulmentAvailableChannels = [SELECT count()
                                                     FROM AnnulmentAvailableChannels__c
-                                                    WHERE OriginChannel__c = :codeOficinaComercial
-                                                    AND AnnulmentChannel__c = :codeOficinaComercial];
-              outMap.put('Flag1','flag');  
+                                                    WHERE OriginChannel__c = :orderStore.Channel_Type_3__c
+                                                    AND AnnulmentChannel__c = :userStore.Channel_Type_3__c];
+
            if(annulmentAvailableChannels > 0)
            {
-               outMap.put('Flag2','flag');
                 //Si el CANAL del punto de venta ORIGEN es AGENTE
                 if(orderStore.Channel_Type_3__c == codeAgente)
                 {
-                    outMap.put('Flag3','flag');
                     //Si el CANAL del punto de venta donde se ANULA es OFICINA COMERCIAL
                     if(userStore.Channel_Type_3__c == codeOficinaComercial)
                     {
-                        outMap.put('Flag4','flag');
-                        
                         //Se comprueban si existen TANGIBLES
                         List<OrderItem> orderItems = new List<OrderItem>();
-                        orderItems = [SELECT Id, Product2.ProductCode, Product2.Name, FromStock__c, Product2.Tangible__c
+                        orderItems = [SELECT Id, Product2.vlocity_cmt__Type__c , FromStock__c, Product2.Tangible__c
                                     FROM OrderItem
                                     WHERE OrderId = :orderId];
                         for(OrderItem item : orderItems)
                         {
-                            //Se comprueba si es tangible
-                            if(item.Product2.Tangible__c)
-                            {
-                                //No se tienen en cuenta las simcards para anulacion
-                                if(item.Product2.ProductCode != 'FAN_PSIM_REPRO' && item.Product2.ProductCode != 'FAN_PSIM_STANDARD')
-                                {
-                                    existTangible = true;
-                                    //Se comprueba si es un tangible CONSIGNADO
-                                    if(item.FromStock__c != 'MTPL')
-                                    {
-                                        availableChannel = true;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        //Si no existen tangibles dentro de la orden, se permite anular
-                        if(!existTangible && !availableChannel){
-                            availableChannel = true;
-                            existTangible = true;
-                        }
-
-                    }
-                    else if(userStore.Channel_Type_3__c == codeAgente && orderStore.Name == userStore.Name)
-                        availableChannel = true;
-                }else{
-                      existTangible = true;
-                     //Se comprueban si existen TANGIBLES
-                     List<OrderItem> orderItems = new List<OrderItem>();
-                     orderItems = [SELECT Id, Product2.ProductCode, Product2.Name, FromStock__c, Product2.Tangible__c
-                                    FROM OrderItem
-                                    WHERE OrderId = :orderId];
-                     for(OrderItem item : orderItems)
-                     {
-                        //Se comprueba si es tangible
-                        if(item.Product2.Tangible__c)
-                        {
-                            //No se tienen en cuenta las simcards para anulacion
-                            if(item.Product2.ProductCode != 'FAN_PSIM_REPRO' && item.Product2.ProductCode != 'FAN_PSIM_STANDARD')
+                            if(item.Product2.Tangible__c && item.Product2.vlocity_cmt__Type__c  != 'Simcard')
                             {
                                 existTangible = true;
                                 //Se comprueba si es un tangible CONSIGNADO
-                                if(item.FromStock__c != 'MTPL')
+                                if(item.FromStock__c == 'MTPL')
                                 {
                                     availableChannel = true;
                                     break;
                                 }
                             }
                         }
+                        //Si no existen tangibles dentro de la orden, se permite anular
+                        if(!existTangible && !availableChannel){
+                            availableChannel = true;
+                        }
+                    }
+                    else
+                    {
+                        if(userStore.Channel_Type_3__c == codeAgente && orderStore.Name == userStore.Name)
+                            availableChannel = true;
+                        existTangible = ValidateTangibleForAnnulment(orderId);
                     }
                 }
+                else{
+                    availableChannel = true;
+                    existTangible = ValidateTangibleForAnnulment(orderId);
+                }
            }
-            
-            //existTangible = true;
                 
             outMap.put('availableChannel', availableChannel);
             outMap.put('existTangible', existTangible);
+        }
+        catch(Exception e)
+        {
+            System.debug('Exception Msg: ' + e.getMessage());
+            System.debug('Exception Cause: ' + e.getCause());
+            System.debug('Exception Stack Trace: ' + e.getStackTraceString());
+            throw e;
+        }
+    }
+
+    private Boolean ValidateTangibleForAnnulment(Id orderId)
+    {
+        try
+        {
+            Boolean existTangible = false;
+            List<OrderItem> orderItems = [SELECT Id, Product2.vlocity_cmt__Type__c , FromStock__c, Product2.Tangible__c
+                                    FROM OrderItem
+                                    WHERE OrderId = :orderId];
+            for(OrderItem item : orderItems)
+            {
+                if(item.Product2.Tangible__c && item.Product2.vlocity_cmt__Type__c  != 'Simcard')
+                {
+                    existTangible = true;
+                    break;
+                }
+            }
+            return existTangible;
         }
         catch(Exception e)
         {
@@ -1120,11 +1114,20 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
                 annulOrder.OrderApprovalStatus__c = orderApprovalStatus;
             }
 
-            /* Se compenta hasta que funcione
-            vlocity_cmt.SimpleDecompositionController.decomposeOrder(annulOrder.Id);
-            vlocity_cmt.SimpleDecompositionController.startOrchestrationPlan(annulOrder.Id);
-            */
+            string responseOM;
 
+            if (!Test.isRunningTest()){
+                responseOM = vlocity_cmt.SimpleDecompositionController.decomposeAndCreatePlanEx(annulOrder.Id, true);
+            }
+            else{
+                responseOM='OK';
+            }
+            
+            if(responseOM != 'OK')
+                {
+                    throw new FuncException('Error en la descomposición de la orden.');
+                }
+            
             Order originOrder = [SELECT Id, Status, TrackingStatus__c, OrderApprovalStatus__c FROM Order WHERE Id = :oldOrderId];
             originOrder.Status = 'Cancelled';
             if(trackingStatus <> null)

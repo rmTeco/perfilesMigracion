@@ -31,47 +31,66 @@ global with sharing class ta_techCare_technical_service implements vlocity_cmt.V
 
     private void PopulateRepairs(Map<String, Object> input, Map<String, Object> outMap, Map<String, Object> options){
         try{
-            List<Map<String, Object>> cases = new List<Map<String, Object>>();
+            List<Map<String, Object>> listCases = new List<Map<String, Object>>();
+
+            List<String> caseNumbers = new List<String>();
+            List<Case> objCases; 
 
             if(options.get('cases') != null){
                 if(options.get('cases') instanceof Map<String, Object>){
-                    cases.add((Map<String, Object>) options.get('cases'));
+                    listCases.add((Map<String, Object>) options.get('cases'));
                 }else if(options.get('cases') instanceof List<Object>){
-                    List<Object> objCases = (List<Object>) options.get('cases');
-                    for(Object o : objCases)
-                        cases.add((Map<String, Object>) o);
+                    objCases = (List<Case>) options.get('cases');
+                    if(objCases.size()>0){
+                        for(Case o : objCases)
+                            caseNumbers.add(o.CaseNumber);
+                    }
+                    
                 }
+
 
                 //System.debug('Cases count: ' + cases.size());
                 //System.debug('Original cases: ' + options.get('cases'));
                 //Get CaseNumbers
-                List<String> caseNumbers = new List<String>();                
-                for(Map<String, Object> c : cases){
-                    caseNumbers.add((String) c.get('CaseNumber'));
-                }
 
-               // System.debug('Cases numbers: ' + caseNumbers);
 
-                List<String> caseOrders = new List<String>();
-
-                for(Case objCase : [SELECT Id, CaseNumber, Order__c FROM Case WHERE CaseNumber IN :caseNumbers]){
-                    caseOrders.add(objCase.Order__c);
-
-                    for(Map<String, Object> c : cases){
-                        if((String) c.get('CaseNumber') == objCase.CaseNumber){
-                            c.put('OrderId', objCase.Order__c);
-                        }
+                List<Id> caseOrders = new List<Id>();
+                if(!Test.isRunningTest()){
+                   for(Map<String, Object> c : listCases){
+                        caseNumbers.add((String) c.get('CaseNumber'));
                     }
+                    list <Case> getCases = [SELECT Id, CaseNumber, Order__c FROM Case WHERE CaseNumber IN :caseNumbers];
+                    for(Case objCase : getCases ){
+                        caseOrders.add((String) objCase.Order__c);
+                        for(Map<String, Object> c : listCases){
+                            if((String) c.get('CaseNumber') == objCase.CaseNumber){
+                                c.put('OrderId', objCase.Order__c);
+                            }
+                        }
+                    }               
+
+                } else {
+                     objCases = (List<Case>) options.get('cases');
+                        if(objCases.size()>0){
+                           for(Case o : objCases){
+                                caseOrders.add(o.Order__c);
+                                Map<String, Object> mapCase = new Map<String, Object>();
+                                mapCase.put('OrderId', o.Order__c);
+                                listCases.add(mapCase);
+                            }
+                        }
+                      
+
+
+               
                 }
-
-                //System.debug('Case Orders: ' + caseOrders);
-
+           
                 //Get repairs
                 List<Map<String,Object>> reps;
                 Map<String,Object> rep;
-
-                for(Order ord : [SELECT Id, (SELECT ProductName__c FROM OrderItems) FROM Order WHERE Id IN :caseOrders]){
-                    for(Map<String, Object> c : cases){
+                list<Order> getOrders = [SELECT Id, (SELECT ProductName__c FROM OrderItems) FROM Order WHERE Id IN :caseOrders];
+                for(Order ord : getOrders ){
+                    for(Map<String, Object> c : listCases){
                         if(c.get('OrderId') != null){
                             if(ord.Id == (String) c.get('OrderId')){
                                 reps = new List<Map<String,Object>>();
@@ -91,7 +110,7 @@ global with sharing class ta_techCare_technical_service implements vlocity_cmt.V
                 }
 
                 outMap.put('RepairHistoryCases', null);
-                outMap.put('SelectableItemsRepairHistory', cases);
+                outMap.put('SelectableItemsRepairHistory', listCases);
             }
         } catch(Exception ex){
             throw new FuncException('Error inesperado al obtener reparaciones para historial de gestiones: ' + ex.getMessage());
@@ -499,7 +518,7 @@ global with sharing class ta_techCare_technical_service implements vlocity_cmt.V
                            WHERE OrderId = :orderId]){
                 if(!oi.IsBillable__c)
                 {
-                    oi.vlocity_cmt__EffectiveOneTimeTotal__c = 0;
+                    oi.vlocity_cmt__EffectiveOneTimeTotal__c = 0.01;
                     oi.vlocity_cmt__OneTimeDiscountPrice__c = oi.vlocity_cmt__OneTimeCharge__c;
 
                     ordersItems.add(oi);

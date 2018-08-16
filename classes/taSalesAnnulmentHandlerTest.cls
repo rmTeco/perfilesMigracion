@@ -85,6 +85,8 @@ public class taSalesAnnulmentHandlerTest
     Account account = TestDataFactory.createAccounts(1, 'Consumer')[0];
 
     Order order = TestDataFactory.createOrders(1, account)[0];
+    order.TrackingStatus__c = 'Entregado';
+    update order;
 
     OrderItem item = TestDataFactory.createOrderItem(1, order)[0];
     item.vlocity_cmt__SerialNumber__c = '89543410307680582547';
@@ -97,6 +99,48 @@ public class taSalesAnnulmentHandlerTest
       tsah.invokeMethod('ReturnSerialsToStock', inputMap, outMap, options);
     Test.stopTest();
   }
+  
+  @isTest static void CreateOrCheckAnnulmentOrder()
+  {
+    Map<String, Object> inputMap = new Map<String, Object>();
+    Map<String, Object> outMap = new Map<String, Object>();
+    Map<String, Object> options = new Map<String, Object>();
+
+    Account account = TestDataFactory.createAccounts(1, 'Consumer')[0];
+
+    Order order = TestDataFactory.createOrders(1, account)[0];
+    order.TrackingStatus__c = 'Pendiente de Anulacion';
+    order.Gestion__c = 'Desconexión';
+    update order;
+
+    options.put('orderId', order.id);
+
+    Test.startTest();
+      taSalesAnnulmentHandler tsah = new taSalesAnnulmentHandler();
+      tsah.invokeMethod('CreateOrCheckAnnulmentOrder', inputMap, outMap, options);
+    Test.stopTest();
+  }
+  
+    @isTest static void ValidateAnnulmentStoreLocation()
+  {
+    Map<String, Object> inputMap = new Map<String, Object>();
+    Map<String, Object> outMap = new Map<String, Object>();
+    Map<String, Object> options = new Map<String, Object>();
+
+    Account account = TestDataFactory.createAccounts(1, 'Consumer')[0];
+
+    Order order = TestDataFactory.createOrders(1, account)[0];
+    order.Delivery_Method__c = 'Store Pick Up';
+    update order;
+
+    options.put('OrderId', order.id);
+
+    Test.startTest();
+      taSalesAnnulmentHandler tsah = new taSalesAnnulmentHandler();
+      tsah.invokeMethod('ValidateAnnulmentStoreLocation', inputMap, outMap, options);
+    Test.stopTest();
+  }
+  
   
   @isTest static void ReturnSerialsToStockCEG()
   {
@@ -120,6 +164,7 @@ public class taSalesAnnulmentHandlerTest
     order.Gestion__c = 'Cambio en Garantia';
     //order.Gestion__c = 'Venta';
     order.OriginStoreLocation__c = bsns.id;
+    order.TrackingStatus__c = 'Entregado';
     update order;
 
     OrderItem item = TestDataFactory.createOrderItem(1, order)[0];
@@ -178,6 +223,42 @@ public class taSalesAnnulmentHandlerTest
     Test.startTest();
     taSalesAnnulmentHandler tsah = new taSalesAnnulmentHandler();
     tsah.invokeMethod('PaymentRollback', inputMap, outMap, options);
+    Test.stopTest();
+  }
+  
+    @isTest static void GetCardsPayments()
+  {
+    Map<String,Object> inputMap = new Map<String,Object>();
+    Map<String,Object> outMap = new Map<String,Object>();
+    Map<String,Object> options = new Map<String,Object>();
+    
+    Account account = TestDataFactory.createAccounts(1, 'Consumer')[0];
+    account.AccountIntegrationId__c = '10000000564';
+
+    Order order = TestDataFactory.createOrders(1, account)[0];
+    
+    vlocity_cmt__PaymentAdjustment__c paymentAdjustment = TestDataFactory.createPaymentAdjustments(1, account, order, null, 1)[0];
+
+    List<CardType__c> csList = new List<CardType__c>();
+    csList.add(new CardType__c(
+      name = 'Tarjeta_Credito',
+      CardTypeCode__c = 2.001,
+      ResponseCardType__c = 'TAR'
+    ));
+
+    csList.add(new CardType__c(
+      name = 'Tarjeta_Debito',
+      CardTypeCode__c = 4.002,
+      ResponseCardType__c = 'DEB'
+    ));
+
+    insert csList;
+
+    options.put('OrderId', order.Id);
+    
+    Test.startTest();
+    taSalesAnnulmentHandler tsah = new taSalesAnnulmentHandler();
+    tsah.invokeMethod('GetCardsPayments', inputMap, outMap, options);
     Test.stopTest();
   }
 

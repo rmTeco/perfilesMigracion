@@ -72,7 +72,11 @@ private class taSalesSMSInteractionTest {
     TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
     TestDataFactory.createExpectedMessage();
     
+    insert new SMSSender__c(Name='S-Confirmacion-SMS', Sender__c='TestStress - SMS');
+    
     Account acc = TestDataFactory.createAccounts(1,'Business')[0];
+    acc.CustomerIntegrationId__c = 5645647;
+    update acc;
     Order ord = TestDataFactory.createOrders(1, acc)[0];
     Asset ast = TestDataFactory.createAssets(1, acc, testLine)[0];
     
@@ -88,6 +92,7 @@ private class taSalesSMSInteractionTest {
     
     options.put('accountId', acc.Id);
     options.put('phone', 123456789);
+    options.put('orderId',ord.Id);
     
     Test.startTest();
     taSalesSMSInteraction testClass = new taSalesSMSInteraction();
@@ -132,6 +137,7 @@ private class taSalesSMSInteractionTest {
     
     options.put('accountId', acc.Id);
     options.put('phone', testLine);
+    options.put('orderId',ord.Id);
     
     Test.startTest();
     taSalesSMSInteraction testClass = new taSalesSMSInteraction();
@@ -244,7 +250,11 @@ private class taSalesSMSInteractionTest {
     
     Test.startTest();
     taSalesSMSInteraction testClass = new taSalesSMSInteraction();
+    try {
     testClass.invokeMethod(method, input, outMap, options);
+    } catch (exception e) {
+        System.assertEquals('Error inesperado al enviar el SMS.',e.getMessage());
+    }
     Test.stopTest();
   }
 

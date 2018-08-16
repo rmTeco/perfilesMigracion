@@ -8,13 +8,13 @@ public class BillingGroupCloseCaseControllerTest {
        
        Account acc = new Account(Name = 'testLagertha',Phone = '0800'); 
         insert acc;
-  
-    Contact con = new Contact(FirstName = 'Ragnar', LastName = 'Lodbrok', Phone = '0900', MobilePhone = '0400', Email = 'ragnar.lodbrok@gmail.com');
-    con.AccountId = acc.Id;  //account id 
-    insert con;
-    
-    Case test_case = new Case(Subject = 'test_subject_vikings', AccountID = acc.Id, ContactId = con.Id, Status = 'Nueva', Origin = 'Telefónico', RecordTypeId = caseRecordTypeId);
-    insert test_case;
+	
+		Contact con = new Contact(FirstName = 'Ragnar', LastName = 'Lodbrok', Phone = '0900', MobilePhone = '0400', Email = 'ragnar.lodbrok@gmail.com');
+		con.AccountId = acc.Id;  //account id 
+		insert con;
+		
+		Case test_case = new Case(Subject = 'test_subject_vikings', AccountID = acc.Id, ContactId = con.Id, Status = 'Nueva', Origin = 'Telefónico', RecordTypeId = caseRecordTypeId);
+		insert test_case;
        
         //BillingGroupCloseCaseController testedClass = new BillingGroupCloseCaseController();
        
@@ -39,7 +39,7 @@ public class BillingGroupCloseCaseControllerTest {
        system.assertEquals('El proceso fue cancelado.', caseResult[0].Resolution_Comment__c);
        
        
-  }
+	}
     
     @IsTest static void closeCaseCatchTest(){ 
        system.debug('ENTRO BillingGroupCloseCaseControllerTest.closeCaseCatchTest');
@@ -47,13 +47,13 @@ public class BillingGroupCloseCaseControllerTest {
        
        Account acc = new Account(Name = 'testLagertha',Phone = '0800'); 
         insert acc;
-  
-    Contact con = new Contact(FirstName = 'Ragnar', LastName = 'Lodbrok', Phone = '0900', MobilePhone = '0400', Email = 'ragnar.lodbrok@gmail.com');
-    con.AccountId = acc.Id;  //account id 
-    insert con;
-    
-    Case test_case = new Case(Subject = 'test_subject_vikings', AccountID = acc.Id, ContactId = con.Id, Status = 'Nueva', Origin = 'Telefónico', RecordTypeId = caseRecordTypeId);
-    insert test_case;
+	
+		Contact con = new Contact(FirstName = 'Ragnar', LastName = 'Lodbrok', Phone = '0900', MobilePhone = '0400', Email = 'ragnar.lodbrok@gmail.com');
+		con.AccountId = acc.Id;  //account id 
+		insert con;
+		
+		Case test_case = new Case(Subject = 'test_subject_vikings', AccountID = acc.Id, ContactId = con.Id, Status = 'Nueva', Origin = 'Telefónico', RecordTypeId = caseRecordTypeId);
+		insert test_case;
        
        Test.startTest();
        Boolean resultTest = BillingGroupCloseCaseController.closeCase(test_case.Id);
@@ -65,7 +65,7 @@ public class BillingGroupCloseCaseControllerTest {
         system.assertEquals(false, resultTest);
        
        
-  }
+	}
     
 @IsTest static void addLineItemToOrderTest(){ 
        system.debug('ENTRO BillingGroupCloseCaseControllerTest.addLineItemToOrder');
@@ -87,7 +87,7 @@ public class BillingGroupCloseCaseControllerTest {
     
        List<PricebookEntry> TestPricebookEntry =[SELECT Id,ProductCode,Pricebook2Id,Product2Id FROM PricebookEntry WHERE ProductCode =: testProduct2[0].ProductCode];
     
-       system.debug('TestPricebookEntry[0].Pricebook2Id =' + TestPricebookEntry[0].Pricebook2Id);  
+       system.debug('TestPricebookEntry[0].Pricebook2Id =' + TestPricebookEntry[0].Pricebook2Id);	
        system.debug('TestPricebookEntry.Product2Id =' + TestPricebookEntry[0].Product2Id);
        system.debug('TestPricebookEntry.ProductCode =' + TestPricebookEntry[0].ProductCode);
         
@@ -96,6 +96,6 @@ public class BillingGroupCloseCaseControllerTest {
        Test.stopTest();
     
        system.debug('RESULTTEST =' + resultTest);
-  }
+	}
     
 }

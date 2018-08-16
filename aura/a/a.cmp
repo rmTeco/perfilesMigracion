@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,force:lightningQuickAction">
+
+    <!-- Id of the Account the page hosting this component is showing -->
+    <aura:attribute name="recordId" type="Id" />
+
+	<ui:button class="slds-button_brand textWhite" aura:id="button2" buttonTitle="" label="Ir a otro lado" press="{!c.redirigirConfirmacion}" />    
+</aura:component>

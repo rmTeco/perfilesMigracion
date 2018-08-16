@@ -1,0 +1,146 @@
+<apex:page sidebar="false" controller="ta_security_wmassignment_controller">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+        <apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+        <apex:includeScript value="{!URLFOR($Resource.jstree, 'jstree/dist/jstree.js')}"></apex:includeScript>
+        <script>
+            localStorage.removeItem('jstree');
+
+           //alert(document.getElementById('vlcActionId'));
+            const getItems = async (id = null) => {
+                //alert(document.getElementById('vlcActionId'));
+                const pq = function(id){
+                  return new Promise( 
+                    function(fullfill, rejected){
+                        //alert(document.getElementById('vlcActionId'));
+
+                        Visualforce.remoting.Manager.invokeAction(
+                        '{!$RemoteAction.ta_security_wmassignment_controller.feedTree}',
+                        function(result, event){
+
+                                //let rx = new RegExp('/&quot;/ig');
+                                //result = JSON.parse(result.replace(rx, '"'));
+                                if (event.status) {
+                                    // Get DOM IDs for HTML and Visualforce elements like this
+                                    fullfill( JSON.parse(result) );
+                                } else if (event.type === 'exception') {
+                                    rejected(event);
+                                } else {
+                                    rejected(event);
+                                }
+                            }, 
+                            {escape: false}
+                        );
+                    });  
+                }  
+                let result = await pq(id);
+                return result;
+                }
+            
+            window.configObject = {
+                        "core": {
+                            "animation": 0,
+                                "check_callback": true,
+                                    "themes": { "stripes": true },
+                            'data':  async (node, cb) => {
+                               
+                                let tmpdata = await getItems(node.id);
+                                return cb(tmpdata);
+                            }
+                        },
+                        "types": {
+                            "#": {
+                                "max_children": 1,
+                                    "max_depth": 4,
+                                        "valid_children": ["root"]
+                            },
+                            "root": {
+                                "icon": "/static/3.3.5/assets/images/tree_icon.png",
+                                    "valid_children": ["default"]
+                            },
+                            "default": {
+                                "valid_children": ["default", "file"]
+                            },
+                            "file": {
+                                "icon": "glyphicon glyphicon-file",
+                                    "valid_children": []
+                            }
+                        },
+                        "checkbox": {
+                            "keep_selected_style": false
+                        },
+                        "plugins": [
+                            "contextmenu", "dnd", "search",
+                            "state", "types", "wholerow"
+                        ]
+                    }
+            
+            
+            const saveState = ()=>{
+                console.log($('#jstree_demo').jstree(true).get_state().core.selected);
+            }
+
+            const CreateComponent = () => {
+                jQuery('#jstree_demo').jstree('destroy').empty();
+                window.tree = jQuery('#jstree_demo').jstree(window.configObject);
+                tree.on("changed.jstree", function (e, data) {
+                if(data.action==="select_node"){
+                    ViewTeam(data.node.id);
+                    console.log(data.node.id);
+                    }
+                });               
+            }
+            $( document ).ready(function() {
+                CreateComponent();
+            });
+            
+        </script>
+    <apex:form id="theForm"> 
+    <apex:slds />
+    <div class="slds-scope">
+    <div class="slds-m-around--medium">
+        <apex:inputField value="{!foreignMember.User_member__c}"/>
+    </div>
+    <div class="slds-grid slds-wrap slds-grid--pull-padded">
+        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+            <apex:outputPanel id="myTableResult">
+                <apex:pageBlock >
+                <h1 class="slds-section__title">{!$Label.WorkTeamofDestination}</h1>
+                    <div style="overflow: auto; height: 350px;">
+                        <div id="jstree_demo"/>
+                        <!--<apex:commandButton styleClass="myClass" title="Filtrar" value="Filtrar" reRender="myButtons, myTableResult, myMessages, dataTableResult, componentPanel" status="renderMeStatus" onclick="CreateComponent(); return false;"/>      -->         
+                    </div>
+                     <apex:actionFunction action="{!ViewTeam}" name="ViewTeam" rerender="membersBlock">
+                        <apex:param name="recordId" value="" assignTo="{!selectedId}"/>
+                    </apex:actionFunction>
+                </apex:pageBlock>
+            </apex:outputPanel>
+        </div>
+        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+           <apex:outputPanel id="membersBlock">
+                <apex:pageBlock >
+                    <h1 class="slds-section__title">{!$Label.TeamMembers}</h1>
+                    <div style="overflow: auto; height: 350px;">
+                        <apex:pageBlockTable value="{!workteam_Members}" var="wm" rendered="{!workteam_Members.size > 0}">
+                            <apex:column >
+                                <apex:facet name="header">
+                                    Users
+                                </apex:facet>
+                                <div class="slds-m-left--xx-small">
+                                    {!wm.User_member__r.Name}
+                                </div>
+                            </apex:column>
+                        </apex:pageBlockTable>
+                    </div> 
+                    <apex:actionFunction name="rerenderTopPanel" rerender="membersBlock" />
+                    <apex:actionFunction name="Assign" action="{! Assign }"/>
+                </apex:pageBlock>
+                <div class="slds-button slds-button--neutral slds-not-selected" aria-live="assertive"  
+                onclick='Assign();'>
+                    {!$Label.Save}
+                </div>
+            </apex:outputPanel>
+        </div>
+    </div>
+    </div>
+    </apex:form>
+</apex:page>

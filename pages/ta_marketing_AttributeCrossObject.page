@@ -1,0 +1,30 @@
+<apex:page standardController="Crossobject__c" extensions="AttributeCrossObjectExtension">
+    <apex:form >
+        <apex:pageBlock title="{!$Label.Attributes}">
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    {!$Label.vlocity_cmt__name}
+                    <apex:inputField value="{! record.String1__c }" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    {!$Label.Weighing}
+                    <apex:inputField value="{! record.Integer1__c }" required="true"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    {!$Label.AccountType}
+                    <c:MultiselectPicklist leftLabel="{!$Label.AvailableRecordTypes}"
+                                           leftOption="{!RecordTypePicklist}"
+                                           rightLabel="{!$Label.SelectedAccountTypes}"
+                                           rightOption="{!RecordTypeAdded}"
+                                           size="10"
+                                           width="150px"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Guardar" action="{! save}" />
+                <apex:commandButton value="Cancelar" action="{! cancel}"  />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

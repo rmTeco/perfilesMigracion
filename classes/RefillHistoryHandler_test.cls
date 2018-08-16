@@ -1,12 +1,12 @@
 @IsTest
 public class RefillHistoryHandler_test {
-  @IsTest static void invoke_filterDataByChannel_ROL(){
+	@IsTest static void invoke_filterDataByChannel_ROL(){
         String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -15,7 +15,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','ROL');
         input.put('benefitFilter','Con Beneficio');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -23,12 +23,12 @@ public class RefillHistoryHandler_test {
     }
     
     @IsTest static void invoke_filterDataByChannel_Web(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -37,7 +37,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','Web');
         input.put('benefitFilter','Con Beneficio');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -45,12 +45,12 @@ public class RefillHistoryHandler_test {
     }
     
     @IsTest static void invoke_filterDataByChannel_SMS(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -59,7 +59,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','SMS');
         input.put('benefitFilter','Con Beneficio');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -67,12 +67,12 @@ public class RefillHistoryHandler_test {
     }
     
     @IsTest static void invoke_filterDataByChannel_IVR(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -81,7 +81,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','IVR');
         input.put('benefitFilter','Con Beneficio');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -89,12 +89,12 @@ public class RefillHistoryHandler_test {
     }
     
     @IsTest static void invoke_filterDataByChannel_OTHER(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -103,7 +103,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','OTHER');
         input.put('benefitFilter','Con Beneficio');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -116,14 +116,14 @@ public class RefillHistoryHandler_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         input.put('startDateFilter',stringDateStart);
         input.put('channelFilter','ROL');
         input.put('benefitFilter','Con Beneficio');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -136,14 +136,14 @@ public class RefillHistoryHandler_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         input.put('startDateFilter',stringDateStart);
         input.put('channelFilter','ROL');
         //input.put('benefitFilter','Con Beneficio');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -156,7 +156,7 @@ public class RefillHistoryHandler_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -165,7 +165,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','ROL');
         input.put('benefitFilter','Test');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -178,14 +178,14 @@ public class RefillHistoryHandler_test {
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         input.put('startDateFilter',stringDateStart);
         input.put('channelFilter','ROL');
         input.put('benefitFilter','Test');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -193,12 +193,12 @@ public class RefillHistoryHandler_test {
     }
     
     @IsTest static void invoke_filterDataByChannel_Web_BenefitTest(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -207,7 +207,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','Web');
         input.put('benefitFilter','Test');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -215,12 +215,12 @@ public class RefillHistoryHandler_test {
     }
     
     @IsTest static void invoke_filterDataByChannel_SMS_BenefitTest(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -229,7 +229,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','SMS');
         input.put('benefitFilter','Test');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
@@ -237,12 +237,12 @@ public class RefillHistoryHandler_test {
     }
     
     @IsTest static void invoke_filterDataByChannel_IVR_BenefitTest(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -251,19 +251,19 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','IVR');
         input.put('benefitFilter','Test');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         
         system.assertNotEquals(null,outMap.get('Result'));   
     }
     @IsTest static void invoke_filterDataByChannel_OTHER_BenefitTest(){
-      String methodName = 'filterDataByChannel';
+    	String methodName = 'filterDataByChannel';
 
         Map<String, Object> input = new Map<String, Object>();
         Map<String, Object> outMap = new Map<String, Object>();
         Map<String, Object> options = new Map<String, Object>();
-    
+		
         RefillHistoryHandler refil = new RefillHistoryHandler();
         String stringDateStart = string.valueOfGmt((system.today()-2));
         String stringDateEnd = string.valueOfGmt((system.today()+2));
@@ -272,7 +272,7 @@ public class RefillHistoryHandler_test {
         input.put('channelFilter','OTHER');
         input.put('benefitFilter','Test');
         
-      Test.startTest();
+    	Test.startTest();
         refil.invokeMethod(methodName, input, outMap, options);
         Test.stopTest();
         

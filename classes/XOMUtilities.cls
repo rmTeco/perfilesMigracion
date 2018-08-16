@@ -104,7 +104,7 @@ global class XOMUtilities {
                     }
                 }
             }
-            System.debug(outputJsonAttributes);
+            //System.debug(outputJsonAttributes);
             return outputJsonAttributes;
         }
         catch(Exception ex){

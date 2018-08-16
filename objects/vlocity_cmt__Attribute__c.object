@@ -209,6 +209,56 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Profile__c</fullName>
+        <externalId>false</externalId>
+        <label>Profile</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Marketing User</fullName>
+                    <default>false</default>
+                    <label>Marketing User</label>
+                </value>
+                <value>
+                    <fullName>TA - Back Office</fullName>
+                    <default>false</default>
+                    <label>TA - Back Office</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Record_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Record Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Business</fullName>
+                    <default>false</default>
+                    <label>Business</label>
+                </value>
+                <value>
+                    <fullName>Consumer</fullName>
+                    <default>false</default>
+                    <label>Consumer</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>TemporaryMark__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -776,7 +826,9 @@
         <columns>NAME</columns>
         <columns>vlocity_cmt__ActiveFlg__c</columns>
         <columns>vlocity_cmt__AttributeCategoryId__c</columns>
+        <columns>vlocity_cmt__AttributeCategoryCode__c</columns>
         <columns>vlocity_cmt__Code__c</columns>
+        <columns>vlocity_cmt__ValueType__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>

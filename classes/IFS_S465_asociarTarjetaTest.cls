@@ -7,17 +7,17 @@ public class IFS_S465_asociarTarjetaTest {
     @isTest static void testResponseStatus200 () {
         FromJSON jsonObj = new FromJSON();
 
-        //jsonObj.asociarTarjeta.idCliente='0016C000008fDM6QAM';
+		//jsonObj.asociarTarjeta.idCliente='0016C000008fDM6QAM';
         // String idCliAux = String.valueOf(10000);
         jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='2';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='2';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -46,15 +46,15 @@ public class IFS_S465_asociarTarjetaTest {
     @isTest static void testResponseAnotherStatus417_ID_CLIENTE () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente='';
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='02';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente='';
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='02';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -78,15 +78,15 @@ public class IFS_S465_asociarTarjetaTest {
         @isTest static void testResponseAnotherStatus417_CARD_NUMBER () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='02';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='02';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -110,15 +110,15 @@ public class IFS_S465_asociarTarjetaTest {
         @isTest static void testResponseAnotherStatus417_EXPIRATION_YEAR () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='02';
-        jsonObj.asociarTarjeta.expirationYear='';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='02';
+		jsonObj.asociarTarjeta.expirationYear='';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -143,15 +143,15 @@ public class IFS_S465_asociarTarjetaTest {
         @isTest static void testResponseAnotherStatus417_LAST_4_NUMBERS () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='02';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='02';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -176,15 +176,15 @@ public class IFS_S465_asociarTarjetaTest {
         @isTest static void testResponseAnotherStatus417_EXPIRATION_MONTH () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -209,15 +209,15 @@ public class IFS_S465_asociarTarjetaTest {
        @isTest static void testASOCIAR_TRARJ_PRIM_NULL () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='02';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary= null;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='02';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary= null;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -232,7 +232,7 @@ public class IFS_S465_asociarTarjetaTest {
 
         IFS_S465_asociarTarjeta.getData();
 
-        //System.assertEquals(Integer.valueOf('417'), RestContext.response.statuscode); 
+        System.assertEquals(Integer.valueOf('417'), RestContext.response.statuscode); 
     //    Map<String, Object> resMap = (Map<String, Object>)JSON.deserializeUntyped(RestContext.response.responseBody.toString());
     //    System.assertEquals('OK', resMap.get('resultado'));
 
@@ -242,15 +242,15 @@ public class IFS_S465_asociarTarjetaTest {
        @isTest static void testVALIDAR_EXPIRATION_MONTH () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='17';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary= true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='17';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary= true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -275,15 +275,15 @@ public class IFS_S465_asociarTarjetaTest {
        @isTest static void testVALIDAR_EXPIRATION_YEAR () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='17';
-        jsonObj.asociarTarjeta.expirationYear='2014';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary= true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='17';
+		jsonObj.asociarTarjeta.expirationYear='2014';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary= true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -308,15 +308,15 @@ public class IFS_S465_asociarTarjetaTest {
       @isTest static void testVALIDAR_4_NUMBERS () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='MASTERCARD';
-        jsonObj.asociarTarjeta.expirationMonth='02';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='22';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='MASTERCARD';
+		jsonObj.asociarTarjeta.expirationMonth='02';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='22';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -331,7 +331,7 @@ public class IFS_S465_asociarTarjetaTest {
 
         IFS_S465_asociarTarjeta.getData();
 
-        //System.assertEquals(Integer.valueOf('417'), RestContext.response.statuscode); 
+        System.assertEquals(Integer.valueOf('417'), RestContext.response.statuscode); 
 //        Map<String, Object> resMap = (Map<String, Object>)JSON.deserializeUntyped(RestContext.response.responseBody.toString());
 //        System.assertEquals('OK', resMap.get('resultado'));
 
@@ -341,15 +341,15 @@ public class IFS_S465_asociarTarjetaTest {
     @isTest static void testVALIDAR_CARD_TYPE () {
         FromJSON jsonObj = new FromJSON();
 
-        jsonObj.asociarTarjeta.idCliente= idCliAux;
-        jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
-        jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
-        jsonObj.asociarTarjeta.cardType='TRUCHA';
-        jsonObj.asociarTarjeta.expirationMonth='02';
-        jsonObj.asociarTarjeta.expirationYear='2018';
-        jsonObj.asociarTarjeta.last4Numbers='2222';
-        jsonObj.asociarTarjeta.isPrimary=true;
-        jsonObj.asociarTarjeta.securityCode='333';
+		jsonObj.asociarTarjeta.idCliente= idCliAux;
+		jsonObj.asociarTarjeta.cardHolderName='Juan Perez';
+		jsonObj.asociarTarjeta.cardNumber='XXXXXXXXXXXX2222';
+		jsonObj.asociarTarjeta.cardType='TRUCHA';
+		jsonObj.asociarTarjeta.expirationMonth='02';
+		jsonObj.asociarTarjeta.expirationYear='2018';
+		jsonObj.asociarTarjeta.last4Numbers='2222';
+		jsonObj.asociarTarjeta.isPrimary=true;
+		jsonObj.asociarTarjeta.securityCode='333';
 
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -390,7 +390,7 @@ public class IFS_S465_asociarTarjetaTest {
         Account a = new Account();
         a.Name='TestIFSS445Account';
         a.AccountIntegrationId__c= idCliAux;
-    //  a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
+	//	a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
         lstAcc.add(a);
         insert lstAcc;
         a = getCreatedAccount('TestIFSS445Account');

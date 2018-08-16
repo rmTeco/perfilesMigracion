@@ -7,6 +7,9 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
     public static final String OPERATION_DEVOLUCION = 'DEVG';
     public static final String INSTANCE_FACTURA = 'FACTURA';
     public static final String INSTANCE_ANULAR_RESERVA = 'ANULARESERVA';
+    public static final String STOCK_MOVEMENT_NO_APLICA = 'NOAPLICA';
+    public static final String RESERVAR_STOCK_NMU = 'R';
+    public static final String LIBERAR_STOCK_NMU = 'L';
     static final String COD_PRODUCTO_ENVIO_BASE = 'FAN_ENV_000';
 
     public String valor { get; set; }
@@ -141,7 +144,10 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
                 DeleteCartItemsDeliveryChild(inputMap, outMap, options);
             }
             // PFTA-7756 - FIN
-
+            
+            if (methodName.equals('GetOrderSerials')){
+                GetOrderSerials(inputMap,outMap,options);
+            }
             result = false;
         }
         catch(Exception e) {
@@ -157,7 +163,6 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         try {
             String orderId = (String) options.get('orderId');
             AnulaStockReserved(orderId);
-            RealeaseNmuReserve(orderId);
             CancelOrder(orderId);
         }
         catch(Exception e) {
@@ -187,7 +192,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
             String channel = (String) options.get('Channel');
             String deliveryMethod = (String) options.get('DeliveryMethod');
             if(deliveryMethod == 'Store Pick Up' && channel == 'Agentes')
-                UpdateOrderStatus(orderId, 'Entregado');
+                UpdateDeliveredStatus(orderId);
             else
             {
                 UpdateOrderStatus(orderId, 'Pendiente de Entrega');
@@ -211,7 +216,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
             if (order.Gestion__c == 'Cambio en Garantia')
             {
                 CegStockMovement(orderId);
-                UpdateOrderStatus(orderId, 'Entregado');
+                UpdateDeliveredStatus(orderId);
                 DeleteTasks(orderId, PENDIENTE_ENTREGA_NOTIFICATION);
             }
             else
@@ -223,7 +228,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
                     addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_VENTA_NORMAL, INSTANCE_FACTURA, null, order.OriginStoreLocation__r.AssociatedWarehouseId__c, order.Delivery_Method__c);
                 }
                 taOrderController.MoveSerialsStock(serialNumbersToMove);
-                UpdateOrderStatus(orderId, 'Entregado');
+                UpdateDeliveredStatus(orderId);
                 DeleteTasks(orderId, PENDIENTE_ENTREGA_NOTIFICATION);
             }
         }
@@ -322,19 +327,34 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         }
     }
 
+    public static void UpdateDeliveredStatus(String orderId) {
+        System.debug('UpdateDeliveredStatus');
+        try {
+            Order order = new Order();
+            order.Id = orderId;
+            order.TrackingStatus__c = 'Entregado';
+            order.DeliveryDate__c = Date.Today();
+            update order;
+        }
+        catch(Exception e) {
+            System.debug('An unexpected error has occurred: ' + e.getMessage());
+            System.debug(e.getMessage());
+        }
+    }
+
     @RemoteAction
     global static void CancelOrderAndRedirect(string id) {
         try{
             System.debug('En CancelOrderAndRedirect');
             //PFTA-11544
             ReleaseLinesFromOrder(id);
-            RealeaseNmuReserve(id);
             AnulaStockReserved(id);
             CancelOrder(id);
         }
-        catch(DmlException e) {
+        catch(Exception e) {
             System.debug('An unexpected error has occurred: ' + e.getMessage());
             System.debug(e.getMessage());
+            throw e;
         }
     }
 
@@ -342,7 +362,8 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
     global static void OrderTimeOut(string orderId) {
         try {
             System.debug('OrderTimeOut');
-            Order order = [SELECT Delivery_Method__c FROM Order WHERE Id = :orderId];
+            /*
+            Order order = [SELECT Delivery_Method__c, OrderNumber FROM Order WHERE Id = :orderId];
             List<OrderItem> orderItems = GetOrderSerials(orderId);
             System.debug('orderItems ===> '+orderItems);
             Map<String,String> getPointOfSaleWarehouseResponse = GetPointOfSaleWarehouse(orderId);
@@ -369,39 +390,15 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
             }
             else
             {
-                ManageReservedNmus('L',nmusMap,codPuntoDeVenta,codDeposito, orderId);
+                ManageReservedNmus(LIBERAR_STOCK_NMU,nmusMap, order.OrderNumber);
             }
+            */
+            CancelOrderAndRelease(orderId);
         }
-        catch(DmlException e) {
+        catch(Exception e) {
             System.debug('An unexpected error has occurred: ' + e.getMessage());
             System.debug(e.getMessage());
-        }
-    }
-
-    private static void ReleaseLines(string jsonOrder) {
-        try{
-            System.debug('ReleaseLines');
-            System.debug('jsonOrder: ' + jsonOrder);
-            Map<string, Object> order =  (Map<string, Object>)JSON.deserializeUntyped(jsonOrder);
-            List<Object> planes =(List<Object>) order.get('planes');
-            Map<string, string> linesToRelease = new Map<string, string>();
-            LinesManager lineManager = new LinesManager();
-
-            for (Object p : planes){
-                Map<string, Object> plan = (Map<string, Object>) p;
-                List<Object> lines = (List<Object>)plan.get('lineas');
-                for (Object l : lines){
-                    Map<String, Object> line = (Map<String, Object>) l;
-                    String lineAux = (String)line.get('linea');
-                    if (String.isNotBlank(lineAux)) linesToRelease.put(lineAux, 'DESBLOQ');
-                }
-            }
-
-            if(linesToRelease.KeySet().size() > 0 )
-                lineManager.FreeReservedLines(linesToRelease);
-        }
-        catch(DmlException ex) {
-            System.debug(ex.getMessage());
+            throw e;
         }
     }
 
@@ -422,7 +419,6 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         */
         try{
             ReleaseLinesFromOrder(orderId);
-            RealeaseNmuReserve(orderId);
             AnulaStockReserved(orderId);
             //CancelOrder(orderId);
         }
@@ -443,6 +439,30 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         * @param    orderId: The order Id
         * @return   nothing
         */
+        try {
+            System.debug('ReleaseLines');
+            Order order = new Order(Id = orderId);
+            List<Order> orders = new List<Order>();
+            orders.add(order);
+            ReleaseLinesFromOrder(orders);
+        }
+        catch(Exception e) {
+            System.debug('ReleaseLines Msg: ' + e.getMessage());
+            System.debug('ReleaseLines Cause: ' + e.getCause());
+            System.debug('ReleaseLines Stack Trace: ' + e.getStackTraceString());
+        }
+    }
+
+    public static void ReleaseLinesFromOrder(List<Order> orders) {
+        /**ß
+        * ─────────────────────────────────────────────────────────────────────────────────────────────────
+        * @description Release Lines previously reserved in an Order
+        * ─────────────────────────────────────────────────────────────────────────────────────────────────
+        * @author   rocio.s.caceres
+        * @date     2018-07-18
+        * @param    Order Set 
+        * @return   nothing
+        */     
         String lineNumber;
         Map<string, string> linesToRelease = new Map<string, string>();
         Map<String,Object> jsonAttribute;
@@ -451,8 +471,16 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
 
         try {
             System.debug('ReleaseLines');
+            
+            Set<Id> orderIds = new Set<Id>();
+            for(Order o : orders)
+            {
+               orderIds.add(o.id);
+            }
 
-            plansProducts = [SELECT Id, Product2.ProductCode, Product2.Name, Product2.vlocity_cmt__Type__c, vlocity_cmt__SerialNumber__c, vlocity_cmt__JSONAttribute__c, FromStock__c FROM OrderItem WHERE OrderId = :orderId AND Product2.vlocity_cmt__Type__c = 'Plan Prepago'];
+            plansProducts = [SELECT Id, Product2.ProductCode, Product2.Name, Product2.vlocity_cmt__Type__c, vlocity_cmt__SerialNumber__c, vlocity_cmt__JSONAttribute__c, FromStock__c 
+                            FROM OrderItem WHERE OrderId IN :orderIds AND Product2.vlocity_cmt__Type__c = 'Plan Prepago'];
+            
             for (OrderItem planProduct : plansProducts){
                 jsonAttribute = AssetAttributesUtils.GetJSONAttribute(planProduct.vlocity_cmt__JSONAttribute__c, 'Numero de Linea');
                 lineNumber = (String)((Map<String, Object>)jsonAttribute.get('attributeRunTimeInfo')).get('value');
@@ -587,34 +615,61 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         return rDate;
     }
 
-    private static void AnulaStockReserved(string orderId) {
-        System.debug('AnulaStockReserved');
-        /*PFTA-6757 CALL ANULARESERVA */
-        system.debug('Anulación Orderd ====> '+orderId);
-        Order order = [SELECT Delivery_Method__c FROM Order WHERE Id = :orderId];
-        List<OrderItem> orderItems = GetOrderSerials(orderId);
-        Map<String,String> getPointOfSaleWarehouseResponse = GetPointOfSaleWarehouse(orderId);
-        String codPuntoDeVenta = getPointOfSaleWarehouseResponse.get('codPuntoDeVenta');
-        String codDeposito = getPointOfSaleWarehouseResponse.get('codDeposito');
-        Map<String,Object> oldSerialNumbers = new Map<String,Object>();
-        System.debug('PRINT orderItems SIZE ON CANCEL');
-        System.debug(orderItems.size());
-        if(orderItems.size() > 0){
-            System.debug('CANCEL ORDER INSIDE IF > 0');
+    public static void AnulaStockReserved(string orderId)
+    {
+        try
+        {
+            Order order = new Order(Id = orderId);
+            List<Order> orders = new List<Order>();
+            orders.add(order);
+            AnulaStockReserved(orders);
+        }
+        catch(Exception e)
+        {
+            System.debug('Exception Msg: ' + e.getMessage());
+            System.debug('Exception Cause: ' + e.getCause());
+            System.debug('Exception Stack Trace: ' + e.getStackTraceString());
+            throw e;
+        }
+    }
+
+    public static void AnulaStockReserved(List<Order> orders)
+    {
+        try
+        {
+            List <Id> orderList =  New List <Id> ();
+            for(Order o : orders)
+            {
+                orderList.add(o.id);
+            }
+            List<OrderItem> orderItems = taOrderController.GetOrderSerials(orderList);
+            Map<ID, Order> ordersMaps = new Map<ID, Order>([SELECT Id, OrderNumber, OriginStoreLocation__r.AssociatedWarehouseId__c, Delivery_Method__c FROM Order WHERE id in :orderList]);
+            Map<String,Object> serialNumbersToMove = new Map<String,Object>();
             for(OrderItem item : orderItems){
                 if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c))
                 {
-                    System.debug('vlocity_cmt__SerialNumber__c IS NOT BLANK');
-                    addSerialToMove(oldSerialNumbers, item.vlocity_cmt__SerialNumber__c, OPERATION_VENTA_NORMAL, INSTANCE_ANULAR_RESERVA, item.FromStock__c, codDeposito, order.Delivery_Method__c);
+                    Order originOrder =  (Order) ordersMaps.get(item.OrderId);
+                    taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_VENTA_NORMAL, INSTANCE_ANULAR_RESERVA, item.FromStock__c, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, originOrder.Delivery_Method__c);
                     item.vlocity_cmt__SerialNumber__c = null;
                 }
             }
-            System.debug('oldSerialNumbers SIZE -> ' + oldSerialNumbers.size());
-            if (oldSerialNumbers.size() > 0)
+            if (serialNumbersToMove.KeySet().size() > 0)
+                taOrderController.MoveSerialsStock(serialNumbersToMove);
+            else
             {
-                MoveSerialsStock(oldSerialNumbers);
-                update orderItems;
+                for(String orderId: ordersMaps.KeySet()){
+                    Order orderMap = (Order) ordersMaps.get(orderId);
+                    ManageReservedNmus(LIBERAR_STOCK_NMU,new Map<String, Map<String, Object>>(), orderMap.OrderNumber);           
+                }
             }
+            update orderItems;
+        }
+        catch(Exception e)
+        {
+            System.debug('Exception Msg: ' + e.getMessage());
+            System.debug('Exception Cause: ' + e.getCause());
+            System.debug('Exception Stack Trace: ' + e.getStackTraceString());
+            throw e;
         }
         /* PFTA-6757 FIN */
     }
@@ -630,22 +685,6 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         catch(DmlException e) {
             System.debug('An unexpected error has occurred: ' + e.getMessage());
             throw e;
-        }
-    }
-
-    private static void RealeaseNmuReserve(string orderId) {
-        try{
-            System.debug('RealeaseNmuReserve');
-            StockUtils.StockQuantityManagement(new Map<String, Map<String, Object>>(), orderId, 'L');
-
-        }catch(DmlException e){
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
-        catch(Exception e){
-            System.debug('taOrderController:RealeaseNmuReserve -> exception: '+e);
-            System.debug('Exception Stack Trace: ' + e.getStackTraceString());
-            throw new ServiceException('Error al realizar la reserva/liberacion del stock');
         }
     }
 
@@ -836,10 +875,10 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         }
     }
 
-    public static void ManageReservedNmus(String operationCode, Map<String, Map<String, Object>> nmusMap, String codPuntoDeVenta, String codDeposito, String orderId) {
+    public static void ManageReservedNmus(String operationCode, Map<String, Map<String, Object>> nmusMap, String orderNumber) {
         try
         {
-            StockUtils.StockQuantityManagement(nmusMap, orderId, operationCode);
+            StockUtils.StockQuantityManagement(nmusMap, orderNumber, operationCode);
         }
         catch(FuncException e){
             System.debug('taOrderController:ManageReservedNmus -> exception: '+e);
@@ -909,7 +948,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         System.debug('GetOrderSerials');
         try
         {
-            List<OrderItem> tangibleItems = [SELECT Id, Quantity, Product2.ProductCode, Product2.Name, Product2.NMU__c, Product2.vlocity_cmt__Type__c, vlocity_cmt__SerialNumber__c, Huawei_Invoice_Item_Sequence__c, Product2.Tangible__c, vlocity_cmt__JSONAttribute__c, FromStock__c, vlocity_cmt__Action__c, Operation_Code__c, Deposit_Code__c, vlocity_cmt__AssetId__c FROM OrderItem WHERE OrderId IN :orderIds AND Product2.Tangible__c = true AND vlocity_cmt__Action__c = 'Add'];
+            List<OrderItem> tangibleItems = [SELECT Id, Quantity, Product2.ProductCode, Product2.Name, Product2.NMU__c, Product2.vlocity_cmt__Type__c, vlocity_cmt__SerialNumber__c, Product2.Tangible__c, vlocity_cmt__JSONAttribute__c, FromStock__c, vlocity_cmt__Action__c, Operation_Code__c, Deposit_Code__c, vlocity_cmt__AssetId__c, OrderId FROM OrderItem WHERE OrderId IN :orderIds AND Product2.Tangible__c = true AND vlocity_cmt__Action__c = 'Add'];
             return tangibleItems;
         }
         catch(Exception e)
@@ -924,7 +963,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         System.debug('GetCEGOrderSerials');
         try
         {
-            List<OrderItem> tangibleItems = [SELECT Id, Product2.ProductCode, Product2.Name, Product2.NMU__c, Product2.vlocity_cmt__Type__c, vlocity_cmt__SerialNumber__c, Huawei_Invoice_Item_Sequence__c, Product2.Tangible__c, vlocity_cmt__JSONAttribute__c, FromStock__c, vlocity_cmt__Action__c, Operation_Code__c, Deposit_Code__c, vlocity_cmt__AssetId__c, vlocity_cmt__AssetId__r.SerialNumber FROM OrderItem WHERE OrderId = :orderId AND Product2.Tangible__c = true];
+            List<OrderItem> tangibleItems = [SELECT Id, Product2.ProductCode, Product2.Name, Product2.NMU__c, Product2.vlocity_cmt__Type__c, vlocity_cmt__SerialNumber__c, Product2.Tangible__c, vlocity_cmt__JSONAttribute__c, FromStock__c, vlocity_cmt__Action__c, Operation_Code__c, Deposit_Code__c, vlocity_cmt__AssetId__c, vlocity_cmt__AssetId__r.SerialNumber, OrderId FROM OrderItem WHERE OrderId = :orderId AND Product2.Tangible__c = true];
             return tangibleItems;
         }
         catch(Exception e)
@@ -950,10 +989,23 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
 
 
         System.debug(orderId);
-        Boolean isNewPackExistingLine = (Boolean) inputMap.get('IsNewPackExistingLine');
-        Boolean isMACDValidationIdentitySubmit = (Boolean) inputMap.get('IsMACDValidationIdentitySubmit');
-        Boolean isMACDValidationIdentityABMSubmit = (Boolean) inputMap.get('IsMACDValidationIdentityABMSubmit');
-        Boolean isAnnulment = (Boolean) inputMap.get('isAnnulment');
+        Boolean isNewPackExistingLine;
+        Boolean isMACDValidationIdentitySubmit;
+        Boolean isMACDValidationIdentityABMSubmit;
+        Boolean isAnnulment;
+        
+        if(inputMap.get('IsNewPackExistingLine') != null){
+            isNewPackExistingLine = (Boolean) inputMap.get('IsNewPackExistingLine');
+        }
+        if(inputMap.get('IsMACDValidationIdentitySubmit') != null){
+            isMACDValidationIdentitySubmit = (Boolean) inputMap.get('IsMACDValidationIdentitySubmit');
+        }
+        if(inputMap.get('IsMACDValidationIdentityABMSubmit') != null){
+            isMACDValidationIdentityABMSubmit = (Boolean) inputMap.get('IsMACDValidationIdentityABMSubmit');
+        }
+        if(inputMap.get('isAnnulment') != null){
+            isAnnulment = (Boolean) inputMap.get('isAnnulment');
+        }
 
         System.debug('isAnnulment: ' + isAnnulment);
         System.debug('isNewPackExistingLine: ' + isNewPackExistingLine);
@@ -1240,10 +1292,12 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
             WHERE
                 OrderId = :orderId
                 AND IsBillable__c = true
-                AND vlocity_cmt__Action__c = 'Add'
+                AND (vlocity_cmt__Action__c = 'Add' OR vlocity_cmt__Action__c = 'Change')
             ORDER BY CreatedDate DESC
         ];
-        // System.debug(JSON.serialize(orderItems));
+         System.debug(JSON.serialize(orderItems));
+         System.debug('ORDEN -> '+orderId);
+         System.debug('ORDENES -> '+orderItems);
 
         List<OrderItem> billables = new List<OrderItem>();
         for(OrderItem item : orderItems)
@@ -1259,7 +1313,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
             }
             // if (isBillable) billables.add(item);
         }
-        // System.debug(JSON.serialize(billables));
+        System.debug('BILLABLES ->'+JSON.serialize(billables));
         return billables;
         // ta_sales_paymentMethodLogic paymentMethodClass = new ta_sales_paymentMethodLogic();
         // return paymentMethodClass.GetInstallmentsByCard(bankCode, cardCode);
@@ -1312,7 +1366,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
             if (result == 0)
                 return true;
             else return false;
-        }catch(DmlException e){
+        }catch(Exception e){
             System.debug('An unexpected error has occurred: ' + e.getMessage());
             System.debug(e.getMessage());
             return false;
@@ -2222,112 +2276,6 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         }
     }
     // PFTA-7756 - FIN
-    /*
-  // PFTA-11425 #Start
-  
-    public static void ReleaseLinesFromOrder(List<Order> orders) {
-        /**ß
-        * ─────────────────────────────────────────────────────────────────────────────────────────────────
-        * @description Release Lines previously reserved in an Order
-        * ─────────────────────────────────────────────────────────────────────────────────────────────────
-        * @author   rocio.s.caceres
-        * @date     2018-07-18
-        * @param    Order Set 
-        * @return   nothing
-        */
-        /*
-        String lineNumber;
-        Map<string, string> linesToRelease = new Map<string, string>();
-        Map<String,Object> jsonAttribute;
-        List<OrderItem> plansProducts;
-        String lineAux;
-
-        try {
-            System.debug('ReleaseLines');
-            
-            Set<Id> orderIds = new Set<Id>();
-            for(Order o : orders)
-            {
-               orderIds.add(o.id);
-            }
-
-            plansProducts = [SELECT Id, Product2.ProductCode, Product2.Name, Product2.vlocity_cmt__Type__c, vlocity_cmt__SerialNumber__c, vlocity_cmt__JSONAttribute__c, FromStock__c 
-                            FROM OrderItem WHERE OrderId IN :orderIds AND Product2.vlocity_cmt__Type__c = 'Plan Prepago'];
-            
-            for (OrderItem planProduct : plansProducts){
-                jsonAttribute = AssetAttributesUtils.GetJSONAttribute(planProduct.vlocity_cmt__JSONAttribute__c, 'Numero de Linea');
-                lineNumber = (String)((Map<String, Object>)jsonAttribute.get('attributeRunTimeInfo')).get('value');
-                if (String.isNotBlank(lineNumber)) linesToRelease.put(lineNumber, 'DESBLOQ');
-            }
-
-            LinesManager lineManager = new LinesManager();
-            if(linesToRelease.KeySet().size() > 0 )
-                lineManager.FreeReservedLines(linesToRelease);
-        }
-        catch(Exception e) {
-            System.debug('ReleaseLines Msg: ' + e.getMessage());
-            System.debug('ReleaseLines Cause: ' + e.getCause());
-            System.debug('ReleaseLines Stack Trace: ' + e.getStackTraceString());
-        }
-    }
-    
-        
-    private static void RealeaseNmuReserve( List<Order> orders) {
-        try{
-            System.debug('RealeaseNmuReserve List');
-            String codAplicacion = '2';
-            String idUnicoTransaccion = GuidUtil.NewGuid();
-            System.debug('taOrderController:idUnicoTransaccion: ' + idUnicoTransaccion);
-            for(Order o: orders){
-                if(!Test.isRunningTest()){
-                    Map<string, Object> response = IFS_S101_reserveOrRelease.reserveOrRelease('L', codAplicacion, o.OrderNumber, '0', idUnicoTransaccion, new Map<String, Map<String, Object>>());
-                    System.debug('response: ' + response);
-                }
-                
-            }
-
-        }catch(DmlException e){
-            System.debug('An unexpected error has occurred: ' + e.getMessage());
-            throw e;
-        }
-    }
-    
-    
-    private static void AnulaStockReserved(List<Order> orders) {
-        
-        System.debug('AnulaStockReserved');
-        //Se crea una lista de ID para no volver a reescribir el metodo GetOrderSerials
-        List <Id> orderList =  New List <Id> ();
-        for(Order o : orders)
-            {
-               orderList.add(o.id);
-            }
-        List<OrderItem> orderItems = GetOrderSerials(orderList);
-        Map<String,String> oldSerialNumbers = new Map<String,String>();
-        System.debug('PRINT orderItems SIZE ON CANCEL');
-        System.debug(orderItems.size());
-        if(orderItems.size() > 0){
-            System.debug('CANCEL ORDER INSIDE IF > 0');
-            for(OrderItem item : orderItems){
-                if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c))
-                {
-                    System.debug('vlocity_cmt__SerialNumber__c IS NOT BLANK');
-                    oldSerialNumbers.put(item.vlocity_cmt__SerialNumber__c, item.FromStock__c);
-                    item.vlocity_cmt__SerialNumber__c = null;
-                }
-            }
-
-            System.debug('oldSerialNumbers SIZE -> ' + oldSerialNumbers.size());
-            if (oldSerialNumbers.size() > 0)
-            {
-                for(Order o  : orders){
-                    MoveSerialsStock(INSTANCE_VENTA_NORMAL,INSTANCE_ANULAR_RESERVA,oldSerialNumbers, o.PickUpStoreLocation__r.AssociatedWarehouseId__c, o.Delivery_Method__c);
-                }
-                update orderItems;
-            }
-        }
-
-    }
     
     public static void CancelOrderAndRelease(List<Order> orders) {
         /**
@@ -2338,9 +2286,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         * @date     2018-18-07
         * @return   nothing
         */
-           /*
            ReleaseLinesFromOrder(orders);
-           RealeaseNmuReserve(orders);
            AnulaStockReserved(orders);
            for(Order o: orders){       
                 
@@ -2352,7 +2298,7 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
                         optMap = new Map<String,Object>();
                         optMap.put('OrderId', o.Id);
                         if(!Test.isRunningTest()){
-                            taSalesAnnulmentHandler.HotInvoiceRollback(inMap, outMap, optMap);
+                            Map<String, Object> response = taOrderController.call_S457_Hot_Invoice_Rollback(o.Id);
                         }
                         o.TrackingStatus__c = 'Cancelada - Timeout Caja';
                     }
@@ -2372,8 +2318,4 @@ global with sharing class taOrderController implements vlocity_cmt.VlocityOpenIn
         update orders;
 
     }
-    
-  */
-    
-  // PFTA-11425 #Finish
 }

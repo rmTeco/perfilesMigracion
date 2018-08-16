@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <label><!-- Change Management Integration --></label>
+        <name>Change_Management_Integration__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- Add here the Id of the record within your external Project Management system. --></help>
+        <label><!-- External Id --></label>
+        <name>External_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Project Type --></label>
+        <name>ProjectType__c</name>
+        <picklistValues>
+            <masterLabel>Bugfix</masterLabel>
+            <translation><!-- Bugfix --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>User Stories</masterLabel>
+            <translation><!-- User Stories --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Sprint --></label>
+        <name>Sprint__c</name>
+        <picklistValues>
+            <masterLabel>Sprint 17</masterLabel>
+            <translation><!-- Sprint 17 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sprint 18</masterLabel>
+            <translation><!-- Sprint 18 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sprint 19</masterLabel>
+            <translation><!-- Sprint 19 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sprint 20</masterLabel>
+            <translation><!-- Sprint 20 --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sprint 21</masterLabel>
+            <translation><!-- Sprint 21 --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- For Rally, the workspace ID is required in addition to the External Project Id. --></help>
+        <label><!-- Workspace Id --></label>
+        <name>Workspace_Id__c</name>
+    </fields>
+    <fields>
+        <label><!-- Workstream --></label>
+        <name>Workstream__c</name>
+        <picklistValues>
+            <masterLabel>Arquitectura</masterLabel>
+            <translation><!-- Arquitectura --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>CARE</masterLabel>
+            <translation><!-- CARE --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Customer Master</masterLabel>
+            <translation><!-- Customer Master --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>EPC</masterLabel>
+            <translation><!-- EPC --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Integration Procedure</masterLabel>
+            <translation><!-- Integration Procedure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Marketing</masterLabel>
+            <translation><!-- Marketing --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Mobile App</masterLabel>
+            <translation><!-- Mobile App --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Sales - CPQ</masterLabel>
+            <translation><!-- Sales - CPQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Security</masterLabel>
+            <translation><!-- Security --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Technical Care</masterLabel>
+            <translation><!-- Technical Care --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UX/UI Care</masterLabel>
+            <translation><!-- UX/UI Care --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UX/UI Sales-CPQ</masterLabel>
+            <translation><!-- UX/UI Sales-CPQ --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>UX/UI Technical Care</masterLabel>
+            <translation><!-- UX/UI Technical Care --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>xOM</masterLabel>
+            <translation><!-- xOM --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <help><!-- If working with Copado Change Management, the Project must be linked to a Deployment Flow. --></help>
+        <label><!-- Deployment Flow --></label>
+        <name>copado__Deployment_Flow__c</name>
+        <relationshipLabel><!-- Projects --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Description --></label>
+        <name>copado__Description__c</name>
+    </fields>
+    <fields>
+        <label><!-- End Date --></label>
+        <name>copado__End_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- When this field is checked, Copado will index the metadata selected against the user stories into the User Story Metadata custom object. Indexed metadata can be used for reporting and compliance, and it&apos;s also used by Copado overlap awareness feature. --></help>
+        <label><!-- Index Metadata --></label>
+        <name>copado__Index_Metadata__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Date --></label>
+        <name>copado__Start_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- Status --></label>
+        <name>copado__Status__c</name>
+        <picklistValues>
+            <masterLabel>Completed</masterLabel>
+            <translation><!-- Completed --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Draft</masterLabel>
+            <translation><!-- Draft --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>In progress</masterLabel>
+            <translation><!-- In progress --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Planned</masterLabel>
+            <translation><!-- Planned --></translation>
+        </picklistValues>
+    </fields>
+    <webLinks>
+        <label><!-- Sync_External_User_Stories --></label>
+        <name>Sync_External_User_Stories</name>
+    </webLinks>
+</CustomObjectTranslation>

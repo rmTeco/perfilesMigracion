@@ -13,7 +13,7 @@ public class MktSMSOnlineSenderTest{
 
         Id crossObjectRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'SMSAdministrator' AND SobjectType = 'Crossobject__c' LIMIT 1].Id;
         List<Campaign> campaignList = TestDataFactory.createCampaigns(1);
-        
+        //insert campaignList;
 
         List<CrossObject__c> coList = new List<CrossObject__c>();
         CrossObject__c message = new CrossObject__c(RecordTypeId = crossObjectRecordTypeId,
@@ -31,7 +31,7 @@ public class MktSMSOnlineSenderTest{
                                                MessageId__c   = message.Id,
                                                IsSMSOnline__c = true);
         cmList.add(cm);
-        
+        //insert cmList;
 
         Test.startTest();
         MktSMSOnlineSender.sendSMSOnline(cmList);   

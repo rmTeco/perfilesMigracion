@@ -66,6 +66,10 @@
         <relationshipLabel><!-- Cases --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Aprobado --></label>
+        <name>Aprobado__c</name>
+    </fields>
+    <fields>
         <label><!-- Area --></label>
         <name>Area__c</name>
         <picklistValues>
@@ -75,6 +79,10 @@
         <picklistValues>
             <masterLabel>ACON</masterLabel>
             <translation><!-- ACON --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>ALEX</masterLabel>
+            <translation><!-- ALEX --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>APOR</masterLabel>
@@ -87,6 +95,10 @@
         <picklistValues>
             <masterLabel>ASOL</masterLabel>
             <translation><!-- ASOL --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>BJEX</masterLabel>
+            <translation><!-- BJEX --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Diagnóstico</masterLabel>
@@ -122,10 +134,6 @@
     <fields>
         <label><!-- Cantidad Ajuste --></label>
         <name>CantidadAjuste__c</name>
-    </fields>
-    <fields>
-        <label><!-- Cantidad tiempo caso --></label>
-        <name>Cantidad_tiempo_caso__c</name>
     </fields>
     <fields>
         <label><!-- CaseNumberStatus --></label>
@@ -221,10 +229,6 @@
         <name>CreatedByMe__c</name>
     </fields>
     <fields>
-        <label>Equipo del Creador</label>
-        <name>Creator_Team__c</name>
-    </fields>
-    <fields>
         <label><!-- Saldo Actual --></label>
         <name>Current_Balance__c</name>
     </fields>
@@ -292,10 +296,6 @@
             <masterLabel>Sin Impacto</masterLabel>
             <translation><!-- Sin Impacto --></translation>
         </picklistValues>
-    </fields>
-    <fields>
-        <label><!-- Tipo Dispositivo Afectado --></label>
-        <name>IncidentDevice__c</name>
     </fields>
     <fields>
         <label>Incidente</label>
@@ -1163,16 +1163,28 @@
         <relationshipLabel><!-- Cases Initiated --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Motivo de reclamo --></label>
+        <name>KB_MotivoReclamo__c</name>
+        <picklistValues>
+            <masterLabel>La respuesta no me resulta clara.</masterLabel>
+            <translation><!-- La respuesta no me resulta clara. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Le falta información.</masterLabel>
+            <translation><!-- Le falta información. --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>No resolvió mi inconveniente.</masterLabel>
+            <translation><!-- No resolvió mi inconveniente. --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
         <label><!-- LineNumber --></label>
         <name>LineNumber__c</name>
     </fields>
     <fields>
         <label><!-- LoteNumber --></label>
         <name>LoteNumber__c</name>
-    </fields>
-    <fields>
-        <label><!-- MSISDN --></label>
-        <name>MSISDN__c</name>
     </fields>
     <fields>
         <label><!-- MarcaExcepcion --></label>
@@ -1240,7 +1252,7 @@
         <name>OwnedByMe__c</name>
     </fields>
     <fields>
-        <label>Team</label>
+        <label><!-- Owner Team --></label>
         <name>Owner_Team__c</name>
         <relationshipLabel><!-- Cases --></relationshipLabel>
     </fields>
@@ -1281,14 +1293,6 @@
     <fields>
         <label><!-- Port Market --></label>
         <name>Port_Market__c</name>
-    </fields>
-    <fields>
-        <label><!-- Port Movement Sub Type --></label>
-        <name>Port_Movement_Sub_Type__c</name>
-    </fields>
-    <fields>
-        <label><!-- Port Movement Type --></label>
-        <name>Port_Movement_Type__c</name>
     </fields>
     <fields>
         <label><!-- Port NRN --></label>
@@ -2441,6 +2445,10 @@
             <translation><!-- Recargas --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Reconexión administrativa</masterLabel>
+            <translation><!-- Reconexión administrativa --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Reconexión siniestro</masterLabel>
             <translation><!-- Reconexión siniestro --></translation>
         </picklistValues>
@@ -2517,6 +2525,10 @@
             <translation><!-- Suscripciones --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Suspensión administrativa</masterLabel>
+            <translation><!-- Suspensión administrativa --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Suspensión siniestro</masterLabel>
             <translation><!-- Suspensión siniestro --></translation>
         </picklistValues>
@@ -2589,6 +2601,10 @@
             <translation><!-- Actualización de Datos del Cliente --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>BP</masterLabel>
+            <translation><!-- BP --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Consulta técnica</masterLabel>
             <translation><!-- Consulta técnica --></translation>
         </picklistValues>
@@ -2631,6 +2647,10 @@
         <picklistValues>
             <masterLabel>SENV</masterLabel>
             <translation><!-- SENV --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>SP</masterLabel>
+            <translation><!-- SP --></translation>
         </picklistValues>
     </fields>
     <fields>
@@ -2684,11 +2704,6 @@
             <masterLabel>Servicio Técnico</masterLabel>
             <translation><!-- Servicio Técnico --></translation>
         </picklistValues>
-    </fields>
-    <fields>
-        <label>Síntoma de STT</label>
-        <name>TS_Symptom__c</name>
-        <relationshipLabel><!-- Cases --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- Tipo Ajuste --></label>
@@ -2948,6 +2963,10 @@
         <name>payment_refunds_date__c</name>
     </fields>
     <fields>
+        <label>Numero de Suscripción</label>
+        <name>relatedAssetMSISDN__c</name>
+    </fields>
+    <fields>
         <label><!-- Numero TDC --></label>
         <name>tdc_number__c</name>
     </fields>
@@ -3017,6 +3036,11 @@
         <description><!-- Massive Incident --></description>
         <label><!-- Incidente Masivo --></label>
         <name>Incidente_Masivo</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Comentarios negativos sobre artículos --></description>
+        <label><!-- KnowledgeArticles --></label>
+        <name>KB_KnowledgeArticles</name>
     </recordTypes>
     <recordTypes>
         <description><!-- Eventos conocidos / Noticias --></description>

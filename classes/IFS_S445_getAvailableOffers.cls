@@ -1,3 +1,11 @@
+/**
+ * Este servicio es el Listener de Http, donde se recibe el requerimiento y se devuelve la respuesta
+ * enviada por la implementacion (IFS_S445_getAvailableOffers_cls.cls).
+ *
+ * @Author: Alejandro Salord (Certa Consulting).
+ * @Version: 
+ * @see: 
+ */
 @RestResource(urlMapping='/v1/integrationprocedure/getAvailableOffers/*')
 global with sharing class IFS_S445_getAvailableOffers {
 

@@ -10,23 +10,19 @@ global with sharing class Vlocity_PreProcessor_Multi implements vlocity_cmt.Vloc
         System.debug(LoggingLevel.ERROR, ' ---- PreProcessor inputMap ' + inputMap);
         
         System.debug(LoggingLevel.ERROR, ' ---- PreProcessor options ' + options);
-        SObject parent = (SObject)vlocity_cmt.FlowStaticMap.flowMap.get('parent');
-        String parentObjName;
-        String parentId;
+        Map<String, Object> input = (Map<String, Object>)inputMap.get('input');
+        
         List<String> sourceObjectIDs = (List<String>)options.get('sourceObjectIds');
         if(sourceObjectIDs == null) 
         {
             system.debug('Exit from here');
             return true;
         }
-        String ids = sourceObjectIds.get(sourceObjectIds.size()-1);
-        System.debug(LoggingLevel.ERROR, ' ---- IDS ' + ids);
-
-        if (parent != null) {
-          parentId = String.valueOf(parent.Id);
-          //either Quote/Order or Opportunity
-          parentObjName = parent.getSObjectType().getDescribe().getName();
-        }
+        String parentId = (String)input.get('parentId');
+        String parentObjName = (String)input.get('parentObjName');
+        String itemId = (String)input.get('itemId');
+                
+        
         System.debug(LoggingLevel.ERROR, ' ---- PreProcessor parentId ' + parentId);
         System.debug(LoggingLevel.ERROR, ' ---- PreProcessor parentObjName ' + parentObjName);
         if (String.isBlank(parentId) || String.isBlank(parentObjName)) {
@@ -49,7 +45,7 @@ global with sharing class Vlocity_PreProcessor_Multi implements vlocity_cmt.Vloc
         
         //initialize DR Rest Call
         req.requestURI = '/v2/DataRaptor/' + inputBundle + '/';
-        req.addParameter('Id', parentId);
+        req.addParameter('Id', itemId);
         RestContext.request = req;
         RestContext.response = res;
         
@@ -58,6 +54,7 @@ global with sharing class Vlocity_PreProcessor_Multi implements vlocity_cmt.Vloc
         //Make sure to get all attributes and values for comparision for a given matrix
         string matrixName = [select vlocity_cmt__CalculationMatrixId__r.Name from vlocity_cmt__CalculationProcedureStep__c  where vlocity_cmt__CalculationProcedureVersionId__r.vlocity_cmt__CalculationProcedureId__r.Name=:((String)options.get('configurationName')) limit 1].vlocity_cmt__CalculationMatrixId__r.Name;
         
+       // string matrixName = 'MultiAttribute_Device_Pricing_Matrix';
         System.debug(LoggingLevel.ERROR, ' ---- matrixName ' + matrixName);
 
         getCalcMatrixdata(matrixName);
@@ -184,7 +181,9 @@ global with sharing class Vlocity_PreProcessor_Multi implements vlocity_cmt.Vloc
             bFirst = false;
           }
           Map<String, Object> attrInfo = (Map<String, Object>)attr;
-          String attrCode = (String)attrInfo.get('attributeuniquecode__c');
+        //String attrCode = (String)attrInfo.get('attributeuniquecode__c');
+          
+          String attrCode = (String)attrInfo.get('attributedisplayname__c');
 
           // Use the attribute display name
           //String attrName = (String)attrInfo.get('attributedisplayname__c');

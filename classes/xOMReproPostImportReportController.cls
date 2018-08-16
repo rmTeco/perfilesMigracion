@@ -1,5 +1,10 @@
 public with sharing class xOMReproPostImportReportController {
 
+    public PageReference loadData() {
+        return null;
+    }
+
+
   public List<xOMReproJobLoteResults> reproLines {get; set;}
   public xOMReproJobLoteResults reproLinesLoteDetail {get; set;}
 

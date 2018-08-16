@@ -1,0 +1,152 @@
+<apex:page controller="cwbtool.DescribeCustomApplicationCtrl" sidebar="false" tabStyle="CWB_Tool__tab" showheader="false">
+
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}"/>
+<link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap-multiselect.css')}" /> 
+<apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__googleAnalytics,'/googleAnalytics.js')}"/>
+   
+<style>
+  fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+    box-shadow:  0px 0px 0px 0px #000;
+    margin-left:8% !important;
+    width:63%;
+}
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+    .bodyDiv{
+ height:400px;
+}
+.Btn-group{
+  width:60% !important;
+}
+.frm{
+  margin:15px;
+}
+.modal {
+    outline:none;
+}
+</style>
+ <apex:pagemessages rendered="{!lstCustomApplication==null || lstCustomApplication.size==0}"/>
+<apex:outputpanel rendered='{!lstCustomApplication!=null && lstCustomApplication.size>0}' layout='none' > 
+<c:actionstatusNew />
+<!--  <fieldset class="scheduler-border">
+    <legend class="scheduler-border">CustomApplication</legend>-->
+
+<apex:form id="form" styleclass="frm">
+   
+           <apex:selectList value="{!lstSelectedCustomApplication}" multiselect="true" styleclass="multiselect CustomApplicationClass" style="margin-right:40px;display:none;"> 
+            <apex:selectOptions value="{!lstCustomApplication}"/>
+       </apex:selectList>
+      <span id="example21-toggle" class="Btn Btn-primary compType ga" style='margin-right:10px;' onclick='Startprocessing();refresh();'  data-action='Download CustomApplication Detail Action'>Download CustomApplication</span>
+   
+   
+      <apex:actionFunction name="getCustomApplicationDetails" action="{!getCustomApplicationDetails}" />
+       <apex:actionFunction name="refresh" action="{!refresh}" reRender="refreshPanel,msgId,form"/> 
+       
+   <apex:outputpanel id="refreshPanel">  
+      <apex:pagemessages rendered="{!lstCustomApplication==null || lstCustomApplication.size==0}"/>
+      <apex:actionPoller action="{!resultfound}" reRender="refreshPanel,msgId,form" interval="5" enabled="{!isStart}" oncomplete="if({!isProcessed}){hideOverLay();}"/>
+   </apex:outputpanel>
+
+<c:AppUpgradeMessage hastoken="{!hasToken}" loogedinUserHave="{!isLoggedInUserHave}" isReachedMaximumlimit="{!SelectedComponentReachedTheLimit}" isAlreadySelectedComponent="{!isAlreadySelectedComponent}" type="CustomApplication"/>
+
+<script>
+var gaDetail='OrgName={!HTMLENCODE($Organization.Name)}_Name={!HTMLENCODE($User.FirstName)}';
+function Startprocessing(){
+   
+    if({!!SelectedComponentReachedTheLimit} && ({!!hasToken} || {!!isLoggedInUserHave})){
+         /*bootbox.confirm("<font color='green'>{!$Label.cwbtool__free_app_message} </font><br><br>.Are you sure?", function(result) {
+             if(result){
+                showOverLay('{!HTMLENCODE(strStatus)}');
+                getCustomApplicationDetails(); 
+             }else{
+                 return;
+             }
+      });*/
+      bootbox.dialog({
+          message: "<font color=''>{!$Label.cwbtool__free_app_message} </font>",
+          title: "Are you Sure?",
+          buttons: {
+            success: {
+              label: "Yes",
+              className: "Btn-success",
+              callback: function() {
+                showOverLay('{!HTMLENCODE(strStatus)}');
+                  getCustomApplicationDetails(); 
+               }    
+              },
+            main: {
+              label: "No",
+              className: "Btn-default",
+              callback: function() {
+                   return;
+              }
+            }
+         }
+      });
+    }else{
+        showOverLay('{!HTMLENCODE(strStatus)}');
+        getCustomApplicationDetails();  
+    }
+    
+  //showOverLay('{!HTMLENCODE(strStatus)}');
+  //getCustomApplicationDetails();
+ }
+
+ $(document).ready(function() {
+    $('.CustomApplicationClass').multiselect({
+    nSelectedText  : ' Custom Application Selected', 
+    buttonClass: 'Btn Btn-default', 
+    enableFiltering: true,
+    filterBehavior: 'both',
+   enableCaseInsensitiveFiltering: true,
+    filterPlaceholder: 'Search CustomApplication..',
+   includeSelectAllOption: {!isLoggedInUserHave && hasToken},
+   selectAllText: 'Select ALL CustomApplication',
+   selectAllValue: 'multiselect-all',
+  maxHeight:217,
+ buttonWidth: '90%',
+  nonSelectedText: 'You have not selected any CustomApplication',
+  disableIfEmpty:true,
+   onChange: function(element, checked) {
+          if($('.CustomApplicationClass').val()==null){
+              $('.containerDivclass').hide();
+              $('#containerMessage').show();
+          }else{
+              $('.containerDivclass').show();
+              $('#containerMessage').hide();
+          }
+         if({!!isLoggedInUserHave} || {!!hasToken}){   
+           disabledEnabled('CustomApplicationClass');
+          } 
+        }
+    });
+   if({!!isLoggedInUserHave} || {!!hasToken}){    
+     disabledExisting('CustomApplicationClass'); 
+   }
+});
+
+</script>
+
+<apex:pagemessages id="msgId" escape="false"/>
+</apex:form>
+<!-- </fieldset>  -->
+
+</apex:outputpanel>
+<!--<c:AppUpgradeMessage hastoken="{!hasToken}" loogedinUserHave="{!isLoggedInUserHave}"/>-->
+</apex:page>

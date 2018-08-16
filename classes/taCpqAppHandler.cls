@@ -12,12 +12,16 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             if(methodName.equals('getCartsProducts')){
                 getCartsProducts(methodName, input, outMap, options);
             }
+            /*
             if(methodName.equals('processPrefaResult')){
                 processPrefaResult(methodName, input, outMap, options);
             }
+            */
+            /*
             if(methodName.equals('getCartsProductsById')){
                 getCartsProductsById(methodName, input, outMap, options);
             }
+            */
         }
         catch(Exception e)
         {
@@ -26,7 +30,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
         }
         return result;
     }
-
+    /*
     public void getCartsProductsById(String methodName, Map<String, Object> input, Map<String, Object> outMap, Map<String, Object> options)
     {
         System.debug('getCartsProductsById');
@@ -67,7 +71,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             }
             system.debug('Cp Check queryIds'+ queryIds);
             if(queryIds.size() > 0){
-                Pricebook2 pb2 = [SELECT Id, Name, IsActive FROM PriceBook2 WHERE IsStandard=True LIMIT 1];
+                //Pricebook2 pb2 = [SELECT Id, Name, IsActive FROM PriceBook2 WHERE IsStandard=True LIMIT 1];
                 system.debug('Cp Check queryIds'+ queryIds);
                 List<PriceBookEntry> entries = [SELECT Product2Id, vlocity_cmt__RecurringPrice__c, UnitPrice, OneTime_Price_w_o_VAT__c FROM PriceBookEntry WHERE Product2Id IN :queryIds];
                 system.debug('entries'+entries);
@@ -100,7 +104,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
                         record.fields.put('OneTimePrice', otPrice);
                     }else if(product2Fields.Family == 'Movil'){
                         System.debug('getCartsProductsById: Movil SMS QUANTITY');
-                        /*Need SMS Saliente, Voz Saliente, Datos Salientes to Show Details*/
+                        //Need SMS Saliente, Voz Saliente, Datos Salientes to Show Details
                         Map<String, Object> smsQt = new Map<String, Object>();
                         smsQt.put('label', 'Quantity');
                         smsQt.put('value', '3000');
@@ -136,7 +140,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             {
                 //System.debug('records: ' + p);
                 recordsResult.add(p);
-                Map<String, Object> product = (Map<String, Object>)p.fields.get('ProductCode');
+                Map<String, Object> product = (Map<String, Object>)p.fields.get('NMU__c');
                 if (product != null)
                 {
                     System.debug('product: ' + product);
@@ -159,6 +163,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
         }
 
     }
+    */
 
     public static List<String> GetStockCode(String idOrder){
         /*PFTA-6033 */
@@ -193,12 +198,35 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             System.debug('LRO -- NMU Cart: ' + nmuCart);
             System.debug('LRO -- Stocks: ' + stocks);
 
-            //PFTA - 10326 - Se envia siempre punto de venta 0
-            if (stocks.size() > 1)
-                jSonResponse = IFS_S089_conseguirDisponibilidad.conseguirDisponibilidad('0', codDeposito, codeMarc, codFamProd, nmuCart, null);
-            else
-                jSonResponse = IFS_S089_conseguirDisponibilidad.conseguirDisponibilidad('0', codDeposito, codeMarc, codFamProd, nmuCart, stocks[0]);
-
+            //PFTA-4216. Se llama al IPS en lugar del Custom Setting
+            Map<String, Object> inputS089 = new Map<String, Object>();
+            Map<String, Object> outputS089 = new Map<String, Object>();
+            Map<String, Object> optionsS089 = new Map<String, Object>();
+            Map<String, Object> params = new Map<String, Object>();
+            params.put('codPuntoVenta', '0');
+            params.put('codDeposito', codDeposito);
+            if(codeMarc != null) {
+                params.put('codMarca', codeMarc);
+            }
+            if (codFamProd != null) {
+                params.put('codFamProd', codFamProd);
+            }
+            if(nmuCart != null) {
+                params.put('codNMU', nmuCart);
+            }
+            if(stocks.size() > 1) {
+                params.put('stockProducto', null);
+            } else {
+                params.put('stockProducto', stocks[0]);
+            }
+            inputS089.put('params',params);
+            System.debug('request s089: '+JSON.serialize(inputS089));
+            
+            vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
+            integProcService.invokeMethod('IFS_S089', inputS089, outputS089, optionsS089);
+            
+            System.debug('response s089: '+JSON.serialize(outputS089));
+            jsonResponse = (Map<String, Object>)outputS089.get('IPResult');
             existencias = (List<Object>) jSonResponse.get('listaExistencias');
             return existencias;
         }
@@ -212,17 +240,13 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
         try{
             String idOrder = (String) input.get('cartId');
             String prefaResult = '120000';
-            GetPrefaResult(idOrder);
+            //GetPrefaResult(idOrder);
             String query = (String) input.get('query');
             //input.put('query', null);
             //input.put('pagesize', '100');
-            if(!Test.isRunningTest()){
                 vlocity_cmt.CpqAppHandler cpqAppHandler = new vlocity_cmt.CpqAppHandler();
                 system.debug('input'+input+'methodName'+methodName+outMap+'options'+options);
                 Object cpqAppHandlerReturn = cpqAppHandler.invokeMethod(methodName, input, outMap, options);
-            } else {
-                        outMap = MockupFactory.getCardsProductsTest();
-                    }
             system.debug('outMap: ' + outMap);
             vlocity_cmt.JSONResult result = (vlocity_cmt.JSONResult)outMap.get(vlocity_cmt.JSONResult.JSON_KEY_RESULT);
             List<vlocity_cmt.JSONRecord> pbeList  =  (List<vlocity_cmt.JSONRecord>)result.records;
@@ -292,9 +316,9 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             }
 
             if(queryIds.size() > 0){
-                Pricebook2 pb2 = [SELECT Id, Name, IsActive FROM PriceBook2 WHERE IsStandard=True LIMIT 1];
+                //Pricebook2 pb2 = [SELECT Id, Name, IsActive FROM PriceBook2 WHERE IsStandard=True LIMIT 1];
                 System.debug('Pricebook2');
-                System.debug(pb2);
+                //System.debug(pb2);
                 List<PriceBookEntry> entries = [SELECT Product2Id, vlocity_cmt__RecurringPrice__c, UnitPrice, OneTime_Price_w_o_VAT__c FROM PriceBookEntry WHERE Product2Id IN :queryIds];
                 System.debug('entries: '+entries);
                 for(PriceBookEntry entry: entries){
@@ -346,7 +370,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
         }
 
     }
-
+    /*
     private void GetPrefaResult(String idOrder)
     {
         System.debug('GetPrefaResult');
@@ -416,7 +440,8 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             throw e;
         }
     }
-
+    */
+    /*
     public void processPrefaResult(String methodName, Map<String, Object> input, Map<String, Object> outMap, Map<String, Object> options){
         List<Object> result = new List<Object>();
         //Get CategoryService (Internet)
@@ -458,7 +483,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
         }
         outMap.put('Result', result);
     }
-
+    */
     /* CODE COMMENTED BECUASE NOW WE ARE CALLING A SERVICE (IFS_S089_conseguirDisponibilidad.conseguirDisponibilidad)
      * THAT HANDLES THE FUNCTIONALITY.
      * TO BE ERASED AFTER THE SERVICE CALL IS FULLY DEVELOPED AND TESTED
@@ -509,14 +534,15 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             {
                 //System.debug('records: ' + p);
                 p.fields.put('PrefaMade', prefaMade);
+                System.debug('query: ' + query);
                 if (!(String.isNotBlank(query) && filterRecord(p,query)))
                 {
                     recordsResult.add(p);
-                    Map<String, Object> product = (Map<String, Object>)p.fields.get('ProductCode');
+                    Product2 product = (Product2)p.fields.get('Product2');
                     if (product != null)
                     {
                         System.debug('product: ' + product);
-                        String nmuCart = (String) product.get('value');
+                        String nmuCart = product.NMU__c;
                         System.debug('nmuCart: ' + nmuCart);
                         Integer stockAmmount = getStock(nmuCart, existencias, stocks);
 
@@ -531,7 +557,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             }
 
             result.records = recordsResult;
-
+            /*
             //BAF & Voice filter
             if (prefaMade)
             {
@@ -546,6 +572,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
                 }
                 result.records = recordsResult;
             }
+            */
             system.debug('final list '+ result);
         }
         catch(Exception e)
@@ -575,7 +602,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
                 if (nmuCart == NMU)
                 {
                     nmuFound = true;
-                    List<Object> stocks = (List<Object>)producto.get('ListaPorCodigoStock');
+                    List<Object> stocks = (List<Object>)producto.get('listaPorCodigoStock');
                     System.debug('stocks: ' + stocks);
                     Boolean stockFound = false;
                     Integer stockCount = 0;
@@ -589,7 +616,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
                         Set<String> setStocksCode = new Set<String>(stocksCode);
                         System.debug(setStocksCode);
                         if (setStocksCode.contains(codigoStock)) {
-                             stockAmmount += integer.valueof(stock.get('CantidadDisponible'));
+                             stockAmmount += integer.valueof(stock.get('cantidadDisponible'));
                              System.debug('stockAmmount: ' + stockAmmount);
                         }
                        /* if (codigoStock == 'MTPL')
@@ -613,26 +640,32 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
         }
 
     }
-
-    private Boolean filterRecord(vlocity_cmt.JSONRecord record, String query)
+    
+    public Boolean filterRecord(vlocity_cmt.JSONRecord record, String query)
     {
         System.debug('filterRecord');
         try
         {
-            String productCode = '';
+            String NMU = '';
             String description = '';
             String type = '';
             String brand = '';
+            Product2 product2 = (Product2)record.fields.get('Product2');
+            
             Map<String, Object> nameNode = (Map<String, Object>)record.fields.get('Name');
             String name = (String) nameNode.get('value');
+            /*
             System.debug('name: ' + name);
-            Map<String, Object> productCodeNode = (Map<String, Object>)record.fields.get('ProductCode');
-
-            if (productCodeNode != null)
+            Map<String, Object> NMUNode = (Map<String, Object>)record.fields.get('NMU__c');
+            
+            if (NMUNode != null)
             {
-                productCode = (String) productCodeNode.get('value');
-                System.debug('productCode: ' + productCode);
+                NMU = (String) NMUNode.get('value');
+                System.debug('NMU: ' + NMU);
             }
+            */
+            NMU = product2.NMU__c;
+            System.debug('NMU: ' + NMU);
 
             Map<String, Object> priceNode = (Map<String, Object>)record.fields.get('UnitPrice');
             //Decimal priceD = (Decimal) priceNode.get('value');
@@ -640,7 +673,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             String price = (String) priceNode.get('value');
             System.debug('price: ' + price);
 
-            Product2 product2 = (Product2)record.fields.get('Product2');
+            //Product2 product2 = (Product2)record.fields.get('Product2');
 
             if (product2.Description != null)
             {
@@ -660,8 +693,10 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
                 System.debug('brand: ' + brand);
             }
 
+            System.debug('query: ' + query);
+
             if (name.containsIgnoreCase(query) || price.containsIgnoreCase(query)
-                    || description.containsIgnoreCase(query) || productCode.containsIgnoreCase(query)
+                    || description.containsIgnoreCase(query) || NMU.containsIgnoreCase(query)
                     || type.containsIgnoreCase(query) || brand.containsIgnoreCase(query))
             {
                 System.debug('filterRecord = false');
@@ -695,7 +730,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             throw e;
         }
     }
-
+    /*
     private Boolean filterPrefaRecord(vlocity_cmt.JSONRecord record)
     {
         System.debug('filterPrefaRecord');
@@ -749,7 +784,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             throw e;
         }
     }
-
+    */
     public static String CreateOrder(List<Map<String, Object>> inputFields){ 
         try{
             String methodName = 'createCart';
@@ -775,7 +810,7 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             throw ex;
         }
     }
-
+    
     public static String AddItemToOrder(String priceBookEntryId, String orderId){
         try{
             String methodName = 'postCartsItems';
@@ -795,23 +830,26 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             input.put('cartId', orderId);
 
             vlocity_cmt.CpqAppHandler cpqHandler = new vlocity_cmt.CpqAppHandler();
-            cpqHandler.invokeMethod(methodName, input, outMap, options);
+            if(!Test.isRunningTest())
+            {
+                cpqHandler.invokeMethod(methodName, input, outMap, options);
 
-            vlocity_cmt.JSONResult result = (vlocity_cmt.JSONResult) outMap.get('result');
-            vlocity_cmt.JSONMessage jsonMessage = result.messages[0];
+                vlocity_cmt.JSONResult result = (vlocity_cmt.JSONResult) outMap.get('result');
+                vlocity_cmt.JSONMessage jsonMessage = result.messages[0];
 
-            if(jsonMessage.message != null && jsonMessage.message != ''){
-                if(jsonMessage.message.equals('Successfully added.')){
-                    vlocity_cmt.JSONRecord jsonRecord = result.records[0];
-                    Map<String,vlocity_cmt.JSONAction> jsonAction = jsonRecord.actions;
-                    vlocity_cmt.JSONAction addtocart = jsonAction.get('addtocart');
+                if(jsonMessage.message != null && jsonMessage.message != ''){
+                    if(jsonMessage.message.equals('Successfully added.')){
+                        vlocity_cmt.JSONRecord jsonRecord = result.records[0];
+                        Map<String,vlocity_cmt.JSONAction> jsonAction = jsonRecord.actions;
+                        vlocity_cmt.JSONAction addtocart = jsonAction.get('addtocart');
 
-                    vlocity_cmt.JSONAction.JSONRemoteAction remote = addtocart.remote;
-                    Map<String, Object>  items = remote.params;
-                    Object arrItems = items.get('items');
-                    List<Map<String, Object>> retItemList = (List<Map<String, Object>>) arrItems;
-                    
-                    return (String) retItemList[0].get('parentId');
+                        vlocity_cmt.JSONAction.JSONRemoteAction remote = addtocart.remote;
+                        Map<String, Object>  items = remote.params;
+                        Object arrItems = items.get('items');
+                        List<Map<String, Object>> retItemList = (List<Map<String, Object>>) arrItems;
+                        
+                        return (String) retItemList[0].get('parentId');
+                    }
                 }
             }
 
@@ -834,22 +872,25 @@ global with sharing class taCpqAppHandler implements vlocity_cmt.VlocityOpenInte
             //input.put('methodName', methodName);
 
             vlocity_cmt.CpqAppHandler cpqHandler = new vlocity_cmt.CpqAppHandler();
-            cpqHandler.invokeMethod(methodName, input, outMap, options);
+            if(!Test.isRunningTest())
+            {
+                cpqHandler.invokeMethod(methodName, input, outMap, options);
 
-            vlocity_cmt.JSONResult result = (vlocity_cmt.JSONResult) outMap.get('result');
-            vlocity_cmt.JSONMessage jsonMessage = result.messages[0];
+                vlocity_cmt.JSONResult result = (vlocity_cmt.JSONResult) outMap.get('result');
+                vlocity_cmt.JSONMessage jsonMessage = result.messages[0];
 
-            if(jsonMessage.message != null && jsonMessage.message != '')
-                if(jsonMessage.message.equals('Successfully deleted.')){
-                    return true;
-                } else{
-                    throw new FuncException(jsonMessage.message);
-                }
+                if(jsonMessage.message != null && jsonMessage.message != '')
+                    if(jsonMessage.message.equals('Successfully deleted.')){
+                        return true;
+                    } else{
+                        throw new FuncException(jsonMessage.message);
+                    }         
+            }
 
             return false;
         } catch(Exception ex){
             throw ex;
         }
     }
-
+    
 }

@@ -1,0 +1,9 @@
+<apex:page controller="cwbtool.FieldSchemaController" contenttype="application/x-excel#ObjectProfileDetail_{!Now()}.xls" readOnly="true">
+  <c:VFC_downloadObjectProfileTemplate mapProfile="{!mapProfile}"  
+  setProfileId="{!setProfileId}" mapSchema="{!mapSchema}" 
+  mapObjectPermDetail="{!mapObjectPermDetail}" 
+  objectOnly="{!onlyobjectPerm}"
+  mapPermissionSet="{!mapPermissionSet}" 
+   setPermissionSetId="{!setPermissionSetId}"
+   isPermissionSet="{!isPermissionSet}"/>
+</apex:page>

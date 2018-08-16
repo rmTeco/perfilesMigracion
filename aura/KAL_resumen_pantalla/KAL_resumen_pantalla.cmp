@@ -1,0 +1,7 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+   <aura:handler event="c:KAL_datos_entregaEvent" action="{!c.handleEvent}"/>
+   <aura:attribute name="persistentTipoEntrega" type="String" default="None"/> 
+   <aura:attribute name="persistentPrecioEntrega" type="Double" default="0"/> 
+   El evento se disparó: {!v.persistentTipoEntrega}
+   El evento se disparó: {!v.persistentPrecioEntrega}
+</aura:component>

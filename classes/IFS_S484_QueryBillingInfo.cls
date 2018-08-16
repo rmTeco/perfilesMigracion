@@ -1,6 +1,8 @@
 @RestResource(urlMapping='/v1/integrationprocedure/queryBillingInfo/*')
 global with sharing class IFS_S484_QueryBillingInfo {
 
+    private static String guId = null;
+
     @HttpPost
     global static void getData() {
         System.debug('---- getData()');
@@ -11,6 +13,9 @@ global with sharing class IFS_S484_QueryBillingInfo {
         RestResponse res = RestContext.response;
         RestRequest req = RestContext.request;
         res.addHeader('Content-Type', 'application/json');
+
+        writeLog ('REQ', req.requestBody.toString());
+
         try {
             res.statuscode = 200;
             Map<String, Object> body = (Map<String, Object>)JSON.deserializeUntyped(req.requestBody.toString());
@@ -36,6 +41,23 @@ global with sharing class IFS_S484_QueryBillingInfo {
         catch(Exception e){
             res.statuscode = 500;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('500',e.getMessage())));
+        }
+
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
+    }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S484', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S484', pTipo, guId, '', pDatos);  
         }
     }
 

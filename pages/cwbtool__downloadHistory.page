@@ -1,0 +1,26 @@
+<apex:page showHeader="false" sidebar="false" tabstyle="CWB_Tool__tab" title="Download History">
+
+  <link rel="stylesheet" href="{!URLFOR($Resource.cwb,'/cwb/css/bootstrap2.css')}"/>
+  
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/jquery.min.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap.js')}"/>
+   <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-transition.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-dropdown.js')}"/>
+  <apex:includeScript value="{!URLFOR($Resource.cwbtool__cwb,'/cwb/JS/bootstrap-multiselect.js')}"/>
+ 
+
+ <link rel="stylesheet" href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
+ <apex:stylesheet value="{!URLFOR($Resource.cwbtool__SLDS, 'SLDS/assets/styles/salesforce-lightning-design-system-ns-vf.css')}" />
+     
+<c:actionstatusNew />
+<apex:form styleclass="CWB">
+   <c:CWBReportLicenseManagement showdescription="true" newWindow="{!if($CurrentPage.parameters.newWindow=='',true,false)}"/>
+   <script>
+   try{ 
+      $(document).ready(function(){
+        parent.iframeLoaded();
+      });
+      }catch(ex){}
+   </script>
+  </apex:form> 
+</apex:page>

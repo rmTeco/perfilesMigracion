@@ -1,0 +1,12 @@
+<apex:page controller="cwbtool.FieldSchemaController" contenttype="application/x-excel#ObjectDetail_{!Now()}.xls" readOnly="true">
+   
+   <apex:outputpanel layout="none" rendered="{!!$Setup.cwbtool__CWB_Setup__c.cwbtool__BasicReportInSingleWorksheet__c}"> 
+      <c:VFC_downloadObjectDetail mapProfile="{!mapProfile}"  setProfileId="{!setProfileId}" mapSchema="{!mapSchema}" mapObjectPermDetail="{!mapObjectPermDetail}"/>
+  </apex:outputpanel>
+   <apex:outputpanel layout="none" rendered="{!$Setup.cwbtool__CWB_Setup__c.cwbtool__BasicReportInSingleWorksheet__c}"> 
+    <c:VFC_downloadObjectDetailSingleWS mapProfile="{!mapProfile}"  setProfileId="{!setProfileId}" mapSchema="{!mapSchema}" mapObjectPermDetail="{!mapObjectPermDetail}"/>
+  </apex:outputpanel>
+
+  
+
+</apex:page>

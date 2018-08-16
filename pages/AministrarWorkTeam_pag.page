@@ -1,0 +1,25 @@
+<apex:page controller="AministrarWorkTeam_ctr">
+    <apex:form >
+            <apex:pageBlock title="Equipos de trabajo" rendered="{!blnEquipo}">
+                             <apex:pageBlockButtons >
+                                           <!--apex:commandButton value="<<" action="{!beginning}" disabled="{!DisablePrevious}"/>
+                                           <apex:commandButton value="<" action="{!previous}" disabled="{!DisablePrevious}"/>
+                                           <apex:commandButton value=">" action="{!next}" disabled="{!DisableNext}"/>
+                                           <apex:commandButton value=">>" action="{!last}" disabled="{!DisableNext}"/-->
+                             </apex:pageBlockButtons>
+                            <apex:pageBlockTable value="{!equiposToShow}" var="equ">
+                                <apex:column headerValue="Nombre" value="{!equ.name}"/>                  
+                                <apex:column headerValue="Número de equipo">
+                                    <apex:outputField value="{!equ.Work_Team_Number__c}"/>
+                                </apex:column>
+                            </apex:pageBlockTable>
+           
+        <apex:pageBlockButtons >
+           <apex:commandButton action="{!URLFOR($Action.WorkTeam__c.New)}" value="Crear Equipo de Trabajo" style="Text-Align:Center"/>
+           <apex:commandButton action="{!URLFOR($Action.WorkTeam__c.Clone)}" value="Clonar" style="Text-Align:Center"/>
+           <apex:commandButton action="{!URLFOR($Action.WorkTeam__c.Edit)}" value="Editar" style="Text-Align:Center"/>
+        </apex:pageBlockButtons>
+           
+           </apex:pageBlock>
+    </apex:form>
+  </apex:page>

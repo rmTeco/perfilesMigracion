@@ -14,6 +14,7 @@
 global with sharing class IFS_S452_queryCreditCardAsociation {
 
     private static final Boolean K_DEBUG_ON = true; 
+    private static String guId = null;
 
     @HttpPost
     global static void getData() {
@@ -28,6 +29,9 @@ global with sharing class IFS_S452_queryCreditCardAsociation {
         Map<String, Object> result = new Map<String, Object>();
         Map<String, Object> result1 = new Map<String, Object>();
         res.addHeader('Content-Type', 'application/json');
+
+        writeLog ('REQ', req.requestBody.toString());
+
         try {
             printDebug('Paso 3');
 
@@ -155,6 +159,25 @@ global with sharing class IFS_S452_queryCreditCardAsociation {
             res.statuscode = 500;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('500',e.getMessage())));
         }
+
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
+        
+    }
+
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S452', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S452', pTipo, guId, '', pDatos);  
+        }
     }
 
     private static List<Map<String, String>> getRespuestaNoOk(String pCodigo, String pDescripcion) {
@@ -173,12 +196,7 @@ global with sharing class IFS_S452_queryCreditCardAsociation {
     private static Account[] getAccountByIdCliente(String pIdCliente) {
         try {
             printDebug('metodo --> getAccountByIdCliente()');
-            List<Account> lstCuentas = new List<Account>();
-            if (Test.isRunningTest()){
-                lstCuentas = [SELECT Id, AccountIntegrationId__c FROM Account WHERE name = 'TestIFSS452Account'];
-            } else {
-                lstCuentas = [SELECT Id, AccountIntegrationId__c FROM Account WHERE AccountIntegrationId__c = :pIdCliente];
-            }
+            Account[] lstCuentas = [SELECT Id, AccountIntegrationId__c FROM Account WHERE AccountIntegrationId__c = :pIdCliente];
             if (lstCuentas == null || lstCuentas.isEmpty()) {
                 throw new FunctionalException('El query devolvio lista vacia.');
             }

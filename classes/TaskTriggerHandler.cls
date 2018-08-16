@@ -1,7 +1,15 @@
+/**
+ * Created by Alex Lazarev 23/08/2017
+ * Provides logic support to trigMasterTask trigger
+ * Object: Task
+ *
+ * Version: 1.2
+ */
+
 public class TaskTriggerHandler {
 
     public static void initiateBillingIntegrationProcess(List<Task> triggerNew) {
-        Boolean debug = false;
+        Boolean debug = true;
 
         if(debug){System.debug('triggerNew Task: ' + triggerNew);}
         // Setting values to null to reset them on each loop
@@ -98,6 +106,7 @@ public class TaskTriggerHandler {
             c.RepeatedCalls__c = (Integer) ar.get('TaskCount');
             casesToRollup.add(c);
         }
+        
 
         update casesToRollup;
     }

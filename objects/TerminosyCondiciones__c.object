@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Instancia que guarda los Términos y Condiciones generales de los productos.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>activo__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Muestra si los términos y condiciones son los activos o no.</description>
+        <externalId>false</externalId>
+        <label>activo</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>termsproduct__c</fullName>
+        <description>Campo que contiene la URL de los Términos y Condiciones</description>
+        <externalId>false</externalId>
+        <label>termsproduct</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>TerminosyCondiciones</label>
+    <visibility>Public</visibility>
+</CustomObject>

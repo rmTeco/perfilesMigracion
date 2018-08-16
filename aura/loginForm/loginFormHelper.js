@@ -1,4 +1,35 @@
-({
+({    
+    getSessionIdJS: function(component, event, helper){
+        var action = component.get("c.getSessionId");
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+				var resp = response.getReturnValue();
+                if(resp == true){
+                    console.log("exist toke " + resp);
+                }
+                if(resp == false){
+                	console.log("REDIRECT TO TELECOM SITE");
+					//window.open("https://telecom.com.ar","_top");
+                }
+            }
+            else if (state === "INCOMPLETE") {
+                console.log("Wait: ");
+            }
+            else if (state === "ERROR") {
+                var errors = response.getError();
+                if (errors) {
+                    if (errors[0] && errors[0].message) {
+                        console.log("Error message: " + 
+                                 errors[0].message);
+                    }
+                } else {
+                    console.log("Unknown error");
+                }
+            }
+        });
+        $A.enqueueAction(action);
+    },
     
     qsToEventMap: {
         'startURL'  : 'e.c:setStartUrl'

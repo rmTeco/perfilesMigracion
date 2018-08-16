@@ -299,7 +299,6 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
     global static void SendSMS(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options){
         // Map<String, Object> request = (Map<String, Object>)options.get('S159_Request');
         System.debug('SendSMS');
-
         String accountId = (String)options.get('accountId');
         String orderId = (String)options.get('orderId');
         String type = (String)options.get('type');
@@ -308,6 +307,10 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
         //Boolean isValid = validateClientResponse(type, accountId); Modificado por Joshua Juanchini por la línea de abajo
         Boolean isValid = validateClientResponse(type, cellnumber);
         // Boolean isValid = false;
+        
+        Account account = [SELECT Name, CustomerIntegrationId__c FROM Account WHERE Id = :accountId];
+        Order ord = [SELECT OrderNumber FROM Order WHERE Id = :orderId];
+        Datetime moment = Datetime.now();
 
         Map<String, Object> validateSMS_Response = new Map<String, Object>();
         validateSMS_Response.put('IsValid', isValid);
@@ -317,23 +320,28 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
         if(!isValid){
             System.debug('3');
             // String body = '{"body": {"request": {"Target": {"User": {"Celnumber": "'+ cellnumber +'"}}},"communicationText": "'+ text +'"}}';
-            String body = '{"params":{"nroLinea":"'+ cellnumber +'"},"body":{"bodyFullCodeName":"string","campaignName":"'+SMSSender__c.getInstance('S-Confirmacion-SMS').Sender__c+'","channelName":"SMS","communicationDate":"","communicationText":"'+ text +'","messageReference":"string","target":{"rawdata":[{"key":"string","value":"string"}],"user":{"customerNumber":0,"lastName":"string","mail":"string","name":"string"}}}}';
+            //PFTA-10979 - Se cambio request para la integracion IFS_S159_2
+            String body = '{"body":{"campaignName":"'+SMSSender__c.getInstance('S-Confirmacion-SMS').Sender__c+'","customerName":"'+ account.Name +'","customerNumber":"'+ account.CustomerIntegrationId__c +'","externalMessageID":"'+ord.OrderNumber +' - '+ cellnumber +' - '+ moment +'","extraFields":""},"params":{"nroLinea":"'+ cellnumber +'"}}';
+            System.debug('IPS_S159_2 request: '+body);
+            //String body = '{"params":{"nroLinea":"'+ cellnumber +'"},"body":{"bodyFullCodeName":"string","campaignName":"'+SMSSender__c.getInstance('S-Confirmacion-SMS').Sender__c+'","channelName":"SMS","communicationDate":"","communicationText":"'+ text +'","messageReference":"string","target":{"rawdata":[{"key":"string","value":"string"}],"user":{"customerNumber":0,"lastName":"string","mail":"string","name":"string"}}}}';
             Map<String, Object> input = (Map<String, Object>) JSON.deserializeUntyped(body);
             Map<String, Object> output = new Map<String, Object>();
             Map<String, Object> options2 = new Map<String, Object>();
 
             System.debug('SendSMS: ' + JSON.serialize(input));
             vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
-            integProcServ.invokeMethod('IFS_S159', input, output, options2);
-
-			String execCode = 'OK';
+            integProcServ.invokeMethod('IFS_S159_2', input, output, options2);
+            System.debug('IPS_S159_2 response: '+output);
+			Boolean execCode = false;
 
             if(!Test.isRunningTest()){
             	Map<String, Object> response = (Map<String, Object>) output.get('IPResult');
-            	execCode = (String) response.get('executionCode');
+            	execCode = (Boolean) response.get('isSuccess');
+            } else {
+                execCode = true;
             }
             
-            if(execCode != 'OK'){
+            if(!execCode){
                 throw new FuncException('Error inesperado al enviar el SMS.');
             }
 
@@ -466,7 +474,8 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
         String accountId = (String)options.get('accountId');
         String phone = String.valueOf(options.get('phone'));
         String phoneS121 = String.valueOf(options.get('phoneS121'));
-
+        String orderId = String.valueOf(options.get('orderId'));
+        
         //PFTA-10979
         //We only send SMS if the number is not the same
         Boolean sendSMS = false;
@@ -475,7 +484,10 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
             sendSMS = true;
         } 
 
-        Account account = [SELECT Id, RecordTypeId, vlocity_cmt__RootAccountId__c, Name FROM Account WHERE Id = :accountId];
+        Order ord = [SELECT OrderNumber FROM Order WHERE Id = :orderId];
+        Datetime moment = Datetime.now();
+
+        Account account = [SELECT Id, RecordTypeId, vlocity_cmt__RootAccountId__c, Name, CustomerIntegrationId__c FROM Account WHERE Id = :accountId];
         String recordTypeId = account.RecordTypeId;
         RecordType recordType = [SELECT Id, Name FROM RecordType WHERE Id = :recordTypeId];
 
@@ -491,9 +503,9 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
             hasPhone = true;
         }
 
-        // Llamamos al IP S159
+        // Llamamos al IP S159_2
         if(sendSMS && !hasPhone){
-            System.debug('Mando SMS al S159');
+            System.debug('Mando SMS al S159_2');
             SMS_Expected_Response_Type__c expected = SMS_Expected_Response_Type__c.getInstance('SMS_Expected_Response_Type');
             
             //armo el text de envio de SMS haciendo los replaces
@@ -506,12 +518,16 @@ global with sharing class taSalesSMSInteraction implements vlocity_cmt.VlocityOp
             text = text.replace('{{OK}}', expected.Ok__c);
             text = text.replace('{{KO}}', expected.Ko__c);
 
-            String body = '{"body": {"request": {"Target": {"User": {"Celnumber": "'+ phone +'"}}},"communicationText": "'+ text +'"}}';
+            //PFTA-10979 - Se cambio request para la integracion IFS_S159_2
+            String body = '{"body":{"campaignName":"'+SMSSender__c.getInstance('S-Confirmacion-SMS').Sender__c+'","customerName":"'+ account.Name +'","customerNumber":"'+ account.CustomerIntegrationId__c +'","externalMessageID":"'+ord.OrderNumber +' - '+ phone +' - '+ moment +'","extraFields":""},"params":{"nroLinea":"'+ phone +'"}}';
+            System.debug('IPS_S159_2 request: '+body);            
+            //String body = '{"body": {"request": {"Target": {"User": {"Celnumber": "'+ phone +'"}}},"communicationText": "'+ text +'"}}';
             Map<String, Object> input = (Map<String, Object>) JSON.deserializeUntyped(body);
             Map<String, Object> output = new Map<String, Object>();
             Map<String, Object> options2 = new Map<String, Object>();
             vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
-            integProcServ.invokeMethod('IFS_S159', input, output, options2);
+            integProcServ.invokeMethod('IFS_S159_2', input, output, options2);
+            System.debug('IPS_S159_2 response: '+output);   
             outMap.put('IP_Response', output);
 
             // hago el track de envio de SMS

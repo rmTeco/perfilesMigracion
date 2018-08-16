@@ -1,0 +1,91 @@
+<apex:page standardController="Account" standardStylesheets="false" applyHtmlTag="false" showHeader="false">
+    
+    <head>
+        <style type="text/CSS">
+            body{
+                font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;         
+            }
+
+            .center{
+                text-align:center;
+            }
+
+            .table-bordered {
+                border: 1px solid #000;
+                border-collapse : collapse;
+                font-size : .7em;
+            }
+
+
+           thead>tr>th {
+                vertical-align: bottom;
+                border: 1px solid #000;
+                border-spacing: 0;
+                text-align:center;
+                border-collapse: collapse;
+                background : #202d79;
+                color:white;
+            }
+
+            td {
+                vertical-align: bottom;
+                border: 1px solid #000;
+                border-spacing: 0;
+                border-collapse: collapse;
+                text-align:center;
+            }
+
+            .header>td{
+                font-weight:bold;
+                background : #c4c4c4;               
+            }
+
+            .echoArea>td{
+                padding:10px;
+            }
+
+            @page {
+                            size: letter;
+                            margin: 25mm;
+                            margin-top: 0.8cm;
+                            
+                            @bottom-center {
+                                content: "Page " counter(page) " of " counter(pages);
+                            }
+                            
+                        
+                        }
+                        
+                        .page-break {
+                            display:block;
+                            page-break-after:always;
+                        }
+                        
+                        body {
+                            font-family: Arial Unicode MS;
+                        }
+
+        </style>
+    </head>
+
+    <body>
+        <img src='https://c.na15.content.force.com/servlet/servlet.ImageServer?id=015i0000008RMYR&oid=00Di0000000hz1j&lastMod=1443192829000' title="logo"/>
+        <h4> This is an example of table styles.</h4>
+        <table width="100%" class="table-bordered">
+            <thead>
+                <tr>
+            <th> Name</th>
+            <th>First Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!Account.Contacts}" var="con">
+                    <tr>
+                        <td>{!con.Name}</td>
+                        <td>{!con.FirstName}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+    </body>
+</apex:page>

@@ -1,0 +1,40 @@
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" controller="KB_KnowledgeViewController" cache="false"  action="{!search}" docType="html-5.0">
+
+<style type="text/css">
+
+    #KbBodyId .card {
+        height: auto;
+    }
+    #KbBodyId .card-xs {
+        height: auto;
+    }
+    #KbBodyId .card-xs .card-footer {
+        display: '';
+    }
+
+    #starID .hand{
+        font-size: 38px;
+        margin-left: 18px;
+    }
+#congratulationsID {
+    margin-left: 28px; 
+    margin-top: -5px;
+}
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://resources.personal.com.ar/styles/v1/css/tpstyle.css"/>
+<link rel="stylesheet" type="text/css" href="https://www.personal.com.ar/css/customs/custom.home2.css"/>
+<link rel="stylesheet" type="text/css" href="https://resources.personal.com.ar/components/jquery/owl/owl.carousel.css"/>
+
+<apex:includeScript value="{!URLFOR($Resource.KB_jquery_3_3_1_min_js)}"/>
+<apex:includeScript value="{!URLFOR($Resource.KB_bootstrap_4_0,'/js/bootstrap.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.KB_bootstrap_4_0,'/css/bootstrap.min.css')}"/>
+
+<apex:includeScript value="/support/console/40.0/integration.js"/>   
+    <div id="knowledgeDiv">
+        <apex:form >  
+            <c:KB_articleVote articleSelected="{!articleSelected}"/>
+        </apex:form>
+    </div>
+</apex:page>

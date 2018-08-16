@@ -1,12 +1,17 @@
 @RestResource(urlMapping='/v1/integrationprocedure/validateReproNoNominated/*')
 global with sharing class IFS_S442_validateReproNoNominated {
 
+    private static String guId = null;
+
     @HttpPost
     global static void getData() {
         FromJSON jsonBody;
         RestResponse res = RestContext.response;
         RestRequest req = RestContext.request;
         res.addHeader('Content-Type', 'application/json');
+
+        writeLog ('REQ', req.requestBody.toString());
+        
         try {
             try {
                 jsonBody = (fromJSON)JSON.deserialize(req.requestBody.toString(),FromJSON.class);
@@ -30,7 +35,26 @@ global with sharing class IFS_S442_validateReproNoNominated {
             res.statuscode = 404;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('417',e.getMessage())));
         }
+        
+        writeLog ('RES', res.statuscode + ';' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(res.responseBody)).toString());
+
     }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S442', pTipo, guId, '', pDatos);  
+        }
+        else {
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S442', pTipo, guId, '', pDatos);  
+        }
+    }
+
 
     private static Map<String,Object> getLinea (String pNroLinea) {
         boolean lvalor = false;

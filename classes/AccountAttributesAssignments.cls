@@ -35,22 +35,30 @@ global with sharing class AccountAttributesAssignments  implements vlocity_cmt.V
 
             outMap.put('Account', account[0]);
             Account acc = account[0];
+            System.debug('acc: ' + acc);
             if(acc.Attributes__c != Null){
                 System.debug('currentAccAttributes sin TRIM: ' + acc.Attributes__c);
-                currentAccAttributes = new Set<String>(acc.Attributes__c.split(';'));
+                currentAccAttributes = new Set<String>(acc.Attributes__c.split('; '));
+                System.debug('currentAccAttributes: ' + currentAccAttributes);
             }
             List<AttributesWeighing__c> weighings = [SELECT Object__c, Attribute__c, Weighing__c FROM AttributesWeighing__c
                                                        ORDER BY Weighing__c DESC];
+            System.debug('weighings: ' + weighings);
 
             List<Contact> contact = [SELECT Id, Attributes__c FROM Contact 
                                       WHERE Id = :account[0].vlocity_cmt__PrimaryContactId__c];
-            Contact con = contact[0];
-            if(con.Attributes__c != Null){
-                currentConAttributes = new Set<String>(con.Attributes__c.split(';'));
-            }
+            System.debug('contact: ' + contact);
 
-            System.debug('currentAccAttributes: ' + currentAccAttributes);
-            System.debug('currentConAttributes: ' + currentConAttributes);
+            Contact con = new Contact();
+            if(!contact.isEmpty()){
+                con = contact[0];
+                System.debug('con: ' + con);
+            }
+            
+            if(con.Attributes__c != Null){
+                currentConAttributes = new Set<String>(con.Attributes__c.split('; '));
+                System.debug('currentConAttributes + conAtt: ' + currentConAttributes);
+            }
 
             String attributes = '';
             String result;

@@ -1,0 +1,3 @@
+<apex:page controller="cwbtool.FieldSchemaController" contenttype="application/x-excel#ApexDetail_{!TODAY()}.xls" readOnly="true">
+  <c:VFC_ApexDetailDownload instanceURL="{!hostURL}" coveragedetailNotFound="{!coveragedetailNotFound}" mapProfile="{!mapProfile}"  setProfileId="{!setProfileId}" mapApexDetail="{!mapApexDetail}" mapApexTrigger="{!mapApexTrigger}"/>
+ </apex:page>

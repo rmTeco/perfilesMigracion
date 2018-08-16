@@ -1,4 +1,6 @@
 public class IFS_S171_validateEMail {
+
+    private static String guId = null;
     
     public static Map<String,Object> validateEMail(String mail){
         
@@ -8,6 +10,29 @@ public class IFS_S171_validateEMail {
         return responseNode;
     }
     
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pReq, String pRes, Integer pResStatus) {
+        System.debug('Entre en writeLog - pTipo --> ' + pTipo + ' - pReq --> ' + pReq + ' - pRes --> ' + pRes + ' - pResStatus --> ' + pResStatus);
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
+
+        if (pTipo == 'REQ') {
+            guId = String.isBlank(guId) ? GuidUtil.NewGuid() : guId;  
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S171', pTipo, guId, pReq, '');  
+        }
+        else {
+            String datos = 'status code = ' + pResStatus + ' ; status = ; ';
+            if (pResStatus < 300) {
+                datos += 'request to DPW OK';
+            }
+            else {
+                datos += 'request to DPW FAIL ; request body = ' + (String.isBlank(pReq)?'':pReq) + ' ; Response = ' + pRes;
+            } 
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S171', pTipo, guId, '', datos);  
+        }
+    }
+    
     public static HttpResponse makePostCallout(String id) {
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -15,17 +40,16 @@ public class IFS_S171_validateEMail {
         String campo='email';
         IFS_EndpointFixer fixer = new IFS_EndpointFixer();
         EndPointService__c endpoint;
+
         if(endPoints.size()>0){
             endpoint = endPoints[0];
         }
-        //String endpointTEMP='http://exeo.mockable.io/email/'+id+'/envio';
-        //endpointTEMP='http://exeo.mockable.io/arnet/email/{email}/validar';
+
         if(endpoint != null){
               endpoint.EndPoint__c=fixer.FixEndpoint(campo, id, endpoint);
               request.setEndpoint(endpoint.EndPoint__c);
         }
         
-        //request.setEndpoint(endpointTEMP);
         request.setMethod('GET');
         request.setHeader('Content-Type', 'application/json;charset=UTF-8');
         String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
@@ -33,65 +57,10 @@ public class IFS_S171_validateEMail {
         HttpResponse response = http.send(request);
         system.debug(response);
         system.debug(response.getBody());   
-        /*
-        //Manejo de errores.
-        Boolean hayError = false;
-        
-        if (response.getStatusCode() == 400) {
-            hayError=True;
-            throw new CallOutException('Bad Request. La solicitud contiene sintaxis errónea y no debería repetirse.');
-        }
-        if (response.getStatusCode() == 401) {
-            hayError=True;
-            throw new CallOutException('Unauthorized. Usuario no autorizado. Falló la autenticación.');
-            
-        }
-        if (response.getStatusCode() == 403) {
-            hayError=True;
-            throw new CallOutException('Forbidden. No tiene los privilegios para hacer la solicitud que desea.');
-            
-        }
-        if (response.getStatusCode() == 404) {
-            hayError=True;
-            throw new CallOutException('Recurso no encontrado. El servicio no encuentra el recurso solicitado.');
-            
-        }
-        if (response.getStatusCode() == 405) {
-            hayError=True;
-            throw new CallOutException('Method not allowed. El método solicitado no es soportado por el servicio.');
-            
-        }
-        if (response.getStatusCode() == 408) {
-            hayError=True;
-            throw new CallOutException('Request Timeout. No se obtuvo respuesta de la plataforma servidora.');
-            
-        }
-        if (response.getStatusCode() == 418) {
-            hayError=True;
-            throw new CallOutException('Error controlado. Error funcional o de plataforma que se encuentra especificado.');
-            
-        }
-        
-        if (response.getStatusCode() == 500) {
-            hayError=True;
-            throw new CallOutException('Error no controlado.');
-            
-        }*/
-        
+
+        writeLog ('REQ', '{"'+campo+'":"'+id+'"}', null, 0);
+        writeLog ('RES', request.getBody(), response.getBody(), response.getStatusCode());
+
         return response;
-        
     }     
-    /*
-public class conseguirDisponibilidadJSON{
-
-public String idPuntoDeVenta {get;set;}
-public String codDeposito {get;set;}
-public String codMarca {get;set;}
-public String codFamiliaProducto {get;set;}
-public String NMU {get;set;}
-public String codigoStock {get;set;}
-
-
-}*/
-    
 }

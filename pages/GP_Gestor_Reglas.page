@@ -88,7 +88,9 @@
                                 </span>
                             </div>
                         </apex:column>
-                        <apex:column value="{!gp.Tipo_de_evento__c}" headerValue="Evento"/>
+                        <apex:column headerValue="Evento">
+                            <apex:outputField value="{!gp.Tipo_de_evento__c}" />
+                        </apex:column>
                         <apex:column value="{!gp.Name}" headerValue="Numero de Regla"/>
                         <apex:column headerValue="Activa" width="10%">
                             <apex:inputCheckbox value="{!gp.Activa__c}" disabled="true"/>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>KB_Article__ka.KB_Article__kav$KB_ValoracionPromedio__c</field>
+    </columns>
+    <columns>
+        <field>KB_Article__ka.KB_Article__kav$VersionNumber</field>
+    </columns>
+    <columns>
+        <field>KB_Article__ka.KB_Article__kav$PublishStatus</field>
+    </columns>
+    <description>Knowledge articles with normalized score</description>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>KB_Article__ka.KB_Article__kav$Title</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Knowledge articles with normalized score</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>KB_ArticlesNormalizedScore__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>KB_Article__ka$ArchivedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

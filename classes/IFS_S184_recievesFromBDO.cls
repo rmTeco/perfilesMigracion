@@ -54,12 +54,12 @@ global with sharing class IFS_S184_recievesFromBDO {
         catch (CalloutException ce) {
             res.statuscode = 400;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('400',ce.getMessage())));
-            writeLog ('RES', res.statuscode + ';' + getRespuestaNoOk('417',ce.getMessage()));
+            writeLog ('RES', res.statuscode + ';' + getRespuestaNoOk('400',ce.getMessage()));
         }
         catch (IPException e) {
             res.statuscode = 417;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('184-01','Mensaje ya enviado')));
-            writeLog ('RES', res.statuscode + ';' + getRespuestaNoOk('417',e.getMessage()));
+            writeLog ('RES', res.statuscode + ';' + getRespuestaNoOk('184-01','Mensaje ya enviado'));
         }
     }
 
@@ -68,15 +68,14 @@ global with sharing class IFS_S184_recievesFromBDO {
      */
     private static void writeLog (String pTipo, String pDatos) {
         printDebug('Entre en writeLog - pTipo --> ' + pTipo + ' - pDatos --> ' + pDatos);
-        DateTime dt = DateTime.now();
-        String dts = dt.format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'');
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
 
         if (pTipo == 'REQ') {
             guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
-            /*IFS_LogRecord.record(dts, 'SERVICIO', 'S184', guId, pTipo, pDatos, '');  */
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S184', pTipo, guId, '', pDatos);  
         }
         else {
-           /* IFS_LogRecord.record(dts, 'SERVICIO', 'S184', guId, pTipo, '', pDatos);  */
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S184', pTipo, guId, '', pDatos);  
         }
     }
 

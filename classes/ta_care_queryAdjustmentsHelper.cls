@@ -29,9 +29,6 @@ global with sharing class ta_care_queryAdjustmentsHelper implements vlocity_cmt.
             if (methodName.Equals('GetAdjustmentHistory')) {
                 GetAdjustmentHistory(inputMap, outMap, options);
             }
-            if (methodName.Equals('GetAdjustmentHistoryForOS')) {
-                GetAdjustmentHistoryForOS(inputMap, outMap, options);
-            }
 
             if(methodName.Equals('GetWorkTeamHierarchy'))
             {
@@ -42,7 +39,7 @@ global with sharing class ta_care_queryAdjustmentsHelper implements vlocity_cmt.
             {
                 RecallApprovalProcess(inputMap, outMap, options);
             }
-
+ 
             if(methodName.Equals('AmountLimitForUser'))
             {
                 AmountLimitForUser(inputMap, outMap, options);
@@ -93,15 +90,6 @@ global with sharing class ta_care_queryAdjustmentsHelper implements vlocity_cmt.
                 flag = true; 
             }
 
-           /* if(profileName == 'System Administrator'  )
-            {
-                result.put('codError', '0');
-                result.put('approvalProfileR', 'FAN_Director');
-                result.put('approvalId', '0056C000000xouc');
-                flag = true; 
-            }
-            */
-
             while (!flag) 
             {
                 List<WorkTeam__c> workTeams = (List<WorkTeam__c>)Database.query(strQuery);
@@ -138,94 +126,129 @@ global with sharing class ta_care_queryAdjustmentsHelper implements vlocity_cmt.
     }
     
     global void GetAdjustmentHistory(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
-        
-        // Vlocity Integration Procedure Obj
-        vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
-        
-        // ***** *****  BUG  PFTA-10332 *********************** ////////////
-        Map<String, Object> bodyNewMap = (Map<String,Object>) inputMap.get('body');
-        System.debug('newBody_' + inputMap );
-        String codSubcript = (String) inputMap.get('codSuscriptId');  
-        Map<String, Object> resultNew = (Map<String,Object>) bodyNewMap.get('cuenta'); 
-        
-        
-        Map<String, Object> codiT = (Map<String, Object>) resultNew.get('codigoAcceso');
-        System.debug('result new_' + resultNew + '--' + codiT);
-        
-        codiT.put('codSuscripcion', codSubcript);
-        
-        bodyNewMap.put('cuenta',resultNew);
-        bodyNewMap.put('fechaDesde', Date.today() - 5 );
-        bodyNewMap.put('fechaHasta', Date.today());
-        
-        inputMap.put('body',bodyNewMap );
-        System.debug('New Data' + inputMap);
-        
-        // ***** *****  //// ***********************
-        
-        //Getting S138 data from IP
-        if(!Test.isRunningTest()){integProcServ.invokeMethod('IFS_S138', inputMap, outMap, options);}
-        //System.debug('inputMap: ' + inputMap);
-        System.debug('outMap: ' + outMap);
-        Map<String, Object> result = (Map<String, Object>)outMap.get('IPResult');
-        List<Object> ajustments = (List<Object>)result.get('listaDetalleAjuste');
-        List<Object> ajustments2 = new List<Object>();
-        for (Object a : ajustments){
-            Map<string, object> aMap = ( Map<string, object>)a;
-            aMap.put('motivoAjuste', getAdjustments_CBS__c.getInstance((string)aMap.get('codMotivoAjuste')).ServiceMessage__c);
-            ajustments2.add(aMap);
+        try
+        {
+            //DateTime fechaIncio = DateTime.now() - 20;
+            //String codSuscriptor =  '9900000352810001';
+            String sDate, eDate;
+
+            if((String.valueOf(inputMap.get('startDateFilter')) == null) && (String.valueOf(inputMap.get('endDateFilter')) == null))
+            {
+                DateTime fechaIncio = DateTime.now() - 5;
+                DateTime fechaFin = DateTime.now() + 1;
+                sDate = String.valueOf(fechaIncio);
+                eDate = String.valueOf(fechaFin);
+
+            } 
+            else
+            {
+                sDate = String.valueOf(inputMap.get('startDateFilter'));
+                eDate = String.valueOf(inputMap.get('endDateFilter'));
+            }
+
+            String codSuscriptor = String.valueOf(inputMap.get('codSuscriptor'));
+            String cantidadMaxConsulta = String.valueOf(inputMap.get('cantidadMaxConsulta'));
+            String referenciaItemPaginado = String.valueOf(inputMap.get('referenciaItemPaginado'));
+            String cantidadItemsConsulta = String.valueOf(inputMap.get('cantidadItemsConsulta'));
+
+            Map<String, Object> result2 = new Map<String, Object>();
+            Map<String, Object> outputMap = new Map<String, Object>();
+
+            String jsonString = '{"body":{"cantidadItemsConsulta":'+cantidadItemsConsulta+',"cantidadMaxConsulta":'+cantidadMaxConsulta+',"cuenta":{"codigoAcceso":{"codSuscripcion":"'+codSuscriptor+'"}},"fechaDesde":"'+sDate+'","fechaHasta":"'+eDate+'","infoDetalle":{},"referenciaItemPaginado":'+referenciaItemPaginado+'}}';
+
+            System.debug('Request jsonString: '+jsonString);
+            Map<String, Object> input = (Map<String, Object>)JSON.deserializeUntyped(jsonString);
+
+            if(!Test.isRunningTest()){
+                vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
+                integProcServ.invokeMethod('IFS_S138', input, outputMap, options);
+                System.debug('Response S138: '+outputMap);
+            }
+            else
+            {
+                outputMap = outMap;
+            }
+
+            Map<String, Object> result = (Map<String, Object>)outputMap.get('IPResult');
+            Map<String, Object> mapAjustes;
+
+            List<Object> ajustments = (List<Object>)result.get('listaDetalleAjuste');
+            List<Object> ajustments2 = new List<Object>();
+
+            if(ajustments == null)
+            {
+                mapAjustes = new Map<String, Object>();
+                mapAjustes.put('codError', '201');
+                mapAjustes.put('descError', 'No hay registros en los ultimos 5 dias.');
+                ajustments2.add(mapAjustes);
+            }
+            else
+            {
+                for (Object a : ajustments){
+                    mapAjustes = new Map<String, Object>();
+                    Map<string, object> aMap = ( Map<string, object>)a;
+                    
+                    mapAjustes.put('motivoAjuste', String.valueOf(aMap.get('codMotivoAjuste')) == '' ? 'Sin datos' : String.valueOf(aMap.get('codMotivoAjuste')));
+                    mapAjustes.put('codCanal', String.valueOf(aMap.get('codCanal')) == '' ? 'Sin datos' : String.valueOf(aMap.get('codCanal')));
+                    mapAjustes.put('fechaAjuste', String.valueOf(aMap.get('fechaAjuste')) == '' ? 'Sin datos' : String.valueOf(aMap.get('fechaAjuste')));
+                    mapAjustes.put('codCuentaTasacion', String.valueOf(aMap.get('codCuentaTasacion')) == '' ? 'Sin datos' : String.valueOf(aMap.get('codCuentaTasacion')));
+
+                    List<Object> listaAjusteBalanceInfo = (List<Object>)aMap.get('listaAjusteBalanceInfo');
+                    List<Object> listaInfoAjusteUnidadesLibres = (List<Object>)aMap.get('listaInfoAjusteUnidadesLibres');
+                    
+                    if(listaAjusteBalanceInfo != null)
+                    {
+                        mapAjustes.put('codigoAjuste', 'Balance');
+
+                        for(Object b : listaAjusteBalanceInfo)
+                        {
+                            Map<string, object> bMap = ( Map<string, object>)b;
+
+                            //Los ajustes realizados impactan sobre C_MAIN_ACCOUNT en el caso de Balance.
+                            if(String.valueOf(bMap.get('codTipoBalance')) == 'C_MAIN_ACCOUNT')
+                            {
+                                mapAjustes.put('codMoneda', String.valueOf(bMap.get('codMoneda')) == null ? 'Sin datos' : String.valueOf(bMap.get('codMoneda')));
+                                mapAjustes.put('montoAjuste', String.valueOf(bMap.get('montoAjuste')) == null ? 'Sin datos' : String.valueOf(bMap.get('montoAjuste')));
+                                mapAjustes.put('tipoAjuste', String.valueOf(bMap.get('tipoAjuste')) == null ? 'Sin datos' : String.valueOf(bMap.get('tipoAjuste'))); 
+                                mapAjustes.put('fechaExpiracionBalance', String.valueOf(bMap.get('fechaExpiracionBalance')) == null ? 'Sin datos' : String.valueOf(bMap.get('fechaExpiracionBalance')));
+                                mapAjustes.put('codTipoBalance', String.valueOf(bMap.get('codTipoBalance'))); 
+                            }
+                        }
+                        ajustments2.add(mapAjustes);
+                    }
+                    else
+                    {
+                        if(listaInfoAjusteUnidadesLibres != null)
+                        {
+                            mapAjustes.put('codigoAjuste', 'Libre');
+
+                            for(Object c : listaInfoAjusteUnidadesLibres)
+                            {
+                                Map<string, object> cMap = ( Map<string, object>)c;
+                                mapAjustes.put('codUnidadDeMedida', String.valueOf(cMap.get('codUnidadDeMedida')) == null ? 'Sin datos' : String.valueOf(cMap.get('codUnidadDeMedida')));
+                                mapAjustes.put('montoAjuste', String.valueOf(cMap.get('montoAjuste')) == null ? 'Sin datos' : String.valueOf(cMap.get('montoAjuste')));
+                                mapAjustes.put('tipoAjuste', String.valueOf(cMap.get('tipoAjuste')) == null ? 'Sin datos' : String.valueOf(cMap.get('tipoAjuste'))); 
+                                mapAjustes.put('fechaAjusteVigenciaHasta', String.valueOf(cMap.get('fechaAjusteVigenciaHasta')) == null ? 'Sin datos' : String.valueOf(cMap.get('fechaAjusteVigenciaHasta')));
+                            }
+                            ajustments2.add(mapAjustes);
+                        }
+                    }
+                }   
+            }
+
+        result2.put('listaDetalleAjuste', ajustments2);
+        result2.put('cantidadMaxConsulta', result.get('cantidadMaxConsulta'));
+        result2.put('referenciaItemPaginado', result.get('referenciaItemPaginado'));
+        result2.put('cantidadItemsConsulta', result.get('cantidadItemsConsulta'));
+        outMap.put('IPResult', result2);
+        System.debug('outMap: '+outMap);
         }
-        result.put('listaDetalleAjuste', ajustments2);
-        outMap.put('IPResult', result);
-        //system.debug(json.serialize(outMap));
-        
+        catch(Exception ex)
+        {
+            System.debug('Error: '+ ex.getMessage());
+            throw ex;
+        }
     }
-    
-    global void GetAdjustmentHistoryForOS(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
-        
-        //Se llama al metodo GetAdjustmentHistory el cual usa custom settings para convertir los codMotivo a motivoAjuste
-        GetAdjustmentHistory(inputMap, outMap, options);
-        Map<String, Object> result = (Map<String, Object>)outMap.get('IPResult');
-        List<Object> ajustments = (List<Object>)result.get('listaDetalleAjuste');
-        List<Object> ajustments2 = new List<Object>();
-        //se transforma los elementos de la lista listaDetalleAjuste para ajustar la estructura a el template que los mostrará
-        for (Object a : ajustments){
-            Map<string, object> aMap = new Map<string, object>();
-            Map<string, object> aMapAux = (Map<string, object>)a;
-            //Se obtiene el monto del ajsute de la lista AjusteBalanceInfo, 
-            //esto pudiera ser una sumatoria, pero por ahora solo se está tomando el primer elemento
-            List<Object> BalanceInfo = (List<Object>)aMapAux.get('listaAjusteBalanceInfo');
-            Map<string, object> BIMapAux = (Map<string, object>)BalanceInfo[0];
-            
-            aMap.put('Amount', BIMapAux.get('montoAjuste'));
-            aMap.put('CaseNumber', '000011111');
-            aMap.put('CreatedDate', aMapAux.get('fechaAjuste'));
-            aMap.put('Id', 'ID11111111111');
-            aMap.put('CaseStatus', 'Derivada');
-            aMap.put('Tipo', aMapAux.get('motivoAjuste'));
-            aMap.put('TipoConcepto', BIMapAux.get('tipoAjuste'));
-            aMap.put('TipoItem', aMapAux.get('motivoAjuste'));
-            ajustments2.add(aMap);
-        }
-        
-        //Se intenta leer la lista de ajustes historias enviados como options a traves
-        //de un remote action de un OmniScript
-        List<Object> AdjustmentCases = new List<Object>();
-        try{
-            AdjustmentCases = (List<Object>)options.get('HistoricalAdjustments');
-            
-        }catch(Exception ex){ System.debug(ex.getMessage()); }
-        
-        //Si existen elementos se agregan al objeto, union de las dos listas
-        for (object o : AdjustmentCases){
-            ajustments2.add((Map<string, object>)o);
-        }
-        
-        result.put('listaDetalleAjuste', ajustments2);
-        outMap.put('IPResult', result);
-        system.debug(json.serialize(outMap));
-        
-    } 
 
     global static void RecallApprovalProcess(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) 
     {

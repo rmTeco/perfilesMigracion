@@ -1,0 +1,65 @@
+<apex:page controller="cwbtool.CodeComparator" >
+<apex:stylesheet value="{!URLFOR($Resource.cwbtool__jsLib,'/jsdifflib/diffview.css')}" />
+  contenttype="application/x-excel#ApexDetail_{!TODAY()}.doc" 
+<style>
+@page {
+table.diff {
+	border-collapse:collapse;
+	border:1px solid darkgray;
+	white-space:pre-wrap
+}
+table.diff tbody { 
+	font-family:Courier, monospace
+}
+table.diff tbody th {
+	font-family:verdana,arial,'Bitstream Vera Sans',helvetica,sans-serif;
+	background:#EED;
+	font-size:11px;
+	font-weight:normal;
+	border:1px solid #BBC;
+	color:#886;
+	padding:.3em .5em .1em 2em;
+	text-align:right;
+	vertical-align:top
+}
+table.diff thead {
+	border-bottom:1px solid #BBC;
+	background:#EFEFEF;
+	font-family:Verdana
+}
+table.diff thead th.texttitle {
+	text-align:left
+}
+table.diff tbody td {
+	padding:0px .4em;
+	padding-top:.4em;
+	vertical-align:top;
+}
+table.diff .empty {
+	background-color:#DDD;
+}
+table.diff .replace {
+	background-color:#FD8
+}
+table.diff .delete {
+	background-color:#E99;
+}
+table.diff .skip {
+	background-color:#EFEFEF;
+	border:1px solid #AAA;
+	border-right:1px solid #BBC;
+}
+table.diff .insert {
+	background-color:#9E9
+}
+table.diff th.author {
+	text-align:right;
+	border-top:1px solid #BBC;
+	background:#EFEFEF
+}
+
+}
+</style>
+<table class="diff"><thead><tr><th></th><th class="texttitle">Self_Kanishk-Current Org</th><th></th><th class="texttitle">Self_Kanishk-Current Org</th></tr></thead><tbody><tr><th>1</th><td class="replace">public with sharing class CWBSetupCtrl {</td><th>1</th><td class="replace">public class CodeCoverage{</td></tr><tr><th></th><td class="empty"></td><th>2</th><td class="replace"> public Integer size; //1</td></tr><tr><th></th><td class="empty"></td><th>3</th><td class="replace"> public Integer totalSize; //1</td></tr><tr><th></th><td class="empty"></td><th>4</th><td class="replace"> public boolean done;</td></tr><tr><th></th><td class="empty"></td><th>5</th><td class="replace"> public cls_queryLocator queryLocator;</td></tr><tr><th></th><td class="empty"></td><th>6</th><td class="replace"> public String entityTypeName; //ApexCodeCoverageAggregate</td></tr><tr><th></th><td class="empty"></td><th>7</th><td class="replace"> public cls_records[] records;</td></tr><tr><th></th><td class="empty"></td><th>8</th><td class="replace"> class cls_queryLocator {</td></tr><tr><th></th><td class="empty"></td><th>9</th><td class="replace"> }</td></tr><tr><th></th><td class="empty"></td><th>10</th><td class="replace"> public class cls_records {</td></tr><tr><th></th><td class="empty"></td><th>11</th><td class="replace"> // public cls_attributes attributes;</td></tr><tr><th></th><td class="empty"></td><th>12</th><td class="replace"> public cls_ApexClassOrTrigger ApexClassOrTrigger;</td></tr><tr><th></th><td class="empty"></td><th>13</th><td class="replace"> public String ApexClassOrTriggerId; //01pF0000003inEhIAI</td></tr><tr><th></th><td class="empty"></td><th>14</th><td class="replace"> public Integer NumLinesCovered; //0</td></tr><tr><th></th><td class="empty"></td><th>15</th><td class="replace"> public Integer NumLinesUncovered; //9</td></tr><tr><th></th><td class="empty"></td><th>16</th><td class="replace"> }</td></tr><tr><th></th><td class="empty"></td><th>17</th><td class="replace"> /* class cls_attributes {</td></tr><tr><th></th><td class="empty"></td><th>18</th><td class="replace"> public String type; //Name</td></tr><tr><th></th><td class="empty"></td><th>19</th><td class="replace"> public String url; ///services/data/v30.0/tooling/sobjects/ApexClass/01pF0000003inEhIAI</td></tr><tr><th></th><td class="empty"></td><th>20</th><td class="replace"> }*/</td></tr><tr><th></th><td class="empty"></td><th>21</th><td class="replace"> class cls_ApexClassOrTrigger {</td></tr><tr><th></th><td class="empty"></td><th>22</th><td class="replace"> //public cls_attributes attributes;</td></tr><tr><th></th><td class="empty"></td><th>23</th><td class="replace"> public String Type; //01p</td></tr><tr><th></th><td class="empty"></td><th>24</th><td class="replace"> public String Name; //EventCalendar</td></tr><tr><th></th><td class="empty"></td><th>25</th><td class="replace"> }</td></tr><tr><th></th><td class="empty"></td><th>26</th><td class="replace"> public static CodeCoverage parse(String json){</td></tr><tr><th></th><td class="empty"></td><th>27</th><td class="replace"> return (CodeCoverage) System.JSON.deserialize(json, CodeCoverage.class);</td></tr><tr><th></th><td class="empty"></td><th>28</th><td class="replace"> }</td></tr><tr><th>2</th><td class="equal"></td><th>29</th><td class="equal"></td></tr><tr><th>3</th><td class="replace">public CWB_Setup__c objSetup{get;set;}</td><th>30</th><td class="replace"> </td></tr><tr><th>4</th><td class="replace"></td><th></th><td class="empty"></td></tr><tr><th>5</th><td class="replace"></td><th></th><td class="empty"></td></tr><tr><th>6</th><td class="replace">public CWBSetupCtrl(){</td><th></th><td class="empty"></td></tr><tr><th>7</th><td class="replace"> objSetup=FieldSchemaUtil.getCustomSettingValue();&nbsp;&nbsp;&nbsp;&nbsp;</td><th></th><td class="empty"></td></tr><tr><th>8</th><td class="equal">}</td><th>31</th><td class="equal">}</td></tr><tr><th>9</th><td class="delete"></td><th></th><td class="empty"></td></tr><tr><th>10</th><td class="delete">public pagereference saveDetail(){</td><th></th><td class="empty"></td></tr><tr><th>11</th><td class="delete">&nbsp;&nbsp;&nbsp;&nbsp;upsert objSetup;</td><th></th><td class="empty"></td></tr><tr><th>12</th><td class="delete">&nbsp;&nbsp;&nbsp;&nbsp;ApexPages.addMessage(new ApexPages.message(ApexPages.SEVERITY.CONFIRM,'Updated successfully'));</td><th></th><td class="empty"></td></tr><tr><th>13</th><td class="delete">&nbsp;&nbsp;&nbsp;&nbsp;return null;</td><th></th><td class="empty"></td></tr><tr><th>14</th><td class="delete">}</td><th></th><td class="empty"></td></tr><tr><th>15</th><td class="delete"></td><th></th><td class="empty"></td></tr><tr><th>16</th><td class="delete"></td><th></th><td class="empty"></td></tr><tr><th>17</th><td class="delete"></td><th></th><td class="empty"></td></tr><tr><th>18</th><td class="delete"></td><th></th><td class="empty"></td></tr><tr><th>19</th><td class="delete">}</td><th></th><td class="empty"></td></tr></tbody></table>
+
+</apex:page>

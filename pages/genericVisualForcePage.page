@@ -1,0 +1,64 @@
+<apex:page Controller="genericControllerVFP" standardStylesheets="false" showHeader="false" sidebar="false" docType="html-5.0">
+  
+  <head>
+      <apex:includeScript value="/support/console/34.0/integration.js"/>
+      <!-- <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_assets, '/javascripts/vlocity.js')}"></script> -->
+      <script src="{!URLFOR($Resource.vlocity_cmt__vlocity_core_assets, '/latest/vlocity_core_assets.js')}"></script>
+      <script src="{!$Resource.vlocity_cmt__SldsAngular}"></script>
+  </head>
+  <body>
+    <div class="vlocity via-slds" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" ng-app="General">
+
+      <apex:form >
+          <apex:commandButton action="{!traerValor}" value="Traer Valor" rerender="rerend"></apex:commandButton>
+          <apex:commandButton action="{!setearValor}" value="Setear Valor"> </apex:commandButton>
+          
+          <apex:outputPanel id="rerend">
+              <apex:outputText value="{!valor}"/>
+          </apex:outputPanel>
+      </apex:form>
+
+        <!--<vlocity_cmt:BusinessProcessComponent strOmniScriptType="TechCare"
+                  strOmniScriptSubType="Diagnosis"
+                  strOmniScriptLang="Spanish"
+                  previewMode="{!$CurrentPage.parameters.previewEmbedded}"
+                  verticalMode="{!$CurrentPage.parameters.verticalMode}"
+                  strOmniScriptId="{!$CurrentPage.parameters.designerPreviewId}"
+                  scriptLayout="lightning"/>-->
+        
+        <script type="text/javascript">
+                  var modules = ['vlocity-business-process'];
+                  var myModule = angular.module('General', modules);
+                  
+                 myModule
+                      .controller('LinesController', LinesController);
+                      
+                      function LinesController() {
+                          var lc = this;
+      
+                          lc.testingMiracle = testingMiracle;
+                          lc.setearPalabra = setearPalabra;
+                          lc.getPalabra = getPalabra;
+                          
+                          function setearPalabra()
+                          {
+                              Visualforce.remoting.Manager.invokeAction(
+                                  "genericControllerVFP",
+                                  function(result, event) {
+                                      console.info(result);
+                                  },
+                                  {escape: false} // No escaping, please
+                              );
+                          }
+                          
+                          function getPalabra()
+                          {
+                              return 'alla';
+                          }
+                         
+
+                     }
+          </script>
+      </div>      
+    </body>
+</apex:page>

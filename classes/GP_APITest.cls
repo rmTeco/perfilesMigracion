@@ -2,6 +2,7 @@
 public with sharing class GP_APITest {
     
     /*
+    Test
     static testMethod void adherirUnSocioBulk() {
 
         Account cuenta = new Account();
