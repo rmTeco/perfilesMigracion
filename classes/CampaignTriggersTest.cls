@@ -8,8 +8,16 @@ public class CampaignTriggersTest {
         mktgCloudAPISettings.ClientId__c = '1234';
         mktgCloudAPISettings.ClientSecret__c = '4567';
         mktgCloudAPISettings.MktgAuthURL__c = 'https://auth.exacttargetapis.com/v1/requestToken';
+        mktgCloudAPISettings.TokenDuration__c = 3400;
+        mktgCloudAPISettings.TokenCreationDate__c = Datetime.now();
+        mktgCloudAPISettings.MCAPIAccessToken__c = '12345';        
         mktgCloudAPISettings = getMktgCloudAPISettings();
+        
+        
         insert mktgCloudAPISettings;
+        
+        Id usId = userinfo.getUserId();
+        TestDataFactory.setTeamMember('Test', usId, null);
         
         Test.setMock(HttpCalloutMock.class, new MktgCloudCalloutMock2()); 
         
@@ -21,7 +29,7 @@ public class CampaignTriggersTest {
             Campaign cp = new Campaign(Name = 'Test Campaign ' + i, Campaign_Type__c = 'Desarrollo',
                                        Campaign_Subtype__c = 'Fidelización', Campaign_Subtype_2__c = 'Club Personal', 
                                        Channel_Type__c  = 'OUT', Channel__c  = 'SMS', Campaign_Destiny__c = 'Masivo', Type = 'Desarrollo',
-                                       Destination__c = 'Masivo',SubtypeL1__c = 'Fidelización', SubtypeL2__c = 'Club Personal');
+                                       Destination__c = 'Masivo',SubtypeL1__c = 'Activ. Comercial', SubtypeL2__c = 'Cambio de Terminal');
             campaignList.add(cp);
         }
         
@@ -31,7 +39,7 @@ public class CampaignTriggersTest {
         endpoint2TestResp.put('https://www.exacttargetapis.com/hub/v1/campaigns', fakeCampaignResponse);
 
         HttpCalloutMock multiCalloutMock = new MktgCloudMultiCalloutMock(endpoint2TestResp);
- 		Test.setMock(HttpCalloutMock.class, multiCalloutMock);
+        Test.setMock(HttpCalloutMock.class, multiCalloutMock);
         
         Test.startTest();        
         Test.setMock(HttpCalloutMock.class, new MktgCloudCalloutCreateCampaignMock2());         
@@ -44,7 +52,7 @@ public class CampaignTriggersTest {
         public HttpResponse respond(HttpRequest req) {
             HttpResponse res = new HttpResponse();
             res.setHeader('Content-Type', 'application/json');
-            res.setBody('{"id":"1234"}');
+            res.setBody('{"id":"1234","accessToken":"1234567", "expiresIn": 3479}');
             res.setStatusCode(200);
             return res; 
         }
@@ -61,7 +69,7 @@ public class CampaignTriggersTest {
     }    
     
     public static SingleRequestMock mktgCloudCampaignResponse (){
-    	SingleRequestMock fakeCampaignResponse = new SingleRequestMock(200,
+        SingleRequestMock fakeCampaignResponse = new SingleRequestMock(200,
                                                          'Complete',
                                                          '{"id":"1234"}',
                                                          null);

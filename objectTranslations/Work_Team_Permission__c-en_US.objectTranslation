@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Work Team Permission</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Work Team Permissions</value>
+    </caseValues>
+    <fields>
+        <label><!-- Is Active --></label>
+        <name>Is_Active__c</name>
+    </fields>
+    <fields>
+        <label><!-- Permission Set API Name --></label>
+        <name>Permission_Set_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Queue API Name --></label>
+        <name>Queue_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Queue Function --></label>
+        <name>Queue_Function__c</name>
+        <picklistValues>
+            <masterLabel>Approver</masterLabel>
+            <translation><!-- Approver --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Case back office</masterLabel>
+            <translation><!-- Case back office --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Reviser</masterLabel>
+            <translation><!-- Reviser --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- Role API Name --></label>
+        <name>Role_API_Name__c</name>
+    </fields>
+    <fields>
+        <label><!-- Work Team --></label>
+        <name>Work_Team__c</name>
+        <relationshipLabel><!-- Work Team Permissions --></relationshipLabel>
+    </fields>
+    <recordTypes>
+        <description><!-- Used to configure the permission sets active by work team. --></description>
+        <label><!-- Permissions by work team --></label>
+        <name>Permissions_by_work_team</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Record type to configure the queues assigned by work team. --></description>
+        <label><!-- Queues by work team --></label>
+        <name>Queues_by_work_team</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to configure the user roles available for the work team. --></description>
+        <label><!-- Roles active by work team --></label>
+        <name>Roles_active_by_work_team</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -25,13 +25,13 @@
 
         vlocity_cmt__CalculationMatrix__c testMatrix = new vlocity_cmt__CalculationMatrix__c(name='PaymentDeliveryMethod');
         insert testMatrix;
-
         vlocity_cmt__CalculationMatrixVersion__c objVersion = new vlocity_cmt__CalculationMatrixVersion__c();
         objVersion.vlocity_cmt__VersionNumber__c = 1;
         objVersion.vlocity_cmt__IsEnabled__c = true;
         objVersion.Name = 'PaymentDeliveryMethod';
         objVersion.vlocity_cmt__CalculationMatrixId__c = testMatrix.id;
         insert objVersion;
+       
 
         vlocity_cmt__CalculationMatrixRow__c objCalculation = new vlocity_cmt__CalculationMatrixRow__c();
         objCalculation.vlocity_cmt__InputData__c = '{"MetodoEntrega":"Delivery","Canal":"Oficinas Comerciales"}';
@@ -375,6 +375,7 @@
         TestDataFactory.createPaymentAdjustments(1, accs[0], orders[0], objPaymentMethod, 0);
         TestDataFactory.createPaymentAdjustments(1, accs[0], orders[0], objPaymentMethodDesc, 0);
         TestDataFactory.createPaymentAdjustments(1, accs[0], orders[0], objPaymentMethodTj, 1);
+
         TestDataFactory.createPaymentAdjustments(1, accs[0], orders[0], TestDataFactory.createPaymentMethod(1, accs[0])[0], 0);
 
         options.put('accountId', accs[0].Id);
@@ -480,7 +481,7 @@
         Map<String, Object> options = new Map<String, Object>();
 
 
-        User u = TestDataFactory.createUser('TA - OFCOM Venta y Atencion a Clientes');
+        User u = TestDataFactory.createUser('System Administrator');
         System.runAs(u) {
 
             TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);

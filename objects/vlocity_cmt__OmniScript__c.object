@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>vlocity_cmt__AdditionalInformation__c</fullName>
         <deprecated>false</deprecated>
@@ -416,6 +417,12 @@
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
         <columns>NAME</columns>
+        <columns>vlocity_cmt__Type__c</columns>
+        <columns>vlocity_cmt__SubType__c</columns>
+        <columns>vlocity_cmt__IsReusable__c</columns>
+        <columns>vlocity_cmt__Language__c</columns>
+        <columns>vlocity_cmt__DataRaptorBundleId__c</columns>
+        <columns>vlocity_cmt__DataRaptorBundleName__c</columns>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>

@@ -33,7 +33,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>CloseDate</field>
+                <field>SCP_Certa_GC__fecha_probable_de_venta__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
@@ -54,16 +54,16 @@
                 <field>SCP_Certa_GC__Probabilidad__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SCP_Certa_GC__fecha_probable_de_venta__c</field>
+                <behavior>Required</behavior>
+                <field>CloseDate</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>SCP_Certa_GC__TMI__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SCP_Certa_GC__Fecha_comprometida_instalaci_n__c</field>
+                <behavior>Readonly</behavior>
+                <field>SCP_Certa_GC__Fecha_comprometida_instalaci_n_formula__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -76,14 +76,14 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Type</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>SCP_Certa_GC__Estado_de_la_oportunidad__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Type</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>OwnerId</field>
             </layoutItems>
             <layoutItems>
@@ -91,7 +91,7 @@
                 <field>Description</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Probability</field>
             </layoutItems>
         </layoutColumns>
@@ -135,7 +135,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SCP_Certa_GC__Total_CUV_ARG__c</field>
+                <field>SCP_Certa_GC__Total_CUV_ARG_resumen__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -157,7 +157,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SCP_Certa_GC__Total_CUV_USD__c</field>
+                <field>SCP_Certa_GC__Total_CUV_USD_resumen__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -275,8 +275,12 @@
         <fields>SCP_Certa_GC__Plazo__c</fields>
         <fields>SCP_Certa_GC__Total_Mes_por_Plazo__c</fields>
         <fields>SCP_Certa_GC__Cargo_unica_vez__c</fields>
+        <fields>SCP_Certa_GC__Cargo_por_unica_vez_total__c</fields>
         <fields>SCP_Certa_GC__FCV__c</fields>
         <relatedList>RelatedLineItemList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedContactRoleList</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>FULL_NAME</fields>

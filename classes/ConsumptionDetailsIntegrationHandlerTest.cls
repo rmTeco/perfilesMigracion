@@ -105,4 +105,30 @@ public class ConsumptionDetailsIntegrationHandlerTest {
 		system.assertEquals('Internet',t2);
 		*/
     }
+    
+    @IsTest static void TestDiferentDates(){
+        
+        String methodName = 'filterDataByFamily';
+
+        Map<String, Object> input = new Map<String, Object>();
+        Map<String, Object> outMap = new Map<String, Object>();
+        Map<String, Object> options = new Map<String, Object>();
+        
+        input.put('serviceFamily', 'Internet');
+		input.put('startDateFilter','20080101');
+		input.put('endDateFilter','20180101');
+        input.put('CustomerIntegrationId','318987');
+        input.put('facturaFilter','Febrero');
+        input.put('filterOption','');
+        
+        ConsumptionDetailsIntegrationHandler consumptionhandler = new ConsumptionDetailsIntegrationHandler();
+        
+        Test.startTest();
+        ConsumptionDetailsIntegrationHandler.CodigoAccesoWrapper lala = New ConsumptionDetailsIntegrationHandler.CodigoAccesoWrapper('1','1');
+        consumptionhandler.invokeMethod(methodName, input, outMap, options);
+		Test.stopTest();
+        
+		system.assertEquals('Internet',input.get('serviceFamily'));
+
+    }
 }

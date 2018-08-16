@@ -37,8 +37,8 @@
         <entryCriteria>
             <formula>AND(
  !ISBLANK(Summary)
-,KB_AssignedCategory__c 
-,KB_AssignedTopic__c 
+,KB_AssignedCategory__c
+,KB_AssignedTopic__c
 )</formula>
         </entryCriteria>
         <ifCriteriaNotMet>RejectRecord</ifCriteriaNotMet>
@@ -50,7 +50,7 @@
         <criteriaItems>
             <field>KB_Article__kav.PublishStatus</field>
             <operation>equals</operation>
-            <value>Borrador</value>
+            <value>Draft</value>
         </criteriaItems>
     </entryCriteria>
     <finalApprovalActions>

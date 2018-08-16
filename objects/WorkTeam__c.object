@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>AmountOfActiveChildTeams__c</fullName>
         <description>Summary with the amount of child teams related to the work team.</description>
@@ -208,10 +209,12 @@ Used to control the synchronization between this 2 objects.</description>
     </fields>
     <label>Work Team</label>
     <listViews>
-        <fullName>All1</fullName>
+        <fullName>All</fullName>
         <columns>NAME</columns>
+        <columns>Work_Place__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>es</language>
     </listViews>
     <listViews>
         <fullName>buscar_equipo</fullName>
@@ -222,9 +225,9 @@ Used to control the synchronization between this 2 objects.</description>
         <columns>Work_Place__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Team_Name__c</field>
+            <field>Work_Place__c</field>
             <operation>contains</operation>
-            <value>Age</value>
+            <value>blue</value>
         </filters>
         <label>buscar equipo</label>
         <language>en_US</language>

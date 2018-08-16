@@ -100,9 +100,6 @@ public class taSalesAnnulmentHandlerTest
   
   @isTest static void ReturnSerialsToStockCEG()
   {
-    String mockResponse = '{"listaResultado":[{"mensajeResultado": "OK","codigoResultado": "0","numeroSerie": "99543410307677114097"}],"codigoResultado": "OK"}';
-    VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S105', mockResponse);
-
     Map<String, Object> inputMap = new Map<String, Object>();
     Map<String, Object> outMap = new Map<String, Object>();
     Map<String, Object> options = new Map<String, Object>();

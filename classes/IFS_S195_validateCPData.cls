@@ -1,6 +1,9 @@
 @RestResource(urlMapping='/v1/integrationprocedure/CustomerCare_CP_validateCPDiscount/*')
 global with sharing class IFS_S195_validateCPData {
 
+    private static boolean K_DEBUG_ON = true;    //-- Enable / Disable Class Debug Mode.
+    private static String guId = null;
+
     @HttpGet
     global static void getData() {
         RestRequest req = RestContext.request;
@@ -13,6 +16,8 @@ global with sharing class IFS_S195_validateCPData {
             res.statuscode = 200;
             String nroLinea = req.requestURI.substring(req.requestURI.lastIndexOf('/')+1);
 
+            writeLog ('REQ', req.requestURI);
+
             // Validaciones de requeridos
             if (string.isBlank(nroLinea)) {
                 throw new CalloutException('Error: El número de línea es requerido');
@@ -21,10 +26,29 @@ global with sharing class IFS_S195_validateCPData {
             result1.put('validateCPData',getDataAsociado(nroLinea));
             res.responseBody = Blob.valueOf(JSON.serialize(result1));
 
+            writeLog ('RES', res.statuscode + ';' + JSON.serialize(result1));
         }
         catch(Exception e){
             res.statuscode = 417;
             res.responseBody = Blob.valueOf(JSON.serialize(getRespuestaNoOk('417',e.getMessage())));
+            writeLog ('RES', res.statuscode + ';' + getRespuestaNoOk('417',e.getMessage()));
+        }
+    }
+
+    /**
+     * Wrapper del IFS_LogRecord.record
+     */
+    private static void writeLog (String pTipo, String pDatos) {
+        printDebug('Entre en writeLog - pTipo --> ' + pTipo + ' - pDatos --> ' + pDatos);
+        DateTime dt = DateTime.now();
+        String dts = dt.format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'');
+
+        if (pTipo == 'REQ') {
+            guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
+            //IFS_LogRecord.record(dts, 'SERVICIO', 'S195', guId, pTipo, pDatos, '');  
+        }
+        else {
+            //IFS_LogRecord.record(dts, 'SERVICIO', 'S195', guId, pTipo, '', pDatos);  
         }
     }
 
@@ -114,7 +138,7 @@ global with sharing class IFS_S195_validateCPData {
         try {
             Product2 producto = [SELECT vlocity_cmt__Type__c, vlocity_cmt__SubType__c, Family, vlocity_cmt__JSONAttribute__c FROM Product2  WHERE Id = :pProduct2Id];
             if (producto != null) {
-                List<String> jsonAttribute = getFormaPago (producto.vlocity_cmt__JSONAttribute__c);
+                // List<String> jsonAttribute = getFormaPago (producto.vlocity_cmt__JSONAttribute__c);
                 lSegmento = getFormaPago(producto.vlocity_cmt__JSONAttribute__c);
 
                 System.debug('Sali de getformaPago---> lSegmento: ' + lSegmento );
@@ -182,6 +206,15 @@ global with sharing class IFS_S195_validateCPData {
     }
 
 
+    /**
+     * @Objetivo: Wrapper del System.debug que permite 
+     *            setearle si imprime o no.
+     */
+    private static void printDebug(String pMensaje) {
+        if (K_DEBUG_ON) {
+            System.debug(pMensaje);
+        }
+    }
 
  
     public class ToJSON_1 {

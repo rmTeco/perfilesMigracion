@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>vlocity_cmt__ConsoleAdminSearch</fullName>
         <description>EPC Console Admin Search</description>
@@ -402,8 +403,14 @@
     <label>Vlocity Entity Filter</label>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
+        <columns>NAME</columns>
+        <columns>vlocity_cmt__IsActive__c</columns>
+        <columns>vlocity_cmt__Code__c</columns>
+        <columns>vlocity_cmt__Type__c</columns>
+        <columns>vlocity_cmt__EvaluationCriteria__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <label>Entity Filter Name</label>

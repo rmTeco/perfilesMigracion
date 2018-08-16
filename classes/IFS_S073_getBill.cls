@@ -28,21 +28,13 @@ global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInt
      */
     private Map<String, Object> getBill (Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {
 
-        if (inputMap == null || inputMap.isEmpty()) {
-            //-- Si el inputMap viene nulo o vacio asumo que es una corrida de prueba.
-            
-            System.debug('InputMap vino vacio se genera inputMap con datos de prueba.');
-            inputMap = new Map<String, Object>();
-            inputMap.put('database', 'facturaciclica');
-            inputMap.put('usuario', 'DESARROLLO');
-            inputMap.put('password', 'DESARROLLO');
-            inputMap.put('nroCuenta', '0000017607');
-            inputMap.put('fechaEmision', '2017-11-30 00:00:00'); 
-        }
 
         System.debug('InputMap recibido --> ' +  inputMap);
 
         try {
+            if (inputMap == null || inputMap.isEmpty()) {
+                throw new CalloutException('El inputMap vino vacio o nulo.');
+            }
             String body = JSON.serialize(inputMap);
             if (outMap == null) {
                 outMap = new Map<String, Object>();
@@ -53,6 +45,7 @@ global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInt
                 return (Map<String, Object>)JSON.deserializeUntyped(response.getBody());
             }
             else {
+                HttpResponse response = makeCallout(body);
                 if (inputMap != null && inputMap.containsKey('Request')) {
                     Map<String, Object> request = (Map<String, Object>)inputMap.get('Request');
                     if (!request.containsKey('database')) {
@@ -104,9 +97,14 @@ global with sharing class IFS_S073_getBill implements vlocity_cmt.VlocityOpenInt
             request.setMethod('POST');
             request.setEndpoint(endpoint.endpoint__c);
             request.setBody(body);
-            //String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
-            //request.setHeader('Authorization', authorizationHeader);
-            return http.send(request);
+            if (!Test.isRunningTest()) {
+                String authorizationHeader = IFS_AuthorizationHeader.giveHeader();
+                request.setHeader('Authorization', authorizationHeader);
+                return http.send(request);
+            }
+            else {
+                return null;
+            }                
         }
         catch (Exception e) {
             throw new CalloutException(e);

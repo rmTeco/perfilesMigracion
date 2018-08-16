@@ -35,8 +35,8 @@ public class MockupFactory {
         productsList.add(new Product2(Name = 'Simcard', Description = 'Simcard', Tangible__c = true,Marca__c = 'TELECOM Personal',Family = 'Movil', vlocity_cmt__Type__c = 'Simcard', NMU__c = 'PEPE', vlocity_cmt__JSONAttribute__c = getJsonAttributesSimcard()));
         productsList.add(new Product2(Name = 'Simcard2', Description = 'Simcard2', Tangible__c = true,Marca__c = 'TELECOM Personal',Family = 'Movil', vlocity_cmt__Type__c = 'Simcard', NMU__c = 'PEPE', vlocity_cmt__JSONAttribute__c = getJsonAttributesSimcard()));
         productsList.add(new Product2(Name = 'Mate 9 Lite Messi - Dorado', Tangible__c = true,Marca__c = 'SAMSUNG',Description = 'Mate 9 Lite Messi - Dorado',Family = 'Movil', vlocity_cmt__Type__c = 'Dispositivo', NMU__c = 'BSI0A76AK', vlocity_cmt__JSONAttribute__c = getJsonAttributesMate9()));
-        productsList.add(new Product2(Name = 'Plan con tarjeta', Description = 'Plan con tarjeta', Tangible__c = false,Marca__c = 'TELECOM Personal',Family = 'Prepaid', vlocity_cmt__Type__c = 'Plan Prepago', NMU__c = 'PREPAGO'));
-        productsList.add(new Product2(Name = 'Banda Ancha', Description = 'Banda Ancha', Tangible__c = false,Marca__c = 'TELECOM Personal',Family = 'Internet', NMU__c = 'PEPE2'));
+        productsList.add(new Product2(Name = 'Plan con tarjeta', Description = 'Plan con tarjeta', Tangible__c = false,Marca__c = 'TELECOM Personal',Family = 'Prepaid', vlocity_cmt__Type__c = 'Plan Prepago', NMU__c = 'PEPE'));
+        productsList.add(new Product2(Name = 'Banda Ancha', Description = 'Banda Ancha', Tangible__c = false,Marca__c = 'TELECOM Personal',Family = 'Internet', NMU__c = 'PEPE'));
         insert productsList;
 
         vlocity_cmt__VlocityAttachment__c formsUrls = new vlocity_cmt__VlocityAttachment__c(vlocity_cmt__ObjectId__c = productsList.get(3).Id, vlocity_cmt__UrlLong__c = 'http://www.teco.com/terminosycondiciones.pdf');
@@ -92,10 +92,10 @@ public class MockupFactory {
         insert paymentAdjust;
         
         List<OrderItem> ordItemList = new List<OrderItem>();
-        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(0).Id, Quantity = 10, PricebookEntryId = standardPrice1.Id, UnitPrice = 100, vlocity_cmt__JSONAttribute__c = productsList.get(0).vlocity_cmt__JSONAttribute__c, vlocity_cmt__Action__c = 'Add'));
-        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(1).Id, Quantity = 5, PricebookEntryId = standardPrice2.Id, UnitPrice = 10, vlocity_cmt__JSONAttribute__c = productsList.get(1).vlocity_cmt__JSONAttribute__c, vlocity_cmt__Action__c = 'Add'));
-        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(2).Id, Quantity = 5, PricebookEntryId = standardPrice3.Id, UnitPrice = 10, vlocity_cmt__JSONAttribute__c = productsList.get(2).vlocity_cmt__JSONAttribute__c, vlocity_cmt__Action__c = 'Add'));
-        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(3).Id, Quantity = 5, PricebookEntryId = standardPrice4.Id, UnitPrice = 10, vlocity_cmt__Action__c = 'Add'));
+        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(0).Id, Quantity = 10, PricebookEntryId = standardPrice1.Id, UnitPrice = 100, vlocity_cmt__JSONAttribute__c = productsList.get(0).vlocity_cmt__JSONAttribute__c));
+        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(1).Id, Quantity = 5, PricebookEntryId = standardPrice2.Id, UnitPrice = 10, vlocity_cmt__JSONAttribute__c = productsList.get(1).vlocity_cmt__JSONAttribute__c));
+        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(2).Id, Quantity = 5, PricebookEntryId = standardPrice3.Id, UnitPrice = 10, vlocity_cmt__JSONAttribute__c = productsList.get(2).vlocity_cmt__JSONAttribute__c));
+        ordItemList.add(new OrderItem(OrderId = order.Id, Product2Id = productsList.get(3).Id, Quantity = 5, PricebookEntryId = standardPrice4.Id, UnitPrice = 10));
         insert ordItemList;
 
         Location__c loc = new Location__c(Name = 'test1', DepartmentCode__c = 'Cod', LocationCode__c = 'Test1', StateCode__c ='B', Status__c = true);

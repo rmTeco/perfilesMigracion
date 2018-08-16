@@ -186,16 +186,17 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
         {
             List<OrderItem> orderItems = taOrderController.GetOrderSerials(orderId);
             Order originOrder = [Select id, OriginStoreLocation__r.AssociatedWarehouseId__c from Order where id = : orderId];
-
-            Map<String,Object> serialNumbersToMove = new Map<String,Object>();
+            
+            Map<String,String> returnedSerialNumbers = new Map<String,String>();
             for(OrderItem item : orderItems){
                 if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard'))
                 {
-                    taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACION, INSTANCE_ANULAR_VENTA, item.FromStock__c, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    returnedSerialNumbers.put(item.vlocity_cmt__SerialNumber__c, item.FromStock__c);
                 }
             }
-            if (serialNumbersToMove.KeySet().size() > 0)
-                taOrderController.MoveSerialsStock(serialNumbersToMove);
+            if (!Test.isRunningTest())
+                if (returnedSerialNumbers.KeySet().size() > 0)
+                    taOrderController.MoveSerialsStock(OPERATION_TYPE_ANULACION,INSTANCE_ANULAR_VENTA, returnedSerialNumbers, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
         }
         catch(Exception e)
         {
@@ -226,29 +227,53 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
     {
         try
         {
-            List<OrderItem> orderItems = taOrderController.GetCEGOrderSerials(orderId);
-
-            Map<String,Object> serialNumbersToMove = new Map<String,Object>();
-
+            List<OrderItem> orderItems = taOrderController.GetOrderSerials(orderId);
+            
+            Map<String,String> returnedSerialNumbers = new Map<String,String>();
+            Map<String,String> serialNumbersForReturn = new Map<String,String>();
+            
             Order originOrder = [Select id, OriginStoreLocation__r.AssociatedWarehouseId__c from Order where id = : orderId];
             
             for(OrderItem item : orderItems){
                 if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard') && (item.vlocity_cmt__Action__c == 'Disconnect'))
                 {
-                    taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACIONCEG, INSTANCE_ANULAR_DEVOLUCION, null, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    serialNumbersForReturn.put(item.vlocity_cmt__SerialNumber__c, null);
                 }
                 if (string.isNotBlank(item.vlocity_cmt__SerialNumber__c) && (item.Product2.vlocity_cmt__Type__c != 'Simcard') && (item.vlocity_cmt__Action__c == 'Add'))
                 {
-                    taOrderController.addSerialToMove(serialNumbersToMove, item.vlocity_cmt__SerialNumber__c, OPERATION_TYPE_ANULACION, INSTANCE_ANULAR_VENTA, item.FromStock__c, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    returnedSerialNumbers.put(item.vlocity_cmt__SerialNumber__c, item.FromStock__c);
+                    
                 }
             }
-
-            if (serialNumbersToMove.KeySet().size() > 0)
-            {
-                taOrderController.MoveSerialsStock(serialNumbersToMove);
-            }
-
-        }
+            
+            /*Map<String,Object> mapaANUL = new Map<String,Object>();
+            
+            mapaANUL.put('serialesANUL', returnedSerialNumbers);
+            mapaANUL.put('operationType', OPERATION_TYPE_ANULACION);
+            mapaANUL.put('instanceAnulacion', INSTANCE_ANULAR_VENTA);
+            mapaANUL.put('codDepositoCliente',STOCK_MOVEMENT_CODDEPOSITO_CLIENTE);
+            
+            outMap.put('MovStockAnulacionVenta',mapaANUL);
+            
+            
+            Map<String,Object> mapaANUG = new Map<String,Object>();
+            
+            mapaANUG.put('serialesANUL', serialNumbersForReturn);
+            mapaANUG.put('operationType', OPERATION_TYPE_ANULACIONCEG);
+            mapaANUG.put('instanceAnulacion', INSTANCE_ANULAR_DEVOLUCION);
+            mapaANUG.put('codDepositoCliente', originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c);
+            
+            outMap.put('MovStockAnulacionCEG',mapaANUG);
+            */
+            
+            if (!Test.isRunningTest())
+                if (returnedSerialNumbers.KeySet().size() > 0 && serialNumbersForReturn.KeySet().size() > 0){
+                    taOrderController.MoveSerialsStock(OPERATION_TYPE_ANULACION, INSTANCE_ANULAR_VENTA, returnedSerialNumbers, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    taOrderController.MoveSerialsStock(OPERATION_TYPE_ANULACIONCEG, INSTANCE_ANULAR_DEVOLUCION, serialNumbersForReturn, originOrder.OriginStoreLocation__r.AssociatedWarehouseId__c, STOCK_MOVEMENT_NO_APLICA);
+                    
+                    
+                    
+        }}
         catch(Exception e)
         {
             System.debug('Exception Msg: ' + e.getMessage());
@@ -285,7 +310,7 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
     {
         String orderId = String.valueOf(options.get('OrderId'));
 
-        Map<String, Object> response = taOrderController.call_S457_Hot_Invoice_Rollback(orderId);
+        Map<String, Object> response = call_S457_Hot_Invoice_Rollback(orderId);
 
         outMap.put('IPResult', response.get('IPResult'));
     }
@@ -541,6 +566,43 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
         // //     account.HuaweiNotice_S202__c = true;
         // //     update account;
         // // }
+        // Map<String, Object> outMap = new Map<String, Object>();
+        // outMap.put('IPResult', response);
+
+        return output;
+    }
+
+    public static Map<String, Object> call_S457_Hot_Invoice_Rollback(String orderId)
+    {
+        Order order = [
+            SELECT
+                PreInvoiceNumber__c,
+                Account.AccountIntegrationId__c
+            FROM Order
+            WHERE Id = :orderId
+        ];
+
+        Map<String, Object> request = new Map<String, Object>();
+
+        Map<String, Object> anularFacturaPeticion = new Map<String, Object>();
+        anularFacturaPeticion.put('numeroComprobante', order.PreInvoiceNumber__c);
+
+        Map<String, Object> codAcceso = new Map<String, Object>();
+        Map<String, Object> codAccesoCuenta = new Map<String, Object>();
+        codAccesoCuenta.put('idCuenta', order.Account.AccountIntegrationId__c);
+        codAcceso.put('codAccesoCuenta', codAccesoCuenta);
+        anularFacturaPeticion.put('codAcceso', codAcceso);
+
+        request.put('anularFacturaPeticion', anularFacturaPeticion);
+
+        Map<String, Object> input = request;
+        Map<String, Object> output = new Map<String, Object>();
+        Map<String, Object> options = new Map<String, Object>();
+        vlocity_cmt.IntegrationProcedureService integProcService = new vlocity_cmt.IntegrationProcedureService();
+        integProcService.invokeMethod('IFS_S457', input, output, options);
+
+        // Map<String, Object> response = (Map<String, Object>)output.get('IPResult');
+
         // Map<String, Object> outMap = new Map<String, Object>();
         // outMap.put('IPResult', response);
 
@@ -823,9 +885,9 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
             String orderId = String.valueOf(options.get('OrderId'));
             Order ord = [Select Id, Delivery_Method__c From Order Where Id = :orderId];
             if(ord.Delivery_Method__c == 'Store Pick Up'){
-                StoreLocationValidation = permiso;
+	            StoreLocationValidation = permiso;
             }else{
-                StoreLocationValidation = true;
+	            StoreLocationValidation = true;
             }
             outMap.put('StoreLocationValidation', StoreLocationValidation);
     }
@@ -917,7 +979,7 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
             outMap.put('orderCEG',orderCEG);
     }
     
-   // Se agrego el Is_Active__c en la consulta del WorkTeam__c y de Team_Member__c- Bug PFTA-11703
+    
     public Boolean ValidatePuntoDeVenta(Id orderId, Id annulmentOrderId,  Map<String,Object> outMap) {
 
       Boolean punto;
@@ -930,7 +992,7 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
       
       if (!Test.isRunningTest()){
       userStore = [SELECT Id, Name, Channel__c, Channel_Type__c, Channel_Type_2__c, Channel_Type_3__c FROM vlocity_cmt__BusinessSite__c WHERE Id = :[SELECT Id, Work_Place__c
-                                                FROM WorkTeam__c WHERE Is_Active__c = true AND Id = :[SELECT Id, Work_Team__c FROM Team_Member__c WHERE Is_Active__c = true AND User_member__c = :UserInfo.getUserId()].Work_Team__c].Work_Place__c];
+                                                FROM WorkTeam__c WHERE Id = :[SELECT Id, Work_Team__c FROM Team_Member__c WHERE User_member__c = :UserInfo.getUserId()].Work_Team__c].Work_Place__c];
       }
       
       if (Test.isRunningTest()){
@@ -977,7 +1039,7 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
     }
     //PFTA-8520
     
-    // Se agrego el Is_Active__c en la consulta del WorkTeam__c y de Team_Member__c- Bug PFTA-11703
+
     public void ValidateAnnulmentChannel(Map<String,Object> inputMap, Map<String, Object> outMap, Map<String, Object> options)
     {
         try
@@ -999,9 +1061,9 @@ global with sharing class taSalesAnnulmentHandler implements vlocity_cmt.Vlocity
                                                         FROM vlocity_cmt__BusinessSite__c
                                                     WHERE Id = :[SELECT Id, Work_Place__c
                                                                     FROM WorkTeam__c
-                                                                    WHERE Is_Active__c = true AND Id = :[SELECT Id, Work_Team__c
+                                                                    WHERE Id = :[SELECT Id, Work_Team__c
                                                                                     FROM Team_Member__c
-                                                                                WHERE Is_Active__c = true AND User_member__c = :UserInfo.getUserId()].Work_Team__c
+                                                                                WHERE User_member__c = :UserInfo.getUserId()].Work_Team__c
                                                                     ].Work_Place__c];
 
             system.debug('userStore =====> '+userStore);

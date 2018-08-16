@@ -33,7 +33,7 @@ global with sharing class ta_care_querySOSRefillsHelper implements vlocity_cmt.V
         System.debug('result new_' + codSubcript);
         Map<String, Object> codAcces = (Map<String,Object>) bodyNewMap.get('codigoAcceso');
         
-        codAcces.put('identificadorRecurso', codSubcript);
+        codAcces.put('codSuscripcion', codSubcript);
         
         bodyNewMap.put('codigoAcceso',codAcces);
         //bodyNewMap.put('fechaDesde', Date.today() - 3 );
@@ -49,33 +49,42 @@ global with sharing class ta_care_querySOSRefillsHelper implements vlocity_cmt.V
         }        
         System.debug('Answer S440: ' + outMap);
         Map<String, Object> result = (Map<String, Object>)outMap.get('IPResult');
-        Map<String, Object> resultChild2  = (Map<String, Object>) result.get('result');
+       // Map<String, Object> resultChild2  = (Map<String, Object>) result.get('result');
         System.debug('result init-- ' + result );
-        if(resultChild2 != null && resultChild2.get('detalle') != null){
+        if((result != null && result.get('detalle') != null)){
             
-            Map<String, Object> objectNewResult = new Map<String, Object>();
             result.put('codError', '201');
-            result.put('descError', 'msg');
+            result.put('descError', 'msg');      
+            Map<String, Object> objectNewResult = new Map<String, Object>();
             objectNewResult.put('listaDetallePrestamo', result);
             outMap.put('IPResult',objectNewResult);
+            
         }else{
             List<Object> refillsSOS = (List<Object>)result.get('listaDetallePrestamo');
-            List<Object> Payments = (List<Object>)result.get('listaDetalleReembolso');
-            List<Object> refillsSOS2 = new List<Object>();
-            for (Object r : refillsSOS){
-                Map<String, Object> rMap = (Map<String, Object>)r;
-                rMap.put('estado', estados.get((string)rMap.get('estadoPrestamoAdq')));
-                for (Object p : Payments){
-                    Map<String, Object> pMap = (Map<String, Object>)p;
-                    if (rMap.get('fechaAltaProductoAdq').equals(pMap.get('fechaAltaProductoAdq'))){
-                        rMap.put('fechaPago', pMap.get('fechaPago'));
-                        break;
+            if(refillsSOS.isEmpty()){
+              result.put('codError', '201');
+              result.put('descError', 'NO DATA');  
+              Map<String, Object> objectNewResult = new Map<String, Object>();
+              objectNewResult.put('listaDetallePrestamo', result);
+              outMap.put('IPResult',objectNewResult);
+            }else{
+                List<Object> Payments = (List<Object>)result.get('listaDetalleReembolso');
+                List<Object> refillsSOS2 = new List<Object>();
+                for (Object r : refillsSOS){
+                    Map<String, Object> rMap = (Map<String, Object>)r;
+                    rMap.put('estado', estados.get((string)rMap.get('estadoPrestamoAdq')));
+                    for (Object p : Payments){
+                        Map<String, Object> pMap = (Map<String, Object>)p;
+                        if (rMap.get('fechaAltaProductoAdq').equals(pMap.get('fechaAltaProductoAdq'))){
+                            rMap.put('fechaPago', pMap.get('fechaPago'));
+                            break;
+                        }
                     }
+                    refillsSOS2.add(rMap);
                 }
-                refillsSOS2.add(rMap);
+                result.put('listaDetallePrestamo', refillsSOS2);
+                outMap.put('IPResult', result);
             }
-            result.put('listaDetallePrestamo', refillsSOS2);
-            outMap.put('IPResult', result);
             System.debug(outMap);
         }        
     }
@@ -86,62 +95,66 @@ global with sharing class ta_care_querySOSRefillsHelper implements vlocity_cmt.V
         vlocity_cmt.IntegrationProcedureService integProcServ = new vlocity_cmt.IntegrationProcedureService();
         
          // ***** *****  BUG  PFTA-10332 *********************** ////////////
-        Map<String, Object> bodyNewMap = (Map<String,Object>) inputMap.get('body');
         String codSubcript = (String) inputMap.get('codSubcript');  
         System.debug('result new_' + codSubcript);
-        Map<String, Object> codAcces = (Map<String,Object>) bodyNewMap.get('codigoAcceso');
         
-        codAcces.put('identificadorRecurso', codSubcript);
+        Date dateFrom = Date.today() - 5;
+        Date dateUntil = Date.today();
+        String dateFromString = string.valueOf(dateFrom)+' 00:00:00';
+        String dateUntilString = string.valueOf(dateUntil)+' 00:00:00';
+        System.debug('fechasss_' + dateFromString +'__-' + dateUntilString);
         
-        bodyNewMap.put('codigoAcceso',codAcces);
-        bodyNewMap.put('fechaDesde', Date.today() - 5 );
-        bodyNewMap.put('fechaHasta', Date.today());
         
-        inputMap.put('body',bodyNewMap );
-        System.debug('New Data' + inputMap);
+        Map<String, Object> bodyMap = new Map<String, Object>();
+        Map<String, Object> bodyNew2 = new Map<String, Object>();
+        bodyMap.put('body',bodyNew2);
+        Map<String, Object>  codigoAcceso = new Map<String, Object>();
+        codigoAcceso.put('codSuscripcion',codSubcript);
+        
+        Map<String, Object> other = (Map<String, Object>) bodyMap.get('body');     
+        other.put('cantidadItemsConsulta', '2');
+        other.put('cantidadMaxConsulta', '3');
+        other.put('codigoAcceso',codigoAcceso);
+        other.put('fechaDesde', dateFromString);
+        other.put('fechaHasta', dateUntilString);
+        other.put('referenciaItemPaginado', '0');
+ 
+        System.debug('New Data_s139' + bodyMap);
         //*******************  --------  **************** ///////
         
         // Getting S139 data from IP
         if(!Test.isRunningTest()){
-            integProcServ.invokeMethod('IFS_S139', inputMap, outMap, options);           
+            integProcServ.invokeMethod('IFS_S139', bodyMap, outMap, options);           
         }        
         System.debug('Answer S139' + outMap);
         
         Map<String, Object> result = (Map<String, Object>)outMap.get('IPResult');
-        Map<String, Object> resultChild2  = (Map<String, Object>) result.get('result');
-        System.debug('result init--_' + resultChild2 );
+       // Map<String, Object> resultChild2  = (Map<String, Object>) result.get('result');
+        System.debug('result init--_' + result );
         
-        if(resultChild2 != null && resultChild2.get('detalle') != null){
+        if((result != null && result.get('detalle') != null)){
             
-            Map<String, Object> objectNewResult = new Map<String, Object>();
-            Map<String, Object> objectchildResult = new Map<String, Object>();
             result.put('codError', '201');
-            result.put('descError', 'msg');
-            objectNewResult.put('detalleDeMovimientosLista',objectchildResult);
-            Map<String, Object> objectchild2Result = (Map<String, Object>)objectNewResult.get('detalleDeMovimientosLista');
-            // System.debug('objectchild2Result --' + objectchild2Result);
-            objectchild2Result.put('elementoDetalleDeMovimientos',result);
-            System.debug('objectNewResult_-' + objectNewResult );
+            result.put('descError', 'msg');      
+            Map<String, Object> objectNewResult = new Map<String, Object>();
+            objectNewResult.put('detalleDeMovimientosLista', result);
             outMap.put('IPResult',objectNewResult);
-            
+   
         }else{
-            Map<String, Object> refillsHistory = (Map<String, Object>)result.get('detalleDeMovimientosLista');
-            List<Object> detailMov =  (List<Object>) refillsHistory.get('elementoDetalleDeMovimientos');
-            System.debug('detailMov__' + detailMov);
-            List<Object> refillsHistory2 = new List<Object>();
-            //List<Object> detailUnidd = new List<Object>();
-            for (Object rd : detailMov){
-                refillsHistory2.add(rd);
-               /* List<Object> listDetail = (List<Object>) rd.get('promocionTasadaLista');
-                for (Object dd : listDetail ){
-                    detailUnidd.add(dd);
-                }*/
-            }
-            System.debug('refillsHistory2_'+ refillsHistory2);
-            //System.debug('detailUnidd__' + detailUnidd);
-            result.put('elementoDetalleDeMovimientos', refillsHistory2);
-            outMap.put('IPResult', result);
-            System.debug(outMap);     
+            Map<String, Object> detailMovi = (Map<String, Object>) result.get('detalleDeMovimientosLista');
+            List<Object> elementDetailMov =  (List<Object>) detailMovi.get('elementoDetalleDeMovimientos');
+            System.debug('elementDetailMov -' + elementDetailMov  );
+            if(elementDetailMov.isEmpty()){
+              result.put('codError', '201');
+              result.put('descError', 'NO DATA');  
+              Map<String, Object> objectNewResult = new Map<String, Object>();
+              objectNewResult.put('detalleDeMovimientosLista', result);
+              outMap.put('IPResult',objectNewResult);
+            }else{
+                result.put('detalleDeMovimientosLista',elementDetailMov);
+                outMap.put('IPResult', result);
+                System.debug(outMap);
+            }     
         } 
     } 
     

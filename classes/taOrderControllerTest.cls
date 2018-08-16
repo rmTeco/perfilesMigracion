@@ -1,13 +1,8 @@
 @isTest
     public class taOrderControllerTest
     {
-        @isTest
-        static void testCancelarOrden()
+        static testmethod void testCancelarOrden()
         {
-            String mockResponse = '{"listaResultado":[{"mensajeResultado": "OK","codigoResultado": "0","numeroSerie": "99543410307677114097"}],"codigoResultado": "OK"}';
-            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S105', mockResponse);
-            mockResponse = '{"listaResultado": [],"descripcionResultado": "Liberacion Exitosa","codigoResultado": "OK"}';
-            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S101', mockResponse);
             MockupFactory.generate();
             vlocity_cmt__PriceList__c objPrice = [select Name, vlocity_cmt__Code__c, Id from vlocity_cmt__PriceList__c limit 1];
             Order objOrder = new Order();
@@ -28,9 +23,7 @@
                 String temp = classOrCo.valor;
             Test.stopTest();
         }
-
-        @isTest
-        static void testOrden1()
+        static testmethod void testOrden1()
         {
             List<Account> AccList = TestDataFactory.createAccounts(1, 'Consumer');
             Id idRecordType = Schema.SObjectType.vlocity_cmt__BusinessSite__c.getRecordTypeInfosByName().get('Punto de venta OC').getRecordTypeId();
@@ -162,17 +155,9 @@
                 TaOrderController.GetCardsByBank('1');
             test.stopTest();
         }
-
-        @isTest
-        static void testOrder2()
+        static testmethod void testOrder2()
         {
-            String mockResponse = '{"listaResultado":[{"mensajeResultado": "OK","codigoResultado": "0","numeroSerie": "99543410307677114097"}],"codigoResultado": "OK"}';
-            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S105', mockResponse);
-
-            mockResponse = '{"listaResultado": [],"descripcionResultado": "Liberacion Exitosa","codigoResultado": "OK"}';
-            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S101', mockResponse);
-
-            String vlocitycmtJSONAttribute = '{"FAN_ATTCAT_000048":[{"$$AttributeDefinitionStart$$":null,"attributeRunTimeInfo":"10","objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwIbUAI","attributecategoryid__c":"a0F6C000000BovEUAS","categorycode__c":"FAN_ATTCAT_000048","categoryname__c":"Caracteristicas Simcard","attributeuniquecode__c":"FAN_ATT_000070","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"NMU Simcard","displaysequence__c":"95","categorydisplaysequence__c":95,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqQ3UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":null,"valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","values":[{"displayText":"Simcard Magenta: (3FF Micro SIM)","id":10,"value":"PTP3FFMMI"},{"displayText":"Simcard Cyan: (2FF Bolsita)","id":20,"value":"PTP2FFCCI"},{"displayText":"Simcard Violeta: (4FF Nano SIM)","id":30,"value":"PTP4FFVNI"},{"displayText":"Simcard Cyan 2FF/3FF Bolsita comunes","id":40,"value":"PTP23FFCI"},{"displayText":"Usimcard Triple Corte Bolsita","id":50,"value":"PTPBOLTCI"}],"default":[]},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwHOUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000068","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Facturable en Venta","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":true,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPxUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"true","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"true"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwkBUAQ","attributecategoryid__c":"a0F6C000000BoqlUAC","categorycode__c":"FAN_ATTCAT_000042","categoryname__c":"Integracion","attributeuniquecode__c":"FAN_ATT_000084","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Charge Code","displaysequence__c":"31","categorydisplaysequence__c":31,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":true,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPvUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"C_OT_MB_EQUIPMENT_SIM","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[{"displayText":"SIM","id":30,"value":"C_OT_MB_EQUIPMENT_SIM"}],"values":[{"displayText":"Telefono","id":10,"value":"C_OT_MB_EQUIPMENT_PHONES"},{"displayText":"Modem","id":20,"value":"C_OT_MB_EQUIPMENT_MODEMS"},{"displayText":"SIM","id":30,"value":"C_OT_MB_EQUIPMENT_SIM"},{"displayText":"Accesorio","id":40,"value":"C_OT_MB_EQUIPMENT_ACCESORIOS"},{"displayText":"Netbook","id":50,"value":"C_OT_MB_EQUIPMENT_NETBOOK"}]},"$$AttributeDefinitionEnd$$":null}]}';
+            String vlocitycmtJSONAttribute = '{"FAN_ATTCAT_000048":[{"$$AttributeDefinitionStart$$":null,"attributeRunTimeInfo":"10",objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwIbUAI","attributecategoryid__c":"a0F6C000000BovEUAS","categorycode__c":"FAN_ATTCAT_000048","categoryname__c":"Caracteristicas Simcard","attributeuniquecode__c":"FAN_ATT_000070","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"NMU Simcard","displaysequence__c":"95","categorydisplaysequence__c":95,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqQ3UAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":null,"valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","values":[{"displayText":"Simcard Magenta: (3FF Micro SIM)","id":10,"value":"PTP3FFMMI"},{"displayText":"Simcard Cyan: (2FF Bolsita)","id":20,"value":"PTP2FFCCI"},{"displayText":"Simcard Violeta: (4FF Nano SIM)","id":30,"value":"PTP4FFVNI"},{"displayText":"Simcard Cyan 2FF/3FF Bolsita comunes","id":40,"value":"PTP23FFCI"},{"displayText":"Usimcard Triple Corte Bolsita","id":50,"value":"PTPBOLTCI"}],"default":[]},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwHOUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000068","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Facturable en Venta","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":true,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPxUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"true","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"true"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000ZuacQAC","attributeid__c":"a0G6C000000pwkBUAQ","attributecategoryid__c":"a0F6C000000BoqlUAC","categorycode__c":"FAN_ATTCAT_000042","categoryname__c":"Integracion","attributeuniquecode__c":"FAN_ATT_000084","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Charge Code","displaysequence__c":"31","categorydisplaysequence__c":31,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":true,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UqPvUAK","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"C_OT_MB_EQUIPMENT_SIM","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[{"displayText":"SIM","id":30,"value":"C_OT_MB_EQUIPMENT_SIM"}],"values":[{"displayText":"Telefono","id":10,"value":"C_OT_MB_EQUIPMENT_PHONES"},{"displayText":"Modem","id":20,"value":"C_OT_MB_EQUIPMENT_MODEMS"},{"displayText":"SIM","id":30,"value":"C_OT_MB_EQUIPMENT_SIM"},{"displayText":"Accesorio","id":40,"value":"C_OT_MB_EQUIPMENT_ACCESORIOS"},{"displayText":"Netbook","id":50,"value":"C_OT_MB_EQUIPMENT_NETBOOK"}]},"$$AttributeDefinitionEnd$$":null}]}';
             List<Account> AccList = TestDataFactory.createAccounts(1, 'Consumer');
             Id idRecordType = Schema.SObjectType.vlocity_cmt__BusinessSite__c.getRecordTypeInfosByName().get('Punto de venta OC').getRecordTypeId();
             vlocity_cmt__BusinessSite__c StoreLocations = new vlocity_cmt__BusinessSite__c(RecordTypeId=idRecordType, vlocity_cmt__OrganizationId__c=AccList[0].id ,PointOfSaleId__c=1.0, AssociatedWarehouseDefault__c='Default', Channel_Type__c='Agentes' ,Channel_Type_3__c='Agentes' ,Channel_Type_2__c='Agentes' ,Channel__c='Físico');
@@ -295,23 +280,15 @@
                 OrderCtrl.invokeMethod('DeleteCartItem',inputMapDelete ,outMap,options);
 
                 taOrderController.GetPriceAdjustmentsGroupByOrderItem(orderId);
-
-                Map<String,Object> serialNumbersToMove = new Map<String,Object>();
-                taOrderController.addSerialToMove(serialNumbersToMove, '99999777799999', 'VTAN', 'ANULARESERVA', 'MTPL', '134', OrdList[0].Delivery_Method__c);
-                taOrderController.addSerialToMove(serialNumbersToMove, '77776676767666', 'VTAN', 'ANULARESERVA', 'MCVM', '134', OrdList[0].Delivery_Method__c);
-                taOrderController.MoveSerialsStock(serialNumbersToMove);
+                Map<String,String> serialNumbers = new Map<String,String>();
+                serialNumbers.put('99999777799999', 'MTPL');
+                serialNumbers.put('77776676767666', 'MCVM');
+                taOrderController.MoveSerialsStock('VTAN','ANULARESERVA',serialNumbers, '134', OrdList[0].Delivery_Method__c);
 
             test.stoptest();
         }
-
-        @isTest
-        static void testOrderTimeOut()
+        static testmethod void testOrderTimeOut()
         {
-            String mockResponse = '{"listaResultado":[{"mensajeResultado": "OK","codigoResultado": "0","numeroSerie": "99543410307677114097"}],"codigoResultado": "OK"}';
-            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S105', mockResponse);
-            mockResponse = '{"listaResultado": [],"descripcionResultado": "Liberacion Exitosa","codigoResultado": "OK"}';
-            VlocityIntegrationProcedureTestUtility.mockIntegrationProcedure('IFS_S101', mockResponse);
-
             List<Account> AccList = TestDataFactory.createAccounts(1, 'Consumer');
             Id idRecordType = Schema.SObjectType.vlocity_cmt__BusinessSite__c.getRecordTypeInfosByName().get('Punto de venta OC').getRecordTypeId();
             vlocity_cmt__BusinessSite__c StoreLocations = new vlocity_cmt__BusinessSite__c(RecordTypeId=idRecordType, Name='Barrio Norte',
@@ -372,8 +349,7 @@
 
         }
 
-        @isTest
-        static void testOrder3()
+        static testmethod void testOrder3()
         {
             IFS_S038_updateCycleMock mock = new IFS_S038_updateCycleMock();
         mock.status = 200;
@@ -409,9 +385,7 @@
                 OrderCtrl.invokeMethod('GetProductNMU',inputMap,outMap,options);
             Test.stopTest();
         }
-
-        @isTest
-        static void testOrder()
+        static testmethod void testOrder()
         {
             TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
             Map<String,Object> inputMap = new Map<String,Object>();
@@ -438,9 +412,7 @@
                 OrderCtrl.invokeMethod('GetCreditReChargeAmmount',inputMap ,outMap,options);
             Test.stopTest();
         }
-
-        @isTest
-        static void testOrder4()
+        static testmethod void testOrder4()
         {
             Map<String,Object> inputMap = new Map<String,Object>();
             Map<String,Object> outMap = new Map<String,Object>();
@@ -468,9 +440,7 @@
                 //ow.invokeMethod('getAccountId',inputMap,outMap,options);
             Test.stopTest();
         }
-
-        @isTest
-        static void AprobarOrderADVTest(){
+        static testmethod void AprobarOrderADVTest(){
           MockupFactory.generate();
           vlocity_cmt__PriceList__c objPrice = [select Name, vlocity_cmt__Code__c, Id from vlocity_cmt__PriceList__c limit 1];
           Order objOrder = new Order();
@@ -519,9 +489,7 @@
             Test.stopTest();
         }
 
-
-        @isTest
-        static void testDeliveryMethods(){
+        static testmethod void testDeliveryMethods(){
             Map<String,Object> inputMap = new Map<String,Object>();
             Map<String,Object> outMap = new Map<String,Object>();
             Map<String,Object> options = new Map<String,Object>();
@@ -554,7 +522,7 @@
                 
             Test.stopTest();
         }
-        /*
+        
         static testmethod void CancelOrderAndRelease_Test (){      
           Order objOrder = new Order();
           List<Account> AccList = TestDataFactory.createAccounts(1);
@@ -572,7 +540,7 @@
               taOrderController.CancelOrderAndRelease(ordList);
           Test.stopTest();
         }
-    */
+
       
 
     }

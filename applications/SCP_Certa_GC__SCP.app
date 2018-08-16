@@ -5,19 +5,12 @@
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>SCP</label>
+    <logo>SCP_Certa_GC__SCP/SCP_Certa_GC__LogoTelecom.png</logo>
     <tabs>standard-Account</tabs>
     <tabs>standard-Contact</tabs>
     <tabs>standard-Opportunity</tabs>
     <tabs>SCP_Certa_GC__SCP</tabs>
     <tabs>standard-report</tabs>
     <tabs>SCP_Certa_GC__Dollar_Budget</tabs>
-    <tabs>vlocity_cmt__VlocityTrackingEntry__c</tabs>
-    <tabs>Transaction_History__c</tabs>
-    <tabs>AttributesConfiguration</tabs>
-    <tabs>WorkTeam__c</tabs>
-    <tabs>vlocity_cmt__SyncDeltaObject__c</tabs>
-    <tabs>Team_Member__c</tabs>
-    <tabs>vlocity_cmt__InboundRESTInterface__c</tabs>
-    <tabs>Repro_Reporter</tabs>
-    <tabs>Permissions_by_Work_Team</tabs>
+    <tabs>SCP_Certa_GC__Proyecto__c</tabs>
 </CustomApplication>

@@ -12,8 +12,10 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
             if (methodName.equals('AddSelectedPack')){
                 AddSelectedPack(inputMap, outMap, options);
             }
+            if (methodName.equals('ChangeSubOffering')){
+                ChangeSubOffering(inputMap, outMap, options);
+            }
             result = false;
-            //System.debug('outMap:' + outMap);
         }
         catch(Exception e)
         {
@@ -70,6 +72,7 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
         
         List<Object> selectedCombo = (List<Object>) options.get('SelectedCombo');
         String idOrder = (String) options.get('IdOrder');
+        String assetId = (String) options.get('IdAsset');
         
         Id priceBookEntryId;
         for(Object combo : selectedCombo) {
@@ -98,15 +101,38 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
             inputMapAPI.put('cartId',idOrder);
             inputMapAPI.put('itemId',priceBookEntryId);
             Map<String, Object> responseAPI = taOrderController.addToCartItems(inputMapAPI);
-            /*
-            Map<String, Object> responseAPIResult = (Map<String, Object>) responseAPI.get('result');
-            List<Object> responseAPIResultList = (List<Object>) responseAPIResult.get('messages');
-            outMap.put('AddItemToCart_AddItemResponse',responseAPIResultList.get(0));
-            */
+            
+            OrderItem newItem = [SELECT Id, vlocity_cmt__AssetId__c FROM OrderItem WHERE OrderId = :idOrder LIMIT 1];
+            System.debug('newItem: ' + newItem);
+            newItem.vlocity_cmt__AssetId__c = assetId;
+            update newItem;
         }
     }
 
-    public static void ChangeSubOffering(String idOrder, String medioDePago, OrderItem item){
+    public static void ChangeSubOffering(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options){
+        System.debug('Change Sub Offering');
+        
+        String idOrder = (String) options.get('IdOrder');
+        String medioDePago = (String) options.get('MedioDePago');
+        
+        Schema.DescribeFieldResult fieldResult = Order.PaymentMethodType__c.getDescribe();
+        List<Schema.PicklistEntry> pleList = fieldResult.getPicklistValues();
+        for(Schema.PicklistEntry picklistEntry : pleList) {
+            if(picklistEntry.getValue() == medioDePago)
+                medioDePago = picklistEntry.getLabel();
+        }
+        
+        OrderItem item = [SELECT Id, Product2.Id, Product2.vlocity_cmt__JSONAttribute__c, Product2.ProductCode, Product2.ID_Sistema_Origen__c, vlocity_cmt__AssetId__r.Subscription_Id__c, vlocity_cmt__AssetId__r.MSISDN__c FROM OrderItem WHERE OrderId = :idOrder LIMIT 1];
+        Map<String,Object> response = ChangeSubOffering(idOrder, medioDePago, item);
+        if (response.containsKey('Error')) {
+            outMap.put('ChangeSubOfferingResult','Error');
+        } else {
+            inputMap.put('nroLinea',item.vlocity_cmt__AssetId__r.MSISDN__c);
+            EnviarSMSExito(inputMap, outMap, options);
+        }
+    }
+
+    public static Map<String,Object> ChangeSubOffering(String idOrder, String medioDePago, OrderItem item){
         System.debug('Change Sub Offering');
         
         Map<String, Object> input = new Map<String, Object>();
@@ -132,11 +158,14 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
         //}
         Order ord = new Order(Id = idOrder, Status = orderStatus);
         update ord;
+        return ipResult;
     }
 
-    private static Map<String, Object> GenerateRequestS210(String medioDePago, OrderItem item){
+    private static Map<String, Object> GenerateRequestS210(String medioDePago, OrderItem item) {
         System.debug('Generate Request S210');
-        
+        System.debug('medioDePago: ' + medioDePago);
+        System.debug('item: ' + item);
+
         //String reqMock = '{"body": {"codigoAcceso": {"codSuscripcion": "152001012"},"ofertaPrincipal": {"ofertaPrincipalAnterior": {"producto": {"codProducto": 1078}},"nuevaOfertaPrincipal": {"producto": {"codProducto": 1837006933},"codGranularidadProducto": "S","tipoAplicacionOferta": "I","estadoProductoAdq": "2","listaInstanciaProducto": [{"codProducto": 1053,"marcaProductoPrincipal": "A","codGranularidadProducto": "S","tipoRed": "0"}]},"tiempoEfectivo": {"ejecucionCambio": "I"}}}}';
         Map<String, Object> body = new Map<String, Object>();
         Map<String, Object> codigoAcceso = new Map<String, Object>();
@@ -147,22 +176,23 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
         Map<String, Object> instanciaOferta = new Map<String, Object>();
         Map<String, Object> producto = new Map<String, Object>();
 
-        if(item.Product2 != null) {   System.debug('product......' + item.Product2.Id);
+        if(item.Product2 != null) {
+            System.debug('product......' + item.Product2.Id);
             String codProducto = item.Product2.ProductCode;
             String jsonAttribute = item.Product2.vlocity_cmt__JSONAttribute__c;
-                        
-            //Get the offer Expiration Date from the JSON Attributes
-            Map<String, Object> unitOfMeasureMap = AssetAttributesUtils.GetJSONAttribute(jsonAttribute, 'Unidad de Medida de Vigencia');    
-            List<Object> defaultValuesList = (List<Object>)((Map<String, Object>)unitOfMeasureMap.get('attributeRunTimeInfo')).get('default');  
-            Map<String, Object> valueMap = (Map<String, Object>) defaultValuesList.get(0);  
-            String unitOfMeasure = (String) valueMap.get('value');  
 
-            Map<String, Object> expirationMap = AssetAttributesUtils.GetJSONAttribute(jsonAttribute, 'Vigencia Activacion');    
-            String expirationValue = (String)((Map<String, Object>)expirationMap.get('attributeRunTimeInfo')).get('default');   
-            
+            //Get the offer Expiration Date from the JSON Attributes
+            Map<String, Object> unitOfMeasureMap = AssetAttributesUtils.GetJSONAttribute(jsonAttribute, 'Unidad de Medida de Vigencia');
+            List<Object> defaultValuesList = (List<Object>) ((Map<String, Object>) unitOfMeasureMap.get('attributeRunTimeInfo')).get('default');
+            Map<String, Object> valueMap = (Map<String, Object>) defaultValuesList.get(0);
+            String unitOfMeasure = (String) valueMap.get('value');
+
+            Map<String, Object> expirationMap = AssetAttributesUtils.GetJSONAttribute(jsonAttribute, 'Vigencia Activacion');
+            String expirationValue = (String) ((Map<String, Object>) expirationMap.get('attributeRunTimeInfo')).get('default');
+
             //With the Expiration and the Unit of Measure of expiration, calculate the expiration date
             DateTime activationDate = Datetime.now();
-            Integer expirationValueInt = Integer.valueOf(expirationValue);  
+            Integer expirationValueInt = Integer.valueOf(expirationValue);
             DateTime expirationDateTime;
 
             if(unitOfMeasure == 'H')
@@ -176,25 +206,25 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
 
             Date expirationDate = expirationDateTime.date();
             String formattedExpirationDateTime = string.valueOf(expirationDate) + ' 00:00:00';
-            
-            auxMapListaAgregoOferta.put('fechaHastaCaracteristicaProd', formattedExpirationDateTime);    
+
+            auxMapListaAgregoOferta.put('fechaHastaCaracteristicaProd', formattedExpirationDateTime);
 
             Map<String, Object> tiempoEfectivo = new Map<String, Object>();
             tiempoEfectivo.put('ejecucionCambio', 'I');
-            auxMapListaAgregoOferta.put('tiempoEfectivo', tiempoEfectivo);            
+            auxMapListaAgregoOferta.put('tiempoEfectivo', tiempoEfectivo);
             
             listaAgregoOferta.add(auxMapListaAgregoOferta);
-            ofertaComplementaria.put('listaAgregoOferta', listaAgregoOferta);   
+            ofertaComplementaria.put('listaAgregoOferta', listaAgregoOferta);
 
             //Depending on the Payment Method selected, include data on the request or not
-            if (medioDePago != 'Descuento de Saldo') {      
+            if (medioDePago != 'Descuento de Saldo') {
                 List<Object> listaPropiedades = new List<Object>();
                 Map<String, Object> auxMapListaPropiedades = new Map<String, Object>();
                 auxMapListaPropiedades.put('fechaHastaCaracteristicaProd', formattedExpirationDateTime);
                 auxMapListaPropiedades.put('valorCaracteristicaProducto', '0');
                 auxMapListaPropiedades.put('tipoCaracteristicaProducto', '1');
                 auxMapListaPropiedades.put('codCaracteristicaProducto', 'C_RC_OVERRIDE_PRICE');
-                
+
                 listaPropiedades.add(auxMapListaPropiedades);
                 instanciaOferta.put('listaPropiedades', listaPropiedades);
             }
@@ -203,14 +233,14 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
             //Get the offer Origin Id from the JSON Attributes <-- eliminado 06/jun
             //Map<String, Object> idOriginMap = AssetAttributesUtils.GetJSONAttribute(jsonAttribute, 'ID Sistema Origen');
             //String idOriginValue = (String)((Map<String, Object>)idOriginMap.get('attributeRunTimeInfo')).get('default');
-            
+
             String idOriginValue = item.Product2.ID_Sistema_Origen__c;
             //Adding codProducto value
             producto.put('codProducto', idOriginValue);
             instanciaOferta.put('producto', producto);
 
             auxMapListaAgregoOferta.put('instanciaOferta', instanciaOferta);
-            
+
             body.put('ofertaComplementaria', ofertaComplementaria);
         }
 
@@ -224,7 +254,8 @@ global with sharing class ta_sales_renovacionDatos implements vlocity_cmt.Vlocit
         Map<String, Object> request = new Map<String, Object>();
         request.put('body', body);
         System.debug('Request Body: ' + JSON.serialize(request));
-        
+
         return request;
     }
+
 }

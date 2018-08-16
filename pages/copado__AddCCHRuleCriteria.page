@@ -1,0 +1,281 @@
+<apex:page docType="html-5.0" standardController="copado__Compliance_Rule__c" applyHtmlTag="true"  showHeader="true" sidebar="true" standardStylesheets="true" extensions="copado.AddCCHRuleCriteriaExt" title="Manage {!$ObjectType.copado__Compliance_Rule__c.Label} Criteria" cache="false">
+	<apex:outputField value="{!rule.copado__Metadata_Type__c}" rendered="false"/><!-- NR to avoid vf NS issues -->
+	<apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}" />
+	
+	<script type="text/javascript">
+		var $copado = $copado || jQuery.noConflict();
+		$copado(document).ready(function(){
+			overridePageMessages();
+		})
+	</script>
+	<apex:outputPanel layout="block" >
+		<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" lang="en" style="height: 100%;">
+		    <head>
+		    	<TITLE>Compliance Manage Criteria {!copado__Compliance_Rule__c.Name} | Copado</TITLE>
+		      <apex:slds />
+		      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		      <apex:stylesheet value="{!URLFOR($Resource.copado__SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+		    </head>
+		    <body class="slds-scope" style="{!IF($User.UIThemeDisplayed == 'Theme4d','margin: 12px;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2),linear-gradient(to top,rgba(32, 92, 159, 0), rgb(32, 92, 159));','')}">
+		    	<center>
+	    			<div style="position: fixed;top:-5px;left:20%;right:20%;">
+	    				<p><apex:pageMessages id="topMessages"/></p>
+	    			</div>
+	    		</center>
+		    	<apex:form id="form" rendered="{!renderDetails}">
+		    		<c:ScreenLocker msg="{!$Label.copado__loading}" /> 
+		    		
+		    		<div class="slds-page-header" style="{!IF($User.UIThemeDisplayed == 'Theme4d','background: #fdfdfd;margin-bottom: 12px;padding-bottom: 10px;border-collapse: collapse;border-radius: 4px;','')}">
+						<div class="slds-grid">
+							<div class="slds-col slds-has-flexi-truncate">
+								<div class="slds-media">
+								    <div class="slds-media__figure">
+								        <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+									        <svg class="slds-icon" aria-hidden="true">
+									        	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS,'/assets/icons/standard-sprite/svg/symbols.svg#custom_notification')}"></use>
+									        </svg>
+								        </span>
+								    </div>
+								    <div class="slds-media__body">
+								    	<p class="slds-text-heading--label slds-line-height--reset">Manage {!$ObjectType.copado__Compliance_Rule__c.Label} Criteria</p>
+								        <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{!$ObjectType.copado__Compliance_Rule__c.Label} {!$Label.copado__edit}"><apex:outputField value="{!copado__Compliance_Rule__c.Name}"></apex:outputField> {!$Label.EDIT}</h1>
+								    </div>
+								</div>
+							</div>
+							<!-- ACTION BUTTONS -->
+							<div class="slds-col slds-no-flex slds-grid slds-align-top ">
+							  <div class="slds-button-group" role="group">
+							  	<apex:outputPanel id="buttons" layout="block">
+								  	<apex:commandButton value="{!$Label.site.save}" onclick="preSave()" styleClass="slds-button slds-button_neutral" action="{!dummy}" immediate="false" reRender="xxx"/>
+								  	<apex:actionFunction name="saveCriterias" action="{!saveCriterias}" reRender="topMessages,theMessages,renderPanel,criterias,buttons,validateRule" oncomplete="overridePageMessages();showLoader(false);"/>
+								  	<apex:commandButton id="validateRule" rendered="{!AND(hasCriteria,NOT(ISBLANK(rule.copado__Metadata_Type__c)),rule.copado__Metadata_Type__c != '--None--')}" value="{!$Label.copado__us_validate}" onclick="showLoader(true);" styleClass="slds-button {!IF(isValid,'slds-button_success','slds-button_destructive')}" action="{!validateRuleFromPage}" immediate="false" reRender="topMessages,theMessages,renderPanel,criterias,validateRule" title="{!IF(isValid,'Validated','Compliance rule is not valid or not validated yet.')}" oncomplete="overridePageMessages();showLoader(false);"/>
+								  	<apex:commandButton value="{!$Label.copado__close}" styleClass="slds-button slds-button_neutral" action="{!cancelCriterias}" immediate="true" reRender="theMessages"/>
+							  	</apex:outputPanel>
+							  </div>
+							</div>
+							<!-- / ACTION BUTTONS -->
+						</div>
+						<div style="background: white; height: 25px;">
+							<!-- Header details buffer-->
+						</div>
+					</div>
+					<div style="padding: 10px;background: #fdfdfd;border-collapse: collapse; background: #fdfdfd;border-radius: 4px;">
+						<!-- Rule info -->
+						<fieldset class="slds-box slds-theme--default slds-container--fluid">
+							<legend id="newaccountform" class="slds-text-heading--medium slds-p-vertical--medium">
+								{!$Label.Rule_Info}
+							</legend>
+							<div class="slds-grid">
+								<apex:outputPanel styleClass="slds-col" layout="block" id="metaType">
+									<apex:outputPanel layout="block" id="hasNoType" styleClass="slds-form-element" rendered="{!OR(ISBLANK(rule.copado__Metadata_Type__c),rule.copado__Metadata_Type__c == '--None--')}">
+										<apex:outputLabel styleClass="slds-form-element__label" value="Metadata Type" />
+										<apex:selectList styleClass="slds-select" value="{!rule.copado__Metadata_Type__c}" size="1" multiselect="false">
+											<apex:selectOptions value="{!categoryTypes}" />
+											<apex:actionSupport action="{!getNodePicklist}" event="onchange" reRender="criterias,metaType,buttons" /> 
+											<!-- add process spinner to above action support -->
+										</apex:selectList>
+									</apex:outputPanel>
+									<apex:outputPanel id="hasType" layout="none" rendered="{!AND(NOT(ISBLANK(rule.copado__Metadata_Type__c)),rule.copado__Metadata_Type__c != '--None--')}">
+										<c:LightningReadyOutputFields sObject="{!rule}" field="Metadata_Type__c" dividerBottom="false"/>
+									</apex:outputPanel>
+								</apex:outputPanel>
+															
+								<apex:repeat value="{!$ObjectType.copado__Compliance_Rule__c.FieldSets.copado__Criteria_Page_Fields}" var="fields">
+								<div class="slds-col" >
+									<c:LightningReadyOutputFields sObject="{!copado__Compliance_Rule__c}" field="{!fields}" dividerBottom="false"/>
+								</div>
+								</apex:repeat>
+							</div>
+						</fieldset>
+						<!-- Rule info End -->
+
+						<!-- Filter Criteria Selection -->
+						<fieldset class="slds-box slds-theme--default slds-container--fluid">
+							<legend id="newaccountform" class="slds-text-heading--medium slds-p-vertical--medium">
+								{!$Label.Criteria_Selection}
+							</legend>
+							<apex:outputPanel id="criterias" layout="block" >
+								
+								<table cellspacing="1" cellpadding="1" style="border-collapse: collapse;width: 65%;" class="slds-table slds-table_cell-buffer">
+									<thead style="font-weight: bold;font-size: 11pt;">
+										<tr style="padding-bottom: 5px;">
+											<td style="width: 5%;">&nbsp;</td>
+											<td >{!$Label.Node}</td>
+											<td >{!$Label.Field}</td>
+											<td >{!$Label.Operator}</td>
+											<td >{!$Label.Value}</td>
+											<td >&nbsp;</td>
+										</tr>
+									</thead>
+									<tbody>
+										
+										<apex:repeat value="{!criteriaList}" var="criteria">
+										<tr style="min-height: 40px;">
+											<td style="width: 3%;">
+												<apex:outputPanel layout="block" rendered="{!showFilterLogic}">
+													<span style="display: block;" class="defaultAnd">{!criteria.order}</span>
+												</apex:outputPanel>
+											</td>
+											<td style="width: 20%;">
+												<apex:selectList styleClass="slds-select" style="width: 100%;" value="{!criteria.nodeName}" size="1" multiselect="false">
+													<apex:selectOptions value="{!categoryNodes}" />
+													<apex:actionSupport action="{!SelectNode}" event="onchange" reRender="criterias" /> 
+												</apex:selectList>
+											</td>
+											<td style="width: 20%;">
+												<apex:selectList styleClass="slds-select" style="width: 100%;" value="{!criteria.fieldName}" size="1" multiselect="false">
+													<apex:selectOptions value="{!nodeFields[criteria.nodeName]}" />
+													<apex:actionSupport action="{!getFieldOperators}" event="onchange" reRender="criterias">
+														<apex:param name="cro" value="{!criteria.order}" />
+													</apex:actionSupport> 
+												</apex:selectList>
+											</td>
+											<td style="width: 15%;">
+												<apex:selectList styleClass="slds-select" style="width: 100%;"  value="{!criteria.operator}" size="1" multiselect="false">
+													<apex:selectOptions value="{!criteria.operatorSet}" />
+													<apex:actionSupport action="{!dummy}" event="onchange" reRender="criterias,metaType" /> 
+												</apex:selectList>
+											</td>
+											<td >
+												<apex:input styleClass="slds-input" rendered="{!OR(criteria.fieldType='STRING', criteria.fieldType='ID', criteria.fieldType='BASE64BINARY')}" value="{!criteria.input}" type="text"/>
+										        <apex:input styleClass="slds-input" rendered="{!criteria.fieldType='DATE'}" value="{!criteria.input}" type="date"/>
+										        <apex:input styleClass="slds-input" rendered="{!criteria.fieldType='DATETIME'}" value="{!criteria.input}" type="datetime"/>
+										        <apex:input styleClass="slds-input" html-myId="numberInput{!criteria.order}" rendered="{!OR(criteria.fieldType='INTEGER', criteria.fieldType='DOUBLE',criteria.fieldType='INT',criteria.fieldType='PERCENT')}" value="{!criteria.input}" type="text"/>
+										        <script type="text/javascript">
+										        	$copado(function () {
+													    $copado("input[myId^='numberInput']").keydown(function (event) {
+													        if (event.shiftKey == true) {
+													            event.preventDefault();
+													        }
+													        if ((event.keyCode >= 48 && event.keyCode <= 57) || 
+													            (event.keyCode >= 96 && event.keyCode <= 105) || 
+													            event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 37 ||
+													            event.keyCode == 39 || event.keyCode == 46 || event.keyCode == 190 || event.keyCode == 44 || event.keyCode == 188 || event.keyCode == 110) {
+
+													        } else {
+													            event.preventDefault();
+													        }
+													        if($copado(this).val().indexOf('.') !== -1 && event.keyCode == 190 && $copado(this).val().indexOf(',') === -1){
+													            event.preventDefault(); 
+													        }
+													        if($copado(this).val().indexOf('.') === -1 && $copado(this).val().indexOf(',') !== -1 && (event.keyCode == 188 || event.keyCode == 44 || event.keyCode == 110)){
+													            event.preventDefault(); 
+													        }
+													        //if a decimal has been added, disable the "." or "," -button
+
+													    });
+													})
+										        </script>
+										        <apex:inputCheckbox style="font-size: x-large;" rendered="{!criteria.fieldType='BOOLEAN'}" value="{!criteria.input}"/>
+										        <apex:input styleClass="slds-input" rendered="{!criteria.fieldType='TIME'}" value="{!criteria.input}" type="text"/>
+											</td>
+											<td style="width: 3%;">
+												<apex:outputPanel layout="block" rendered="{!!showFilterLogic}">
+													<span style="display: block;" class="defaultAnd">AND</span>
+												</apex:outputPanel>
+											</td>
+										</tr>
+										</apex:repeat>
+									</tbody>
+								</table>
+								
+							</apex:outputPanel>
+							<apex:commandLink id="addRow" action="{!addNewCriteria}" reRender="criterias,renderPanel" value="Add Row" />&nbsp;&nbsp;
+
+							<apex:outputPanel id="removeRowPanel" >
+								<apex:commandLink id="removeRow" action="{!removeCriteria}" reRender="criterias,renderPanel" value="Remove Row" rendered="{!showFilterLogic}"/>
+							</apex:outputPanel>
+						<!-- Filter Criteria Selection End -->
+							<!-- Filter Logic Entry -->
+							<apex:outputPanel layout="block" styleClass="slds-grid" id="logicPanel" >
+								<div class="slds-col" >
+									<a href="#" id="addLogic" onclick="togglePanel($copado(this))" active="{!showFilterLogic}">
+									{!IF(showFilterLogic,$Label.Clear_Filter_Logic,$Label.Add_Filter_Logic)}
+									</a>
+									<apex:outputPanel layout="block" id="renderPanel">
+										<apex:outputPanel layout="block" rendered="{!showFilterLogic}">
+											<p>									
+												<apex:inputText styleClass="logic slds-input" style="width: 50%;" value="{!filterLogic}" />
+												<!--<apex:pageMessages id="theMessages"/>-->
+												<apex:outputPanel id="theMessages">
+													<apex:pageMessage rendered="{!!ISBLANK(logicMessage)}" severity="Error" detail="{!logicMessage}" strength="0"/>
+												</apex:outputPanel>
+											</p>
+											<img class="logic" src="/img/report_boolean_filter.gif" alt="Open tips link above for help using filters" width="533" height="211" title="Open tips link above for help using filters"/>
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</div>
+								<apex:actionFunction name="toggleLogic" action="{!toggleLogic}" reRender="renderPanel,criterias,removeRowPanel"/>
+							</apex:outputPanel>
+						</fieldset>
+						<!-- Filter Logic Entry END-->
+					</div>
+		    	</apex:form>
+		    	<script type="text/javascript">
+					var togglePanel = function(elem){
+						var show = elem.attr('active');
+						console.log(show);
+						if(show === "false"){
+							toggleLogic();
+							$copado('.defaultAnd').hide()
+							elem.text("{!JSENCODE($Label.Clear_Filter_Logic)}");
+							elem.attr('active',"true"); 
+							// TODO: call and action function to clear filterLogic
+						}else{
+							toggleLogic();
+							$copado('.defaultAnd').show()
+							elem.text("{!JSENCODE($Label.Add_Filter_Logic)}");
+							elem.attr('active',"false");
+						}									
+						return false;
+					}
+					var showLoader = function(show){
+						if(show === false){
+							unlockScreen();
+						}else{
+							lockScreen();
+						}									
+						return false;
+					}
+					var preSave = function(){
+						showLoader(true);
+						saveCriterias();
+						return false;
+					}
+					var overridePageMessages = function(cb){
+
+		                textureEffect = 'slds-theme--alert-texture';
+
+		                $copado('.warningM3').addClass('slds-notify slds-notify--toast slds-theme--warning customMessage '+textureEffect);          
+		                $copado('.confirmM3').addClass('slds-notify slds-notify--alert slds-theme--success  customMessage '+textureEffect);    
+		                $copado('.errorM3').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+		                $copado('.errorM4').addClass('slds-notify slds-notify--alert slds-theme--error customMessage '+textureEffect);                  
+		                $copado('.infoM3').addClass('slds-notify slds-notify--toast customMessage '+textureEffect);    
+
+		                $copado('.errorM3').removeClass('errorM3'); 
+		                $copado('.errorM4').removeClass('errorM3'); 
+		                $copado('.confirmM3').removeClass('confirmM3'); 
+		                $copado('.infoM3').removeClass('infoM3');   
+		                $copado('.warningM3').removeClass('warningM3');
+
+		                $copado('.message').css('margin',0);
+		                $copado('.message').on('click',function(){$copado('.message').hide()});
+		                $copado('.message').css('margin-top',10);
+		                $copado('.message').css('font-size','11pt');
+						$copado('.messageText').css('color','white');
+						$copado('.messageText').css('font-weight','500');
+						$copado('.messageText h4').css('color','white');
+						$copado('.customMessage').css('z-index','999');
+						$copado('.messageText').css('width','87%');
+						$copado('.messageText').css('overflow-wrap','break-word');
+
+		                if(cb) cb();
+
+		                return false;
+		            }
+				</script>
+		    </body>
+		</html>
+	</apex:outputPanel>
+</apex:page>

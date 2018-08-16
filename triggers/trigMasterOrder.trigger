@@ -28,5 +28,5 @@ trigger trigMasterOrder on Order (after delete, after insert, after undelete, be
         system.debug('Stack trace: ' + e.getStackTraceString());
         system.debug('Error trigMasterOrder ' + e.getMessage() + 'linea: ' + e.getLineNumber());
     }
-    //      ApplicationDomain.TriggerHandler(Orders.Class);
+    ApplicationDomain.TriggerHandler(Orders.Class);
 }

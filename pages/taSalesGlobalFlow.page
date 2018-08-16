@@ -96,12 +96,11 @@
                     gc.close = close;
                     gc.onTimeout = onTimeout;
                     gc.orderId = "{!$CurrentPage.parameters.IdOrder}";
-                    
                     gc.showErrorTimeout = false;
                     //console.info($location.host());
                     
 
-                    function init() {   
+                    function init() {
                         if(gc.orderId){
                             //getTimeOut();
                             gc.counter = convertMinutesToSeconds(10);
@@ -156,17 +155,18 @@
                     
                     function onTimeout(){
                         gc.counter--;
+                        console.info('ONtimeout: ', gc.counter);
                         mytimeout = $timeout(gc.onTimeout,1000);
-                        if (!gc.counter) {  
+                        if (!gc.counter) {  console.info('stop timeout: 1');
                             gc.showErrorTimeout = true;
                             stop();
                         }
                     }
 
-                    function stop (){   
+                    function stop (){   console.info('stop timeout: 2');
                         $timeout.cancel(mytimeout);
-                        
-                        Visualforce.remoting.Manager.invokeAction("taOrderController.OrderTimeOut", gc.orderId,
+                        console.info('stop timeout: 3');
+                        Visualforce.remoting.Manager.invokeAction("taOrderController.OrderTimeOut", IdOrder,
                             function(result, event) {
                                 console.info("OrderTimeOut: ",result);
                                  //sforce.console.getEnclosingTabId(closeSubtab);

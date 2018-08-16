@@ -54,6 +54,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fieldSets>
         <fullName>vlocity_cmt__ConsoleAdminSearch</fullName>
         <description>Vlocity Product Console Admin Search</description>
@@ -129,6 +130,16 @@
         </displayedFields>
         <label>New Price List</label>
     </fieldSets>
+    <fields>
+        <fullName>sfxId__c</fullName>
+        <externalId>true</externalId>
+        <label>sfxId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <fields>
         <fullName>vlocity_cmt__Code__c</fullName>
         <caseSensitive>false</caseSensitive>

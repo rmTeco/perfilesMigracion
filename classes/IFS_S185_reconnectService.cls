@@ -67,17 +67,17 @@ global with sharing class IFS_S185_reconnectService {
      */
     private static void writeLog (String pTipo, String pDatos) {
         printDebug('Entre en writeLog - pTipo --> ' + pTipo + ' - pDatos --> ' + pDatos);
-        DateTime dt = DateTime.now();
-        String dts = dt.format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'');
+        String dts = DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss.SSS\'Z\'', 'America/Argentina/Buenos_Aires');
 
         if (pTipo == 'REQ') {
             guId = GuidUtil.NewGuid(); //-- Calculo el Guid.
-            IFS_LogRecord.record(dts, 'SERVICIO', 'S185', guId, pTipo, pDatos, ''); 
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S185', pTipo, guId, '', pDatos);  
         }
         else {
-            IFS_LogRecord.record(dts, 'SERVICIO', 'S185', guId, pTipo, '', pDatos); 
+            IFS_LogRecord.record(dts, 'SERVICIO', 'S185', pTipo, guId, '', pDatos);  
         }
     }
+
 
     private static Map<String, Object> mapeoOM (FromJSON pJson) {
 

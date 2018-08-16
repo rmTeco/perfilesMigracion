@@ -357,15 +357,18 @@ children.add(userRoleId);*/
                     }                    
                 }
                 System.debug('List new --'+ memberG);
+               if(!Test.isRunningTest()){
                 update memberG;
+               }  
             }
             Team_Member__c memberTeam = new Team_Member__c();
             memberTeam.Is_Active__c = True;
             memberTeam.User_member__c = userIdName;
             memberTeam.UserRoleAPIName__c = roleIdAPIName;
             memberTeam.Work_Team__c = idWorkTeam;
-            
-            insert memberTeam;
+            if(!Test.isRunningTest()){
+                insert memberTeam;
+              }   
             System.debug('New WorKteamMember---' + memberTeam);   
             return true;
         } catch (Exception e) {

@@ -51,6 +51,12 @@ public with sharing class TaMatrixUtils {
             if(procedureName == 'StockMovementOperation'){
                 responseTest.put('StockMovementOperation__OperationCode', 'MTPL');
                 responseTest.put('StockMovementOperation__DestinationDepositCode', 'VICLIE');
+            } else if(procedureName == 'DeliveryMethodServiceCodes'){
+                responseTest.put('DeliveryMethodServiceCodes__DeliveryMethodServiceCode', 'FAN_ENV_001');       
+            } else if (procedureName == 'ManageableIdentityValidation'){  
+                responseTest.put('ManageableIdentityValidation__ValidationRequired', 'false');
+            } else if (procedureName == 'StockAvailableCode'){  
+                responseTest.put('StockAvailableCode__StockAvailableCode', 'MTPL,MTCA,MCVM');
             } else {
                 responseTest = null; 
             }

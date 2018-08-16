@@ -356,7 +356,7 @@ global with sharing class taSalesOrderPaymentInteraction implements vlocity_cmt.
                         datosProductoCRM.put('codProducto', nmu.get('attributeuniquecode__c'));
                     }
                     else{
-                        datosProductoCRM.put('codProducto', orderItem.vlocity_cmt__Product2Id__r.NMU__c);
+                        datosProductoCRM.put('codProducto', orderItem.vlocity_cmt__Product2Id__r.StockKeepingUnit);
                     }
                 }
                 else{
@@ -462,6 +462,7 @@ global with sharing class taSalesOrderPaymentInteraction implements vlocity_cmt.
         infoCargos.put('listaDetalleCargoInfo', listaDetalleCargoInfo);
         infoCargos.put('codMoneda', 'ARS');
         request.put('infoCargos', infoCargos);
+        
         request.put('codVendedor', UserInfo.getUserId());
 
         // METODOS DE PAGOS

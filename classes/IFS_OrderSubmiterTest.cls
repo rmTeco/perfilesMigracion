@@ -1,17 +1,18 @@
 @isTest
 public class IFS_OrderSubmiterTest {
-    private static final String K_TIPO_JOB = 'Job Request';
-
-    @isTest static void testResponseStatus200 () {
+    
+   @isTest static void testResponseStatus200 () {
         Test.startTest();
-        insertJob('8016C0000000e2EQAQ', '0016C000009KWawQAG');
+        List<Account> lstAcc = TestDataFactory.createAccounts(1, null);
+        List<Order> lstOrders = TestDataFactory.createOrders(1, lstAcc[0]);
+        insertJob(lstOrders[0].Id, lstAcc[0].Id);
         IFS_OrderSubmiter os = new IFS_OrderSubmiter();
         DataBase.executeBatch(os);
         Test.stopTest();    
     }    
 
-
-    private static void insertJob (Id pOrderId, Id pAccountId) {
+    static void insertJob (Id pOrderId, Id pAccountId) {
+        final String K_TIPO_JOB = 'Job Request';
         Crossobject__c co = new Crossobject__c();
         co.order__c = pOrderId;
         co.CrossObjectName__c = K_TIPO_JOB + ' ' + pOrderId;
@@ -22,5 +23,6 @@ public class IFS_OrderSubmiterTest {
         co.RecordTypeId = Schema.SObjectType.Crossobject__c.getRecordTypeInfosByName().get('External Channel').getRecordTypeId();
         insert co;
     }
+
 
 }

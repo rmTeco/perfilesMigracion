@@ -1,0 +1,124 @@
+<!--
+ - Created by mertyalti on 20/02/2018.
+ -->
+
+<apex:page id="ArtifactMetadata" standardController="copado__Artifact__c" extensions="copado.Settings">
+    <link rel="stylesheet" href="{!URLFOR($Resource.jqx,'jqwidgets/styles/jqx.base.css')}"/>
+    <c:WizardUtils id="cmpWizardUtilities"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}"/>
+    <script type="text/javascript">
+            var __sfdcSessionId = '{!GETSESSIONID()}';
+    </script>
+    <script src="/soap/ajax/36.0/connection.js"></script>
+    <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__jqx,'jqwidgets/jqx-all.js')}"/>
+    <apex:stylesheet value="{!IF($User.UIThemeDisplayed == 'Theme4d',URLFOR($Resource.copado__CopadoLightningCSS),'')}"/>
+
+    <div id="jqxgrid" style="width:99%;"></div>
+
+
+    <script type="text/javascript">
+
+
+		$(document).on('ready',function(){
+			prepareGrid();
+		});
+
+
+        var loadingHTML = '<center><img src="/img/loading.gif" /> <i>{!$Label.LOADING}<span id="retry-label"></span></i></center>';
+        $('#jqxgrid').html(loadingHTML);
+
+		var prepareGrid = function(){
+			var att = dw.u.getDecodedAttach("{!JSENCODE(Artifact__c.Id)}","ArtifactMetaData");
+            if(att){
+    			var body = att.Body;
+                try{
+        			var metadataRecords = JSON.parse(body);
+        			startGrid(metadataRecords);
+                } catch(e){
+                    console.error(e);
+                    var noDataHtml = '<center>{!JSENCODE($Label.NODATATODISPLAY)}</center>';
+                    $('#jqxgrid').html(noDataHtml);
+                }
+            } else {
+                var noDataHtml = '<center>{!JSENCODE($Label.NODATATODISPLAY)}</center>';
+                $('#jqxgrid').html(noDataHtml);
+            }
+		}
+		var startGrid = function (data) {
+			try{
+                //normalize data
+                var len = data.length;
+
+                var _datafields = [
+                    {name: 'n', type: 'string'},
+                    {name: 't', type: 'string'},
+                    {name: 'd', type: 'string'}
+                ];
+                var theme = 'base',
+                source = {
+                    localdata: data,
+                    datafields: _datafields,
+                    datatype: "array",
+                },
+                //adapter wrapper
+                dataAdapter = new $.jqx.dataAdapter(source),
+
+                //keep jquery pointer for performance query
+                $grid = $('<div>');
+
+                $("#jqxgrid").html($grid);
+
+                $grid.jqxGrid({
+                    width: '100%',
+                    source: dataAdapter,
+                    showfilterrow: true,
+                    filterable: true,
+                    theme: theme,
+                    editable: false,
+                    selectionmode: 'none',
+                    enablebrowserselection: true,
+                    pageable: true,
+                    pagesizeoptions: ['10', '20', '50','100','500'],
+                    pagesize: 20,
+                    sortable: true,
+                    columnsresize: true,
+                    localization: localizationobj,
+                    columns: [
+                        {
+                            text: copadoLabels.name,
+                            filtertype: 'textbox',
+                            filtercondition: 'contains',
+                            editable: false,
+                            datafield: 'n',
+                            width: '40%'
+                        },
+                        {
+                            text: copadoLabels.type,
+                            datafield: 't',
+                            filterable: true,
+                            filtertype: 'checkedlist',
+                            editable: false,
+                            columntype: 'textbox',
+                            width: '35%'
+                        },
+                        {
+                            text: copadoLabels.LastModifiedDate,
+                            filtertype: 'textbox',
+                            editable: false,
+                            datafield: 'd',
+                            cellsformat: 'M/d/yyyy',
+                            width: '25%'
+                        }
+                    ]
+                });
+            } catch(e){
+                console.error('error',e);
+                var noDataHtml = '<center>{!JSENCODE($Label.NODATATODISPLAY)}</center>';
+                $('#jqxgrid').html(noDataHtml);
+            }
+
+         };
+
+    </script>
+</apex:page>

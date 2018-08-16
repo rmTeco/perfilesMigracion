@@ -22,10 +22,6 @@
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__TrackAsAgreement__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>SourceOrgProductId__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -81,6 +77,38 @@
     </layoutSections>
     <layoutSections>
         <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Order Management</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>500</height>
+                <page>vlocity_cmt__TelcoProductAttributes</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Price Books</label>
+        <layoutColumns>
+            <layoutItems>
+                <height>200</height>
+                <page>vlocity_cmt__PriceBooksList</page>
+                <showLabel>false</showLabel>
+                <showScrollbars>true</showScrollbars>
+                <width>100%</width>
+            </layoutItems>
+        </layoutColumns>
+        <style>OneColumn</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
         <detailHeading>false</detailHeading>
         <editHeading>false</editHeading>
         <label>Custom Links</label>
@@ -106,9 +134,6 @@
         <fields>vlocity_cmt__DefaultQuantity__c</fields>
         <fields>vlocity_cmt__RelationshipType__c</fields>
         <fields>vlocity_cmt__RelatedProductId__c</fields>
-        <fields>CREATED_DATE</fields>
-        <fields>UPDATEDBY_USER</fields>
-        <fields>LAST_UPDATE</fields>
         <relatedList>vlocity_cmt__ProductRelationship__c.vlocity_cmt__Product2Id__c</relatedList>
     </relatedLists>
     <relatedLists>

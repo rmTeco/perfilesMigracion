@@ -122,7 +122,6 @@ global class POCTreeController {
     public static PageReference reloadPage(){
         //POCTree
         //PageReference tempPage = ApexPages.currentPage();  
-        selectedPermissionName = '';
         PageReference tempPage = new PageReference('/apex/POCTree');    
         tempPage.setRedirect(true);
         return tempPage;

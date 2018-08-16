@@ -2,6 +2,8 @@
 public class TrialCustomerPortalHomePageCntrlTest {
     
     static testMethod void method() { 
+       User loggedInUser = [Select id,contactId,Contact.AccountId from User where id = :UserInfo.getUserId()];
+    
        Id caseRecordTypeId = [SELECT Id FROM RecordType WHERE DeveloperName = 'Diagnosis' AND SobjectType = 'Case' LIMIT 1].Id;
        Account acc = new Account(Name = 'testLagertha',Phone = '0800'); 
        insert acc;
@@ -13,8 +15,11 @@ public class TrialCustomerPortalHomePageCntrlTest {
        con.AccountId = acc.Id;  //account id 
        insert con;
         
-       Case test_case = new Case(Subject = 'test_subject_vikings', AccountID = acc.Id, ContactId = con.Id, Status = 'Nueva', Origin = 'Telefónico', RecordTypeId = caseRecordTypeId);
+       Case test_case = new Case(Subject = 'test_subject_vikings', AccountID = acc.Id, ContactId = loggedInUser.ContactId, Status = 'Nueva', Origin = 'Telefónico', RecordTypeId = caseRecordTypeId);
        insert test_case;
+       
+       system.debug('loggedInUser: ' + loggedInUser);
+       system.debug('con : ' + con );
        
         Product2 prod = new Product2(
             Name = 'TestProduct', 
@@ -33,7 +38,7 @@ public class TrialCustomerPortalHomePageCntrlTest {
         
        Idea ideas = new Idea(Title = 'Titulo', CommunityId = cm[0].Id);
        insert ideas;
-        
+       Test.StartTest();
        TrialCustomerPortalHomePageController tcPortal = new TrialCustomerPortalHomePageController();
        tcPortal.sortField1 = 'Name';
        tcPortal.SortProducts();
@@ -41,7 +46,8 @@ public class TrialCustomerPortalHomePageCntrlTest {
        tcPortal.SortSolutions();
         tcPortal.sortField4 = 'Title';
        tcPortal.SortIdeas();
-        tcPortal.sortField2 = 'AccountID';
+        tcPortal.sortField2 = 'CaseNumber';
        tcPortal.SortCases();
+       Test.StopTest();
      }
 }

@@ -6,7 +6,7 @@ global with sharing class AssetUtils implements vlocity_cmt.VlocityOpenInterface
         try {
             if (methodName.Equals('getNegotiations')) {
                 getNegotiations(inputMap, outMap, options);
-            }            
+            }
         }
         catch(Exception ex) {
             outMap.put('error', ex.getStackTraceString());
@@ -15,30 +15,21 @@ global with sharing class AssetUtils implements vlocity_cmt.VlocityOpenInterface
         return result;
     }
     
-    public List<OrderItem> getOrdersByAsset(String assetId) {
+    List<OrderItem> getOrdersByAsset(String assetId) {
         
-        List<OrderItem> orderItemList = [SELECT Id,OrderId, Order.OrderNumber, Order.Name, toLabel(Order.Status), Order.CreatedDate
+        List<OrderItem> orderItemList = [SELECT Id,OrderId, Order.OrderNumber, Order.Name, Order.Status, Order.CreatedDate
                                          FROM OrderItem 
                                          WHERE vlocity_cmt__AssetId__c = :assetId
                                          ORDER BY Order.CreatedDate DESC];
         return orderItemList;
     }
     
-    public List<Case> getCasesByAsset(String assetId) {
-        List<Case> casesList = [SELECT AssetId,CaseNumber,CreatedDate,Id,toLabel(Status),Subject 
+    List<Case> getCasesByAsset(String assetId) {
+        List<Case> casesList = [SELECT AssetId,CaseNumber,CreatedDate,Id,Status,Subject 
                                 FROM Case
                                 WHERE AssetId = :assetId
                                 ORDER BY CreatedDate DESC];
         return casesList;
-    }
-
-    public static Order getOrderByAsset(String assetId){
-        Asset asset = [SELECT vlocity_cmt__OrderProductId__r.OrderId FROM Asset WHERE Id = :assetId LIMIT 1];
-        System.debug(asset);
-        Order order = [SELECT Id, OriginStoreLocation__c, CreatedDate, DeliveryDate__c, Delivery_Method__c, vlocity_cmt__OriginatingChannel__c
-                         FROM Order
-                        WHERE Id = : asset.vlocity_cmt__OrderProductId__r.OrderId];
-        return order;
     }
     
     void getNegotiations(Map<String,Object> inputMap, Map<String,Object> outMap, Map<String,Object> options) {

@@ -29,6 +29,35 @@ public class ta_care_querySOSRefillsHelper_test {
         System.assertEquals('Cerrado', recordMap.get('estado'));
     }
     
+    @IsTest static void invoke_GetRefillSOSHistory_error(){
+        String methodName = 'GetRefillSOSHistory';
+        
+        Map<String, Object> outMap = new Map<String, Object>();
+        Map<String, Object> options = new Map<String, Object>();
+        Map<String, Object> empty = new Map<String, Object>();
+
+        String jsonInputString = '{"body":{"codigoAcceso":{"codSuscripcion":"string", "identificadorRecurso":"13800001139"}, "listaDatosAdicionales":[{"nombreParametro":"string", "valorParametro":"string"}]}, "codSuscript":"13800001139"}';
+        String ipRes2 = '{"detalle": [{"mensaje": "Codigo: VAL0382505 - xxxxxxxxxxxxxxxxxxx","campo": "Error"},{"mensaje": "MDWOSB12 TST1 - mdwtpbust1.**o","campo": "Backend"},{"mensaje": "373025427","campo": "txId"}],"mensaje": "La validacion del Schema no fue exitosa","codigo": "DP-382505"}';
+        Map<String, Object> outMap2 = (Map<String, Object>)JSON.deserializeUntyped(ipRes2);
+        Map<String, Object> input = (Map<String, Object>)JSON.deserializeUntyped(jsonInputString);
+        outMap.put('IPResult',outMap2);
+        System.debug('Result - Input -'+input );
+        ta_care_querySOSRefillsHelper testedClass = new ta_care_querySOSRefillsHelper();
+
+        Test.startTest();
+        testedClass.invokeMethod(methodName, input, outMap, options);
+        Test.stopTest();
+		
+        system.debug('outMap: '+outMap);
+        
+        Map<String, Object> result = (Map<String, Object>)outMap.get('IPResult');
+        System.debug('detalle result: ' + result);
+        System.debug('detalle error: ' + result.get('detalle'));
+        List<Object> errorSOS = (List<Object>)result.get('detalle');
+		
+        //System.assert(errorSOS != null);
+    }
+    
     @IsTest static void test_getPacksHistoryDetail(){
         String methodName = 'getPacksHistoryDetail';
         

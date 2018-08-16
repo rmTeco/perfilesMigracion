@@ -1157,6 +1157,11 @@
             <field>Parent.Description</field>
             <table>Order.OrderItems.vlocity_cmt__Assets__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Product2.vlocity_cmt__ParentClassId__c</field>
+            <table>Order.OrderItems.vlocity_cmt__Assets__r</table>
+        </columns>
         <masterLabel>Assets</masterLabel>
     </sections>
     <sections>
@@ -1213,6 +1218,36 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>vlocity_cmt__AssetId__c.vlocity_cmt__BillingAccountId__c</field>
+            <table>Order.OrderItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__ParentOrderProduct__c.vlocity_cmt__ParentItemId__c</field>
+            <table>Order.OrderItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__ParentOrderProduct__c.vlocity_cmt__ParentOrderProduct__c</field>
+            <table>Order.OrderItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__ParentOrderProduct__c.vlocity_cmt__RootItemId__c</field>
+            <table>Order.OrderItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__AssetId__c.BundleStatus__c</field>
+            <table>Order.OrderItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__AssetId__c.vlocity_cmt__LineNumber__c</field>
+            <table>Order.OrderItems</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>vlocity_cmt__AssetId__c.vlocity_cmt__ProductHierarchyPath__c</field>
             <table>Order.OrderItems</table>
         </columns>
         <masterLabel>Productos de pedido</masterLabel>

@@ -33,6 +33,26 @@ public class MarketingCloudAPIUtilTest {
         Test.setMock(HttpCalloutMock.class, new MktgCloudCalloutCreateCampaignMock()); 
         
         MarketingCloudAPIUtil.updateCampaign('1234', createCampaignWrapper(), '20');
+        List<Campaign> campaigns = new List<Campaign>();
+        Campaign campaign = new Campaign(Name='TestC', Description='TestD');
+        campaigns.add(campaign);
+        MarketingCloudAPIUtil.serializeCampaigns(campaigns);
+        
+        TriggeredSendNotificationSettings__c tsns = new TriggeredSendNotificationSettings__c();
+        tsns.Name='TestCNS';
+        tsns.TriggeredSendMCId__c='1332';
+        insert tsns;
+        
+        MktgCloudAPISettings__c mcsns = new MktgCloudAPISettings__c();
+        mcsns.Name='TestMCAS';
+        mcsns.ClientId__c='123';
+        mcsns.ClientSecret__c='12';
+        mcsns.MCAPIAccessToken__c='11';
+        mcsns.MktgAuthURL__c='11';
+        mcsns.TokenCreationDate__c=Date.today();
+        mcsns.TokenDuration__c=30;
+        insert mcsns;
+        MarketingCloudAPIUtil.sendMessageWithMC('TestCNS', '{"responses":[{"hasErrors":false,"id":20,"value":"C_OT_MB_EQUIPMENT_MODEMS"},{"displayText":"Modem","id":20,"value":"C_OT_MB_EQUIPMENT_MODEMS"}]}', 'randomData');
 		
     }
     
@@ -43,7 +63,7 @@ public class MarketingCloudAPIUtilTest {
     public static MarketingCloudAPIUtil.CampaignWrapper createCampaignWrapper() {
         return new MarketingCloudAPIUtil.CampaignWrapper('1234', 'Campaign Test', 'Test Description', 'MC Description', '');
     }
-    
+
     public class MktgCloudCalloutCreateCampaignMock implements HttpCalloutMock{
         
         public HttpResponse respond(HttpRequest req) {

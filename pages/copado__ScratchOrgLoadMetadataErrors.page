@@ -1,0 +1,63 @@
+<!--
+ - Created by mertyalti on 16/01/2018.
+ -->
+
+<apex:page id="ScratchOrgLoadMetadataErrors" standardController="copado__Org__c" showHeader="false" sideBar="false"
+           lightningStylesheets="true">
+
+    <apex:stylesheet value="{!URLFOR($Resource.copado__jqx,'jqwidgets/styles/jqx.base.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.copado__jqx,'jqwidgets/styles/jqx.energyblue.css')}"/>
+
+    <apex:includeScript value="{!URLFOR($Resource.copado__Statics,'js/libs/jquery.min.1.10.2.js')}"/>
+    <script type="text/javascript">
+            var __sfdcSessionId = '{!GETSESSIONID()}';
+
+
+    </script>
+    <style>
+        .bPageBlock .pbTitle {
+            width: 55% !important;
+        }
+    </style>
+    <script src="../../soap/ajax/32.0/connection.js" type="text/javascript"></script>
+    <apex:includeScript value="{!URLFOR($Resource.metadataGrid2) }"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__JsRemoting)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__jqx,'jqwidgets/jqx-all.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__ScratchOrg)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.copado__utils)}"/>
+    <script>
+        var $copado = $copado || jQuery.noConflict();
+
+
+    </script>
+    <apex:outputPanel layout="block" id="errorBlock" style="padding-top:10px;">
+        <apex:pageBlock id="errorTitle" title="Latest Metadata Load Errors for Scratch Org {!copado__Org__c.Name}" mode="detail">
+            <apex:outputPanel id="errorGrud" layout="block">
+                <apex:outputPanel layout="none">
+                    <script type="application/javascript">
+                    var _config = {
+                        orgId: "{!JSENCODE(Org__c.Id)}",
+                        attachmentName: 'DxLoadMetadataError',
+                        gridMode: 'error'
+                    };
+                    $copado(function () {
+                        window.setTimeout(copadoDX.initErrors(_config), 0);
+                    });
+                    </script>
+                    <div>
+                        <div id="removeCacheContainer">
+
+                        </div>
+
+                        <div id="errorsGrid">
+                            <center><img src="/img/loading.gif"/><i><span
+                                            id="retry-label">{!$Label.LOADING}</span></i></center>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+
+        </apex:pageBlock>
+    </apex:outputPanel>
+
+</apex:page>

@@ -261,29 +261,29 @@
             <restricted>true</restricted>
             <valueSetName>Delivery_Methods</valueSetName>
             <valueSettings>
-                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
-                <controllingFieldValue>IVR</controllingFieldValue>
-                <controllingFieldValue>SMS</controllingFieldValue>
-                <controllingFieldValue>Social Media</controllingFieldValue>
-                <controllingFieldValue>Agentes</controllingFieldValue>
-                <controllingFieldValue>USSD</controllingFieldValue>
-                <valueName>Presencial</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
-                <controllingFieldValue>E-Commerce</controllingFieldValue>
                 <controllingFieldValue>APP</controllingFieldValue>
                 <controllingFieldValue>WEB</controllingFieldValue>
                 <controllingFieldValue>Call Center</controllingFieldValue>
                 <controllingFieldValue>Agentes</controllingFieldValue>
+                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
+                <controllingFieldValue>E-Commerce</controllingFieldValue>
                 <valueName>Store Pick Up</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>IVR</controllingFieldValue>
+                <controllingFieldValue>SMS</controllingFieldValue>
+                <controllingFieldValue>Social Media</controllingFieldValue>
+                <controllingFieldValue>USSD</controllingFieldValue>
+                <controllingFieldValue>Agentes</controllingFieldValue>
                 <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
-                <controllingFieldValue>E-Commerce</controllingFieldValue>
+                <valueName>Presencial</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>WEB</controllingFieldValue>
                 <controllingFieldValue>Call Center</controllingFieldValue>
                 <controllingFieldValue>Agentes</controllingFieldValue>
+                <controllingFieldValue>Oficinas Comerciales</controllingFieldValue>
+                <controllingFieldValue>E-Commerce</controllingFieldValue>
                 <valueName>Delivery</valueName>
             </valueSettings>
         </valueSet>
@@ -696,7 +696,7 @@
     </fields>
     <fields>
         <fullName>PaymentCFT__c</fullName>
-        <description>#SalesTeam #Sprint12 
+        <description>#SalesTeam #Sprint12
 
 Description:  this field is used to persist the calculation of the CFT (TOTAL FINANCIAL COST) over a selected amount</description>
         <externalId>false</externalId>
@@ -1327,6 +1327,16 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <fullName>Type</fullName>
         <trackHistory>true</trackHistory>
         <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>sfxId__c</fullName>
+        <externalId>true</externalId>
+        <label>sfxId</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>vlocity_cmt__AccountId__c</fullName>
@@ -2303,7 +2313,7 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <columns>CREATEDBY_USER.ALIAS</columns>
         <columns>ORDERS.CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
-        <label>All Orders</label>
+        <label>Todos los pedidos</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -2397,6 +2407,26 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <language>es_MX</language>
     </listViews>
     <listViews>
+        <fullName>Ordenes_ABM_DE_SERVICIOS_OM</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>ORDERS.TOTAL_AMOUNT</columns>
+        <columns>ORDERS.CREATED_DATE</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>ORDERS.LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Gestion__c</field>
+            <operation>equals</operation>
+            <value>Alta Baja Servicios</value>
+        </filters>
+        <label>Ordenes- ABM de servicios- OM</label>
+        <language>es_MX</language>
+    </listViews>
+    <listViews>
         <fullName>Ordenes_Alta_OM</fullName>
         <columns>ORDERS.ORDER_NUMBER</columns>
         <columns>SALES.ACCOUNT.NAME</columns>
@@ -2467,6 +2497,7 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <columns>UPDATEDBY_USER.ALIAS</columns>
         <columns>ORDERS.LAST_UPDATE</columns>
         <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>ORDERS.CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Gestion__c</field>
@@ -2491,9 +2522,29 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <filters>
             <field>Gestion__c</field>
             <operation>equals</operation>
-            <value>Alta producto genérico</value>
+            <value>Compra de Pack</value>
         </filters>
         <label>Ordenes- Compra de pack- OM</label>
+        <language>es_MX</language>
+    </listViews>
+    <listViews>
+        <fullName>Ordenes_Conciliacion_OM</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>ORDERS.TOTAL_AMOUNT</columns>
+        <columns>ORDERS.EFFECTIVE_DATE</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>ORDERS.LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Gestion__c</field>
+            <operation>contains</operation>
+            <value>Conciliate</value>
+        </filters>
+        <label>Ordenes- Conciliacion- OM</label>
         <language>es_MX</language>
     </listViews>
     <listViews>
@@ -2517,6 +2568,26 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <language>es_MX</language>
     </listViews>
     <listViews>
+        <fullName>Ordenes_Rehabilitacion_OM</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>ORDERS.TOTAL_AMOUNT</columns>
+        <columns>ORDERS.EFFECTIVE_DATE</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>ORDERS.LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Gestion__c</field>
+            <operation>contains</operation>
+            <value>Resume</value>
+        </filters>
+        <label>Ordenes- Rehabilitacion- OM</label>
+        <language>es_MX</language>
+    </listViews>
+    <listViews>
         <fullName>Ordenes_Sales</fullName>
         <columns>ORDERS.ORDER_NUMBER</columns>
         <columns>SALES.ACCOUNT.NAME</columns>
@@ -2534,6 +2605,26 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             <value>00014815</value>
         </filters>
         <label>Ordenes- Sales</label>
+    </listViews>
+    <listViews>
+        <fullName>Ordenes_Suspension_OM</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>ORDERS.TOTAL_AMOUNT</columns>
+        <columns>ORDERS.EFFECTIVE_DATE</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>ORDERS.LAST_UPDATE</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Gestion__c</field>
+            <operation>contains</operation>
+            <value>Suspension</value>
+        </filters>
+        <label>Ordenes- Suspension- OM</label>
+        <language>es_MX</language>
     </listViews>
     <listViews>
         <fullName>Ordenes_Venta_OM</fullName>
@@ -2587,11 +2678,12 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <columns>ORDERS.ORDER_NUMBER</columns>
         <columns>SALES.ACCOUNT.NAME</columns>
         <columns>ORDERS.EFFECTIVE_DATE</columns>
+        <columns>Gestion__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>SALES.ACCOUNT.NAME</field>
+            <field>Gestion__c</field>
             <operation>contains</operation>
-            <value>Bum Bum</value>
+            <value>Numero gratis</value>
         </filters>
         <label>Prueba3</label>
         <language>es_MX</language>
@@ -2615,7 +2707,28 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             <operation>equals</operation>
             <value>Activated</value>
         </filters>
+        <filters>
+            <field>ORDERS.EFFECTIVE_DATE</field>
+            <operation>greaterThan</operation>
+        </filters>
         <label>RubenOM-Activated</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>RubenOM_All</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>ORDERS.TOTAL_AMOUNT</columns>
+        <columns>ORDERS.EFFECTIVE_DATE</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>CONTRACT.CONTRACT_NUMBER</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>SALES.ACCOUNT.NAME</field>
+            <operation>equals</operation>
+            <value>RubenOM</value>
+        </filters>
+        <label>RubenOM-All</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -2645,11 +2758,25 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
         <columns>ORDERS.CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Gestion__c</field>
-            <operation>equals</operation>
-            <value>Suspension</value>
+            <field>ORDERS.ORDER_NUMBER</field>
+            <operation>contains</operation>
+            <value>00062492</value>
         </filters>
         <label>Suspension orders</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Todas_las_ordenes2</fullName>
+        <columns>ORDERS.ORDER_NUMBER</columns>
+        <columns>SALES.ACCOUNT.NAME</columns>
+        <columns>ORDERS.EFFECTIVE_DATE</columns>
+        <columns>ORDERS.STATUS</columns>
+        <columns>ORDERS.CREATED_DATE</columns>
+        <columns>ORDERS.LAST_UPDATE</columns>
+        <columns>Gestion__c</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <label>Todas las ordenes - Gestión / Usuario</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -3131,10 +3258,6 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
                 <default>false</default>
             </values>
             <values>
-                <fullName>Cerrada Exitosa - Reclamo</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Cobrado</fullName>
                 <default>false</default>
             </values>
@@ -3256,6 +3379,13 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Recargado</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type</picklist>
+            <values>
+                <fullName>TechQuote</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3505,7 +3635,7 @@ Description:  this field is used to persist the calculation of the CFT (TOTAL FI
             </values>
             <values>
                 <fullName>Presencial</fullName>
-                <default>true</default>
+                <default>false</default>
             </values>
             <values>
                 <fullName>Store Pick Up</fullName>
@@ -4282,36 +4412,36 @@ alert(result);
         <masterLabel>Generate Delta</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
 
-var namespace_prefix = &apos;&apos;; 
-var result = sforce.connection.describeGlobal(); 
-var TOKEN_OBJ = &quot;Party__c&quot;; 
-var sobjects = result.getArray(&quot;sobjects&quot;); 
+var namespace_prefix = &apos;&apos;;
+var result = sforce.connection.describeGlobal();
+var TOKEN_OBJ = &quot;Party__c&quot;;
+var sobjects = result.getArray(&quot;sobjects&quot;);
 
-for(var i=0; i&lt;sobjects.length; i++) { 
-var sobjName = sobjects[i].name; 
-var str = sobjName.split(&quot;__&quot;); 
+for(var i=0; i&lt;sobjects.length; i++) {
+var sobjName = sobjects[i].name;
+var str = sobjName.split(&quot;__&quot;);
 
-//if there are 3 values there is a namespace 
-if (str.length == 3) { 
-//Is it one of ours? 
-var sobj = str[1].valueOf() +&apos;__c&apos;; 
-if(sobj == TOKEN_OBJ) { 
-namespace_prefix = str[0].valueOf(); 
-break; 
-} 
-} 
-} 
+//if there are 3 values there is a namespace
+if (str.length == 3) {
+//Is it one of ours?
+var sobj = str[1].valueOf() +&apos;__c&apos;;
+if(sobj == TOKEN_OBJ) {
+namespace_prefix = str[0].valueOf();
+break;
+}
+}
+}
 
-var simpleDecompControllerNamespace = &apos;&apos;; 
-var simpleDecompPageNamespace = &apos;&apos;; 
-if(namespace_prefix != &quot;&quot;) { 
-simpleDecompControllerNamespace = namespace_prefix + &apos;.&apos;; 
-simpleDecompPageNamespace = namespace_prefix + &apos;__&apos;; 
-} 
-var res = sforce.apex.execute(&quot;XOMGenerateOrderItemsWithDelta&quot;,&quot;GenerateDelta&quot;,{orderId: &apos;{!Order.Id}&apos;}); 
+var simpleDecompControllerNamespace = &apos;&apos;;
+var simpleDecompPageNamespace = &apos;&apos;;
+if(namespace_prefix != &quot;&quot;) {
+simpleDecompControllerNamespace = namespace_prefix + &apos;.&apos;;
+simpleDecompPageNamespace = namespace_prefix + &apos;__&apos;;
+}
+var res = sforce.apex.execute(&quot;XOMGenerateOrderItemsWithDelta&quot;,&quot;GenerateDelta&quot;,{orderId: &apos;{!Order.Id}&apos;});
 alert(res);</url>
     </webLinks>
     <webLinks>
@@ -4322,45 +4452,45 @@ alert(res);</url>
         <masterLabel>Generate Delta &amp; Decompose</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
 
-var namespace_prefix = &apos;&apos;; 
-var result = sforce.connection.describeGlobal(); 
-var TOKEN_OBJ = &quot;Party__c&quot;; 
-var sobjects = result.getArray(&quot;sobjects&quot;); 
+var namespace_prefix = &apos;&apos;;
+var result = sforce.connection.describeGlobal();
+var TOKEN_OBJ = &quot;Party__c&quot;;
+var sobjects = result.getArray(&quot;sobjects&quot;);
 
-for(var i=0; i&lt;sobjects.length; i++) { 
-var sobjName = sobjects[i].name; 
-var str = sobjName.split(&quot;__&quot;); 
+for(var i=0; i&lt;sobjects.length; i++) {
+var sobjName = sobjects[i].name;
+var str = sobjName.split(&quot;__&quot;);
 
-//if there are 3 values there is a namespace 
-if (str.length == 3) { 
-//Is it one of ours? 
-var sobj = str[1].valueOf() +&apos;__c&apos;; 
-if(sobj == TOKEN_OBJ) { 
-namespace_prefix = str[0].valueOf(); 
-break; 
-} 
-} 
-} 
+//if there are 3 values there is a namespace
+if (str.length == 3) {
+//Is it one of ours?
+var sobj = str[1].valueOf() +&apos;__c&apos;;
+if(sobj == TOKEN_OBJ) {
+namespace_prefix = str[0].valueOf();
+break;
+}
+}
+}
 
-var simpleDecompControllerNamespace = &apos;&apos;; 
-var simpleDecompPageNamespace = &apos;&apos;; 
-if(namespace_prefix != &quot;&quot;) { 
-simpleDecompControllerNamespace = namespace_prefix + &apos;.&apos;; 
-simpleDecompPageNamespace = namespace_prefix + &apos;__&apos;; 
-} 
-var res = sforce.apex.execute(&quot;XOMGenerateOrderItemsWithDelta&quot;,&quot;GenerateDelta&quot;,{orderId: &apos;{!Order.Id}&apos;}); 
+var simpleDecompControllerNamespace = &apos;&apos;;
+var simpleDecompPageNamespace = &apos;&apos;;
+if(namespace_prefix != &quot;&quot;) {
+simpleDecompControllerNamespace = namespace_prefix + &apos;.&apos;;
+simpleDecompPageNamespace = namespace_prefix + &apos;__&apos;;
+}
+var res = sforce.apex.execute(&quot;XOMGenerateOrderItemsWithDelta&quot;,&quot;GenerateDelta&quot;,{orderId: &apos;{!Order.Id}&apos;});
 if(res != &apos;OK&apos;)
-   alert(res); 
+   alert(res);
 
-var result = sforce.apex.execute(simpleDecompControllerNamespace+&quot;SimpleDecompositionController&quot;,&quot;decompose&quot;, {orderId: &apos;{!Order.Id}&apos;}); 
-if(result == &apos;OK&apos;) { 
-// trim ID because we&apos;re sending Order IDs to thor in 15-length 
-window.location.href = &apos;/apex/&apos; + simpleDecompPageNamespace + &apos;XOMViewOrderDecomposition?id={!LEFT(Order.Id, 15)}&apos;; 
-} else { 
-alert(result); 
+var result = sforce.apex.execute(simpleDecompControllerNamespace+&quot;SimpleDecompositionController&quot;,&quot;decompose&quot;, {orderId: &apos;{!Order.Id}&apos;});
+if(result == &apos;OK&apos;) {
+// trim ID because we&apos;re sending Order IDs to thor in 15-length
+window.location.href = &apos;/apex/&apos; + simpleDecompPageNamespace + &apos;XOMViewOrderDecomposition?id={!LEFT(Order.Id, 15)}&apos;;
+} else {
+alert(result);
 }</url>
     </webLinks>
     <webLinks>
@@ -4382,25 +4512,25 @@ alert(result);
         <masterLabel>TA CPQ</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/xdomain/xdomain.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/support/console/31.0/integration.js&quot;)} 
-var namespace_prefix = &apos;&apos;; 
-var result = sforce.connection.describeGlobal(); 
-var TOKEN_OBJ = &quot;Party__c&quot;; 
-var sobjects = result.getArray(&quot;sobjects&quot;); 
-for(var i=0; i&lt;sobjects.length; i++) { 
-var sobjName = sobjects[i].name; 
-var str = sobjName.split(&quot;__&quot;); 
-//if there are 3 values there is a namespace 
-if (str.length == 3){ 
-var sobj = str[1].valueOf() +&apos;__c&apos;; 
-if(sobj == TOKEN_OBJ) { 
-namespace_prefix = str[0].valueOf(); 
-} 
-} 
-} 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/xdomain/xdomain.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/support/console/31.0/integration.js&quot;)}
+var namespace_prefix = &apos;&apos;;
+var result = sforce.connection.describeGlobal();
+var TOKEN_OBJ = &quot;Party__c&quot;;
+var sobjects = result.getArray(&quot;sobjects&quot;);
+for(var i=0; i&lt;sobjects.length; i++) {
+var sobjName = sobjects[i].name;
+var str = sobjName.split(&quot;__&quot;);
+//if there are 3 values there is a namespace
+if (str.length == 3){
+var sobj = str[1].valueOf() +&apos;__c&apos;;
+if(sobj == TOKEN_OBJ) {
+namespace_prefix = str[0].valueOf();
+}
+}
+}
 var target_url = &apos;/apex/taSalesCartContainer?id={!Order.Id}&amp;accountId={!Order.vlocity_cmt__AccountId__c}&apos;;
 window.location.href = target_url;</url>
     </webLinks>
@@ -4412,26 +4542,26 @@ window.location.href = target_url;</url>
         <masterLabel>TA Clone</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/xdomain/xdomain.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/support/console/31.0/integration.js&quot;)} 
-var namespace_prefix = &apos;&apos;; 
-var result = sforce.connection.describeGlobal(); 
-var TOKEN_OBJ = &quot;Party__c&quot;; 
-var sobjects = result.getArray(&quot;sobjects&quot;); 
-for(var i=0; i&lt;sobjects.length; i++) { 
-var sobjName = sobjects[i].name; 
-var str = sobjName.split(&quot;__&quot;); 
-//if there are 3 values there is a namespace 
-if (str.length == 3){ 
-var sobj = str[1].valueOf() +&apos;__c&apos;; 
-if(sobj == TOKEN_OBJ) { 
-namespace_prefix = str[0].valueOf(); 
-} 
-} 
-} 
-var target_url = &apos;/apex/taSalesCreateOrder?orderId={!Order.Id}&amp;CloneOrder=true&amp;operationCode=VTLNCE&amp;accountId={!Order.vlocity_cmt__AccountId__c}&apos;; 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/xdomain/xdomain.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/support/console/31.0/integration.js&quot;)}
+var namespace_prefix = &apos;&apos;;
+var result = sforce.connection.describeGlobal();
+var TOKEN_OBJ = &quot;Party__c&quot;;
+var sobjects = result.getArray(&quot;sobjects&quot;);
+for(var i=0; i&lt;sobjects.length; i++) {
+var sobjName = sobjects[i].name;
+var str = sobjName.split(&quot;__&quot;);
+//if there are 3 values there is a namespace
+if (str.length == 3){
+var sobj = str[1].valueOf() +&apos;__c&apos;;
+if(sobj == TOKEN_OBJ) {
+namespace_prefix = str[0].valueOf();
+}
+}
+}
+var target_url = &apos;/apex/taSalesCreateOrder?orderId={!Order.Id}&amp;CloneOrder=true&amp;operationCode=VTLNCE&amp;accountId={!Order.vlocity_cmt__AccountId__c}&apos;;
 window.location.href = target_url;</url>
     </webLinks>
     <webLinks>
@@ -4530,8 +4660,8 @@ alert(deserializedResult.errorMsg);
         <masterLabel>Estado Conciliacion OM</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/apex.js&quot;)} 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/14.0/apex.js&quot;)}
 
 var orderID=&apos;{!Order.Id}&apos;
 var orderNum = &apos;{!Order.OrderNumber}&apos;

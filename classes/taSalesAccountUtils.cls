@@ -75,75 +75,49 @@ global with sharing class taSalesAccountUtils implements vlocity_cmt.VlocityOpen
     }
 
     //GET ACCOUNT ID, GET ORDERS FOR ACCOUNT, RETURN COLLECTION OF DISTINCT ADDRESSES
-    public void getAccountAddresses(Map<String, Object> input, Map<String, Object> outMap, Map<String, Object> options) {
-        try {
-            String accountId = (String) options.get('accountId');
-
-            List<Order> orders = [SELECT Id,
-                                         ShippingAditionalInformation__c,
-                                         ShippingCity,
-                                         ShippingApartment__c,
-                                         ShippingFloor__c,
-                                         ShippingPostalCode,
-                                         ShippingStreet1__c,
-                                         ShippingStreet2__c,
-                                         ShippingStateCode,
-                                         ShippingStreet__c,
-                                         ShippingStreetNumber__c,
-                                         vlocity_cmt__ShippingState__c
-                                    FROM Order
-                                   WHERE AccountId =: accountId
-                                     AND AddressHidden__c = false];
-                
-            Map<String, OrderAddress> addresses = new Map<String, OrderAddress>();
-
-            for(Order o : orders) {
-                OrderAddress oa = new OrderAddress(o);
-
-                if(oa.orderString != 'nullnullnullnullnullnullnullnullnullnullnull'){
-                    OrderAddress existingOa = addresses.get(oa.orderString);
-
-                    if(existingOa == null) {
-                        existingOa = oa;
-                    } else {
-                        existingOa.addOrderId(o.Id);
-                    }
-
-                    addresses.put(oa.orderString, existingOa);
+    public void getAccountAddresses(Map<String, Object> input, Map<String, Object> outMap, Map<String, Object> options){
+        System.debug('getAccountAddresses');
+    	String accountId = (String)options.get('accountId');
+        System.debug('accountId: ' + accountId);
+    	List<Order> orders = [SELECT Id, ShippingAditionalInformation__c, ShippingCity, ShippingApartment__c, ShippingFloor__c, ShippingPostalCode, ShippingStreet1__c, ShippingStreet2__c, ShippingStateCode, ShippingStreet__c, ShippingStreetNumber__c, vlocity_cmt__ShippingState__c FROM Order WHERE AccountId =: accountId AND AddressHidden__c = false];
+        Map<String, OrderAddress> addresses = new Map<String, OrderAddress>();
+    	for(Order o: orders){
+            OrderAddress oa = new OrderAddress(o);
+            if(oa.orderString != 'nullnullnullnullnullnullnullnullnullnullnull'){
+                OrderAddress existingOa = addresses.get(oa.orderString);
+                if(existingOa == null){
+                    existingOa = oa;
+                }else{
+                    existingOa.addOrderId(o.Id);
                 }
+                addresses.put(oa.orderString, existingOa);
             }
+    	}
 
-            List<Map<String, Object>> distinctAddresses = new List<Map<String, Object>>();
+    	List<Map<String, Object>> distinctAddresses = new List<Map<String, Object>>();
+    	for(OrderAddress uniqueAddress: addresses.values()){
+    		Order o = uniqueAddress.o;
+    		Map<String, Object> jsonMap = new Map<String, Object>();
+    		jsonMap.put('ShippingAditionalInformation', o.ShippingAditionalInformation__c);
+    		jsonMap.put('ShippingCity', o.ShippingCity);
+    		jsonMap.put('ShippingApartment', o.ShippingApartment__c);
+    		jsonMap.put('ShippingFloor', o.ShippingFloor__c);
+    		jsonMap.put('ShippingPostalCode', o.ShippingPostalCode);
+    		jsonMap.put('ShippingStreet1', o.ShippingStreet1__c);
+    		jsonMap.put('ShippingStreet2', o.ShippingStreet2__c);
+    		jsonMap.put('ShippingStateCode', o.ShippingStateCode);
+    		jsonMap.put('ShippingStreet', o.ShippingStreet__c);
+    		jsonMap.put('ShippingStreetNumber', o.ShippingStreetNumber__c);
+            jsonMap.put('ShippingState', o.vlocity_cmt__ShippingState__c);
+            jsonMap.put('OrderIds', uniqueAddress.orderIds);
+            distinctAddresses.add(jsonMap);
+    	}
+        System.debug('distinctAddresses: ' + distinctAddresses);
 
-            for(OrderAddress uniqueAddress: addresses.values()) {
-                Order o = uniqueAddress.o;
-                Map<String, Object> jsonMap = new Map<String, Object>();
-                jsonMap.put('ShippingAditionalInformation', o.ShippingAditionalInformation__c);
-                jsonMap.put('ShippingCity', o.ShippingCity);
-                jsonMap.put('ShippingApartment', o.ShippingApartment__c);
-                jsonMap.put('ShippingFloor', o.ShippingFloor__c);
-                jsonMap.put('ShippingPostalCode', o.ShippingPostalCode);
-                jsonMap.put('ShippingStreet1', o.ShippingStreet1__c);
-                jsonMap.put('ShippingStreet2', o.ShippingStreet2__c);
-                jsonMap.put('ShippingStateCode', o.ShippingStateCode);
-                jsonMap.put('ShippingStreet', o.ShippingStreet__c);
-                jsonMap.put('ShippingStreetNumber', o.ShippingStreetNumber__c);
-                jsonMap.put('ShippingState', o.vlocity_cmt__ShippingState__c);
-                jsonMap.put('OrderIds', uniqueAddress.orderIds);
-                distinctAddresses.add(jsonMap);
-            }
-
-            outMap.put('addresses', distinctAddresses);
-        }
-        catch(Exception e) {
-            System.debug('Exception Msg: ' + e.getMessage());
-            System.debug('Exception Cause: ' + e.getCause());
-            System.debug('Exception Stack Trace: ' + e.getStackTraceString());
-            throw e;
-        }
+    	outMap.put('addresses', distinctAddresses);
     }
 
-    public void removeAddress(Map<String, Object> input, Map<String, Object> outMap) {
+    public void removeAddress(Map<String, Object> input, Map<String, Object> outMap){
         Map<String, Object> shippingAddressData = (Map<String, Object>)input.get('ShippingAddressData');
         Map<String, Object> address = (Map<String, Object>)shippingAddressData.get('Address');
         List<Object> ids = (List<Object>) address.get('Ids');

@@ -186,9 +186,9 @@
                     <label>0.21</label>
                 </value>
                 <value>
-                    <fullName>0.255</fullName>
+                    <fullName>0.262632</fullName>
                     <default>false</default>
-                    <label>0.255</label>
+                    <label>0.262632</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -351,7 +351,7 @@
     </fields>
     <fields>
         <fullName>NMU__c</fullName>
-        <description>Unique product identifier from TA</description>
+        <description>Unique product identifier for TA</description>
         <externalId>true</externalId>
         <label>NMU</label>
         <length>30</length>
@@ -485,7 +485,7 @@
         <valueSet>
             <restricted>true</restricted>
             <valueSetDefinition>
-                <sorted>true</sorted>
+                <sorted>false</sorted>
                 <value>
                     <fullName>Huawei</fullName>
                     <default>false</default>
@@ -1346,13 +1346,12 @@
         <columns>PRODUCT2.FAMILY</columns>
         <columns>UPDATEDBY_USER.ALIAS</columns>
         <columns>PRODUCT2.ACTIVE</columns>
+        <columns>vlocity_cmt__Type__c</columns>
+        <columns>vlocity_cmt__SubType__c</columns>
+        <columns>vlocity_cmt__ObjectTypeId__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>PRODUCT2.NAME</field>
-            <operation>startsWith</operation>
-            <value>Plan</value>
-        </filters>
         <label>Todos los productos</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>AllProducts3</fullName>
@@ -1411,7 +1410,7 @@
                 <default>true</default>
             </values>
             <values>
-                <fullName>0%2E255</fullName>
+                <fullName>0%2E262632</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1503,6 +1502,25 @@
             </values>
             <values>
                 <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TA_Relationship_Type__c</picklist>
+            <values>
+                <fullName>Group</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Offer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Specification</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1619,7 +1637,7 @@
                 <default>true</default>
             </values>
             <values>
-                <fullName>0%2E255</fullName>
+                <fullName>0%2E262632</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1739,6 +1757,25 @@
             </values>
             <values>
                 <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TA_Relationship_Type__c</picklist>
+            <values>
+                <fullName>Group</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Offer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Specification</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2019,7 +2056,7 @@
                 <default>true</default>
             </values>
             <values>
-                <fullName>0%2E255</fullName>
+                <fullName>0%2E262632</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2119,6 +2156,25 @@
             </values>
             <values>
                 <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>TA_Relationship_Type__c</picklist>
+            <values>
+                <fullName>Group</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Offer</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Promotion</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Specification</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2244,6 +2300,8 @@
         <searchResultsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>PRODUCT2.DESCRIPTION</searchResultsAdditionalFields>
         <searchResultsAdditionalFields>PRODUCT2.FAMILY</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Alicuota__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>PRODUCT2.SKU</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>

@@ -299,6 +299,7 @@ private Map<String, Object> input;
             //system.debug('dataPayment => ' + dataPayment);
             
             List<Object> payments = (List<Object>) dataPayment.get('PaymentMethods');
+            //system.debug('Otra linea 2');
             
             String IdPaymentCard;
             Decimal PaymentAmount = (Decimal)dataPayment.get('preloadedAmount');
@@ -310,13 +311,15 @@ private Map<String, Object> input;
             String PaymentMethod; 
             String PaymentType = 'Customer Payment';
             String PaymentBank;
-
+       
             for(Object fld : payments){    
-           
+                           
+            
                 Map<String,Object> data = (Map<String,Object>)fld;
     
                 //Magic!
-                //system.debug('Valor buscado ' + data.get('Selected'));                  
+                system.debug('Valor buscado ' + data.get('Selected'));
+                
                 if (data.get('Selected') == true){
                     IdPaymentCard = (String)data.get('PaymentId');  
                     CardNumber = (String)data.get('CardNumber__c'); 
@@ -329,6 +332,7 @@ private Map<String, Object> input;
                 }
                 
             }
+            
              this.output.put('IdPaymentCard', IdPaymentCard );
              this.output.put('PaymentAmount', PaymentAmount );
              this.output.put('CardNumber', CardNumber );

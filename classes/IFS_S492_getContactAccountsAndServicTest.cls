@@ -1,17 +1,16 @@
 @isTest
 global with sharing class IFS_S492_getContactAccountsAndServicTest {
-    private static final String K_ACCOUNT_NAME = 'TestS492Acc';
-    private static final String K_ACCOUNT_NAME2 = 'TestS492Acc2';
-    private static final String K_ACCOUNT_NAME_ASSET = 'TestS492Ass';
-    private static final String K_PRODUCT_NAME = 'TestS224Prod';
-    private static final String K_MSISDN_OK  = '47774777';
-    private static final String K_ASSET_NAME = 'Plan con tarjeta';
-    private static final String K_ROOT_ASSET_NAME = 'Test492RAss';
-    private static final String K_CONTACT_ID = '0036C000007GFcE';
-    private static final String K_JSON_ATTR = '{"FAN_ATTCAT_000047":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pw2RUAQ","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000057","attributeconfigurable__c":true,"attributedisplaysequence__c":"10","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgNUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyB7UAI","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000129","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Tipo Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgOUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"MOVIL","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[],"values":[{"value":"Desconocido","id":10,"displayText":"Desconocido"},{"value":"Onnet","id":20,"displayText":"Onnet"},{"value":"Offnet","id":30,"displayText":"Offnet"},{"value":"Internacional","id":40,"displayText":"Internacional"},{"value":"Linea Fija","id":50,"displayText":"Linea Fija"}]},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyfcUAA","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000142","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Id de Grupo","displaysequence__c":"null","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UtBVUA0","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"FAN_PV_GFNF_VOZ","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"FAN_PV_GFNF_VOZ"},"$$AttributeDefinitionEnd$$":null}],"FAN_ATTCAT_000045":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHJUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000067","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Provisionable","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgMUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHOUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000068","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Facturable en Venta","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgLUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null}]}';
+    //private static final String K_ACCOUNT_NAME = 'TestS492Acc';
+    //private static final String K_ACCOUNT_NAME2 = 'TestS492Acc2';
+    //private static final String K_ACCOUNT_NAME_ASSET = 'TestS492Ass';
+    //private static final String K_PRODUCT_NAME = 'TestS224Prod';
+    //private static final String K_MSISDN_OK  = '47774777';
+    //private static final String K_ASSET_NAME = 'Plan con tarjeta';
+    //private static final String K_ROOT_ASSET_NAME = 'Test492RAss';
+    //private static final String K_CONTACT_ID = '0036C000007GFcE';
+    //private static final String K_JSON_ATTR = '{"FAN_ATTCAT_000047":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pw2RUAQ","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000057","attributeconfigurable__c":true,"attributedisplaysequence__c":"10","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgNUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyB7UAI","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000129","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Tipo Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgOUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"MOVIL","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[],"values":[{"value":"Desconocido","id":10,"displayText":"Desconocido"},{"value":"Onnet","id":20,"displayText":"Onnet"},{"value":"Offnet","id":30,"displayText":"Offnet"},{"value":"Internacional","id":40,"displayText":"Internacional"},{"value":"Linea Fija","id":50,"displayText":"Linea Fija"}]},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyfcUAA","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000142","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Id de Grupo","displaysequence__c":"null","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UtBVUA0","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"FAN_PV_GFNF_VOZ","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"FAN_PV_GFNF_VOZ"},"$$AttributeDefinitionEnd$$":null}],"FAN_ATTCAT_000045":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHJUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000067","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Provisionable","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgMUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHOUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000068","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Facturable en Venta","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgLUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null}]}';
 
     @isTest static void testResponseStatus200 () {
-
         Account account = createAccount();
         Account accountForAsset = createAccountForAsset();
         //-- Perfiles del usuario --//
@@ -20,18 +19,15 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         createWorkTeamMember (workTeam.Id);
         //-- Datos de la prueba
         Pricebook2 priceBook = createPriceBook();
-        Product2 product = createProduct(K_JSON_ATTR);
+        Product2 product = createProduct(true);
         vlocity_cmt__PriceList__c priceList = createPriceList(priceBook.Id);
         PricebookEntry priceBookEntry = createPriceBookEntry(product, priceBook);
         Asset asset = createAsset(accountForAsset, product, priceList);
 
-
-
-
-
         createContact(null);
         Contact contactId = getContact();
         String contacto = contactId.Id;
+        System.debug('Contacto a consultar --> ' + contacto);
         Test.startTest();
         RestRequest req = new RestRequest();
         RestResponse res = new RestResponse();
@@ -50,8 +46,6 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
     }
 
     @isTest static void testResponseStatus400 () {
-
-
         Account account = createAccount();
         Account accountForAsset = createAccountForAsset();
         //-- Perfiles del usuario --//
@@ -60,14 +54,10 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         createWorkTeamMember (workTeam.Id);
         //-- Datos de la prueba
         Pricebook2 priceBook = createPriceBook();
-        Product2 product = createProduct(K_JSON_ATTR);
+        Product2 product = createProduct(true);
         vlocity_cmt__PriceList__c priceList = createPriceList(priceBook.Id);
         PricebookEntry priceBookEntry = createPriceBookEntry(product, priceBook);
         Asset asset = createAsset(accountForAsset, product, priceList);
-
-
-
-
         String contacto ='';
         Test.startTest();
         RestRequest req = new RestRequest();
@@ -87,8 +77,6 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
     }
 
     @isTest static void testResponseStatus417 () {
-
-
         Account account = createAccount();
         Account accountForAsset = createAccountForAsset();
         //-- Perfiles del usuario --//
@@ -97,12 +85,10 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         createWorkTeamMember (workTeam.Id);
         //-- Datos de la prueba
         Pricebook2 priceBook = createPriceBook();
-        Product2 product = createProduct(K_JSON_ATTR);
+        Product2 product = createProduct(true);
         vlocity_cmt__PriceList__c priceList = createPriceList(priceBook.Id);
         PricebookEntry priceBookEntry = createPriceBookEntry(product, priceBook);
         Asset asset = createAsset(accountForAsset, product, priceList);
-
-
 
         String contacto = '123455';
         Test.startTest();
@@ -123,7 +109,6 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
     }
 
     @isTest static void testResponseStatus417_2 () {
-
         Account account = createAccount();
         Account accountForAsset = createAccountForAsset();
         //-- Perfiles del usuario --//
@@ -132,14 +117,10 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         createWorkTeamMember (workTeam.Id);
         //-- Datos de la prueba
         Pricebook2 priceBook = createPriceBook();
-        Product2 product = createProduct(K_JSON_ATTR);
+        Product2 product = createProduct(true);
         vlocity_cmt__PriceList__c priceList = createPriceList(priceBook.Id);
         PricebookEntry priceBookEntry = createPriceBookEntry(product, priceBook);
         // Asset asset = createAsset(accountForAsset, product, priceList);
-
-
-
-
 
         createContact(null);
         Contact contactId = getContact();
@@ -162,7 +143,6 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
     }
 
     @isTest static void testResponseStatus417_3 () {
-
         Account account = createAccount();
         Account accountForAsset = createAccountForAsset();
         //-- Perfiles del usuario --//
@@ -171,14 +151,10 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         createWorkTeamMember (workTeam.Id);
         //-- Datos de la prueba
         Pricebook2 priceBook = createPriceBook();
-        Product2 product = createProduct('');
+        Product2 product = createProduct(false);
         vlocity_cmt__PriceList__c priceList = createPriceList(priceBook.Id);
         PricebookEntry priceBookEntry = createPriceBookEntry(product, priceBook);
         // Asset asset = createAsset(accountForAsset, product, priceList);
-
-
-
-
 
         createContact(null);
         Contact contactId = getContact();
@@ -226,30 +202,30 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
     private static Account createAccount() {
         System.debug('---------- Entre en createAccount()');
         List<Account> lstAcc = new List<Account>();
-        Account a = new Account(Name=K_ACCOUNT_NAME2, AccountIntegrationId__c=String.valueOf(10000));
+        Account a = new Account(Name='TestS492Acc2', AccountIntegrationId__c=String.valueOf(10000));
         a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
         lstAcc.add(a);
         Account b = new Account(Name='TelecomTest', AccountIntegrationId__c=String.valueOf(10001));
         b.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Billing').getRecordTypeId();
         lstAcc.add(b);
         insert lstAcc;
-        return getCreatedAccount(K_ACCOUNT_NAME2);
+        return getCreatedAccount('TestS492Acc2');
     }
 
     private static Account createAccountForAsset() {
         System.debug('---------- Entre en createAccountForAsset()');
-        Account a = new Account(Name=K_ACCOUNT_NAME_ASSET, AccountIntegrationId__c=String.valueOf(10000));
+        Account a = new Account(Name='TestS492Ass', AccountIntegrationId__c=String.valueOf(10003));
         a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
         insert a;
-        return a;
+        return getCreatedAccount('TestS492Ass');
     }
 
     static Contact createContact(Account pAccount){
         System.debug('---------- Entre en createContact()');
-        Account a = new Account(Name=K_ACCOUNT_NAME_ASSET, AccountIntegrationId__c=String.valueOf(10000));
+        Account a = new Account(Name='TestS492Ass', AccountIntegrationId__c=String.valueOf(10004));
         a.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Consumer').getRecordTypeId();
         insert a;
-        Account ac = [SELECT Id FROM Account WHERE Name = :K_ACCOUNT_NAME_ASSET LIMIT 1];
+        Account ac = [SELECT Id FROM Account WHERE Name = 'TestS492Ass' LIMIT 1];
         Contact c = new Contact(FirstName='Juan', LastName='Perez', AccountId=ac.Id);
         c.DocumentType__c = 'DNI';
         c.DocumentNumber__c = '12345678';
@@ -266,7 +242,7 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
     static Contact getContact () {
         System.debug('-------------- Entre en getContact()');
         Contact c = [SELECT Id FROM Contact WHERE FirstName = 'Juan' AND LastName = 'Perez' AND DocumentNumber__c = '12345678'];
-        System.debug('-------------- Sali de getContact()');
+        System.debug('-------------- Sali de getContact() - Id: ' + c.Id);
         return c;
     }
 
@@ -287,9 +263,9 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         return  [SELECT id FROM vlocity_cmt__PriceList__c WHERE vlocity_cmt__Code__c = 'PRL_TELCOM'];
     }
     
-    private static Product2 createProduct(String pJsonAttr) {
+    private static Product2 createProduct(Boolean pWithJson) {
         System.debug('---------- Entre en createProduct()');
-        Product2 prod = new Product2(Name=K_PRODUCT_NAME);
+        Product2 prod = new Product2(Name='TestS224Prod');
         prod.ProductCode = 'FAN_PV_FNF_00001';
         prod.IsActive = true;
         prod.Family = 'Movil';
@@ -300,20 +276,25 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         prod.recordTypeId  = Schema.SObjectType.Product2.getRecordTypeInfosByName().get('Product').getRecordTypeId();
         prod.vlocity_cmt__IsOrderable__c = true;
         prod.vlocity_cmt__IsConfigurable__c = true;
-        prod.vlocity_cmt__JSONAttribute__c = pJsonAttr;
- //       prod.vlocity_cmt__JSONAttribute__c = '{"FAN_ATTCAT_000047":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pw2RUAQ","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000057","attributeconfigurable__c":true,"attributedisplaysequence__c":"10","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgNUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyB7UAI","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000129","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Tipo Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgOUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"MOVIL","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[],"values":[{"value":"Desconocido","id":10,"displayText":"Desconocido"},{"value":"Onnet","id":20,"displayText":"Onnet"},{"value":"Offnet","id":30,"displayText":"Offnet"},{"value":"Internacional","id":40,"displayText":"Internacional"},{"value":"Linea Fija","id":50,"displayText":"Linea Fija"}]},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyfcUAA","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000142","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Id de Grupo","displaysequence__c":"null","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UtBVUA0","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"FAN_PV_GFNF_VOZ","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"FAN_PV_GFNF_VOZ"},"$$AttributeDefinitionEnd$$":null}],"FAN_ATTCAT_000045":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHJUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000067","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Provisionable","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgMUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHOUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000068","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Facturable en Venta","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgLUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null}]}';
+        //prod.vlocity_cmt__JSONAttribute__c = pJsonAttr;
+        if (pWithJson) {
+            prod.vlocity_cmt__JSONAttribute__c = '{"FAN_ATTCAT_000047":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pw2RUAQ","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000057","attributeconfigurable__c":true,"attributedisplaysequence__c":"10","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgNUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text"},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyB7UAI","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000129","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Tipo Numero Amigo","displaysequence__c":"73","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":true,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgOUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":"Dropdown","value__c":"MOVIL","valuedatatype__c":"Picklist","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Picklist","uiDisplayType":"Dropdown","default":[],"values":[{"value":"Desconocido","id":10,"displayText":"Desconocido"},{"value":"Onnet","id":20,"displayText":"Onnet"},{"value":"Offnet","id":30,"displayText":"Offnet"},{"value":"Internacional","id":40,"displayText":"Internacional"},{"value":"Linea Fija","id":50,"displayText":"Linea Fija"}]},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pyfcUAA","attributecategoryid__c":"a0F6C000000BoryUAC","categorycode__c":"FAN_ATTCAT_000047","categoryname__c":"Configuracion FnF","attributeuniquecode__c":"FAN_ATT_000142","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Id de Grupo","displaysequence__c":"null","categorydisplaysequence__c":73,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UtBVUA0","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":"FAN_PV_GFNF_VOZ","valuedatatype__c":"Text","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Text","default":"FAN_PV_GFNF_VOZ"},"$$AttributeDefinitionEnd$$":null}],"FAN_ATTCAT_000045":[{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHJUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000067","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Provisionable","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgMUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null},{"$$AttributeDefinitionStart$$":null,"objectid__c":"01t6C000000aBb7QAE","attributeid__c":"a0G6C000000pwHOUAY","attributecategoryid__c":"a0F6C000000Bor5UAC","categorycode__c":"FAN_ATTCAT_000045","categoryname__c":"Caracteristicas Principales","attributeuniquecode__c":"FAN_ATT_000068","attributeconfigurable__c":true,"attributedisplaysequence__c":"1","attributefilterable__c":true,"attributecloneable__c":true,"isactive__c":true,"attributedisplayname__c":"Facturable en Venta","displaysequence__c":"71","categorydisplaysequence__c":71,"customconfiguitemplate__c":null,"formatmask__c":null,"hasrule__c":false,"isconfigurable__c":false,"ishidden__c":false,"valueinnumber__c":null,"objecttype__c":"Product2","querycode__c":null,"isreadonly__c":false,"isquerydriven__c":false,"querylabel__c":null,"id":"a0D6C000000UrgLUAS","isrequired__c":false,"rulemessage__c":null,"uidisplaytype__c":null,"value__c":null,"valuedatatype__c":"Checkbox","valuedescription__c":null,"attributeRunTimeInfo":{"dataType":"Checkbox","default":false},"$$AttributeDefinitionEnd$$":null}]}';
+        }
+        else {
+            prod.vlocity_cmt__JSONAttribute__c = '';
+        }
 
         insert prod;
-        return  [SELECT Id FROM Product2 WHERE Name = :K_PRODUCT_NAME];
+        return  [SELECT Id FROM Product2 WHERE Name = 'TestS224Prod'];
     }
 
     public static Asset createAsset(Account pAccount, Product2 pProduct, vlocity_cmt__PriceList__c pPriceList){
         Asset rootAsset = createRootAsset(pAccount, pProduct, pPriceList);
         System.debug('---------- Entre en createAsset()'); 
-        Asset a = new Asset(Name=K_ASSET_NAME);
+        Asset a = new Asset(Name='Plan con tarjeta');
         a.Product2Id = pProduct.Id;
         a.Accountid = pAccount.Id;
-        a.MSISDN__c = K_MSISDN_OK;
+        a.MSISDN__c = '47774777';
         a.vlocity_cmt__PricebookEntryId__c = Test.getStandardPricebookId();
         a.vlocity_cmt__EffectiveQuantity__c=1;
         a.vlocity_cmt__EffectiveOneTimeTotal__c=0.0;
@@ -325,13 +306,13 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         a.vlocity_cmt__JSONAttribute__c='' ;
         insert a;
 
-        return  [SELECT Id FROM Asset WHERE MSISDN__c = :K_MSISDN_OK AND Name = :K_ASSET_NAME];
+        return  [SELECT Id FROM Asset WHERE MSISDN__c = '47774777' AND Name = 'Plan con tarjeta'];
     }
 
 
     public static Asset createRootAsset(Account pAccount, Product2 pProduct, vlocity_cmt__PriceList__c pPriceList){
         System.debug('---------- Entre en createRootAsset()'); 
-        Asset a = new Asset(Name=K_ROOT_ASSET_NAME);
+        Asset a = new Asset(Name='Test492RAss');
         a.Product2Id = pProduct.Id;
         a.Accountid = pAccount.Id;
         a.vlocity_cmt__PricebookEntryId__c = Test.getStandardPricebookId();
@@ -342,11 +323,11 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
 
         insert a;
 
-        a = [SELECT Id FROM Asset WHERE Name = :K_ROOT_ASSET_NAME];
+        a = [SELECT Id FROM Asset WHERE Name = 'Test492RAss'];
         a.vlocity_cmt__RootItemId__c = a.Id;
         update a;
 
-        return  [SELECT Id FROM Asset WHERE Name = :K_ROOT_ASSET_NAME];
+        return  [SELECT Id FROM Asset WHERE Name = 'Test492RAss'];
     }
 
     private static Pricebook2 createPriceBook(){
@@ -419,6 +400,5 @@ global with sharing class IFS_S492_getContactAccountsAndServicTest {
         public String canalCod;
     }
     
-
 
 }

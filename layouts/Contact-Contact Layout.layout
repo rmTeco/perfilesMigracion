@@ -63,14 +63,6 @@
                 <behavior>Edit</behavior>
                 <field>PermanencyDueDate__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Mailing_Address__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Migrated__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -127,7 +119,7 @@
                 <field>DocumentType__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>DocumentNumber__c</field>
             </layoutItems>
             <layoutItems>
@@ -456,17 +448,6 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Crossobject__c.Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <relatedList>DRAsset__c.Contact__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>ACCOUNT.NAME</fields>
-        <fields>ACCOUNT.ADDRESS1_CITY</fields>
-        <fields>ACCOUNT.PHONE1</fields>
-        <fields>DocumentNumber__c</fields>
-        <relatedList>Account.vlocity_cmt__PrimaryContactId__c</relatedList>
     </relatedLists>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

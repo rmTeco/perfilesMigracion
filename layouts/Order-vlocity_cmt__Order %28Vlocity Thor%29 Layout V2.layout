@@ -4,7 +4,9 @@
     <customButtons>vlocity_cmt__UpdateContract</customButtons>
     <customButtons>vlocity_cmt__GenerateDocumentPDF</customButtons>
     <customButtons>vlocity_cmt__PickFrameContract</customButtons>
+    <customButtons>vlocity_cmt__CPQ</customButtons>
     <customButtons>vlocity_cmt__ViewDecomposedOrder</customButtons>
+    <customButtons>vlocity_cmt__ViewOrchestrationPlan</customButtons>
     <customButtons>vlocity_cmt__XOMSubmitOrder</customButtons>
     <customButtons>vlocity_cmt__DecomposeOrder</customButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -91,6 +93,18 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>vlocity_cmt__OrchestrationPlanId__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>vlocity_cmt__ThorJeopardyStatus__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>vlocity_cmt__RequestedCompletionDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>vlocity_cmt__DueDate__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

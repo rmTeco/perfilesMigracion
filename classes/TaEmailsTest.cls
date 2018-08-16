@@ -6,7 +6,7 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
         Test.startTest();
         taEmails tae = new taEmails();
         tae.invokeMethod('getEmails', null, null, null);
-        tae.invokeMethod('sendEmailToWorkteamManager', null, null, null);        
+        tae.invokeMethod('sendEmailToWorkteamManager', null, null, null);
         Test.stopTest();
     }
 
@@ -14,15 +14,15 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
     public static testmethod void unitTest2(){
         Map<String,Object> inputMap = new  Map<String,Object>();
         Map<String,Object> outMap = new Map<String,Object>();
-        Map<String,Object> options = new Map<String,Object>(); 
-              
+        Map<String,Object> options = new Map<String,Object>();
+
         Case getCase = createCase1();
         options.put('caseId', (String)getCase.Id);
 
         Test.startTest();
         createWorkTeamNew();
         taEmails tae = new taEmails();
-        tae.invokeMethod('sendEmailToWorkteamManager', inputMap, outMap, options);        
+        tae.invokeMethod('sendEmailToWorkteamManager', inputMap, outMap, options);
         Test.stopTest();
     }
 
@@ -71,7 +71,7 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
     AccountId = getAsset.AccountId,
     AssetId = getAsset.Id,
     Order__c = getOrder.Id,
-    ContactId = getAsset.ContactId,               
+    ContactId = getAsset.ContactId,
     Status = 'Informada');
 
     insert newCaseExample;
@@ -92,7 +92,7 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
     AssetId = getAsset.Id,
     SuppliedPhone = '11989898989',
     Order__c = getOrder.Id,
-    ContactId = getAsset.ContactId,               
+    ContactId = getAsset.ContactId,
     Status = 'Informada');
 
     insert newCaseExample;
@@ -119,7 +119,7 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
     orderExample.Status = 'Draft';
     orderExample.vlocity_cmt__PriceListId__c=taPriceList.Id;
     orderExample.Delivery_Method__c = 'Presencial';
-    orderExample.vlocity_cmt__OriginatingChannel__c='Agentes';    
+    orderExample.vlocity_cmt__OriginatingChannel__c='Agentes';
 
     insert orderExample;
 
@@ -209,8 +209,8 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
   }
 
     public static WorkTeam__c createWorkTeamNew(){
-    User getUser = createUser('Solution Manager');
-        String wtUserId = (String)getUser.Id;        
+    User getUser = createUser('System Administrator');
+        String wtUserId = (String)getUser.Id;
     WorkTeam__c wt = new WorkTeam__c(Name='EquipoTst', Team_Name__c='EquipoTst', Is_Active__c=true, Manager__c=wtUserId);
         insert wt;
         return wt;
@@ -220,8 +220,10 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
     public static WorkTeam__c createWorkTeam(){
         vlocity_cmt__BusinessSite__c storeLocation = createStoreLocation();
         Id storelocationId = storeLocation.Id;
-        User getUser = createUser('Solution Manager');
-        String wtUserId = (String)getUser.Id;        
+        User getUser = createUser('System Administrator Test');
+        System.debug('getUser ' + getUser);
+        String wtUserId = (String)getUser.Id;
+        System.debug('(String)getUser.Id ' + (String)getUser.Id);
         WorkTeam__c wt = new WorkTeam__c(Name='EquipoTst', Team_Name__c='EquipoTst', Is_Active__c=true, Work_Place__c=storelocationId, Manager__c=wtUserId);
         insert wt;
         return wt;
@@ -229,9 +231,9 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
 
 
       private static Account createWtAccount() {
-        
+
         List<Account> lstAcc = new List<Account>();
-     
+
         Account b = new Account(Name='nvprb', AccountIntegrationId__c=String.valueOf(10012));
         b.recordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Billing').getRecordTypeId();
         lstAcc.add(b);
@@ -239,31 +241,31 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
         return getCreatedAccount1('nvprb');
     }
 
-    
+
     private static Account getCreatedAccount1 (String pName) {
         Account a = [SELECT Id FROM Account WHERE Name = :pName];
-  
-        return a;
-    } 
 
-    private static vlocity_cmt__BusinessSite__c createStoreLocation () {    
+        return a;
+    }
+
+    private static vlocity_cmt__BusinessSite__c createStoreLocation () {
         Account orgAcc = createWtAccount();
 
-        vlocity_cmt__BusinessSite__c storeLocation = new vlocity_cmt__BusinessSite__c(Name='Barrio Norte1', 
+        vlocity_cmt__BusinessSite__c storeLocation = new vlocity_cmt__BusinessSite__c(Name='Barrio Norte1',
             vlocity_cmt__OrganizationId__c=orgAcc.Id, Status__c='Activo', Type__c='POS', Channel__c='Físico',
              Channel_Type__c='Oficinas Comerciales', Channel_Type_2__c='Oficinas Comerciales', Channel_Type_3__c='Oficinas Comerciales',
              Region__c='AMBA');
-        insert storeLocation;     
-        return [SELECT Id FROM vlocity_cmt__BusinessSite__c WHERE Name='Barrio Norte1'];     
+        insert storeLocation;
+        return [SELECT Id FROM vlocity_cmt__BusinessSite__c WHERE Name='Barrio Norte1'];
     }
 
      public static User createUser(String profile){
         User u;
-        
-        try{ 
-            Id p = [SELECT Id FROM Profile WHERE Name = :profile].Id;
-            u = new User(Alias = 'testu', Email='testuser@superhijitus.com', 
-            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+
+        try{
+            Id p = [SELECT Id FROM Profile WHERE Name =: profile].Id;
+            u = new User(Alias = 'testu', Email='testuser@superhijitus.com',
+            EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
             LocaleSidKey='es_AR', ProfileId = p,
             TimeZoneSidKey='America/Argentina/Buenos_Aires', UserName='osPrueba');
             insert u;
@@ -285,22 +287,22 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
         String htmlBody = '<p><b>Este mensaje es enviado como notificacion de una prueba de la clase TaEmailsTest</b></p>';
         Test.startTest();
         taEmails tae = new taEmails();
-       // tae.sendInternalEmail(userId, subject, htmlBody);        
+       // tae.sendInternalEmail(userId, subject, htmlBody);
         Test.stopTest();
     }
 
-  
+
 @isTest static void invoke_sendEmailToWorkteamManager_OK(){
     String methodName ='sendEmailToWorkteamManager';
     Map<String,Object> outMap = new Map<String, Object>();
     Map<String, Object> empty = new Map<String, Object>();
     Map<String,Object> options = new Map<String, Object>();
     Map<String,Object> inputMap = new Map<String, Object>();
-    taEmails testedClass = new taEmails();        
-    
+    taEmails testedClass = new taEmails();
+
     //Creacion del contacto
     Contact contactObj = new Contact(
-        LastName = 'Pepe', 
+        LastName = 'Pepe',
         Phone = '45454544545'
     );
     insert contactObj;
@@ -309,14 +311,14 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
     Id businessRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Business').getRecordTypeId();
     Account accountObj = new Account (
         vlocity_cmt__PrimaryContactId__c = contactObj.Id,
-        Name='Cuenta Test', 
+        Name='Cuenta Test',
         RecordTypeId = businessRecordTypeId,
         AccountIntegrationId__c = '0016C000009I5zg' //Ver cual existe en huawei
     );
     insert accountObj;
-    
+
         String profileName = 'pepe';
-        Id profileId = [SELECT Id FROM Profile WHERE name =: profileName].Id; 
+        Id profileId = [SELECT Id FROM Profile WHERE name =: profileName].Id;
         User tstManager = new User();
         tstManager.ProfileId = profileId;
         tstManager.Username = 'claseTest@gmail.com';
@@ -329,7 +331,7 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
         tstManager.EmailEncodingKey = 'ISO-8859-1';
         tstManager.LanguageLocaleKey = 'en_US';
         insert tstManager;
-    
+
     WorkTeam__c tstTeam = new WorkTeam__c();
     tstTeam.Name = 'EquipoTst';
     tstTeam.Team_Name__c = 'EquipoTst';
@@ -372,8 +374,8 @@ private static final String K_ACCOUNT_NAME = 'TestIFSS453Account';
 
     Test.startTest();
     testedClass.invokeMethod(methodName, inputMap, outMap, options);
-    Test.stopTest();      
+    Test.stopTest();
 
-  }    
+  }
 */
 }

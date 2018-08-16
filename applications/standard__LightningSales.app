@@ -24,15 +24,5 @@
     <tabs>standard-OtherUserProfile</tabs>
     <tabs>standard-Case</tabs>
     <tabs>standard-Forecasting3</tabs>
-    <tabs>TS_Symptom__c</tabs>
-    <tabs>vlocity_cmt__VlocityTrackingEntry__c</tabs>
-    <tabs>Transaction_History__c</tabs>
-    <tabs>AttributesConfiguration</tabs>
-    <tabs>WorkTeam__c</tabs>
-    <tabs>vlocity_cmt__SyncDeltaObject__c</tabs>
-    <tabs>Team_Member__c</tabs>
-    <tabs>vlocity_cmt__InboundRESTInterface__c</tabs>
-    <tabs>Repro_Reporter</tabs>
-    <tabs>Permissions_by_Work_Team</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

@@ -172,6 +172,7 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isServiceCloudConsole>true</isServiceCloudConsole>
     <label>Consola FAN</label>
+    <logo>SharedDocuments/TelecomLogo.png</logo>
     <preferences>
         <enableCustomizeMyTabs>true</enableCustomizeMyTabs>
         <enableKeyboardShortcuts>true</enableKeyboardShortcuts>
@@ -183,13 +184,13 @@
         <enableTabLimits>false</enableTabLimits>
         <saveUserSessions>true</saveUserSessions>
     </preferences>
+    <tabs>standard-home</tabs>
+    <tabs>vlocity_cmt__IntegrationRetryPolicy__c</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Case</tabs>
-    <tabs>Case_Resolution_Time__c</tabs>
-    <tabs>Case_Channel_Configuration__c</tabs>
     <tabs>standard-Order</tabs>
     <tabs>standard-Asset</tabs>
-    <tabs>standard-home</tabs>
+    <tabs>vlocity_cmt__ManualQueue__c</tabs>
     <tabs>standard-Opportunity</tabs>
     <tabs>vlocity_cmt__Premises__c</tabs>
     <tabs>vlocity_cmt__ObjectClass__c</tabs>
@@ -204,6 +205,9 @@
     <tabs>vlocity_cmt__InboundRESTInterface__c</tabs>
     <tabs>Repro_Reporter</tabs>
     <tabs>Permissions_by_Work_Team</tabs>
+    <tabs>standard-Contact</tabs>
+    <tabs>Case_Channel_Configuration__c</tabs>
+    <tabs>Case_Resolution_Time__c</tabs>
     <tabs>Logistica</tabs>
     <tabs>Entregas</tabs>
     <workspaceConfig>
@@ -244,6 +248,9 @@
             <tab>standard-Case</tab>
         </mappings>
         <mappings>
+            <tab>standard-Contact</tab>
+        </mappings>
+        <mappings>
             <tab>standard-Opportunity</tab>
         </mappings>
         <mappings>
@@ -260,6 +267,12 @@
         </mappings>
         <mappings>
             <tab>vlocity_cmt__InboundRESTInterface__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__IntegrationRetryPolicy__c</tab>
+        </mappings>
+        <mappings>
+            <tab>vlocity_cmt__ManualQueue__c</tab>
         </mappings>
         <mappings>
             <tab>vlocity_cmt__ObjectClass__c</tab>

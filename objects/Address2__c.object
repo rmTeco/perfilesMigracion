@@ -52,6 +52,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>Account_Owner__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -1162,6 +1163,17 @@ Required if “Piso Requerido” is set</description>
         <externalId>false</externalId>
         <label>casillaPostal</label>
         <length>6</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>sfxId__c</fullName>
+        <externalId>true</externalId>
+        <label>sfxId</label>
+        <length>18</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

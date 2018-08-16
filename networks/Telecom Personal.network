@@ -2,7 +2,7 @@
 <Network xmlns="http://soap.sforce.com/2006/04/metadata">
     <allowInternalUserLogin>false</allowInternalUserLogin>
     <allowMembersToFlag>false</allowMembersToFlag>
-    <changePasswordTemplate>unfiled$public/CommunityChangePasswordEmailTemplate</changePasswordTemplate>
+    <changePasswordTemplate>unfiled$public/Communities_Changed_Password_Email</changePasswordTemplate>
     <communityRoles/>
     <disableReputationRecordConversations>false</disableReputationRecordConversations>
     <emailSenderAddress>alex.lazarev@cloudgaia.com</emailSenderAddress>
@@ -25,10 +25,26 @@
     <forgotPasswordTemplate>unfiled$public/Forgot_Password_Community</forgotPasswordTemplate>
     <gatherCustomerSentimentData>false</gatherCustomerSentimentData>
     <logoutUrl>https://www.personal.com.ar</logoutUrl>
+    <navigationLinkSet>
+        <navigationMenuItem>
+            <label>Knowledge Center</label>
+            <position>0</position>
+            <publiclyAvailable>false</publiclyAvailable>
+            <target>/toparticles</target>
+            <type>InternalLink</type>
+        </navigationMenuItem>
+        <navigationMenuItem>
+            <label>Support</label>
+            <position>1</position>
+            <publiclyAvailable>false</publiclyAvailable>
+            <target>/contactsupport</target>
+            <type>InternalLink</type>
+        </navigationMenuItem>
+    </navigationLinkSet>
     <networkMemberGroups>
         <profile>admin</profile>
-        <profile>test community</profile>
         <profile>customer community user</profile>
+        <profile>test community</profile>
     </networkMemberGroups>
     <networkPageOverrides>
         <changePasswordPageOverrideSetting>VisualForce</changePasswordPageOverrideSetting>

@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
         <fullName>ElapsedTime__c</fullName>
         <externalId>false</externalId>
@@ -247,8 +248,13 @@
     <label>Vlocity Tracking Entry</label>
     <listViews>
         <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>vlocity_cmt__All</fullName>
@@ -256,10 +262,10 @@
         <columns>NAME</columns>
         <columns>User__c</columns>
         <columns>TrackingEvent__c</columns>
+        <columns>ElapsedTime__c</columns>
         <columns>ElementName__c</columns>
         <columns>ElementType__c</columns>
         <columns>ElementStepNumber__c</columns>
-        <columns>ElapsedTime__c</columns>
         <columns>CREATEDBY_USER</columns>
         <columns>OmniScriptId__c</columns>
         <filterScope>Everything</filterScope>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitlementProcess xmlns="http://soap.sforce.com/2006/04/metadata">
+    <SObjectType>Case</SObjectType>
+    <active>true</active>
+    <businessHours>Default</businessHours>
+    <description>Waits for Case on &quot;Cambio de titularidad&quot; to receive SMS Response, else it closes it after 24hs.</description>
+    <entryStartDateField>Case.CreatedDate</entryStartDateField>
+    <exitCriteriaFilterItems>
+        <field>Case.Status</field>
+        <operation>equals</operation>
+        <value>Anulada, Derivada, Devolución con falla, Devolución destrucción total, Devolucion exitosa, Expirada, No aceptada, Rechazada</value>
+    </exitCriteriaFilterItems>
+    <isVersionDefault>true</isVersionDefault>
+    <milestones>
+        <businessHours>Default</businessHours>
+        <milestoneCriteriaFilterItems>
+            <field>Case.Subject</field>
+            <operation>equals</operation>
+            <value>Cambio de titularidad</value>
+        </milestoneCriteriaFilterItems>
+        <milestoneName>SMS Response Milestone</milestoneName>
+        <minutesToComplete>1440</minutesToComplete>
+        <timeTriggers>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Minutes</workflowTimeTriggerUnit>
+        </timeTriggers>
+        <useCriteriaStartTime>false</useCriteriaStartTime>
+    </milestones>
+    <name>sms response on case_v2</name>
+    <versionMaster>552c0000000015J</versionMaster>
+    <versionNumber>1</versionNumber>
+</EntitlementProcess>

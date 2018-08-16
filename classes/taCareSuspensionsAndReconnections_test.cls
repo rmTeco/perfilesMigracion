@@ -16,7 +16,12 @@ public class taCareSuspensionsAndReconnections_test {
         caseParent.subject = 'testCase';
         insert caseParent;
         
-        string BillingAccs = '[{"Fraud": false,"Status": "Active","Id": "0016C000008fHeiQAE","Name": "Sandra Ramos Billing 1","$$hashKey": "object:613","vlcSelected": true}]';
+        List<Account> listAccount = TestDataFactory.createAccounts(1);
+        
+        String idTest = (String)listAccount[0].Id;
+        String nameTest = (String)listAccount[0].Name;
+       
+        string BillingAccs = '[{"Fraud": false,"Status": "Active","Id":"'+idTest+'","$$hashKey": "object:613","Name":"'+nameTest+'","vlcSelected": true}]';
         List<Object> responseNode = (List<Object>) JSON.deserializeUntyped(BillingAccs);
         
         
@@ -48,7 +53,12 @@ public class taCareSuspensionsAndReconnections_test {
         caseParent.subject = 'testCase';
         insert caseParent;
         
-        string FraudBillingAccs = '[{"Fraud": false,"Status": "Active","Id": "0016C000008fHeiQAE","Name": "Sandra Ramos Billing 1","$$hashKey": "object:613","vlcSelected": true}]';
+        List<Account> listAccount = TestDataFactory.createAccounts(1);
+        
+        String idTest = (String)listAccount[0].Id;
+        String nameTest = (String)listAccount[0].Name;
+       
+        string FraudBillingAccs = '[{"Fraud": false,"Status": "Active","Id":"'+idTest+'","$$hashKey": "object:613","Name":"'+nameTest+'","vlcSelected": true}]';
         List<Object> responseNode = (List<Object>) JSON.deserializeUntyped(FraudBillingAccs);
         
         
@@ -80,7 +90,11 @@ public class taCareSuspensionsAndReconnections_test {
         caseParent.subject = 'testCase';
         insert caseParent;
         
-        string AssetsM = '[{"Name": "Simcard","isValid": true,"AssetId": "02i6C0000002h3jQAA","$$hashKey": "object:601","vlcSelected": true}]';
+        List<Account> listAccount = TestDataFactory.createAccounts(1);
+        List<Asset> listAsset = TestDataFactory.createAssets(1,listAccount[0],'111111');
+        String idTest = (String)listAsset[0].Id;
+        
+        string AssetsM = '[{"Name": "Simcard","isValid": true,"AssetId": "'+idTest+'","$$hashKey": "object:601","vlcSelected": true}]';
         List<Object> responseNode = (List<Object>) JSON.deserializeUntyped(AssetsM);
         Id postsalesId = Schema.SObjectType.Case.GetRecordTypeInfosByName().Get('Postsales').GetRecordTypeId();
         
@@ -307,9 +321,15 @@ public class taCareSuspensionsAndReconnections_test {
         Map<String,Object> inputMap = new Map<String, Object>();
         
         
-        string jsonTransaction = '{"AccountId":"0016C000009IOSI","Description":"Suspensión","Imei":"864345677654345","NewStatus":"Active","RecordType":"0126C0000000AR0QAM","Type":"Siniestro","SinisterType":"Hurto"}';
-
+        Id transactionHistoryRecordTypeId = Schema.SObjectType.Transaction_History__c.getRecordTypeInfosByName().get('Asset Transaction History').getRecordTypeId();
+        String transactionHistoryRecordTypeIdString = (String)transactionHistoryRecordTypeId;
+        
+        string jsonTransaction = '{"Description":"Suspensión","Imei":"864345677654345","NewStatus":"Active","Type":"Siniestro","SinisterType":"Hurto"}';
         Map<String, Object> responseNode = (Map<String, Object>) JSON.deserializeUntyped(jsonTransaction);
+        responseNode.put('RecordType', transactionHistoryRecordTypeIdString);
+        List<Account> listAccount = TestDataFactory.createAccounts(1);
+        
+        responseNode.put('AccountId',listAccount[0].Id);
         options.put('transactionHistory',responseNode);
         
         
@@ -318,9 +338,9 @@ public class taCareSuspensionsAndReconnections_test {
         testedClass.invokeMethod(methodName, inputMap, output, options);
         Test.stopTest(); 
         
-        
+        String testAccountId = (String)listAccount[0].Id; 
         transaction_history__c outMapNode = (transaction_history__c) output.get('TransactionHistoryCreate');
-        system.assertEquals('0016C000009IOSI',outMapNode.Account__c);
+        system.assertEquals(testAccountId,outMapNode.Account__c);
         
     }
 

@@ -331,19 +331,19 @@ public with sharing class BillingResponseHandlerTest {
         }
         Test.stopTest();
     }
-    
+
     @isTest static void processInternetPackReset_Test() {
         String methodName = 'processInternetPackReset_Test';
 
         String nroLinea = 'NroLinea';
-        //TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
-        Account account = [SELECT Id FROM Account LIMIT 1];
-        TestDataFactory.createAssets(1,account);
-        
-        Asset asset = [SELECT vlocity_cmt__LineNumber__c, AccountId FROM Asset LIMIT 1];
-        asset.vlocity_cmt__LineNumber__c = nroLinea;
-        asset.MSISDN__c = nroLinea;
-        update asset;
+    	//TestDataFactory.setTeamMember('Test', userinfo.getUserId(), null);
+    	Account account = [SELECT Id FROM Account LIMIT 1];
+    	TestDataFactory.createAssets(1,account);
+    	
+    	Asset asset = [SELECT vlocity_cmt__LineNumber__c, AccountId FROM Asset LIMIT 1];
+    	asset.vlocity_cmt__LineNumber__c = nroLinea;
+    	asset.MSISDN__c = nroLinea;
+    	update asset;
         
         Product2 product = TestDataFactory.createProduct(1).get(0);
         product.vlocity_cmt__JSONAttribute__c = '{"attributes":[{"attributedisplayname__c":"Unidad de Medida de Vigencia","attributeRunTimeInfo":{"default":[{"value":"W"}]}},{"attributedisplayname__c":"Vigencia Activacion","attributeRunTimeInfo":{"default":"24"}},{"attributedisplayname__c":"ID Sistema Origen","attributeRunTimeInfo":{"default":"FAN_PRDA_00003"}}]}';                                                                                         
@@ -368,9 +368,9 @@ public with sharing class BillingResponseHandlerTest {
         insert template;
         insert new SMSSender__c(Name='S-Confirmacion-SMS',Sender__c='S-Confirmacion-SMS');
 
-        List<OrderItem> ordItemList = new List<OrderItem>();
+		List<OrderItem> ordItemList = new List<OrderItem>();
         ordItemList.add(new OrderItem(OrderId = orderOBJ.Id, vlocity_cmt__AssetId__c = asset.Id, Product2Id = product.Id, Quantity = 10, PricebookEntryId = standardPrice.Id, UnitPrice = 100));
-        insert ordItemList;
+		insert ordItemList;
         
         Test.startTest();
         BillingResponseHandler.processInternetPackReset(orderOBJ);

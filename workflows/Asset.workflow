@@ -136,7 +136,7 @@
         <fullName>xOM_SubStatus_Suspend_Siniestro</fullName>
         <description>Update SubStatus in a Suspend by Siniestro</description>
         <field>Sub_Status__c</field>
-        <literalValue>Siniestro/Extravio</literalValue>
+        <literalValue>Siniestro</literalValue>
         <name>xOM SubStatus Suspend Siniestro</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -295,10 +295,16 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
+        <booleanFilter>(1 OR 2)</booleanFilter>
         <criteriaItems>
             <field>Asset.Sub_Status__c</field>
             <operation>contains</operation>
             <value>Suspend-Operador</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Asset.Sub_Status__c</field>
+            <operation>contains</operation>
+            <value>Suspend-Fraude</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

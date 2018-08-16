@@ -7,7 +7,6 @@ global class ta_sales_jobSetup{
         scheduleNotifyPickup('00', '01');
         scheduleCancelUnconfirmed('00', '03');
         scheduleCancelUnretrieved('00','01');
-        scheduleReleaseForeignLinesBatch('00','01');
     }
     
     
@@ -40,17 +39,12 @@ global class ta_sales_jobSetup{
         ta_Sales_NotifyPickupExpiration schedule = new ta_Sales_NotifyPickupExpiration();
         system.schedule('ta_Sales_NotifyPickupExpiration ' + System.Now(), getCronExpression(minute, hour), schedule);
     }
-    
-     public static void scheduleReleaseForeignLinesBatch(String minute, String hour){
-        ta_sales_releaseForeignLinesBatch schedule = new ta_sales_releaseForeignLinesBatch();
-        system.schedule('ta_sales_releaseForeignLinesBatch ' + System.Now(), getCronExpression(minute, hour), schedule);
-    }
 
     public static void taskTopicSetup(){
-        String Name = 'TasksTopic';
-        
-        if(Test.isRunningTest()) Name = 'Test';
-        
+    	String Name = 'TasksTopic';
+    	
+    	if(Test.isRunningTest()) Name = 'Test';
+    	
         List<PushTopic> pts = [SELECT Id FROM PushTopic WHERE Name = :Name];
         Database.delete(pts);
 

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>vlocity_cmt__EntityFilter__c$Name</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__EntityFilter__c$vlocity_cmt__IsActive__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__EntityFilter__c$vlocity_cmt__Type__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__EntityFilter__c.vlocity_cmt__EntityFilterConditions__r$Name</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__EntityFilter__c.vlocity_cmt__EntityFilterConditions__r$vlocity_cmt__ConditionType__c</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__EntityFilter__c$CreatedDate</field>
+    </columns>
+    <columns>
+        <field>vlocity_cmt__EntityFilter__c$CreatedBy</field>
+    </columns>
+    <format>Tabular</format>
+    <name>Entity Filter Data</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>Entity_Filter_data__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>vlocity_cmt__EntityFilter__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

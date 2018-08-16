@@ -88,6 +88,7 @@
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>true</enableFeeds>
     <enableHistory>false</enableHistory>
+    <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
         <fullName>vlocity_cmt__StoryFieldSet</fullName>
         <description>Story board</description>
@@ -516,14 +517,14 @@ Filled in by: The account manager.</inlineHelpText>
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>ARG</fullName>
+                    <fullName>$</fullName>
                     <default>false</default>
-                    <label>ARG</label>
+                    <label>$</label>
                 </value>
                 <value>
-                    <fullName>USD</fullName>
+                    <fullName>U$S</fullName>
                     <default>false</default>
-                    <label>USD</label>
+                    <label>U$S</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1438,6 +1439,78 @@ Filled in by: Calculated automatically.</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>SCP_Certa_GC__Buying_Cycle__c</picklist>
+            <values>
+                <fullName>Achievements of Results</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Alleviation of Risks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Assessments of Alternatives</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Awareness of Needs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Decision</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SCP_Certa_GC__Estado_de_la_oportunidad__c</picklist>
+            <values>
+                <fullName>Cancelado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>En Curso</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Firmado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Instalado</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perdida</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SCP_Certa_GC__Moneda__c</picklist>
+            <values>
+                <fullName>%24</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>U%24S</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SCP_Certa_GC__Probabilidad__c</picklist>
+            <values>
+                <fullName>Alta</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Media</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type</picklist>
             <values>
                 <fullName>Existing Business</fullName>
@@ -1548,7 +1621,7 @@ Filled in by: Calculated automatically.</inlineHelpText>
         <protected>false</protected>
         <showsLocation>true</showsLocation>
         <showsStatus>true</showsStatus>
-        <url>http://www.fedex.com/cgi-bin/tracking?tracknumbers={!Opportunity.vlocity_cmt__TrackingNumber__c}&amp;action=track&amp;language=english&amp;cntry_code=us</url>
+        <url>http://www.fedex.com/cgi-bin/tracking?tracknumbers={!Opportunity.SCP_Certa_GC__TrackingNumber__c}&amp;action=track&amp;language=english&amp;cntry_code=us</url>
     </webLinks>
     <webLinks>
         <fullName>SCP_Certa_GC__Matriz_de_Decisi_n</fullName>
@@ -1588,25 +1661,25 @@ Filled in by: Calculated automatically.</inlineHelpText>
         <masterLabel>TA CPQ</masterLabel>
         <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/xdomain/xdomain.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)} 
-{!REQUIRESCRIPT(&quot;/support/console/31.0/integration.js&quot;)} 
-var namespace_prefix = &apos;&apos;; 
-var result = sforce.connection.describeGlobal(); 
-var TOKEN_OBJ = &quot;Party__c&quot;; 
-var sobjects = result.getArray(&quot;sobjects&quot;); 
-for(var i=0; i&lt;sobjects.length; i++) { 
-var sobjName = sobjects[i].name; 
-var str = sobjName.split(&quot;__&quot;); 
-//if there are 3 values there is a namespace 
-if (str.length == 3){ 
-var sobj = str[1].valueOf() +&apos;__c&apos;; 
-if(sobj == TOKEN_OBJ) { 
-namespace_prefix = str[0].valueOf(); 
-} 
-} 
-} 
+        <url>{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/connection.js&quot;)}
+{!REQUIRESCRIPT(&quot;/xdomain/xdomain.js&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/30.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/support/console/31.0/integration.js&quot;)}
+var namespace_prefix = &apos;&apos;;
+var result = sforce.connection.describeGlobal();
+var TOKEN_OBJ = &quot;Party__c&quot;;
+var sobjects = result.getArray(&quot;sobjects&quot;);
+for(var i=0; i&lt;sobjects.length; i++) {
+var sobjName = sobjects[i].name;
+var str = sobjName.split(&quot;__&quot;);
+//if there are 3 values there is a namespace
+if (str.length == 3){
+var sobj = str[1].valueOf() +&apos;__c&apos;;
+if(sobj == TOKEN_OBJ) {
+namespace_prefix = str[0].valueOf();
+}
+}
+}
 var target_url = &apos;/apex/taSalesCPQ?id=&apos;+&apos;{!Opportunity.Id}&apos;;
 window.location.href = target_url;</url>
     </webLinks>
@@ -1740,7 +1813,7 @@ window.location.href = &apos;/&apos; + result + &apos;/e?retURL=%2F&apos; + resu
         <protected>false</protected>
         <showsLocation>true</showsLocation>
         <showsStatus>true</showsStatus>
-        <url>http://www.fedex.com/cgi-bin/tracking?tracknumbers={!Opportunity.vlocity_cmt__TrackingNumber__c}&amp;action=track&amp;language=english&amp;cntry_code=us</url>
+        <url>http://www.fedex.com/cgi-bin/tracking?tracknumbers={!Opportunity.SCP_Certa_GC__TrackingNumber__c}&amp;action=track&amp;language=english&amp;cntry_code=us</url>
     </webLinks>
     <webLinks>
         <fullName>vlocity_cmt__GenerateDocumentPDF</fullName>

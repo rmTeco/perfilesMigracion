@@ -53,6 +53,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
     <fields>
         <fullName>ActiveValidation__c</fullName>
         <caseSensitive>true</caseSensitive>
@@ -167,15 +168,6 @@ This field is filled by Work Flow rule, if the membership is inactive takes the 
     </fields>
     <label>Work Team Member</label>
     <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>User_member__c</columns>
-        <columns>Work_Team__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>All1</fullName>
         <columns>User_member__c</columns>
         <columns>NAME</columns>
@@ -185,7 +177,31 @@ This field is filled by Work Flow rule, if the membership is inactive takes the 
         <columns>UserRoleAPIName__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
-        <language>es</language>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>b_relacion</fullName>
+        <columns>NAME</columns>
+        <columns>User_member__c</columns>
+        <columns>Work_Team__c</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>UserRoleAPIName__c</columns>
+        <columns>Is_Active__c</columns>
+        <columns>Legajo__c</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>User_member__c</field>
+            <operation>contains</operation>
+            <value>bailo</value>
+        </filters>
+        <label>busar relacion</label>
+        <language>en_US</language>
     </listViews>
     <nameField>
         <displayFormat>T-{00000000}</displayFormat>
